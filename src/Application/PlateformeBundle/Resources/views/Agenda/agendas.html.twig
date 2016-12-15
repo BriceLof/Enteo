@@ -1,0 +1,16 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block body %}
+    {# bloc principal #}
+    <div class="blocconsultant">
+        <span>Consultants: </span>
+        <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
+            <option value="">Selectionnez</option>
+            {% for user in consultant%}
+                <option value="{{user.calendrieruri}}">{{user.nom~' '~user.prenom}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="blocacalendar">    
+    </div>
+{% endblock %}

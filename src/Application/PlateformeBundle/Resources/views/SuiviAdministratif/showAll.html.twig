@@ -1,0 +1,27 @@
+{%  if beneficiaire.suiviAdministratif is not null %}
+
+
+            <caption class="titreSection">Suivi Administratif</caption>
+            {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
+                <tr>
+                    <td>{{ suiviAdministratif.date|date('d/M/Y') }}</td>
+                    <td>{{ suiviAdministratif.quoi }}</td>
+                    <td>{{ suiviAdministratif.qui }}</td>
+                    <td class="btn" width="100%">
+                        <a href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a href="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:new",{'id': beneficiaire.id})) }}
+{%  endif %}

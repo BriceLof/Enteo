@@ -1,0 +1,24 @@
+{% extends "::layout/layout.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css">
+{% endblock %}
+
+
+{% block header %}
+    <div id="banner">
+        <p>rechercher</p>
+        <div>
+            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {% javascripts 'bundles/applicationplateforme/js/main.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('js/mainAjax.js') }}"></script>
+{% endblock %}
+

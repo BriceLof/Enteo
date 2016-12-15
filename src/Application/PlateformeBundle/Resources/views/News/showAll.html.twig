@@ -1,0 +1,24 @@
+{%  if beneficiaire.historique is not null %}
+    <div id="afficheListNews">
+        <h5 style="text-decoration: underline">Toutes les News</h5>
+            {% for news in beneficiaire.news %}
+
+                <div class="row newsBoucle">
+                    <div class="col-sm-1"><span>[Admin,jj/mm/aa]</span></div>
+                    <div class="col-sm-1"><span>{{ news.statut.nom }}</span></div>
+                    <div class="col-sm-2"><span>{{ news.detailStatut.detail }}</span></div>
+                    <div class="col-sm-4"><span>{{ news.message }}</span></div>
+                    <div class="btn col-sm-1">
+                        <a href="{{ path('application_delete_news', { 'id': news.id }) }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </div>
+                    <div class="btn col-sm-1">
+                        <a href="{{ path('application_edit_news', { 'id': news.id }) }}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+    </div>
+{%  endif %}

@@ -1,0 +1,22 @@
+
+    <form method="POST" id="historiqueForm" action="{{ path('application_new_historique', { 'id' : beneficiaire.id }) }}" >
+        <tr>
+            <td>{{ form_label(form.evenement) }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">{{ form_widget(form.evenement) }}</td>
+        </tr>
+        <tr>
+            <td colspan="3">{{ form_errors(form.evenement) }}</td>
+        </tr>
+
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="valider">{{ form_widget(form.submit) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_rest(form) }}</td>
+            <td>{{ form_errors(form) }}</td>
+        </tr>
+    </form>

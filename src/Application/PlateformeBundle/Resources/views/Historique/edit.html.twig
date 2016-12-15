@@ -1,0 +1,26 @@
+<form method="POST" id="historiqueEditForm" action="{{ path('application_edit_historique', { 'id' : historique.id }) }}" >
+<table>
+    <tr>
+        <td>date:</td>
+        <td>{{ historique.date|date('d-M-Y') }}</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>{{ form_label(edit_form.evenement, 'évenement : ') }}</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="3">{{ form_widget(edit_form.evenement) }}</td>
+    </tr>
+
+    <tr>
+        <td>&nbsp;</td>
+        <td class="valider">{{ form_widget(edit_form.submit) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_rest(edit_form) }}</td>
+        <td>{{ form_errors(edit_form) }}</td>
+    </tr>
+</table>
+</form>

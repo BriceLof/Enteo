@@ -1,0 +1,270 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block body %}
+    <div id="flashbag" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for message in app.session.flashbag.get('info') %}
+                    <h4 class="titreSection">Message flash : {{ message }}</h4>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="afficheBeneficiaire" class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="sectionBeneficiaire">
+                    <div id="editBeneficiaire" class="tableOnglet">
+                        <form action="{{ path('application_show_beneficiaire', { 'id':beneficiaire.id }) }}" method="POST" id="ficheBeneficiaireForm">
+                            <table class="table-condensed">
+                                <caption class="titreSection">Fiche Bénéficiaire</caption>
+                                <tr>
+                                    <td>{{ form_label(edit_form.dateConfMer) }}</td>
+                                    <td>{{ form_widget(edit_form.dateConfMer) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.dateConfMer) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.civiliteConso) }}</td>
+                                    <td>{{ form_widget(edit_form.civiliteConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.civiliteConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.nomConso) }}</td>
+                                    <td>{{ form_widget(edit_form.nomConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.nomConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.prenomConso) }}</td>
+                                    <td>{{ form_widget(edit_form.prenomConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.prenomConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.poste) }}</td>
+                                    <td>{{ form_widget(edit_form.poste) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.poste) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.encadrement) }}</td>
+                                    <td>{{ form_widget(edit_form.encadrement) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.encadrement) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableSection">Coordonnées</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.telConso) }}</td>
+                                    <td>{{ form_widget(edit_form.telConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.telConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.tel2) }}</td>
+                                    <td>{{ form_widget(edit_form.tel2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.tel2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.emailConso) }}</td>
+                                    <td>{{ form_widget(edit_form.emailConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.emailConso) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.email2) }}</td>
+                                    <td>{{ form_widget(edit_form.email2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.email2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableSection">Adresse Bénéficiaire</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.adresse) }}</td>
+                                    <td>{{ form_widget(edit_form.adresse) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.adresse) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.adresseComplement) }}</td>
+                                    <td>{{ form_widget(edit_form.adresseComplement) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.adresseComplement) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.ville.zip) }}</td>
+                                    <td>{{ form_widget(edit_form.ville.zip) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.ville.zip) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.ville.nom) }}</td>
+                                    <td>{{ form_widget(edit_form.ville.nom) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.ville.nom) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.pays) }}</td>
+                                    <td>{{ form_widget(edit_form.pays) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.pays) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.numSecu) }}</td>
+                                    <td>{{ form_widget(edit_form.numSecu) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.numSecu) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_label(edit_form.dateNaissance) }}</td>
+                                    <td>{{ form_widget(edit_form.dateNaissance) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_errors(edit_form.dateNaissance) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td class="valider">{{ form_widget(edit_form.submit) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form_rest(edit_form) }}</td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sectionBeneficiaire">
+                    <div id="statut" class="tableOnglet">
+                        <table class="table-condensed">
+                            <caption class="titreSection">Statut( A faire )</caption>
+                            <tr>
+                                <td>Statut :</td>
+                                <td>Téléphone</td>
+                            </tr>
+                            <tr>
+                                <td>Détail :</td>
+                                <td>Voir onglet "Detail Statut"</td>
+                            </tr>
+                            <tr>
+                                <td>Gestionnaire Administratif</td>
+                                <td>Select</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="ProjetBeneficiaire" class="tableOnglet">
+                        <table class="table-condensed">
+                            <caption class="titreSection">Projet Bénéficiaire</caption>
+                            <tr>
+                                <td>Statut actuel :</td>
+                                <td>{{ beneficiaire.statut }}</td>
+                            </tr>
+                            <tr>
+                                <td>Années Expérience</td>
+                                <td>//A faire</td>
+                            </tr>
+                            <tr>
+                                <td>Heures DIF dispo :</td>
+                                <td>{{ beneficiaire.heureDif }}H</td>
+                            </tr>
+                            <tr>
+                                <td>Heures CPF dispo :</td>
+                                <td>{{ beneficiaire.heureCpf }}H</td>
+                            </tr>
+                            <tr>
+                                <td>Diplôme visé :</td>
+                                <td>{{ beneficiaire.diplomeVise }}</td>
+                            </tr>
+                            <tr>
+                                <td>Motivation :</td>
+                                <td>{{ beneficiaire.motivation }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="accompagnement" class="tableOnglet">
+                        <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
+                            <table class="table-condensed">
+                                <caption class="titreSection">Accompagnement</caption>
+                                {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
+                            </table>
+                        </form>
+                    </div>
+                    <div id="espaceDocumentaire" class="tableOnglet">
+                        <table class="table-condensed">
+                            <caption class="titreSection">Espace Documentaire</caption>
+                        </table>
+                    </div>
+                    <div id="satisfactionRecommandation" class="tableOnglet">
+                        <table class="table-condensed">
+                            <caption class="titreSection">Satisfaction/Recommandation</caption>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="sectionBeneficiaire">
+                    <!-- ========= MAJ ======== -->
+                    <div id="historique" class="tableOnglet">
+                        {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
+                        {{render(controller("ApplicationPlateformeBundle:Historique:agenda", {'id':beneficiaire.id}))}}
+                    </div>
+                    <div id="suiviAdministratif" class="tableOnglet">
+                        <form method="POST" id="suiviAdministratifEditForm" action="{{ path('application_edit_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+                            <table class="table-condensed">
+                                {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="news col-md-12">
+                <h4 class="titreSection">NEWS</h4>
+                <div id="tabNews">
+                    <ul>
+                        <li><a href="#tabs-1">toutes les News</a></li>
+                        <li><a href="#tabs-2">Ajouter une News</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        {{ render(controller("ApplicationPlateformeBundle:News:showAll",{'beneficiaire': beneficiaire})) }}                    </div>
+                    <div id="tabs-2" class="col-md-3">
+                        {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

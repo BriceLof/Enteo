@@ -1,0 +1,144 @@
+.loading{
+    background:url('../images/loading.gif')center no-repeat;
+    height: 218px;
+}
+
+#banner{
+
+}
+
+#rechercherPlus{
+    display: none;
+}
+
+.valider{
+    float: right;
+}
+.valider button{
+    background-color: #454545;
+    color: white;
+}
+
+.sectionBeneficiaire{
+    margin: 3%;
+    margin-top: -50px;
+}
+
+.tableOnglet{
+    width: 100%;
+    border: 1px solid;
+    margin-bottom: 10%;
+}
+
+.tableOnglet table{
+    width: 100%;
+}
+
+#afficheBeneficiaire{
+    width: 100%;
+}
+
+
+.titreSection{
+    background-color: #000041;
+    color: #f6f6f6;
+    text-align: center;
+}
+.tableSection{
+    text-decoration: underline;
+}
+
+.newsBoucle{
+    margin-bottom: 5px;
+    border: 1px solid;
+}
+
+#tabNews{
+    height: 370px;
+    overflow: hidden;
+}
+
+.newsBoucle > div{
+    top: 7px;
+}
+
+#afficheListNews{
+    margin: 5%;
+    margin-top: 20px;
+}
+
+
+#application_plateformebundle_news{
+}
+
+
+#ajouteNews{
+    display: none;
+}
+
+
+/**
+ / =============== Parie Agenda ==================== /
+*/
+#agendaForm{
+    padding: 6px;
+    margin-top: 4px;
+}
+#agendaForm button{
+    background: rgba(51, 51, 51, 0.84);
+    color: white;
+    margin-left: 70%;
+}
+
+#agendaForm button:hover{
+    background-color: #e6e6e6;
+    color: rgba(51, 51, 51, 0.84);
+}
+.blocacalendar{
+    padding: 23px;
+}
+
+.blocconsultant {
+    padding-left: 24px;
+}
+
+/*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
+#editBeneficiaire input{
+    border: 1px solid transparent;
+}
+#editBeneficiaire select{
+    border: 1px solid transparent;
+}
+#editBeneficiaire input:hover{
+  border: 1px solid ;
+}
+#editBeneficiaire select:hover{
+    border: 1px solid ;
+}
+
+/*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
+#accompagnement input{
+    border: 1px solid transparent;
+}
+#accompagnement select{
+    border: 1px solid transparent;
+}
+#accompagnement input:hover{
+    border: 1px solid ;
+}
+#accompagnement select:hover{
+    border: 1px solid ;
+}
+
+.inputAccompagnement > input{
+    display: inherit;
+    width: 50%;
+}
+
+
+
+#flashbag{
+    margin-bottom: 100px;
+    margin-top:-80px
+
+}

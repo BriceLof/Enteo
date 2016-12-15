@@ -1,0 +1,32 @@
+
+
+    <div>
+        <form method="POST" id="ajaxForm" >
+            <div class="container-fluid">
+                <div class="row">
+                    <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>
+                    <span class="col-md-1">{{ form_widget(form.prenomConso) }}</span>
+                    <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
+                </div>
+
+                <div class="row" id="rechercherPlus">
+                    <span class="col-md-2">{{ form_widget(form.ville.nom) }}</span>
+                    <span class="col-md-1">{{ form_widget(form.ville.zip) }}</span>
+                    <span class="col-md-1">{{ form_widget(form.pays) }}</span>
+                </div>
+
+                <div class="row">
+                    <span id="plusMoins" class="btn plusMoins">voir plus +</span>
+                </div>
+                <div class="row">
+                    <span class="col-md-1">{{ form_widget(form.submit) }}</span>
+                    <span class="col-md-1">{{ form_rest(form) }}</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <hr style="color: black;border-color: black">
+    </div>
+
+

@@ -1,0 +1,14 @@
+application_users_users:
+    resource: "@ApplicationUsersBundle/Controller/UsersController.php"
+    type:     annotation
+
+application_users:
+    resource: "@ApplicationUsersBundle/Resources/config/routing.yml"
+    prefix:   /
+
+application_plateforme:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

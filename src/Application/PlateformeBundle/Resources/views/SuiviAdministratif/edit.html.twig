@@ -1,0 +1,22 @@
+
+        <tr>
+            <td>Date :</td>
+            <td>{{ form_widget(edit_form.date) }}</td>
+        </tr>
+        <tr>
+            <td>Quoi :</td>
+            <td>{{ form_widget(edit_form.quoi) }}</td>
+        </tr>
+        <tr>
+            <td>Qui :</td>
+            <td>{{ form_widget(edit_form.qui) }}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td class="valider">{{ form_widget(edit_form.submit) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_rest(edit_form) }}</td>
+            <td>{{ form_errors(edit_form) }}</td>
+        </tr>
+

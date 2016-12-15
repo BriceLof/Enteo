@@ -1,0 +1,23 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    
+user:
+    path: /user
+    defaults: {_controller: ApplicationUsersBundle:Users:index }
+
+user_type:
+    path: /user/{typeUser}
+    defaults: {_controller: ApplicationUsersBundle:Users:index }
+    
+    
+user_edit:
+    path: /user/{id}/edit
+    defaults: {_controller: ApplicationUsersBundle:Users:edit }
+    requirements:
+        id: \d+
+        
+user_delete:
+    path: /user/{id}/delete
+    defaults: {_controller: ApplicationUsersBundle:Users:delete }
+    requirements:
+        id: \d+

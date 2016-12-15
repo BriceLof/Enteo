@@ -1,0 +1,52 @@
+application_plateforme_agenda_evenement:
+    path:     /agenda/evenements
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Agenda:evenement
+        
+application_plateforme_agenda:
+    path:     /agenda
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Agenda:agendas
+        
+application_plateforme_detail_statut:
+    path:     /detail_statut/{idStatut}
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Home:detailStatut 
+
+application_plateforme_received_mer:
+    path:     /received_mer
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Webservice:index 
+
+#beneficiaire
+application_plateforme_beneficiaire:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/beneficiaire.yml"
+    prefix:   /beneficiaire
+
+#suivi administratif
+application_plateforme_suivi_administratif:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/suiviAdministratif.yml"
+    prefix:   /suivi-administratif
+
+#accompagnement
+application_plateforme_accompagnement:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/accompagnement.yml"
+    prefix:   /accompagnement
+
+application_plateforme_historique:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/historique.yml"
+    prefix:   /historique
+
+application_plateforme_news:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/news.yml"
+    prefix:   /news
+
+application_plateforme_homepage:
+    path:     /{page}
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Home:index 
+        page:        1
+        requirements:
+        page: \d*
+
+

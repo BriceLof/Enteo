@@ -1,0 +1,12 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+   application_plateforme.statut:
+       class: Application\PlateformeBundle\Services\Statut
+       arguments: ["@doctrine.orm.entity_manager"]
+       
+   application_google_calendar:
+       class: Application\PlateformeBundle\Services\GoogleCalendar

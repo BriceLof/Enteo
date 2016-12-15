@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Enteo{% endblock %}</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    {% stylesheets '@ApplicationPlateformeBundle/Resources/public/css/main.css' %}
+      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+    <header> 
+        <!-- MENU-->
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{{path('application_plateforme_homepage')}}">Enteo</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Comptes <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ path('user_type', {'typeUser': 'administrateurs' }) }}">Administrateurs</a></li>
+                    <li><a href="{{ path('user_type', {'typeUser': 'beneficiaires' }) }}">Bénéficiaires</a></li>
+                    <li><a href="{{ path('user_type', {'typeUser': 'consultants' }) }}">Consultants VAE</a></li>
+                    <li><a href="{{ path('user_type', {'typeUser': 'commerciaux' }) }}">Commerciaux Téléphone</a></li>
+                    <li><a href="{{ path('user_type', {'typeUser': 'gestionnaires' }) }}">Gestionnaires Administratifs</a></li>
+                  </ul>
+                </li>
+                <li><a href="#contact">Centre Ressources</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistiques <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Bénéficiaires par période</a></li>
+                    <li><a href="#">Suivi des Contacts Mer</a></li>
+                  </ul>
+                </li>
+                <li><a href="#contact">Scripts</a></li>
+                <li><a href="{{ path('application_plateforme_agenda') }}">Agenda</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right nav-connexion">
+                <li >
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                        <a href="{{ path('fos_user_security_logout') }}">
+                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    {% endif %}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        </nav>
+        {% block header %}{% endblock %}
+    </header>
+    
+    <div id="content" style="margin-top: 130px;">
+        {% block menuLeft %}{% endblock %}
+        {% block body %}{% endblock %}
+    </div>
+    
+    <footer>
+        
+    </footer>  
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {% block javascripts %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+services:
+#    application_plateforme.example:
+#        class: Application\PlateformeBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    application_plateforme.mail:
+        class: Application\PlateformeBundle\Services\Mailer
+        arguments: ["@mailer","@templating"]
+
+    daterange.validator:
+        class: Application\PlateformeBundle\Validator\Constraints\DateRangeValidator
+        tags:
+            - { name: validator.constraint_validator, alias: daterange_validator }
+            
+    application_google_calendar:
+        class: Application\PlateformeBundle\Services\GoogleCalendar

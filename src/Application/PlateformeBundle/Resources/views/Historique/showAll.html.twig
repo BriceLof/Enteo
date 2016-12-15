@@ -1,0 +1,21 @@
+
+                <caption class="titreSection">Historique Bénéficiaire</caption>
+                {% for historique in beneficiaire.historique %}
+                    <tr>
+                        <td class="btn" width="100%">
+                            <a href="{{ path('application_delete_historique', { 'id': historique.id }) }}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                            <a href="{{ path('application_edit_historique', {'id': historique.id}) }}">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
+                    </tr>
+                 {% endfor %}
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+

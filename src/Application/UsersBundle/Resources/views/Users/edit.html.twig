@@ -1,0 +1,17 @@
+{% extends "ApplicationUsersBundle::layout.html.twig" %}
+
+{% block body %}
+    
+    
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="alert alert-success" role="alert">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+        
+    <section class="col-md-9 col-md-offset-1">
+        {{ wo_render_breadcrumbs() }}
+        {{form(edit_form)}} 
+    </section>
+   
+{% endblock %}
