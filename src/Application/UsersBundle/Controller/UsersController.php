@@ -30,7 +30,7 @@ class UsersController extends Controller
         if(is_null($typeUser))
             $users = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
         else
-            $users = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
+            $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser);
         
        
         return $this->render('ApplicationUsersBundle:Users:index.html.twig', array(

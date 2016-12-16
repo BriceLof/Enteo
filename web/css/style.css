@@ -142,3 +142,11 @@
     margin-top:-80px
 
 }
+
+select.error, textarea.error, input.error {
+   color:#FF0000 ;
+}
+
+div.error {
+   color:#FF0000 ;
+}

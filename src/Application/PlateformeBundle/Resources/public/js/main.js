@@ -21,7 +21,7 @@ $(function(){
                 
                 $.ajax({
                     type: 'get',
-                    url: "http://localhost/teo/web/app_dev.php/detail_statut/"+statutId,
+                    url: "http://localhost/Enteo/web/detail_statut/"+statutId,
                     beforeSend: function(){
                         console.log('ça charge')
                         //$(".detailStatut").append(

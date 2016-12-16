@@ -80,14 +80,14 @@ class BeneficiaireType extends AbstractType
             ))
 
             ->add('email2', TextType::class, array(
-                'label' => 'Email ',
+                'label' => 'Email 2',
                 'attr' => array(
                     'placeholder' => '',
                 )
             ))
 
             ->add('emailConso', TextType::class, array(
-                'label' => 'Email 2 ',
+                'label' => 'Email  ',
                 'attr' => array(
                     'placeholder' => '',
                 )

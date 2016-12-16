@@ -44,7 +44,7 @@ class Users extends BaseUser
     private $calendrierid;
     
     /**
-    * @ORM\Column(name="calendrieruri", type="string", length=500, nullable=false)
+    * @ORM\Column(name="calendrieruri", type="string", length=500, nullable=true)
     */
     private $calendrieruri;
     

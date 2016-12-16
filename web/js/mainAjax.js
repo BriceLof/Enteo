@@ -167,7 +167,8 @@ $("document").ready(function () {
                 "suivi_administratif[quoi]":{
                     "required": true
                 }
-            }
+            },
+            errorElement: 'div'
         })
     });
 
@@ -233,7 +234,8 @@ $("document").ready(function () {
                 "beneficiaire[dateNaissance]":{
                     "required": true
                 }
-            }
+            },
+            errorElement: 'div'
         })
     });
 

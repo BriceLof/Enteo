@@ -10,5 +10,18 @@ namespace Application\UsersBundle\Repository;
  */
 class UsersRepository extends \Doctrine\ORM\EntityRepository
 {
-    
+    public function findByTypeUser($slugType)
+    {   
+        
+        $qb = $this->createQueryBuilder('u');
+
+        $qb ->where('u.roles LIKE :type')
+            ->setParameter('type', '%'.$slugType.'%');
+        ;
+
+        return $qb
+          ->getQuery()
+          ->getResult()
+        ; 
+    }
 }
