@@ -220,6 +220,9 @@
                                 {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
                             </table>
                         </form>
+                        <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
+                            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                        </form>
                     </div>
                     <div id="espaceDocumentaire" class="tableOnglet">
                         <table class="table-condensed">

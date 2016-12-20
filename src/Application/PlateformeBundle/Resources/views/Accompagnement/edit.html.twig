@@ -13,12 +13,29 @@
             <td>Tarif Accompagnement</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif, { 'attr': {'value': beneficiaire.accompagnement.tarif }} ) }} <span>Euros</span></td>
         </tr>
+        {% if beneficiaire.consultant is not null %}
         <tr>
             <td>Consulant :</td>
-            <td>//A FAIRE</td>
+            <td>{{ beneficiaire.consultant.nom }}</td>
         </tr>
         <tr>
-            <td class="tableSection"><a href="#">Changer consultant</a></td>
+            <td>&nbsp;</td>
+            <td>{{ beneficiaire.consultant.prenom }}</td>
+        </tr>
+        <tr>
+            <td class="btn btn-primary">changer de consultant</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>Consulant :</td>
+        </tr>
+        <tr>
+            <td class="btn btn-primary" id="ajouterConsultant">ajouter un consultant</td>
+        </tr>
+        {% endif %}
+        <div id="formulaireConsultant"></div>
+        <tr>
+            <td class="tableSection"><a href="#"></a></td>
         </tr>
         <tr>
             <td>&nbsp;</td>

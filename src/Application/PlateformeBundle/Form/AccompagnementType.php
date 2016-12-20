@@ -56,6 +56,7 @@ class AccompagnementType extends AbstractType
                     'class' => 'date',
                 )
             ))
+
             ->add('submit', SubmitType::class, array('label' => 'Valider')
             )
         ;

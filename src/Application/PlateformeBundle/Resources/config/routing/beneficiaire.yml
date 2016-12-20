@@ -21,3 +21,7 @@ application_ajaxSearch_beneficiaire:
     defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:search2" }
     options:
         expose:  true
+
+application_edit_consultant_beneficiaire:
+    path:     /add-consultant/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:editConsultant" }

@@ -1058,6 +1058,8 @@ class Beneficiaire
     {
         $this->consultant = $consultant;
 
+        $consultant->addBeneficiaire($this);
+
         return $this;
     }
 
