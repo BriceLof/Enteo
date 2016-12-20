@@ -96,4 +96,3 @@ class Statut
         return $this->slug;
     }
 }
-

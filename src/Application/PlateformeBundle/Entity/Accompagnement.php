@@ -31,6 +31,8 @@ class Accompagnement
      */
     private $opcaOpacif;
 
+
+
     /**
      * @var
      *

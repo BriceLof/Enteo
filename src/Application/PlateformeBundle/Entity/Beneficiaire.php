@@ -36,6 +36,12 @@ class Beneficiaire
     private $news;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="beneficiaire", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $consultant;
+
+    /**
      * @ORM\OneToMany(targetEntity="Historique", mappedBy="beneficiaire")
      */
     protected $historique;
@@ -1039,5 +1045,29 @@ class Beneficiaire
     public function getAccompagnement()
     {
         return $this->accompagnement;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Beneficiaire
+     */
+    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 }
