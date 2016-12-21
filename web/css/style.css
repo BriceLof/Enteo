@@ -102,6 +102,17 @@
     padding-left: 24px;
 }
 
+.formPagenda{
+     display: none;
+     border: 1px solid rgba(128, 128, 128, 0.278431);
+     width: 278px;
+}
+
+.blocacalendar, .bloc_form_agenda{
+    display:inline-block;
+    vertical-align: top;
+}
+
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
 #editBeneficiaire input{
     border: 1px solid transparent;

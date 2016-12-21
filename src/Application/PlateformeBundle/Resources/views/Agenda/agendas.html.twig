@@ -1,16 +1,24 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
 {% block body %}
-    {# bloc principal #}
-    <div class="blocconsultant">
-        <span>Consultants: </span>
-        <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
-            <option value="">Selectionnez</option>
-            {% for user in consultant%}
-                <option value="{{user.calendrieruri}}">{{user.nom~' '~user.prenom}}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="blocacalendar">    
-    </div>
+    
+            {# bloc principal #}
+            <div class="blocconsultant">
+                <span>Consultants: </span>
+                <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
+                    <option value="">Selectionnez</option>
+                    {% for user in consultant%}
+                        <option id="{{user.id}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="blocacalendar">    
+            </div>
+            <div class="bloc_form_agenda">
+                <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement') }}" >
+                   <div>
+                       {{ form_widget(form) }}
+                   </div>
+                </form>
+            </div>
 {% endblock %}

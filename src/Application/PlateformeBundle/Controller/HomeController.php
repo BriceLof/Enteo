@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends Controller
 {
-    
     public function indexAction(Request $request, $page)
     {
 
@@ -56,7 +55,6 @@ class HomeController extends Controller
             'form_news'             => $form->createView()
         ));
     }
-    
     public function detailStatutAction($idStatut)
     {
         $em = $this->getDoctrine()->getManager();
