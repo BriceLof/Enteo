@@ -32,8 +32,6 @@
         
         // Traitement de l'ajout d'un evenement dans le calendrier du beneficiaire
         public function evenementAction(Request $request){
-            var_dump($_SESSION['calendrierId']);
-            exit;
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             // Traitement des données emises par le formulaire
             if ($request->isMethod('POST')){
