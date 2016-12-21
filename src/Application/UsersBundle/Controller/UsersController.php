@@ -54,8 +54,10 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush($user);
+            $_SESSION['calendrierId'] = $user->getCalendrierid(); // Id calendrier
             return $this->redirectToRoute('users_show', array('id' => $user->getId()));
         }
+        $_SESSION['calendrierId'] = $user->getCalendrierid(); // Id calendrier
         return $this->render('users/new.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),

@@ -316,12 +316,32 @@ $("document").ready(function () {
 // --- Affichage calendrier d'un consultant ----- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
-    // vide le bloc
-    emptyelement('blocacalendar', 'class');
-    // Affichage du calendrier dans le bloc
-    $('.blocacalendar').append($('#consultantC').val());
-    // modification de la largeur du calendrier
-    $('.blocacalendar iframe').attr('width', '100%')
+     emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+     if($('#consultantC').val() != ""){
+         // On ajoute l'id dans l'action du formulaire Ajout Evenement
+        var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
+        action = action.split("?"); // Vire l'ancienne valeur [userId]
+        action = action[0]+"?userId="+$("#consultantC option:selected").attr("id"); // String de l'action finale
+        console.log('-------------- Action: '+action);
+        $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
+        // Affichage du calendrier dans le bloc
+        $('.blocacalendar').append($('#consultantC').val());
+        // Affichage du formulaire 
+        $('.formPagenda').css('display', 'inline-block');
+        // modification de la largeur du calendrier
+        $('.blocacalendar iframe').attr('width', '1150');
+        // Positionnement du bouton
+        $('.formPagenda button').css('margin-left', '59%');
+        $('#agendaForm').css({
+            padding: '6px',
+            'margin-top': '45px'
+        });
+     }
+     else{
+         // On masque le formulaire
+         $('.formPagenda').css('display', 'none');
+     }
+        
 });
 
 // vide un bloc
@@ -335,7 +355,6 @@ function emptyelement(element, type){
             break;
     }
 }
-
 
 (function(){
     var plusMoins = document.getElementById('plusMoins');

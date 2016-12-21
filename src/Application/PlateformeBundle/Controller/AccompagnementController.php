@@ -25,38 +25,27 @@ class AccompagnementController extends Controller
      */
     public function showAction(Request $request, $id)
     {
-
-
         $em = $this->getDoctrine()->getManager();
-
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-
-
         $accompagnement = $beneficiaire->getAccompagnement();
         if(is_null($accompagnement)){
             $accompagnement = new Accompagnement();
         }
-
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-
         $editForm = $this->createEditForm($accompagnement);
         $editForm->handleRequest($request);
-
         if ($editForm->isValid()) {
             $beneficiaire->setAccompagnement($accompagnement);
             $em->persist($beneficiaire);
             $em->flush();
-
             $this->get('session')->getFlashBag()->add('info', 'Accompagnement bien enregistré');
-
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                 'beneficiaire' => $beneficiaire,
                 'id' => $beneficiaire->getId(),
             )));
         }
-
         return $this->render('ApplicationPlateformeBundle:Accompagnement:edit.html.twig', array(
             'beneficiaire' => $beneficiaire,
             'accompagnement' => $accompagnement,
@@ -74,9 +63,7 @@ class AccompagnementController extends Controller
     private function createEditForm(Accompagnement $accompagnement)
     {
         $form = $this->createForm(AccompagnementType::class, $accompagnement);
-
         $form->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
-
         return $form;
     }
 }

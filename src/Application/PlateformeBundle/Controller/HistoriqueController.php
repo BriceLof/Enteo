@@ -163,9 +163,7 @@ class HistoriqueController extends Controller
     public function agendaAction(Request $request, $id){
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
-
         // Traitement du formulaire
-
         return $this->render('ApplicationPlateformeBundle:Historique:agenda.html.twig', array(
             'form' => $form->createView(),
             'beneficiaire' => $id
