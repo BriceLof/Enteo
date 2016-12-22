@@ -124,6 +124,12 @@ class Beneficiaire
     private $statut;
 
     /**
+     * @ORM\Column(name="experience", type="string", nullable=true)
+     * @Assert\Type("string")
+     */
+    private $experience;
+
+    /**
      * @ORM\Column(name="heure_dif", type="integer", nullable=true)
      * @Assert\Type("integer")
      */
@@ -142,8 +148,8 @@ class Beneficiaire
     private $heureCpfAnnee;
 
     /**
-     * @ORM\Column(name="motivation", type="string", length=255, nullable=true)
-     * @Assert\Type("string")
+     * @ORM\Column(name="motivation", type="text", nullable=true)
+     * @Assert\Type("text")
      */
     private $motivation;
 
@@ -1071,5 +1077,29 @@ class Beneficiaire
     public function getConsultant()
     {
         return $this->consultant;
+    }
+
+    /**
+     * Set experience
+     *
+     * @param integer $experience
+     *
+     * @return Beneficiaire
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return integer
+     */
+    public function getExperience()
+    {
+        return $this->experience;
     }
 }

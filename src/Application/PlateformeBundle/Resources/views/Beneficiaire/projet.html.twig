@@ -1,0 +1,32 @@
+<tr>
+    <td>{{ form_label(projet_form.statut) }}</td>
+    <td>{{ form_widget(projet_form.statut) }}</td>
+</tr>
+<tr>
+    <td>{{ form_label(projet_form.experience) }}</td>
+    <td>{{ form_widget(projet_form.experience) }}</td>
+</tr>
+<tr>
+    <td>{{ form_label(projet_form.heureDif) }}</td>
+    <td>{{ form_widget(projet_form.heureDif) }}</td>
+</tr>
+<tr>
+    <td>{{ form_label(projet_form.heureCpf) }}</td>
+    <td>{{ form_widget(projet_form.heureCpf) }}</td>
+</tr>
+<tr>
+    <td>{{ form_label(projet_form.diplomeVise) }}</td>
+    <td>{{ form_widget(projet_form.diplomeVise) }}</td>
+</tr>
+<tr>
+    <td>{{ form_label(projet_form.motivation) }}</td>
+    <td>{{ form_widget(projet_form.motivation, {'attr':{'rows':'6'}}) }}</td>
+</tr>
+<tr>
+    <td>&nbsp;</td>
+    <td class="valider">{{ form_widget(projet_form.submit) }}</td>
+</tr>
+<tr>
+    <td>{{ form_rest(projet_form) }}</td>
+    <td>{{ form_errors(projet_form) }}</td>
+</tr>

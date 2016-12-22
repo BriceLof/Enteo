@@ -10,7 +10,7 @@
     use Application\PlateformeBundle\Entity\AgendaB;
     
 
-    define('CALENDARID', 'vn0gsc1lned8iosg3qv18k7bg4@group.calendar.google.com'); // VALEUR A RENDRE DYNAMIQUE
+    define('CALENDARID', 'ranaivoson0@gmail.com'); // VALEUR A RENDRE DYNAMIQUE
     
     class AgendaController extends Controller
     {
@@ -33,6 +33,7 @@
         // Traitement de l'ajout d'un evenement dans le calendrier du beneficiaire
         public function evenementAction(Request $request){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
+
             // Traitement des données emises par le formulaire
             if ($request->isMethod('POST')){
                 // ------------------------------------------------------------------------ //
@@ -55,6 +56,7 @@
             $googleCalendar->setRedirectUri($redirectUri);
             
             if ($request->query->has('code') && $request->get('code')) {
+
                 $client = $googleCalendar->getClient($request->get('code'));
             } else {
                 $client = $googleCalendar->getClient();
@@ -68,7 +70,7 @@
             if(isset($_SESSION['agenda'])){
                 $summary = $_SESSION['agenda']->getHeureDebut()->format('H:i').' - '.$_SESSION['agenda']->getHeureFin()->format('H:i').' '.$_SESSION['agenda']->getSummary();
                 $eventInsert = $googleCalendar->addEvent(
-                                    $_SESSION['calendrierId'],
+                                    CALENDARID,
                                     $_SESSION['agenda']->getDateDebut(),
                                     $_SESSION['agenda']->getDateFin(),
                                     $summary,
@@ -86,7 +88,8 @@
             }
             else{
                 // Formulaire qui se trouve dans [Voir Fiche]
-                return ((!empty($request->query->get('id')))?  $this->redirectToRoute('application_show_beneficiaire', array('id' => $request->query->get('id'))) : $this->redirectToRoute('application_plateforme_homepage', array('page' => 1)));
+
+                return ((!empty($request->query->get('id')))?  $this->redirectToRoute('application_show_beneficiaire', array('id' => $request->query->get('id'))) : $this->redirectToRoute('application_plateforme_agenda', array('page' => 1)));
             }
             
             // return $this->render('ApplicationPlateformeBundle:Agenda:evenement.html.twig', array('id'=>$request->query->get('id')));

@@ -33,14 +33,22 @@ application_plateforme_accompagnement:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/accompagnement.yml"
     prefix:   /accompagnement
 
+#historique
 application_plateforme_historique:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/historique.yml"
     prefix:   /historique
 
+#news
 application_plateforme_news:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/news.yml"
     prefix:   /news
 
+#bureau
+application_plateforme_bureau:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/bureau.yml"
+    prefix:   /bureau
+
+#homepage
 application_plateforme_homepage:
     path:     /{page}
     defaults: 

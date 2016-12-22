@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -10,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
-class AccompagnementType extends AbstractType
+class FinanceurType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -18,38 +19,22 @@ class AccompagnementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('opcaOpacif', TextType::class, array(
-                'label' => 'nom OPCA/OPACIF',
+            ->add('nom', ChoiceType::class, array(
+                'choices' => array(
+                    '...' => '',
+                    'OPCA' => 'OPCA',
+                    'OPACIF' => 'OPACIF',
+                )
+            ))
+
+            ->add('montant', NumberType::class, array(
+                'label' => ' Montant en euros',
                 'attr' => array(
                     'placeholder' => '',
                 )
             ))
-            ->add('heure', TextType::class, array(
-                'label' => 'Accompagnement en heure',
-                'attr' => array(
-                    'placeholder' => '',
-
-                )
-            ))
-
-            ->add('tarif', NumberType::class, array(
-                'label' => 'Tarif Accompagnement',
-                'attr' => array(
-                    'placeholder' => '',
-                )
-            ))
-
-            ->add('dateDebut', DateType::class, array(
-                'label' => 'date de début',
-                'widget' => 'single_text',
-                'input' => 'datetime',
-                'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'class' => 'date',
-                )
-            ))
-            ->add('dateFin', DateType::class, array(
-                'label' => 'date de fin',
+            ->add('dateAccord', DateType::class, array(
+                'label' => 'Accord Prise en charge',
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
@@ -60,7 +45,7 @@ class AccompagnementType extends AbstractType
 
             ->add('submit', SubmitType::class, array('label' => 'Valider')
             )
-        ;
+            ;
     }
 
     /**
@@ -69,7 +54,7 @@ class AccompagnementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\PlateformeBundle\Entity\Accompagnement'
+            'data_class' => 'Application\PlateformeBundle\Entity\Financeur'
         ));
     }
 
@@ -78,6 +63,6 @@ class AccompagnementType extends AbstractType
      */
     public function getName()
     {
-        return 'application_plateformebundle_accompagnementType';
+        return 'application_plateformebundle_financeurType';
     }
 }

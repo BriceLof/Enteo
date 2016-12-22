@@ -25,3 +25,7 @@ application_ajaxSearch_beneficiaire:
 application_edit_consultant_beneficiaire:
     path:     /add-consultant/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:editConsultant" }
+
+application_projet_beneficiaire:
+    path:     /editProjet/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:projet" }

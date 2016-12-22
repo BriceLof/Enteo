@@ -1,0 +1,46 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div id="afficheAllBureau" class="tableOnglet">
+                    <table class="table-condensed">
+                        <caption class="titreSection">liste des bureaux</caption>
+                        <tr>
+                            <th>nom</th>
+                            <th>adresse</th>
+                            <th>ville</th>
+                            <th></th>
+                        </tr>
+                    {% for bureau in bureaux %}
+                        <tr>
+                            <td>{{ bureau.nom }}</td>
+                            <td>{{ bureau.adresse }}</td>
+                            <td>{{ bureau.ville.nom }}</td>
+                            <td class="btn" width="100%">
+                                <a href="{{ path('application_delete_bureau', { 'id': bureau.id }) }}">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                                <a href="{{ path('application_edit_bureau', {'id': bureau.id }) }}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="ajouteBureau" class="tableOnglet">
+                    <form method="POST" id="bureauNewForm" action="{{ path('application_new_bureau') }}" >
+                        <table class="table-condensed">
+                            <caption class="titreSection">Ajouter un bureau</caption>
+                            {{ render(controller("ApplicationPlateformeBundle:Bureau:new")) }}
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
