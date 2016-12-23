@@ -17,13 +17,12 @@
         // Traitement des liens des calendriers de beneficiaires
         public function agendasAction(Request $request){
             if(empty($request->query->get('userid'))){
-                // Recuperer tous les consultants (Pour Admin)
+                // Recuperer de tous les consultants (Pour Admin)
                 $em = $this->getDoctrine()->getManager();
                 $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
             }
             else{
-                // Recuperer le consultant  find($productId)
-                // Recuperer tous les consultants (Pour Admin)
+                // Recuperer le consultant  
                 $em = $this->getDoctrine()->getManager();
                 $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
             }
@@ -100,8 +99,22 @@
             }
             // On le redirige sur la page du beneficiaire
             if(!empty($request->query->get('userId'))){
+                // Redirection sur la page agenda du consultant
+                if(!empty($request->query->get('calendrierid'))){
+                    $em = $this->getDoctrine()->getManager();
+                    $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userId'));
+                    $historique = new Historique(); // Historique
+                    $form = $this->createForm(HistoriqueType::class, $historique);
+                    return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
+                        'consultant' => $resultat,
+                        'form' => $form->createView()
+                     ));
+                }
+                else{
+                    
+                }
                 // Redirection sur la page [Agenda]
-                return $this->redirectToRoute('application_plateforme_agenda');
+                // return $this->redirectToRoute('application_plateforme_agenda');
             }
             else{
                 // Formulaire qui se trouve dans [Voir Fiche]
