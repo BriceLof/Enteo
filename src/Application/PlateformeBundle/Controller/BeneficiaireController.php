@@ -3,6 +3,8 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Ville;
+use Application\PlateformeBundle\Form\ConsultantType;
+use Application\PlateformeBundle\Form\ProjetType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,6 +35,8 @@ class BeneficiaireController extends Controller
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
 
+        $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
+
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
 
@@ -40,11 +44,82 @@ class BeneficiaireController extends Controller
             $em->flush();
         }
 
+
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
-            'beneficiaire'      => $beneficiaire, 
+            'form_consultant' => $editConsultantForm->createView(),
+            'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),
         ));
     }
+
+    /**
+     * editer le consultant affilié au bénéficiaire
+     *
+     */
+    public function editConsultantAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        if (!$beneficiaire) {
+            throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
+        }
+
+        $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
+        $editConsultantForm->handleRequest($request);
+
+
+
+        if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
+            $beneficiaire = $editConsultantForm->getData();
+            $em->persist($beneficiaire);
+            $em->flush();
+            return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'id' => $beneficiaire->getId(),
+                )
+            ));
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Beneficiaire:editConsultant.html.twig', array(
+            'form_consultant' => $editConsultantForm->createView(),
+            'beneficiaire'      => $beneficiaire,
+        ));
+    }
+
+    /**
+     * afficher/editer le projet du bénéficiaire
+     *
+     */
+    public function projetAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        if (!$beneficiaire) {
+            throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
+        }
+
+        $projetForm = $this->createProjetEditForm($beneficiaire);
+        $projetForm->add('submit',  SubmitType::class, array(
+            'label' => 'Mettre à jour'
+        ));
+
+        $projetForm->handleRequest($request);
+
+        if ($request->isMethod('POST') && $projetForm->isValid()) {
+            $beneficiaire = $projetForm->getData();
+            $em->persist($beneficiaire);
+            $em->flush();
+            return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'id' => $beneficiaire->getId(),
+                )
+            ));
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Beneficiaire:projet.html.twig', array(
+            'projet_form' => $projetForm->createView(),
+            'beneficiaire'      => $beneficiaire,
+        ));
+    }
+
 
     /**
      * Creates a form to edit a beneficiaire entity.
@@ -59,6 +134,32 @@ class BeneficiaireController extends Controller
 
         $form->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
 
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit consultant in beneficiaire entity.
+     *
+     * @param Beneficiaire $beneficiaire The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createConsultantEditForm(Beneficiaire $beneficiaire)
+    {
+        $form = $this->createForm(ConsultantType::class, $beneficiaire);
+        return $form;
+    }
+
+    /**
+     * Creates a form to edit projet in beneficiaire entity.
+     *
+     * @param Beneficiaire $beneficiaire The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createProjetEditForm(Beneficiaire $beneficiaire)
+    {
+        $form = $this->createForm(ProjetType::class, $beneficiaire);
         return $form;
     }
 
@@ -160,4 +261,6 @@ class BeneficiaireController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+
 }

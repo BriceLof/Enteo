@@ -102,6 +102,34 @@
     padding-left: 24px;
 }
 
+.formPagenda{
+     display: none;
+     border: 1px solid rgba(128, 128, 128, 0.278431);
+     width: 278px;
+}
+
+.blocacalendar, .bloc_form_agenda{
+    display:inline-block;
+    vertical-align: top;
+}
+
+.formPagenda .title_formulaire_agenda, #agendaForm .title_formulaire_agenda{
+    background: blue;
+    width: 100%;
+    /*padding-left: 47px;*/
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: white;
+    box-shadow: 1px;
+    border-top-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    margin-bottom: 7px;
+}
+
+.blocagendaprincipal{
+    margin-top: -6%;
+}
+
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
 #editBeneficiaire input{
     border: 1px solid transparent;
@@ -114,6 +142,10 @@
 }
 #editBeneficiaire select:hover{
     border: 1px solid ;
+}
+
+#afficheAllBureau{
+    border:1px solid;
 }
 
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/

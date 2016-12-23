@@ -36,6 +36,7 @@ class Ville
      * @ORM\Column(name="zip", type="string", length=5)
      */
     private $zip;
+
     /**
      * Constructor
      */

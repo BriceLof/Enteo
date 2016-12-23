@@ -32,6 +32,11 @@ class Accompagnement
     private $opcaOpacif;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Financeur", mappedBy="accompagnement")
+     */
+    private $financeur;
+
+    /**
      * @var
      *
      * @ORM\Column(name="heure", type="integer")
@@ -192,5 +197,46 @@ class Accompagnement
     public function getDateFin()
     {
         return $this->dateFin;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->financeur = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add financeur
+     *
+     * @param \Application\PlateformeBundle\Entity\Financeur $financeur
+     *
+     * @return Accompagnement
+     */
+    public function addFinanceur(\Application\PlateformeBundle\Entity\Financeur $financeur)
+    {
+        $this->financeur[] = $financeur;
+
+        return $this;
+    }
+
+    /**
+     * Remove financeur
+     *
+     * @param \Application\PlateformeBundle\Entity\Financeur $financeur
+     */
+    public function removeFinanceur(\Application\PlateformeBundle\Entity\Financeur $financeur)
+    {
+        $this->financeur->removeElement($financeur);
+    }
+
+    /**
+     * Get financeur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFinanceur()
+    {
+        return $this->financeur;
     }
 }

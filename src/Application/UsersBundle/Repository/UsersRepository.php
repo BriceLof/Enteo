@@ -24,4 +24,5 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
           ->getResult()
         ; 
     }
+
 }

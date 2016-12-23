@@ -17,7 +17,14 @@ class Users extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="consultant")
+     */
+    private $beneficiaire;
+
+
     /**
     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
     */
@@ -199,4 +206,38 @@ class Users extends BaseUser
         return $this->calendrierid;
     }
  
+
+    /**
+     * Add beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
+     *
+     * @return Users
+     */
+    public function addBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
+    {
+        $this->beneficiaire[] = $beneficiaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
+     */
+    public function removeBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
+    {
+        $this->beneficiaire->removeElement($beneficiaire);
+    }
+
+    /**
+     * Get beneficiaire
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBeneficiaire()
+    {
+        return $this->beneficiaire;
+    }
 }

@@ -47,7 +47,11 @@
                   </ul>
                 </li>
                 <li><a href="#contact">Scripts</a></li>
-                <li><a href="{{ path('application_plateforme_agenda') }}">Agenda</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('application_plateforme_agenda') }}">Agenda</a></li>
+                {% elseif is_granted('ROLE_CONSULTANT') %}
+                    <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}">Agenda</a></li>
+                {% endif %}
               </ul>
               <ul class="nav navbar-nav navbar-right nav-connexion">
                 <li >

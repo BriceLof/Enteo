@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends Controller
 {
-    
     public function indexAction(Request $request, $page)
-    {   
+    {
+
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
@@ -55,7 +55,6 @@ class HomeController extends Controller
             'form_news'             => $form->createView()
         ));
     }
-    
     public function detailStatutAction($idStatut)
     {
         $em = $this->getDoctrine()->getManager();

@@ -311,19 +311,61 @@ $("document").ready(function () {
             }
         });
     });*/
+    
+    // =============================================== //
+    // ========== Agenda du consultant =============== // 
+    // =============================================== //
+    if($('.calendrierconsultant').val() != undefined){
+        console.log('----------------------------------------------------- ++++++++++++++++++');
+        // emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+        // Affichage du calendrier dans le bloc
+        $('.blocacalendar').append($('.calendrierconsultant').val());
+        // Affichage du formulaire 
+        $('.formPagenda').css('display', 'inline-block');
+        // modification de la largeur du calendrier
+        $('.blocacalendar iframe').attr('width', '1150');
+        // Positionnement du bouton
+        $('.formPagenda button').css('margin-left', '59%');
+        $('#agendaForm').css({
+            padding: '6px',
+            'margin-top': '45px'
+        });
+    }
 });
 
 
 // ---------------------------------------------- //
-// --- Affichage calendrier d'un consultant ----- //
+// --- Affichage pour Admin ----- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
-    // vide le bloc
-    emptyelement('blocacalendar', 'class');
-    // Affichage du calendrier dans le bloc
-    $('.blocacalendar').append($('#consultantC').val());
-    // modification de la largeur du calendrier
-    $('.blocacalendar iframe').attr('width', '100%')
+     emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+     if($('#consultantC').val() != ""){
+         // On ajoute l'id dans l'action du formulaire Ajout Evenement
+        var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
+        action = action.split("?"); // Vire l'ancienne valeur [userId]
+        idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
+        idconsultant = idconsultant.split('-');
+        action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+        console.log('-------------- Action: '+action);
+        $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
+        // Affichage du calendrier dans le bloc
+        $('.blocacalendar').append($('#consultantC').val());
+        // Affichage du formulaire 
+        $('.formPagenda').css('display', 'inline-block');
+        // modification de la largeur du calendrier
+        $('.blocacalendar iframe').attr('width', '1150');
+        // Positionnement du bouton
+        $('.formPagenda button').css('margin-left', '59%');
+        $('#agendaForm').css({
+            padding: '6px',
+            'margin-top': '45px'
+        });
+     }
+     else{
+         // On masque le formulaire
+         $('.formPagenda').css('display', 'none');
+     }
+        
 });
 
 // vide un bloc
@@ -337,7 +379,6 @@ function emptyelement(element, type){
             break;
     }
 }
-
 
 (function(){
     var plusMoins = document.getElementById('plusMoins');
@@ -390,4 +431,65 @@ function emptyelement(element, type){
 
 
 
+$(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#espace_documentaire_documents');
 
+    // On ajoute un lien pour ajouter une nouvelle catégorie
+    var $addLink = $('<a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>');
+    $container.append($addLink);
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+        addImage($container);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+    });
+
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+        addImage($container);
+    } else {
+        // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+        $container.children('div').each(function() {
+            addDeleteLink($(this));
+        });
+    }
+
+    // La fonction qui ajoute un formulaire Image
+    function addImage($container) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Image n°' + (index+1))
+            .replace(/__name__/g, index));
+
+        // On ajoute au prototype un lien pour pouvoir supprimer l'image
+        addDeleteLink($prototype);
+
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+
+        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+        index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une image
+    function addDeleteLink($prototype) {
+        // Création du lien
+        $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+        // Ajout du lien
+        $prototype.append($deleteLink);
+
+        // Ajout du listener sur le clic du lien
+        $deleteLink.click(function(e) {
+            $prototype.remove();
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            return false;
+        });
+    }
+});

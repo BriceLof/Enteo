@@ -36,6 +36,12 @@ class Beneficiaire
     private $news;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="beneficiaire", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $consultant;
+
+    /**
      * @ORM\OneToMany(targetEntity="Historique", mappedBy="beneficiaire")
      */
     protected $historique;
@@ -49,6 +55,11 @@ class Beneficiaire
      * @ORM\OneToOne(targetEntity="Accompagnement", cascade={"persist"})
      */
     protected $accompagnement;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
+     */
+    protected $documents;
 
     /**
      * @ORM\Column(name="poste", type="string", length=255, nullable=true)
@@ -118,6 +129,12 @@ class Beneficiaire
     private $statut;
 
     /**
+     * @ORM\Column(name="experience", type="string", nullable=true)
+     * @Assert\Type("string")
+     */
+    private $experience;
+
+    /**
      * @ORM\Column(name="heure_dif", type="integer", nullable=true)
      * @Assert\Type("integer")
      */
@@ -136,8 +153,8 @@ class Beneficiaire
     private $heureCpfAnnee;
 
     /**
-     * @ORM\Column(name="motivation", type="string", length=255, nullable=true)
-     * @Assert\Type("string")
+     * @ORM\Column(name="motivation", type="text", nullable=true)
+     * @Assert\Type("text")
      */
     private $motivation;
 
@@ -227,6 +244,7 @@ class Beneficiaire
     {
         $this->news = new ArrayCollection();
         $this->historique = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
     
     /**
@@ -1039,5 +1057,93 @@ class Beneficiaire
     public function getAccompagnement()
     {
         return $this->accompagnement;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Beneficiaire
+     */
+    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        $consultant->addBeneficiaire($this);
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * Set experience
+     *
+     * @param integer $experience
+     *
+     * @return Beneficiaire
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return integer
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+
+
+    /**
+     * Add document
+     *
+     * @param \Application\PlateformeBundle\Entity\Document $document
+     *
+     * @return Beneficiaire
+     */
+    public function addDocument(\Application\PlateformeBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+
+        $document->setBeneficiaire($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \Application\PlateformeBundle\Entity\Document $document
+     */
+    public function removeDocument(\Application\PlateformeBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }
