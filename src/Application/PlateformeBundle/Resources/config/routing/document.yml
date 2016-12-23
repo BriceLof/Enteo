@@ -1,0 +1,5 @@
+application_new_document:
+    path:     /new/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:new" }
+    options:
+        expose:  true

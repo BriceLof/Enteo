@@ -144,6 +144,10 @@
     border: 1px solid ;
 }
 
+#afficheAllBureau{
+    border:1px solid;
+}
+
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
 #accompagnement input{
     border: 1px solid transparent;

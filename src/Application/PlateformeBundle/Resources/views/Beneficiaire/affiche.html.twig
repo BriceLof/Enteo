@@ -185,33 +185,12 @@
                         </table>
                     </div>
                     <div id="ProjetBeneficiaire" class="tableOnglet">
-                        <table class="table-condensed">
-                            <caption class="titreSection">Projet Bénéficiaire</caption>
-                            <tr>
-                                <td>Statut actuel :</td>
-                                <td>{{ beneficiaire.statut }}</td>
-                            </tr>
-                            <tr>
-                                <td>Années Expérience</td>
-                                <td>//A faire</td>
-                            </tr>
-                            <tr>
-                                <td>Heures DIF dispo :</td>
-                                <td>{{ beneficiaire.heureDif }}H</td>
-                            </tr>
-                            <tr>
-                                <td>Heures CPF dispo :</td>
-                                <td>{{ beneficiaire.heureCpf }}H</td>
-                            </tr>
-                            <tr>
-                                <td>Diplôme visé :</td>
-                                <td>{{ beneficiaire.diplomeVise }}</td>
-                            </tr>
-                            <tr>
-                                <td>Motivation :</td>
-                                <td>{{ beneficiaire.motivation }}</td>
-                            </tr>
-                        </table>
+                        <form method="POST" id="projetEditForm" action="{{ path('application_projet_beneficiaire', { 'id' : beneficiaire.id }) }}" >
+                            <table class="table-condensed">
+                                <caption class="titreSection">Projet Bénéficiaire</caption>
+                                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:projet",{'id': beneficiaire.id})) }}
+                            </table>
+                        </form>
                     </div>
                     <div id="accompagnement" class="tableOnglet">
                         <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
@@ -221,13 +200,18 @@
                             </table>
                         </form>
                         <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
-                            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                            <table class="table-condensed">
+                                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                            </table>
                         </form>
                     </div>
                     <div id="espaceDocumentaire" class="tableOnglet">
-                        <table class="table-condensed">
-                            <caption class="titreSection">Espace Documentaire</caption>
-                        </table>
+                        <form action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
+                            <table class="table-condensed">
+                                <caption class="titreSection">Espace Documentaire</caption>
+                                {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
+                            </table>
+                        </form>
                     </div>
                     <div id="satisfactionRecommandation" class="tableOnglet">
                         <table class="table-condensed">

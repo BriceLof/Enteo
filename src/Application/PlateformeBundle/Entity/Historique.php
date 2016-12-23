@@ -64,7 +64,7 @@ class Historique
     private $heurefin;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="historique", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="historique")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;

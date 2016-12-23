@@ -10,7 +10,7 @@
     use Application\PlateformeBundle\Entity\AgendaB;
     
 
-    define('CALENDARID', 'vn0gsc1lned8iosg3qv18k7bg4@group.calendar.google.com'); // VALEUR A RENDRE DYNAMIQUE
+    define('CALENDARID', 'ranaivoson0@gmail.com'); // VALEUR A RENDRE DYNAMIQUE
     
     class AgendaController extends Controller
     {
@@ -39,6 +39,7 @@
         // Traitement de l'ajout d'un evenement dans le calendrier du beneficiaire
         public function evenementAction(Request $request){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
+
             // Traitement des données emises par le formulaire
             if ($request->isMethod('POST')){
                 // ------------------------------------------------------------------------ //
@@ -74,6 +75,7 @@
             $googleCalendar->setRedirectUri($redirectUri);
             
             if ($request->query->has('code') && $request->get('code')) {
+
                 $client = $googleCalendar->getClient($request->get('code'));
             } else {
                 $client = $googleCalendar->getClient();
@@ -86,7 +88,7 @@
             if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
                 $summary = $_SESSION['agenda']->getHeureDebut()->format('H:i').' - '.$_SESSION['agenda']->getHeureFin()->format('H:i').' '.$_SESSION['agenda']->getSummary();
                 $eventInsert = $googleCalendar->addEvent(
-                                    $_SESSION['calendrierId'],
+                                    CALENDARID,
                                     $_SESSION['agenda']->getDateDebut(),
                                     $_SESSION['agenda']->getDateFin(),
                                     $summary,
@@ -111,10 +113,9 @@
                      ));
                 }
                 else{
-                    
+                    // Redirection sur la page agenda de l'Admin
+                    return $this->redirectToRoute('application_plateforme_agenda');
                 }
-                // Redirection sur la page [Agenda]
-                // return $this->redirectToRoute('application_plateforme_agenda');
             }
             else{
                 // Formulaire qui se trouve dans [Voir Fiche]
