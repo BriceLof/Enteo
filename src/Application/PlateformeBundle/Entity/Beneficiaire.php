@@ -57,6 +57,11 @@ class Beneficiaire
     protected $accompagnement;
 
     /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
+     */
+    protected $documents;
+
+    /**
      * @ORM\Column(name="poste", type="string", length=255, nullable=true)
      */
     private $poste;
@@ -239,6 +244,7 @@ class Beneficiaire
     {
         $this->news = new ArrayCollection();
         $this->historique = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
     
     /**
@@ -1101,5 +1107,43 @@ class Beneficiaire
     public function getExperience()
     {
         return $this->experience;
+    }
+
+
+
+    /**
+     * Add document
+     *
+     * @param \Application\PlateformeBundle\Entity\Document $document
+     *
+     * @return Beneficiaire
+     */
+    public function addDocument(\Application\PlateformeBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+
+        $document->setBeneficiaire($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \Application\PlateformeBundle\Entity\Document $document
+     */
+    public function removeDocument(\Application\PlateformeBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }

@@ -261,4 +261,6 @@ class BeneficiaireController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+
 }

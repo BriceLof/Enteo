@@ -48,6 +48,11 @@ application_plateforme_bureau:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/bureau.yml"
     prefix:   /bureau
 
+#document
+application_plateforme_document:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/document.yml"
+    prefix:   /document
+
 #homepage
 application_plateforme_homepage:
     path:     /{page}
