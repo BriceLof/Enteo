@@ -1,24 +1,35 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
-
 {% block body %}
-    
-            {# bloc principal #}
-            <div class="blocconsultant">
-                <span>Consultants: </span>
-                <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
-                    <option value="">Selectionnez</option>
-                    {% for user in consultant%}
-                        <option id="{{user.id}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="blocacalendar">    
-            </div>
-            <div class="bloc_form_agenda">
-                <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement') }}" >
-                   <div>
-                       {{ form_widget(form) }}
+            {% if is_granted('ROLE_ADMIN') %}
+                {# bloc Agenda pour Admin #}
+                <div class="blocconsultant">
+                    <span>Consultants: </span>
+                    <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
+                        <option value="">Selectionnez</option>
+                        {% for user in consultant%}
+                            <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="blocacalendar">    
+                </div>
+                <div class="bloc_form_agenda">
+                    <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement') }}" >
+                       <div>
+                           {{ form_widget(form) }}
+                       </div>
+                    </form>
+                </div>
+            {% elseif is_granted('ROLE_CONSULTANT') %}
+                {# bloc Agenda pour consultant #}
+                   <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
+                   <div class="blocacalendar"></div>
+                   <div class="bloc_form_agenda">
+                      <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
+                         <div>
+                            {{ form_widget(form) }}
+                         </div>
+                      </form>
                    </div>
-                </form>
-            </div>
+            {% endif %}
 {% endblock %}
