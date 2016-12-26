@@ -206,7 +206,7 @@
                         </form>
                     </div>
                     <div id="espaceDocumentaire" class="tableOnglet">
-                        <form action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
+                        <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                             <table class="table-condensed">
                                 <caption class="titreSection">Espace Documentaire</caption>
                                 {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}

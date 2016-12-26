@@ -58,6 +58,7 @@ class Beneficiaire
 
     /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
+     * @Assert\Valid
      */
     protected $documents;
 

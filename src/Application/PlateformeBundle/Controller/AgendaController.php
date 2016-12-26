@@ -10,7 +10,7 @@
     use Application\PlateformeBundle\Entity\AgendaB;
     
 
-    define('CALENDARID', 'ranaivoson0@gmail.com'); // VALEUR A RENDRE DYNAMIQUE
+    // define('CALENDARID', 'ranaivoson0@gmail.com'); // VALEUR A RENDRE DYNAMIQUE
     
     class AgendaController extends Controller
     {
@@ -18,8 +18,8 @@
         public function agendasAction(Request $request){
             if(empty($request->query->get('userid'))){
                 // Recuperer de tous les consultants (Pour Admin)
-                $em = $this->getDoctrine()->getManager();
-                $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
+				$em = $this->getDoctrine()->getManager();
+				$resultat = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
             }
             else{
                 // Recuperer le consultant  
@@ -39,7 +39,6 @@
         // Traitement de l'ajout d'un evenement dans le calendrier du beneficiaire
         public function evenementAction(Request $request){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-
             // Traitement des données emises par le formulaire
             if ($request->isMethod('POST')){
                 // ------------------------------------------------------------------------ //
@@ -53,7 +52,7 @@
                         // On recupere le calendrier id du consultant
                         switch(true){
                             case (empty($_SESSION['calendrierId'])):
-                                $users = $em->getRepository('ApplicationUsersBundle:User')->find($beneficiaire->getConsultant()); // Beneficiaire
+                                $users = $em->getRepository('ApplicationUsersBundle:Users')->find($beneficiaire->getConsultant()); // Beneficiaire
                                 $_SESSION['calendrierId'] = $users->getCalendrierid();
                                 break;
                         }
@@ -73,9 +72,7 @@
             // Instanciation du calendrier
             $googleCalendar = $this->get('application_google_calendar');
             $googleCalendar->setRedirectUri($redirectUri);
-            
             if ($request->query->has('code') && $request->get('code')) {
-
                 $client = $googleCalendar->getClient($request->get('code'));
             } else {
                 $client = $googleCalendar->getClient();
@@ -88,7 +85,7 @@
             if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
                 $summary = $_SESSION['agenda']->getHeureDebut()->format('H:i').' - '.$_SESSION['agenda']->getHeureFin()->format('H:i').' '.$_SESSION['agenda']->getSummary();
                 $eventInsert = $googleCalendar->addEvent(
-                                    CALENDARID,
+                                    $_SESSION['calendrierId'],
                                     $_SESSION['agenda']->getDateDebut(),
                                     $_SESSION['agenda']->getDateFin(),
                                     $summary,
@@ -100,27 +97,36 @@
                                 );
             }
             // On le redirige sur la page du beneficiaire
-            if(!empty($request->query->get('userId'))){
-                // Redirection sur la page agenda du consultant
-                if(!empty($request->query->get('calendrierid'))){
-                    $em = $this->getDoctrine()->getManager();
-                    $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userId'));
-                    $historique = new Historique(); // Historique
-                    $form = $this->createForm(HistoriqueType::class, $historique);
-                    return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
-                        'consultant' => $resultat,
-                        'form' => $form->createView()
-                     ));
-                }
-                else{
-                    // Redirection sur la page agenda de l'Admin
-                    return $this->redirectToRoute('application_plateforme_agenda');
-                }
-            }
-            else{
+			if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
+				// Redirection sur la page agenda de l'Admin
+                return $this->redirectToRoute('application_plateforme_agenda');
+			}
+			else{
+				if(!empty($request->query->get('userId'))){
+					// Redirection sur la page agenda du consultant
+					if(!empty($request->query->get('calendrierid'))){
+						$em = $this->getDoctrine()->getManager();
+						$resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userId'));
+						$historique = new Historique(); // Historique
+						$form = $this->createForm(HistoriqueType::class, $historique);
+						return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
+							'consultant' => $resultat,
+							'form' => $form->createView()
+						 ));
+					}
+					else{
+						// Redirection sur la page agenda de l'Admin
+						return $this->redirectToRoute('application_plateforme_agenda');
+					}
+				}
+			}
+            
+           /*else{
+				// Redirection sur la page agenda de l'Admin
+                return $this->redirectToRoute('application_plateforme_agenda');
                 // Formulaire qui se trouve dans [Voir Fiche]
-                return ((!empty($beneficiaire))?  $this->redirectToRoute('application_show_beneficiaire', array('id' => $beneficiaire->getId())) : $this->redirectToRoute('application_plateforme_homepage', array('page' => 1)));
-            }
+                // return ((!empty($beneficiaire))?  $this->redirectToRoute('application_show_beneficiaire', array('id' => $beneficiaire->getId())) : $this->redirectToRoute('application_plateforme_homepage', array('page' => 1)));
+            }*/
         }
         
 	/**

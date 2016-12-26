@@ -172,6 +172,21 @@ $("document").ready(function () {
         })
     });
 
+    //espace documentaire validate
+    $( function() {
+        $("#newDocumentsForm").validate({
+            rules: {
+                "espace_documentaire_documents_0_description":{
+                    "required": true
+                },
+                "suivi_administratif[quoi]":{
+                    "required": true
+                }
+            },
+            errorElement: 'div'
+        })
+    });
+
 
     //validation jquery de la fiche beneficiaire
     $( function() {
@@ -451,7 +466,6 @@ $(document).ready(function() {
 
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     if (index == 0) {
-        addImage($container);
     } else {
         // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
         $container.children('div').each(function() {
