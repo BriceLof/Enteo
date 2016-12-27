@@ -419,8 +419,6 @@ class Beneficiaire
     {
         $this->ville = $ville;
 
-        $ville->addBeneficiaire($this);
-
         return $this;
     }
 

@@ -135,14 +135,14 @@ $("document").ready(function () {
         $("#accompagnementEditForm").validate({
             rules: {
                 "accompagnement[opcaOpacif]":{
-                    "required": true
+                    "required": false
                 },
                 "accompagnement[heure]":{
-                    "required": true,
+                    "required": false,
                     "number" : true
                 },
                 "accompagnement[tarif]":{
-                    "required": true,
+                    "required": false,
                     "tarif" : /^[1-9][0-9]+(\.?([0-9]?[1-9]|[1-9][0-9]?))?$/
                 },
                 "accompagnement[dateDebut]": {
@@ -166,6 +166,26 @@ $("document").ready(function () {
                 },
                 "suivi_administratif[quoi]":{
                     "required": true
+                }
+            },
+            errorElement: 'div'
+        })
+    });
+
+    //validation jquery
+    $( function() {
+        $("#projetEditForm").validate({
+            rules: {
+                "projet[experience]":{
+                    "required": false
+                },
+                "projet[heureDif]":{
+                    "required": false,
+                    "number": true
+                },
+                "projet[heureCpf]":{
+                    "required": false,
+                    "number": true
                 }
             },
             errorElement: 'div'
@@ -207,18 +227,18 @@ $("document").ready(function () {
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[poste]":{
-                    "required": true,
+                    "required": false,
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[encadrement]":{
-                    "required": true
+                    "required": false
                 },
                 "beneficiaire[telConso]":{
                     "required": true,
                     "tel": /^0[1-8][0-9]{8}$/
                 },
                 "beneficiaire[tel2]":{
-                    "required": true,
+                    "required": false,
                     "tel": /^0[1-8][0-9]{8}$/
                 },
                 "beneficiaire[emailConso]":{
@@ -226,11 +246,11 @@ $("document").ready(function () {
                     "email": true
                 },
                 "beneficiaire[email2]":{
-                    "required": true,
+                    "required": false,
                     "email": true
                 },
                 "beneficiaire[adresse]":{
-                    "required": true
+                    "required": false
                 },
                 "beneficiaire[ville][zip]":{
                     "required": true
@@ -243,11 +263,11 @@ $("document").ready(function () {
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[numSecu]":{
-                    "required": true,
+                    "required": false,
                     "numSecu": /^[12][0-9]{14}$/
                 },
                 "beneficiaire[dateNaissance]":{
-                    "required": true
+                    "required": false
                 }
             },
             errorElement: 'div'

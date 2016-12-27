@@ -308,6 +308,8 @@ class Ville
     {
         $this->beneficiaire[] = $beneficiaire;
 
+        $beneficiaire->setVille($this);
+
         return $this;
     }
 
@@ -341,6 +343,8 @@ class Ville
     public function addBureaux(\Application\PlateformeBundle\Entity\Bureau $bureaux)
     {
         $this->bureaux[] = $bureaux;
+
+        $bureaux->setVille($this);
 
         return $this;
     }

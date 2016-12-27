@@ -42,11 +42,40 @@ class BeneficiaireController extends Controller
 
         if ($request->isMethod('POST') && $editForm->isValid()) {
             $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
-            //var_dump($ville);die;
-            $beneficiaire->setVille($ville);
 
-            $em->flush();
-
+            $ville->addBeneficiaire($beneficiaire);
+            $qb = $em->createQueryBuilder();
+            $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
+                ->set('u.ville', '?1')
+                ->set('u.civiliteConso', '?3')
+                ->set('u.nomConso', '?4')
+                ->set('u.prenomConso', '?5')
+                ->set('u.poste', '?6')
+                ->set('u.encadrement', '?7')
+                ->set('u.telConso', '?8')
+                ->set('u.tel2', '?9')
+                ->set('u.emailConso', '?10')
+                ->set('u.email2', '?11')
+                ->set('u.pays', '?12')
+                ->set('u.numSecu', '?13')
+                ->set('u.dateNaissance', '?14')
+                ->where('u.id = ?2')
+                ->setParameter(1, $ville)
+                ->setParameter(2, $id)
+                ->setParameter(3, $beneficiaire->getCiviliteConso())
+                ->setParameter(4, $beneficiaire->getNomConso())
+                ->setParameter(5, $beneficiaire->getPrenomConso())
+                ->setParameter(6, $beneficiaire->getPoste())
+                ->setParameter(7, $beneficiaire->getEncadrement())
+                ->setParameter(8, $beneficiaire->getTelConso())
+                ->setParameter(9, $beneficiaire->getTel2())
+                ->setParameter(10, $beneficiaire->getEmailConso())
+                ->setParameter(11, $beneficiaire->getEmail2())
+                ->setParameter(12, $beneficiaire->getPays())
+                ->setParameter(13, $beneficiaire->getNumSecu())
+                ->setParameter(14, $beneficiaire->getDateNaissance())
+                ->getQuery();
+            $p = $q->execute();
         }
 
 
