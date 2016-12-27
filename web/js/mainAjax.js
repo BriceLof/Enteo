@@ -592,7 +592,9 @@ $(document).ready(function() {
 
     function afficheMessageFlash() {
         var flash = document.getElementById("flashbag");
-        flash.style.display='none';
+        if (flash != undefined) {
+            flash.style.display = 'none';
+        }
     }
     setTimeout(afficheMessageFlash,5000);
 })();
