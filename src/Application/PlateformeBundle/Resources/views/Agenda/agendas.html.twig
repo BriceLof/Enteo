@@ -24,11 +24,11 @@
                                <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
                                    {% if bureau|length > 1 %}
                                        <option value="">Selectionner un Bureau</option>
-                                       <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.zip}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
+                                       <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
                                    {% else %}
                                        <option value="">Selectionner un Bureau</option>
                                        {% for bureaux in bureau %}
-                                           <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.zip}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
+                                           <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.cp}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
                                        {% endfor %}
                                    {% endif %}
                                </select>
@@ -58,11 +58,11 @@
                             <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
                                 {% if bureau|length > 1 %}
                                     <option value="">Selectionner un Bureau</option>
-                                    <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.zip}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
+                                    <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
                                 {% else %}
                                     <option value="">Selectionner un Bureau</option>
                                     {% for bureaux in bureau %}
-                                       <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.zip}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
+                                       <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.cp}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
                                     {% endfor %}
                                 {% endif %}
                              </select>
