@@ -23,11 +23,7 @@ class DocumentType extends AbstractType
 
             ->add('description',TextType::class, array(
                 'label' => 'Description',
-<<<<<<< HEAD
-                'required' => true,
-=======
                 'required' => true
->>>>>>> 7bcc31131b9b34e940699f0caff9542baf5fd1d3
             ))
         ;
 

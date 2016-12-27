@@ -410,65 +410,16 @@ $('#consultantC').change(function(){
 });
 
 // vide un bloc
-function emptyelement(element, type){
-    switch(type){
+function emptyelement(element, type) {
+    switch (type) {
         case 'id':
-            $('#'+element).empty();
+            $('#' + element).empty();
             break;
         case 'class':
-            $('.'+element).empty();
+            $('.' + element).empty();
             break;
     }
 }
-
-(function(){
-    var plusMoins = document.getElementById('plusMoins');
-    plusMoins.onclick = function () {
-        if(plusMoins.innerHTML == 'voir plus +') {
-            document.getElementById('rechercherPlus').style.display = 'block';
-            plusMoins.innerHTML = 'voir moins -';
-        }else{
-            document.getElementById('rechercherPlus').style.display = 'none';
-            plusMoins.innerHTML = 'voir plus +';
-        }
-    };
-
-    /**
-     var ajouterNews = document.getElementById('OngletAjouterNews');
-     var afficherNews = document.getElementById('OngletAfficherNews');
-     ajouterNews.onclick = function (e) {
-        e.preventDefault();
-        ajouterNews.className='active';
-        afficherNews.className = '';
-        document.getElementById('afficheNews').style.display = 'block';
-        document.getElementById('ajouteNews').style.display = 'none';
-    };
-     afficherNews.onclick = function (e) {
-        e.preventDefault();
-        ajouterNews.className = '';
-        afficherNews.className = 'active';
-        document.getElementById('afficheNews').style.display = 'none';
-        document.getElementById('ajouteNews').style.display = 'block';
-    };
-     */
-
-    var input = document.querySelectorAll('#editBeneficiaire input');
-    var content = [];
-    for(var i=0;i<input.length;i++) {
-        content[i] = input[i].value;
-        input[i].addEventListener('change',function(test){
-            this.style.border = '1px solid #ccc';
-            this.style.backgroundColor = "#c7c4c4";
-            this.style.color = 'inherit';
-        },true);
-    }
-
-    function afficheMessageFlash() {
-        var flash = document.getElementById("flashbag");
-        flash.style.display='none';
-    }
-    setTimeout(afficheMessageFlash,5000);
-})();
 
 
 
@@ -533,3 +484,54 @@ $(document).ready(function() {
         });
     }
 });
+
+(function(){
+
+    var plusMoins = document.getElementById('plusMoins');
+    if(plusMoins != undefined) {
+        plusMoins.onclick = function () {
+            if (plusMoins.innerHTML == 'voir plus +') {
+                document.getElementById('rechercherPlus').style.display = 'block';
+                plusMoins.innerHTML = 'voir moins -';
+            } else {
+                document.getElementById('rechercherPlus').style.display = 'none';
+                plusMoins.innerHTML = 'voir plus +';
+            }
+        };
+    }
+    /**
+     var ajouterNews = document.getElementById('OngletAjouterNews');
+     var afficherNews = document.getElementById('OngletAfficherNews');
+     ajouterNews.onclick = function (e) {
+        e.preventDefault();
+        ajouterNews.className='active';
+        afficherNews.className = '';
+        document.getElementById('afficheNews').style.display = 'block';
+        document.getElementById('ajouteNews').style.display = 'none';
+    };
+     afficherNews.onclick = function (e) {
+        e.preventDefault();
+        ajouterNews.className = '';
+        afficherNews.className = 'active';
+        document.getElementById('afficheNews').style.display = 'none';
+        document.getElementById('ajouteNews').style.display = 'block';
+    };
+     */
+
+    var input = document.querySelectorAll('#editBeneficiaire input');
+    var content = [];
+    for(var i=0;i<input.length;i++) {
+        content[i] = input[i].value;
+        input[i].addEventListener('change',function(test){
+            this.style.border = '1px solid #ccc';
+            this.style.backgroundColor = "#c7c4c4";
+            this.style.color = 'inherit';
+        },true);
+    }
+
+    function afficheMessageFlash() {
+        var flash = document.getElementById("flashbag");
+        flash.style.display='none';
+    }
+    setTimeout(afficheMessageFlash,5000);
+})();
