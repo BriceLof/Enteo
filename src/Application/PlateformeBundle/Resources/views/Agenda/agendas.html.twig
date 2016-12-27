@@ -17,6 +17,27 @@
                         <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement') }}" >
                             <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
                            <div>
+                               <!-- champs supplementaires ajoutés statiquements -->
+                               <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
+                               <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" class="form-control new_input" required>
+                               <label>Bureau</label>
+                               <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
+                                   {% if bureau|length > 1 %}
+                                       <option value="">Selectionner un Bureau</option>
+                                       <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.zip}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
+                                   {% else %}
+                                       <option value="">Selectionner un Bureau</option>
+                                       {% for bureaux in bureau %}
+                                           <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.zip}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
+                                       {% endfor %}
+                                   {% endif %}
+                               </select>
+                               <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input" disabled="true">
+                               <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
+                               <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
+                               <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
+                               <label>Code postal</label><input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
+                               <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
                                {{ form_widget(form) }}
                            </div>
                         </form>
@@ -25,12 +46,33 @@
             {% elseif is_granted('ROLE_CONSULTANT') %}
                 {# bloc Agenda pour consultant #}
                    <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
-                   <div class="blocacalendar" style="margin-top: -8%;"></div>
-                   <div class="bloc_form_agenda" style="margin-top: -8%;">
+                   <div class="blocacalendar"></div>
+                   <div class="bloc_form_agenda">
                       <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
                           <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
                          <div>
-                            {{ form_widget(form) }}
+                            <!-- champs supplementaires ajoutés statiquements -->
+                            <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
+                            <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" class="form-control new_input" required>
+                            <label>Bureau</label>
+                            <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
+                                {% if bureau|length > 1 %}
+                                    <option value="">Selectionner un Bureau</option>
+                                    <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.zip}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
+                                {% else %}
+                                    <option value="">Selectionner un Bureau</option>
+                                    {% for bureaux in bureau %}
+                                       <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.zip}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
+                                    {% endfor %}
+                                {% endif %}
+                             </select>
+                             <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input" disabled="true">
+                             <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
+                             <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
+                             <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
+                             <label>Code postal</label><input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
+                             <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
+                             {{ form_widget(form) }}
                          </div>
                       </form>
                    </div>

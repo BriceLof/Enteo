@@ -18,35 +18,21 @@ class HistoriqueType extends AbstractType
         $builder
             ->add('summary',     TextType::class, array(
                 'label' => 'Titre evenement',
-                'attr' => array(
-                    'placeholder' => '')))
+                ))
             ->add('description',     TextType::class, array(
                 'label' => 'Description evenement',
-                'attr' => array(
-                    'placeholder' => '')))
+                'required' => false))
             ->add('dateDebut', DateType::class, array(
-                'label' => 'Debut evenement',
-                'attr' => array(
-                    'placeholder' => '',
-                )
+                'label' => 'Debut evenement'
             ))
             ->add('dateFin', DateType::class, array(
-                'label' => 'Fin evenement',
-                'attr' => array(
-                    'placeholder' => '',
-                )
+                'label' => 'Fin evenement'
             ))
             ->add('heureDebut', TimeType::class, array(
-                'label' => 'Heure Debut',
-                'attr' => array(
-                    'placeholder' => '',
-                )
+                'label' => 'Heure Debut'
             ))
             ->add('heureFin', TimeType::class, array(
-                'label' => 'Heure Fin',
-                'attr' => array(
-                    'placeholder' => '',
-                )
+                'label' => 'Heure Fin'
             ))
             ->add('Enregistrer',  SubmitType::class, array(
                 'label' => 'Enregistrer'

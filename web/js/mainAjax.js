@@ -327,7 +327,6 @@ $("document").ready(function () {
     });
     /**
      $("#ajaxForm").submit(function (e) {
-
         e.preventDefault();
         $.ajax({
             url: Routing.generate('application_ajaxSearch_beneficiaire'), // le nom du fichier indiqué dans le formulaire
@@ -336,11 +335,9 @@ $("document").ready(function () {
             cache: true,
             dataType: 'html',
             beforeSend: function () {
-
                 var resultat = document.getElementById('content');
                 resultat.innerHTML = "";
                 resultat.innerHTML += '<div class="loading"></div>';
-
             },
             success: function (response) {
                 template = response;
@@ -353,18 +350,27 @@ $("document").ready(function () {
 
 
     
-    // =============================================== //
-    // ========== Agenda du consultant =============== // 
-    // =============================================== //
+    // ============================================================ //
+    // =================== Agenda du consultant ==================== // 
+    // ========== On affiche le calendrier et le formulaire ======= //
+    // ============================================================ //
     if($('.calendrierconsultant').val() != undefined){
-        console.log('----------------------------------------------------- ++++++++++++++++++');
-        // emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+        // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
+        selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        for(j=0; j<selectheuresd.length; j++){
+            if(j<7 || j>20){
+                selectheuresd[j].remove(); // heure debut
+                selectheuresf[j].remove(); // heure fin
+            }
+        }
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('.calendrierconsultant').val());
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
+        $('.blocacalendar iframe').attr('height', '900');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -372,6 +378,52 @@ $("document").ready(function () {
             'margin-top': '45px'
         });
     }
+    
+    // ============================================================== //
+    // ============ Mise à jour des valeurs des champs ============== //
+    // ============= ville et adresse en fonction du ================ //
+    // ====================== Bureau ================================ //
+    // ============================================================== //
+    $('#bureauRdv').change(function(){
+        if($('#bureauRdv').val() != ""){
+            // On renseigne les champs ville et adresse
+            idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
+            idbureauoption = idbureauoption.split("_");
+            villenom = $("#bureauRdv").val(); // On recupere la ville
+            $('#ville').val(villenom); // On instancie la ville
+            $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
+            $('#zip').val(idbureauoption[1]); // On instancie l'adresse
+            $('#villeh').val(villenom); // On instancie la ville
+            $('#adresseh').val(idbureauoption[0]); // On instancie l'adresse
+            $('#ziph').val(idbureauoption[1]); // On instancie l'adresse
+        }
+        else{
+            // On reinitialise tous les champs des input desactivé
+            $('#ville').val(); 
+            $('#adresse').val();
+            $('#zip').val(); 
+            $('#villeh').val(); 
+            $('#adresseh').val();
+            $('#ziph').val(); 
+        }
+    });
+    
+    // ================================================================ //
+    // ========== Gestion des Heures dans l'ajout d'un RDV ============ //
+    // ================================================================ //
+    $('#historique_heureDebut_hour').change(function(){
+        // historique_heureDebut_hour
+        // On initialise l'heure de fin en fonction de l'heure de debut
+        heure_debut = parseInt($('#historique_heureDebut_hour').val()); // On recupère l'heure de debut
+        minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
+        majheuredebut = heure_debut+1;
+        $('#historique_heureFin_hour').val(majheuredebut); // Maj de l'heure de fin
+        $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
+    });
+    $('#historique_heureDebut_minute').change(function(){
+        minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
+        $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
+    });
 });
 
 
@@ -381,13 +433,21 @@ $("document").ready(function () {
 $('#consultantC').change(function(){
      emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
      if($('#consultantC').val() != ""){
-         // On ajoute l'id dans l'action du formulaire Ajout Evenement
+        // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
+        selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        for(j=0; j<selectheuresd.length; j++){
+            if(j<7 || j>20){
+                selectheuresd[j].remove(); // heure debut
+                selectheuresf[j].remove(); // heure fin
+            }
+        }
+        // On ajoute l'id dans l'action du formulaire Ajout Evenement
         var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
         action = action.split("?"); // Vire l'ancienne valeur [userId]
         idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
-        console.log('-------------- Action: '+action);
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('#consultantC').val());
@@ -395,6 +455,7 @@ $('#consultantC').change(function(){
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
+        $('.blocacalendar iframe').attr('height', '900');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({

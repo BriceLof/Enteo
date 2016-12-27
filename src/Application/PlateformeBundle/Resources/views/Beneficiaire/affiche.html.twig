@@ -10,8 +10,18 @@
             </div>
         </div>
     </div>
-
     <div id="afficheBeneficiaire" class="container">
+        <!--<div class="row">
+            <div class="col-md-12">
+                <div class="url_agenda">
+                    {#% if is_granted('ROLE_ADMIN') %#}
+                        <a href="{#{ path('application_plateforme_agenda') }#}" target="_blank">Ajouter un evenement</a>
+                    {#% elseif is_granted('ROLE_CONSULTANT') %#}
+                        <a href="{#{ path('application_plateforme_agenda', {'userid':app.user.id}) }#}" target="_blank">Ajouter un evenement</a>
+                    {#% endif %#}
+                </div>
+            </div>
+        </div>-->
         <div class="row">
             <div class="col-md-4">
                 <div class="sectionBeneficiaire">
@@ -230,9 +240,11 @@
             <div class="col-md-4">
                 <div class="sectionBeneficiaire">
                     <!-- ========= MAJ ======== -->
+                    <div>
+                        {#render(controller("ApplicationPlateformeBundle:Historique:agenda", {'id':beneficiaire.id}))#}
+                    </div>
                     <div id="historique" class="tableOnglet">
                         {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
-                        {{render(controller("ApplicationPlateformeBundle:Historique:agenda", {'id':beneficiaire.id}))}}
                     </div>
                     <div id="suiviAdministratif" class="tableOnglet">
                         <form method="POST" id="suiviAdministratifEditForm" action="{{ path('application_edit_suivi_administratif', { 'id' : beneficiaire.id }) }}" >

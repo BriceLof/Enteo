@@ -48,9 +48,9 @@
                 </li>
                 <li><a href="#contact">Scripts</a></li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="{{ path('application_plateforme_agenda') }}">Agenda</a></li>
+                    <li><a href="{{ path('application_plateforme_agenda') }}" target="_blank">Agenda</a></li>
                 {% elseif is_granted('ROLE_CONSULTANT') %}
-                    <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}">Agenda</a></li>
+                    <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}" target="_blank">Agenda</a></li>
                 {% endif %}
               </ul>
               <ul class="nav navbar-nav navbar-right nav-connexion">
@@ -72,7 +72,7 @@
         {% block header %}{% endblock %}
     </header>
     
-    <div id="content" style="margin-top: 130px;">
+    <div id="content" style="margin-top: 7px;">
         {% block menuLeft %}{% endblock %}
         {% block body %}{% endblock %}
     </div>
