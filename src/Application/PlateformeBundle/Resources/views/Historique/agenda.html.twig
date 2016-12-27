@@ -1,5 +1,6 @@
 {# empty Twig template #}
 <form method="POST" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', { 'id' : beneficiaire }) }}" >
+    <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
    <div>
        {{ form_widget(form) }}
    </div>

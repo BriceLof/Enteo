@@ -350,11 +350,33 @@ $("document").ready(function () {
     });*/
 
 
+
+
+    
+    // =============================================== //
+    // ========== Agenda du consultant =============== // 
+    // =============================================== //
+    if($('.calendrierconsultant').val() != undefined){
+        console.log('----------------------------------------------------- ++++++++++++++++++');
+        // emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+        // Affichage du calendrier dans le bloc
+        $('.blocacalendar').append($('.calendrierconsultant').val());
+        // Affichage du formulaire 
+        $('.formPagenda').css('display', 'inline-block');
+        // modification de la largeur du calendrier
+        $('.blocacalendar iframe').attr('width', '1150');
+        // Positionnement du bouton
+        $('.formPagenda button').css('margin-left', '59%');
+        $('#agendaForm').css({
+            padding: '6px',
+            'margin-top': '45px'
+        });
+    }
 });
 
 
 // ---------------------------------------------- //
-// --- Affichage calendrier d'un consultant ----- //
+// --- Affichage pour Admin ----- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
      emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
@@ -362,7 +384,9 @@ $('#consultantC').change(function(){
          // On ajoute l'id dans l'action du formulaire Ajout Evenement
         var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
         action = action.split("?"); // Vire l'ancienne valeur [userId]
-        action = action[0]+"?userId="+$("#consultantC option:selected").attr("id"); // String de l'action finale
+        idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
+        idconsultant = idconsultant.split('-');
+        action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
         console.log('-------------- Action: '+action);
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du calendrier dans le bloc
