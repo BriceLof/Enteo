@@ -21,23 +21,21 @@ class DocumentController extends Controller
      */
     public function newAction(Request $request,$id)
     {
+        $bene = new Beneficiaire();
 
-        $em = $this->getDoctrine()->getManager();
-        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-
-
-        $document_form = $this->createDocumentEditForm($beneficiaire);
+        $document_form = $this->createDocumentEditForm($bene);
         $document_form->add('submit',  SubmitType::class, array(
             'label' => 'upload'
         ));
         $document_form->handleRequest($request);
 
-
         if ($document_form->isSubmitted()) {
             //var_dump($beneficiaire->getDocuments());die;
             if($document_form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
                 $em->persist($beneficiaire);
-                foreach ($beneficiaire->getDocuments() as $document){
+                foreach ($bene->getDocuments() as $document){
                     $document->setBeneficiaire($beneficiaire);
                     $em->persist($document);
                 }
@@ -63,15 +61,15 @@ class DocumentController extends Controller
 
                 return $this->redirectToRoute('application_new_document', array(
                     'erreur' => $document_form->getData(),
-                    'beneficiaire' => $beneficiaire,
-                    'id' => $beneficiaire->getId(),
+                    'beneficiaire' => $bene,
+                    'id' => $bene->getId(),
                 ));
             }
         }
 
 
         return $this->render('ApplicationPlateformeBundle:Document:new.html.twig', array(
-            'beneficiaire' => $beneficiaire,
+            'beneficiaire' => $bene,
             'document_form' => $document_form->createView(),
         ));
     }

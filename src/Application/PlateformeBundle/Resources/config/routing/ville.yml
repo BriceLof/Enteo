@@ -1,0 +1,5 @@
+application_search_ville:
+    path:     /search/{cp}
+    defaults: { _controller: "ApplicationPlateformeBundle:Ville:ajaxSearchByCp" }
+    options:
+        expose:  true

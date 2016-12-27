@@ -3,9 +3,12 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class VilleType extends AbstractType
 {
@@ -15,14 +18,19 @@ class VilleType extends AbstractType
             ->add('nom', TextType::class, array(
                 'label' => 'Ville ',
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'ville',
+                    'autocomplete' => 'off',
+                    'readonly' => 'readonly',
                 )
             ))
 
-            ->add('zip', TextType::class, array(
+            ->add('cp', TextType::class, array(
                 'label' => 'Code Postal ',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'cp',
+                    'maxlength' => 5,
+                    'autocomplete' => 'off',
                 )
             ))
         ;

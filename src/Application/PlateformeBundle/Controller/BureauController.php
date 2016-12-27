@@ -44,7 +44,8 @@ class BureauController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($bureau);
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($form['ville']['nom']->getData());
+            $bureau->setVille($ville);
             $em->flush($bureau);
 
             return $this->redirect($this->generateUrl('application_index_bureau'));

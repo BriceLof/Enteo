@@ -43,6 +43,11 @@ application_plateforme_news:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/news.yml"
     prefix:   /news
 
+#ville
+application_plateforme_ville:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/ville.yml"
+    prefix:   /ville
+
 #bureau
 application_plateforme_bureau:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/bureau.yml"

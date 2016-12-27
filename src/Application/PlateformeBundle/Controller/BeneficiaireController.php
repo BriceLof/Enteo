@@ -40,8 +40,13 @@ class BeneficiaireController extends Controller
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($request->isMethod('POST') && $editForm->isValid()) {
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+            //var_dump($ville);die;
+            $beneficiaire->setVille($ville);
+
             $em->flush();
+
         }
 
 

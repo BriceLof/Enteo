@@ -116,16 +116,23 @@
                                     <td>{{ form_errors(edit_form.adresseComplement) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_label(edit_form.ville.zip) }}</td>
-                                    <td>{{ form_widget(edit_form.ville.zip) }}</td>
+                                    <td>{{ form_label(edit_form.ville.cp) }}</td>
+                                    <td>{{ form_widget(edit_form.ville.cp) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.ville.zip) }}</td>
+                                    <td>{{ form_errors(edit_form.ville.cp) }}</td>
                                 </tr>
-                                <tr>
-                                    <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                    <td>{{ form_widget(edit_form.ville.nom) }}</td>
-                                </tr>
+                                {% if beneficiaire.ville.nom is not null %}
+                                    <tr>
+                                        <td>{{ form_label(edit_form.ville.nom) }}</td>
+                                        <td>{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td>{{ form_label(edit_form.ville.nom) }}</td>
+                                        <td>{{ form_widget(edit_form.ville.nom ) }}</td>
+                                    </tr>
+                                {% endif %}
                                 <tr>
                                     <td>{{ form_errors(edit_form.ville.nom) }}</td>
                                 </tr>
@@ -206,7 +213,7 @@
                         </form>
                     </div>
                     <div id="espaceDocumentaire" class="tableOnglet">
-                        <form action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
+                        <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                             <table class="table-condensed">
                                 <caption class="titreSection">Espace Documentaire</caption>
                                 {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
