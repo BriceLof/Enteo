@@ -309,10 +309,53 @@ $("document").ready(function () {
         });
     });*/
     
-    // ============================================================ //
-    // =================== Agenda du consultant ==================== // 
-    // ========== On affiche le calendrier et le formulaire ======= //
-    // ============================================================ //
+    // =========================================================================== //
+    // ================= Autocompletion Nom et Prenom beneficiaire =============== //
+    // =========================================================================== //
+    // Autocompletion nom
+    $("#nomb").autocomplete({
+        source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
+            $.ajax({
+                url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
+                data : {
+                    term : $('#nomb').val(),
+                    sentinel: 1,
+                },
+                dataType : 'json', // on spécifie bien que le type de données est en JSON
+                success : function(donnee){
+                    var obj = $.parseJSON(donnee);
+                    reponse($.map(obj, function (item) {
+                        console.log(item.nomConso);
+                        return item.nomConso;
+                    }));
+                }
+            });
+        }
+    });
+    // Autocompletion prenom
+    $("#prenomb").autocomplete({
+        source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
+            $.ajax({
+                url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
+                data : {
+                    term : $('#prenomb').val(),
+                    sentinel: 2,
+                },
+                dataType : 'json', // on spécifie bien que le type de données est en JSON
+                success : function(donnee){
+                    console.log(donnee);
+                    /*chaine1 = donnee.replace("[", "");
+                    chaine1 = chaine1.replace("]", "");*/
+                    var obj = $.parseJSON(donnee);
+                    reponse($.map(obj, function (item) {
+                        console.log(item.prenomConso);
+                        return item.prenomConso;
+                    }));
+                }
+            });
+        }
+    });
+    
     if($('.calendrierconsultant').val() != undefined){
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
@@ -387,7 +430,7 @@ $("document").ready(function () {
 
 
 // ---------------------------------------------- //
-// --- Affichage pour Admin ----- //
+// ------------- Affichage pour Admin ----------- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
      emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
@@ -482,7 +525,6 @@ function emptyelement(element, type){
             this.style.color = 'inherit';
         },true);
     }
-
     function afficheMessageFlash() {
         var flash = document.getElementById("flashbag");
         flash.style.display='none';
@@ -495,21 +537,17 @@ function emptyelement(element, type){
 $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#espace_documentaire_documents');
-
     // On ajoute un lien pour ajouter une nouvelle catégorie
     var $addLink = $('<a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>');
     $container.append($addLink);
-
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $addLink.click(function(e) {
         addImage($container);
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
     });
-
     // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
     var index = $container.find(':input').length;
-
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     if (index == 0) {
         addImage($container);
@@ -527,13 +565,10 @@ $(document).ready(function() {
         // - le texte "__name__" qu'il contient par le numéro du champ
         var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Image n°' + (index+1))
             .replace(/__name__/g, index));
-
         // On ajoute au prototype un lien pour pouvoir supprimer l'image
         addDeleteLink($prototype);
-
         // On ajoute le prototype modifié à la fin de la balise <div>
         $container.append($prototype);
-
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         index++;
     }
@@ -542,10 +577,8 @@ $(document).ready(function() {
     function addDeleteLink($prototype) {
         // Création du lien
         $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
         // Ajout du lien
         $prototype.append($deleteLink);
-
         // Ajout du listener sur le clic du lien
         $deleteLink.click(function(e) {
             $prototype.remove();

@@ -2,6 +2,7 @@
     namespace Application\PlateformeBundle\Controller;
     
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Application\PlateformeBundle\Entity\Beneficiaire;
@@ -11,6 +12,24 @@
     
     class AgendaController extends Controller
     {
+        // google-calendar-api@plenary-net-147113.iam.gserviceaccount.com
+        // Autocompletion 
+        public function autocompletionsAction(Request $request){
+            $em = $this->getDoctrine()->getManager(); // Entity manager
+            if($request->query->get('sentinel') == 1){
+                // nom
+                $query = $em->createQuery('SELECT b.nomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
+                $query->setParameter('nom', $request->query->get('term').'%');
+            }
+            else if($request->query->get('sentinel') == 2){
+                // prenom
+                $query = $em->createQuery('SELECT b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.prenomConso LIKE :prenom');
+                $query->setParameter('prenom', $request->query->get('term').'%');
+            }
+            $results = $query->getResult();
+            return new JsonResponse(json_encode($results));
+        }
+        
         // Traitement des liens des calendriers de beneficiaires
         public function agendasAction(Request $request){
             $em = $this->getDoctrine()->getManager(); // Entity manager
@@ -95,7 +114,6 @@
                                    $allDay = true
                                 );
             }
-            
             // On le redirige sur la page agenda
             if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
                  // Redirection sur la page agenda de l'Admin

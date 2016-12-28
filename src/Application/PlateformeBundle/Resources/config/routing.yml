@@ -8,6 +8,11 @@ application_plateforme_agenda:
     defaults: 
         _controller: ApplicationPlateformeBundle:Agenda:agendas
         
+autocompletion_agenda:
+    path:     /autocompletion
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Agenda:autocompletions
+        
 application_plateforme_detail_statut:
     path:     /detail_statut/{idStatut}
     defaults: 
