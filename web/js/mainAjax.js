@@ -283,7 +283,9 @@ $("document").ready(function () {
                     console.log('ça charge !');
                 },
                 success: function (data) {
-                    $(".ville").replaceWith('<select id="beneficiaire_ville_nom" name="beneficiaire[ville][nom]" class="ville form-control">');
+                    var id = $(".ville").attr("id");
+                    var name = $(".ville").attr("name");
+                    $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
                     $.each(data.ville, function(index,value){
                         $(".ville").append($('<option>',{value: value, text: value}));
                     });
@@ -369,7 +371,7 @@ $("document").ready(function () {
 
 
 
-    
+
     // ============================================================ //
     // =================== Agenda du consultant ==================== // 
     // ========== On affiche le calendrier et le formulaire ======= //
@@ -398,7 +400,7 @@ $("document").ready(function () {
             'margin-top': '45px'
         });
     }
-    
+
     // ============================================================== //
     // ============ Mise à jour des valeurs des champs ============== //
     // ============= ville et adresse en fonction du ================ //
@@ -419,15 +421,15 @@ $("document").ready(function () {
         }
         else{
             // On reinitialise tous les champs des input desactivé
-            $('#ville').val(); 
+            $('#ville').val();
             $('#adresse').val();
-            $('#zip').val(); 
-            $('#villeh').val(); 
+            $('#zip').val();
+            $('#villeh').val();
             $('#adresseh').val();
-            $('#ziph').val(); 
+            $('#ziph').val();
         }
     });
-    
+
     // ================================================================ //
     // ========== Gestion des Heures dans l'ajout d'un RDV ============ //
     // ================================================================ //
@@ -451,8 +453,8 @@ $("document").ready(function () {
 // --- Affichage pour Admin ----- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
-     emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
-     if($('#consultantC').val() != ""){
+    emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+    if($('#consultantC').val() != ""){
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
@@ -482,12 +484,12 @@ $('#consultantC').change(function(){
             padding: '6px',
             'margin-top': '45px'
         });
-     }
-     else{
-         // On masque le formulaire
-         $('.formPagenda').css('display', 'none');
-     }
-        
+    }
+    else{
+        // On masque le formulaire
+        $('.formPagenda').css('display', 'none');
+    }
+
 });
 
 // vide un bloc
