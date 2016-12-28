@@ -35,7 +35,7 @@ class Mer
      * @ORM\Column(name="client_id", type="integer")
      */
     private $clientId;
-    
+
     /**
      * @ORM\Column(name="statut", type="string", length=255)
      */
@@ -47,7 +47,7 @@ class Mer
      * @ORM\Column(name="nom_conso", type="string", length=255)
      */
     private $nomConso;
-    
+
     /**
      * @var string
      *
@@ -68,12 +68,12 @@ class Mer
      * @ORM\Column(name="ville_conso", type="string", length=255)
      */
     private $villeConso;
-    
+
     /**
      * @ORM\Column(name="code_postal", type="string", length=5)
      */
     private $codePostal;
-    
+
     /**
      * @var string
      *
@@ -87,7 +87,7 @@ class Mer
      * @ORM\Column(name="date_heure_mer", type="datetime")
      */
     private $dateHeureMer;
-    
+
     /**
      * @var \DateTime
      *
@@ -121,13 +121,13 @@ class Mer
      */
     private $diplomeViseConso;
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="origine_mer", type="string", length=255)
      */
     private $origineMer;
-    
+
     /**
      * Get id
      *

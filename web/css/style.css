@@ -200,3 +200,7 @@ select.error, textarea.error, input.error {
 div.error {
    color:#FF0000 ;
 }
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: auto;
+}

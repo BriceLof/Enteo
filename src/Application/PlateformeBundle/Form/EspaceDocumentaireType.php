@@ -15,12 +15,6 @@ class EspaceDocumentaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('civiliteConso', TextType::class, array(
-                'label' => 'Civilité ',
-                'attr' => array(
-                    'placeholder' => '',
-                )
-            ))
             ->add('documents', CollectionType::class, array(
                 'entry_type' => DocumentType::class,
                 'allow_add' => true,

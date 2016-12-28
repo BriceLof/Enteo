@@ -17,6 +17,8 @@ application_plateforme_detail_statut:
     path:     /detail_statut/{idStatut}
     defaults: 
         _controller: ApplicationPlateformeBundle:Home:detailStatut 
+    options:
+        expose: true
 
 application_plateforme_received_mer:
     path:     /received_mer
@@ -47,6 +49,11 @@ application_plateforme_historique:
 application_plateforme_news:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/news.yml"
     prefix:   /news
+
+#ville
+application_plateforme_ville:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/ville.yml"
+    prefix:   /ville
 
 #bureau
 application_plateforme_bureau:

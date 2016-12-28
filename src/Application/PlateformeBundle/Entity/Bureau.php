@@ -24,9 +24,8 @@ class Bureau
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ville" ,cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Valid
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="bureaux", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
 

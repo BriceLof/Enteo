@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
-* Beneficiaire
-*
-* @ORM\Table(name="beneficiaire")
-* @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BeneficiaireRepository")
-*/
+ * Beneficiaire
+ *
+ * @ORM\Table(name="beneficiaire")
+ * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BeneficiaireRepository")
+ */
 class Beneficiaire
 {
     /**
@@ -24,9 +24,8 @@ class Beneficiaire
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ville")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Valid
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
 
@@ -58,6 +57,7 @@ class Beneficiaire
 
     /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
+     * @Assert\Valid
      */
     protected $documents;
 
@@ -73,7 +73,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="tel_2", type="string", nullable=true)
-     * @Assert\Regex("#^0[1-68][0-9]{8}$#",
+     * @Assert\Regex("#^0[1-678][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
      */
@@ -197,7 +197,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="tel_conso", type="string", length=255)
-     * @Assert\Regex("#^0[1-68][0-9]{8}$#",
+     * @Assert\Regex("#^0[1-678][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
      */
@@ -227,7 +227,7 @@ class Beneficiaire
      * @ORM\Column(name="origine_mer", type="string", length=255)
      */
     private $origineMer;
-    
+
     /**
      * @ORM\Column(name="nb_appel_tel", type="integer", nullable=true)
      * @Assert\Type(
@@ -236,7 +236,7 @@ class Beneficiaire
      * )
      */
     private $nbAppelTel;
-    
+
     /**
      * Constructor
      */
@@ -246,7 +246,7 @@ class Beneficiaire
         $this->historique = new ArrayCollection();
         $this->documents = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -358,7 +358,7 @@ class Beneficiaire
     {
         $this->news[] = $news;
         $news->setBeneficiaire($this);
-        
+
         return $this;
     }
 
@@ -944,13 +944,13 @@ class Beneficiaire
         return $this->nbAppelTel;
 
     }
-    
-    // appeler lors de l'ajout d'une news 
+
+    // appeler lors de l'ajout d'une news
     public function increaseNbAppelTel()
     {
         $this->nbAppelTel++;
     }
-    
+
     /**
      * Set encadrement
      *

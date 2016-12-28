@@ -1,5 +1,14 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
+{% block header %}
+    <div id="banner">
+        <p>rechercher</p>
+        <div>
+            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
     <section class="container-fluid">
         {% for beneficiaire in liste_beneficiaire %}
@@ -54,7 +63,7 @@
                                 <th>Détail statut</th>
                             </tr>
                             <tr>
-                                <td colspan=2><span style="color:red"><b>{# if beneficiaire.nbAppelTel <= 0 %}0{% endif #} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
                                 <td colspan=2>
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("m/d/Y") ~ ' à' : '' }} 
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}

@@ -44,6 +44,8 @@ class BureauController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($form['ville']['nom']->getData());
+            $bureau->setVille($ville);
             $em->persist($bureau);
             $em->flush($bureau);
 
@@ -91,7 +93,21 @@ class BureauController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+
+            $ville->addBureaux($bureau);
+            $qb = $em->createQueryBuilder();
+            $q = $qb->update('ApplicationPlateformeBundle:Bureau', 'u')
+                ->set('u.ville', '?1')
+                ->set('u.adresse', '?2')
+                ->set('u.nom', '?3')
+                ->where('u.id = ?4')
+                ->setParameter(1, $ville)
+                ->setParameter(2, $bureau->getAdresse())
+                ->setParameter(3, $bureau->getNom())
+                ->setParameter(4, $id)
+                ->getQuery();
+            $p = $q->execute();
 
             return $this->redirect($this->generateUrl('application_index_bureau'));
         }

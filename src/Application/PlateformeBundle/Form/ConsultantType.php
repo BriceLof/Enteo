@@ -23,7 +23,8 @@ class ConsultantType extends AbstractType
                 'class' => 'ApplicationUsersBundle:Users',
                 'label' => 'Consultant',
                 'placeholder' => 'choisissez votre consultant',
-                'choice_label' => 'prenom'
+                'choice_label' => 'prenom',
+
             ))
             ->add('submit', SubmitType::class, array('label' => 'Modifier le consultant'));
         ;

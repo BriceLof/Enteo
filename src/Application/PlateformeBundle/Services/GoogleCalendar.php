@@ -11,10 +11,12 @@ namespace Application\PlateformeBundle\Services;
 class GoogleCalendar
 {
     // Fichier client_secret.json
-    const PATH_CLIENT_SECRET = __DIR__ .'\client_secret.json';
+    const PATH_CLIENT_SECRET = __DIR__ .'/client_secret.json';
     
     // Fichier creand credentialsPath
+
     const PATH_CREDENTIALS = __DIR__ ;
+
     /**
      * @var string
      */

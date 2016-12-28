@@ -135,14 +135,14 @@ $("document").ready(function () {
         $("#accompagnementEditForm").validate({
             rules: {
                 "accompagnement[opcaOpacif]":{
-                    "required": true
+                    "required": false
                 },
                 "accompagnement[heure]":{
-                    "required": true,
+                    "required": false,
                     "number" : true
                 },
                 "accompagnement[tarif]":{
-                    "required": true,
+                    "required": false,
                     "tarif" : /^[1-9][0-9]+(\.?([0-9]?[1-9]|[1-9][0-9]?))?$/
                 },
                 "accompagnement[dateDebut]": {
@@ -162,6 +162,41 @@ $("document").ready(function () {
         $("#suiviAdministratifEditForm").validate({
             rules: {
                 "suivi_administratif[qui]":{
+                    "required": true
+                },
+                "suivi_administratif[quoi]":{
+                    "required": true
+                }
+            },
+            errorElement: 'div'
+        })
+    });
+
+    //validation jquery
+    $( function() {
+        $("#projetEditForm").validate({
+            rules: {
+                "projet[experience]":{
+                    "required": false
+                },
+                "projet[heureDif]":{
+                    "required": false,
+                    "number": true
+                },
+                "projet[heureCpf]":{
+                    "required": false,
+                    "number": true
+                }
+            },
+            errorElement: 'div'
+        })
+    });
+
+    //espace documentaire validate
+    $( function() {
+        $("#newDocumentsForm").validate({
+            rules: {
+                "espace_documentaire_documents_0_description":{
                     "required": true
                 },
                 "suivi_administratif[quoi]":{
@@ -192,18 +227,18 @@ $("document").ready(function () {
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[poste]":{
-                    "required": true,
+                    "required": false,
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[encadrement]":{
-                    "required": true
+                    "required": false
                 },
                 "beneficiaire[telConso]":{
                     "required": true,
                     "tel": /^0[1-8][0-9]{8}$/
                 },
                 "beneficiaire[tel2]":{
-                    "required": true,
+                    "required": false,
                     "tel": /^0[1-8][0-9]{8}$/
                 },
                 "beneficiaire[emailConso]":{
@@ -211,11 +246,11 @@ $("document").ready(function () {
                     "email": true
                 },
                 "beneficiaire[email2]":{
-                    "required": true,
+                    "required": false,
                     "email": true
                 },
                 "beneficiaire[adresse]":{
-                    "required": true
+                    "required": false
                 },
                 "beneficiaire[ville][zip]":{
                     "required": true
@@ -228,18 +263,42 @@ $("document").ready(function () {
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[numSecu]":{
-                    "required": true,
+                    "required": false,
                     "numSecu": /^[12][0-9]{14}$/
                 },
                 "beneficiaire[dateNaissance]":{
-                    "required": true
+                    "required": false
                 }
             },
             errorElement: 'div'
         })
     });
 
+    $(".cp").keyup(function () {
+        if ($(this).val().length === 5){
+            $.ajax({
+                type: 'get',
+                url: Routing.generate('application_search_ville', {cp : $(this).val()}),
+                beforeSend: function(){
+                    console.log('ça charge !');
+                },
+                success: function (data) {
+                    var id = $(".ville").attr("id");
+                    var name = $(".ville").attr("name");
+                    $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
+                    $.each(data.ville, function(index,value){
+                        $(".ville").append($('<option>',{value: value, text: value}));
+                    });
 
+                    console.log('ville ok');
+                }
+            })
+        }else{
+            $(".ville").val('');
+        }
+    });
+
+    //ajax rechercher dans la page home
     $("#ajaxForm").submit(function (e) {
 
         e.preventDefault();
@@ -308,7 +367,7 @@ $("document").ready(function () {
             }
         });
     });*/
-    
+
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -473,28 +532,31 @@ $('#consultantC').change(function(){
 });
 
 // vide un bloc
-function emptyelement(element, type){
-    switch(type){
+function emptyelement(element, type) {
+    switch (type) {
         case 'id':
-            $('#'+element).empty();
+            $('#' + element).empty();
             break;
         case 'class':
-            $('.'+element).empty();
+            $('.' + element).empty();
             break;
     }
 }
 
 (function(){
     var plusMoins = document.getElementById('plusMoins');
-    plusMoins.onclick = function () {
-        if(plusMoins.innerHTML == 'voir plus +') {
-            document.getElementById('rechercherPlus').style.display = 'block';
-            plusMoins.innerHTML = 'voir moins -';
-        }else{
-            document.getElementById('rechercherPlus').style.display = 'none';
-            plusMoins.innerHTML = 'voir plus +';
-        }
-    };
+    if(plusMoins != undefined) {
+         plusMoins.onclick = function () {
+            if(plusMoins.innerHTML == 'voir plus +') {
+                document.getElementById('rechercherPlus').style.display = 'block';
+                plusMoins.innerHTML = 'voir moins -';
+            }else{
+                document.getElementById('rechercherPlus').style.display = 'none';
+                plusMoins.innerHTML = 'voir plus +';
+            }
+        };
+    }
+   
 
     /**
      var ajouterNews = document.getElementById('OngletAjouterNews');
@@ -532,8 +594,6 @@ function emptyelement(element, type){
     setTimeout(afficheMessageFlash,5000);
 })();
 
-
-
 $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#espace_documentaire_documents');
@@ -550,7 +610,6 @@ $(document).ready(function() {
     var index = $container.find(':input').length;
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     if (index == 0) {
-        addImage($container);
     } else {
         // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
         $container.children('div').each(function() {
@@ -587,3 +646,56 @@ $(document).ready(function() {
         });
     }
 });
+
+(function(){
+
+    var plusMoins = document.getElementById('plusMoins');
+    if(plusMoins != undefined) {
+        plusMoins.onclick = function () {
+            if (plusMoins.innerHTML == 'voir plus +') {
+                document.getElementById('rechercherPlus').style.display = 'block';
+                plusMoins.innerHTML = 'voir moins -';
+            } else {
+                document.getElementById('rechercherPlus').style.display = 'none';
+                plusMoins.innerHTML = 'voir plus +';
+            }
+        };
+    }
+    /**
+     var ajouterNews = document.getElementById('OngletAjouterNews');
+     var afficherNews = document.getElementById('OngletAfficherNews');
+     ajouterNews.onclick = function (e) {
+        e.preventDefault();
+        ajouterNews.className='active';
+        afficherNews.className = '';
+        document.getElementById('afficheNews').style.display = 'block';
+        document.getElementById('ajouteNews').style.display = 'none';
+    };
+     afficherNews.onclick = function (e) {
+        e.preventDefault();
+        ajouterNews.className = '';
+        afficherNews.className = 'active';
+        document.getElementById('afficheNews').style.display = 'none';
+        document.getElementById('ajouteNews').style.display = 'block';
+    };
+     */
+
+    var input = document.querySelectorAll('#editBeneficiaire input');
+    var content = [];
+    for(var i=0;i<input.length;i++) {
+        content[i] = input[i].value;
+        input[i].addEventListener('change',function(test){
+            this.style.border = '1px solid #ccc';
+            this.style.backgroundColor = "#c7c4c4";
+            this.style.color = 'inherit';
+        },true);
+    }
+
+    function afficheMessageFlash() {
+        var flash = document.getElementById("flashbag");
+        if (flash != undefined) {
+            flash.style.display = 'none';
+        }
+    }
+    setTimeout(afficheMessageFlash,5000);
+})();

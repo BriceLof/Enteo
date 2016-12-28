@@ -1,6 +1,8 @@
 <?php
 
 namespace Application\UsersBundle\Repository;
+use Application\UsersBundle\Entity\Users;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * UsersRepository
@@ -23,6 +25,31 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
           ->getQuery()
           ->getResult()
         ; 
+    }
+
+
+    /**
+     * récupère les consultants
+     *
+     * @param Users $users
+     * @return \Doctrine\ORM\NativeQuery
+     */
+    public function search(Users $users)
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Application\UsersBundle\Entity\Users','b');
+
+        $query = 'SELECT u.* FROM users u WHERE 1';
+        $params = array();
+
+
+        $query .= ' AND u.roles = :roles';
+        $params['roles'] = "ROLE_CONSULTANT";
+
+        $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
+        $request->setParameters($params);
+
+        return $request;
     }
 
 }

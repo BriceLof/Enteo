@@ -34,14 +34,52 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-
+/**
+        $lastNews = [];
+        $lastNews = end($beneficiaire->getNews());
+        var_dump($lastNews);die;
+*/
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
 
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
-            $em->flush();
+        if ($request->isMethod('POST') && $editForm->isValid()) {
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+
+            $ville->addBeneficiaire($beneficiaire);
+            $qb = $em->createQueryBuilder();
+            $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
+                ->set('u.ville', '?1')
+                ->set('u.civiliteConso', '?3')
+                ->set('u.nomConso', '?4')
+                ->set('u.prenomConso', '?5')
+                ->set('u.poste', '?6')
+                ->set('u.encadrement', '?7')
+                ->set('u.telConso', '?8')
+                ->set('u.tel2', '?9')
+                ->set('u.emailConso', '?10')
+                ->set('u.email2', '?11')
+                ->set('u.pays', '?12')
+                ->set('u.numSecu', '?13')
+                ->set('u.dateNaissance', '?14')
+                ->where('u.id = ?2')
+                ->setParameter(1, $ville)
+                ->setParameter(2, $id)
+                ->setParameter(3, $beneficiaire->getCiviliteConso())
+                ->setParameter(4, $beneficiaire->getNomConso())
+                ->setParameter(5, $beneficiaire->getPrenomConso())
+                ->setParameter(6, $beneficiaire->getPoste())
+                ->setParameter(7, $beneficiaire->getEncadrement())
+                ->setParameter(8, $beneficiaire->getTelConso())
+                ->setParameter(9, $beneficiaire->getTel2())
+                ->setParameter(10, $beneficiaire->getEmailConso())
+                ->setParameter(11, $beneficiaire->getEmail2())
+                ->setParameter(12, $beneficiaire->getPays())
+                ->setParameter(13, $beneficiaire->getNumSecu())
+                ->setParameter(14, $beneficiaire->getDateNaissance())
+                ->getQuery();
+            $p = $q->execute();
         }
 
 
@@ -210,7 +248,6 @@ class BeneficiaireController extends Controller
 
         $form->handleRequest($request);
 
-
         if ($form->isValid()){
 
             $ville = new Ville();
@@ -219,9 +256,10 @@ class BeneficiaireController extends Controller
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                     'nom' => $form["ville"]["nom"]->getData(),
                 ));
+                $beneficiaire->setVille($ville);
             }
 
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(),$ville);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
             $results = $query->getArrayResult();
             return new JsonResponse(json_encode($results));
         }
