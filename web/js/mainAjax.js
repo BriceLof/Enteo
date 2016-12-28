@@ -320,6 +320,9 @@ $("document").ready(function () {
                 var resultat = document.getElementById('content');
 
                 resultat.innerHTML = "";
+
+///////////////////////////////////////test//////////////////////////////////////////////////////
+
                 var table = document.createElement('table');
                 table.setAttribute('class',"table table-bordered");
                 var tr = document.createElement('tr');
