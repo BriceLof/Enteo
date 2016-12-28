@@ -248,7 +248,6 @@ class BeneficiaireController extends Controller
 
         $form->handleRequest($request);
 
-
         if ($form->isValid()){
 
             $ville = new Ville();
@@ -257,9 +256,10 @@ class BeneficiaireController extends Controller
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                     'nom' => $form["ville"]["nom"]->getData(),
                 ));
+                $beneficiaire->setVille($ville);
             }
 
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(),$ville);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
             $results = $query->getArrayResult();
             return new JsonResponse(json_encode($results));
         }

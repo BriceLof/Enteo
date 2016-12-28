@@ -52,6 +52,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['prenomConso'] = $beneficiaire->getPrenomConso();
         }
 
+        if(!is_null($beneficiaire->getVille())) {
+            $query .= ' AND b.ville_id = :villeId';
+            $params['villeId'] = $beneficiaire->getVille()->getId();
+        }
+
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
         $request->setParameters($params);
 
