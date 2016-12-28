@@ -132,7 +132,7 @@
                                 <tr>
                                     <td>{{ form_errors(edit_form.ville.cp) }}</td>
                                 </tr>
-                                {% if beneficiaire.ville.nom is not null %}
+                                {% if beneficiaire.ville is not null %}
                                     <tr>
                                         <td>{{ form_label(edit_form.ville.nom) }}</td>
                                         <td>{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
@@ -186,10 +186,11 @@
                 <div class="sectionBeneficiaire">
                     <div id="statut" class="tableOnglet">
                         <table class="table-condensed">
-                            <caption class="titreSection">Statut( A faire )</caption>
+                            <caption class="titreSection">Statut</caption>
                             <tr>
+                                {% set lastNews = beneficiaire.news|last %}
                                 <td>Statut :</td>
-                                <td>Téléphone</td>
+                                <td>{# lastNews.statut #}</td>
                             </tr>
                             <tr>
                                 <td>Détail :</td>

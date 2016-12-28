@@ -28,6 +28,7 @@ class BureauType extends AbstractType
             ->add('ville', VilleType::class, array(
                 'label' => '',
                 'required' => false,
+                'by_reference' => true,
             ));
     }
 
