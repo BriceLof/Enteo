@@ -34,7 +34,11 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-
+/**
+        $lastNews = [];
+        $lastNews = end($beneficiaire->getNews());
+        var_dump($lastNews);die;
+*/
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
 
         $editForm = $this->createEditForm($beneficiaire);

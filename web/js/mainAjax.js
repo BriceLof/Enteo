@@ -283,7 +283,9 @@ $("document").ready(function () {
                     console.log('ça charge !');
                 },
                 success: function (data) {
-                    $(".ville").replaceWith('<select id="beneficiaire_ville_nom" name="beneficiaire[ville][nom]" class="ville form-control">');
+                    var id = $(".ville").attr("id");
+                    var name = $(".ville").attr("name");
+                    $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
                     $.each(data.ville, function(index,value){
                         $(".ville").append($('<option>',{value: value, text: value}));
                     });
