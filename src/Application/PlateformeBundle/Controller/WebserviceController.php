@@ -81,11 +81,12 @@ class WebserviceController extends Controller
         $news->setDetailStatut($detailStatut);
         $news->setMessage("");
         $em->persist($news);
-        
+
+        /**
         var_dump($mer);
         var_dump($ville);
         var_dump($beneficiaire);
-        
+        */
         
         
         $em->flush();

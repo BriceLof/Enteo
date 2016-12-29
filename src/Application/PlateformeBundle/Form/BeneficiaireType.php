@@ -122,6 +122,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('pays', TextType::class, array(
                 'label' => 'Pays ',
+                'data' => 'FRANCE',
                 'attr' => array(
                     'placeholder' => '',
                 )

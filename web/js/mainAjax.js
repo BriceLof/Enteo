@@ -219,16 +219,13 @@ $("document").ready(function () {
                     "required": true
                 },
                 "beneficiaire[nomConso]":{
-                    "required": true,
-                    "texte": /^([a-z ]-?,?)+$/i
+                    "required": true
                 },
                 "beneficiaire[prenomConso]":{
-                    "required": true,
-                    "texte": /^([a-z ]-?,?)+$/i
+                    "required": true
                 },
                 "beneficiaire[poste]":{
-                    "required": false,
-                    "texte": /^([a-z ]-?,?)+$/i
+                    "required": false
                 },
                 "beneficiaire[encadrement]":{
                     "required": false
@@ -368,7 +365,7 @@ $("document").ready(function () {
         });
     });*/
 
-<<<<<<< HEAD
+
 
 
 
@@ -377,7 +374,7 @@ $("document").ready(function () {
     // =================== Agenda du consultant ==================== // 
     // ========== On affiche le calendrier et le formulaire ======= //
     // ============================================================ //
-=======
+
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -388,7 +385,7 @@ $("document").ready(function () {
                 url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
-                    sentinel: 1,
+                    sentinel: 1
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -408,7 +405,7 @@ $("document").ready(function () {
                 url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
                 data : {
                     term : $('#prenomb').val(),
-                    sentinel: 2,
+                    sentinel: 2
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -425,7 +422,7 @@ $("document").ready(function () {
         }
     });
     
->>>>>>> 22cb429c1fde4317e3eb12d16a01211f83dbc840
+
     if($('.calendrierconsultant').val() != undefined){
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
@@ -462,7 +459,7 @@ $("document").ready(function () {
             idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
             idbureauoption = idbureauoption.split("_");
             villenom = $("#bureauRdv").val(); // On recupere la ville
-            $('#ville').val(villenom); // On instancie la ville
+            $('#ville').val(idbureauoption[2]); // On instancie la ville
             $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
             $('#zip').val(idbureauoption[1]); // On instancie l'adresse
             $('#villeh').val(villenom); // On instancie la ville
@@ -553,57 +550,6 @@ function emptyelement(element, type) {
             break;
     }
 }
-
-(function(){
-    var plusMoins = document.getElementById('plusMoins');
-    if(plusMoins != undefined) {
-         plusMoins.onclick = function () {
-            if(plusMoins.innerHTML == 'voir plus +') {
-                document.getElementById('rechercherPlus').style.display = 'block';
-                plusMoins.innerHTML = 'voir moins -';
-            }else{
-                document.getElementById('rechercherPlus').style.display = 'none';
-                plusMoins.innerHTML = 'voir plus +';
-            }
-        };
-    }
-   
-
-    /**
-     var ajouterNews = document.getElementById('OngletAjouterNews');
-     var afficherNews = document.getElementById('OngletAfficherNews');
-     ajouterNews.onclick = function (e) {
-        e.preventDefault();
-        ajouterNews.className='active';
-        afficherNews.className = '';
-        document.getElementById('afficheNews').style.display = 'block';
-        document.getElementById('ajouteNews').style.display = 'none';
-    };
-     afficherNews.onclick = function (e) {
-        e.preventDefault();
-        ajouterNews.className = '';
-        afficherNews.className = 'active';
-        document.getElementById('afficheNews').style.display = 'none';
-        document.getElementById('ajouteNews').style.display = 'block';
-    };
-     */
-
-    var input = document.querySelectorAll('#editBeneficiaire input');
-    var content = [];
-    for(var i=0;i<input.length;i++) {
-        content[i] = input[i].value;
-        input[i].addEventListener('change',function(test){
-            this.style.border = '1px solid #ccc';
-            this.style.backgroundColor = "#c7c4c4";
-            this.style.color = 'inherit';
-        },true);
-    }
-    function afficheMessageFlash() {
-        var flash = document.getElementById("flashbag");
-        flash.style.display='none';
-    }
-    setTimeout(afficheMessageFlash,5000);
-})();
 
 $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.

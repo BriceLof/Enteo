@@ -188,13 +188,15 @@
                         <table class="table-condensed">
                             <caption class="titreSection">Statut</caption>
                             <tr>
-                                {% set lastNews = beneficiaire.news|last %}
+                                {% if(beneficiaire.news | length > 0) %}
+                                    {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
+                                {% endif %}
                                 <td>Statut :</td>
-                                <td>{# lastNews.statut #}</td>
+                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
                             </tr>
                             <tr>
                                 <td>Détail :</td>
-                                <td>Voir onglet "Detail Statut"</td>
+                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                             </tr>
                             <tr>
                                 <td>Gestionnaire Administratif</td>

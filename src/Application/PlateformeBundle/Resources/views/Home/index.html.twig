@@ -46,7 +46,11 @@
                                 <td>{{ beneficiaire.domaineVae|capitalize }}</td>
                                 <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
                                 <td>{{ beneficiaire.heureRappel|capitalize }}</td>
-                                <td>Mme Payet</td>
+                                {% if beneficiaire.consultant is not null %}
+                                    <td>{{ beneficiaire.consultant.nom }}</td>
+                                {% else %}
+                                    <td>Pas de consultant</td>
+                                {% endif %}
                             </tr>
                             
                             {% if(beneficiaire.news | length > 0) %}
