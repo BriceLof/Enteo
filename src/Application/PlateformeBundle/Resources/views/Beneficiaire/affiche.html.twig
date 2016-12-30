@@ -34,42 +34,24 @@
                                     <td>{{ form_widget(edit_form.dateConfMer) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.dateConfMer) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.civiliteConso) }}</td>
                                     <td>{{ form_widget(edit_form.civiliteConso) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form_errors(edit_form.civiliteConso) }}</td>
                                 </tr>
                                 <tr>
                                     <td>{{ form_label(edit_form.nomConso) }}</td>
                                     <td>{{ form_widget(edit_form.nomConso) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.nomConso) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.prenomConso) }}</td>
                                     <td>{{ form_widget(edit_form.prenomConso) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form_errors(edit_form.prenomConso) }}</td>
                                 </tr>
                                 <tr>
                                     <td>{{ form_label(edit_form.poste) }}</td>
                                     <td>{{ form_widget(edit_form.poste) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.poste) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.encadrement) }}</td>
                                     <td>{{ form_widget(edit_form.encadrement) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form_errors(edit_form.encadrement) }}</td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
@@ -82,28 +64,16 @@
                                     <td>{{ form_widget(edit_form.telConso) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.telConso) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.tel2) }}</td>
                                     <td>{{ form_widget(edit_form.tel2) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form_errors(edit_form.tel2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>{{ form_label(edit_form.emailConso) }}</td>
                                     <td>{{ form_widget(edit_form.emailConso) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.emailConso) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.email2) }}</td>
                                     <td>{{ form_widget(edit_form.email2) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form_errors(edit_form.email2) }}</td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
@@ -116,21 +86,12 @@
                                     <td>{{ form_widget(edit_form.adresse) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.adresse) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.adresseComplement) }}</td>
                                     <td>{{ form_widget(edit_form.adresseComplement) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.adresseComplement) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.ville.cp) }}</td>
                                     <td>{{ form_widget(edit_form.ville.cp) }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form_errors(edit_form.ville.cp) }}</td>
                                 </tr>
                                 {% if beneficiaire.ville is not null %}
                                     <tr>
@@ -151,9 +112,6 @@
                                     <td>{{ form_widget(edit_form.pays) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.pays) }}</td>
-                                </tr>
-                                <tr>
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
@@ -161,14 +119,11 @@
                                     <td>{{ form_widget(edit_form.numSecu) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.numSecu) }}</td>
-                                </tr>
-                                <tr>
                                     <td>{{ form_label(edit_form.dateNaissance) }}</td>
                                     <td>{{ form_widget(edit_form.dateNaissance) }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form_errors(edit_form.dateNaissance) }}</td>
+                                    <td>{{ form_errors(edit_form) }}</td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
@@ -228,11 +183,17 @@
                     </div>
     {% endif %}
                     <div id="espaceDocumentaire" class="tableOnglet">
+                        <table class="table-condensed">
+                            <caption class="titreSection">Espace Documentaire</caption>
+                            {% for document in beneficiaire.documents %}
+                                <tr>
+                                    <td>{{ document.description }}</td>
+                                    <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span>voir le document</span></a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
                         <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
-                            <table>
-                                <caption class="titreSection">Espace Documentaire</caption>
-                                {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
-                            </table>
+                            {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                         </form>
                     </div>
                     <div id="satisfactionRecommandation" class="tableOnglet">

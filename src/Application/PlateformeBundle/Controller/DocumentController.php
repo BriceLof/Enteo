@@ -81,9 +81,23 @@ class DocumentController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDocumentEditForm(Beneficiaire $beneficiaire)
+    public function createDocumentEditForm(Beneficiaire $beneficiaire)
     {
         $form = $this->createForm(EspaceDocumentaireType::class, $beneficiaire);
         return $form;
+    }
+
+    /**
+     * show document in a new target
+     */
+    public function showAction($path){
+        $em = $this->getDoctrine()->getManager();
+        $document = $em->getRepository('ApplicationPlateformeBundle:Document')->findOneBy(array(
+            'path' => $path,
+        ));
+
+        return $this->render('ApplicationPlateformeBundle:Document:show.html.twig', array(
+            'document' => $document,
+        ));
     }
 }

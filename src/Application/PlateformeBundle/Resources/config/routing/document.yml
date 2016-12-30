@@ -3,3 +3,8 @@ application_new_document:
     defaults: { _controller: "ApplicationPlateformeBundle:Document:new" }
     options:
         expose:  true
+
+
+application_show_document:
+    path: /show/{path}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:show" }

@@ -57,6 +57,8 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['villeId'] = $beneficiaire->getVille()->getId();
         }
 
+        $query .= ' ORDER BY b.id DESC';
+
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
         $request->setParameters($params);
 
