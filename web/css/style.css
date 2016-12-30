@@ -32,6 +32,12 @@
 
 .tableOnglet table{
     width: 100%;
+    border-collapse: collapse;
+    empty-cells: hide;
+}
+
+.tableOnglet tr label{
+    margin-left: 5px;
 }
 
 #afficheBeneficiaire{
@@ -204,3 +210,5 @@ div.error {
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     cursor: auto;
 }
+
+

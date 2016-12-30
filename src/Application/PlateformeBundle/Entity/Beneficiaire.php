@@ -154,7 +154,6 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="motivation", type="text", nullable=true)
-     * @Assert\Type("text")
      */
     private $motivation;
 

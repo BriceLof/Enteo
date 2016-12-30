@@ -2,8 +2,10 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
 use Application\PlateformeBundle\Form\ConsultantType;
+use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\ProjetType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,11 +36,11 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-/**
+        /**
         $lastNews = [];
         $lastNews = end($beneficiaire->getNews());
         var_dump($lastNews);die;
-*/
+         */
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
 
         $editForm = $this->createEditForm($beneficiaire);
@@ -208,7 +210,7 @@ class BeneficiaireController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    public function searchAction(Request $request)
+    public function searchAction(Request $request,$page = 1 )
     {
 
         $beneficiaire = new Beneficiaire();
@@ -219,12 +221,27 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
+            $ville = new Ville();
+            if (!is_null($form["ville"]["nom"]->getData())) {
+                $em = $this->getDoctrine()->getManager();
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
+                    'nom' => $form["ville"]["nom"]->getData(),
+                ));
+                $beneficiaire->setVille($ville);
+            }
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
             $results = $query->getResult();
+            $nbPages = ceil(count($results) / 50);
+            // Formulaire d'ajout d'une news à un bénéficiaire
+            $news = new News();
+            $formNews = $this->get("form.factory")->create(NewsType::class, $news);
 
-            return $this->render('ApplicationPlateformeBundle:Beneficiaire:recherche.html.twig',array(
+            return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
                 'form' => $form->createView(),
                 'results' => $results,
+                'nbPages'               => $nbPages,
+                'page'                  => $page,
+                'form_news'             => $formNews->createView()
             ));
         }
 
@@ -282,10 +299,11 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
+
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
             $results = $query->getResult();
 
-             $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:resultatRecherche.html.twig',array(
+            $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:resultatRecherche.html.twig',array(
                 'results' => $results,
             ))->getContent();
 

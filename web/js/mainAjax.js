@@ -296,6 +296,8 @@ $("document").ready(function () {
     });
 
     //ajax rechercher dans la page home
+    // desactivation de l'ajax par demande de philippe pour plus de visibilité
+    /**
     $("#ajaxForm").submit(function (e) {
 
         e.preventDefault();
@@ -344,6 +346,7 @@ $("document").ready(function () {
             }
         });
     });
+     */
     /**
      $("#ajaxForm").submit(function (e) {
         e.preventDefault();

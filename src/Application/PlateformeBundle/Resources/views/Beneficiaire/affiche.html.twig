@@ -27,7 +27,7 @@
                 <div class="sectionBeneficiaire">
                     <div id="editBeneficiaire" class="tableOnglet">
                         <form action="{{ path('application_show_beneficiaire', { 'id':beneficiaire.id }) }}" method="POST" id="ficheBeneficiaireForm">
-                            <table class="table-condensed">
+                            <table>
                                 <caption class="titreSection">Fiche Bénéficiaire</caption>
                                 <tr>
                                     <td>{{ form_label(edit_form.dateConfMer) }}</td>
@@ -185,7 +185,7 @@
             <div class="col-md-4">
                 <div class="sectionBeneficiaire">
                     <div id="statut" class="tableOnglet">
-                        <table class="table-condensed">
+                        <table>
                             <caption class="titreSection">Statut</caption>
                             <tr>
                                 {% if(beneficiaire.news | length > 0) %}
@@ -206,15 +206,16 @@
                     </div>
                     <div id="ProjetBeneficiaire" class="tableOnglet">
                         <form method="POST" id="projetEditForm" action="{{ path('application_projet_beneficiaire', { 'id' : beneficiaire.id }) }}" >
-                            <table class="table-condensed">
+                            <table>
                                 <caption class="titreSection">Projet Bénéficiaire</caption>
                                 {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:projet",{'id': beneficiaire.id})) }}
                             </table>
                         </form>
                     </div>
+    {% if is_granted('ROLE_ADMIN') %}
                     <div id="accompagnement" class="tableOnglet">
                         <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
-                            <table class="table-condensed">
+                            <table>
                                 <caption class="titreSection">Accompagnement</caption>
                                 {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
                             </table>
@@ -225,9 +226,10 @@
                             </table>
                         </form>
                     </div>
+    {% endif %}
                     <div id="espaceDocumentaire" class="tableOnglet">
                         <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
-                            <table class="table-condensed">
+                            <table>
                                 <caption class="titreSection">Espace Documentaire</caption>
                                 {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                             </table>
@@ -247,15 +249,19 @@
                         {#render(controller("ApplicationPlateformeBundle:Historique:agenda", {'id':beneficiaire.id}))#}
                     </div>
                     <div id="historique" class="tableOnglet">
-                        {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
+                        <table>
+                            {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
+                        </table>
                     </div>
+    {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">
                         <form method="POST" id="suiviAdministratifEditForm" action="{{ path('application_edit_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
-                            <table class="table-condensed">
+                            <table>
                                 {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
                             </table>
                         </form>
                     </div>
+    {% endif %}
                 </div>
             </div>
         </div>
