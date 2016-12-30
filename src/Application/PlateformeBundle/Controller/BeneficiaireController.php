@@ -216,7 +216,7 @@ class BeneficiaireController extends Controller
         $beneficiaire = new Beneficiaire();
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
 
-        $form->add('submit', SubmitType::class, array('label' => 'Rechercher'));
+        $form->add('submit', SubmitType::class, array('label' => 'Affiner'));
 
         $form->handleRequest($request);
 

@@ -3,6 +3,10 @@
     height: 218px;
 }
 
+.navbar-static-top{
+    margin-bottom: 8px;
+}
+
 #banner{
 
 }
@@ -211,4 +215,8 @@ div.error {
     cursor: auto;
 }
 
-
+/*bouton rechercher*/
+#recherche_beneficiaire_submit{
+    color: #fcf8e3;
+    background-color: #563333;
+}
