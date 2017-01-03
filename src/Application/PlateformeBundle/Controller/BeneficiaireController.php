@@ -221,7 +221,6 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
-            $ville = new Ville();
             if (!is_null($form["ville"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
@@ -229,7 +228,19 @@ class BeneficiaireController extends Controller
                 ));
                 $beneficiaire->setVille($ville);
             }
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
+
+            $dateDebut = null;
+            $dateFin = null;
+
+            if(!is_null($form['dateDebut']->getData())){
+                $dateDebut = $form['dateDebut']->getData();
+            }
+            if(!is_null($form['dateFin']->getData())){
+                $dateFin = $form['dateFin']->getData();
+            }
+
+
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
             $results = $query->getResult();
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
@@ -317,6 +328,4 @@ class BeneficiaireController extends Controller
             'form' => $form->createView(),
         ));
     }
-
-
 }

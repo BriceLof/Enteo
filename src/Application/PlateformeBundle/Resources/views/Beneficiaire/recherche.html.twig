@@ -10,6 +10,12 @@
                 <span class="col-md-1">{{ form_widget(form.ville.cp, { 'attr': {'placeholder': 'Code Postal' }}) }}</span>
                 <span class="col-md-2">{{ form_widget(form.ville.nom, { 'attr': {'placeholder': 'Ville' }}) }}</span>
                 <span class="col-md-1">{{ form_widget(form.pays) }}</span>
+
+                <!-- not mapped -->
+                <span class="col-md-1">{{ form_widget(form.dateDebut) }}</span>
+                <span class="col-md-1">{{ form_widget(form.dateFin) }}</span>
+                <!---------------->
+
                 <span class="col-md-1">{{ form_widget(form.submit) }}</span>
                 <span class="col-md-1">{{ form_rest(form) }}</span>
             </div>

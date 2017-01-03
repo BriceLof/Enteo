@@ -34,7 +34,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, true); 
     }
     
-    public function search(Beneficiaire $beneficiaire)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
@@ -56,6 +56,18 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $query .= ' AND b.ville_id = :villeId';
             $params['villeId'] = $beneficiaire->getVille()->getId();
         }
+
+        if(!is_null($debut)){
+            $query .= ' AND b.date_conf_mer >= :dateDebut';
+            $params['dateDebut'] = $debut;
+        }
+
+        if(!is_null($fin)){
+            $query .= ' AND b.date_conf_mer >= :datefin';
+            $params['dateFin'] = $fin;
+        }
+
+
 
         $query .= ' ORDER BY b.id DESC';
 
