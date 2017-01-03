@@ -58,7 +58,7 @@
                             <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" class="form-control new_input" required>
                             <label>Bureau</label>
                             <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
-                                {% if bureau|length > 1 %}
+                                {% if bureau|length <= 1 %}
                                     <option value="">Selectionner un Bureau</option>
                                     <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
                                 {% else %}

@@ -385,7 +385,7 @@ $("document").ready(function () {
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
+                url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
                     sentinel: 1
@@ -405,7 +405,7 @@ $("document").ready(function () {
     $("#prenomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
+                url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
                 data : {
                     term : $('#prenomb').val(),
                     sentinel: 2
