@@ -63,7 +63,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         }
 
         if(!is_null($fin)){
-            $query .= ' AND b.date_conf_mer >= :datefin';
+            $query .= ' AND b.date_conf_mer <= :dateFin';
             $params['dateFin'] = $fin;
         }
 
