@@ -1,0 +1,9 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block body %}
+    <div id="pageImage">
+        <div id="afficheImage">
+            <img src="{{asset('uploads/beneficiaire/documents/'~document.path)}}" alt="{{ document.description }}" width="100%">
+        </div>
+    </div>
+{% endblock %}
