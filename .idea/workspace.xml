@@ -3,15 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Teo-.iml" afterPath="$PROJECT_DIR$/.idea/Teo-.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/webServers.xml" afterPath="$PROJECT_DIR$/.idea/webServers.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/parameters.yml" afterPath="$PROJECT_DIR$/app/config/parameters.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/parameters_dev.yml" afterPath="$PROJECT_DIR$/app/config/parameters_dev.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/parameters_pre_prod.yml" afterPath="$PROJECT_DIR$/app/config/parameters_pre_prod.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/DocumentController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/DocumentController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/recherche.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/recherche.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/document.yml" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/document.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,23 +32,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BeneficiaireRepository.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php">
+      <file leaf-file-name="DocumentController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/DocumentController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="61" column="42" selection-start-line="61" selection-start-column="42" selection-end-line="61" selection-end-column="42" />
-              <folding>
-                <marker date="1483441333586" expanded="true" signature="1387:1425" ph="SELECT b.* F... beneficiaire" />
-              </folding>
+            <state relative-caret-position="304">
+              <caret line="118" column="21" selection-start-line="118" selection-start-column="21" selection-end-line="118" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BeneficiaireController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
+      <file leaf-file-name="showAll.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/showAll.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="242" column="147" selection-start-line="242" selection-start-column="147" selection-end-line="242" selection-end-column="147" />
+            <state relative-caret-position="187">
+              <caret line="11" column="29" selection-start-line="4" selection-start-column="24" selection-end-line="11" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="affiche.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="191" column="65" selection-start-line="191" selection-start-column="65" selection-end-line="191" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="document.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/document.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HistoriqueController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HistoriqueController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="219">
+              <caret line="107" column="5" selection-start-line="85" selection-start-column="4" selection-end-line="107" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BureauController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="129" column="24" selection-start-line="129" selection-start-column="24" selection-end-line="129" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -78,8 +116,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Historique.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Mer.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/News.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Statut.php" />
@@ -107,13 +143,11 @@
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HomeController.php" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Entity/Ville.php" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/app/config/parameters.yml" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/app/config/parameters_dev.yml" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Entity/Bureau.php" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Entity/Beneficiaire.php" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/app/config/parameters_pre_prod.yml" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/HomeController.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BureauType.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Bureau/edit.html.twig" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/web/js/mainAjax.js" />
@@ -121,14 +155,18 @@
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/WebserviceController.php" />
         <option value="$PROJECT_DIR$/web/js/mainAjax.js" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
         <option value="$PROJECT_DIR$/app/config/parameters.yml" />
-        <option value="$PROJECT_DIR$/app/config/parameters_dev.yml" />
         <option value="$PROJECT_DIR$/app/config/parameters_pre_prod.yml" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/recherche.html.twig" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/app/config/parameters_dev.yml" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
+        <option value="$PROJECT_DIR$/app/config/parameters_dev.yml" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/DocumentController.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/document.yml" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" />
       </list>
     </option>
   </component>
@@ -170,86 +208,15 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane />
+      </pane>
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Enteo_backup/app/config/parameters.yml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
@@ -262,6 +229,116 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\Enteo\app\config" />
     </key>
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Document/show.html.twig</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -332,7 +409,8 @@
       <workItem from="1482499155157" duration="46310000" />
       <workItem from="1482835727301" duration="23236000" />
       <workItem from="1482914504099" duration="5711000" />
-      <workItem from="1483437905734" duration="3543000" />
+      <workItem from="1483437905734" duration="3905000" />
+      <workItem from="1483441858546" duration="5166000" />
     </task>
     <task id="LOCAL-00001" summary="- ajout de la relation entre consultant et bénéficiaire">
       <created>1482234847639</created>
@@ -446,24 +524,31 @@
       <option name="project" value="LOCAL" />
       <updated>1482919908584</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="- recherche par date">
+      <created>1483441501458</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1483441501458</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="217217000" />
+    <option name="totallyTimeSpent" value="222745000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28290468" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20121029" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28744328" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20121029" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5332829" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991454" sideWeight="0.48487142" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991454" sideWeight="0.4667171" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.4667171" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -536,7 +621,8 @@
     <MESSAGE value="- erreur javascript corrigé&#10;" />
     <MESSAGE value="Merge branch 'master' of https://github.com/BriceLof/Enteo into ranaivoson&#10;&#10;Conflicts:&#10;&#9;src/Application/PlateformeBundle/Controller/AgendaController.php&#10;&#9;src/Application/PlateformeBundle/Services/GoogleCalendar.php&#10;" />
     <MESSAGE value="- mis a jour probleme ville" />
-    <option name="LAST_COMMIT_MESSAGE" value="- mis a jour probleme ville" />
+    <MESSAGE value="- recherche par date" />
+    <option name="LAST_COMMIT_MESSAGE" value="- recherche par date" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -551,39 +637,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Statut.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/beneficiaire.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="21" selection-start-line="7" selection-start-column="4" selection-end-line="10" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/ville.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="48" column="20" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/DocumentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="31" column="42" selection-start-line="31" selection-start-column="11" selection-end-line="31" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -668,13 +725,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.git/info/exclude">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -694,14 +744,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
           <caret line="208" column="19" selection-start-line="208" selection-start-column="9" selection-end-line="208" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HistoriqueController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2104">
-          <caret line="22" column="7" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -803,21 +845,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2143">
-          <caret line="329" column="23" selection-start-line="329" selection-start-column="22" selection-end-line="329" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="134" column="56" selection-start-line="134" selection-start-column="56" selection-end-line="134" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Bureau/new.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -839,19 +866,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="48" column="34" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -863,27 +881,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters_dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters_pre_prod.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -907,30 +908,117 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="63" column="14" selection-start-line="54" selection-start-column="12" selection-end-line="63" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.git/info/exclude">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
+    <entry file="file://$PROJECT_DIR$/app/config/parameters_pre_prod.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="242" column="147" selection-start-line="242" selection-start-column="147" selection-end-line="242" selection-end-column="147" />
+        <state relative-caret-position="187">
+          <caret line="11" column="42" selection-start-line="0" selection-start-column="0" selection-end-line="11" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/parameters_dev.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="61" column="42" selection-start-line="61" selection-start-column="42" selection-end-line="61" selection-end-column="42" />
+        <state relative-caret-position="782">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding>
-            <marker date="1483441333586" expanded="true" signature="1387:1425" ph="SELECT b.* F... beneficiaire" />
+            <marker date="1483449846360" expanded="true" signature="1487:1525" ph="SELECT b.* F... beneficiaire" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="336" column="1" selection-start-line="336" selection-start-column="1" selection-end-line="336" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5484">
+          <caret line="329" column="5" selection-start-line="329" selection-start-column="5" selection-end-line="329" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="129" column="24" selection-start-line="129" selection-start-column="24" selection-end-line="129" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HistoriqueController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="107" column="5" selection-start-line="85" selection-start-column="4" selection-end-line="107" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/historique.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="78" selection-start-line="8" selection-start-column="0" selection-end-line="10" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/document.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/DocumentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="118" column="21" selection-start-line="118" selection-start-column="21" selection-end-line="118" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/showAll.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="29" selection-start-line="4" selection-start-column="24" selection-end-line="11" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="191" column="65" selection-start-line="191" selection-start-column="65" selection-end-line="191" selection-end-column="65" />
+          <folding />
         </state>
       </provider>
     </entry>
   </component>
   <component name="webServersAuthStorage">
-    <data>AAABoHC754eX3BIu3eliZ1jXcywZMXhUlaeTb8aC3LJnrVxaRs5oYTo8adkG7j1tJXoLxN0jSUDEQ5Ojhr+kY+WCTcAIc4ddzsbBxsfRP8IGaHKEIHcZCtuggNaltBYGpoJ550rBMIhgm4glkstsVI2XdAKUTWl6CoZUxO1E1qb/0fSY1PsUC3r3MN28YqAM29CKtZzC52ui7Al3S29dO+rZFOxkfJb0CXsjxEOLdjOWhCP09nJEEAN4b41KoOSC2c20FOsXPeznyAHY+OtKMEhHCRIcH3g0NtjUlJsRxANHeSQwrviTHI2kD/NYfRaIbL4eLBvgBUZEPPAIA+qv5X+WCAp60JilpJN2ByYD0Ei+FFmUq41Op6TSCsLiHjGEtK8DUjNGMSM//dmv3i3G45ZZNZiNLOtX5MOj/BQRMlXH5mpg7JkHlcm9DWLFPuVEWsM9Qmmupc0cLy42MsSwTuhYqcc2MMrT3f3NHfoswB2OzPxl/ylSL4NbyomkjcruL4qHeuhbIrZNCOFT7zJsJh76dEtBVqm1p6ShacJj6FVcQesQ1wgdOvPKhc8kRdz4QZfI0A==</data>
+    <data>AAACEAFsI8p/WBavNTvb1uOfawRvKJNniKjGbF9ZJWcfX1Rm/1KywLlavYNU31ZVcBrT4Ke/+F+Ukjv2LVxgaIlr1lCE5QdYXHJtFfyuyI7XAS6SBpUq3hPmgk/VKrm4iQs8Vn5qj0VQ/acL8RvT35aScNHN7BxWc6ZL1jgeWuk8hQe4svTEF5GZm9IumE5+8i156Z4TcmGr4+JbgFy9JBkFfytJz8JQuzwVeqGnEWma25N8GnHz5OfmBlf3FcubHy53T4utnJ3CRjC3VkYTD2KifTqY2o+6D5MFyNDImury1+eCVJMyV2if0fYCdKcbIyIyK9W3S/gGou5p0NAYdncvj4ghm6RDws+WFVqNNOY7cxO9/1zhnT4JPzNxrPqa0dByzzz7WruEwoDQ55BiW/dAHya3aVssJRM6m1pb+jBWU6T/SJbD83BACLQdG67Ucx1PSBrYfRJAdfJafukrzlxybVxzgLgSItObReZCKeyKsH7q7GG4bhf3/YfLgC5U5wWghwnjmYWGS9DSxy34Z4knspjxU3Emgd7wWpZlo89K/YNduZiJQt/RRJ0WJJH8xmOPRL6cQXeX7NhfPqWyOzDBGsliBWzheIiXcTwPGqYFVgKOaSQarO73/rvI6k86RiTGrMefMCXGyxBKd88evUnuLShWwQX9nBHEgxztUQC7nUNT3SWAHy9xhf97cDevjtblYwmXjwXWWRDIyZZ0YT4VINI=</data>
   </component>
 </project>

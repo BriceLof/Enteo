@@ -26,6 +26,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="139563f3-ca5f-464c-800d-cddce952eefe" name="IF_PROD" url="http://www.iciformations.fr">
+        <fileTransfer host="www.iciformations.fr" port="22" rootFolder="/opt/web/clients/i/iciformat/iciformations.fr/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

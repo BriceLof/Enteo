@@ -229,8 +229,14 @@ class BeneficiaireController extends Controller
                 $beneficiaire->setVille($ville);
             }
 
+
+            $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
+
+            if(!is_null($form["ville"]["cp"]->getData())){
+                $codePostal = $form["ville"]["cp"]->getData();
+            }
 
             if(!is_null($form['dateDebut']->getData())){
                 $dateDebut = $form['dateDebut']->getData();
@@ -240,7 +246,7 @@ class BeneficiaireController extends Controller
             }
 
 
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $codePostal);
             $results = $query->getResult();
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire

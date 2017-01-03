@@ -189,6 +189,11 @@
                                 <tr>
                                     <td>{{ document.description }}</td>
                                     <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span>voir le document</span></a></td>
+                                    <td class="btn" width="100%">
+                                        <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </table>

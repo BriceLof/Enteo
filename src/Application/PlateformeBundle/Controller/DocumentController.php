@@ -100,4 +100,28 @@ class DocumentController extends Controller
             'document' => $document,
         ));
     }
+
+    /**
+     * Deletes a Document entity.
+     *
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
+        $beneficiaire = $document->getBeneficiaire();
+
+        if (!$document) {
+            throw $this->createNotFoundException('Unable to find Historique.');
+        }
+
+        $em->remove($document);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('info', 'document bien supprimé');
+
+        return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+            'id' => $beneficiaire->getId(),
+        )));
+    }
 }
