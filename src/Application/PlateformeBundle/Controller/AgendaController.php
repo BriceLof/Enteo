@@ -75,6 +75,7 @@ class AgendaController extends Controller
                     'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
                     'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
                     'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
+                    'rdv' => ($request->request->get('typeRdv') == 'presenciel')? '': $request->request->get('typeRdv')
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
@@ -95,7 +96,7 @@ class AgendaController extends Controller
         // Ajout de l'evenement dans la calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            $typerdv = ($request->request->get('typeRdv') == 'presenciel')? '': $request->request->get('typeRdv');
+            $typerdv = $_SESSION['agenda'][0]['rdv'];
             $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
             $eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
