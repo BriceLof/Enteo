@@ -382,10 +382,12 @@ $("document").ready(function () {
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
     // Autocompletion nom
+    console.log('*************** pathname: '+location.pathname);
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
+                // url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
+                url : 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"), // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
                     sentinel: 1
