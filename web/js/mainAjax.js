@@ -385,7 +385,7 @@ $("document").ready(function () {
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
+                url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
                     sentinel: 1
@@ -394,15 +394,48 @@ $("document").ready(function () {
                 success : function(donnee){
                     var obj = $.parseJSON(donnee);
                     reponse($.map(obj, function (item) {
-                        console.log(item.nomConso);
-                        return item.nomConso;
+                        return {
+                            value: function ()
+                            {
+                              if ($(this).attr('id') == 'nomb')
+                              {
+                                 if(item.nomConso != undefined){
+                                     return item.nomConso+' '+item.prenomConso;
+                                     console.log('Nom: '+item.nomConso+' Prenom: '+item.prenomConso);
+                                 }
+                                 else{
+                                     return 'Aucun element trouvé';
+                                 }
+                              }
+                              else
+                              {
+                                  if(item.prenomConso != undefined){
+                                     $('#nomb').val(item.nomConso);
+                                     $('#prenomb').val(item.prenomConso); // input visible
+                                     $('#prenombe').val(item.prenomConso); // input hidden
+                                     $('#historique_Enregistrer').removeAttr('disabled');
+                                     return item.nomConso+' '+item.prenomConso;
+                                  }
+                                  else{
+                                     $('#nomb').val('');
+                                     $('#prenomb').val(''); // input visible
+                                     $('#prenombe').val(''); // input hidden
+                                     $('#historique_Enregistrer').attr('disabled','true');
+                                     return 'Aucun Beneficiaire trouvé';
+                                  }
+                              }
+                            }
+                        }
                     }));
                 }
             });
         }
     });
+    
+    // Si 
+    
     // Autocompletion prenom
-    $("#prenomb").autocomplete({
+    /*$("#prenomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
                 url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
@@ -413,8 +446,6 @@ $("document").ready(function () {
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
                     console.log(donnee);
-                    /*chaine1 = donnee.replace("[", "");
-                    chaine1 = chaine1.replace("]", "");*/
                     var obj = $.parseJSON(donnee);
                     reponse($.map(obj, function (item) {
                         console.log(item.prenomConso);
@@ -423,7 +454,7 @@ $("document").ready(function () {
                 }
             });
         }
-    });
+    });*/
     
 
     if($('.calendrierconsultant').val() != undefined){

@@ -18,15 +18,16 @@ class AgendaController extends Controller
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if($request->query->get('sentinel') == 1){
             // nom
-            $query = $em->createQuery('SELECT b.nomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
+            $query = $em->createQuery('SELECT b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
             $query->setParameter('nom', $request->query->get('term').'%');
         }
-        else if($request->query->get('sentinel') == 2){
+        /*else if($request->query->get('sentinel') == 2){
             // prenom
             $query = $em->createQuery('SELECT b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.prenomConso LIKE :prenom');
             $query->setParameter('prenom', $request->query->get('term').'%');
-        }
+        }*/
         $results = $query->getResult();
+        if(count($results) <= 0) $results = array('nomConso' => -1);
         return new JsonResponse(json_encode($results));
     }
 
@@ -76,7 +77,7 @@ class AgendaController extends Controller
                 // On stocke Les infos dans un tableau
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
-                    'prenom' => $request->request->get('prenomb'),
+                    'prenom' => $request->request->get('prenombeneficiaire'),
                     'bureau' => $request->request->get('bureauRdv'),
                     'ville' => $request->request->get('villeh'),
                     'adresse' => $request->request->get('adresseh'),

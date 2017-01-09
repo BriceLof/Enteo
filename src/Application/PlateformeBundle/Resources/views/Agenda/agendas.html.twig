@@ -19,7 +19,8 @@
                            <div>
                                <!-- champs supplementaires ajoutés statiquements -->
                                <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
-                               <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" class="form-control new_input" required>
+                               <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
+                               <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
                                <label>Bureau</label>
                                <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
                                    {% if bureau|length > 1 %}
@@ -55,7 +56,8 @@
                          <div>
                             <!-- champs supplementaires ajoutés statiquements -->
                             <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
-                            <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" class="form-control new_input" required>
+                            <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
+                            <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
                             <label>Bureau</label>
                             <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
                                 {% if bureau|length <= 1 %}
