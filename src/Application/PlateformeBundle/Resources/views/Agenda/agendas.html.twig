@@ -42,7 +42,7 @@
                                             {% endfor %}
                                         {% endif %}
                                     </select>
-                                    <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input" disabled="true">
+                                    <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input ville" disabled="true">
                                     <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                     <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
                                     <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
@@ -66,25 +66,33 @@
                             <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
                             <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
                             <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
-                            <label>Bureau</label>
-                            <select name="bureauRdv" id="bureauRdv" class="form-control new_input" required>
-                                {% if bureau|length <= 1 %}
-                                    <option value="">Selectionner un Bureau</option>
-                                    <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
-                                {% else %}
-                                    <option value="">Selectionner un Bureau</option>
-                                    {% for bureaux in bureau %}
-                                       <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.cp}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
-                                    {% endfor %}
-                                {% endif %}
-                             </select>
-                             <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input" disabled="true">
-                             <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
-                             <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
-                             <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
-                             <label>Code postal</label><input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
-                             <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
-                             {{ form_widget(form) }}
+                            <!-- Type de Rendez-vous [presentiel ou distanciel] -->
+                            <label>Type de Rendez-vous: </label>
+                            <p class="trdv">
+                               <input type="radio" name="typeRdv" class="typerdv" id="rdvpresentiel" class="rdvpresentiel" checked="true" value="presenciel"><span style="margin-left:2%;">Presenciel</span>
+                               <input type="radio" name="typeRdv" class="typerdv" id="rdvdistentiel" class="rdvdistentiel" value="distanciel"><span style="margin-left:2%;">Distanciel</span>
+                            </p>
+                            <div class="bureau_v">
+                                <label>Bureau</label>
+                                <select name="bureauRdv" id="bureauRdv" class="form-control new_input bureauRdv" required>
+                                    {% if bureau|length <= 1 %}
+                                        <option value="">Selectionner un Bureau</option>
+                                        <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
+                                    {% else %}
+                                        <option value="">Selectionner un Bureau</option>
+                                        {% for bureaux in bureau %}
+                                           <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.cp}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                 </select>
+                                 <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input ville" disabled="true">
+                                 <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
+                                 <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
+                                 <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
+                                 <label>Code postal</label><input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
+                                 <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
+                            </div>
+                            {{ form_widget(form) }}
                          </div>
                       </form>
                    </div>
