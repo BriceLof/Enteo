@@ -206,12 +206,8 @@ class GoogleCalendar
         $client->setState($this->base64UrlEncode(json_encode($this->parameters)));
         // Load previously authorized credentials from a file.
         //$credentialsPath = $this->credentialsPath;
-        $credentialsPath = self::PATH_CREDENTIALS.'\credentials'.$_SESSION['useridcredencial'].'.json';
+        $credentialsPath = self::PATH_CREDENTIALS.'/credentials'.$_SESSION['useridcredencial'].'.json';
         if ($fromFile) {
-            /*echo '<pre>';
-            var_dump($credentialsPath);
-            var_dump(file_exists($credentialsPath));
-            exit;*/
             if (file_exists($credentialsPath)) {
                 $accessToken = json_decode(file_get_contents($credentialsPath), true);
             } else {

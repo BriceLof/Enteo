@@ -400,24 +400,24 @@ $("document").ready(function () {
                               if ($(this).attr('id') == 'nomb')
                               {
                                  if(item.nomConso != undefined){
-                                     return item.nomConso;
+                                    return item.nomConso;
                                  }
                               }
                               else
                               {
                                   if(item.prenomConso != undefined){
-                                     $('#nomb').val(item.nomConso);
-                                     $('#prenomb').val(item.prenomConso); // input visible
-                                     $('#prenombe').val(item.prenomConso); // input hidden
-                                     $('#historique_Enregistrer').removeAttr('disabled');
-                                     return item.nomConso;
+                                      $('#nomb').val(item.nomConso);
+                                      $('#prenomb').val(item.prenomConso); // input visible
+                                      $('#prenombe').val(item.prenomConso); // input hidden
+                                      $('#historique_Enregistrer').removeAttr('disabled');
+                                      return item.nomConso;
                                   }
                                   else{
-                                     $('#nomb').val('');
-                                     $('#prenomb').val(''); // input visible
-                                     $('#prenombe').val(''); // input hidden
-                                     $('#historique_Enregistrer').attr('disabled','true');
-                                     return 'Aucun Beneficiaire trouvé';
+                                      $('#nomb').val('');
+                                      $('#prenomb').val(''); // input visible
+                                      $('#prenombe').val(''); // input hidden
+                                      $('#historique_Enregistrer').attr('disabled','true');
+                                      return 'Aucun Beneficiaire trouvé';
                                   }
                               }
                             }
@@ -433,12 +433,14 @@ $("document").ready(function () {
     // ==================================================================================== //
     $('input:radio[name="typeRdv"]').change(function(){
             if ($(this).is(':checked') && $(this).val() == 'distanciel') {
+                console.log('----------------- ttt: '+$(this).val());
                 // On masque les bureau et adresse
                 $('.bureau_v').css('display', 'none');
                 // On supprime le required dans le champ bureau
                 $('#bureauRdv').removeAttr('required');
             }
             else{
+                console.log('----------------- ttt: '+$(this).val());
                 // On affiche les bureau et adresse
                 $('.bureau_v').css('display', 'inline-block');
                 // On ajoute le required dans le champ bureau
@@ -482,7 +484,7 @@ $("document").ready(function () {
             idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
             idbureauoption = idbureauoption.split("_");
             villenom = $("#bureauRdv").val(); // On recupere la ville
-            $('#ville').val(idbureauoption[2]); // On instancie la ville
+            $('.ville').val(villenom); // On instancie la ville
             $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
             $('#zip').val(idbureauoption[1]); // On instancie l'adresse
             $('#villeh').val(villenom); // On instancie la ville
