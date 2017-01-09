@@ -12,7 +12,6 @@ use Application\PlateformeBundle\Entity\AgendaB;
 
 class AgendaController extends Controller
 {
-    // google-calendar-api@plenary-net-147113.iam.gserviceaccount.com
     // Autocompletion
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
@@ -21,13 +20,7 @@ class AgendaController extends Controller
             $query = $em->createQuery('SELECT b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
             $query->setParameter('nom', $request->query->get('term').'%');
         }
-        /*else if($request->query->get('sentinel') == 2){
-            // prenom
-            $query = $em->createQuery('SELECT b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.prenomConso LIKE :prenom');
-            $query->setParameter('prenom', $request->query->get('term').'%');
-        }*/
-        $results = $query->getResult();
-        if(count($results) <= 0) $results = array('nomConso' => -1);
+        (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();;
         return new JsonResponse(json_encode($results));
     }
 
@@ -78,10 +71,10 @@ class AgendaController extends Controller
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
                     'prenom' => $request->request->get('prenombeneficiaire'),
-                    'bureau' => $request->request->get('bureauRdv'),
-                    'ville' => $request->request->get('villeh'),
-                    'adresse' => $request->request->get('adresseh'),
-                    'zip' => $request->request->get('ziph'),
+                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('bureauRdv'):'',
+                    'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
+                    'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
+                    'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
@@ -102,7 +95,8 @@ class AgendaController extends Controller
         // Ajout de l'evenement dans la calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
+            $typerdv = ($request->request->get('typeRdv') == 'presenciel')? '': $request->request->get('typeRdv');
+            $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
             $eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
                 $_SESSION['agenda'][1]->getDateDebut(),

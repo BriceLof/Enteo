@@ -23,10 +23,12 @@ class HistoriqueType extends AbstractType
                 'label' => 'Description evenement',
                 'required' => false))
             ->add('dateDebut', DateType::class, array(
-                'label' => 'Debut evenement'
+                'label' => 'Debut evenement', 
+                'attr' => array('class' => 'datedebut')
             ))
             ->add('dateFin', DateType::class, array(
-                'label' => 'Fin evenement'
+                'label' => 'Fin evenement', 
+                'attr' => array('class' => 'datefin')
             ))
             ->add('heureDebut', TimeType::class, array(
                 'label' => 'Heure Debut'

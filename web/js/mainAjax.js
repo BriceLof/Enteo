@@ -382,11 +382,9 @@ $("document").ready(function () {
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
     // Autocompletion nom
-    console.log('*************** pathname: '+location.pathname);
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                // url : 'http://'+location.hostname+'/teo/web/app_dev.php/autocompletion', // on appelle le script JSON
                 url : 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"), // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
@@ -402,11 +400,7 @@ $("document").ready(function () {
                               if ($(this).attr('id') == 'nomb')
                               {
                                  if(item.nomConso != undefined){
-                                     return item.nomConso+' '+item.prenomConso;
-                                     console.log('Nom: '+item.nomConso+' Prenom: '+item.prenomConso);
-                                 }
-                                 else{
-                                     return 'Aucun element trouvé';
+                                     return item.nomConso;
                                  }
                               }
                               else
@@ -416,7 +410,7 @@ $("document").ready(function () {
                                      $('#prenomb').val(item.prenomConso); // input visible
                                      $('#prenombe').val(item.prenomConso); // input hidden
                                      $('#historique_Enregistrer').removeAttr('disabled');
-                                     return item.nomConso+' '+item.prenomConso;
+                                     return item.nomConso;
                                   }
                                   else{
                                      $('#nomb').val('');
@@ -434,31 +428,24 @@ $("document").ready(function () {
         }
     });
     
-    // Si 
-    
-    // Autocompletion prenom
-    /*$("#prenomb").autocomplete({
-        source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
-            $.ajax({
-                url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
-                data : {
-                    term : $('#prenomb').val(),
-                    sentinel: 2
-                },
-                dataType : 'json', // on spécifie bien que le type de données est en JSON
-                success : function(donnee){
-                    console.log(donnee);
-                    var obj = $.parseJSON(donnee);
-                    reponse($.map(obj, function (item) {
-                        console.log(item.prenomConso);
-                        return item.prenomConso;
-                    }));
-                }
-            });
-        }
-    });*/
-    
-
+    // ==================================================================================== //
+    // ======= Affichage du bureau et l'adresse en fonction du type de rendez vous ======== //
+    // ==================================================================================== //
+    $('input:radio[name="typeRdv"]').change(function(){
+            if ($(this).is(':checked') && $(this).val() == 'distanciel') {
+                // On masque les bureau et adresse
+                $('.bureau_v').css('display', 'none');
+                // On supprime le required dans le champ bureau
+                $('#bureauRdv').removeAttr('required');
+            }
+            else{
+                // On affiche les bureau et adresse
+                $('.bureau_v').css('display', 'inline-block');
+                // On ajoute le required dans le champ bureau
+                $('#bureauRdv').attr('required','true');
+            }
+    });
+  
     if($('.calendrierconsultant').val() != undefined){
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
@@ -512,12 +499,11 @@ $("document").ready(function () {
             $('#ziph').val();
         }
     });
-
+    
     // ================================================================ //
     // ========== Gestion des Heures dans l'ajout d'un RDV ============ //
     // ================================================================ //
     $('#historique_heureDebut_hour').change(function(){
-        // historique_heureDebut_hour
         // On initialise l'heure de fin en fonction de l'heure de debut
         heure_debut = parseInt($('#historique_heureDebut_hour').val()); // On recupère l'heure de debut
         minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
@@ -529,6 +515,8 @@ $("document").ready(function () {
         minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
         $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
     });
+    
+    console.log();
 });
 
 
