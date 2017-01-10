@@ -21,13 +21,13 @@ $(function(){
                 
                 $.ajax({
                     type: 'get',
-                    url: "http://localhost/Enteo/web/detail_statut/"+statutId,
+                    url: Routing.generate("application_plateforme_detail_statut", { idStatut: statutId }),
                     beforeSend: function(){
                         console.log('ça charge')
                         //$(".detailStatut").append(
                     }
                 }).done(function(data) {
-                    console.log(data.details)
+                    console.log(data)
                     $(".detailStatut").html("");
                     for(var i = 0; i < data.details.length; i++)
                     {

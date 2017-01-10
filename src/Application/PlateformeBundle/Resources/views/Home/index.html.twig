@@ -48,13 +48,13 @@
                             </tr>
                             <tr>
                                 <th colspan=2>Nombre total appel</th>
-                                <th colspan=2>Dernier appel</th>
+                                <th colspan=2>Date de la news</th>
                                 <th colspan=5>Dernière news</th>
                                 <th>Statut</th>
                                 <th>Détail statut</th>
                             </tr>
                             <tr>
-                                <td colspan=2><span style="color:red"><b>{# if beneficiaire.nbAppelTel <= 0 %}0{% endif #} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
                                 <td colspan=2>
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("m/d/Y") ~ ' à' : '' }} 
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
