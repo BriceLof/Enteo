@@ -4,7 +4,7 @@
                 {# bloc Agenda pour Admin #}
                 <div class="blocagendaprincipal">
                     <div class="blocconsultant">
-                        <span>Consultants: </span>
+                        <span>Voir l'agenda du consultant: </span>
                         <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
                             <option value="">Selectionnez</option>
                             {% for user in consultant%}
@@ -12,11 +12,14 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div id="nomconsultant">
+                        <span class="nomconsultant"></span>
+                    </div>
                     <div class="blocacalendar"></div>
                     <div class="bloc_form_agenda">
                         <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement') }}" >
                             <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
-                           <div>
+                           <div class="champs-form">
                                <!-- champs supplementaires ajoutés statiquements -->
                                <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
                                <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
@@ -42,6 +45,7 @@
                                             {% endfor %}
                                         {% endif %}
                                     </select>
+                                    <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
                                     <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input ville" disabled="true">
                                     <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                     <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
@@ -57,11 +61,14 @@
             {% elseif is_granted('ROLE_CONSULTANT') %}
                 {# bloc Agenda pour consultant #}
                    <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
+                   <div id="nomconsultant">
+                        <span class="nomconsultant">{{'Agenda de '~consultant.nom~' '~consultant.prenom}}</span>
+                   </div>
                    <div class="blocacalendar"></div>
                    <div class="bloc_form_agenda">
                       <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
                           <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
-                         <div>
+                         <div class="champs-form">
                             <!-- champs supplementaires ajoutés statiquements -->
                             <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
                             <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
@@ -85,6 +92,7 @@
                                         {% endfor %}
                                     {% endif %}
                                  </select>
+                                 <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
                                  <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input ville" disabled="true">
                                  <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                  <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">

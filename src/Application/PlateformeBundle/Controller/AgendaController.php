@@ -63,7 +63,11 @@ class AgendaController extends Controller
                     $_SESSION['useridcredencial'] = $request->query->get('userId');
                     break;
             }
+            // On recupere le bureau
+            $bureauObject = ($request->request->get('bureauselect') != -1)? $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($request->request->get('bureauselect')) : NULL;
             $historique = new Historique(); // Historique
+            $historique->setBureau($bureauObject);
+            $historique->setTypeRdv($request->request->get('typeRdv'));
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if ($form->handleRequest($request)->isValid()) {
@@ -96,7 +100,7 @@ class AgendaController extends Controller
         // Ajout de l'evenement dans la calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            $typerdv = $_SESSION['agenda'][0]['rdv'];
+            $typerdv = $_SESSION['agenda'][1]['rdv'];
             $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
             $eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
@@ -109,6 +113,9 @@ class AgendaController extends Controller
                 $optionalParams = [],
                 $allDay = true
             );
+            // On enregistre l'historique en BD
+            $em->persist($historique);
+            $em->flush();
         }
         // On le redirige sur la page agenda
         if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){

@@ -433,14 +433,12 @@ $("document").ready(function () {
     // ==================================================================================== //
     $('input:radio[name="typeRdv"]').change(function(){
             if ($(this).is(':checked') && $(this).val() == 'distanciel') {
-                console.log('----------------- ttt: '+$(this).val());
                 // On masque les bureau et adresse
                 $('.bureau_v').css('display', 'none');
                 // On supprime le required dans le champ bureau
                 $('#bureauRdv').removeAttr('required');
             }
             else{
-                console.log('----------------- ttt: '+$(this).val());
                 // On affiche les bureau et adresse
                 $('.bureau_v').css('display', 'inline-block');
                 // On ajoute le required dans le champ bureau
@@ -458,13 +456,16 @@ $("document").ready(function () {
                 selectheuresf[j].remove(); // heure fin
             }
         }
+        // Affichage du nom du consultant
+        $('.nomconsultant').text($('.consultantC').val());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('.calendrierconsultant').val());
+        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '900');
+        $('.blocacalendar iframe').attr('height', '1092');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -484,12 +485,17 @@ $("document").ready(function () {
             idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
             idbureauoption = idbureauoption.split("_");
             villenom = $("#bureauRdv").val(); // On recupere la ville
-            $('.ville').val(villenom); // On instancie la ville
+            $('.ville').val(idbureauoption[2]); // On instancie la ville
             $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
-            $('#zip').val(idbureauoption[1]); // On instancie l'adresse
-            $('#villeh').val(villenom); // On instancie la ville
+            $('#zip').val(idbureauoption[1]); // On instancie le code postal
+            $('#villeh').val(idbureauoption[2]); // On instancie la ville
             $('#adresseh').val(idbureauoption[0]); // On instancie l'adresse
-            $('#ziph').val(idbureauoption[1]); // On instancie l'adresse
+            $('#ziph').val(idbureauoption[1]); // On instancie le code postal
+            // id du bureau 
+            b_id = $("#bureauRdv option:selected").attr("class");
+            b_id = b_id.split("_");
+            console.log('**************************** id bureau: '+b_id[1]);
+            $('.bureauselect').val(b_id[1]);
         }
         else{
             // On reinitialise tous les champs des input desactivé
@@ -499,6 +505,7 @@ $("document").ready(function () {
             $('#villeh').val();
             $('#adresseh').val();
             $('#ziph').val();
+            $('.bureauselect').val();
         }
     });
     
@@ -544,13 +551,16 @@ $('#consultantC').change(function(){
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
+        // Affichage du nom du consultant
+        $('.nomconsultant').text('Agenda de '+$('#consultantC option:selected').text());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('#consultantC').val());
+        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '900');
+        $('.blocacalendar iframe').attr('height', '1092');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
