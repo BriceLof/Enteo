@@ -71,6 +71,9 @@ fos_user:
     registration:
         form:
             type: Application\UsersBundle\Form\UsersType
+    profile:
+        form:
+            type: Application\UsersBundle\Form\ProfileType
     
 # Swiftmailer Configuration
 swiftmailer:

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 
 class BeneficiaireType extends AbstractType
@@ -51,6 +52,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('poste', TextType::class, array(
                 'label' => 'Poste occupé ',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -58,6 +60,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('encadrement', ChoiceType::class, array(
                 'label' => 'Encadrement ',
+                'required' => false,
                 'choices' => array(
                     '...' => '',
                     'oui' => 'oui',
@@ -74,6 +77,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('tel2', TextType::class, array(
                 'label' => 'Tél 2 ',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -81,6 +85,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('email2', TextType::class, array(
                 'label' => 'Email 2',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -95,6 +100,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('adresse', TextType::class, array(
                 'label' => 'Adresse ',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -102,6 +108,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('adresseComplement', TextType::class, array(
                 'label' => 'Complement ',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -110,10 +117,12 @@ class BeneficiaireType extends AbstractType
             ->add('ville', VilleType::class, array(
                 'label' => '',
                 'required' => false,
+                'by_reference' => true,
             ))
 
             ->add('pays', TextType::class, array(
                 'label' => 'Pays ',
+                'data' => 'FRANCE',
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -121,6 +130,7 @@ class BeneficiaireType extends AbstractType
 
             ->add('numSecu', TextType::class, array(
                 'label' => 'N° de Sécu ',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -129,6 +139,7 @@ class BeneficiaireType extends AbstractType
             ->add('dateNaissance', DateType::class, array(
                 'label' => 'Date de Naissance ',
                 'widget' => 'single_text',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )

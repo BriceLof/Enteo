@@ -135,14 +135,14 @@ $("document").ready(function () {
         $("#accompagnementEditForm").validate({
             rules: {
                 "accompagnement[opcaOpacif]":{
-                    "required": true
+                    "required": false
                 },
                 "accompagnement[heure]":{
-                    "required": true,
+                    "required": false,
                     "number" : true
                 },
                 "accompagnement[tarif]":{
-                    "required": true,
+                    "required": false,
                     "tarif" : /^[1-9][0-9]+(\.?([0-9]?[1-9]|[1-9][0-9]?))?$/
                 },
                 "accompagnement[dateDebut]": {
@@ -172,6 +172,41 @@ $("document").ready(function () {
         })
     });
 
+    //validation jquery
+    $( function() {
+        $("#projetEditForm").validate({
+            rules: {
+                "projet[experience]":{
+                    "required": false
+                },
+                "projet[heureDif]":{
+                    "required": false,
+                    "number": true
+                },
+                "projet[heureCpf]":{
+                    "required": false,
+                    "number": true
+                }
+            },
+            errorElement: 'div'
+        })
+    });
+
+    //espace documentaire validate
+    $( function() {
+        $("#newDocumentsForm").validate({
+            rules: {
+                "espace_documentaire_documents_0_description":{
+                    "required": true
+                },
+                "suivi_administratif[quoi]":{
+                    "required": true
+                }
+            },
+            errorElement: 'div'
+        })
+    });
+
 
     //validation jquery de la fiche beneficiaire
     $( function() {
@@ -184,26 +219,23 @@ $("document").ready(function () {
                     "required": true
                 },
                 "beneficiaire[nomConso]":{
-                    "required": true,
-                    "texte": /^([a-z ]-?,?)+$/i
+                    "required": true
                 },
                 "beneficiaire[prenomConso]":{
-                    "required": true,
-                    "texte": /^([a-z ]-?,?)+$/i
+                    "required": true
                 },
                 "beneficiaire[poste]":{
-                    "required": true,
-                    "texte": /^([a-z ]-?,?)+$/i
+                    "required": false
                 },
                 "beneficiaire[encadrement]":{
-                    "required": true
+                    "required": false
                 },
                 "beneficiaire[telConso]":{
                     "required": true,
                     "tel": /^0[1-8][0-9]{8}$/
                 },
                 "beneficiaire[tel2]":{
-                    "required": true,
+                    "required": false,
                     "tel": /^0[1-8][0-9]{8}$/
                 },
                 "beneficiaire[emailConso]":{
@@ -211,11 +243,11 @@ $("document").ready(function () {
                     "email": true
                 },
                 "beneficiaire[email2]":{
-                    "required": true,
+                    "required": false,
                     "email": true
                 },
                 "beneficiaire[adresse]":{
-                    "required": true
+                    "required": false
                 },
                 "beneficiaire[ville][zip]":{
                     "required": true
@@ -228,18 +260,44 @@ $("document").ready(function () {
                     "texte": /^([a-z ]-?,?)+$/i
                 },
                 "beneficiaire[numSecu]":{
-                    "required": true,
+                    "required": false,
                     "numSecu": /^[12][0-9]{14}$/
                 },
                 "beneficiaire[dateNaissance]":{
-                    "required": true
+                    "required": false
                 }
             },
             errorElement: 'div'
         })
     });
 
+    $(".cp").keyup(function () {
+        if ($(this).val().length === 5){
+            $.ajax({
+                type: 'get',
+                url: Routing.generate('application_search_ville', {cp : $(this).val()}),
+                beforeSend: function(){
+                    console.log('ça charge !');
+                },
+                success: function (data) {
+                    var id = $(".ville").attr("id");
+                    var name = $(".ville").attr("name");
+                    $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
+                    $.each(data.ville, function(index,value){
+                        $(".ville").append($('<option>',{value: value, text: value}));
+                    });
 
+                    console.log('ville ok');
+                }
+            })
+        }else{
+            $(".ville").val('');
+        }
+    });
+
+    //ajax rechercher dans la page home
+    // desactivation de l'ajax par demande de philippe pour plus de visibilité
+    /**
     $("#ajaxForm").submit(function (e) {
 
         e.preventDefault();
@@ -288,9 +346,9 @@ $("document").ready(function () {
             }
         });
     });
+     */
     /**
      $("#ajaxForm").submit(function (e) {
-
         e.preventDefault();
         $.ajax({
             url: Routing.generate('application_ajaxSearch_beneficiaire'), // le nom du fichier indiqué dans le formulaire
@@ -299,11 +357,9 @@ $("document").ready(function () {
             cache: true,
             dataType: 'html',
             beforeSend: function () {
-
                 var resultat = document.getElementById('content');
                 resultat.innerHTML = "";
                 resultat.innerHTML += '<div class="loading"></div>';
-
             },
             success: function (response) {
                 template = response;
@@ -311,46 +367,283 @@ $("document").ready(function () {
             }
         });
     });*/
+
+
+
+
+
+
+    // ============================================================ //
+    // =================== Agenda du consultant ==================== // 
+    // ========== On affiche le calendrier et le formulaire ======= //
+    // ============================================================ //
+
+    // =========================================================================== //
+    // ================= Autocompletion Nom et Prenom beneficiaire =============== //
+    // =========================================================================== //
+    // Autocompletion nom
+    $("#nomb").autocomplete({
+        source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
+            $.ajax({
+                url : 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"), // on appelle le script JSON
+                data : {
+                    term : $('#nomb').val(),
+                    sentinel: 1
+                },
+                dataType : 'json', // on spécifie bien que le type de données est en JSON
+                success : function(donnee){
+                    var obj = $.parseJSON(donnee);
+                    reponse($.map(obj, function (item) {
+                        return {
+                            value: function ()
+                            {
+                              if ($(this).attr('id') == 'nomb')
+                              {
+                                 if(item.nomConso != undefined){
+                                    return item.nomConso;
+                                 }
+                              }
+                              else
+                              {
+                                  if(item.prenomConso != undefined){
+                                      $('#nomb').val(item.nomConso);
+                                      $('#prenomb').val(item.prenomConso); // input visible
+                                      $('#prenombe').val(item.prenomConso); // input hidden
+                                      $('#historique_Enregistrer').removeAttr('disabled');
+                                      return item.nomConso;
+                                  }
+                                  else{
+                                      $('#nomb').val('');
+                                      $('#prenomb').val(''); // input visible
+                                      $('#prenombe').val(''); // input hidden
+                                      $('#historique_Enregistrer').attr('disabled','true');
+                                      return 'Aucun Beneficiaire trouvé';
+                                  }
+                              }
+                            }
+                        }
+                    }));
+                }
+            });
+        }
+    });
+    
+    // ==================================================================================== //
+    // ======= Affichage du bureau et l'adresse en fonction du type de rendez vous ======== //
+    // ==================================================================================== //
+    $('input:radio[name="typeRdv"]').change(function(){
+            if ($(this).is(':checked') && $(this).val() == 'distanciel') {
+                console.log('----------------- ttt: '+$(this).val());
+                // On masque les bureau et adresse
+                $('.bureau_v').css('display', 'none');
+                // On supprime le required dans le champ bureau
+                $('#bureauRdv').removeAttr('required');
+            }
+            else{
+                console.log('----------------- ttt: '+$(this).val());
+                // On affiche les bureau et adresse
+                $('.bureau_v').css('display', 'inline-block');
+                // On ajoute le required dans le champ bureau
+                $('#bureauRdv').attr('required','true');
+            }
+    });
+  
+    if($('.calendrierconsultant').val() != undefined){
+        // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
+        selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        for(j=0; j<selectheuresd.length; j++){
+            if(j<7 || j>20){
+                selectheuresd[j].remove(); // heure debut
+                selectheuresf[j].remove(); // heure fin
+            }
+        }
+        // Affichage du calendrier dans le bloc
+        $('.blocacalendar').append($('.calendrierconsultant').val());
+        // Affichage du formulaire 
+        $('.formPagenda').css('display', 'inline-block');
+        // modification de la largeur du calendrier
+        $('.blocacalendar iframe').attr('width', '1150');
+        $('.blocacalendar iframe').attr('height', '900');
+        // Positionnement du bouton
+        $('.formPagenda button').css('margin-left', '59%');
+        $('#agendaForm').css({
+            padding: '6px',
+            'margin-top': '45px'
+        });
+    }
+
+    // ============================================================== //
+    // ============ Mise à jour des valeurs des champs ============== //
+    // ============= ville et adresse en fonction du ================ //
+    // ====================== Bureau ================================ //
+    // ============================================================== //
+    $('#bureauRdv').change(function(){
+        if($('#bureauRdv').val() != ""){
+            // On renseigne les champs ville et adresse
+            idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
+            idbureauoption = idbureauoption.split("_");
+            villenom = $("#bureauRdv").val(); // On recupere la ville
+            $('.ville').val(villenom); // On instancie la ville
+            $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
+            $('#zip').val(idbureauoption[1]); // On instancie l'adresse
+            $('#villeh').val(villenom); // On instancie la ville
+            $('#adresseh').val(idbureauoption[0]); // On instancie l'adresse
+            $('#ziph').val(idbureauoption[1]); // On instancie l'adresse
+        }
+        else{
+            // On reinitialise tous les champs des input desactivé
+            $('#ville').val();
+            $('#adresse').val();
+            $('#zip').val();
+            $('#villeh').val();
+            $('#adresseh').val();
+            $('#ziph').val();
+        }
+    });
+    
+    // ================================================================ //
+    // ========== Gestion des Heures dans l'ajout d'un RDV ============ //
+    // ================================================================ //
+    $('#historique_heureDebut_hour').change(function(){
+        // On initialise l'heure de fin en fonction de l'heure de debut
+        heure_debut = parseInt($('#historique_heureDebut_hour').val()); // On recupère l'heure de debut
+        minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
+        majheuredebut = heure_debut+1;
+        $('#historique_heureFin_hour').val(majheuredebut); // Maj de l'heure de fin
+        $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
+    });
+    $('#historique_heureDebut_minute').change(function(){
+        minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
+        $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
+    });
+    
+    console.log();
 });
 
 
 // ---------------------------------------------- //
-// --- Affichage calendrier d'un consultant ----- //
+// ------------- Affichage pour Admin ----------- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
-    // vide le bloc
-    emptyelement('blocacalendar', 'class');
-    // Affichage du calendrier dans le bloc
-    $('.blocacalendar').append($('#consultantC').val());
-    // modification de la largeur du calendrier
-    $('.blocacalendar iframe').attr('width', '100%')
+    emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
+    if($('#consultantC').val() != ""){
+        // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
+        selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        for(j=0; j<selectheuresd.length; j++){
+            if(j<7 || j>20){
+                selectheuresd[j].remove(); // heure debut
+                selectheuresf[j].remove(); // heure fin
+            }
+        }
+        // On ajoute l'id dans l'action du formulaire Ajout Evenement
+        var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
+        action = action.split("?"); // Vire l'ancienne valeur [userId]
+        idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
+        idconsultant = idconsultant.split('-');
+        action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+        $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
+        // Affichage du calendrier dans le bloc
+        $('.blocacalendar').append($('#consultantC').val());
+        // Affichage du formulaire 
+        $('.formPagenda').css('display', 'inline-block');
+        // modification de la largeur du calendrier
+        $('.blocacalendar iframe').attr('width', '1150');
+        $('.blocacalendar iframe').attr('height', '900');
+        // Positionnement du bouton
+        $('.formPagenda button').css('margin-left', '59%');
+        $('#agendaForm').css({
+            padding: '6px',
+            'margin-top': '45px'
+        });
+    }
+    else{
+        // On masque le formulaire
+        $('.formPagenda').css('display', 'none');
+    }
+
 });
 
 // vide un bloc
-function emptyelement(element, type){
-    switch(type){
+function emptyelement(element, type) {
+    switch (type) {
         case 'id':
-            $('#'+element).empty();
+            $('#' + element).empty();
             break;
         case 'class':
-            $('.'+element).empty();
+            $('.' + element).empty();
             break;
     }
 }
 
+$(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#espace_documentaire_documents');
+    // On ajoute un lien pour ajouter une nouvelle catégorie
+    var $addLink = $('<a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>');
+    $container.append($addLink);
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+        addImage($container);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+    });
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+    } else {
+        // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+        $container.children('div').each(function() {
+            addDeleteLink($(this));
+        });
+    }
+
+    // La fonction qui ajoute un formulaire Image
+    function addImage($container) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Image n°' + (index+1))
+            .replace(/__name__/g, index));
+        // On ajoute au prototype un lien pour pouvoir supprimer l'image
+        addDeleteLink($prototype);
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+        index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une image
+    function addDeleteLink($prototype) {
+        // Création du lien
+        $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+        // Ajout du lien
+        $prototype.append($deleteLink);
+        // Ajout du listener sur le clic du lien
+        $deleteLink.click(function(e) {
+            $prototype.remove();
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            return false;
+        });
+    }
+});
 
 (function(){
-    var plusMoins = document.getElementById('plusMoins');
-    plusMoins.onclick = function () {
-        if(plusMoins.innerHTML == 'voir plus +') {
-            document.getElementById('rechercherPlus').style.display = 'block';
-            plusMoins.innerHTML = 'voir moins -';
-        }else{
-            document.getElementById('rechercherPlus').style.display = 'none';
-            plusMoins.innerHTML = 'voir plus +';
-        }
-    };
 
+    var plusMoins = document.getElementById('plusMoins');
+    if(plusMoins != undefined) {
+        plusMoins.onclick = function () {
+            if (plusMoins.innerHTML == 'voir plus +') {
+                document.getElementById('rechercherPlus').style.display = 'block';
+                plusMoins.innerHTML = 'voir moins -';
+            } else {
+                document.getElementById('rechercherPlus').style.display = 'none';
+                plusMoins.innerHTML = 'voir plus +';
+            }
+        };
+    }
     /**
      var ajouterNews = document.getElementById('OngletAjouterNews');
      var afficherNews = document.getElementById('OngletAfficherNews');
@@ -383,11 +676,9 @@ function emptyelement(element, type){
 
     function afficheMessageFlash() {
         var flash = document.getElementById("flashbag");
-        flash.style.display='none';
+        if (flash != undefined) {
+            flash.style.display = 'none';
+        }
     }
     setTimeout(afficheMessageFlash,5000);
 })();
-
-
-
-

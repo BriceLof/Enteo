@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>{% block title %}Enteo{% endblock %}</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -47,7 +48,11 @@
                   </ul>
                 </li>
                 <li><a href="#contact">Scripts</a></li>
-                <li><a href="{{ path('application_plateforme_agenda') }}">Agenda</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('application_plateforme_agenda') }}" target="_blank">Agenda</a></li>
+                {% elseif is_granted('ROLE_CONSULTANT') %}
+                    <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}" target="_blank">Agenda</a></li>
+                {% endif %}
               </ul>
               <ul class="nav navbar-nav navbar-right nav-connexion">
                 <li >
@@ -68,7 +73,7 @@
         {% block header %}{% endblock %}
     </header>
     
-    <div id="content" style="margin-top: 130px;">
+    <div id="content" style="margin-top: 7px;">
         {% block menuLeft %}{% endblock %}
         {% block body %}{% endblock %}
     </div>

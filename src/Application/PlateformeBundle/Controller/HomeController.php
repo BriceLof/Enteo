@@ -12,14 +12,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends Controller
 {
-    
     public function indexAction(Request $request, $page)
-    {   
+    {
+
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
-    
-        $nbPerPage = 4;
+
+        //demande de philippe pour que le nombre de beneficiaire par page soit de 50
+        //auparavant 4
+        $nbPerPage = 50;
         
         $em = $this->getDoctrine()->getManager();  
         // Récupération liste béneficiaires
@@ -55,7 +57,6 @@ class HomeController extends Controller
             'form_news'             => $form->createView()
         ));
     }
-    
     public function detailStatutAction($idStatut)
     {
         $em = $this->getDoctrine()->getManager();

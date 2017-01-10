@@ -42,14 +42,15 @@ class WebserviceController extends Controller
         
         // Ville 
         $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array("nom" => $mer->getVilleConso()));
+        /**
         if(is_null($ville))
         {
             $ville = new Ville;
             $ville->setNom($mer->getVilleConso());
-            $ville->setZip($mer->getCodePostal());
+            $ville->setCp($mer->getCodePostal());
             $em->persist($ville);
         }
-        
+        */
         // Benéficiaire 
         $beneficiaire = new Beneficiaire;
         $beneficiaire->setVille($ville);
@@ -80,11 +81,12 @@ class WebserviceController extends Controller
         $news->setDetailStatut($detailStatut);
         $news->setMessage("");
         $em->persist($news);
-        
+
+        /**
         var_dump($mer);
         var_dump($ville);
         var_dump($beneficiaire);
-        
+        */
         
         
         $em->flush();

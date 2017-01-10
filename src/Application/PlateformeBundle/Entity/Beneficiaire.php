@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
-* Beneficiaire
-*
-* @ORM\Table(name="beneficiaire")
-* @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BeneficiaireRepository")
-*/
+ * Beneficiaire
+ *
+ * @ORM\Table(name="beneficiaire")
+ * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BeneficiaireRepository")
+ */
 class Beneficiaire
 {
     /**
@@ -24,9 +24,8 @@ class Beneficiaire
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ville")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Valid
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
 
@@ -34,6 +33,12 @@ class Beneficiaire
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
      */
     private $news;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="beneficiaire", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $consultant;
 
     /**
      * @ORM\OneToMany(targetEntity="Historique", mappedBy="beneficiaire")
@@ -51,6 +56,12 @@ class Beneficiaire
     protected $accompagnement;
 
     /**
+     * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
+     * @Assert\Valid
+     */
+    protected $documents;
+
+    /**
      * @ORM\Column(name="poste", type="string", length=255, nullable=true)
      */
     private $poste;
@@ -62,7 +73,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="tel_2", type="string", nullable=true)
-     * @Assert\Regex("#^0[1-68][0-9]{8}$#",
+     * @Assert\Regex("#^0[1-678][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
      */
@@ -118,6 +129,12 @@ class Beneficiaire
     private $statut;
 
     /**
+     * @ORM\Column(name="experience", type="string", nullable=true)
+     * @Assert\Type("string")
+     */
+    private $experience;
+
+    /**
      * @ORM\Column(name="heure_dif", type="integer", nullable=true)
      * @Assert\Type("integer")
      */
@@ -136,8 +153,7 @@ class Beneficiaire
     private $heureCpfAnnee;
 
     /**
-     * @ORM\Column(name="motivation", type="string", length=255, nullable=true)
-     * @Assert\Type("string")
+     * @ORM\Column(name="motivation", type="text", nullable=true)
      */
     private $motivation;
 
@@ -180,7 +196,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="tel_conso", type="string", length=255)
-     * @Assert\Regex("#^0[1-68][0-9]{8}$#",
+     * @Assert\Regex("#^0[1-678][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
      */
@@ -210,7 +226,7 @@ class Beneficiaire
      * @ORM\Column(name="origine_mer", type="string", length=255)
      */
     private $origineMer;
-    
+
     /**
      * @ORM\Column(name="nb_appel_tel", type="integer", nullable=true)
      * @Assert\Type(
@@ -219,7 +235,7 @@ class Beneficiaire
      * )
      */
     private $nbAppelTel;
-    
+
     /**
      * Constructor
      */
@@ -227,8 +243,9 @@ class Beneficiaire
     {
         $this->news = new ArrayCollection();
         $this->historique = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -340,7 +357,7 @@ class Beneficiaire
     {
         $this->news[] = $news;
         $news->setBeneficiaire($this);
-        
+
         return $this;
     }
 
@@ -926,13 +943,13 @@ class Beneficiaire
         return $this->nbAppelTel;
 
     }
-    
-    // appeler lors de l'ajout d'une news 
+
+    // appeler lors de l'ajout d'une news
     public function increaseNbAppelTel()
     {
         $this->nbAppelTel++;
     }
-    
+
     /**
      * Set encadrement
      *
@@ -1039,5 +1056,93 @@ class Beneficiaire
     public function getAccompagnement()
     {
         return $this->accompagnement;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Beneficiaire
+     */
+    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        $consultant->addBeneficiaire($this);
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
+    }
+
+    /**
+     * Set experience
+     *
+     * @param integer $experience
+     *
+     * @return Beneficiaire
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return integer
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+
+
+    /**
+     * Add document
+     *
+     * @param \Application\PlateformeBundle\Entity\Document $document
+     *
+     * @return Beneficiaire
+     */
+    public function addDocument(\Application\PlateformeBundle\Entity\Document $document)
+    {
+        $this->documents[] = $document;
+
+        $document->setBeneficiaire($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \Application\PlateformeBundle\Entity\Document $document
+     */
+    public function removeDocument(\Application\PlateformeBundle\Entity\Document $document)
+    {
+        $this->documents->removeElement($document);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 }

@@ -47,19 +47,19 @@ class News
      * @ORM\Column(name="message", type="text")
      */
     private $message;
-    
+
     /**
      * @var
      *
      * @ORM\Column(name="date_heure", type="datetime")
      */
     private $dateHeure;
-    
+
     public function __construct()
     {
         $this->dateHeure = new \DateTime;
     }
-    
+
     /**
      * Get id
      *
@@ -143,7 +143,7 @@ class News
     }
 
 
-    
+
 
     /**
      * Set dateHeure
@@ -193,11 +193,11 @@ class News
     {
         return $this->beneficiaire;
     }
-    
-    // rajoute un +1 au nombre appel si la news à un statut téléphone 
+
+    // rajoute un +1 au nombre appel si la news à un statut téléphone
     /**
-    * @ORM\PrePersist
-    */
+     * @ORM\PrePersist
+     */
     public function increase()
     {
         if($this->statut->getSlug() == "telephone")

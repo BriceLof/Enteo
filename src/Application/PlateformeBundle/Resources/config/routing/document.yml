@@ -1,0 +1,13 @@
+application_new_document:
+    path:     /new/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:new" }
+    options:
+        expose:  true
+
+application_show_document:
+    path: /show/{path}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:show" }
+
+application_delete_document:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:delete" }

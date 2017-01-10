@@ -3,10 +3,14 @@
 namespace Application\UsersBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+// use Symfony\Component\Form\Extension\Core\Type\TextType;
+// use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UsersType extends AbstractType
 {
@@ -28,6 +32,12 @@ class UsersType extends AbstractType
                     'multiple' => true,
                     'expanded' => true
                     
+                ))
+                ->add('calendrierid', TextType::class, array(
+                    'label' => 'Calendrier ID',
+                ))
+                ->add('calendrieruri', TextareaType::class, array(
+                    'label' => 'Calendrier URI',
                 ))
                 ->add('nom')
                 ->add('prenom')

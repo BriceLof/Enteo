@@ -27,11 +27,11 @@ class DetailStatut
      * @ORM\Column(name="detail", type="string", length=255)
      */
     private $detail;
-    
+
     /**
-    * @ORM\ManyToOne(targetEntity="Statut")
-    * @ORM\JoinColumn(nullable=false)
-    */
+     * @ORM\ManyToOne(targetEntity="Statut")
+     * @ORM\JoinColumn(nullable=false)
+     */
     private $statut;
 
     /**

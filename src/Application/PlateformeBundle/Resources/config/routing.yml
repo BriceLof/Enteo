@@ -8,10 +8,16 @@ application_plateforme_agenda:
     defaults: 
         _controller: ApplicationPlateformeBundle:Agenda:agendas
         
+autocompletion_agenda:
+    path:     /autocompletion
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Agenda:autocompletions
+        
 application_plateforme_detail_statut:
     path:     /detail_statut/{idStatut}
     defaults: 
         _controller: ApplicationPlateformeBundle:Home:detailStatut
+
     options:
         expose: true
 
@@ -35,14 +41,32 @@ application_plateforme_accompagnement:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/accompagnement.yml"
     prefix:   /accompagnement
 
+#historique
 application_plateforme_historique:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/historique.yml"
     prefix:   /historique
 
+#news
 application_plateforme_news:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/news.yml"
     prefix:   /news
 
+#ville
+application_plateforme_ville:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/ville.yml"
+    prefix:   /ville
+
+#bureau
+application_plateforme_bureau:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/bureau.yml"
+    prefix:   /bureau
+
+#document
+application_plateforme_document:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/document.yml"
+    prefix:   /document
+
+#homepage
 application_plateforme_homepage:
     path:     /{page}
     defaults: 

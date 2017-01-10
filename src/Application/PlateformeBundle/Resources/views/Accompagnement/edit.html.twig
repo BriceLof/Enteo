@@ -1,6 +1,4 @@
 {% if beneficiaire.accompagnement is not null %}
-
-    <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
         <tr>
             <td>Nom OPCA/OPACIF</td>
             <td>{{ form_widget(edit_form_a.opcaOpacif,   { 'attr': {'value': beneficiaire.accompagnement.opcaOpacif }} ) }}</td>
@@ -11,43 +9,8 @@
         </tr>
         <tr>
             <td>Tarif Accompagnement</td>
-            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif, { 'attr': {'value': beneficiaire.accompagnement.tarif }} ) }} <span>Euros</span></td>
+            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif, { 'attr': {'value': beneficiaire.accompagnement.tarif }} ) }} <span>&euro;</span></td>
         </tr>
-        <tr>
-            <td>Consulant :</td>
-            <td>//A FAIRE</td>
-        </tr>
-        <tr>
-            <td class="tableSection"><a href="#">Changer consultant</a></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td colspan="2">Date prévue accompagnement :</td>
-        </tr>
-        <tr>
-            <td colspan="2">Du :&nbsp;{{ form_widget(edit_form_a.dateDebut) }} &nbsp;Au :&nbsp;{{ form_widget(edit_form_a.dateFin) }}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="tableSection">Détail du Financement</td>
-        </tr>
-        <tr>
-            <td>//A FAIRE</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td class="valider">{{ form_widget(edit_form_a.submit) }}</td>
-        </tr>
-        <tr>
-            <td>{{ form_rest(edit_form_a) }}</td>
-            <td>{{ form_errors(edit_form_a) }}</td>
-        </tr>
-
 {% else %}
         <tr>
             <td>Nom OPCA/OPACIF</td>
@@ -55,18 +18,37 @@
         </tr>
         <tr>
             <td>Accompagnement en Heures :</td>
-            <td>{{ form_widget(edit_form_a.heure) }}</td>
+            <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure) }} Heures</td>
         </tr>
         <tr>
             <td>Tarif Accompagnement</td>
-            <td>{{ form_widget(edit_form_a.tarif) }}</td>
+            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif) }} <span>&euro;</span></td>
         </tr>
+{% endif %}
+{% if beneficiaire.consultant is not null %}
         <tr>
             <td>Consulant :</td>
-            <td>//A FAIRE</td>
+            <td>{{ beneficiaire.consultant.nom }}</td>
         </tr>
         <tr>
-            <td class="tableSection"><a href="#">Changer consultant</a></td>
+            <td>&nbsp;</td>
+            <td>{{ beneficiaire.consultant.prenom }}</td>
+        </tr>
+        <tr>
+            <!--<td class="btn btn-primary">changer de consultant</td>-->
+        </tr>
+{% else %}
+        <tr>
+            <td>Consulant :</td>
+            <td>Pas encore de consultant assigné</td>
+        </tr>
+        <tr>
+
+        </tr>
+{% endif %}
+        <div id="formulaireConsultant"></div>
+        <tr>
+            <td class="tableSection"><a href="#"></a></td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -95,4 +77,3 @@
             <td>{{ form_rest(edit_form_a) }}</td>
             <td>{{ form_errors(edit_form_a) }}</td>
         </tr>
-{% endif %}

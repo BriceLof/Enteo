@@ -18,26 +18,30 @@ class AccompagnementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('opcaOpacif', TextType::class, array(
                 'label' => 'nom OPCA/OPACIF',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
             ))
             ->add('heure', TextType::class, array(
                 'label' => 'Accompagnement en heure',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
 
                 )
             ))
+
             ->add('tarif', NumberType::class, array(
                 'label' => 'Tarif Accompagnement',
+                'required' => false,
                 'attr' => array(
                     'placeholder' => '',
                 )
             ))
+
             ->add('dateDebut', DateType::class, array(
                 'label' => 'date de début',
                 'widget' => 'single_text',
@@ -45,6 +49,7 @@ class AccompagnementType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'class' => 'date',
+                    'autocomplete' => 'off',
                 )
             ))
             ->add('dateFin', DateType::class, array(
@@ -54,8 +59,10 @@ class AccompagnementType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'class' => 'date',
+                    'autocomplete' => 'off',
                 )
             ))
+
             ->add('submit', SubmitType::class, array('label' => 'Valider')
             )
         ;

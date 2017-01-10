@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="statut")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\StatutRepository")
- * 
+ *
  */
 class Statut
 {
@@ -96,4 +96,3 @@ class Statut
         return $this->slug;
     }
 }
-

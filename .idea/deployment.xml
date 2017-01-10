@@ -2,7 +2,28 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
+      <paths name="Entheor">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="IF_DEV">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="IF_PROD">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="PO">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

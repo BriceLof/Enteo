@@ -11,10 +11,12 @@ namespace Application\PlateformeBundle\Services;
 class GoogleCalendar
 {
     // Fichier client_secret.json
-    const PATH_CLIENT_SECRET = __DIR__ .'\client_secret.json';
+    const PATH_CLIENT_SECRET = __DIR__ .'/client_secret.json';
     
     // Fichier creand credentialsPath
-    const PATH_CREDENTIALS = __DIR__ .'\credentials.json';
+
+    const PATH_CREDENTIALS = __DIR__ ;
+
     /**
      * @var string
      */
@@ -204,12 +206,8 @@ class GoogleCalendar
         $client->setState($this->base64UrlEncode(json_encode($this->parameters)));
         // Load previously authorized credentials from a file.
         //$credentialsPath = $this->credentialsPath;
-        $credentialsPath = self::PATH_CREDENTIALS;
+        $credentialsPath = self::PATH_CREDENTIALS.'/credentials'.$_SESSION['useridcredencial'].'.json';
         if ($fromFile) {
-            /*echo '<pre>';
-            var_dump($credentialsPath);
-            var_dump(file_exists($credentialsPath));
-            exit;*/
             if (file_exists($credentialsPath)) {
                 $accessToken = json_decode(file_get_contents($credentialsPath), true);
             } else {

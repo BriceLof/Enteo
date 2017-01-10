@@ -1,0 +1,15 @@
+application_new_bureau:
+    path:     /new
+    defaults: { _controller: "ApplicationPlateformeBundle:Bureau:new" }
+
+application_delete_bureau:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Bureau:delete" }
+
+application_edit_bureau:
+    path:     /edit/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Bureau:edit" }
+
+application_index_bureau:
+    path:     /
+    defaults: { _controller: "ApplicationPlateformeBundle:Bureau:index" }

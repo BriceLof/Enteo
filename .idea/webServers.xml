@@ -10,6 +10,30 @@
           <option name="port" value="21" />
         </fileTransfer>
       </webServer>
+      <webServer id="c1459fd5-7b9d-4ad9-9dc8-3d133699e903" name="Entheor" url="http://home347813754.1and1-data.host">
+        <fileTransfer host="home347813754.1and1-data.host" port="22" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="c7727613-47cd-4ec4-ad5b-a77546e81332" name="PO" url="http://portail-orientation.fr">
+        <fileTransfer host="portail-orientation.fr" port="22" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="139563f3-ca5f-464c-800d-cddce952eefe" name="IF_PROD" url="http://www.iciformations.fr">
+        <fileTransfer host="www.iciformations.fr" port="22" rootFolder="/opt/web/clients/i/iciformat/iciformations.fr/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

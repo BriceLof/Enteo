@@ -3,6 +3,10 @@
     height: 218px;
 }
 
+.navbar-static-top{
+    margin-bottom: 8px;
+}
+
 #banner{
 
 }
@@ -18,10 +22,17 @@
     background-color: #454545;
     color: white;
 }
+#espace_documentaire_submit{
+    float: right;
+    margin-top: -46px;
+    background-color: #454545;
+    color: white;
+}
+
 
 .sectionBeneficiaire{
     margin: 3%;
-    margin-top: -50px;
+    /*margin-top: -50px;*/
 }
 
 .tableOnglet{
@@ -32,6 +43,12 @@
 
 .tableOnglet table{
     width: 100%;
+    border-collapse: collapse;
+    empty-cells: hide;
+}
+
+.tableOnglet tr label{
+    margin-left: 5px;
 }
 
 #afficheBeneficiaire{
@@ -60,6 +77,9 @@
 
 .newsBoucle > div{
     top: 7px;
+}
+.newsBoucle .glyphicon{
+    top: -5px;
 }
 
 #afficheListNews{
@@ -102,6 +122,56 @@
     padding-left: 24px;
 }
 
+.formPagenda{
+     display: none;
+     border: 1px solid rgba(128, 128, 128, 0.278431);
+     width: 278px;
+}
+
+.blocacalendar, .bloc_form_agenda{
+    display:inline-block;
+    vertical-align: top;
+}
+
+.formPagenda .title_formulaire_agenda, #agendaForm .title_formulaire_agenda{
+    background: #000041;
+    width: 100%;
+    color: white;
+    border-top-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    margin-bottom: 7px;
+}
+
+.blocagendaprincipal{
+    /*margin-top: -6%;*/
+}
+
+#bureauRdv{
+    width: 100%;
+    height: 36px;
+}
+
+.trdv .typerdv{
+    margin-left:5%;
+}
+
+.formPagenda .new_input{
+    margin-bottom: 14px;
+}
+
+.url_agenda a{
+    background-color: #000041;
+    color: white;
+    padding-left: 18px;
+    padding-top: 5px;
+    padding-right: 18px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    margin-left: 16px;
+}
+
+/* ============================= Fin Agenda =========================== */
+
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
 #editBeneficiaire input{
     border: 1px solid transparent;
@@ -114,6 +184,24 @@
 }
 #editBeneficiaire select:hover{
     border: 1px solid ;
+}
+
+/*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
+#ProjetBeneficiaire input{
+    border: 1px solid transparent;
+}
+#ProjetBeneficiaire select{
+    border: 1px solid transparent;
+}
+#ProjetBeneficiaire input:hover{
+    border: 1px solid ;
+}
+#ProjetBeneficiaire select:hover{
+    border: 1px solid ;
+}
+
+#afficheAllBureau{
+    border:1px solid;
 }
 
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/
@@ -137,6 +225,8 @@
 
 
 
+
+
 #flashbag{
     margin-bottom: 100px;
     margin-top:-80px
@@ -149,4 +239,40 @@ select.error, textarea.error, input.error {
 
 div.error {
    color:#FF0000 ;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+    cursor: auto;
+}
+
+/*bouton rechercher*/
+#recherche_beneficiaire_submit{
+    color: #fcf8e3;
+    background-color: #563333;
+}
+
+.sectionBeneficiaire input{
+    height: 25px;
+}
+
+#afficheBeneficiaire tr{
+    height: 25px;
+}
+
+#afficheImage{
+    width: 595px;
+    /* to centre page on screen*/
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media print {
+    #afficheImage {
+        width: 210mm;
+        height: 297mm;
+    }
+}
+
+#pageImage{
+    background-color: grey;
 }
