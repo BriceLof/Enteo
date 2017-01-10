@@ -1,37 +1,32 @@
+<form action="{{ path('application_search_beneficiaire', { 'page' : 1 }) }}" method="POST" id="ajaxForm" >
+    <div class="container-fluid">
+        <div class="row">
+            <span class="col-md-1">Filtres : </span>
+            <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>
+            <span class="col-md-1">{{ form_widget(form.prenomConso) }}</span>
+            <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
+            <span class="col-md-1">{{ form_widget(form.ville.cp, { 'attr': {'placeholder': 'Code Postal' }}) }}</span>
+            <span class="col-md-2">{{ form_widget(form.ville.nom, { 'attr': {'placeholder': 'Ville' }}) }}</span>
+            <span class="col-md-1">{{ form_widget(form.pays) }}</span>
 
+            <!-- not mapped -->
+            <span class="col-md-1">{{ form_widget(form.dateDebut) }}</span>
+            <span class="col-md-1">{{ form_widget(form.dateFin) }}</span>
+            <!---------------->
 
-<div>
-    <form action="{{ path('application_search_beneficiaire', { 'page' : 1 }) }}" method="POST" id="ajaxForm" >
-        <div class="container-fluid">
-            <div class="row">
-                <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>
-                <span class="col-md-1">{{ form_widget(form.prenomConso) }}</span>
-                <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
-                <span class="col-md-1">{{ form_widget(form.ville.cp, { 'attr': {'placeholder': 'Code Postal' }}) }}</span>
-                <span class="col-md-2">{{ form_widget(form.ville.nom, { 'attr': {'placeholder': 'Ville' }}) }}</span>
-                <span class="col-md-1">{{ form_widget(form.pays) }}</span>
-
-                <!-- not mapped -->
-                <span class="col-md-1">{{ form_widget(form.dateDebut) }}</span>
-                <span class="col-md-1">{{ form_widget(form.dateFin) }}</span>
-                <!---------------->
-
-                <span class="col-md-1">{{ form_widget(form.submit) }}</span>
-                <span class="col-md-1">{{ form_rest(form) }}</span>
-            </div>
-            <div class="row" id="rechercherPlus">
-            </div>
-{#
-            <div class="row">
-                <span id="plusMoins" class="btn plusMoins">affiner les résultats</span>
-            </div>
-#}
+            <span class="col-md-1">{{ form_widget(form.submit) }}</span>
+            <span class="col-md-1">{{ form_rest(form) }}</span>
         </div>
-    </form>
-</div>
-<div>
-    <hr style="color: black;border-color: black">
-</div>
+        <div class="row" id="rechercherPlus">
+        </div>
+{#
+        <div class="row">
+            <span id="plusMoins" class="btn plusMoins">affiner les résultats</span>
+        </div>
+#}
+    </div>
+</form>
+
 
 
 

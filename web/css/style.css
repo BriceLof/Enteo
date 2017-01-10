@@ -8,8 +8,22 @@
 }
 
 #banner{
-
+    width:100%;
 }
+#banner form{
+    width: 85%;
+    margin: auto;
+    margin-top: 36px;
+    margin-bottom: 31px;
+    text-align: center;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #e7e7e7;
+}
+#banner form span{
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
 
 #rechercherPlus{
     display: none;
@@ -247,8 +261,11 @@ div.error {
 
 /*bouton rechercher*/
 #recherche_beneficiaire_submit{
-    color: #fcf8e3;
-    background-color: #563333;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #f0c41a;
+    border: none;
+    letter-spacing: 1px;
 }
 
 .sectionBeneficiaire input{

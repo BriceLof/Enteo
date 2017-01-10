@@ -2,21 +2,19 @@
 
 {% block header %}
     <div id="banner">
-        <p style="color: red;margin-left: 1%;text-decoration: underline">FILTRES</p>
-        <div>
-            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
-        </div>
+        {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
+        
     </div>
 {% endblock %}
 
 {% block body %}
-    <section class="container-fluid">
+    <section class="container-fluid section-tab-home-benef">
     {% if results is defined %}
         {% for beneficiaire in results %}
             {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
-            <div class="row">
+            <div class="row tab-home-benef">
                 <div class="table-responsive col-md-12" >
-                    <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" style="width:53px">Maj</button>
+                    <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
                     <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                     <br><br>
                     <table class="table table-bordered ">
@@ -57,9 +55,9 @@
                         {% if(beneficiaire.news | length > 0) %}
                             {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                         {% endif %}
-                        <tr>
+                        <!--<tr>
                             <td colspan=11></td>
-                        </tr>
+                        </tr>-->
                         <tr>
                             <th colspan=2>Nombre total appel</th>
                             <th colspan=2>Dernier appel</th>
@@ -122,9 +120,9 @@
 
         {% for beneficiaire in liste_beneficiaire %}
             {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
-            <div class="row">
+            <div class="row tab-home-benef">
                 <div class="table-responsive col-md-12" >
-                    <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" style="width:53px">Maj</button>
+                    <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
                     <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                     <br><br>
                     <table class="table table-bordered ">
@@ -165,9 +163,9 @@
                             {% if(beneficiaire.news | length > 0) %}
                                 {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                             {% endif %}
-                            <tr>
+                            <!--<tr>
                                 <td colspan=11></td>
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <th colspan=2>Nombre total appel</th>
                                 <th colspan=2>Dernier appel</th>
