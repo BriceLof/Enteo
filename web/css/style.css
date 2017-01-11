@@ -73,6 +73,7 @@
 }
 
 .sectionBeneficiaire #espace_documentaire a:link{
+    width: 140px;
     color: black;
 }
 
@@ -340,4 +341,8 @@ div.error {
 
 #pageImage{
     background-color: grey;
+}
+
+.modal-body{
+    margin-bottom: 80px;
 }

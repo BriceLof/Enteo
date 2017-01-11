@@ -27,7 +27,7 @@ class Accompagnement
     /**
      * @var
      *
-     * @ORM\Column(name="opca_opacif", type="string", length=255)
+     * @ORM\Column(name="opca_opacif", type="string", length=255, nullable=true)
      *
      */
     private $opcaOpacif;
@@ -40,7 +40,7 @@ class Accompagnement
     /**
      * @var
      *
-     * @ORM\Column(name="heure", type="integer")
+     * @ORM\Column(name="heure", type="integer", nullable=true)
      * @Assert\Regex("#^[0-9]+$#",
      *     message = " veuillez rentrer le nombre d'heure "
      * )
@@ -50,21 +50,21 @@ class Accompagnement
     /**
      * @var
      *
-     * @ORM\Column(name="tarif", type="float")
+     * @ORM\Column(name="tarif", type="float", nullable=true)
      */
     private $tarif;
 
     /**
      * @var
      *
-     * @ORM\Column(name="date_debut", type="date")
+     * @ORM\Column(name="date_debut", type="date", nullable=true)
      */
     private $dateDebut;
 
     /**
      * @var
      *
-     * @ORM\Column(name="date_fin", type="date")
+     * @ORM\Column(name="date_fin", type="date", nullable=true)
      */
     private $dateFin;
 

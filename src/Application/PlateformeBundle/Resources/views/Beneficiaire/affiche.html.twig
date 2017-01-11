@@ -183,11 +183,21 @@
                                 </tbody>
                             </table>
                         </form>
-                        <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
-                            <table class="table-condensed">
-                                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
-                            </table>
-                        </form>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Changement de Consultant</h4>
+                                        <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
+                                            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
     {% endif %}
                     <div id="espaceDocumentaire" class="tableOnglet">
