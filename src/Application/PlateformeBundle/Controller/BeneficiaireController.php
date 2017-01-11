@@ -282,6 +282,9 @@ class BeneficiaireController extends Controller
 
         $form->handleRequest($request);
 
+        $dateDebut = null;
+        $dateFin = null;
+
         $ville = new Ville();
         if (!is_null($form["ville"]["nom"]->getData())) {
             $em = $this->getDoctrine()->getManager();
@@ -291,7 +294,7 @@ class BeneficiaireController extends Controller
             $beneficiaire->setVille($ville);
         }
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
         $results = $query->getArrayResult();
         $resultats = new JsonResponse(json_encode($results));
         $resultats->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
@@ -300,7 +303,6 @@ class BeneficiaireController extends Controller
 
 
         return $resultats;
-
     }
 
     /**

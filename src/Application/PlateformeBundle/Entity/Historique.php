@@ -31,7 +31,7 @@ class Historique
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -62,7 +62,22 @@ class Historique
      * @ORM\Column(name="heure_fin", type="time")
      */
     private $heurefin;
-
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_rdv", type="text")
+     */
+    private $type_rdv;
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Bureau", inversedBy="historique")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
+    
+    
     /**
      * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="historique")
      * @ORM\JoinColumn(nullable=false)
@@ -71,7 +86,6 @@ class Historique
 
     /**
      * Historique constructor.
-     *
      */
     public function __construct()
     {
@@ -257,5 +271,53 @@ class Historique
     public function getHeurefin()
     {
         return $this->heurefin;
+    }
+
+    /**
+     * Set typeRdv
+     *
+     * @param string $typeRdv
+     *
+     * @return Historique
+     */
+    public function setTypeRdv($typeRdv)
+    {
+        $this->type_rdv = $typeRdv;
+
+        return $this;
+    }
+
+    /**
+     * Get typeRdv
+     *
+     * @return string
+     */
+    public function getTypeRdv()
+    {
+        return $this->type_rdv;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Historique
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
     }
 }

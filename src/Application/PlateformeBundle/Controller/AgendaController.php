@@ -12,21 +12,15 @@ use Application\PlateformeBundle\Entity\AgendaB;
 
 class AgendaController extends Controller
 {
-    // google-calendar-api@plenary-net-147113.iam.gserviceaccount.com
     // Autocompletion
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if($request->query->get('sentinel') == 1){
             // nom
-            $query = $em->createQuery('SELECT b.nomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
+            $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
             $query->setParameter('nom', $request->query->get('term').'%');
         }
-        else if($request->query->get('sentinel') == 2){
-            // prenom
-            $query = $em->createQuery('SELECT b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.prenomConso LIKE :prenom');
-            $query->setParameter('prenom', $request->query->get('term').'%');
-        }
-        $results = $query->getResult();
+        (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();;
         return new JsonResponse(json_encode($results));
     }
 
@@ -52,39 +46,48 @@ class AgendaController extends Controller
         ));
     }
 
-    // Traitement de l'ajout d'un evenement dans le calendrier du beneficiaire
+    // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
     public function evenementAction(Request $request){
         $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
         $em = $this->getDoctrine()->getManager(); // Doctrine manager
         // Traitement des données emises par le formulaire
         if ($request->isMethod('POST')){
-            // ------------------------------------------------------------------------ //
-            // ---- Traitement du formulaire d'ajout evenement de la page [Agenda] ---- //
-            // ------------------------------------------------------------------------ //
             switch(true){
                 case (!empty($request->query->get('userId'))):
                     $_SESSION['calendrierId'] = $request->query->get('calendrierid');
                     // On stocke l'id du user pour la personnalisation du fichier credentials
-                    // dans google calendar qui permet la connexion à l'agenda du l'utilisateur
+                    // dans google calendar qui permet la connexion à l'agenda du consultant
                     $_SESSION['useridcredencial'] = $request->query->get('userId');
                     break;
             }
             $historique = new Historique(); // Historique
+            // On recupere le bureau
+            if($request->request->get('bureauselect') != -1){
+                $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($request->request->get('bureauselect'));
+                $historique->setBureau($bureauObject); // bureau
+            }
+            // On recupere le beneficiaire
+            $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->request->get('idbeneficiaire')) : NULL;
+            $historique->setBeneficiaire($benef); // beneficiaire
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if ($form->handleRequest($request)->isValid()) {
+                $historique->setTypeRdv($request->request->get('typeRdv'));
                 // On stocke Les infos dans un tableau
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
-                    'prenom' => $request->request->get('prenomb'),
-                    'bureau' => $request->request->get('bureauRdv'),
-                    'ville' => $request->request->get('villeh'),
-                    'adresse' => $request->request->get('adresseh'),
-                    'zip' => $request->request->get('ziph'),
+                    'prenom' => $request->request->get('prenombeneficiaire'),
+                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('bureauRdv'):'',
+                    'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
+                    'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
+                    'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
+                    'rdv' => ($request->request->get('typeRdv') == 'presenciel')? '': $request->request->get('typeRdv')
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
             }
+			
+			
         }
         // Instanciation du calendrier
         $googleCalendar = $this->get('application_google_calendar');
@@ -101,7 +104,8 @@ class AgendaController extends Controller
         // Ajout de l'evenement dans la calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
+            $typerdv = $_SESSION['agenda'][0]['rdv'];
+            $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
             $eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
                 $_SESSION['agenda'][1]->getDateDebut(),
@@ -113,6 +117,9 @@ class AgendaController extends Controller
                 $optionalParams = [],
                 $allDay = true
             );
+            // On enregistre l'historique en BD
+            $em->persist($_SESSION['agenda'][1]);
+            $em->flush();
         }
         // On le redirige sur la page agenda
         if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){

@@ -374,18 +374,28 @@ $("document").ready(function () {
 
 
     // ============================================================ //
-    // =================== Agenda du consultant ==================== // 
+    // =================== Agenda du consultant =================== // 
     // ========== On affiche le calendrier et le formulaire ======= //
     // ============================================================ //
 
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
+	var urlautocompletion;
+	console.log('----------- pathname: '+location.pathname);
+    switch(true){
+        case (location.pathname == '/web/app_dev.php/agenda/evenements'):
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
+            break;
+        default:
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
+            break;
+    }
     // Autocompletion nom
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
+                url : urlautocompletion, // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
                     sentinel: 1
@@ -394,38 +404,62 @@ $("document").ready(function () {
                 success : function(donnee){
                     var obj = $.parseJSON(donnee);
                     reponse($.map(obj, function (item) {
-                        console.log(item.nomConso);
-                        return item.nomConso;
-                    }));
-                }
-            });
-        }
-    });
-    // Autocompletion prenom
-    $("#prenomb").autocomplete({
-        source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
-            $.ajax({
-                url : 'http://'+location.hostname+'/web/app_dev.php/autocompletion', // on appelle le script JSON
-                data : {
-                    term : $('#prenomb').val(),
-                    sentinel: 2
-                },
-                dataType : 'json', // on spécifie bien que le type de données est en JSON
-                success : function(donnee){
-                    console.log(donnee);
-                    /*chaine1 = donnee.replace("[", "");
-                    chaine1 = chaine1.replace("]", "");*/
-                    var obj = $.parseJSON(donnee);
-                    reponse($.map(obj, function (item) {
-                        console.log(item.prenomConso);
-                        return item.prenomConso;
+                        return {
+                            value: function ()
+                            {
+                              if ($(this).attr('id') == 'nomb')
+                              {
+                                 if(item.nomConso != undefined){
+                                    return item.nomConso;
+                                 }
+                              }
+                              else
+                              {
+                                  if(item.prenomConso != undefined){
+                                      $('#nomb').val(item.nomConso);
+                                      $('#prenomb').val(item.prenomConso); // input visible
+                                      $('#prenombe').val(item.prenomConso); // input hidden
+                                      $('#historique_Enregistrer').removeAttr('disabled');
+                                      $('#idbeneficiaire').val(item.id);
+                                      return item.nomConso;
+                                  }
+                                  else{
+                                      $('#nomb').val('');
+                                      $('#prenomb').val(''); // input visible
+                                      $('#prenombe').val(''); // input hidden
+                                      $('#historique_Enregistrer').attr('disabled','true');
+                                      $('#idbeneficiaire').val(-1);
+                                      return 'Aucun Beneficiaire trouvé';
+                                  }
+                              }
+                            }
+                        }
                     }));
                 }
             });
         }
     });
     
-
+    // ==================================================================================== //
+    // ======= Affichage du bureau et l'adresse en fonction du type de rendez vous ======== //
+    // ==================================================================================== //
+    $('input:radio[name="typeRdv"]').change(function(){
+            if ($(this).is(':checked') && $(this).val() == 'distanciel') {
+                // On masque les bureau et adresse
+                $('.bureau_v').css('display', 'none');
+                // On supprime le required dans le champ bureau
+                $('#bureauRdv').removeAttr('required');
+                $('.letyperdv').val($(this).val());
+            }
+            else{
+                $('.letyperdv').val($(this).val());
+                // On affiche les bureau et adresse
+                $('.bureau_v').css('display', 'inline-block');
+                // On ajoute le required dans le champ bureau
+                $('#bureauRdv').attr('required','true');
+            }
+    });
+  
     if($('.calendrierconsultant').val() != undefined){
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
@@ -436,13 +470,16 @@ $("document").ready(function () {
                 selectheuresf[j].remove(); // heure fin
             }
         }
+        // Affichage du nom du consultant
+        $('.nomconsultant').text($('.consultantC').val());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('.calendrierconsultant').val());
+        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '900');
+        $('.blocacalendar iframe').attr('height', '1092');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -462,12 +499,16 @@ $("document").ready(function () {
             idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
             idbureauoption = idbureauoption.split("_");
             villenom = $("#bureauRdv").val(); // On recupere la ville
-            $('#ville').val(idbureauoption[2]); // On instancie la ville
+            $('.ville').val(idbureauoption[2]); // On instancie la ville
             $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
-            $('#zip').val(idbureauoption[1]); // On instancie l'adresse
-            $('#villeh').val(villenom); // On instancie la ville
+            $('#zip').val(idbureauoption[1]); // On instancie le code postal
+            $('#villeh').val(idbureauoption[2]); // On instancie la ville
             $('#adresseh').val(idbureauoption[0]); // On instancie l'adresse
-            $('#ziph').val(idbureauoption[1]); // On instancie l'adresse
+            $('#ziph').val(idbureauoption[1]); // On instancie le code postal
+            // id du bureau 
+            b_id = $("#bureauRdv option:selected").attr("class");
+            b_id = b_id.split("_");
+            $('.bureauselect').val(b_id[1]);
         }
         else{
             // On reinitialise tous les champs des input desactivé
@@ -477,14 +518,14 @@ $("document").ready(function () {
             $('#villeh').val();
             $('#adresseh').val();
             $('#ziph').val();
+            $('.bureauselect').val();
         }
     });
-
+    
     // ================================================================ //
     // ========== Gestion des Heures dans l'ajout d'un RDV ============ //
     // ================================================================ //
     $('#historique_heureDebut_hour').change(function(){
-        // historique_heureDebut_hour
         // On initialise l'heure de fin en fonction de l'heure de debut
         heure_debut = parseInt($('#historique_heureDebut_hour').val()); // On recupère l'heure de debut
         minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
@@ -521,13 +562,16 @@ $('#consultantC').change(function(){
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
+        // Affichage du nom du consultant
+        $('.nomconsultant').text('Agenda de '+$('#consultantC option:selected').text());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('#consultantC').val());
+        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '900');
+        $('.blocacalendar iframe').attr('height', '1092');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({

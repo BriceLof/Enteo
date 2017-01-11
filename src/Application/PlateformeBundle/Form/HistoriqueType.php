@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class HistoriqueType extends AbstractType
@@ -16,6 +17,9 @@ class HistoriqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('type_rdv', HiddenType::class, array(
+                'attr' => array('class' => 'letyperdv', 'value' => 'presenciel')
+            ))
             ->add('summary',     TextType::class, array(
                 'label' => 'Titre evenement',
                 ))
@@ -23,10 +27,12 @@ class HistoriqueType extends AbstractType
                 'label' => 'Description evenement',
                 'required' => false))
             ->add('dateDebut', DateType::class, array(
-                'label' => 'Debut evenement'
+                'label' => 'Debut evenement', 
+                'attr' => array('class' => 'datedebut')
             ))
             ->add('dateFin', DateType::class, array(
-                'label' => 'Fin evenement'
+                'label' => 'Fin evenement', 
+                'attr' => array('class' => 'datefin')
             ))
             ->add('heureDebut', TimeType::class, array(
                 'label' => 'Heure Debut'
@@ -35,7 +41,7 @@ class HistoriqueType extends AbstractType
                 'label' => 'Heure Fin'
             ))
             ->add('Enregistrer',  SubmitType::class, array(
-                'label' => 'Enregistrer'
+                'label' => 'Enregistrer', 'disabled' => 'true'
             ))
         ;
     }

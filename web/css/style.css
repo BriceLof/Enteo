@@ -170,11 +170,13 @@
     color: rgba(51, 51, 51, 0.84);
 }
 .blocacalendar{
-    padding: 23px;
+    padding-top: 15px;
+    padding-left: 24px;
 }
 
 .blocconsultant {
     padding-left: 24px;
+    padding-top: 8px;
 }
 
 .formPagenda{
@@ -189,21 +191,31 @@
 }
 
 .formPagenda .title_formulaire_agenda, #agendaForm .title_formulaire_agenda{
-    background: #000041;
+    background: #668cd9;
     width: 100%;
     color: white;
-    border-top-left-radius: 7px;
-    border-bottom-right-radius: 7px;
-    margin-bottom: 7px;
+    padding: 10px;
+    font-size: 17px;
 }
 
-.blocagendaprincipal{
-    /*margin-top: -6%;*/
+#nomconsultant{
+    padding-left: 24px;
+    padding-top: 15px;
+    font-size: 18px;
+}
+
+.champs-form{
+    background-color: #e4e4e4;
+    padding: 10px;
 }
 
 #bureauRdv{
     width: 100%;
     height: 36px;
+}
+
+.trdv .typerdv{
+    margin-left:5%;
 }
 
 .formPagenda .new_input{
