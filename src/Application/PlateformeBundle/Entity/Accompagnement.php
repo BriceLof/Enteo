@@ -28,6 +28,7 @@ class Accompagnement
      * @var
      *
      * @ORM\Column(name="opca_opacif", type="string", length=255)
+     *
      */
     private $opcaOpacif;
 

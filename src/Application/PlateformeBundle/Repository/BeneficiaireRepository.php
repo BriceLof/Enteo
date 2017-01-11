@@ -34,11 +34,10 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, true); 
     }
     
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $cp)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
-        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville','v');
 
         $query = 'SELECT b.* FROM beneficiaire b WHERE 1';
         $params = array();

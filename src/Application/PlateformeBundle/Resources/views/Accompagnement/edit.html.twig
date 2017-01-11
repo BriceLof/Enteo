@@ -55,10 +55,10 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td colspan="2">Date prévue accompagnement :</td>
+            <td colspan="3">Date prévue accompagnement :</td>
         </tr>
         <tr>
-            <td colspan="2">Du :&nbsp;{{ form_widget(edit_form_a.dateDebut) }} &nbsp;Au :&nbsp;{{ form_widget(edit_form_a.dateFin) }}</td>
+            <td colspan="3" style="display: -webkit-box;"><span>Du :&nbsp;</span>{{ form_widget(edit_form_a.dateDebut) }} <span>&nbsp;Au :&nbsp;</span>{{ form_widget(edit_form_a.dateFin) }}</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -71,9 +71,9 @@
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td class="valider">{{ form_widget(edit_form_a.submit) }}</td>
+            <td colspan="2" class="valider">{{ form_widget(edit_form_a.submit) }}</td>
         </tr>
-        <tr>
+        <tr class="form-rest">
             <td>{{ form_rest(edit_form_a) }}</td>
             <td>{{ form_errors(edit_form_a) }}</td>
         </tr>

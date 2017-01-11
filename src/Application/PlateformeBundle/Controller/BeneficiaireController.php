@@ -246,7 +246,7 @@ class BeneficiaireController extends Controller
             }
 
 
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $codePostal);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
             $results = $query->getResult();
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
@@ -282,25 +282,25 @@ class BeneficiaireController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()){
-
-            $ville = new Ville();
-            if (!is_null($form["ville"]["nom"]->getData())) {
-                $em = $this->getDoctrine()->getManager();
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]["nom"]->getData(),
-                ));
-                $beneficiaire->setVille($ville);
-            }
-
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
-            $results = $query->getArrayResult();
-            return new JsonResponse(json_encode($results));
+        $ville = new Ville();
+        if (!is_null($form["ville"]["nom"]->getData())) {
+            $em = $this->getDoctrine()->getManager();
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
+                'nom' => $form["ville"]["nom"]->getData(),
+            ));
+            $beneficiaire->setVille($ville);
         }
 
-        return $this->render('ApplicationPlateformeBundle:Beneficiaire:recherche.html.twig',array(
-            'form' => $form->createView(),
-        ));
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
+        $results = $query->getArrayResult();
+        $resultats = new JsonResponse(json_encode($results));
+        $resultats->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
+        $resultats->headers->set('Access-Control-Allow-Origin', '*');
+        $resultats->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
+
+
+        return $resultats;
+
     }
 
     /**

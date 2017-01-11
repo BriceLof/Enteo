@@ -16,29 +16,82 @@
 }
 
 .valider{
-    float: right;
 }
+
 .valider button{
     background-color: #454545;
     color: white;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
+
 #espace_documentaire_submit{
+    margin-right: 50px;
     float: right;
     margin-top: -46px;
     background-color: #454545;
     color: white;
 }
 
+.sectionBeneficiaire table tbody tr td:first-of-type{
+    margin-top:10px;
+    margin-left: 30px;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    cursor: default;
+}
+
+.sectionBeneficiaire .glyphicon-plus{
+    float: left;
+    font-size: 9px;
+}
+.sectionBeneficiaire .glyphicon-minus{
+    float: left;
+    font-size: 9px;
+}
+
+#newDocumentsForm{
+    margin-top:10px;
+    margin-left: 30px;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    cursor: default;
+}
+
+.sectionBeneficiaire a:link{
+    color:#fbfbfb;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+.sectionBeneficiaire #espace_documentaire a:link{
+    color: black;
+}
 
 .sectionBeneficiaire{
+    font-size: 12px;
     margin: 3%;
     /*margin-top: -50px;*/
 }
 
+.form-control{
+    width: 95%;
+    font-size: 13px;
+}
+
 .tableOnglet{
     width: 100%;
-    border: 1px solid;
+    border: 1px solid rgba(232, 227, 227, 0.59);
     margin-bottom: 10%;
+    background-color: rgba(228, 228, 228, 0.45);
 }
 
 .tableOnglet table{
@@ -48,7 +101,6 @@
 }
 
 .tableOnglet tr label{
-    margin-left: 5px;
 }
 
 #afficheBeneficiaire{
@@ -57,7 +109,10 @@
 
 
 .titreSection{
-    background-color: #000041;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 14px;
+    background-color: #50a60d;
     color: #f6f6f6;
     text-align: center;
 }
@@ -219,7 +274,9 @@
     width: 50%;
 }
 
-
+.form-rest{
+    display: none;
+}
 
 
 
@@ -248,11 +305,11 @@ div.error {
 }
 
 .sectionBeneficiaire input{
-    height: 25px;
+    height: 30px;
 }
 
 #afficheBeneficiaire tr{
-    height: 25px;
+    height: 30px;
 }
 
 #afficheImage{
