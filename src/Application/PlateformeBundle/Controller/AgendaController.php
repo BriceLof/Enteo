@@ -106,7 +106,7 @@ class AgendaController extends Controller
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
             $typerdv = $_SESSION['agenda'][0]['rdv'];
             $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-            $eventInsert = $googleCalendar->addEvent(
+            /*$eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
                 $_SESSION['agenda'][1]->getDateDebut(),
                 $_SESSION['agenda'][1]->getDateFin(),
@@ -116,7 +116,7 @@ class AgendaController extends Controller
                 $location = $lieu,
                 $optionalParams = [],
                 $allDay = true
-            );
+            );*/
             // On enregistre l'historique en BD
             $em->persist($_SESSION['agenda'][1]);
             $em->flush();
