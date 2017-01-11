@@ -27,7 +27,7 @@ $(function(){
                         //$(".detailStatut").append(
                     }
                 }).done(function(data) {
-                    console.log(data.details)
+                    console.log(data)
                     $(".detailStatut").html("");
                     for(var i = 0; i < data.details.length; i++)
                     {

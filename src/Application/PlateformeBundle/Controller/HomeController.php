@@ -49,7 +49,12 @@ class HomeController extends Controller
             $em->persist($news);
             $em->flush();
         }
-
+        
+       /* foreach($beneficiaires as $b)
+        {
+            var_dump($b);exit;
+        }
+        exit;*/
         return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
             'liste_beneficiaire'    => $beneficiaires, 
             'nbPages'               => $nbPages,
