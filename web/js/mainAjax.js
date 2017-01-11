@@ -374,18 +374,28 @@ $("document").ready(function () {
 
 
     // ============================================================ //
-    // =================== Agenda du consultant ==================== // 
+    // =================== Agenda du consultant =================== // 
     // ========== On affiche le calendrier et le formulaire ======= //
     // ============================================================ //
 
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
+	var urlautocompletion;
+	console.log('----------- pathname: '+location.pathname);
+    switch(true){
+        case (location.pathname == '/web/app_dev.php/agenda/evenements'):
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
+            break;
+        default:
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
+            break;
+    }
     // Autocompletion nom
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"), // on appelle le script JSON
+                url : urlautocompletion, // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
                     sentinel: 1
@@ -410,6 +420,7 @@ $("document").ready(function () {
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       $('#historique_Enregistrer').removeAttr('disabled');
+                                      $('#idbeneficiaire').val(item.id);
                                       return item.nomConso;
                                   }
                                   else{
@@ -417,6 +428,7 @@ $("document").ready(function () {
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
                                       $('#historique_Enregistrer').attr('disabled','true');
+                                      $('#idbeneficiaire').val(-1);
                                       return 'Aucun Beneficiaire trouvé';
                                   }
                               }
@@ -433,14 +445,14 @@ $("document").ready(function () {
     // ==================================================================================== //
     $('input:radio[name="typeRdv"]').change(function(){
             if ($(this).is(':checked') && $(this).val() == 'distanciel') {
-                console.log('----------------- ttt: '+$(this).val());
                 // On masque les bureau et adresse
                 $('.bureau_v').css('display', 'none');
                 // On supprime le required dans le champ bureau
                 $('#bureauRdv').removeAttr('required');
+                $('.letyperdv').val($(this).val());
             }
             else{
-                console.log('----------------- ttt: '+$(this).val());
+                $('.letyperdv').val($(this).val());
                 // On affiche les bureau et adresse
                 $('.bureau_v').css('display', 'inline-block');
                 // On ajoute le required dans le champ bureau
@@ -458,13 +470,16 @@ $("document").ready(function () {
                 selectheuresf[j].remove(); // heure fin
             }
         }
+        // Affichage du nom du consultant
+        $('.nomconsultant').text($('.consultantC').val());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('.calendrierconsultant').val());
+        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '900');
+        $('.blocacalendar iframe').attr('height', '1092');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -484,12 +499,16 @@ $("document").ready(function () {
             idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
             idbureauoption = idbureauoption.split("_");
             villenom = $("#bureauRdv").val(); // On recupere la ville
-            $('.ville').val(villenom); // On instancie la ville
+            $('.ville').val(idbureauoption[2]); // On instancie la ville
             $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
-            $('#zip').val(idbureauoption[1]); // On instancie l'adresse
-            $('#villeh').val(villenom); // On instancie la ville
+            $('#zip').val(idbureauoption[1]); // On instancie le code postal
+            $('#villeh').val(idbureauoption[2]); // On instancie la ville
             $('#adresseh').val(idbureauoption[0]); // On instancie l'adresse
-            $('#ziph').val(idbureauoption[1]); // On instancie l'adresse
+            $('#ziph').val(idbureauoption[1]); // On instancie le code postal
+            // id du bureau 
+            b_id = $("#bureauRdv option:selected").attr("class");
+            b_id = b_id.split("_");
+            $('.bureauselect').val(b_id[1]);
         }
         else{
             // On reinitialise tous les champs des input desactivé
@@ -499,6 +518,7 @@ $("document").ready(function () {
             $('#villeh').val();
             $('#adresseh').val();
             $('#ziph').val();
+            $('.bureauselect').val();
         }
     });
     
@@ -517,8 +537,6 @@ $("document").ready(function () {
         minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
         $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
     });
-    
-    console.log();
 });
 
 
@@ -544,13 +562,16 @@ $('#consultantC').change(function(){
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
+        // Affichage du nom du consultant
+        $('.nomconsultant').text('Agenda de '+$('#consultantC option:selected').text());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('#consultantC').val());
+        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '900');
+        $('.blocacalendar iframe').attr('height', '1092');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -682,3 +703,16 @@ $(document).ready(function() {
     }
     setTimeout(afficheMessageFlash,5000);
 })();
+
+function plusMoins(element) {
+    parent = element.parentNode.parentNode;
+    tbody = parent.getElementsByClassName('collapse')[0];
+    span  = element.getElementsByClassName('glyphicon')[0];
+    //alert(span);
+    //alert(element.getElementsByClassName('glyphicon')[0].className);
+    if(tbody.className == 'collapse in'){
+        span.className = 'glyphicon glyphicon-plus';
+    }else{
+        span.className = 'glyphicon glyphicon-minus';
+    }
+}
