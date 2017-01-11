@@ -24,6 +24,7 @@
                                <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
                                <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
                                <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+                               <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
                                <!-- Type de Rendez-vous [presentiel ou distanciel] -->
                                <label>Type de Rendez-vous: </label>
                                <p class="trdv">
@@ -67,12 +68,13 @@
                    <div class="blocacalendar"></div>
                    <div class="bloc_form_agenda">
                       <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
-                          <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
+                         <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
                          <div class="champs-form">
                             <!-- champs supplementaires ajoutés statiquements -->
                             <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
                             <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
                             <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+                            <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
                             <!-- Type de Rendez-vous [presentiel ou distanciel] -->
                             <label>Type de Rendez-vous: </label>
                             <p class="trdv">

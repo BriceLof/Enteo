@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class HistoriqueType extends AbstractType
@@ -16,6 +17,9 @@ class HistoriqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('type_rdv', HiddenType::class, array(
+                'attr' => array('class' => 'letyperdv', 'value' => 'presenciel')
+            ))
             ->add('summary',     TextType::class, array(
                 'label' => 'Titre evenement',
                 ))

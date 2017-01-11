@@ -410,6 +410,7 @@ $("document").ready(function () {
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       $('#historique_Enregistrer').removeAttr('disabled');
+                                      $('#idbeneficiaire').val(item.id);
                                       return item.nomConso;
                                   }
                                   else{
@@ -417,6 +418,7 @@ $("document").ready(function () {
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
                                       $('#historique_Enregistrer').attr('disabled','true');
+                                      $('#idbeneficiaire').val(-1);
                                       return 'Aucun Beneficiaire trouvé';
                                   }
                               }
@@ -437,8 +439,10 @@ $("document").ready(function () {
                 $('.bureau_v').css('display', 'none');
                 // On supprime le required dans le champ bureau
                 $('#bureauRdv').removeAttr('required');
+                $('.letyperdv').val($(this).val());
             }
             else{
+                $('.letyperdv').val($(this).val());
                 // On affiche les bureau et adresse
                 $('.bureau_v').css('display', 'inline-block');
                 // On ajoute le required dans le champ bureau
@@ -494,7 +498,6 @@ $("document").ready(function () {
             // id du bureau 
             b_id = $("#bureauRdv option:selected").attr("class");
             b_id = b_id.split("_");
-            console.log('**************************** id bureau: '+b_id[1]);
             $('.bureauselect').val(b_id[1]);
         }
         else{
@@ -524,8 +527,6 @@ $("document").ready(function () {
         minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
         $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
     });
-    
-    console.log();
 });
 
 

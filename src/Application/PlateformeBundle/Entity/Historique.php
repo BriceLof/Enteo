@@ -68,7 +68,7 @@ class Historique
      *
      * @ORM\Column(name="type_rdv", type="text")
      */
-    private $typerdv;
+    private $type_rdv;
     
     
     /**

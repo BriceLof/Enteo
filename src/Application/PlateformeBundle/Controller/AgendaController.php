@@ -17,7 +17,7 @@ class AgendaController extends Controller
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if($request->query->get('sentinel') == 1){
             // nom
-            $query = $em->createQuery('SELECT b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
+            $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
             $query->setParameter('nom', $request->query->get('term').'%');
         }
         (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();;
@@ -46,31 +46,33 @@ class AgendaController extends Controller
         ));
     }
 
-    // Traitement de l'ajout d'un evenement dans le calendrier du beneficiaire
+    // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
     public function evenementAction(Request $request){
         $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
         $em = $this->getDoctrine()->getManager(); // Doctrine manager
         // Traitement des données emises par le formulaire
         if ($request->isMethod('POST')){
-            // ------------------------------------------------------------------------ //
-            // ---- Traitement du formulaire d'ajout evenement de la page [Agenda] ---- //
-            // ------------------------------------------------------------------------ //
             switch(true){
                 case (!empty($request->query->get('userId'))):
                     $_SESSION['calendrierId'] = $request->query->get('calendrierid');
                     // On stocke l'id du user pour la personnalisation du fichier credentials
-                    // dans google calendar qui permet la connexion à l'agenda du l'utilisateur
+                    // dans google calendar qui permet la connexion à l'agenda du consultant
                     $_SESSION['useridcredencial'] = $request->query->get('userId');
                     break;
             }
-            // On recupere le bureau
-            $bureauObject = ($request->request->get('bureauselect') != -1)? $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($request->request->get('bureauselect')) : NULL;
             $historique = new Historique(); // Historique
-            $historique->setBureau($bureauObject);
-            $historique->setTypeRdv($request->request->get('typeRdv'));
+            // On recupere le bureau
+            if($request->request->get('bureauselect') != -1){
+                $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($request->request->get('bureauselect'));
+                $historique->setBureau($bureauObject); // bureau
+            }
+            // On recupere le beneficiaire
+            $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->request->get('idbeneficiaire')) : NULL;
+            $historique->setBeneficiaire($benef); // beneficiaire
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if ($form->handleRequest($request)->isValid()) {
+                $historique->setTypeRdv($request->request->get('typeRdv'));
                 // On stocke Les infos dans un tableau
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
