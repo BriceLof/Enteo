@@ -374,18 +374,28 @@ $("document").ready(function () {
 
 
     // ============================================================ //
-    // =================== Agenda du consultant ==================== // 
+    // =================== Agenda du consultant =================== // 
     // ========== On affiche le calendrier et le formulaire ======= //
     // ============================================================ //
 
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
+	var urlautocompletion;
+	console.log('----------- pathname: '+location.pathname);
+    switch(true){
+        case (location.pathname == '/web/app_dev.php/agenda/evenements'):
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
+            break;
+        default:
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
+            break;
+    }
     // Autocompletion nom
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
-                url : 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"), // on appelle le script JSON
+                url : urlautocompletion, // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
                     sentinel: 1
