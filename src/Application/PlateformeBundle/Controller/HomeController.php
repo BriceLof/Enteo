@@ -28,10 +28,10 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();  
         // Récupération liste béneficiaires
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');
-        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT')){
-            $beneficiaires = $this->getUser()->getBeneficiaire();
-        }else {
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+        }else {
+            $beneficiaires = $this->getUser()->getBeneficiaire();
         }
         
         // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
