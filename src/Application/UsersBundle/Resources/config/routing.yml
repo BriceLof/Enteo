@@ -1,14 +1,17 @@
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-    
-user:
-    path: /user
-    defaults: {_controller: ApplicationUsersBundle:Users:index }
 
 user_type:
     path: /user/{typeUser}
-    defaults: {_controller: ApplicationUsersBundle:Users:index }
-    
+    defaults: 
+        _controller: ApplicationUsersBundle:Users:index 
+        typeUser: 
+            
+user_show:
+    path: /user/{id}/show
+    defaults: {_controller: ApplicationUsersBundle:Users:show }
+    requirements:
+        id: \d+
     
 user_edit:
     path: /user/{id}/edit

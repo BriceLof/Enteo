@@ -55,8 +55,9 @@ class Users extends BaseUser
     private $email2;
 
     /**
-    * @ORM\Column(name="ville", type="string", length=255, nullable=true)
-    */
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville")
+     * @ORM\JoinColumn(nullable=true)
+     */
     private $ville;
 
     /**
@@ -129,29 +130,6 @@ class Users extends BaseUser
         return $this->prenom;
     }
 
-    /**
-     * Set ville
-     *
-     * @param string $ville
-     *
-     * @return Users
-     */
-    public function setVille($ville)
-    {
-        $this->ville = $ville->getId();
-
-        return $this;
-    }
-
-    /**
-     * Get ville
-     *
-     * @return string
-     */
-    public function getVille()
-    {
-        return $this->ville;
-    }
 
     /**
      * Set distanciel
@@ -356,5 +334,29 @@ class Users extends BaseUser
     public function getTel2()
     {
         return $this->tel2;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param \Application\PlateformeBundle\Entity\Ville $ville
+     *
+     * @return Users
+     */
+    public function setVille(\Application\PlateformeBundle\Entity\Ville $ville = null)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return \Application\PlateformeBundle\Entity\Ville
+     */
+    public function getVille()
+    {
+        return $this->ville;
     }
 }

@@ -11,40 +11,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * User controller.
- *
- * @Route("users")
  * @Security("has_role('ROLE_ADMIN')")
  */
 class UsersController extends Controller
 {
-    /**
-     * Lists all user entities.
-     *
-     * @Route("/", name="users_index")
-     * @Method("GET")
-     */
-    public function indexAction($typeUser)
+    
+    public function indexAction($typeUser = null)
     {
-        //var_dump($typeUser);
+        //var_dump($typeUser);exit;
         $em = $this->getDoctrine()->getManager();
         if(is_null($typeUser))
             $users = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
         else
             $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser);
         
-       
         return $this->render('ApplicationUsersBundle:Users:index.html.twig', array(
             'users' => $users,
             
         ));
     }
 
-    /**
-     * Creates a new user entity.
-     *
-     * @Route("/new", name="users_new")
-     * @Method({"GET", "POST"})
-     */
     public function newAction(Request $request)
     {
         $user = new User();
@@ -64,24 +50,18 @@ class UsersController extends Controller
         ));
     }
     
-    /**
-     * Finds and displays a user entity.
-     *
-     * @Route("/{id}", name="users_show")
-     * @Method("GET")
-     */
     public function showAction(Users $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
-
-        return $this->render('users/show.html.twig', array(
+        //var_dump($user);exit;
+        return $this->render('ApplicationUsersBundle:Users:show.html.twig', array(
             'user' => $user,
-            'delete_form' => $deleteForm->createView(),
+            
         ));
     }
 
     public function editAction(Request $request, Users $user)
     {
+        //var_dump($user);exit;
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('Application\UsersBundle\Form\UsersType', $user);
         $editForm->handleRequest($request);
@@ -94,8 +74,8 @@ class UsersController extends Controller
         
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         // Simple example
-        $breadcrumbs->addItem("Home", $this->get("router")->generate("user"));
-        $breadcrumbs->addItem("Utilisateur", $this->get("router")->generate("user"));
+        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_type"));
+        $breadcrumbs->addItem("Utilisateur", $this->get("router")->generate("user_type"));
         $breadcrumbs->addItem("Modification");  
         // Example with parameter injected into translation "user.profile"
     
