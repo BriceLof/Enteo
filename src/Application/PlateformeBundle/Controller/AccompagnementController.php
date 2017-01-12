@@ -27,6 +27,11 @@ class AccompagnementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
+
         $accompagnement = $beneficiaire->getAccompagnement();
         if(is_null($accompagnement)){
             $accompagnement = new Accompagnement();

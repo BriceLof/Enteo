@@ -24,6 +24,9 @@ class NewsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
 
@@ -70,6 +73,9 @@ class NewsController extends Controller
         $news = $em->getRepository('ApplicationPlateformeBundle:News')->find($id);
         $beneficiaire = $news->getBeneficiaire();
 
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
         if (!$news) {
             throw $this->createNotFoundException('Unable to find News.');
         }

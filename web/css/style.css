@@ -363,3 +363,13 @@ div.error {
 .modal-body{
     margin-bottom: 80px;
 }
+
+#collapseHistorique a:link{
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+}
+
+.panel-heading{
+    background-color: white;
+}

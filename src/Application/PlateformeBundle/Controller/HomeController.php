@@ -19,6 +19,8 @@ class HomeController extends Controller
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
 
+        //var_dump($this->getUser()->getRoles());die;
+
         //demande de philippe pour que le nombre de beneficiaire par page soit de 50
         //auparavant 4
         $nbPerPage = 50;
@@ -26,7 +28,11 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();  
         // Récupération liste béneficiaires
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');
-        $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT')){
+            $beneficiaires = $this->getUser()->getBeneficiaire();
+        }else {
+            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+        }
         
         // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
         $nbPages = ceil(count($beneficiaires) / $nbPerPage);
