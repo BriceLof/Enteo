@@ -1,226 +1,235 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
 {% block header %}
-    <div id="banner">
-        {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
-        
-    </div>
+    {% if liste_beneficiaire != null %}
+        <div id="banner">
+            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}      
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block body %}
+    
     <section class="container-fluid section-tab-home-benef">
-    {% if results is defined %}
-        {% for beneficiaire in results %}
-            {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
-            <div class="row tab-home-benef">
-                <div class="table-responsive col-md-12" >
-                    <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
-                    <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
-                    <br><br>
-                    <table class="table table-bordered ">
-                        <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Ville</th>
-                            <th>Date Mer</th>
-                            <th>Heure Mer</th>
-                            <th>Tél</th>
-                            <th>Email</th>
-                            <th>Domaine Vae</th>
-                            <th>Diplôme visé</th>
-                            <th>Heure rappel</th>
-                            <th>Consultant</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+    {% if liste_beneficiaire != null %}
+        {% if results is defined %}
+            {% for beneficiaire in results %}
+                {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
+                <div class="row tab-home-benef">
+                    <div class="table-responsive col-md-12" >
+                        <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
+                        <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
+                        <br><br>
+                        <table class="table table-bordered ">
+                            <thead>
                             <tr>
-                                <td>{{ beneficiaire.nomConso|capitalize }}</td>
-                                <td>{{ beneficiaire.prenomConso|capitalize }}</td>
-                                <td>{{ beneficiaire.ville.nom|capitalize }}</td>
-                                <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
-                                <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
-                                <td>{{ beneficiaire.telConso }}</td>
-                                <td>{{ beneficiaire.emailConso }}</td>
-                                <td>{{ beneficiaire.domaineVae|capitalize }}</td>
-                                <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
-                                <td>{{ beneficiaire.heureRappel|capitalize }}</td>
-                                {% if beneficiaire.consultant is not null %}
-                                    <td>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</td>
-                                {% else %}
-                                    <td>Pas encore de consultant</td>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Ville</th>
+                                <th>Date Mer</th>
+                                <th>Heure Mer</th>
+                                <th>Tél</th>
+                                <th>Email</th>
+                                <th>Domaine Vae</th>
+                                <th>Diplôme visé</th>
+                                <th>Heure rappel</th>
+                                <th>Consultant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ beneficiaire.nomConso|capitalize }}</td>
+                                    <td>{{ beneficiaire.prenomConso|capitalize }}</td>
+                                    <td>{{ beneficiaire.ville.nom|capitalize }}</td>
+                                    <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
+                                    <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
+                                    <td>{{ beneficiaire.telConso }}</td>
+                                    <td>{{ beneficiaire.emailConso }}</td>
+                                    <td>{{ beneficiaire.domaineVae|capitalize }}</td>
+                                    <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
+                                    <td>{{ beneficiaire.heureRappel|capitalize }}</td>
+                                    {% if beneficiaire.consultant is not null %}
+                                        <td>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</td>
+                                    {% else %}
+                                        <td>Pas encore de consultant</td>
+                                    {% endif %}
+                                </tr>
+
+                                {% if(beneficiaire.news | length > 0) %}
+                                    {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                                 {% endif %}
-                            </tr>
-
-                            {% if(beneficiaire.news | length > 0) %}
-                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                            {% endif %}
-                            <!--<tr>
-                                <td colspan=11></td>
-                            </tr>-->
-                            <tr>
-                                <th colspan=2>Nombre total appel</th>
-                                <th colspan=2>Dernier appel</th>
-                                <th colspan=5>Dernière news</th>
-                                <th>Statut</th>
-                                <th>Détail statut</th>
-                            </tr>
-                            <tr>
-                                <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
-                                <td colspan=2>
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
-                                </td>
-                                <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
-                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
-                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <!--<tr>
+                                    <td colspan=11></td>
+                                </tr>-->
+                                <tr>
+                                    <th colspan=2>Nombre total appel</th>
+                                    <th colspan=2>Dernier appel</th>
+                                    <th colspan=5>Dernière news</th>
+                                    <th>Statut</th>
+                                    <th>Détail statut</th>
+                                </tr>
+                                <tr>
+                                    <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                    <td colspan=2>
+                                        {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
+                                        {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
+                                    </td>
+                                    <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
+                                    <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
+                                    <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <aside id="form_add_news_{{ beneficiaire.id }}" class="formulaire_add_news col-md-3" style="position:fixed;z-index:3;top:25%;left:35%;margin-left:15px;box-shadow: 6px 12px 25px rgba(17, 17, 17, 0.35);margin-top:0px;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px; display:none">
+                        <h3>MAJ Bénéficiaire : </h3>
+                        <p>
+                            <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
+                            {{ beneficiaire.ville.nom|capitalize }}
+                        </p>
+                        <div class="loading_ajax"></div>
+                    </aside>
                 </div>
-                <aside id="form_add_news_{{ beneficiaire.id }}" class="formulaire_add_news col-md-3" style="position:fixed;z-index:3;top:25%;left:35%;margin-left:15px;box-shadow: 6px 12px 25px rgba(17, 17, 17, 0.35);margin-top:0px;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px; display:none">
-                    <h3>MAJ Bénéficiaire : </h3>
-                    <p>
-                        <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
-                        {{ beneficiaire.ville.nom|capitalize }}
-                    </p>
-                    <div class="loading_ajax"></div>
-                </aside>
+                <br>
+                <br>
+            {% endfor %}
+            <aside class="formulaire_add_news" style="display:none;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px;"></aside>
+            </section>
+
+            <div id="block_formulaire_add_news" style="display:none" >
+                <form action="{{ path('application_plateforme_homepage') }}" method="post">
+                    <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
+                    {{ form_label(form_news.statut) }}
+                    {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
+                    {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
+                    {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut'}}) }}
+                    {{ form_rest(form_news) }}
+
+                </form>
             </div>
-            <br>
-            <br>
-        {% endfor %}
-        <aside class="formulaire_add_news" style="display:none;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px;"></aside>
-        </section>
 
-        <div id="block_formulaire_add_news" style="display:none" >
-            <form action="{{ path('application_plateforme_homepage') }}" method="post">
-                <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
-                {{ form_label(form_news.statut) }}
-                {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
-                {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
-                {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut'}}) }}
-                {{ form_rest(form_news) }}
+            <div id="pagination" style="text-align:center">
+                <ul class="pagination">
+                    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                    {% for p in range(1, nbPages) %}
+                        <li{% if p == page %} class="active"{% endif %}>
+                            <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
 
-            </form>
-        </div>
+            {% for beneficiaire in liste_beneficiaire %}
+                {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
+                <div class="row tab-home-benef">
+                    <div class="table-responsive col-md-12" >
+                        <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
+                        <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
+                        <br><br>
+                        <table class="table table-bordered ">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Ville</th>
+                                <th>Date Mer</th>
+                                <th>Heure Mer</th>
+                                <th>Tél</th>
+                                <th>Email</th>
+                                <th>Domaine Vae</th>
+                                <th>Diplôme visé</th>
+                                <th>Heure rappel</th>
+                                <th>Consultant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ beneficiaire.nomConso|capitalize }}</td>
+                                    <td>{{ beneficiaire.prenomConso|capitalize }}</td>
+                                    <td>{{ beneficiaire.ville.nom|capitalize }}</td>
+                                    <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
+                                    <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
+                                    <td>{{ beneficiaire.telConso }}</td>
+                                    <td>{{ beneficiaire.emailConso }}</td>
+                                    <td>{{ beneficiaire.domaineVae|capitalize }}</td>
+                                    <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
+                                    <td>{{ beneficiaire.heureRappel|capitalize }}</td>
+                                    {% if beneficiaire.consultant is not null %}
+                                        <td>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</td>
+                                    {% else %}
+                                        <td>Pas encore de consultant</td>
+                                    {% endif %}
+                                </tr>
 
-        <div id="pagination" style="text-align:center">
-            <ul class="pagination">
-                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                {% for p in range(1, nbPages) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+                                {% if(beneficiaire.news | length > 0) %}
+                                    {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
+                                {% endif %}
+                                <!--<tr>
+                                    <td colspan=11></td>
+                                </tr>-->
+                                <tr>
+                                    <th colspan=2>Nombre total appel</th>
+                                    <th colspan=2>Dernier appel</th>
+                                    <th colspan=5>Dernière news</th>
+                                    <th>Statut</th>
+                                    <th>Détail statut</th>
+                                </tr>
+                                <tr>
+                                    <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                    <td colspan=2>
+                                        {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
+                                        {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
+                                    </td>
+                                    <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
+                                    <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
+                                    <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <aside id="form_add_news_{{ beneficiaire.id }}" class="formulaire_add_news col-md-3" style="position:fixed;z-index:3;top:25%;left:35%;margin-left:15px;box-shadow: 6px 12px 25px rgba(17, 17, 17, 0.35);margin-top:0px;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px; display:none">
+                        <h3>MAJ Bénéficiaire : </h3>
+                        <p>
+                            <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
+                            {{ beneficiaire.ville.nom|capitalize }}
+                        </p>
+                        <div class="loading_ajax"></div>
+                    </aside>
+                </div>
+                <br>
+                <br>
+            {% endfor %}
+            <aside class="formulaire_add_news" style="display:none;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px;"></aside>
+            </section>
+
+            <div id="block_formulaire_add_news" style="display:none" >
+                <form action="{{ path('application_plateforme_homepage') }}" method="post">
+                    <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
+                    {{ form_label(form_news.statut) }}
+                    {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
+                    {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
+                    {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut'}}) }}
+                    {{ form_rest(form_news) }}
+
+                </form>
+            </div>
+
+            <div id="pagination" style="text-align:center">
+                <ul class="pagination">
+                    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                    {% for p in range(1, nbPages) %}
+                        <li{% if p == page %} class="active"{% endif %}>
+                            <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     {% else %}
-
-        {% for beneficiaire in liste_beneficiaire %}
-            {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
-            <div class="row tab-home-benef">
-                <div class="table-responsive col-md-12" >
-                    <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
-                    <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
-                    <br><br>
-                    <table class="table table-bordered ">
-                        <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Ville</th>
-                            <th>Date Mer</th>
-                            <th>Heure Mer</th>
-                            <th>Tél</th>
-                            <th>Email</th>
-                            <th>Domaine Vae</th>
-                            <th>Diplôme visé</th>
-                            <th>Heure rappel</th>
-                            <th>Consultant</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{ beneficiaire.nomConso|capitalize }}</td>
-                                <td>{{ beneficiaire.prenomConso|capitalize }}</td>
-                                <td>{{ beneficiaire.ville.nom|capitalize }}</td>
-                                <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
-                                <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
-                                <td>{{ beneficiaire.telConso }}</td>
-                                <td>{{ beneficiaire.emailConso }}</td>
-                                <td>{{ beneficiaire.domaineVae|capitalize }}</td>
-                                <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
-                                <td>{{ beneficiaire.heureRappel|capitalize }}</td>
-                                {% if beneficiaire.consultant is not null %}
-                                    <td>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</td>
-                                {% else %}
-                                    <td>Pas encore de consultant</td>
-                                {% endif %}
-                            </tr>
-
-                            {% if(beneficiaire.news | length > 0) %}
-                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                            {% endif %}
-                            <!--<tr>
-                                <td colspan=11></td>
-                            </tr>-->
-                            <tr>
-                                <th colspan=2>Nombre total appel</th>
-                                <th colspan=2>Dernier appel</th>
-                                <th colspan=5>Dernière news</th>
-                                <th>Statut</th>
-                                <th>Détail statut</th>
-                            </tr>
-                            <tr>
-                                <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
-                                <td colspan=2>
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
-                                </td>
-                                <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
-                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
-                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <aside id="form_add_news_{{ beneficiaire.id }}" class="formulaire_add_news col-md-3" style="position:fixed;z-index:3;top:25%;left:35%;margin-left:15px;box-shadow: 6px 12px 25px rgba(17, 17, 17, 0.35);margin-top:0px;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px; display:none">
-                    <h3>MAJ Bénéficiaire : </h3>
-                    <p>
-                        <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
-                        {{ beneficiaire.ville.nom|capitalize }}
-                    </p>
-                    <div class="loading_ajax"></div>
-                </aside>
-            </div>
-            <br>
-            <br>
-        {% endfor %}
-        <aside class="formulaire_add_news" style="display:none;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px;"></aside>
-        </section>
-
-        <div id="block_formulaire_add_news" style="display:none" >
-            <form action="{{ path('application_plateforme_homepage') }}" method="post">
-                <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
-                {{ form_label(form_news.statut) }}
-                {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
-                {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
-                {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut'}}) }}
-                {{ form_rest(form_news) }}
-
-            </form>
+        <div class="jumbotron">
+            <p class="">Vous n'avez pas encore de bénéficiaires attribués</p>
         </div>
-
-        <div id="pagination" style="text-align:center">
-            <ul class="pagination">
-                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                {% for p in range(1, nbPages) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+       
     {% endif %}
 {% endblock %}

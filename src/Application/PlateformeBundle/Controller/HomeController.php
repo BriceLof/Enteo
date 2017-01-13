@@ -31,42 +31,56 @@ class HomeController extends Controller
         if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
         }else {
-            $beneficiaires = $this->getUser()->getBeneficiaire();
+            
+            if(count($this->getUser()->getBeneficiaire()) > 0)
+            {
+                $beneficiaires = $this->getUser()->getBeneficiaire();
+                
+                // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
+                $nbPages = ceil(count($beneficiaires) / $nbPerPage);
+
+                // Si la page n'existe pas, on retourne une 404
+                if ($page > $nbPages) {
+                    throw $this->createNotFoundException("La page ".$page." n'existe pas.");
+                }
+
+                // Formulaire d'ajout d'une news à un bénéficiaire
+                $news = new News;
+                $form = $this->get("form.factory")->create(NewsType::class, $news);
+
+                if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                    $news = $form->getData();
+
+                    $beneficiaire_id = $request->request->get('beneficiaire_id');
+                    $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
+
+                    $em->persist($news);
+                    $em->flush();
+                }
+                
+                return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
+                    'liste_beneficiaire'    => $beneficiaires, 
+                    'nbPages'               => $nbPages,
+                    'page'                  => $page,
+                    'form_news'             => $form->createView()
+                ));
+            }
+            else{
+                return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
+                    'liste_beneficiaire'    => null, 
+                ));
+            }
+            
+            
         }
         
-        // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
-        $nbPages = ceil(count($beneficiaires) / $nbPerPage);
-
-        // Si la page n'existe pas, on retourne une 404
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
-    
-        // Formulaire d'ajout d'une news à un bénéficiaire
-        $news = new News;
-        $form = $this->get("form.factory")->create(NewsType::class, $news);
-        
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $news = $form->getData();
-           
-            $beneficiaire_id = $request->request->get('beneficiaire_id');
-            $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
-
-            $em->persist($news);
-            $em->flush();
-        }
         
        /* foreach($beneficiaires as $b)
         {
             var_dump($b);exit;
         }
         exit;*/
-        return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
-            'liste_beneficiaire'    => $beneficiaires, 
-            'nbPages'               => $nbPages,
-            'page'                  => $page,
-            'form_news'             => $form->createView()
-        ));
+        
     }
     public function detailStatutAction($idStatut)
     {
