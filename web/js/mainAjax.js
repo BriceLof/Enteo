@@ -712,7 +712,15 @@ function plusMoins(element) {
     //alert(element.getElementsByClassName('glyphicon')[0].className);
     if(tbody.className == 'collapse in'){
         span.className = 'glyphicon glyphicon-plus';
+        if(tbody.id == 'collapseEspaceDocumentaire'){
+            ajoutDocument = document.getElementById('AjoutDocument');
+            ajoutDocument.className = 'collapse'
+        }
     }else{
         span.className = 'glyphicon glyphicon-minus';
+        if(tbody.id == 'collapseEspaceDocumentaire'){
+            ajoutDocument = document.getElementById('AjoutDocument');
+            ajoutDocument.className = 'collapse in';
+        }
     }
 }
