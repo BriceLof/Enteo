@@ -241,9 +241,9 @@
                     </div>
                     <div id="historique" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
+                            <caption class="titreSection"><a  href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
                         </table>
-                        <div class="collapse in" id="collapseHistorique">
+                        <div id="collapseHistorique" class="collapse in">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                     {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
                             </div>
