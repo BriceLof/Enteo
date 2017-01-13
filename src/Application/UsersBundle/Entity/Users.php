@@ -75,7 +75,6 @@ class Users extends BaseUser
     */
     private $calendrieruri;
     
-   
     
     public function __construct()
     {
@@ -362,5 +361,38 @@ class Users extends BaseUser
         return $this->ville;
     }
 
-    
+    public function setRoles(array $roles)
+    {
+        $this->roles = array();
+
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return Users
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 }

@@ -1,18 +1,103 @@
 {% extends "ApplicationUsersBundle::layout.html.twig" %}
 
-{% block body %}
-    
-    
-    {% for flash_message in app.session.flashBag.get('notice') %}
-        <div class="alert alert-success" role="alert">
-            {{ flash_message }}
-        </div>
-    {% endfor %}
+{% block menuLeft %}
+    <nav class="col-md-2 list-group" >
+        <ul style="margin-top: 46px;">
+            <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+            <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'consultant'}) }}" >Consultants</a></li>
+            <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'commercial'}) }}" >Commerciaux</a></li>
+            <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'gestion'}) }}" >Gestionnaire</a></li>
+            <br>
+            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Ajouter un utilisateur</a>
+        </ul>
         
-    <section class="col-md-9 col-md-offset-1">
-        {{ wo_render_breadcrumbs() }}
-        {{form(edit_form)}} 
-        {{form_rest(edit_form)}}
-    </section>
-   
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <section class="col-md-9 ">
+        <div class="page-header">
+            <h1>Gestion - Utilisateurs<br><small>Détails</small></h1>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Informations compte</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p><b>Date de création :</b> {{ user.prenom }}</p>
+                        <p><b>Ville de rattachement :</b> {% if user.ville %} {{ user.ville.nom|capitalize }} {% endif %}</p>
+                        <p><b>Dossiers en Cours :</b> {{ user.tel1 }}</p><br>
+                        <p><b>Login :</b> {{ user.civilite }}</p>
+                        <p><b>Mot de passe :</b> {{ user.password | slice(0,-45) }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Nom et Contact</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p><b>Civilité :</b> {{ form_widget(form.civilite, {'value' : user.civilite}) }} </p>
+                        <p><b>Nom :</b> {{ user.nom }}</p>
+                        <p><b>Prénom :</b> {{ user.prenom }}</p>
+                        <p><b>Tél 1 :</b> {{ user.tel1 }}</p>
+                        <p><b>Tél 2 :</b> {{ user.tel2 }}</p>
+                        <p><b>Email 1 :</b> {{ user.email }}</p>
+                        <p><b>Email 2 :</b> {{ user.email2 }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title"><b>Caractéristiques d'Intervention</b></h3>
+                    </div>
+                    <div class="panel-body">
+                      Panel content
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title"><b>Agenda</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p><b>Calendrier ID :</b> {{ user.calendrierid }}</p>
+                        <p><b>Calendrier URI :</b> {{ user.calendrieruri }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                      <h3 class="panel-title"><b>Enquête Qualité</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <p class='col-md-6'><b>Taux de diplômés :</b></p><p class='col-md-6'>92% <span>Validation totale</span></p>
+                            <p class='col-md-6'></p><p class='col-md-6'>8% Validation Partielle</p>
+                            <p class='col-md-6'></p><p class='col-md-6'>100% Total</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-md-12">
+                <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp; Modifier</a>
+                <a href="{{ path('user_delete', {'id': user.id}) }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; Supprimer</a>
+            </div>
+        </div>
+        
+        </section>
+    
+    
+    
 {% endblock %}
