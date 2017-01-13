@@ -706,6 +706,9 @@ $(document).ready(function() {
 
 function plusMoins(element) {
     parent = element.parentNode.parentNode;
+    if (element.id == 'collapseHistorique'){
+        tbody = document.getElementById('')
+    }
     tbody = parent.getElementsByClassName('collapse')[0];
     span  = element.getElementsByClassName('glyphicon')[0];
     //alert(span);
