@@ -32,6 +32,7 @@ class HomeController extends Controller
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
         }else {
             $beneficiaires = $this->getUser()->getBeneficiaire();
+            if(count($beneficiaires) == 0 ) $beneficiaires = null;
         }
         
         // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
@@ -56,11 +57,6 @@ class HomeController extends Controller
             $em->flush();
         }
         
-       /* foreach($beneficiaires as $b)
-        {
-            var_dump($b);exit;
-        }
-        exit;*/
         return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
             'liste_beneficiaire'    => $beneficiaires, 
             'nbPages'               => $nbPages,

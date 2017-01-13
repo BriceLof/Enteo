@@ -2,10 +2,10 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 user_type:
-    path: /user/{typeUser}
+    path: /user/type/{typeUser}
     defaults: 
         _controller: ApplicationUsersBundle:Users:index 
-        typeUser: 
+        typeUser: consultant
             
 user_show:
     path: /user/{id}/show
