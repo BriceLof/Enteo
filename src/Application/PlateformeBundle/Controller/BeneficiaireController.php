@@ -39,8 +39,9 @@ class BeneficiaireController extends Controller
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
         }
          */
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
-                throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
+        }else{
+            throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
         }
 
         if (!$beneficiaire) {

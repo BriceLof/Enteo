@@ -4,6 +4,7 @@
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,8 +48,8 @@
       <file leaf-file-name="BeneficiaireController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="41" column="90" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="90" />
+            <state relative-caret-position="167">
+              <caret line="44" column="9" selection-start-line="41" selection-start-column="8" selection-end-line="44" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -57,10 +58,10 @@
       <file leaf-file-name="AgendaController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+            <state relative-caret-position="136">
+              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding>
-                <marker date="1484305228447" expanded="true" signature="774:887" ph="SELECT b.id,... ApplicationPlateformeBundle" />
+                <marker date="1484305519626" expanded="true" signature="774:887" ph="SELECT b.id,... ApplicationPlateformeBundle" />
               </folding>
             </state>
           </provider>
@@ -568,7 +569,7 @@
       <workItem from="1483953168822" duration="78923000" />
       <workItem from="1484212133054" duration="5965000" />
       <workItem from="1484219811834" duration="350000" />
-      <workItem from="1484222290215" duration="22835000" />
+      <workItem from="1484222290215" duration="23125000" />
     </task>
     <task id="LOCAL-00001" summary="- ajout de la relation entre consultant et bénéficiaire">
       <created>1482234847639</created>
@@ -780,11 +781,25 @@
       <option name="project" value="LOCAL" />
       <updated>1484304735331</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="- security control">
+      <created>1484305234617</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1484305234617</updated>
+    </task>
+    <task id="LOCAL-00032" summary="- security control">
+      <created>1484305395352</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1484305395352</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="373109000" />
+    <option name="totallyTimeSpent" value="373399000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1258,18 +1273,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="41" column="90" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="90" />
+        <state relative-caret-position="167">
+          <caret line="44" column="9" selection-start-line="41" selection-start-column="8" selection-end-line="44" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+        <state relative-caret-position="136">
+          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
-            <marker date="1484305228447" expanded="true" signature="774:887" ph="SELECT b.id,... ApplicationPlateformeBundle" />
+            <marker date="1484305519626" expanded="true" signature="774:887" ph="SELECT b.id,... ApplicationPlateformeBundle" />
           </folding>
         </state>
       </provider>
