@@ -32,7 +32,7 @@
                         <p><b>Ville de rattachement :</b> {{ user.ville.nom }}</p>
                         <p><b>Dossiers en Cours :</b> {{ user.tel1 }}</p><br>
                         <p><b>Login :</b> {{ user.civilite }}</p>
-                        <p><b>Mot de passe :</b> {{ user.nom }}</p>
+                        <p><b>Mot de passe :</b> {{ user.password | slice(0,-45) }}</p>
                     </div>
                 </div>
             </div>

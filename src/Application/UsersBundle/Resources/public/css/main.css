@@ -25,6 +25,12 @@ and open the template in the editor.
     display: inline-block;
 }
 
+.dropdown-header {
+    padding: 3px 11px !important;
+    font-size: 14px !important;
+    color: #337ab7 !important;
+    font-weight: bold !important;
+} 
 /*---------------------------- END Header Menu -----------------------------*/
 
 /*---------------------------- HOME partie tableaux informations bénéficiaires ----------------------------------------*/

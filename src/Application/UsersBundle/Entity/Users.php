@@ -75,6 +75,8 @@ class Users extends BaseUser
     */
     private $calendrieruri;
     
+   
+    
     public function __construct()
     {
         parent::__construct();
@@ -359,4 +361,6 @@ class Users extends BaseUser
     {
         return $this->ville;
     }
+
+    
 }

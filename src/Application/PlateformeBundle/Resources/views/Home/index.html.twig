@@ -34,48 +34,47 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>{{ beneficiaire.nomConso|capitalize }}</td>
-                            <td>{{ beneficiaire.prenomConso|capitalize }}</td>
-                            <td>{{ beneficiaire.ville.nom|capitalize }}</td>
-                            <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
-                            <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
-                            <td>{{ beneficiaire.telConso }}</td>
-                            <td>{{ beneficiaire.emailConso }}</td>
-                            <td>{{ beneficiaire.domaineVae|capitalize }}</td>
-                            <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
-                            <td>{{ beneficiaire.heureRappel|capitalize }}</td>
-                            {% if beneficiaire.consultant is not null %}
-                                <td>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</td>
-                            {% else %}
-                                <td>Pas encore de consultant</td>
+                            <tr>
+                                <td>{{ beneficiaire.nomConso|capitalize }}</td>
+                                <td>{{ beneficiaire.prenomConso|capitalize }}</td>
+                                <td>{{ beneficiaire.ville.nom|capitalize }}</td>
+                                <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
+                                <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
+                                <td>{{ beneficiaire.telConso }}</td>
+                                <td>{{ beneficiaire.emailConso }}</td>
+                                <td>{{ beneficiaire.domaineVae|capitalize }}</td>
+                                <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
+                                <td>{{ beneficiaire.heureRappel|capitalize }}</td>
+                                {% if beneficiaire.consultant is not null %}
+                                    <td>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</td>
+                                {% else %}
+                                    <td>Pas encore de consultant</td>
+                                {% endif %}
+                            </tr>
+
+                            {% if(beneficiaire.news | length > 0) %}
+                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                             {% endif %}
-                        </tr>
-
-                        {% if(beneficiaire.news | length > 0) %}
-                            {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                        {% endif %}
-                        <!--<tr>
-                            <td colspan=11></td>
-                        </tr>-->
-                        <tr>
-                            <th colspan=2>Nombre total appel</th>
-                            <th colspan=2>Dernier appel</th>
-                            <th colspan=5>Dernière news</th>
-                            <th>Statut</th>
-                            <th>Détail statut</th>
-                        </tr>
-                        <tr>
-                            <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
-                            <td colspan=2>
-                                {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("m/d/Y") ~ ' à' : '' }}
-                                {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
-                            </td>
-                            <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
-                            <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
-                            <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                        </tr>
-
+                            <!--<tr>
+                                <td colspan=11></td>
+                            </tr>-->
+                            <tr>
+                                <th colspan=2>Nombre total appel</th>
+                                <th colspan=2>Dernier appel</th>
+                                <th colspan=5>Dernière news</th>
+                                <th>Statut</th>
+                                <th>Détail statut</th>
+                            </tr>
+                            <tr>
+                                <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                <td colspan=2>
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
+                                </td>
+                                <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
+                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
+                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -176,7 +175,7 @@
                             <tr>
                                 <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
                                 <td colspan=2>
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("m/d/Y") ~ ' à' : '' }}
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                                 </td>
                                 <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
