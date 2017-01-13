@@ -1,13 +1,12 @@
 
-
-        <tr>
-            <td>{{ form_label(form_consultant.consultant) }}</td>
-            <td>{{ form_widget(form_consultant.consultant) }}</td>
-        </tr>
-        <tr>
-            <td>{{ form_rest(form_consultant) }}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td class="valider">{{ form_widget(form_consultant.submit) }}</td>
-        </tr>
+<div class="modal-body">
+    <div>
+        <span class="col-md-6" style="margin-top: 10px">{{ form_label(form_consultant.consultant) }}</span>
+        <span class="col-md-6">{{ form_widget(form_consultant.consultant) }}</span>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+    {{ form_widget(form_consultant.submit) }}
+</div>
+<div>{{ form_rest(form_consultant) }}</div>

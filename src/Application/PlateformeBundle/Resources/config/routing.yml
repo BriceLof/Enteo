@@ -16,7 +16,8 @@ autocompletion_agenda:
 application_plateforme_detail_statut:
     path:     /detail_statut/{idStatut}
     defaults: 
-        _controller: ApplicationPlateformeBundle:Home:detailStatut 
+        _controller: ApplicationPlateformeBundle:Home:detailStatut
+
     options:
         expose: true
 

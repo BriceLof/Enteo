@@ -1,9 +1,126 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register form-signin'}}) }}
-    <h2 class="form-signin-heading">Ajouter un utilisateur</h2>
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary btn-block"/>
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    <div class="page-header">
+        <h1>Gestion - Utilisateurs<br><small>Ajouter un utilisateur</small></h1>
     </div>
-{{ form_end(form) }}
+    <div class="panel panel-default" style="width:55%;margin:auto;margin-bottom:40px;">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_label(form.email, "Email *") }}
+                    {{ form_errors(form.email) }}
+                    {{ form_widget(form.email) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.email2) }}
+                    {{ form_errors(form.email2) }}
+                    {{ form_widget(form.email2) }}
+                </div>
+
+                <div class="col-md-12">
+                    {{ form_label(form.username, "Login *") }}
+                    {{ form_errors(form.username) }}
+                    {{ form_widget(form.username) }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form_label(form.plainPassword.first, "Mot de passe *") }}
+                    {{ form_errors(form.plainPassword.first) }}
+                    {{ form_widget(form.plainPassword.first) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.plainPassword.second, "Répéter le mot de passe *") }}
+                    {{ form_errors(form.plainPassword.second) }}
+                    {{ form_widget(form.plainPassword.second) }}
+                </div>
+
+                <div class="col-md-12">
+                    {{ form_label(form.civilite) }}
+                    {{ form_errors(form.civilite) }}
+                    {{ form_widget(form.civilite) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.nom, "Nom *") }}
+                    {{ form_errors(form.nom) }}
+                    {{ form_widget(form.nom) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.prenom, "Prénom *") }}
+                    {{ form_errors(form.prenom) }}
+                    {{ form_widget(form.prenom) }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form_label(form.tel1) }}
+                    {{ form_errors(form.tel1) }}
+                    {{ form_widget(form.tel1) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.tel2) }}
+                    {{ form_errors(form.tel2) }}
+                    {{ form_widget(form.tel2) }}
+                </div>
+
+                <div class="col-md-6">
+                    {{ form_label(form.roles) }}
+                    {{ form_errors(form.roles) }}
+                    {{ form_widget(form.roles) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.distanciel, "Format *") }}
+                    {{ form_errors(form.distanciel) }}
+                    {{ form_widget(form.distanciel) }}
+                </div>
+
+                <div class="col-md-12">
+                    {{ form_label(form.calendrierid) }}
+                    {{ form_errors(form.calendrierid) }}
+                    {{ form_widget(form.calendrierid) }}
+                </div>
+
+                <div class="col-md-12">
+                    {{ form_label(form.calendrieruri) }}
+                    {{ form_errors(form.calendrieruri) }}
+                    {{ form_widget(form.calendrieruri) }}
+                </div>
+                <div class="col-md-12">
+                    {{ form_label(form.ville) }}
+                    {{ form_errors(form.ville) }}
+                    {{ form_widget(form.ville) }}
+                </div>
+                <br>
+                <div class="col-md-4">
+                    <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary btn-block" style="margin-top:20px;"/>
+                </div>
+                {{ form_rest(form) }}
+                <div class="col-md-12">
+                    <p><i>* champs obligatoires</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+{# form_end(form) #}

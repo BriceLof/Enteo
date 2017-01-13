@@ -33,6 +33,12 @@ class BeneficiaireController extends Controller
 
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
+        //var_dump(is_array($this->getUser()->getBeneficiaire()));die;
+
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
+
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }

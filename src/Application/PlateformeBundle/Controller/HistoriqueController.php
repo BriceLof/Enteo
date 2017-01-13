@@ -25,6 +25,9 @@ class HistoriqueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
         $historique = new Historique();
 
         $form = $this->createForm(HistoriqueType::class, $historique);
@@ -92,6 +95,9 @@ class HistoriqueController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
 
         if (!$historique) {
             throw $this->createNotFoundException('Unable to find Historique.');
@@ -133,6 +139,9 @@ class HistoriqueController extends Controller
 
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique ->getBeneficiaire();
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
+        }
 
         if (!$historique) {
             throw $this->createNotFoundException('Unable to find Historique entity.');

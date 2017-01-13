@@ -1,7 +1,4 @@
 {%  if beneficiaire.suiviAdministratif is not null %}
-
-
-            <caption class="titreSection">Suivi Administratif</caption>
             {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
                 <tr>
                     <td>{{ suiviAdministratif.date|date('d/M/Y') }}</td>

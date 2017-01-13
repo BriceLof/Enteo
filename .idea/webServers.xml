@@ -34,6 +34,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="d31c982b-ebf9-4602-b3e3-7b76c4cf8ad1" name="BDC" url="http://newftp.cluster006.ovh.net">
+        <fileTransfer host="newftp.cluster006.ovh.net" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

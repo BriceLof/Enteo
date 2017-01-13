@@ -703,3 +703,24 @@ $(document).ready(function() {
     }
     setTimeout(afficheMessageFlash,5000);
 })();
+
+function plusMoins(element) {
+    parent = element.parentNode.parentNode;
+    tbody = parent.getElementsByClassName('collapse')[0];
+    span  = element.getElementsByClassName('glyphicon')[0];
+    //alert(span);
+    //alert(element.getElementsByClassName('glyphicon')[0].className);
+    if(tbody.className == 'collapse in'){
+        span.className = 'glyphicon glyphicon-plus';
+        if(tbody.id == 'collapseEspaceDocumentaire'){
+            ajoutDocument = document.getElementById('AjoutDocument');
+            ajoutDocument.className = 'collapse'
+        }
+    }else{
+        span.className = 'glyphicon glyphicon-minus';
+        if(tbody.id == 'collapseEspaceDocumentaire'){
+            ajoutDocument = document.getElementById('AjoutDocument');
+            ajoutDocument.className = 'collapse in';
+        }
+    }
+}

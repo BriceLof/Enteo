@@ -49,6 +49,7 @@ class AccompagnementType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'class' => 'date',
+                    'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )
             ))
@@ -58,7 +59,8 @@ class AccompagnementType extends AbstractType
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'class' => 'date',
+                    'class' => 'date accompagnementDate',
+                    'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )
             ))

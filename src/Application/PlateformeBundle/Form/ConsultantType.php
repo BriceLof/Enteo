@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,12 +22,22 @@ class ConsultantType extends AbstractType
 
             ->add('consultant', EntityType::class, array(
                 'class' => 'ApplicationUsersBundle:Users',
-                'label' => 'Consultant',
+                'label' => 'Consultant :',
                 'placeholder' => 'choisissez votre consultant',
+                'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                            ->where('u.roles LIKE :type')
+                            ->setParameter('type', '%consultant%');
+                },
                 'choice_label' => 'prenom',
 
             ))
-            ->add('submit', SubmitType::class, array('label' => 'Modifier le consultant'));
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Enregister',
+                'attr' => array(
+                    'class' => 'btn btn-primary'
+                )
+            ));
         ;
     }
 

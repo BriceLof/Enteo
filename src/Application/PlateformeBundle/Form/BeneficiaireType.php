@@ -61,6 +61,7 @@ class BeneficiaireType extends AbstractType
             ->add('encadrement', ChoiceType::class, array(
                 'label' => 'Encadrement ',
                 'required' => false,
+                'data' => 'oui',
                 'choices' => array(
                     '...' => '',
                     'oui' => 'oui',

@@ -23,21 +23,41 @@ class Users extends BaseUser
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="consultant")
      */
     private $beneficiaire;
-
+    
+    /**
+    * @ORM\Column(name="civilite", type="string", length=255, nullable=true)
+    */
+    private $civilite;
 
     /**
     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
     */
     private $nom;
-
+    
     /**
     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
     */
     private $prenom;
+    
+    /**
+    * @ORM\Column(name="tel1", type="string", length=10, nullable=true)
+    */
+    private $tel1;
+    
+    /**
+    * @ORM\Column(name="tel2", type="string", length=10, nullable=true)
+    */
+    private $tel2;
+    
+    /**
+    * @ORM\Column(name="email2", type="string", length=255, nullable=true)
+    */
+    private $email2;
 
     /**
-    * @ORM\Column(name="ville", type="string", length=255, nullable=true)
-    */
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville")
+     * @ORM\JoinColumn(nullable=true)
+     */
     private $ville;
 
     /**
@@ -110,29 +130,6 @@ class Users extends BaseUser
         return $this->prenom;
     }
 
-    /**
-     * Set ville
-     *
-     * @param string $ville
-     *
-     * @return Users
-     */
-    public function setVille($ville)
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    /**
-     * Get ville
-     *
-     * @return string
-     */
-    public function getVille()
-    {
-        return $this->ville;
-    }
 
     /**
      * Set distanciel
@@ -239,5 +236,127 @@ class Users extends BaseUser
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
+    }
+
+    /**
+     * Set civilite
+     *
+     * @param string $civilite
+     *
+     * @return Users
+     */
+    public function setCivilite($civilite)
+    {
+        $this->civilite = $civilite;
+
+        return $this;
+    }
+
+    /**
+     * Get civilite
+     *
+     * @return string
+     */
+    public function getCivilite()
+    {
+        return $this->civilite;
+    }
+
+
+
+    /**
+     * Set email2
+     *
+     * @param string $email2
+     *
+     * @return Users
+     */
+    public function setEmail2($email2)
+    {
+        $this->email2 = $email2;
+
+        return $this;
+    }
+
+    /**
+     * Get email2
+     *
+     * @return string
+     */
+    public function getEmail2()
+    {
+        return $this->email2;
+    }
+
+    /**
+     * Set tel1
+     *
+     * @param string $tel1
+     *
+     * @return Users
+     */
+    public function setTel1($tel1)
+    {
+        $this->tel1 = $tel1;
+
+        return $this;
+    }
+
+    /**
+     * Get tel1
+     *
+     * @return string
+     */
+    public function getTel1()
+    {
+        return $this->tel1;
+    }
+
+    /**
+     * Set tel2
+     *
+     * @param string $tel2
+     *
+     * @return Users
+     */
+    public function setTel2($tel2)
+    {
+        $this->tel2 = $tel2;
+
+        return $this;
+    }
+
+    /**
+     * Get tel2
+     *
+     * @return string
+     */
+    public function getTel2()
+    {
+        return $this->tel2;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param \Application\PlateformeBundle\Entity\Ville $ville
+     *
+     * @return Users
+     */
+    public function setVille(\Application\PlateformeBundle\Entity\Ville $ville = null)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return \Application\PlateformeBundle\Entity\Ville
+     */
+    public function getVille()
+    {
+        return $this->ville;
     }
 }
