@@ -29,7 +29,7 @@ class AgendaController extends Controller
 
         //var_dump($this->getUser()->getId());die;
 
-        if($this->getUser()->getId() != $request->query->get('userid')){
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || !$this->getUser()->getId() != $request->query->get('userid')){
             throw $this->createNotFoundException('Vous n\'avez pas accès à cette partie.');
         }
 
