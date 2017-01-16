@@ -1,9 +1,9 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 {% block body %}
+    <div class="container-fluid blocagendaprincipal">
             {% if is_granted('ROLE_ADMIN') %}
                 {# bloc Agenda pour Admin #}
-                <div class="container-fluid blocagendaprincipal">
-                    <div class="row">
+                 <div class="row">
                         <div class="col-md-12">
                             <div class="blocconsultant">
                                 <span>Voir l'agenda du consultant: </span>
@@ -104,53 +104,99 @@
                             </div>
                         </div>
                     </div>
-                </div>
             {% elseif is_granted('ROLE_CONSULTANT') %}
                 {# bloc Agenda pour consultant #}
                    <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
-                   <div id="nomconsultant">
-                        <span class="nomconsultant">{{'Agenda de '~consultant.nom~' '~consultant.prenom}}</span>
+                   <div class="row">
+                       <div class="col-md-12">
+                           <div id="nomconsultant">
+                                <span class="nomconsultant">Agenda de </span>
+                                <span class="nomconsultant" style="color: #668cd9;">{{'Agenda de '~consultant.nom~' '~consultant.prenom}}</span>
+                           </div>
+                       </div>
                    </div>
-                   <div class="blocacalendar"></div>
-                   <div class="bloc_form_agenda">
-                      <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
-                         <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
-                         <div class="champs-form">
-                            <!-- champs supplementaires ajoutés statiquements -->
-                            <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
-                            <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
-                            <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
-                            <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
-                            <!-- Type de Rendez-vous [presentiel ou distanciel] -->
-                            <label>Type de Rendez-vous: </label>
-                            <p class="trdv">
-                               <input type="radio" name="typeRdv" class="typerdv" id="rdvpresentiel" class="rdvpresentiel" checked="true" value="presenciel"><span style="margin-left:2%;">Presenciel</span>
-                               <input type="radio" name="typeRdv" class="typerdv" id="rdvdistentiel" class="rdvdistentiel" value="distanciel"><span style="margin-left:2%;">Distanciel</span>
-                            </p>
-                            <div class="bureau_v">
-                                <label>Bureau</label>
-                                <select name="bureauRdv" id="bureauRdv" class="form-control new_input bureauRdv" required>
-                                    {% if bureau|length <= 1 %}
-                                        <option value="">Selectionner un Bureau</option>
-                                        <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp~'_'~bureau.ville.nom}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
-                                    {% else %}
-                                        <option value="">Selectionner un Bureau</option>
-                                        {% for bureaux in bureau %}
-                                           <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.cp~'_'~bureaux.ville.nom}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
-                                        {% endfor %}
-                                    {% endif %}
-                                 </select>
-                                 <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
-                                 <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input ville" disabled="true">
-                                 <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
-                                 <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
-                                 <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
-                                 <label>Code postal</label><input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
-                                 <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
-                            </div>
-                            {{ form_widget(form) }}
-                         </div>
-                      </form>
+                   <div class="row">
+                       <div class="col-md-9">
+                          <div class="blocacalendar"></div>
+                       </div>
+                       <div class="col-md-3">
+                           <div class="bloc_form_agenda">
+                                <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
+                                   <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
+                                   <div class="champs-form">
+                                      <!-- champs supplementaires ajoutés statiquements -->
+                                      <label>Nom beneficiaire</label><input type="text" name="nomb" id="nomb" style="width:100%;" class="form-control new_input" required>
+                                      <label>Prenom beneficiaire</label><input type="text" name="prenomb" id="prenomb" style="width:100%;" disabled="true" class="form-control new_input" required>
+                                      <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+                                      <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
+                                      <!-- Type de Rendez-vous [presentiel ou distanciel] -->
+                                      <label>Type de Rendez-vous: </label>
+                                      <p class="trdv">
+                                         <input type="radio" name="typeRdv" class="typerdv" id="rdvpresentiel" class="rdvpresentiel" checked="true" value="presenciel"><span style="margin-left:2%;">Presenciel</span>
+                                         <input type="radio" name="typeRdv" class="typerdv" id="rdvdistentiel" class="rdvdistentiel" value="distanciel"><span style="margin-left:2%;">Distanciel</span>
+                                      </p>
+                                      <div class="bureau_v">
+                                          <label>Bureau</label>
+                                          <select name="bureauRdv" id="bureauRdv" class="form-control new_input bureauRdv" required>
+                                              {% if bureau|length <= 1 %}
+                                                  <option value="">Selectionner un Bureau</option>
+                                                  <option value="{{bureau.nom}}" id="{{bureau.adresse~'_'~bureau.ville.cp~'_'~bureau.ville.nom}}" class="{{'b_'~bureau.id}}">{{bureau.nom}}</option>
+                                              {% else %}
+                                                  <option value="">Selectionner un Bureau</option>
+                                                  {% for bureaux in bureau %}
+                                                     <option value="{{bureaux.nom}}" id="{{bureaux.adresse~'_'~bureaux.ville.cp~'_'~bureaux.ville.nom}}" class="{{'b_'~bureaux.id}}">{{bureaux.nom}}</option>
+                                                  {% endfor %}
+                                              {% endif %}
+                                           </select>
+                                           <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
+                                           <label>Ville</label><input type="text" name="ville" id="ville" class="form-control new_input ville" disabled="true">
+                                           <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
+                                           <label>Adresse</label><input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
+                                           <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
+                                           <label>Code postal</label><input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
+                                           <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
+                                      </div>
+                                      <div>
+                                            <!-- formulaire historique -->
+                                            <p>
+                                                <span>Titre evenement</span>
+                                                {{form_widget(form.summary)}}
+                                            </p>
+                                            <p>
+                                                <span>Description evenement</span>
+                                                {{form_widget(form.description)}}
+                                            </p>
+                                            <table style="width: 100%;" border="0">
+                                                <tr>
+                                                    <th colspan=2><span>Date</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan=2>
+                                                        {{form_widget(form.dateDebut)}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="height:31px;" valign="bottom"><span>Heure debut</span></th>
+                                                    <th valign="bottom"><span>Heure fin</span></th>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{form_widget(form.heureDebut)}}</td>
+                                                    <td>{{form_widget(form.heureFin)}}</td>
+                                                </tr>
+                                            </table>
+                                            {{ form_widget(form.type_rdv) }}
+                                            <div style="margin-top:32px;">
+                                                {{form_widget(form.Enregistrer)}}
+                                            </div>
+                                            <div>
+                                                {{ form_rest(form) }}
+                                            </div>
+                                       </div>
+                                   </div>
+                                </form>
+                             </div>
+                       </div>
                    </div>
             {% endif %}
+      </div>
 {% endblock %}

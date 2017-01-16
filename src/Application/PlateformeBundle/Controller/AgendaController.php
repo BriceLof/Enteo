@@ -26,10 +26,11 @@ class AgendaController extends Controller
 
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
-        }else{
-            throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
-        }
+        // return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
+        /*if($this->getUser()->getId() != $request->query->get('userid')){
+            // On le redirige sur la page du $this->getUser()->getId()
+            throw $this->createNotFoundException('vous n\'avez pas accès a cette partie.');
+        }*/
 
         $em = $this->getDoctrine()->getManager(); // Entity manager
         $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
@@ -44,6 +45,7 @@ class AgendaController extends Controller
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
+        
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
             'bureau' => $bureau,
@@ -75,7 +77,6 @@ class AgendaController extends Controller
             $historique->setBeneficiaire($benef); // beneficiaire
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-            echo '<pre>';
             // if ($form->handleRequest($request)->isValid()){
             if ($form->handleRequest($request)->isValid()){
                 $historique->setTypeRdv($request->request->get('typeRdv'));
@@ -91,12 +92,6 @@ class AgendaController extends Controller
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
-                
-                $em->persist($_SESSION['agenda'][1]);
-                $em->flush();
-                
-                exit;
-                
             }
         }
         // Instanciation du calendrier
@@ -119,7 +114,7 @@ class AgendaController extends Controller
             $eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
                 $_SESSION['agenda'][1]->getDateDebut(),
-                $_SESSION['agenda'][1]->getDateFin(),
+                $_SESSION['agenda'][1]->getDateDebut(),
                 $summary,
                 $_SESSION['agenda'][1]->getDescription(),
                 $eventAttendee = "",
