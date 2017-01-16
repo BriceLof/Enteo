@@ -68,7 +68,7 @@
                         <tr>
                             <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
                             <td colspan=2>
-                                {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("m/d/Y") ~ ' à' : '' }}
+                                {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                 {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                             </td>
                             <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
@@ -176,7 +176,7 @@
                             <tr>
                                 <td colspan=2><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
                                 <td colspan=2>
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("m/d/Y") ~ ' à' : '' }}
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                                 </td>
                                 <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
