@@ -42,6 +42,11 @@ class Bureau
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
+    
+    public function __construct()
+    {
+        $this->historique = new ArrayCollection();
+    }
 
 
     /**
@@ -125,4 +130,41 @@ class Bureau
     {
         return $this->nom;
     }
+    
+     /**
+     * Add historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     *
+     * @return Beneficiaire
+     */
+    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique[] = $historique;
+
+        $historique->setBureau($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     */
+    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique->removeElement($historique);
+    }
+
+    /**
+     * Get historique
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistorique()
+    {
+        return $this->historique;
+    }
+    
 }

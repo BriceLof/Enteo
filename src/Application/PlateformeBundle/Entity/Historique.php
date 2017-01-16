@@ -272,7 +272,7 @@ class Historique
      *
      * @return Historique
      */
-    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau)
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
     {
         $this->bureau = $bureau;
 
