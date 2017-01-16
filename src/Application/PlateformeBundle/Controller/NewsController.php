@@ -24,6 +24,7 @@ class NewsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
 

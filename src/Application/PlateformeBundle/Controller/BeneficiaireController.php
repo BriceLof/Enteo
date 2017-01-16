@@ -33,6 +33,17 @@ class BeneficiaireController extends Controller
 
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
+        //var_dump(is_array($this->getUser()->getBeneficiaire()));die;
+        /**
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        }
+         */
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
+        }else{
+            throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
+        }
+
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
@@ -212,6 +223,12 @@ class BeneficiaireController extends Controller
      */
     public function searchAction(Request $request,$page = 1 )
     {
+        $idUtilisateur = null;
+
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        }else{
+            $idUtilisateur = $this->getUser()->getId();
+        }
 
         $beneficiaire = new Beneficiaire();
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
@@ -229,7 +246,6 @@ class BeneficiaireController extends Controller
                 $beneficiaire->setVille($ville);
             }
 
-
             $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
@@ -246,7 +262,9 @@ class BeneficiaireController extends Controller
             }
 
 
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
+
+
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire

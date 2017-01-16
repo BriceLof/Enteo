@@ -15,14 +15,20 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 {   
-    public function getBeneficiaire($page, $nbPerPage)
+    public function getBeneficiaire($page, $nbPerPage, $idConsultant = null)
     {
        $query = $this->createQueryBuilder('b')
-            ->orderBy('b.id', 'DESC')
-            ->getQuery()
+            ->orderBy('b.id', 'DESC')   
         ;
-
+       
+       if($idConsultant != null)
+       {
+            $query->where('b.consultant = :id')
+                ->setParameter('id', $idConsultant);   
+       }
+       
         $query
+           ->getQuery()
           // On définit l'annonce à partir de laquelle commencer la liste
           ->setFirstResult(($page-1) * $nbPerPage)
           // Ainsi que le nombre d'annonce à afficher sur une page
@@ -34,7 +40,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query, true); 
     }
     
-    public function search(Beneficiaire $beneficiaire, $debut, $fin)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
@@ -55,6 +61,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if(!is_null($beneficiaire->getVille())) {
             $query .= ' AND b.ville_id = :villeId';
             $params['villeId'] = $beneficiaire->getVille()->getId();
+        }
+
+        if(!is_null($idUtilisateur)){
+            $query .= ' AND b.consultant_id = :consultantId';
+            $params['consultantId'] = $idUtilisateur;
         }
 
         if(!is_null($debut)){

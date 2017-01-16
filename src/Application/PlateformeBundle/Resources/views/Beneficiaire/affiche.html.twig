@@ -218,7 +218,7 @@
                                 {% endfor %}
                             </table>
                         </div>
-                        <div id="AjoutDocument">
+                        <div id="AjoutDocument" class="collapse in">
                             <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                                 {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                             </form>
@@ -241,8 +241,13 @@
                     </div>
                     <div id="historique" class="tableOnglet">
                         <table>
-                            {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
+                            <caption class="titreSection"><a  href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
                         </table>
+                        <div id="collapseHistorique" class="collapse in">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
+                            </div>
+                        </div>
                     </div>
     {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">

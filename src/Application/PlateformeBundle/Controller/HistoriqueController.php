@@ -25,6 +25,7 @@ class HistoriqueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
         $historique = new Historique();
 
         $form = $this->createForm(HistoriqueType::class, $historique);

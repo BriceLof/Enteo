@@ -27,6 +27,8 @@ class AccompagnementController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+
         $accompagnement = $beneficiaire->getAccompagnement();
         if(is_null($accompagnement)){
             $accompagnement = new Accompagnement();

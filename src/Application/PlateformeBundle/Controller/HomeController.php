@@ -19,6 +19,8 @@ class HomeController extends Controller
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
 
+        //var_dump($this->getUser()->getRoles());die;
+
         //demande de philippe pour que le nombre de beneficiaire par page soit de 50
         //auparavant 4
         $nbPerPage = 50;
@@ -26,7 +28,23 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();  
         // Récupération liste béneficiaires
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');
-        $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+        
+        // ADMIN et autres 
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+           
+        }
+        // CONSULTANT
+        else {
+            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage,$this->getUser()->getId() );
+            //$this->getUser()->getBeneficiaire();
+            if(count($beneficiaires) == 0 ) 
+            {
+                $beneficiaires = null;
+                return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array('liste_beneficiaire'    => $beneficiaires));
+            }
+            
+        }
         
         // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
         $nbPages = ceil(count($beneficiaires) / $nbPerPage);
@@ -50,11 +68,6 @@ class HomeController extends Controller
             $em->flush();
         }
         
-       /* foreach($beneficiaires as $b)
-        {
-            var_dump($b);exit;
-        }
-        exit;*/
         return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
             'liste_beneficiaire'    => $beneficiaires, 
             'nbPages'               => $nbPages,

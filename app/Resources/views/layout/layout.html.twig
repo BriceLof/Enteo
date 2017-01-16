@@ -27,28 +27,36 @@
               </button>
               <a class="navbar-brand" href="{{path('application_plateforme_homepage')}}">Enteo</a>
             </div>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Comptes <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="{{ path('user_type', {'typeUser': 'admin' }) }}">Administrateurs</a></li>
-                    <li><a href="{{ path('user_type', {'typeUser': 'beneficiaire' }) }}">Bénéficiaires</a></li>
-                    <li><a href="{{ path('user_type', {'typeUser': 'consultant' }) }}">Consultants VAE</a></li>
-                    <li><a href="{{ path('user_type', {'typeUser': 'commercial' }) }}">Commerciaux Téléphone</a></li>
-                    <li><a href="{{ path('user_type', {'typeUser': 'gestion' }) }}">Gestionnaires Administratifs</a></li>
-                  </ul>
-                </li>
-                <li><a href="#contact">Centre Ressources</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistiques <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Bénéficiaires par période</a></li>
-                    <li><a href="#">Suivi des Contacts Mer</a></li>
-                  </ul>
-                </li>
-                <li><a href="#contact">Scripts</a></li>
                 {% if is_granted('ROLE_ADMIN') %}
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li class="dropdown-header">Utilisateurs</li>
+                        <li><a href="{{ path('user_type', {'typeUser': 'admin' }) }}">Administrateurs</a></li>
+                        <li><a href="{{ path('user_type', {'typeUser': 'beneficiaire' }) }}">Bénéficiaires</a></li>
+                        <li><a href="{{ path('user_type', {'typeUser': 'consultant' }) }}">Consultants VAE</a></li>
+                        <li><a href="{{ path('user_type', {'typeUser': 'commercial' }) }}">Commerciaux Téléphone</a></li>
+                        <li><a href="{{ path('user_type', {'typeUser': 'gestion' }) }}">Gestionnaires Administratifs</a></li>
+
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ path('application_index_bureau') }}">Bureaux</a></li>
+                      </ul>
+                    </li>
+                {% endif %}
+               
+                <li><a href="#contact">Centre Ressources</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Statistiques <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Bénéficiaires par période</a></li>
+                        <li><a href="#">Suivi des Contacts Mer</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#contact">Scripts</a></li>
                     <li><a href="{{ path('application_plateforme_agenda') }}" target="_blank">Agenda</a></li>
                 {% elseif is_granted('ROLE_CONSULTANT') %}
                     <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}" target="_blank">Agenda</a></li>
@@ -67,6 +75,7 @@
                 </li>
               </ul>
             </div>
+            {% endif %}
           </div>
         </nav>
         </nav>

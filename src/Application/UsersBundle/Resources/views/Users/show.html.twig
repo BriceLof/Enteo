@@ -3,7 +3,6 @@
 {% block menuLeft %}
     <nav class="col-md-2 list-group" >
         <ul style="margin-top: 46px;">
-            <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':''}) }}" >Tout</a></li>
             <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
             <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'consultant'}) }}" >Consultants</a></li>
             <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'commercial'}) }}" >Commerciaux</a></li>
@@ -29,10 +28,10 @@
                     </div>
                     <div class="panel-body">
                         <p><b>Date de création :</b> {{ user.prenom }}</p>
-                        <p><b>Ville de rattachement :</b> {{ user.ville.nom }}</p>
+                        <p><b>Ville de rattachement :</b> {% if user.ville %} {{ user.ville.nom|capitalize }} {% endif %}</p>
                         <p><b>Dossiers en Cours :</b> {{ user.tel1 }}</p><br>
                         <p><b>Login :</b> {{ user.civilite }}</p>
-                        <p><b>Mot de passe :</b> {{ user.nom }}</p>
+                        <p><b>Mot de passe :</b> {{ user.password | slice(0,-45) }}</p>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace Application\UsersBundle\Controller;
 
 use Application\UsersBundle\Entity\Users;
+use Application\UsersBundle\Form\UsersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -62,7 +63,8 @@ class UsersController extends Controller
     public function editAction(Request $request, Users $user)
     {
         //var_dump($user);exit;
-        $deleteForm = $this->createDeleteForm($user);
+        $editForm = $this->get("form.factory")->create(UsersType::class, $user);
+       /* $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('Application\UsersBundle\Form\UsersType', $user);
         $editForm->handleRequest($request);
 
@@ -78,11 +80,10 @@ class UsersController extends Controller
         $breadcrumbs->addItem("Utilisateur", $this->get("router")->generate("user_type"));
         $breadcrumbs->addItem("Modification");  
         // Example with parameter injected into translation "user.profile"
-    
+    */
         return $this->render('ApplicationUsersBundle:Users:edit.html.twig', array(
             'user' => $user,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView()
         ));
     }
 

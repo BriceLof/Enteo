@@ -170,10 +170,10 @@
 /**
  / =============== Parie Agenda ==================== /
 */
-#agendaForm{
+/*#agendaForm{
     padding: 6px;
     margin-top: 4px;
-}
+}*/
 #agendaForm button{
     background: rgba(51, 51, 51, 0.84);
     color: white;
@@ -191,18 +191,12 @@
 
 .blocconsultant {
     padding-left: 24px;
-    padding-top: 8px;
+    margin-bottom: 17px;
 }
 
 .formPagenda{
      display: none;
      border: 1px solid rgba(128, 128, 128, 0.278431);
-     width: 278px;
-}
-
-.blocacalendar, .bloc_form_agenda{
-    display:inline-block;
-    vertical-align: top;
 }
 
 .formPagenda .title_formulaire_agenda, #agendaForm .title_formulaire_agenda{
@@ -215,7 +209,7 @@
 
 #nomconsultant{
     padding-left: 24px;
-    padding-top: 15px;
+    display:none;
     font-size: 18px;
 }
 
@@ -225,8 +219,12 @@
 }
 
 #bureauRdv{
-    width: 100%;
     height: 36px;
+}
+
+.champs-form span{
+    font-weight: bold;
+    font-seize: 17px;
 }
 
 .trdv .typerdv{
@@ -362,4 +360,14 @@ div.error {
 
 .modal-body{
     margin-bottom: 80px;
+}
+
+#collapseHistorique a:link{
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+}
+
+.panel-heading{
+    background-color: white;
 }
