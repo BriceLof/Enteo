@@ -92,6 +92,7 @@ class AgendaController extends Controller
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
+	        $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
             }
         }
         // Instanciation du calendrier
@@ -123,7 +124,6 @@ class AgendaController extends Controller
                 $allDay = true
             );
             // On enregistre l'historique en BD
-            $em->persist($_SESSION['agenda'][1]);
             $em->flush();
         }
         // On le redirige sur la page agenda

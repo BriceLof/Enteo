@@ -27,11 +27,7 @@ $(function(){
                         //$(".detailStatut").append(
                     }
                 }).done(function(data) {
-<<<<<<< HEAD
                     console.log(data)
-=======
-                    console.log(data.details)
->>>>>>> d3c743f5601865f96cb0f0fdf2cc1676d5ba979a
                     $(".detailStatut").html("");
                     for(var i = 0; i < data.details.length; i++)
                     {

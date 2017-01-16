@@ -100,7 +100,11 @@ class UsersType extends AbstractType
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('v')
                             ->orderBy('v.nom', 'ASC')
+<<<<<<< HEAD
+							->setMaxResults( 10000 );
+=======
                             ->setMaxResults( 2 );
+>>>>>>> ed4c5004796012435640113fe2960e2b18533284
                     },
                     'choice_label' => 'nom',
                 ))
