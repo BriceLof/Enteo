@@ -18,7 +18,10 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
     public function getBeneficiaire($page, $nbPerPage, $idConsultant = null)
     {
        $query = $this->createQueryBuilder('b')
-            ->orderBy('b.id', 'DESC')   
+            ->leftJoin('b.news', 'n')
+            ->addSelect('n')
+            ->orderBy('b.id', 'DESC') 
+            
         ;
        
        if($idConsultant != null)
@@ -27,14 +30,14 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('id', $idConsultant);   
        }
        
-        $query
+        $query  
            ->getQuery()
           // On définit l'annonce à partir de laquelle commencer la liste
           ->setFirstResult(($page-1) * $nbPerPage)
           // Ainsi que le nombre d'annonce à afficher sur une page
           ->setMaxResults($nbPerPage)
         ;
-
+        
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($query, true); 
