@@ -63,6 +63,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['villeId'] = $beneficiaire->getVille()->getId();
         }
 
+        if(!is_null($beneficiaire->getEmailConso())){
+            $query .= ' AND b.emailConso LIKE :emailConso';
+            $params['emailConso'] = '%'.$beneficiaire->getEmailConso().'%';
+        }
+
         if(!is_null($idUtilisateur)){
             $query .= ' AND b.consultant_id = :consultantId';
             $params['consultantId'] = $idUtilisateur;
