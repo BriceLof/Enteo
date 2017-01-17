@@ -9,12 +9,17 @@ use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends Controller
 {
     public function indexAction(Request $request, $page)
     {
-
+        $session = new Session();
+ 
+        
+       
+                
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
@@ -66,6 +71,9 @@ class HomeController extends Controller
 
             $em->persist($news);
             $em->flush();
+            
+            $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
+            return $this->redirect($url);
         }
         
         return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(

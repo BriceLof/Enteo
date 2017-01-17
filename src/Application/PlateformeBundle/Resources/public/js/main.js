@@ -32,6 +32,7 @@ $(function(){
                     for(var i = 0; i < data.details.length; i++)
                     {
                         console.log(data.details[i].detail);
+                       
                         $(".detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")
                     }
                 });
