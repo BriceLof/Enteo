@@ -381,8 +381,7 @@ $("document").ready(function () {
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
-	var urlautocompletion;
-	console.log('----------- pathname: '+location.pathname);
+    var urlautocompletion;
     switch(true){
         case (location.pathname == '/web/app_dev.php/agenda/evenements'):
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
@@ -439,7 +438,23 @@ $("document").ready(function () {
             });
         }
     });
-    
+	
+	// ==================================================================================== //
+    // ========== Gestion de la date de fin [datedebut == datefin] ======================== //
+    // ==================================================================================== //
+    $("#historique_dateDebut_day").change(function(){
+        // On met à jour le jour de date fin
+        $("#historique_dateFin_day").val($("#historique_dateDebut_day").val());
+    });
+    $("#historique_dateDebut_month").change(function(){
+        // On met à jour le jour de date fin
+        $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
+    });
+    $("#historique_dateDebut_year").change(function(){
+        // On met à jour le jour de date fin
+        $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
+    });
+
     // ==================================================================================== //
     // ======= Affichage du bureau et l'adresse en fonction du type de rendez vous ======== //
     // ==================================================================================== //
@@ -459,7 +474,6 @@ $("document").ready(function () {
                 $('#bureauRdv').attr('required','true');
             }
     });
-  
     if($('.calendrierconsultant').val() != undefined){
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
@@ -471,7 +485,7 @@ $("document").ready(function () {
             }
         }
         // Affichage du nom du consultant
-        $('.nomconsultant').text($('.consultantC').val());
+        $('.nameconsultant').text($('.consultantC').val());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('.calendrierconsultant').val());
         $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
@@ -479,7 +493,7 @@ $("document").ready(function () {
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '1092');
+        $('.blocacalendar iframe').attr('height', '899');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -563,15 +577,15 @@ $('#consultantC').change(function(){
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du nom du consultant
-        $('.nomconsultant').text('Agenda de '+$('#consultantC option:selected').text());
+        $('.nameconsultant').text($('#consultantC option:selected').text());
         // Affichage du calendrier dans le bloc
         $('.blocacalendar').append($('#consultantC').val());
-        $('#calendarTitle').css('display','none !important'); // on masque le titre du calendrier
+        $('#nomconsultant').css('display','inline');
         // Affichage du formulaire 
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '1092');
+        $('.blocacalendar iframe').attr('height', '898');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -582,6 +596,8 @@ $('#consultantC').change(function(){
     else{
         // On masque le formulaire
         $('.formPagenda').css('display', 'none');
+        // On masque le nom du beneficiaire
+        $('#nomconsultant').css('display','none');
     }
 
 });

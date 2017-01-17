@@ -105,6 +105,8 @@ class UsersType extends AbstractType
                         return $er->createQueryBuilder('v')
                             ->orderBy('v.nom', 'ASC')
                             ->setMaxResults( 10000 );
+
+
                     },
                     'choice_label' => 'nom',
                 ))
