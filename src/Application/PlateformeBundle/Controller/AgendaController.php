@@ -19,8 +19,13 @@ class AgendaController extends Controller
             // nom
             $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
             $query->setParameter('nom', $request->query->get('term').'%');
+            (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();
         }
-        (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();;
+        else if($request->query->get('sentinel') == 2){
+            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE v.departementId LIKE :nom');
+            $query->setParameter('nom', $request->query->get('term').'%');
+            (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
+        }
         return new JsonResponse(json_encode($results));
     }
 
@@ -36,8 +41,8 @@ class AgendaController extends Controller
         $em = $this->getDoctrine()->getManager(); // Entity manager
         $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
         if(empty($request->query->get('userid'))){
-            // Recuperer de tous les consultants (Pour Admin)
-            $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
+            // Recuperer tous les consultants (Pour Admin)
+            $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT');
         }
         else{
             // Recuperer le consultant
@@ -52,13 +57,11 @@ class AgendaController extends Controller
             'form' => $form->createView()
         ));
     }
-
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
     public function evenementAction(Request $request){
         $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
         $em = $this->getDoctrine()->getManager(); // Doctrine manager
         // Traitement des données emises par le formulaire
-
         if ($request->isMethod('POST')){
             switch(true){
                 case (!empty($request->query->get('userId'))):
@@ -79,7 +82,8 @@ class AgendaController extends Controller
             $historique->setBeneficiaire($benef); // beneficiaire
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-            if ($form->handleRequest($request)->isValid()) {
+            // if ($form->handleRequest($request)->isValid()){
+            if ($form->handleRequest($request)->isValid()){
                 $historique->setTypeRdv($request->request->get('typeRdv'));
                 // On stocke Les infos dans un tableau
                 $donnespost[] = array(
@@ -93,9 +97,8 @@ class AgendaController extends Controller
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
+                $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
             }
-			
-			
         }
         // Instanciation du calendrier
         $googleCalendar = $this->get('application_google_calendar');
@@ -114,7 +117,7 @@ class AgendaController extends Controller
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
             $typerdv = $_SESSION['agenda'][0]['rdv'];
             $summary = $typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-			// Changer le format en GMT+1 pour prendre en compte les heures du calendrier
+			// Changer le format en GMT+1 pour prendre en compte les heures du calendrier 
 			$h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
 			$h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
 			$hd = explode(":", $h_d); // heure debut
@@ -133,7 +136,6 @@ class AgendaController extends Controller
                 $allDay = false
             );
             // On enregistre l'historique en BD
-            $em->persist($_SESSION['agenda'][1]);
             $em->flush();
         }
         // On le redirige sur la page agenda

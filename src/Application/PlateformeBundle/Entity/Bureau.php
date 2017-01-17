@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Beneficiaire
- *
  * @ORM\Table(name="bureau")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BureauRepository")
  */
@@ -41,8 +40,8 @@ class Bureau
      *
      * @ORM\Column(name="nom", type="string", length=255)
      */
-    private $nom;
-
+    private $nombureau;
+    
     public function __construct()
     {
         $this->historique = new ArrayCollection();
@@ -107,27 +106,66 @@ class Bureau
         return $this->ville;
     }
 
-    /**
-     * Set nom
+
+
+     /**
+     * Add historique
      *
-     * @param string $nom
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
      *
-     * @return Bureau
+     * @return Beneficiaire
      */
-    public function setNom($nom)
+    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
     {
-        $this->nom = $nom;
+        $this->historique[] = $historique;
+
+        $historique->setBureau($this);
 
         return $this;
     }
 
     /**
-     * Get nom
+     * Remove historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     */
+    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique->removeElement($historique);
+    }
+
+    /**
+     * Get historique
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistorique()
+    {
+        return $this->historique;
+    }
+
+
+    /**
+     * Set nombureau
+     *
+     * @param string $nombureau
+     *
+     * @return Bureau
+     */
+    public function setNombureau($nombureau)
+    {
+        $this->nombureau = $nombureau;
+
+        return $this;
+    }
+
+    /**
+     * Get nombureau
      *
      * @return string
      */
-    public function getNom()
+    public function getNombureau()
     {
-        return $this->nom;
+        return $this->nombureau;
     }
 }

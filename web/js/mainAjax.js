@@ -369,15 +369,7 @@ $("document").ready(function () {
     });*/
 
 
-
-
-
-
-    // ============================================================ //
-    // =================== Agenda du consultant =================== // 
-    // ========== On affiche le calendrier et le formulaire ======= //
-    // ============================================================ //
-
+   
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -390,6 +382,67 @@ $("document").ready(function () {
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
             break;
     }
+    
+    // Autocompletion ville
+    $("#dpttest").autocomplete({
+        source: function($request, reponse){
+            $.ajax({
+                url: urlautocompletion,
+                data : {
+                    term : $('#dpttest').val(),
+                    sentinel: 2
+                },
+                dataType : 'json', // on spécifie bien que le type de données est en JSON
+                success : function(donnee){
+                    var obj = $.parseJSON(donnee);
+                    reponse($.map(obj, function (item) {
+                        return {
+                            value: function ()
+                            {
+                              if ($(this).attr('id') == 'dpttest')
+                              {
+                                 if(item.nom != undefined){
+                                    return item.nom;
+                                 }
+                              }
+                              else
+                              {
+                                  if(item.nom != undefined){
+                                      // On met à jour les champs ville, bureau
+                                      $('#dpttest').val(item.departementId); // departement
+                                      $('#bureauRdv').val(item.nombureau); // bureau
+                                      $('#bureauselect').val(item.nombureau); // bureau selectionner
+                                      $("#villeh").val(item.nom); // ville
+                                      $('#adresse').val(item.adresse); // adresse
+                                      $('#adresseh').val(item.adresse); // adresse 
+                                      $('#zip').val(item.cp); // code postal
+                                      $('#ziph').val(item.cp); // code postal
+                                      $('#historique_Enregistrer').removeAttr('disabled');
+                                      return item.nom;
+                                  }
+                                  else{
+                                      // on reinitialise tous les champs
+                                      $('#dpttest').val(); // departement
+                                      $('#bureauRdv').val(); // bureau
+                                      $('#bureauselect').val(-1); // bureau selectionner
+                                      $("#villeh").val(); // ville
+                                      $("#ville").val(); // ville
+                                      $('#adresse').val(); // adresse
+                                      $('#adresseh').val(); // adresse 
+                                      $('#zip').val(); // code postal
+                                      $('#ziph').val(); // code postal
+                                      $('#historique_Enregistrer').attr('disabled','true');
+                                      return 'Aucun Bureau trouvé dans ce departement';
+                                  }
+                              }
+                            }
+                        }
+                    }));
+                }
+            });
+        }
+    });
+    
     // Autocompletion nom
     $("#nomb").autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
@@ -439,24 +492,24 @@ $("document").ready(function () {
         }
     });
 	
-	// ==================================================================================== //
+    // ==================================================================================== //
     // ========== Gestion de la date de fin [datedebut == datefin] ======================== //
     // ==================================================================================== //
     $("#historique_dateDebut_day").change(function(){
-        // On met à jour le jour de date fin
+        // On met à jour le jour de datefin
         $("#historique_dateFin_day").val($("#historique_dateDebut_day").val());
     });
     $("#historique_dateDebut_month").change(function(){
-        // On met à jour le jour de date fin
+        // On met à jour le mois de datefin
         $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
     });
     $("#historique_dateDebut_year").change(function(){
-        // On met à jour le jour de date fin
+        // On met à jour l'année de datefin
         $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
     });
 
     // ==================================================================================== //
-    // ======= Affichage du bureau et l'adresse en fonction du type de rendez vous ======== //
+    // ======= Affichage des bureau, ville, adresse en fonction du departement choisi ===== //
     // ==================================================================================== //
     $('input:radio[name="typeRdv"]').change(function(){
             if ($(this).is(':checked') && $(this).val() == 'distanciel') {
@@ -493,7 +546,7 @@ $("document").ready(function () {
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '899');
+        $('.blocacalendar iframe').attr('height', '780');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
@@ -501,40 +554,6 @@ $("document").ready(function () {
             'margin-top': '45px'
         });
     }
-
-    // ============================================================== //
-    // ============ Mise à jour des valeurs des champs ============== //
-    // ============= ville et adresse en fonction du ================ //
-    // ====================== Bureau ================================ //
-    // ============================================================== //
-    $('#bureauRdv').change(function(){
-        if($('#bureauRdv').val() != ""){
-            // On renseigne les champs ville et adresse
-            idbureauoption = $("#bureauRdv option:selected").attr("id"); // On recupere l'id de l'option selectionner
-            idbureauoption = idbureauoption.split("_");
-            villenom = $("#bureauRdv").val(); // On recupere la ville
-            $('.ville').val(idbureauoption[2]); // On instancie la ville
-            $('#adresse').val(idbureauoption[0]); // On instancie l'adresse
-            $('#zip').val(idbureauoption[1]); // On instancie le code postal
-            $('#villeh').val(idbureauoption[2]); // On instancie la ville
-            $('#adresseh').val(idbureauoption[0]); // On instancie l'adresse
-            $('#ziph').val(idbureauoption[1]); // On instancie le code postal
-            // id du bureau 
-            b_id = $("#bureauRdv option:selected").attr("class");
-            b_id = b_id.split("_");
-            $('.bureauselect').val(b_id[1]);
-        }
-        else{
-            // On reinitialise tous les champs des input desactivé
-            $('#ville').val();
-            $('#adresse').val();
-            $('#zip').val();
-            $('#villeh').val();
-            $('#adresseh').val();
-            $('#ziph').val();
-            $('.bureauselect').val();
-        }
-    });
     
     // ================================================================ //
     // ========== Gestion des Heures dans l'ajout d'un RDV ============ //
@@ -585,7 +604,7 @@ $('#consultantC').change(function(){
         $('.formPagenda').css('display', 'inline-block');
         // modification de la largeur du calendrier
         $('.blocacalendar iframe').attr('width', '1150');
-        $('.blocacalendar iframe').attr('height', '898');
+        $('.blocacalendar iframe').attr('height', '780');
         // Positionnement du bouton
         $('.formPagenda button').css('margin-left', '59%');
         $('#agendaForm').css({
