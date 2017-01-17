@@ -18,26 +18,25 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
     public function getBeneficiaire($page, $nbPerPage, $idConsultant = null)
     {
        $query = $this->createQueryBuilder('b')
-            ->orderBy('b.id', 'DESC')   
+            ->leftJoin('b.news', 'n')
+            ->addSelect('n')
+            ->leftJoin('b.ville', 'v')
+            ->addSelect('v')
+            ->orderBy('b.id', 'DESC')  
         ;
        
        if($idConsultant != null)
        {
             $query->where('b.consultant = :id')
-                ->setParameter('id', $idConsultant);   
+                  ->setParameter('id', $idConsultant);   
        }
        
-        $query
-           ->getQuery()
-          // On définit l'annonce à partir de laquelle commencer la liste
-          ->setFirstResult(($page-1) * $nbPerPage)
-          // Ainsi que le nombre d'annonce à afficher sur une page
-          ->setMaxResults($nbPerPage)
-        ;
-
+        $query->setFirstResult(($page-1) * $nbPerPage)
+               ->setMaxResults($nbPerPage);
+        
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
         // (n'oubliez pas le use correspondant en début de fichier)
-        return new Paginator($query, true); 
+        return new Paginator($query); 
     }
     
     public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur)
@@ -49,13 +48,13 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         $params = array();
 
         if(!is_null($beneficiaire->getNomConso())) {
-            $query .= ' AND b.nom_conso = :nomConso';
-            $params['nomConso'] = $beneficiaire->getNomConso();
+            $query .= ' AND b.nom_conso LIKE :nomConso';
+            $params['nomConso'] = "%".$beneficiaire->getNomConso()."%";
         }
 
         if(!is_null($beneficiaire->getPrenomConso())) {
-            $query .= ' AND b.prenom_conso = :prenomConso';
-            $params['prenomConso'] = $beneficiaire->getPrenomConso();
+            $query .= ' AND b.prenom_conso LIKE :prenomConso';
+            $params['prenomConso'] = "%".$beneficiaire->getPrenomConso()."%";
         }
 
         if(!is_null($beneficiaire->getVille())) {

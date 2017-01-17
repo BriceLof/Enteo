@@ -2,6 +2,7 @@
 
 namespace Application\UsersBundle\Form;
 
+use Application\UsersBundle\Form\DataTransformer\VilleToNumberTransformer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -12,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Application\PlateformeBundle\Form\VilleType;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class UsersType extends AbstractType
 {
@@ -30,9 +33,11 @@ class UsersType extends AbstractType
                         'Commercial'        =>  "ROLE_COMMERCIAL",
                         'Administrateur'    =>  "ROLE_ADMIN",
                     ),
+                    //'mapped' => false,
                     'label' => "Type Utilisateur *",
-                    'multiple' => true,
+                    
                     'expanded' => true,
+                    'multiple' => true,
                     'data' => array("ROLE_USER"),
                     'choice_attr' => function($val, $key, $index) {
                        // adds a class like attending_yes, attending_no, etc
@@ -92,26 +97,22 @@ class UsersType extends AbstractType
                        return ['class' => 'format_input'];
                     },
                 ))
-                          
-                            
+               
                 ->add('ville', EntityType::class, array(
                     'class' => 'ApplicationPlateformeBundle:Ville',
                     'label' => 'Ville *',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('v')
                             ->orderBy('v.nom', 'ASC')
-<<<<<<< HEAD
-							->setMaxResults( 10000 );
-=======
-                            ->setMaxResults( 2 );
->>>>>>> ed4c5004796012435640113fe2960e2b18533284
+                            ->setMaxResults( 10000 );
+
+
                     },
                     'choice_label' => 'nom',
                 ))
-                /*->add('Modifier', SubmitType::class, array(
-                'attr' => array('class' => 'btn  btn-primary'),
-            )) */ 
-            ;
+                
+                ;
+            
     }
     
     public function getParent()

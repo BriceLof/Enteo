@@ -62,18 +62,17 @@ class UsersController extends Controller
 
     public function editAction(Request $request, Users $user)
     {
-        //var_dump($user);exit;
-        $editForm = $this->get("form.factory")->create(UsersType::class, $user);
-       /* $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('Application\UsersBundle\Form\UsersType', $user);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('notice', 'Vos modifications ont été enregistrées');
-            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
-        }
         
+        $editForm = $this->get("form.factory")->create(UsersType::class, $user);
+        var_dump($request->isMethod('POST'));
+        if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
+           $em = $this->getDoctrine()->getManager();
+
+
+            $em->persist($user);
+            $em->flush();
+        }
+        /*
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         // Simple example
         $breadcrumbs->addItem("Home", $this->get("router")->generate("user_type"));

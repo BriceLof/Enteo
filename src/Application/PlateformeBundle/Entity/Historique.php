@@ -72,7 +72,7 @@ class Historique
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Bureau", inversedBy="historique")
+     * @ORM\ManyToOne(targetEntity="Bureau")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $bureau;

@@ -14,6 +14,7 @@
     {% if liste_beneficiaire != null %}
         {% if results is defined %}
             {% for beneficiaire in results %}
+                
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef">
                     <div class="table-responsive col-md-12" >
@@ -42,7 +43,7 @@
                                     <td>{{ beneficiaire.prenomConso|capitalize }}</td>
                                     <td>{{ beneficiaire.ville.nom|capitalize }}</td>
                                     <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
-                                    <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
+                                    <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
                                     <td>{{ beneficiaire.telConso }}</td>
                                     <td>{{ beneficiaire.emailConso }}</td>
                                     <td>{{ beneficiaire.domaineVae|capitalize }}</td>
@@ -127,7 +128,7 @@
                         <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
                         <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                         <br><br>
-                        <table class="table table-bordered ">
+                        <table class="table table-bordered " id="b{{ beneficiaire.id }}">
                             <thead>
                             <tr>
                                 <th>Nom</th>
@@ -149,7 +150,8 @@
                                     <td>{{ beneficiaire.prenomConso|capitalize }}</td>
                                     <td>{{ beneficiaire.ville.nom|capitalize }}</td>
                                     <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
-                                    <td>{{ beneficiaire.dateHeureMer|date("H:i") }}</td>
+                                    <!-- heure de la première news du bénéficiaire, cad l'heure de la confirmation de la mer à qq secondes près -->
+                                    <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
                                     <td>{{ beneficiaire.telConso }}</td>
                                     <td>{{ beneficiaire.emailConso }}</td>
                                     <td>{{ beneficiaire.domaineVae|capitalize }}</td>
