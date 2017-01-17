@@ -170,10 +170,9 @@
 /**
  / =============== Parie Agenda ==================== /
 */
-/*#agendaForm{
-    padding: 6px;
-    margin-top: 4px;
-}*/
+.datefin{
+    display:none;
+}
 #agendaForm button{
     background: rgba(51, 51, 51, 0.84);
     color: white;

@@ -438,6 +438,22 @@ $("document").ready(function () {
             });
         }
     });
+	
+	// ==================================================================================== //
+    // ========== Gestion de la date de fin [datedebut == datefin] ======================== //
+    // ==================================================================================== //
+    $("#historique_dateDebut_day").change(function(){
+        // On met à jour le jour de date fin
+        $("#historique_dateFin_day").val($("#historique_dateDebut_day").val());
+    });
+    $("#historique_dateDebut_month").change(function(){
+        // On met à jour le jour de date fin
+        $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
+    });
+    $("#historique_dateDebut_year").change(function(){
+        // On met à jour le jour de date fin
+        $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
+    });
 
     // ==================================================================================== //
     // ======= Affichage du bureau et l'adresse en fonction du type de rendez vous ======== //
