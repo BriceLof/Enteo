@@ -13,7 +13,7 @@
 #banner form{
     width: 85%;
     margin: auto;
-    margin-top: 36px;
+    margin-top: 20px;
     margin-bottom: 31px;
     text-align: center;
     padding-bottom: 13px;
@@ -22,6 +22,23 @@
 #banner form span{
     padding-right: 3px;
     padding-left: 3px;
+}
+
+.text-left{
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.text-left a:link{
+    color: #5cca42;
+}
+
+.text-left a{
+    color: #5cca42;
+}
+
+.text-left a:hover{
+    color: #5cca42;
 }
 
 
@@ -59,6 +76,17 @@
     cursor: default;
 }
 
+/*.showAllSuiviAdministratif div:first-of-type{
+    margin-top:10px;
+    margin-left: 30px;
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    cursor: default;
+}
+*/
 .sectionBeneficiaire .glyphicon-plus{
     float: left;
     font-size: 9px;
@@ -66,6 +94,14 @@
 .sectionBeneficiaire .glyphicon-minus{
     float: left;
     font-size: 9px;
+}
+
+.myModalNewsModify1 .close span{
+    font-size: 30px;
+}
+
+#collapseSuiviAdministratif{
+    margin-left: 12px;
 }
 
 #newDocumentsForm{
@@ -132,7 +168,12 @@
     text-align: center;
 }
 .tableSection{
+    display: table-cell;
     text-decoration: underline;
+}
+
+#suiviAdministratif a{
+    color: white;
 }
 
 .newsBoucle{
@@ -164,6 +205,18 @@
 
 #ajouteNews{
     display: none;
+}
+
+#ajoutebureau{
+    border: 1px solid black;
+}
+
+.modal-header{
+    text-align: center;
+    background-color: #a7b5b2;
+}
+.btn .col-sm-1{
+    float: right;
 }
 
 

@@ -87,7 +87,7 @@ class Bureau
      */
     public function setVille(\Application\PlateformeBundle\Entity\Ville $ville)
     {
-        $this->ville = $ville;
+        $this->ville->addBureaux($this);
 
         return $this;
     }

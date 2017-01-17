@@ -241,7 +241,7 @@
                     </div>
                     <div id="historique" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a  href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
+                            <caption class="titreSection"><a  id="historiqueCollapse" href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
                         </table>
                         <div id="collapseHistorique" class="collapse in">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -251,19 +251,33 @@
                     </div>
     {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">
-                        <form method="POST" id="suiviAdministratifEditForm" action="{{ path('application_edit_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
                             <table>
-                                <caption class="titreSection"><a href="#collapseSuiviAdministratif" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSuiviAdministratif"><span class="glyphicon glyphicon-minus"></span><span>Suivi Administratif</span></a></caption>
-                                <tbody class="collapse in" id="collapseSuiviAdministratif">
-                                    {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
-                                </tbody>
+                                <caption class="titreSection"><a id="suiviAdministratifCollapse" href="#collapseSuiviAdministratif" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSuiviAdministratif"><span class="glyphicon glyphicon-minus"></span><span>Suivi Administratif</span></a></caption>
                             </table>
-                        </form>
+                            <div class="collapse in" id="collapseSuiviAdministratif">
+                                {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
+
+                                <form method="POST" id="suiviAdministratifNewForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+                                    <table>
+                                        <tbody>
+                                            {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:new",{'id': beneficiaire.id})) }}
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
                     </div>
     {% endif %}
                 </div>
             </div>
         </div>
+<!--
+        <div class="row">
+            <input type="button" value="tout valider" onclick="document.getElementById('ficheBeneficiaireForm').submit();
+                                                                          document.getElementById('projetEditForm').submit();
+                                                                          document.getElementById('accompagnementEditForm').submit();
+                                                                          document.getElementById('suiviAdministratifNewForm').submit();">
+        </div>
+-->
         <div class="row">
             <div class="news col-md-12">
                 <h4 class="titreSection">NEWS</h4>

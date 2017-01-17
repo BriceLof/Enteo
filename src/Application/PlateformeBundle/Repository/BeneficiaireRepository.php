@@ -44,6 +44,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
+        //$rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', $beneficiaire, array( 'id' => 'vid' ));
 
         $query = 'SELECT b.* FROM beneficiaire b WHERE 1';
         $params = array();
@@ -77,6 +78,8 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $query .= ' AND b.date_conf_mer <= :dateFin';
             $params['dateFin'] = $fin;
         }
+
+        //$query .= " INNER JOIN ville v ON v.id = b.id WHERE v.cp LIKE '75%'";
 
         $query .= ' ORDER BY b.id DESC';
 

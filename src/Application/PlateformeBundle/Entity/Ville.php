@@ -344,8 +344,6 @@ class Ville
     {
         $this->bureaux[] = $bureaux;
 
-        $bureaux->setVille($this);
-
         return $this;
     }
 

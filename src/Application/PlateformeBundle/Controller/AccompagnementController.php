@@ -46,7 +46,7 @@ class AccompagnementController extends Controller
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                 'beneficiaire' => $beneficiaire,
                 'id' => $beneficiaire->getId(),
-            )));
+            )).'#accompagnement');
         }
         return $this->render('ApplicationPlateformeBundle:Accompagnement:edit.html.twig', array(
             'beneficiaire' => $beneficiaire,

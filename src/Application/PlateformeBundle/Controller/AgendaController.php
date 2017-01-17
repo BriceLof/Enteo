@@ -28,10 +28,9 @@ class AgendaController extends Controller
     public function agendasAction(Request $request){
 
         //var_dump($this->getUser()->getId());die;
-
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getId() == $request->query->get('userid')){
         }else{
-            throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
+            throw $this->createNotFoundException('vous n\'avez pas accès a cette partie.');
         }
 
         $em = $this->getDoctrine()->getManager(); // Entity manager

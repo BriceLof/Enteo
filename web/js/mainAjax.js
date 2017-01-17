@@ -706,18 +706,25 @@ $(document).ready(function() {
 
 function plusMoins(element) {
     parent = element.parentNode.parentNode;
-    if (element.id == 'collapseHistorique'){
-        tbody = document.getElementById('')
+    if (element.id == 'historiqueCollapse'){
+        tbody = document.getElementById('collapseHistorique');
+    }else{
+        if(element.id == 'suiviAdministratifCollapse'){
+            tbody = document.getElementById('collapseSuiviAdministratif');
+        }
+        else {
+            tbody = parent.getElementsByClassName('collapse')[0];
+        }
     }
-    tbody = parent.getElementsByClassName('collapse')[0];
     span  = element.getElementsByClassName('glyphicon')[0];
+
     //alert(span);
     //alert(element.getElementsByClassName('glyphicon')[0].className);
     if(tbody.className == 'collapse in'){
         span.className = 'glyphicon glyphicon-plus';
         if(tbody.id == 'collapseEspaceDocumentaire'){
             ajoutDocument = document.getElementById('AjoutDocument');
-            ajoutDocument.className = 'collapse'
+            ajoutDocument.className = 'collapse';
         }
     }else{
         span.className = 'glyphicon glyphicon-minus';
