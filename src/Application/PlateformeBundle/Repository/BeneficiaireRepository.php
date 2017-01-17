@@ -48,13 +48,13 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         $params = array();
 
         if(!is_null($beneficiaire->getNomConso())) {
-            $query .= ' AND b.nom_conso = :nomConso';
-            $params['nomConso'] = $beneficiaire->getNomConso();
+            $query .= ' AND b.nom_conso LIKE :nomConso';
+            $params['nomConso'] = "%".$beneficiaire->getNomConso()."%";
         }
 
         if(!is_null($beneficiaire->getPrenomConso())) {
-            $query .= ' AND b.prenom_conso = :prenomConso';
-            $params['prenomConso'] = $beneficiaire->getPrenomConso();
+            $query .= ' AND b.prenom_conso LIKE :prenomConso';
+            $params['prenomConso'] = "%".$beneficiaire->getPrenomConso()."%";
         }
 
         if(!is_null($beneficiaire->getVille())) {
