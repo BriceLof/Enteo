@@ -57,7 +57,6 @@
                       </ul>
                     </li>
                     <li><a href="#contact">Scripts</a></li>
-                
                     <li><a href="{{ path('application_plateforme_agenda') }}" target="_blank">Agenda</a></li>
                 {% elseif is_granted('ROLE_CONSULTANT') %}
                     <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}" target="_blank">Agenda</a></li>

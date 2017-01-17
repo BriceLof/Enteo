@@ -7,7 +7,9 @@ and open the template in the editor.
     Created on : 21 nov. 2016, 18:09:13
     Author     : brice_000
 */
-
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 5px !important;
+}
 .form-signin {
     max-width: 330px;
     padding: 15px;
@@ -24,6 +26,24 @@ and open the template in the editor.
 }
 
 /*---------------------------- END Header Menu -----------------------------*/
+
+/*---------------------------- HOME partie tableaux informations bénéficiaires ----------------------------------------*/
+.section-tab-home-benef, .section-tab-home-benef .btn{
+    font-size:12px !important;
+}
+.section-tab-home-benef .btn{
+    padding: 5px !important;
+    border-radius: 3px;
+    border:none;
+}
+.tab-home-benef{
+    margin-bottom:-34px;
+}
+.tab-home-benef th{
+    background-color:#e5e5e5 !important;
+}
+
+/*---------------------------- END HOME partie tableaux informations bénéficiaires ------------------------------------*/
 
 /*---------------------------- Formulaire ajout news bénéficiaire -----------------------------*/
 .formulaire_add_news h3, .formulaire_add_news p {

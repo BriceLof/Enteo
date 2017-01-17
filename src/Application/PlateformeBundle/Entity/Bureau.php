@@ -43,6 +43,11 @@ class Bureau
      */
     private $nom;
 
+    public function __construct()
+    {
+        $this->historique = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -87,7 +92,7 @@ class Bureau
      */
     public function setVille(\Application\PlateformeBundle\Entity\Ville $ville)
     {
-        $this->ville->addBureaux($this);
+        $this->ville = $ville;
 
         return $this;
     }

@@ -20,14 +20,14 @@ class RechercheBeneficiaireType extends AbstractType
             ->add('nomConso', TextType::class, array(
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'nom',
+                    'placeholder' => 'Nom',
                 )
             ))
             ->add('prenomConso', TextType::class, array(
                 'label' => '',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => 'prénom',
+                    'placeholder' => 'Prénom',
                 )
             ))
             ->add('emailConso', TextType::class, array(
@@ -49,27 +49,27 @@ class RechercheBeneficiaireType extends AbstractType
                 )
             ))
             ->add('dateDebut', DateType::class, array(
-                'label' => 'date de Debut',
+                'label' => 'Date de Debut',
                 'mapped' => false,
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'required' => false,
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'placeholder' => 'date de début',
+                    'placeholder' => 'Date début',
                     'class' => 'date',
                     'autocomplete' => 'off',
                 )
             ))
             ->add('dateFin', DateType::class, array(
-                'label' => 'date de fin',
+                'label' => 'Date de fin',
                 'mapped' => false,
                 'required' => false,
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'placeholder' => 'date de fin',
+                    'placeholder' => 'Datefin',
                     'class' => 'date',
                     'autocomplete' => 'off',
                 )

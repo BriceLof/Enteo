@@ -274,6 +274,7 @@ class BeneficiaireController extends Controller
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
                 'liste_beneficiaire' => $results,
                 'form' => $form->createView(),
+                'liste_beneficiaire' => $results,
                 'results' => $results,
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
