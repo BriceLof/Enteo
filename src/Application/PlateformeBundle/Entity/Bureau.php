@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Beneficiaire
- *
  * @ORM\Table(name="bureau")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BureauRepository")
  */
@@ -41,7 +40,7 @@ class Bureau
      *
      * @ORM\Column(name="nom", type="string", length=255)
      */
-    private $nom;
+    private $nombureau;
     
     public function __construct()
     {
@@ -107,29 +106,7 @@ class Bureau
         return $this->ville;
     }
 
-    /**
-     * Set nom
-     *
-     * @param string $nom
-     *
-     * @return Bureau
-     */
-    public function setNom($nom)
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    /**
-     * Get nom
-     *
-     * @return string
-     */
-    public function getNom()
-    {
-        return $this->nom;
-    }
+    
     
      /**
      * Add historique
@@ -167,4 +144,28 @@ class Bureau
         return $this->historique;
     }
     
+
+    /**
+     * Set nombureau
+     *
+     * @param string $nombureau
+     *
+     * @return Bureau
+     */
+    public function setNombureau($nombureau)
+    {
+        $this->nombureau = $nombureau;
+
+        return $this;
+    }
+
+    /**
+     * Get nombureau
+     *
+     * @return string
+     */
+    public function getNombureau()
+    {
+        return $this->nombureau;
+    }
 }
