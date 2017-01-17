@@ -37,7 +37,7 @@ class HomeController extends Controller
         // ADMIN et autres 
         if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
-           
+           //var_dump($beneficiaires);
         }
         // CONSULTANT
         else {
@@ -75,6 +75,7 @@ class HomeController extends Controller
             $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
             return $this->redirect($url);
         }
+        
         
         return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
             'liste_beneficiaire'    => $beneficiaires, 
