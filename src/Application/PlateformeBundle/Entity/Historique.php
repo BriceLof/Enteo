@@ -41,6 +41,13 @@ class Historique
      * @ORM\Column(name="date_debut", type="datetime")
      */
     private $dateDebut;
+	
+	/**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_fin", type="datetime")
+     */
+    private $dateFin;
     
     /**
      * @var \Time
@@ -84,6 +91,7 @@ class Historique
     {
         $this->date = new \DateTime('now');
         $this->dateDebut = new \DateTime('now');
+		$this->dateFin = new \DateTime('now');
     }
 
 
@@ -287,5 +295,29 @@ class Historique
     public function getBureau()
     {
         return $this->bureau;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Historique
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
     }
 }

@@ -31,7 +31,6 @@ class AgendaController extends Controller
             // On le redirige sur la page du $this->getUser()->getId()
             throw $this->createNotFoundException('vous n\'avez pas accès a cette partie.');
         }*/
-
         $em = $this->getDoctrine()->getManager(); // Entity manager
         $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
         if(empty($request->query->get('userid'))){
@@ -45,7 +44,6 @@ class AgendaController extends Controller
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
-        
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
             'bureau' => $bureau,
@@ -111,17 +109,24 @@ class AgendaController extends Controller
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
             $typerdv = $_SESSION['agenda'][0]['rdv'];
-            $summary = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i').'-'.$_SESSION['agenda'][1]->getHeureFin()->format('H:i').' '.$typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-            $eventInsert = $googleCalendar->addEvent(
+            $summary = $typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
+			// Changer le format en GMT+1 pour prendre en compte les heures du calendrier 
+			$h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
+			$h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
+			$hd = explode(":", $h_d); // heure debut
+			$hf = explode(":", $h_f); // heure fin
+			$datedebut = $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]);
+			$datefin = $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]);
+			$eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
-                $_SESSION['agenda'][1]->getDateDebut(),
-                $_SESSION['agenda'][1]->getDateDebut(),
+                $datedebut,
+                $datefin,
                 $summary,
                 $_SESSION['agenda'][1]->getDescription(),
                 $eventAttendee = "",
                 $location = $lieu,
                 $optionalParams = [],
-                $allDay = true
+                $allDay = false
             );
             // On enregistre l'historique en BD
             $em->flush();
