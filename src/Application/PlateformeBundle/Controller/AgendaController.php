@@ -31,11 +31,15 @@ class AgendaController extends Controller
 
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){
-        // return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
-        /*if($this->getUser()->getId() != $request->query->get('userid')){
-            // On le redirige sur la page du $this->getUser()->getId()
+
+        /**
+        //var_dump($this->getUser()->getId());die;
+        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getId() == $request->query->get('userid')){
+        }else{
             throw $this->createNotFoundException('vous n\'avez pas accès a cette partie.');
-        }*/
+        }
+         */
+
         $em = $this->getDoctrine()->getManager(); // Entity manager
         $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
         if(empty($request->query->get('userid'))){

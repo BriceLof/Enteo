@@ -48,7 +48,7 @@ class SuiviAdministratifType extends AbstractType
                     'placeholder' => '',
                 )
             ))
-            ->add('submit', SubmitType::class, array('label' => 'Valider')
+            ->add('submit', SubmitType::class, array('label' => 'Enregistrer')
             )
         ;
     }

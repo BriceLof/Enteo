@@ -28,6 +28,7 @@ class SuiviAdministratifController extends Controller
         $suiviAdministratif = new SuiviAdministratif();
         $form = $this->createForm(SuiviAdministratifType::class, $suiviAdministratif);
 
+
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             if($form['quoi']->getData()== 'Facture solde'){
 
@@ -100,7 +101,7 @@ class SuiviAdministratifController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $suiviAdministratif = $em->getRepository('ApplicationPlateformeBundle:SuiviAdministratif')->find($id);
-        $beneficiaire = $suiviAdministratif ->getBeneficiaire();
+        $beneficiaire = $suiviAdministratif->getBeneficiaire();
 
         if (!$suiviAdministratif) {
             throw $this->createNotFoundException('Unable to find SuiviAdministratif entity.');

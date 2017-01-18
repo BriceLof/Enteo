@@ -106,8 +106,8 @@ class Bureau
         return $this->ville;
     }
 
-    
-    
+
+
      /**
      * Add historique
      *
@@ -143,7 +143,7 @@ class Bureau
     {
         return $this->historique;
     }
-    
+
 
     /**
      * Set nombureau

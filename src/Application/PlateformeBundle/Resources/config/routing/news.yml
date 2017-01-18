@@ -11,5 +11,5 @@ application_delete_news:
     defaults: { _controller: "ApplicationPlateformeBundle:News:delete" }
 
 application_edit_news:
-    path:     /edit/{id}
+    path:     /update/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:News:update" }
