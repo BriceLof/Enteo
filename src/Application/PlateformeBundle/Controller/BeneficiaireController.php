@@ -162,7 +162,7 @@ class BeneficiaireController extends Controller
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
-            ));
+            ).'#projetEditForm');
         }
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:projet.html.twig', array(
@@ -272,6 +272,7 @@ class BeneficiaireController extends Controller
             $formNews = $this->get("form.factory")->create(NewsType::class, $news);
 
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
+                'liste_beneficiaire' => $results,
                 'form' => $form->createView(),
                 'liste_beneficiaire' => $results,
                 'results' => $results,

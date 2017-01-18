@@ -1,5 +1,6 @@
 <form action="{{ path('application_search_beneficiaire', { 'page' : 1 }) }}" method="POST" id="ajaxForm" >
     <div class="container-fluid">
+        <div class="text-left"><kbd><a href="{{ path('application_plateforme_homepage') }}">Revenir à l'accueil</a></kbd></div>
         <div class="row">
             <span class="col-md-1">Filtres : </span>
             <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>

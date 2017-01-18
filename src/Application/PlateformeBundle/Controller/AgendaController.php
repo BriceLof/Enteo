@@ -31,7 +31,6 @@ class AgendaController extends Controller
 
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){
-        
         echo '<pre>';
         var_dump($_SERVER['REQUEST_URI']);
         exit;

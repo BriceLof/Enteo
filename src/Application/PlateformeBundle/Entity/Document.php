@@ -33,8 +33,11 @@ class Document
     public $path;
 
     /**
-     * @Assert\File(maxSize="6000000")
-     * @Assert\File(mimeTypes={"image/jpeg", "image/png"})
+     * @Assert\File(maxSize="4M")
+     * @Assert\File(mimeTypes={"image/jpeg", "image/png"},
+     *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
+     *     uploadErrorMessage = "Erreur dans l'upload du fichier"
+     * )
      */
     public $file;
 

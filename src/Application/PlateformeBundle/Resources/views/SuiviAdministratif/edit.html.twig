@@ -1,22 +1,27 @@
-
-        <tr>
-            <td>Date :</td>
-            <td>{{ form_widget(edit_form.date) }}</td>
-        </tr>
-        <tr>
-            <td>Quoi :</td>
-            <td>{{ form_widget(edit_form.quoi) }}</td>
-        </tr>
-        <tr>
-            <td>Qui :</td>
-            <td>{{ form_widget(edit_form.qui) }}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td class="valider">{{ form_widget(edit_form.submit) }}</td>
-        </tr>
-        <tr>
-            <td>{{ form_rest(edit_form) }}</td>
-            <td>{{ form_errors(edit_form) }}</td>
-        </tr>
+<div class="modal-body">
+    <div>
+        <div class="form-group">
+            <label>Date :</label>
+            {{ form_widget(edit_form.date) }}
+        </div>
+        <div class="form-group">
+            <label>Quoi :</label>
+            {{ form_widget(edit_form.quoi) }}
+        </div>
+        <div class="form-group">
+            <label>Qui :</label>
+            {{ form_widget(edit_form.qui) }}</td>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+        <div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            {{ form_widget(edit_form.submit, {'attr': {'class' : 'btn btn-primary'}}) }}
+        </div>
+        <div>
+            {{ form_rest(edit_form) }}
+            {{ form_errors(edit_form) }}
+        </div>
+</div>
 

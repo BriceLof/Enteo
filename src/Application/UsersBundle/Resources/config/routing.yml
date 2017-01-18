@@ -1,6 +1,6 @@
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-
+    
 user_type:
     path: /user/type/{typeUser}
     defaults: 
