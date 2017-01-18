@@ -411,7 +411,7 @@ $("document").ready(function () {
                                       // On met à jour les champs ville, bureau
                                       $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
-                                      $('#bureauselect').val(item.nombureau); // bureau selectionner
+                                      $('.bureauselect').val(item.nombureau); // bureau selectionner
                                       $("#villeh").val(item.nom); // ville
                                       $('#adresse').val(item.adresse); // adresse
                                       $('#adresseh').val(item.adresse); // adresse 
@@ -424,7 +424,7 @@ $("document").ready(function () {
                                       // on reinitialise tous les champs
                                       $('#dpttest').val(); // departement
                                       $('#bureauRdv').val(); // bureau
-                                      $('#bureauselect').val(-1); // bureau selectionner
+                                      $('.bureauselect').val(-1); // bureau selectionner
                                       $("#villeh").val(); // ville
                                       $("#ville").val(); // ville
                                       $('#adresse').val(); // adresse

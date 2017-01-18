@@ -87,7 +87,7 @@ class AgendaController extends Controller
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
                     'prenom' => $request->request->get('prenombeneficiaire'),
-                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('bureauRdv'):'',
+                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('bureauselect'):'',
                     'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
                     'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
                     'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
@@ -115,6 +115,7 @@ class AgendaController extends Controller
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
             $typerdv = $_SESSION['agenda'][0]['rdv'];
             $summary = $typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
+			
 			// Changer le format en GMT+1 pour prendre en compte les heures du calendrier 
 			$h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
 			$h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
