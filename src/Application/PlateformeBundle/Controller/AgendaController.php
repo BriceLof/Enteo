@@ -31,17 +31,11 @@ class AgendaController extends Controller
 
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){
-
-        /**
-        //var_dump($this->getUser()->getId());die;
-        if(true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getId() == $request->query->get('userid')){
-        }else{
-            throw $this->createNotFoundException('vous n\'avez pas accès a cette partie.');
+        // On le redirige sur la page du $this->getUser()->getId()
+        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/teo/web/app_dev.php/agenda'){
+            return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
         }
-         */
-
         $em = $this->getDoctrine()->getManager(); // Entity manager
-        $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
         if(empty($request->query->get('userid'))){
             // Recuperer tous les consultants (Pour Admin)
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT');
@@ -55,7 +49,6 @@ class AgendaController extends Controller
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
-            'bureau' => $bureau,
             'form' => $form->createView()
         ));
     }
