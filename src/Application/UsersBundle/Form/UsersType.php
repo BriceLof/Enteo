@@ -27,7 +27,7 @@ class UsersType extends AbstractType
         $builder
                 ->add('roles', ChoiceType::class, array(
                     'choices' => array(
-                        'Basic'             =>  "ROLE_USER",
+                        //'Basic'             =>  "ROLE_USER",
                         'Gestionnaire'      =>  "ROLE_GESTION",
                         'Consultant'        =>  "ROLE_CONSULTANT",
                         'Commercial'        =>  "ROLE_COMMERCIAL",
@@ -38,7 +38,7 @@ class UsersType extends AbstractType
                     
                     'expanded' => true,
                     'multiple' => true,
-                    'data' => array("ROLE_USER"),
+                    //'data' => array("ROLE_USER"),
                     'choice_attr' => function($val, $key, $index) {
                        // adds a class like attending_yes, attending_no, etc
                        return ['class' => 'role_user'];

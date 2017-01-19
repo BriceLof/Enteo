@@ -57,7 +57,7 @@ class News
 
     public function __construct()
     {
-        $this->dateHeure = new \DateTime;
+        $this->dateHeure = new \DateTime();
     }
 
     /**

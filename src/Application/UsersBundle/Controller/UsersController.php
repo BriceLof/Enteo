@@ -19,7 +19,6 @@ class UsersController extends Controller
     
     public function indexAction($typeUser = null)
     {
-        //var_dump($typeUser);exit;
         $em = $this->getDoctrine()->getManager();
         if(is_null($typeUser))
             $users = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
@@ -27,8 +26,7 @@ class UsersController extends Controller
             $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser);
         
         return $this->render('ApplicationUsersBundle:Users:index.html.twig', array(
-            'users' => $users,
-            
+            'users' => $users,  
         ));
     }
 
@@ -53,24 +51,27 @@ class UsersController extends Controller
     
     public function showAction(Users $user)
     {
-        //var_dump($user);exit;
         return $this->render('ApplicationUsersBundle:Users:show.html.twig', array(
-            'user' => $user,
-            
+            'user' => $user,  
         ));
     }
 
     public function editAction(Request $request, Users $user)
     {
-        
+        // supression du salt dans le password avant de le mettre dans le champs du form 
+        $user->setPassword(substr($user->getPassword(), 0,-45));
+        //$user->setRoles(array("ROLE_CONSULTANT"));
+        //var_dump($user->getRoles());
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
-        var_dump($request->isMethod('POST'));
+        //$editForm->get('roles')->setData($user->getRoles());
+
         if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
-           $em = $this->getDoctrine()->getManager();
-
-
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', 'Utilisateur modifié avec succès');
+            return $this->redirectToRoute('user_show', array('id' => $user->getId()));  
         }
         /*
         $breadcrumbs = $this->get("white_october_breadcrumbs");
@@ -101,8 +102,7 @@ class UsersController extends Controller
         
         return $this->render('ApplicationUsersBundle:Users:delete.html.twig', array(
             'form' => $form->createView(),
-        ));
-        
+        ));  
     }
 
     private function createDeleteForm(Users $user)
@@ -112,5 +112,14 @@ class UsersController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+    
+    public function myAccountAction(Request $request)
+    {
+        $myself = $this->getUser();
+        return $this->render('ApplicationUsersBundle:Users:account.html.twig', array(
+            'user' => $myself,  
+        ));
+        
     }
 }
