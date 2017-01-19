@@ -24,3 +24,7 @@ user_delete:
     defaults: {_controller: ApplicationUsersBundle:Users:delete }
     requirements:
         id: \d+
+
+my_account:
+    path: /account/
+    defaults: {_controller: ApplicationUsersBundle:Users:myAccount }

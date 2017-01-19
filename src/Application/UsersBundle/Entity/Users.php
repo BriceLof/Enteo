@@ -76,9 +76,16 @@ class Users extends BaseUser
     private $calendrieruri;
     
     
+    /**
+    * @ORM\Column(name="date_creation", type="date", nullable=false)
+    */
+    private $dateCreation;
+    
     public function __construct()
     {
         parent::__construct();
+        
+        $this->dateCreation = new \DateTime();
     }
     
 
@@ -361,4 +368,28 @@ class Users extends BaseUser
     }
 
    
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Users
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
+    }
 }
