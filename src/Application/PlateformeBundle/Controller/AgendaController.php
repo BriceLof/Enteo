@@ -31,10 +31,18 @@ class AgendaController extends Controller
 
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){
-        // On le redirige sur la page du $this->getUser()->getId()
-        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/teo/web/app_dev.php/agenda'){
-            return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
-        }
+		switch(true){
+			case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
+				// remote
+				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda')
+					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+			break;
+			default:
+				// localhost
+				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/teo/web/app_dev.php/agenda')
+					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+			break;
+		}
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if(empty($request->query->get('userid'))){
             // Recuperer tous les consultants (Pour Admin)
@@ -55,30 +63,18 @@ class AgendaController extends Controller
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
     public function evenementAction(Request $request){
         $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-        $em = $this->getDoctrine()->getManager(); // Doctrine manager
         // Traitement des données emises par le formulaire
         if ($request->isMethod('POST')){
-            switch(true){
-                case (!empty($request->query->get('userId'))):
-                    $_SESSION['calendrierId'] = $request->query->get('calendrierid');
-                    // On stocke l'id du user pour la personnalisation du fichier credentials
-                    // dans google calendar qui permet la connexion à l'agenda du consultant
-                    $_SESSION['useridcredencial'] = $request->query->get('userId');
-                    break;
-            }
             $historique = new Historique(); // Historique
-            // On recupere le bureau
-            if($request->request->get('bureauselect') != -1){
-                $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($request->request->get('bureauselect'));
-                $historique->setBureau($bureauObject); // bureau
-            }
-            // On recupere le beneficiaire
-            $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->request->get('idbeneficiaire')) : NULL;
-            $historique->setBeneficiaire($benef); // beneficiaire
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-            // if ($form->handleRequest($request)->isValid()){
             if ($form->handleRequest($request)->isValid()){
+				// On recupere l'id bureau
+				if($request->request->get('bureauselect') != -1){
+					$_SESSION['bureau'] = $request->request->get('bureauselect');
+				}
+				// On recupère l'id du beneficiaire
+				$_SESSION['benef'] = $request->request->get('idbeneficiaire');
                 $historique->setTypeRdv($request->request->get('typeRdv'));
                 // On stocke Les infos dans un tableau
                 $donnespost[] = array(
@@ -92,7 +88,14 @@ class AgendaController extends Controller
                 );
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
-                $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
+            }
+            switch(true){
+                case (!empty($request->query->get('userId'))):
+                    $_SESSION['calendrierId'] = $request->query->get('calendrierid');
+                    // On stocke l'id du user pour la personnalisation du fichier credentials
+                    // dans google calendar qui permet la connexion à l'agenda du consultant
+                    $_SESSION['useridcredencial'] = $request->query->get('userId');
+                    break;
             }
         }
         // Instanciation du calendrier
@@ -112,14 +115,24 @@ class AgendaController extends Controller
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
             $typerdv = $_SESSION['agenda'][0]['rdv'];
             $summary = $typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-			
-			// Changer le format en GMT+1 pour prendre en compte les heures du calendrier 
+			// Changer le format en GMT+1 pour prendre en compte les heures dans l'agenda
 			$h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
 			$h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
 			$hd = explode(":", $h_d); // heure debut
 			$hf = explode(":", $h_f); // heure fin
 			$datedebut = $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]);
 			$datefin = $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]);
+			
+			// Verifier que les heures choisies ne sont pas occupée
+			$em = $this->getDoctrine()->getManager(); // Doctrine manager
+			// On recupere le beneficiaire
+            $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($_SESSION['benef']) : NULL;
+			$_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
+			// On recupere les rendez-vous du beneficiaire 
+			$resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($datedebut, $datefin, $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s'), $_SESSION['agenda'][1]->setBeneficiaire($benef));
+			echo '<pre>';
+			var_dump(count($resultats));
+			exit;
 			$eventInsert = $googleCalendar->addEvent(
                 $_SESSION['calendrierId'],
                 $datedebut,
@@ -131,8 +144,22 @@ class AgendaController extends Controller
                 $optionalParams = [],
                 $allDay = false
             );
+			// On recupere l'id de l'evenement ajouté
+			$_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+			
+			// On recupère le Bureau
+			if(!empty($_SESSION['bureau'])){
+				$bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
+				$_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
+			}
             // On enregistre l'historique en BD
+			$em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
             $em->flush();
+			// On supprime les sessions pour soulager le gc
+			unset($_SESSION['benef']);
+			unset($_SESSION['bureau']);
+			unset($_SESSION['agenda']);
+			unset($_SESSION['calendrierId']);
         }
         // On le redirige sur la page agenda
         if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
@@ -146,13 +173,11 @@ class AgendaController extends Controller
             if(!empty($request->query->get('userId'))){
                 // Redirection sur la page agenda du consultant
                 if(!empty($request->query->get('calendrierid'))){
-                    $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
                     $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userId'));
                     $historique = new Historique(); // Historique
                     $form = $this->createForm(HistoriqueType::class, $historique);
                     return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
                         'consultant' => $resultat,
-                        'bureau' => $bureau,
                         'form' => $form->createView()
                     ));
                 }
@@ -163,13 +188,12 @@ class AgendaController extends Controller
             }
             else{
                 // 1ere connexion et fichier credential n'existe pas
-                $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll(); // On recupere tous les bureaux
                 $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($_SESSION['useridcredencial']);
+				unset($_SESSION['useridcredencial']);
                 $historique = new Historique(); // Historique
                 $form = $this->createForm(HistoriqueType::class, $historique);
                 return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
                     'consultant' => $resultat,
-                    'bureau' => $bureau,
                     'form' => $form->createView()
                 ));
             }

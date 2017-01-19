@@ -231,7 +231,6 @@
     color: white;
     margin-left: 70%;
 }
-
 #agendaForm button:hover{
     background-color: #e6e6e6;
     color: rgba(51, 51, 51, 0.84);
@@ -240,17 +239,14 @@
     padding-top: 15px;
     padding-left: 24px;
 }
-
 .blocconsultant {
     padding-left: 24px;
     margin-bottom: 17px;
 }
-
 .formPagenda{
      display: none;
      border: 1px solid rgba(128, 128, 128, 0.278431);
 }
-
 .formPagenda .title_formulaire_agenda, #agendaForm .title_formulaire_agenda{
     background: #668cd9;
     width: 100%;
@@ -258,35 +254,28 @@
     padding: 10px;
     font-size: 17px;
 }
-
 #nomconsultant{
     padding-left: 24px;
     display:none;
     font-size: 18px;
 }
-
 .champs-form{
     background-color: #e4e4e4;
     padding: 10px;
 }
-
 #bureauRdv{
     height: 36px;
 }
-
 .champs-form span{
     font-weight: bold;
     font-seize: 17px;
 }
-
 .trdv .typerdv{
     margin-left:5%;
 }
-
 .formPagenda .new_input{
     margin-bottom: 14px;
 }
-
 .url_agenda a{
     background-color: #000041;
     color: white;
@@ -297,7 +286,10 @@
     border-radius: 5px;
     margin-left: 16px;
 }
-
+.ui-menu-item-wrapper{
+	background: #668cd9;
+	color: white;
+}
 /* ============================= Fin Agenda =========================== */
 
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/

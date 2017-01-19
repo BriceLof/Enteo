@@ -10,4 +10,21 @@ namespace Application\PlateformeBundle\Repository;
  */
 class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function dateocuppee($datedeb, $datefin, $heuredeb, $heurefin, $beneficiaireid){
+		return $this
+			->createQueryBuilder('h')
+			->where('h.beneficiaire = :benef')
+			->setParameter('benef',$beneficiaireid)
+			->andWhere('h.dateDebut BETWEEN :debut AND :fin')
+			->setParameter('debut', $datedeb)
+			->setParameter('fin', $datefin)
+			->andWhere('h.heuredebut BETWEEN :hd AND :hf')
+			->setParameter('hd', $heuredeb)
+			->setParameter('hf', $heurefin)
+			->andWhere('h.heurefin BETWEEN :hd AND :hf')
+			->setParameter('hd', $heuredeb)
+			->setParameter('hf', $heurefin)
+			->getQuery()
+			->getResult();
+	}
 }

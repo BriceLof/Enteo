@@ -69,10 +69,17 @@ class Historique
      * @ORM\Column(name="type_rdv", type="text")
      */
     private $type_rdv;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="evenetId", type="text")
+     */
+    private $eventId;
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Bureau")
+     * @ORM\ManyToOne(targetEntity="Bureau", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     protected $bureau;
@@ -83,6 +90,7 @@ class Historique
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;
+	
 
     /**
      * Historique constructor.
@@ -319,5 +327,29 @@ class Historique
     public function getDateFin()
     {
         return $this->dateFin;
+    }
+
+    /**
+     * Set eventId
+     *
+     * @param string $eventId
+     *
+     * @return Historique
+     */
+    public function setEventId($eventId)
+    {
+        $this->eventId = $eventId;
+
+        return $this;
+    }
+
+    /**
+     * Get eventId
+     *
+     * @return string
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
     }
 }

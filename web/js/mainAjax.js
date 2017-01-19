@@ -422,7 +422,7 @@ $("document").ready(function () {
                                   }
                                   else{
                                       // on reinitialise tous les champs
-                                      $('#dpttest').val(); // departement
+                                      $('#dpttest').val(''); // departement
                                       $('#bureauRdv').val(); // bureau
                                       $('.bureauselect').val(-1); // bureau selectionner
                                       $("#villeh").val(); // ville
@@ -518,6 +518,7 @@ $("document").ready(function () {
                 // On supprime le required dans le champ bureau
                 $('#bureauRdv').removeAttr('required');
                 $('.letyperdv').val($(this).val());
+				$("#dpttest").val("-1"); // initialisation pour eviter le blocage de la soumission du formulaire lors d'un rdv distanciel
             }
             else{
                 $('.letyperdv').val($(this).val());
