@@ -223,6 +223,11 @@
 /**
  / =============== Parie Agenda ==================== /
 */
+.msg-errors{
+	padding-left: 42px;
+	padding-right: 10px;
+}
+
 .datefin{
     display:none;
 }

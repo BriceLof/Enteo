@@ -1,6 +1,15 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 {% block body %}
     <div class="container-fluid blocagendaprincipal">
+			{% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
+			<div class="row">
+				<div class="col-mg-12">
+					<div class="alert alert-danger msg-errors" role="alert">
+						<strong>Oops! </strong> <span>ce creneau est dejà occupé</span>
+					</div>
+				</div>
+			</div>
+			{% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 {# bloc Agenda pour Admin #}
                  <div class="row">
