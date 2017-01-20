@@ -420,3 +420,7 @@ div.error {
 .panel-heading{
     background-color: white;
 }
+
+a.deleteBtn{
+    width: 120px;
+}
