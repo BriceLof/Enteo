@@ -2,22 +2,27 @@
 
 namespace Application\UsersBundle\Form;
 
-use Application\UsersBundle\Form\DataTransformer\VilleToNumberTransformer;
-use Doctrine\ORM\EntityRepository;
+//use Application\UsersBundle\Form\DataTransformer\VilleToNumberTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Application\PlateformeBundle\Form\VilleType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
 
 class UsersType extends AbstractType
 {
+    /*private $manager;
+
+    public function __construct(ObjectManager $manager)
+    {
+        $this->manager = $manager;
+    }*/
+    
     /**
      * {@inheritdoc}
      */
@@ -97,7 +102,9 @@ class UsersType extends AbstractType
                        return ['class' => 'format_input'];
                     },
                 ))
-               
+               /* ->add('ville', TextType::class, array(
+                    
+                ))*/
                 ->add('ville', EntityType::class, array(
                     'class' => 'ApplicationPlateformeBundle:Ville',
                     'label' => 'Ville *',
@@ -111,8 +118,14 @@ class UsersType extends AbstractType
                     'choice_label' => 'nom',
                 ))
                 
+                ->add('adresse', TextType::class, array(
+                    'label' => 'Adresse *'
+                ))
                 ;
-            
+                
+                    
+        /*$builder->get('ville')
+            ->addModelTransformer(new VilleToNumberTransformer($this->manager));*/
     }
     
     public function getParent()
