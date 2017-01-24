@@ -73,7 +73,7 @@ class Historique
 	/**
      * @var string
      *
-     * @ORM\Column(name="evenetId", type="text")
+     * @ORM\Column(name="event_id", type="text")
      */
     private $eventId;
     

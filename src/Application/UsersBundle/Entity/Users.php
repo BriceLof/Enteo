@@ -75,11 +75,15 @@ class Users extends BaseUser
     */
     private $calendrieruri;
     
-    
     /**
     * @ORM\Column(name="date_creation", type="date", nullable=false)
     */
     private $dateCreation;
+    
+    /**
+    * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+    */
+    private $adresse;
     
     public function __construct()
     {
@@ -391,5 +395,29 @@ class Users extends BaseUser
     public function getDateCreation()
     {
         return $this->dateCreation;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return Users
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
     }
 }

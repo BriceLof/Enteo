@@ -19,9 +19,9 @@ user_edit:
     requirements:
         id: \d+
         
-user_delete:
-    path: /user/{id}/delete
-    defaults: {_controller: ApplicationUsersBundle:Users:delete }
+user_turn_off:
+    path: /user/{id}/turn_off
+    defaults: {_controller: ApplicationUsersBundle:Users:turnOff }
     requirements:
         id: \d+
 

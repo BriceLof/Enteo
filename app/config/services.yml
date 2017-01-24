@@ -10,3 +10,13 @@ services:
        
    application_google_calendar:
        class: Application\PlateformeBundle\Services\GoogleCalendar
+   
+   application_users.getTypeUser:
+       class: Application\UsersBundle\Services\getTypeUser
+       #arguments: ["@doctrine.orm.entity_manager"]
+       
+   #application_users.type.user:
+    #   class: Application\UsersBundle\Form\UsersType
+    #   arguments: ["@doctrine.orm.entity_manager"]
+    #   tags:
+    #       - { name: form.type }
