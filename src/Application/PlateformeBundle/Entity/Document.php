@@ -49,12 +49,12 @@ class Document
 
     public function getWebDir()
     {
-        return 'uploads/beneficiaire/documents';
+        return 'uploads/beneficiaire/documents/'.$this->beneficiaire->getId();
     }
 
     protected function getUploadDir()
     {
-        return __DIR__.'/../Resources/public/uploads/Documents';
+        return __DIR__.'/../Resources/public/uploads/Documents/.'.$this->beneficiaire->getId();
     }
 
     protected function getUploadRootDir()
@@ -128,8 +128,27 @@ class Document
             return;
         }
 
-        $this->file->move($this->getUploadRootDir(), $this->path);
+        $zip = new \ZipArchive();
+        $zip_path=$this->getUploadRootDir().'/download.zip';
 
+        if($zip->open($zip_path) === TRUE){
+        }else {
+            if ($zip->open($zip_path, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
+                die ("An error occurred creating your ZIP file.");
+            }
+        }
+
+        $fileBeneficiaire = $this->file->move($this->getUploadRootDir(), $this->path);
+
+        $zip->addFile($fileBeneficiaire, $this->path) ;
+        $zip->close();
+
+        //supprimer le fichier original non-compressé
+        $this->tempFile = $this->getAbsolutePath();
+        if (file_exists($this->tempFile))
+            unlink($this->tempFile);
+
+        unset($fileBeneficiaire);
         unset($this->file);
 
         if ($this->oldFile != null) unlink($this->tempFile);
