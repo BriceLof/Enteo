@@ -5,10 +5,39 @@
                     <div class="col-sm-3">{{ suiviAdministratif.quoi }}</div>
                     <div class="col-sm-3">{{ suiviAdministratif.qui }}</div>
                     <div class="btn col-sm-1">
-                        <a href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
-                            <span style="color: black; float: right" class="glyphicon glyphicon-remove"></span>
-                        </a>
+                        <span style="color: black; float: right" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                     </div>
+                    <div class="modal fade" id="myModalSuiviAdministratifDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <span>Voulez-vous vraiment supprimer ce Suivi Administratif?</span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                        <a class="deleteBtn" href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
+                                            <button class="btn btn-primary">Supprimer</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
                     <div class="btn col-sm-1">
                         <span style="color: black; float: right" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
                     </div>
@@ -21,7 +50,7 @@
                                     </button>
                                     <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
                                 </div>
-                                    <form method="POST" id="newsForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
+                                    <form method="POST" id="suiviAdministratifEditForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
                                         {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
                                     </form>
                             </div>

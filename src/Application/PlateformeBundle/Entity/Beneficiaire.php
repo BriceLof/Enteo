@@ -204,10 +204,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="email_conso", type="string", length=45)
-     * @Assert\Email(
-     *     message = "L'e-mail '{{ value }}' n'est pas valide",
-     *     checkMX = true
-     *     )
+     *
      */
     private $emailConso;
 

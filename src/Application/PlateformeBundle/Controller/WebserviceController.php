@@ -69,7 +69,7 @@ class WebserviceController extends Controller
         $beneficiaire->setOrigineMer($mer->getOrigineMer());
         $beneficiaire->setEmailConso($mer->getEmailConso());
         $em->persist($beneficiaire);
-       
+
         // News par défaut
         $news = new News;
         $news->setBeneficiaire($beneficiaire);
