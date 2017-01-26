@@ -5,7 +5,7 @@ services:
 
     application_plateforme.mail:
         class: Application\PlateformeBundle\Services\Mailer
-        arguments: ["@mailer","@templating"]
+        arguments: ["@mailer","@templating", "@doctrine.orm.entity_manager"]
 
     daterange.validator:
         class: Application\PlateformeBundle\Validator\Constraints\DateRangeValidator

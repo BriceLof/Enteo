@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Repository;
 
+use Application\PlateformeBundle\Entity\Statut;
 /**
  * NewsRepository
  *
@@ -10,4 +11,15 @@ namespace Application\PlateformeBundle\Repository;
  */
 class NewsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getNewsByStatut()
+    {
+        //RV1 à faire
+        $queryBuilder = $this->createQueryBuilder('n')
+                ->where('n.statut = :statut')
+                ->setParameter('statut', 3);
+        
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }

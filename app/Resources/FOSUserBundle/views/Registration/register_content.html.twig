@@ -85,6 +85,11 @@
                     {{ form_widget(form.calendrieruri) }}
                 </div>
                 <div class="col-md-12">
+                    {{ form_label(form.departement) }}
+                    {{ form_errors(form.departement) }}
+                    {{ form_widget(form.departement) }}
+                </div>
+                <div class="col-md-12">
                     {{ form_label(form.ville) }}
                     {{ form_errors(form.ville) }}
                     {{ form_widget(form.ville) }}

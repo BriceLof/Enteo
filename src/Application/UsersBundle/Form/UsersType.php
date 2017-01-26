@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvents;
 
 class UsersType extends AbstractType
 {
@@ -102,18 +103,22 @@ class UsersType extends AbstractType
                        return ['class' => 'format_input'];
                     },
                 ))
-               /* ->add('ville', TextType::class, array(
-                    
-                ))*/
+                
+                // Me sert juste à activer l'ajax pour la recherche de ville correspondant
+                ->add('departement', TextType::class, array(
+                    'mapped' => false, 
+                    'label' => "Département *", 
+                    'required' => true, 
+                    'attr' => array("maxlength" => 2)
+                ))
+                
                 ->add('ville', EntityType::class, array(
                     'class' => 'ApplicationPlateformeBundle:Ville',
                     'label' => 'Ville *',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('v')
                             ->orderBy('v.nom', 'ASC')
-                            ->setMaxResults( 10000 );
-
-
+                            ->setMaxResults( 1 );
                     },
                     'choice_label' => 'nom',
                 ))
@@ -122,7 +127,6 @@ class UsersType extends AbstractType
                     'label' => 'Adresse *'
                 ))
                 ;
-                
                     
         /*$builder->get('ville')
             ->addModelTransformer(new VilleToNumberTransformer($this->manager));*/

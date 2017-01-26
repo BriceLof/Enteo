@@ -1,0 +1,3 @@
+application_alerte_rv:
+    path:     /rv
+    defaults: { _controller: "ApplicationPlateformeBundle:Alerte:index" }

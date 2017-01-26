@@ -1,3 +1,10 @@
+application_plateforme_get_ville_ajax:
+    path: /api/ville
+    defaults:
+        _controller: ApplicationPlateformeBundle:Ville:getVille
+    options:
+        expose: true
+
 application_plateforme_agenda_evenement:
     path:     /agenda/evenements
     defaults: 
@@ -66,6 +73,11 @@ application_plateforme_document:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/document.yml"
     prefix:   /document
 
+# Alerte 
+application_plateforme_alerte:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/alerte.yml"
+    prefix:   /alerte
+    
 #homepage
 application_plateforme_homepage:
     path:     /{page}

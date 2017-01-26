@@ -99,10 +99,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    {% javascripts 
-               '@ApplicationPlateformeBundle/Resources/public/js/main.js'
-               '@ApplicationUsersBundle/Resources/public/js/form.js' %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+{% javascripts 
+           '@ApplicationPlateformeBundle/Resources/public/js/main.js'
+           '@ApplicationUsersBundle/Resources/public/js/form.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% block javascripts %}
+{% endblock %}
 </body>
 </html>
