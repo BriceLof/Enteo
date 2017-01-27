@@ -14,3 +14,13 @@ services:
             
     application_google_calendar:
         class: Application\PlateformeBundle\Services\GoogleCalendar
+
+    application_plateforme.document:
+        class: Application\PlateformeBundle\Services\Document
+
+    application_plateforme.twig.document.extesion:
+        class: Application\PlateformeBundle\Twig\DocumentExtension
+        arguments:
+            - "@application_plateforme.document"
+        tags:
+            - { name: twig.extension }

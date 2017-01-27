@@ -11,3 +11,9 @@ application_show_document:
 application_delete_document:
     path:     /delete/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Document:delete" }
+
+application_up_document:
+    path:    /up/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:up" }
+    options:
+        expose: true
