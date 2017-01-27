@@ -46,18 +46,29 @@ and open the template in the editor.
 /*---------------------------- END HOME partie tableaux informations bénéficiaires ------------------------------------*/
 
 /*---------------------------- Formulaire ajout news bénéficiaire -----------------------------*/
-.formulaire_add_news h3, .formulaire_add_news p {
+.block_formulaire_ajout_new .my_header_modal{
+  background-color: #e7e7e7;  
+}
+.block_formulaire_ajout_new .my_header_modal h4{
     text-align: center;
-}
-.formulaire_add_news h3{
-    color:#428bca;
-    font-size:17px;
-    margin-top:0;
-}
-.formulaire_add_news #nom_prenom_beneficiaire{
-    font-size:19px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 17px;
 }
 
+.block_formulaire_ajout_new .my_header_modal p{
+    font-size: 18px;
+    padding-top: 13px;
+    border-top: 1px solid #dbdbdb;
+}
+
+.block_formulaire_ajout_new #nom_prenom_beneficiaire{
+    font-size:19px;
+    color:#d9534f;
+}
+label{
+    margin-top:10px;
+}
 .block_info_chargement, label{
   display:inline-block;  
 }

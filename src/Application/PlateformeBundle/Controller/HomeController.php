@@ -62,7 +62,7 @@ class HomeController extends Controller
         // Formulaire d'ajout d'une news à un bénéficiaire
         $news = new News;
         $form = $this->get("form.factory")->create(NewsType::class, $news);
-        
+        //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $news = $form->getData();
            
