@@ -6,6 +6,7 @@ namespace Application\UsersBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -109,25 +110,42 @@ class UsersType extends AbstractType
                     'mapped' => false, 
                     'label' => "Département *", 
                     'required' => true, 
-                    'attr' => array("maxlength" => 2)
+                    'attr' => array("maxlength" => 2, "class" => "departementInputForAjax")
                 ))
-                
-                ->add('ville', EntityType::class, array(
-                    'class' => 'ApplicationPlateformeBundle:Ville',
-                    'label' => 'Ville *',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('v')
-                            ->orderBy('v.nom', 'ASC')
-                            ->setMaxResults( 1 );
-                    },
-                    'choice_label' => 'nom',
-                ))
-                
-                ->add('adresse', TextType::class, array(
+                ->add('codePostalHidden', HiddenType::class, array("mapped" => false));
+               /* if(isset($options['data']))
+                {
+                    //var_dump($options['data']);
+                    $builder->add('ville', EntityType::class, array(
+                        'class' => 'ApplicationPlateformeBundle:Ville',
+                        'label' => 'Ville *',
+                        'query_builder' => function (EntityRepository $er) use ($options) {
+                            return $er->createQueryBuilder('v')
+                                    ->where('v.id = :id')
+                                    ->setParameter('id',$options['data']->getVille()->getId() )
+                                ->orderBy('v.nom', 'ASC')
+                                ->setMaxResults( 1 );
+                        },
+                        'choice_label' => 'nom',
+                    ));
+                }
+                else{*/
+                    $builder->add('ville', EntityType::class, array(
+                        'class' => 'ApplicationPlateformeBundle:Ville',
+                        'label' => 'Ville *',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('v')
+                                ->orderBy('v.nom', 'ASC')
+                                ->setMaxResults( 1 );
+                        },
+                        'choice_label' => 'nom',
+                    ));
+               // }
+                $builder->add('adresse', TextType::class, array(
                     'label' => 'Adresse *'
                 ))
                 ;
-                    
+                //if(isset($options['data'])) var_dump($options['data']->getVille());
         /*$builder->get('ville')
             ->addModelTransformer(new VilleToNumberTransformer($this->manager));*/
     }

@@ -50,7 +50,7 @@ class VilleController extends Controller
         
         foreach($villesRepo as $villes)
         {
-            $tabVille[] = array( "id" => $villes->getId(),  "nom" => $villes->getNom());
+            $tabVille[] = array( "id" => $villes->getId(),  "nom" => $villes->getNom(), "cp" => $villes->getCp());
         }
 
         $response = new JsonResponse();

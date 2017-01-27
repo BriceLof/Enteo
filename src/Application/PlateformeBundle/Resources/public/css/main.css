@@ -58,8 +58,13 @@ and open the template in the editor.
     font-size:19px;
 }
 
-.loading_ajax{
-    width:32px;
-    height:32px;
-    background:url('../images/ajax-loader.gif');
+.block_info_chargement, label{
+  display:inline-block;  
+}
+.img_loading,.message_chargement {
+    display:inline-block;
+}
+.img_loading{
+    width:19px;
+    margin-left:10px
 }
