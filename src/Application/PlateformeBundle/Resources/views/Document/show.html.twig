@@ -1,9 +1,30 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
 {% block body %}
+    <input type="hidden" name="document" id="document" value="{{ document.id }}">
     <div id="pageImage">
         <div id="afficheImage">
-            <img src="{{asset('uploads/beneficiaire/documents/'~document.beneficiaire.id~'/'~document.path)}}" alt="{{ document.description }}" width="100%">
+            {{ afficherDocument(beneficiaire, document.path) }}
+
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    jQuery(window).load(function() {
+        var documentId = $("#document").val();
+
+        $.ajax({
+            type: 'get',
+            url: Routing.generate("application_up_document", { id: documentId }),
+            beforeSend: function(){
+                console.log('ça charge');
+                //$(".detailStatut").append(
+            }
+        }).done(function(data) {
+            console.log(data);
+        });
+    });
+</script>
 {% endblock %}

@@ -34,7 +34,14 @@ class Document
 
     /**
      * @Assert\File(maxSize="4M")
-     * @Assert\File(mimeTypes={"image/jpeg", "image/png"},
+     * @Assert\File(mimeTypes={
+     *          "image/jpeg",
+     *          "image/png",
+     *          "image/jpg",
+     *          "image/gif",
+     *          "application/pdf",
+     *          "application/x-pdf"
+     *     },
      *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
      *     uploadErrorMessage = "Erreur dans l'upload du fichier"
      * )
