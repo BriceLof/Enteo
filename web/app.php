@@ -1,10 +1,10 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Debug\Debug;
+//use Symfony\Component\Debug\Debug;
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../app/autoload.php';
-Debug::enable();
+//Debug::enable();
 //include_once __DIR__.'/../var/bootstrap.php.cache';
 
 $kernel = new AppKernel('prod', true);
