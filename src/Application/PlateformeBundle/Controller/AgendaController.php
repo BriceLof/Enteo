@@ -35,8 +35,10 @@ class AgendaController extends Controller
         switch(true){
                 case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
                         // remote
-                        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda')
+                        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
                                 return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+						
+                                
                 break;
                 default:
                         // localhost
