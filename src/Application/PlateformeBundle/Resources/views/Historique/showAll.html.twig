@@ -1,51 +1,45 @@
-
-                {% for historique in beneficiaire.historique %}
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="heading{{ loop.index }}">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
-                                <div>
-                                    <span>{{ historique.dateDebut|date('d/m/Y') }}</span>
-                                    <span>{{ historique.summary }}</span>
-                                    <span>{{ historique.bureau.nom }}</span>
-                                </div>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
-                        <div class="panel-body">
-                            <div>
-                                <p></p>
-                                <p>du {{ historique.dateDebut|date('d/m/Y') }} à {{ historique.heureDebut|date('h:m') }}</p>
-                                <p>jusqu'au {{ historique.dateFin|date('d/m/Y') }} à {{ historique.heureFin|date('h:m') }}</p>
-                            </div>
-                            <div style="display: inline">
-                                <div>
-                                    <span>lieu : </span>
-                                    <span>{{ historique.bureau.nom }}</span>
-                                    <span>{{ historique.bureau.adresse }}</span>
-                                    <span>{{ historique.bureau.ville.cp }}</span>
-                                    <span>{{ historique.bureau.ville.nom }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                    {#
-                    <tr>
-                        <td class="btn" width="100%">
-                            <a href="{{ path('application_delete_historique', { 'id': historique.id }) }}">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </a>
-                            <a href="{{ path('application_edit_historique', {'id': historique.id}) }}">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </a>
-                        </td>
-                    </tr>
-                    #}
-                 {% endfor %}
+{% if historiques is not empty %}
+     <table class="table table-striped">
+           <tr>
+              <th style="border:none;">Date</th>
+              <th style="border:none;">Heure debut</th>
+              <th style="border:none;">Heure fin</th>
+              <th style="border:none;">Bureau</th>
+              <th style="border:none;">Type Rdv</th>
+           </tr>
+           {% for historique in historiques %}
+                <tr>
+                    <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
+                       {{historique.dateDebut|date('d/m/Y')}}
+                    </td>    
+                    <td style="border:none;">
+                        <span >{{historique.heureDebut|date('h:m')}}</span>
+                    </td>
+                    <td style="border:none;">
+                        <span >{{ historique.heureFin|date('h:m') }}</span>
+                    </td>
+                    <td style="border:none;">
+                        {% if historique.bureau is defined %}
+                            <span>
+                               {{ historique.bureau.nombureau }}
+                            </span>
+                        {% else %}
+                            <span>-</span>
+                        {% endif %}
+                    </td>
+                    <td style="border:none;">
+                        {% if historique.bureau is defined %}
+                            <span> {{historique.typerdv}} </span>
+                        {% else %}
+                            <span>{{historique.typerdv}}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+     </table>
+{% else %}
+    <span style="margin-left: 6px;">Aucun rendez-vous</span>
+{% endif %}
 
 
 
