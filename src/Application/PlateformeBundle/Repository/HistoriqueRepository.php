@@ -10,6 +10,7 @@ namespace Application\PlateformeBundle\Repository;
  */
 class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 {
+        // Renvoie l'historique d'un beneficiaire à une datetime donnée
 	public function dateocuppee($datedeb, $datefin, $heuredeb, $heurefin, $beneficiaireid){
 		return $this
 			->createQueryBuilder('h')
@@ -27,4 +28,49 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 			->getQuery()
 			->getResult();
 	}
+        
+        // Renvoie l'historique d'un beneficiaire données
+        public function beneficiaireOne($beneficiaireid){
+            $datedujour = new \DateTime('now');
+            return $this
+                    ->createQueryBuilder('h')
+                    ->where('h.beneficiaire = :benef')
+                    ->setParameter('benef',$beneficiaireid)
+                    ->andWhere('h.dateDebut >= :datedeb')
+                    ->setParameter('datedeb', $datedujour)
+                    ->getQuery()
+                    ->getResult();
+        }
+        
+        // Maj d'une historique
+        public function historiquemaj($d_d, $d_f, $h_d, $h_f, $evId){
+            // Mise à jour en BD
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $q = $qb->update('ApplicationPlateformeBundle:Historique', 'h')
+                    ->set('h.heuredebut', '?1')
+                    ->set('h.heurefin', '?2')
+                    ->set('h.dateDebut', '?3')
+                    ->set('h.dateFin', '?4')
+                    ->where('h.eventId = ?5')
+                    ->setParameter(1, $h_d)
+                    ->setParameter(2, $h_f)
+                    ->setParameter(3, $d_d)
+                    ->setParameter(4, $d_f)
+                    ->setParameter(5, $evId)
+                    ->getQuery();
+            $p = $q->execute();
+        }
+        
+        // Historique inferieur à la date du jour
+        public function historiquepast($datedujour, $beneficiaireid){
+            return 
+                $this
+                    ->createQueryBuilder('h')
+                    ->where('h.dateDebut < :h_deb')
+                    ->setParameter('h_deb',$datedujour)
+                    ->andwhere('h.beneficiaire = :benef')
+                    ->setParameter('benef',$beneficiaireid)
+                    ->getQuery()
+                    ->getResult();
+        }
 }

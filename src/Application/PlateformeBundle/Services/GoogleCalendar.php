@@ -11,11 +11,11 @@ namespace Application\PlateformeBundle\Services;
 class GoogleCalendar
 {
     // Fichier client_secret.json
-    const PATH_CLIENT_SECRET = __DIR__ .'/client_secret.json';
+    const PATH_CLIENT_SECRET = __DIR__ .'/Google_calendar_service/client_secret.json';
     
     // Fichier creand credentialsPath
 
-    const PATH_CREDENTIALS = __DIR__ ;
+    const PATH_CREDENTIALS = __DIR__.'/Google_calendar_service' ;
 
     /**
      * @var string
@@ -198,8 +198,6 @@ class GoogleCalendar
         $client->setApplicationName($this->applicationName);
         $client->setScopes($this->scopes);
         // $client->setAuthConfig($this->clientSecretPath);
-        /*var_dump(self::PATH_CLIENT_SECRET);
-        exit;*/
         $client->setAuthConfig(self::PATH_CLIENT_SECRET);
         $client->setAccessType('offline');
         $client->setApprovalPrompt('force');

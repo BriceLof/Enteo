@@ -61,7 +61,26 @@ class AgendaController extends Controller
         ));
     }
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
+    // ################################################################ //
+    // ####### NB: Vous remarquerez que j'ai incrementé et      ####### //
+    // ####### décrementé l'heure de debut et de fin dans       ####### //
+    // ####### la fonction ci-dessous, c'est pour l'integrité   ####### //
+    // ####### des heures en BD et dans le calendrier Google.   ####### //
+    // ####### car les heures dans le calendrier sont en GMT+1  ####### //
+    // ####### ce qui veut dire que si on choisi 08h dans le    ####### //
+    // ####### formulaire d'ajout evenement; dans le calendrier ####### //
+    // ####### on vera 09h au lieu de 08h (GMT+1)               ####### //
+    // ################################################################ //
     public function evenementAction(Request $request){
+        // =========================================== //
+        // ===== Si la demande provient de la page === //
+        // ===== Beneficiaire alors on le redrige ==== //  
+        // =========================================== //
+        if(!empty($_SESSION['firstpast']) && $_SESSION['firstpast'][2] == 'page beneficiaire'){
+            $_SESSION['code'] = $request->get('code'); // On recupere le code d'autorisation google
+            // redirection sur la page show
+            return $this->redirectToRoute('application_show_beneficiaire', array('id'=>$_SESSION['firstpast'][0]));
+        }
         $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
         // Traitement des données emises par le formulaire
         if ($request->isMethod('POST')){
@@ -69,12 +88,12 @@ class AgendaController extends Controller
             $form = $this->createForm(HistoriqueType::class, $historique);
             $url = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if ($form->handleRequest($request)->isValid()){
-				// On recupere l'id bureau
-				if($request->request->get('bureauselect') != -1){
-					$_SESSION['bureau'] = $request->request->get('bureauselect');
-				}
-				// On recupère l'id du beneficiaire
-				$_SESSION['benef'] = $request->request->get('idbeneficiaire');
+		// On recupere l'id bureau
+		if($request->request->get('bureauselect') != -1){
+                    $_SESSION['bureau'] = $request->request->get('bureauselect');
+		}
+		// On recupère l'id du beneficiaire
+		$_SESSION['benef'] = $request->request->get('idbeneficiaire');
                 $historique->setTypeRdv($request->request->get('typeRdv'));
                 // On stocke Les infos dans un tableau
                 $donnespost[] = array(
@@ -84,8 +103,9 @@ class AgendaController extends Controller
                     'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
                     'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
                     'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
-                    'rdv' => ($request->request->get('typeRdv') == 'presenciel')? '': $request->request->get('typeRdv')
+                    'rdv' => ($request->request->get('typeRdv') == 'presenciel')? '' : $request->request->get('typeRdv')
                 );
+                
                 $donnespost[] = $historique; // On stocke l'objet dans une session
                 $_SESSION['agenda'] = $donnespost; // Données du formulaire
             }
@@ -115,58 +135,60 @@ class AgendaController extends Controller
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
             $typerdv = $_SESSION['agenda'][0]['rdv'];
             $summary = $typerdv.' '.$_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-			// Changer le format en GMT+1 pour prendre en compte les heures dans l'agenda
-			$h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
-			$h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
-			$hd = explode(":", $h_d); // heure debut
-			$hf = explode(":", $h_f); // heure fin
-			$datedebut = $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]);
-			$datefin = $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]);
-			
-			// Verifier que les heures choisies ne sont pas occupée
-			$em = $this->getDoctrine()->getManager(); // Doctrine manager
-			// On recupere le beneficiaire
+            // Changer le format en GMT+1 pour prendre en compte les heures dans l'agenda
+            $h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
+            $h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
+            $hd = explode(":", $h_d); // heure debut
+            $hf = explode(":", $h_f); // heure fin
+            // Verifier que les heures choisies ne sont pas occupée
+            $em = $this->getDoctrine()->getManager(); // Doctrine manager
+            // On recupere le beneficiaire
             $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($_SESSION['benef']) : NULL;
-			$_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
-			// On recupere les rendez-vous du beneficiaire 
-			$resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($datedebut, $datefin, $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s'), $benef);
-			
-			if(count($resultats) > 0){
-				// Erreur sur l'heure reservée
-				$this->get('session')->set('erreurs', true);
-			}
-			else{
-				$eventInsert = $googleCalendar->addEvent(
-					$_SESSION['calendrierId'],
-					$datedebut,
-					$datefin,
-					$summary,
-					$_SESSION['agenda'][1]->getDescription(),
-					$eventAttendee = "",
-					$location = $lieu,
-					$optionalParams = [],
-					$allDay = false
-				);
-				// On recupere l'id de l'evenement ajouté
-				$_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
-				
-				// On recupère le Bureau
-				if(!empty($_SESSION['bureau'])){
-					$bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
-					$_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
-				}
-				// On enregistre l'historique en BD
-				$em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
-				$em->flush();
-				$this->get('session')->set('erreurs', false);;
-			}
-			// On supprime les sessions pour soulager le gc
-			$this->get('session')->remove('benef');
-			$this->get('session')->remove('bureau');
-			$this->get('session')->remove('agenda');
-			$this->get('session')->remove('calendrierId');
+            $_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
+            // On recupere les rendez-vous du beneficiaire 
+            $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]+1, $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]+1, $hf[1], $hf[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s'), $benef);
+            
+            if(count($resultats) > 0){
+                // Erreur sur l'heure reservée
+                $this->get('session')->set('erreurs', true);
+            }
+            else{
+                $eventInsert = $googleCalendar->addEvent(
+                    $_SESSION['calendrierId'],
+                    $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
+                    $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
+                    $summary,
+                    $_SESSION['agenda'][1]->getDescription(),
+                    $eventAttendee = "",
+                    $location = $lieu,
+                    $optionalParams = [],
+                    $allDay = false
+                );
+                // On recupere l'id de l'evenement ajouté
+                $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+                // On recupère le Bureau
+                if(!empty($_SESSION['bureau'])){
+                    $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
+                    $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
+                }
+                
+                // On recupere le user pour le stcker en BD
+                $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
+                $_SESSION['agenda'][1]->setConsultant($userbd); // le consultant
+                // On enregistre l'historique en BD
+                $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
+                $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
+                $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
+                $em->flush();
+                unset($_SESSION['agenda']);
+                $this->get('session')->set('erreurs', false);
+            }
+            // On supprime les sessions pour soulager le gc
+            $this->get('session')->remove('benef');
+            $this->get('session')->remove('bureau');
+            $this->get('session')->remove('agenda');
+            $this->get('session')->remove('calendrierId');
         }
-		
         // On le redirige sur la page agenda
         if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
             // Redirection sur la page agenda de l'Admin
@@ -195,7 +217,7 @@ class AgendaController extends Controller
             else{
                 // 1ere connexion et fichier credential n'existe pas
                 $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($_SESSION['useridcredencial']);
-				$this->get('session')->remove('useridcredencial');
+                $this->get('session')->remove('useridcredencial');
                 $historique = new Historique(); // Historique
                 $form = $this->createForm(HistoriqueType::class, $historique);
                 return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
