@@ -5,7 +5,7 @@
     <div id="pageImage">
         <div id="afficheImage">
             {{ afficherDocument(beneficiaire, document.path) }}
-
+            <img src="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" alt="{{ document.description }}">
         </div>
     </div>
 {% endblock %}
