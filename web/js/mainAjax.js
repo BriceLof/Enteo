@@ -172,6 +172,15 @@ $("document").ready(function () {
         })
     });
 
+    $( function() {
+        $("#newDocumentsForm").validate({
+            rules: {
+                "espace_documentaire[documents][0][file]":{
+                    'extension': "jpeg|png|gif|pdf|x-pdf|jpg"
+                }
+            }
+        })
+    });
     //validation jquery
     $( function() {
         $("#projetEditForm").validate({

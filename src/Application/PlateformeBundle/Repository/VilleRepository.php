@@ -2,6 +2,8 @@
 
 namespace Application\PlateformeBundle\Repository;
 
+//use Doctrine\ORM\QueryBuilder;
+
 /**
  * VilleRepository
  *
@@ -10,4 +12,15 @@ namespace Application\PlateformeBundle\Repository;
  */
 class VilleRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByDepartement($departement)
+    {
+        $queryBuilder = $this->createQueryBuilder("v")
+                ->where("v.cp LIKE :departement")
+                ->setParameter("departement", $departement.'%')
+                ->orderBy("v.nom", "ASC");
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+        
+    }
 }

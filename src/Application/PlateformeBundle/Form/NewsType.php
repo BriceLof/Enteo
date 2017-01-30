@@ -29,9 +29,8 @@ class NewsType extends AbstractType
             ->add('detailStatut', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
-
+                'placeholder' => '',
             ))
-
             ->add('message', null, array(
                 'label' => 'Message :'
             )) 

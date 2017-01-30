@@ -7,6 +7,12 @@
 {% block body %}
     <section class="col-md-12">
         {# dump(app.request.get("typeUser")) #}
+        {% for info in app.session.flashbag.get('info') %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ info }}
+            </div>
+        {% endfor %}
         <div class="page-header">
             <div class="row">
                 <h1 class="col-md-10">Gestion - Utilisateurs<br><small>Créer, modifier, voir les enregistrements de la base de données</small></h1>
@@ -27,6 +33,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>Actif</th>
                         <th>Civilité</th>
                         <th>Nom</th>
                         <th>Prénom</th>
@@ -49,7 +56,8 @@
                 <tbody>
                     {% for user in users %}
                         <tr>
-                            <td>{{ user.civilite|capitalize }}</a</td>
+                            {% if user.enabled == "0" %}<td class="bg-danger"> Non </td>{% else %} <td class="bg-success"> Oui </td>{% endif %}
+                            <td>{{ user.civilite|capitalize }}</td>
                             <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.nom|capitalize }}</a></td>
                             <td>{{ user.prenom|capitalize }}</td>
                             <td>{{ user.tel1 }}</td>
@@ -69,9 +77,13 @@
                                 <a href="{{ path('user_edit', {'id': user.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp; modifier</a>
                             </td>
                             <td>
-                                <a href="{{ path('user_delete', {'id': user.id}) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; supprimer</a>
+                                <a href="" data-toggle="modal" data-target="#myModal{{loop.index}}" data-id-user="{{user.id}}" class="delete_element"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; désactiver</a>
+                                <div class="modal fade" id="myModal{{loop.index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    {{ render(controller("ApplicationUsersBundle:Users:turnOff", {'id': user.id } )) }}
+                                </div>
                             </td>
                         </tr>
+                        
                     {% endfor %}
                 </tbody>
             </table>
@@ -79,4 +91,5 @@
             
         
     </section>
+    
 {% endblock %}

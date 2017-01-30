@@ -41,4 +41,21 @@ class VilleController extends Controller
             throw new \Exception('erreur');
         }
     }
+    
+    public function getVilleAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $villesRepo = $em->getRepository("ApplicationPlateformeBundle:Ville")->findByDepartement($request->get('departement'));
+        
+        foreach($villesRepo as $villes)
+        {
+            $tabVille[] = array( "id" => $villes->getId(),  "nom" => $villes->getNom(), "cp" => $villes->getCp());
+        }
+
+        $response = new JsonResponse();
+        return $response->setData(array('villes' => $tabVille));
+        
+    }
+    
 }

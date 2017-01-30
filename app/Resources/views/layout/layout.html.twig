@@ -6,7 +6,7 @@
         <title>{% block title %}Enteo{% endblock %}</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        {% stylesheets '@ApplicationPlateformeBundle/Resources/public/css/main.css' %}
+        {% stylesheets filter="cssrewrite, ?scssphp" '@ApplicationPlateformeBundle/Resources/public/css/main.css' %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
         {% block stylesheets %}{% endblock %}
@@ -99,6 +99,11 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+{% javascripts filter="?jsqueeze"
+           '@ApplicationPlateformeBundle/Resources/public/js/main.js'
+           '@ApplicationUsersBundle/Resources/public/js/form.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% block javascripts %}
 {% endblock %}
 </body>

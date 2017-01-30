@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Form\EspaceDocumentaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -96,8 +97,13 @@ class DocumentController extends Controller
             'path' => $path,
         ));
 
+
+
+        $beneficiaire = $document->getBeneficiaire();
+
         return $this->render('ApplicationPlateformeBundle:Document:show.html.twig', array(
             'document' => $document,
+            'beneficiaire' => $beneficiaire
         ));
     }
 
@@ -112,7 +118,7 @@ class DocumentController extends Controller
         $beneficiaire = $document->getBeneficiaire();
 
         if (!$document) {
-            throw $this->createNotFoundException('Unable to find Historique.');
+            throw $this->createNotFoundException('Unable to find Document.');
         }
 
         $em->remove($document);
@@ -123,5 +129,25 @@ class DocumentController extends Controller
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),
         )));
+    }
+
+    public function upAction(Request $request, $id){
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
+            $beneficiaire = $document->getBeneficiaire();
+
+            if (!$document) {
+                throw $this->createNotFoundException('Unable to find Document.');
+            }
+
+            $this->get('application_plateforme.document')->supprimerDocument($beneficiaire, $document);
+
+            $message = "success";
+            return new JsonResponse($message);
+        }
+        else{
+            throw new \Exception('erreur');
+        }
     }
 }

@@ -45,7 +45,7 @@ class VilleToNumberTransformer implements DataTransformerInterface
             return;
         }
 
-        $issue = $this->manager
+        $ville = $this->manager
             ->getRepository('ApplicationPlateformeBundle:Ville')
             // query for the ville with this id
             ->find($villeNumber)

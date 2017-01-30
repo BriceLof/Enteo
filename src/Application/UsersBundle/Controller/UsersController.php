@@ -51,8 +51,12 @@ class UsersController extends Controller
     
     public function showAction(Users $user)
     {
+        // mon service qui récupère le type d'utilisateur
+        $typeUser = $this->container->get('application_users.getTypeUser');
+
         return $this->render('ApplicationUsersBundle:Users:show.html.twig', array(
-            'user' => $user,  
+            'user' => $user,
+            'typeUser' => $typeUser->typeUser($user)
         ));
     }
 
@@ -60,11 +64,12 @@ class UsersController extends Controller
     {
         // supression du salt dans le password avant de le mettre dans le champs du form 
         $user->setPassword(substr($user->getPassword(), 0,-45));
+        
         //$user->setRoles(array("ROLE_CONSULTANT"));
         //var_dump($user->getRoles());
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
-        //$editForm->get('roles')->setData($user->getRoles());
-
+        $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
+        $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
         if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -86,30 +91,40 @@ class UsersController extends Controller
             'form' => $editForm->createView()
         ));
     }
-
-    public function deleteAction(Request $request, Users $user)
+    
+    // Désactiver un utilisateur (pas de suppression car bénéficiaire est lié à un consultant) 
+    public function turnOffAction(Request $request, Users $user)
     {
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
-
+       
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
+            //var_dump($user->getId());exit;
+            $em = $this->getDoctrine()->getManager(); 
+            //$em->remove($user);
+            $user->setEnabled(0);
             $em->flush($user);
-            
-            return $this->redirectToRoute('user');
+            $request->getSession()->getFlashBag()->add('info', 'Utilisateur désactivé avec succès');
+            return $this->redirectToRoute('user_type');
         }
         
-        return $this->render('ApplicationUsersBundle:Users:delete.html.twig', array(
-            'form' => $form->createView(),
+        return $this->render('ApplicationUsersBundle:Users:turnOff.html.twig', array(
+            'form' => $form->createView(), 
         ));  
     }
 
     private function createDeleteForm(Users $user)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
-            ->setMethod('DELETE')
+            ->setAction($this->generateUrl('user_turn_off', array('id' => $user->getId())))
+            ->add("annuler", \Symfony\Component\Form\Extension\Core\Type\ButtonType::class, array(
+                'label' => "Annuler",
+                'attr' => array('class' => 'btn btn-default', "data-dismiss" => "modal")
+            ))    
+            ->add("delete", \Symfony\Component\Form\Extension\Core\Type\SubmitType::class, array(
+                'label' => "Désactiver",
+                'attr' => array('class' => 'btn btn-danger')
+            ))
             ->getForm()
         ;
     }

@@ -2,22 +2,29 @@
 
 namespace Application\UsersBundle\Form;
 
-use Application\UsersBundle\Form\DataTransformer\VilleToNumberTransformer;
-use Doctrine\ORM\EntityRepository;
+//use Application\UsersBundle\Form\DataTransformer\VilleToNumberTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Application\PlateformeBundle\Form\VilleType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvents;
 
 class UsersType extends AbstractType
 {
+    /*private $manager;
+
+    public function __construct(ObjectManager $manager)
+    {
+        $this->manager = $manager;
+    }*/
+    
     /**
      * {@inheritdoc}
      */
@@ -97,22 +104,50 @@ class UsersType extends AbstractType
                        return ['class' => 'format_input'];
                     },
                 ))
-               
-                ->add('ville', EntityType::class, array(
-                    'class' => 'ApplicationPlateformeBundle:Ville',
-                    'label' => 'Ville *',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('v')
-                            ->orderBy('v.nom', 'ASC')
-                            ->setMaxResults( 10000 );
-
-
-                    },
-                    'choice_label' => 'nom',
-                ))
                 
+                // Me sert juste à activer l'ajax pour la recherche de ville correspondant
+                ->add('departement', TextType::class, array(
+                    'mapped' => false, 
+                    'label' => "Département *", 
+                    'required' => true, 
+                    'attr' => array("maxlength" => 2, "class" => "departementInputForAjax")
+                ))
+                ->add('codePostalHidden', HiddenType::class, array("mapped" => false));
+               /* if(isset($options['data']))
+                {
+                    //var_dump($options['data']);
+                    $builder->add('ville', EntityType::class, array(
+                        'class' => 'ApplicationPlateformeBundle:Ville',
+                        'label' => 'Ville *',
+                        'query_builder' => function (EntityRepository $er) use ($options) {
+                            return $er->createQueryBuilder('v')
+                                    ->where('v.id = :id')
+                                    ->setParameter('id',$options['data']->getVille()->getId() )
+                                ->orderBy('v.nom', 'ASC')
+                                ->setMaxResults( 1 );
+                        },
+                        'choice_label' => 'nom',
+                    ));
+                }
+                else{*/
+                    $builder->add('ville', EntityType::class, array(
+                        'class' => 'ApplicationPlateformeBundle:Ville',
+                        'label' => 'Ville *',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('v')
+                                ->orderBy('v.nom', 'ASC')
+                                ->setMaxResults( 1 );
+                        },
+                        'choice_label' => 'nom',
+                    ));
+               // }
+                $builder->add('adresse', TextType::class, array(
+                    'label' => 'Adresse *'
+                ))
                 ;
-            
+                //if(isset($options['data'])) var_dump($options['data']->getVille());
+        /*$builder->get('ville')
+            ->addModelTransformer(new VilleToNumberTransformer($this->manager));*/
     }
     
     public function getParent()

@@ -18,7 +18,7 @@
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef">
                     <div class="table-responsive col-md-12" >
-                        <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
+                        <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
                         <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                         <br><br>
                         <table class="table table-bordered ">
@@ -82,30 +82,45 @@
                             </tbody>
                         </table>
                     </div>
-                    <aside id="form_add_news_{{ beneficiaire.id }}" class="formulaire_add_news col-md-3" style="position:fixed;z-index:3;top:25%;left:35%;margin-left:15px;box-shadow: 6px 12px 25px rgba(17, 17, 17, 0.35);margin-top:0px;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px; display:none">
-                        <h3>MAJ Bénéficiaire : </h3>
-                        <p>
-                            <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
-                            {{ beneficiaire.ville.nom|capitalize }}
-                        </p>
-                        <div class="loading_ajax"></div>
+                    <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new_{{beneficiaire.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header my_header_modal">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">MAJ Bénéficiaire</h4>
+                                    <p>
+                                        <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
+                                        {{ beneficiaire.ville.nom|capitalize }}
+                                    </p>
+                                    <!-- ID du statut de la dernière news du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
+                                    <input type="hidden" value="{{ derniere_news.statut.id }}" class="statutIDCurrent"/>
+                                </div>
+                               
+                                <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
+                            </div>
+                        </div>
                     </aside>
                 </div>
                 <br>
                 <br>
             {% endfor %}
-            <aside class="formulaire_add_news" style="display:none;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px;"></aside>
             </section>
 
+            <!-- Formulaire qui sera déplacé en javascript dans la boucle pour lié à un bénéficiaire -->
             <div id="block_formulaire_add_news" style="display:none" >
                 <form action="{{ path('application_plateforme_homepage') }}" method="post">
-                    <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
-                    {{ form_label(form_news.statut) }}
-                    {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
-                    {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
-                    {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut'}}) }}
-                    {{ form_rest(form_news) }}
-
+                    <div class="modal-body">
+                        <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
+                        {{ form_label(form_news.statut) }}
+                        {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
+                        {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+                        {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
+                        {{ form_label(form_news.message) }}
+                        {{ form_widget(form_news.message) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_rest(form_news) }}
+                    </div>
                 </form>
             </div>
 
@@ -125,7 +140,7 @@
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef">
                     <div class="table-responsive col-md-12" >
-                        <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" >Maj</button>
+                        <button class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
                         <a href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                         <br><br>
                         <table class="table table-bordered " id="b{{ beneficiaire.id }}">
@@ -190,30 +205,45 @@
                             </tbody>
                         </table>
                     </div>
-                    <aside id="form_add_news_{{ beneficiaire.id }}" class="formulaire_add_news col-md-3" style="position:fixed;z-index:3;top:25%;left:35%;margin-left:15px;box-shadow: 6px 12px 25px rgba(17, 17, 17, 0.35);margin-top:0px;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px; display:none">
-                        <h3>MAJ Bénéficiaire : </h3>
-                        <p>
-                            <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
-                            {{ beneficiaire.ville.nom|capitalize }}
-                        </p>
-                        <div class="loading_ajax"></div>
+                    <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new_{{beneficiaire.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header my_header_modal">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">MAJ Bénéficiaire</h4>
+                                    <p>
+                                        <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</b><br></span>
+                                        {{ beneficiaire.ville.nom|capitalize }}
+                                    </p>
+                                    <!-- ID du statut de la dernière news du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
+                                    <input type="hidden" value="{{ derniere_news.statut.id }}" class="statutIDCurrent"/>
+                                </div>
+                               
+                                <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
+                            </div>
+                        </div>
                     </aside>
                 </div>
                 <br>
-                <br>
+                <br>  
             {% endfor %}
-            <aside class="formulaire_add_news" style="display:none;background-color: #e2e2e2;border-radius: 3px;padding-top: 20px;"></aside>
             </section>
-
+            
+            <!-- Formulaire qui sera déplacé en javascript dans la boucle pour lié à un bénéficiaire -->
             <div id="block_formulaire_add_news" style="display:none" >
                 <form action="{{ path('application_plateforme_homepage') }}" method="post">
-                    <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
-                    {{ form_label(form_news.statut) }}
-                    {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
-                    {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
-                    {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut'}}) }}
-                    {{ form_rest(form_news) }}
-
+                    <div class="modal-body">
+                        <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
+                        {{ form_label(form_news.statut) }}
+                        {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
+                        {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+                        {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
+                        {{ form_label(form_news.message) }}
+                        {{ form_widget(form_news.message) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_rest(form_news) }}
+                    </div>
                 </form>
             </div>
 
@@ -231,7 +261,6 @@
     {% else %}
         <div class="jumbotron">
             <p class="">Vous n'avez pas encore de bénéficiaires attribués</p>
-        </div>
-       
+        </div>      
     {% endif %}
 {% endblock %}
