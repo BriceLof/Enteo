@@ -207,10 +207,10 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         <h4 class="modal-title" id="myModalLabel">Changement de Consultant</h4>
-                                        <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
-                                            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
-                                        </form>
                                     </div>
+                                    <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
+                                        {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                                    </form>
                                 </div>
                             </div>
                         </div>

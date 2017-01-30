@@ -20,23 +20,7 @@ class Document
 
         if($zip->open($zip_path) === TRUE){
             $zip->extractTo($this->getUploadRootDir($beneficiaire),$nomFichier);
-            $temp = tmpfile();
-
-            fwrite($temp,file_get_contents($this->getUploadRootDir($beneficiaire).'/'.$nomFichier));
-
-            rewind($temp);
-
-            $file_content = stream_get_contents($temp);
-
-            echo $file_content;
-
-            echo sprintf('<img src="data:image/png;base64,%s" />', base64_encode($zip->getFromName('Fichier.extension')));
-
             $zip->close();
-
-
-
-
         }
         else{
             echo 'echec';
