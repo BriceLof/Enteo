@@ -3,8 +3,9 @@
 {% block contentMail %}
     <h4>Sujet : {{ sujet }}</h4>
     <p>
-		Bonjour {{ consultant.nom ~ consultant.prenom}},<br><br>
-		Voici le message pour vous deezidoze
-	<p>
+       Bonjour {{ consultant.nom ~ consultant.prenom}},<br><br>
+        
+       {{ message }}
+    <p>
 {% endblock %}
 
