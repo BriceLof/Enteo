@@ -22,6 +22,8 @@ class DocumentCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        $compteur = 0;
+
         $em = $this->getContainer()->get('doctrine')->getManager();
 
         $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findAll();
@@ -32,7 +34,9 @@ class DocumentCommand extends ContainerAwareCommand
             foreach ($documents as $document){
                 $this->getContainer()->get('application_plateforme.document')->supprimerDocument($beneficiaire, $document);
                 $output->writeln('ok');
+                $compteur++;
             }
         }
+        $this->getContainer()->get('application_plateforme.mail')->mailRecapCronDocument($compteur);
     }
 }

@@ -9,8 +9,8 @@ parameters:
     mailer_auth_mode: login
     mailer_host: smtp.gmail.com
     mailer_port: 465
-    mailer_user: 
-    mailer_password: 
+    mailer_user:
+    mailer_password:
     mailer_encryption: ssl
     secret: ThisTokenIsNotSoSecretChangeIt
 

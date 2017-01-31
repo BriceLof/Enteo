@@ -121,8 +121,23 @@ class Mailer
             
             
         }
+
         
-        
+    }
+
+
+    /**
+     * envoi de mail pour le rapport hebdomadaire de la suppression des documents
+     * non-compressés
+     */
+    public function mailRecapCronDocument($compteur){
+        $subject = "Rapport CRON suppression des documents Enteo";
+        $template = '@Apb/Alert/Mail/rapportCronDocument.html.twig';
+        $to = "n.ranaivoson@iciformation.fr";
+        $body = $this->templating->render($template, array(
+            'compteur' => $compteur,
+        ));
+        $this->sendMessage($this->from,$to,null,$subject,$body);
     }
 }
 ?>
