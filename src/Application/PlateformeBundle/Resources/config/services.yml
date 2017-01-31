@@ -24,3 +24,15 @@ services:
             - "@application_plateforme.document"
         tags:
             - { name: twig.extension }
+            
+################################################################################
+###################################  STATUT  ###################################
+################################################################################
+    
+    application_plateforme.statut.add_statut:
+       class: Application\PlateformeBundle\Services\Statut\AddStatutBdd
+       arguments: ["@doctrine.orm.entity_manager"]
+       
+    application_plateforme.statut.cron.rv:
+        class: Application\PlateformeBundle\Services\Statut\Cron\Rv
+        parent: application_plateforme.mail

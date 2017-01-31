@@ -3,11 +3,7 @@
 parameters:
 #    parameter_name: value
 
-services:
-   application_plateforme.statut:
-       class: Application\PlateformeBundle\Services\Statut
-       arguments: ["@doctrine.orm.entity_manager"]
-       
+services:    
    application_google_calendar:
        class: Application\PlateformeBundle\Services\GoogleCalendar
    

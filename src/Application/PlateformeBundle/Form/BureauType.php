@@ -13,7 +13,7 @@ class BureauType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class, array(
+            ->add('nombureau', TextType::class, array(
                 'label' => 'nom ',
                 'attr' => array(
                     'placeholder' => '',

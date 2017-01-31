@@ -15,7 +15,7 @@ class AlerteController extends Controller
 {
     public function indexAction()
     {
-        $service = $this->container->get('application_plateforme.mail')->alerteSuiteRv1();
+        $service = $this->container->get('application_plateforme.statut.cron.rv')->alerteSuiteRv1();
         var_dump($service);
        // var_dump($service->getDateHeure());
        // var_dump(new \DateTime);

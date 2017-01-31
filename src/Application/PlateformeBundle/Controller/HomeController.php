@@ -72,6 +72,9 @@ class HomeController extends Controller
             $em->persist($news);
             $em->flush();
             
+            // Envoi d'un mail selon le statut
+            
+            
             $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
             return $this->redirect($url);
         }
