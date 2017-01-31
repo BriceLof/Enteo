@@ -44,7 +44,7 @@ class Bureau
     
     public function __construct()
     {
-        $this->historique = new ArrayCollection();
+        //$this->historique = new ArrayCollection();
     }
 
 
@@ -115,34 +115,34 @@ class Bureau
      *
      * @return Beneficiaire
      */
-    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+   /* public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
     {
         $this->historique[] = $historique;
 
         $historique->setBureau($this);
 
         return $this;
-    }
+    }*/
 
     /**
      * Remove historique
      *
      * @param \Application\PlateformeBundle\Entity\Historique $historique
      */
-    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    /*public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
     {
         $this->historique->removeElement($historique);
-    }
+    }*/
 
     /**
      * Get historique
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getHistorique()
+   /* public function getHistorique()
     {
         return $this->historique;
-    }
+    }*/
 
 
     /**

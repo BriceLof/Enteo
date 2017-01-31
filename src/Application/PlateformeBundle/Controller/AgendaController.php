@@ -39,7 +39,7 @@ class AgendaController extends Controller
 			break;
 			default:
 				// localhost
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/teo/web/app_dev.php/agenda')
+				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
 					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
 			break;
 		}
