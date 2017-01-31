@@ -68,18 +68,18 @@ class Historique
      *
      * @ORM\Column(name="type_rdv", type="text")
      */
-    private $type_rdv;
+    private $typerdv;
 	
 	/**
      * @var string
      *
-     * @ORM\Column(name="event_id", type="text")
+     * @ORM\Column(name="evenetId", type="text")
      */
     private $eventId;
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Bureau", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Bureau", inversedBy="historique")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $bureau;
@@ -90,6 +90,12 @@ class Historique
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="historique")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $consultant;
 	
 
     /**
@@ -99,7 +105,7 @@ class Historique
     {
         $this->date = new \DateTime('now');
         $this->dateDebut = new \DateTime('now');
-		$this->dateFin = new \DateTime('now');
+	$this->dateFin = new \DateTime('now');
     }
 
 
@@ -266,7 +272,7 @@ class Historique
      */
     public function setTypeRdv($typeRdv)
     {
-        $this->type_rdv = $typeRdv;
+        $this->typerdv = $typeRdv;
 
         return $this;
     }
@@ -278,7 +284,7 @@ class Historique
      */
     public function getTypeRdv()
     {
-        return $this->type_rdv;
+        return $this->typerdv;
     }
 
     /**
@@ -351,5 +357,29 @@ class Historique
     public function getEventId()
     {
         return $this->eventId;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Historique
+     */
+    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 }

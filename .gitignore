@@ -18,3 +18,4 @@
 /web/bundles/
 /nbproject/private/
 web/uploads/
+/src/Application/PlateformeBundle/Services/Google_calendar_service/
