@@ -101,11 +101,16 @@ class Mailer
                             "support@iciformation.fr" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
                 }
-
+                
+                $message = "Votre bénéficiaire <b>".$rv->getBeneficiaire()->getCiviliteConso()." ".$rv->getBeneficiaire()->getNomConso()." ".$rv->getBeneficiaire()->getPrenomConso()." "
+                        . "</b> a fait son RV1 le <b>".$rv->getDateHeure()->format('d-m-Y')."</b> .<br>
+                          Il est en attente d'une mise à jour de son statut.";
+                
                 $body = $this->templating->render($template, array(
                     'consultant' => $rv->getBeneficiaire()->getConsultant(), 
                     'beneficiaire' => $rv->getBeneficiaire(),
-                    'sujet' => $subject
+                    'sujet' => $subject ,
+                    'message' => $message
                 ));
                 
                 $this->sendMessage($this->from, $to, $cc, $subject, $body);
