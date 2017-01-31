@@ -762,3 +762,11 @@ function plusMoins(element) {
         span.className = 'glyphicon glyphicon-minus';
     }
 }
+
+
+(function(){
+    var element = document.getElementById('espace_documentaire_submit');
+    element.addEventListener('click', function () {
+        document.getElementById("loading").style.width = "100%";
+    }, true);
+})();

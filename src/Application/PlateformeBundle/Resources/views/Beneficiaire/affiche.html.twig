@@ -1,6 +1,12 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
 {% block body %}
+    <div class="overlay" id="loading">
+        <div class="overlay-content">
+            <div>Téléchargement du fichier en cours...</div>
+            <div class="loader">Loading...</div>
+        </div>
+    </div>
     <div id="flashbag" class="container">
         <div class="row">
             <div class="col-md-12">
@@ -229,20 +235,20 @@
                                             {{ afficherDocument(beneficiaire, document.path) }}
                                             <tr>
                                                 <td>{{ document.description }}</td>
-                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span>voir le document</span></a></td>
+                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
                                                 <td class="btn" width="100%">
                                                     <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                        <span style="color: black" class="glyphicon glyphicon-remove"></span>
                                                     </a>
                                                 </td>
                                             </tr>
                                         {% else %}
                                             <tr>
                                                 <td>{{ document.description }}</td>
-                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span>voir le document</span></a></td>
+                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
                                                 <td class="btn" width="100%">
                                                     <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                        <span class="glyphicon glyphicon-remove"></span>
+                                                        <span style="color: black" class="glyphicon glyphicon-remove"></span>
                                                     </a>
                                                 </td>
                                             </tr>
