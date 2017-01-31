@@ -1,0 +1,9 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block contentMail %}
+<div>
+    <p>
+        Aujoud'hui ({{ "now"|date("d/m/Y") }}): {{ compteur }} document(s) supprimé(s)
+    </p>
+</div>
+{% endblock %}
