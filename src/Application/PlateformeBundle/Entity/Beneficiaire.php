@@ -203,7 +203,7 @@ class Beneficiaire
     private $telConso;
 
     /**
-     * @ORM\Column(name="email_conso", type="string", length=45)
+     * @ORM\Column(name="email_conso", type="string", length=255)
      *
      */
     private $emailConso;

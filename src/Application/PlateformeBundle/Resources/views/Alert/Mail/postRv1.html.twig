@@ -1,1 +1,7 @@
-Bonjour {{ consultant.nom ~ consultant.prenom}}
+{% extends "::mail/layout.html.twig" %}
+
+{% block contentEmail %}
+    <h3>{{ sujet }}</h3>
+    <p>Bonjour {{ consultant.nom ~ consultant.prenom}},</p>
+    <p>Voici le message pour vous deezidoze<p>
+{% endblock %}

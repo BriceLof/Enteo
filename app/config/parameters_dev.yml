@@ -5,12 +5,11 @@ parameters:
     database_name: enteo
     database_user: root
     database_password:
-    
     mailer_transport: smtp
-    mailer_host: null
-    mailer_user: 
-    mailer_password: 
-
-    
-    
+    mailer_auth_mode: login
+    mailer_host: smtp.gmail.com
+    mailer_port: 465
+    mailer_user: brice.lof@gmail.com
+    mailer_password: 1660277felinx9743121
+    mailer_encryption: ssl
     secret: ThisTokenIsNotSoSecretChangeIt

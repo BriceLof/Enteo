@@ -281,7 +281,7 @@ $("document").ready(function () {
     });
 
     $(".cp").keyup(function () {
-        if ($(this).val().length === 5){
+        if ($(this).val().length >= 2){
             $.ajax({
                 type: 'get',
                 url: Routing.generate('application_search_ville', {cp : $(this).val()}),
@@ -292,11 +292,20 @@ $("document").ready(function () {
                     var id = $(".ville").attr("id");
                     var name = $(".ville").attr("name");
                     $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
+                    var firstOption = "";
                     $.each(data.ville, function(index,value){
-                        $(".ville").append($('<option>',{value: value, text: value}));
+                        if(index == 0) firstOption = value.cp
+                       
+                        $(".ville").append("<option data-cp="+value.cp+" value="+value.id+">"+value.nom+"</option>")
+                        $(".cp").val(firstOption)
                     });
-
-                    console.log('ville ok');
+                       
+                    $("#recherche_beneficiaire_ville_nom").change(function()
+                    {
+                        villeSelected = $('option:selected',this).attr('data-cp');
+                        $(".cp").val(villeSelected)
+                    })
+                    //console.log('ville ok');
                 }
             })
         }else{
