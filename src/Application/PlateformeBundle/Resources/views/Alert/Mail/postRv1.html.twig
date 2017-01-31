@@ -5,7 +5,7 @@
     <p>
        Bonjour {{ consultant.nom ~ consultant.prenom}},<br><br>
         
-       {{ message }}
+       {{ message | raw }}
     <p>
 {% endblock %}
 
