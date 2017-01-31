@@ -3,14 +3,22 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<style>
+			html{background-color:#dedede;padding-top:10px;padding-bottom:10px;}
+			body{ width:65%; margin:auto;background-color:white; }
+			header, footer{ text-align:center;padding-top:20px;padding-bottom:20px; }
+			#content{ padding:25px; margin:auto; }
+		</style>
     </head>
 <body>
     <header> 
         <h1 style="color:#428bca">ENTEO</h1>
     </header>
     
-    {% block contentMail %}
-    {% endblock %}
+	<div id="content">
+		{% block contentMail %}
+		{% endblock %}
+	</div>
 
     <footer>
         <p>

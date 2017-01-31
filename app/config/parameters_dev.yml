@@ -1,16 +1,14 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: localhost
-    database_port:
-    database_name: enteo
-    database_user: root
-    database_password:
-    mailer_transport: smtp
+    database_host: db661016137.db.1and1.com
+    database_port: 3306
+    database_name: db661016137
+    database_user: dbo661016137
+    database_password: entheor
+    mailer_transport: mail
     mailer_auth_mode: login
-    mailer_host: smtp.gmail.com
-    mailer_port: 465
-    mailer_user: brice.lof@gmail.com
-    mailer_password: 1660277felinx9743121
-    mailer_encryption: ssl
+    mailer_host: auth.smtp.1and1.fr
+    mailer_port: 587
+    mailer_user: contact@dev.application.entheor.com
+    mailer_password: contactEnteo2017#
     secret: ThisTokenIsNotSoSecretChangeIt
-
