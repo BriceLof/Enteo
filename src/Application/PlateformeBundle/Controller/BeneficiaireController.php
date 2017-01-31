@@ -28,17 +28,87 @@ class BeneficiaireController extends Controller
      *
      */
     public function showAction(Request $request,$id){
-
-        $em = $this->getDoctrine()->getManager();
-
-        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-
-        //var_dump(is_array($this->getUser()->getBeneficiaire()));die;
-        /**
-        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_CONSULTANT') && !$this->getUser()->getBeneficiaire()->contains($beneficiaire) ){
-            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        $em = $this->getDoctrine()->getManager();        
+        if(isset($id)){
+            // stockage de l'id du beneficiaire 
+            $_SESSION['beneficiaireid'] = $id;
+            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
         }
-         */
+        else if(!empty($_SESSION['beneficiaireid'])){
+            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($_SESSION['beneficiaireid']);
+            unset($_SESSION['beneficiaireid']);
+        }
+        $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
+        // ====================================================== //
+        // ===== Mise à jour des evenements du beneficiaire ===== //
+        // ====================================================== //
+        if(count($histo_beneficiaire) > 0){
+            $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
+            if(!empty($_SESSION['firstpast'])){
+                 unset($_SESSION['firstpast']); // On supprime la session
+                 // Appel des services de Google calendar
+                 $googleCalendar = $this->get('application_google_calendar');
+                 $googleCalendar->setRedirectUri($redirectUri);
+                 if (!empty($_SESSION['code'])){
+                    $client = $googleCalendar->getClient($_SESSION['code']);
+                 }else {
+                    $client = $googleCalendar->getClient();
+                 }
+                 if (is_string($client)) {
+                    header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
+                    exit;
+                 } 
+            }
+            else{
+                // stockage des infos
+                $donnes[] = $id;
+                $donnes[] = $this->getUser()->getId();
+                $donnes[] = 'page beneficiaire';
+                $_SESSION['firstpast'] = $donnes;
+                // Données pour Google calendar
+                $_SESSION['calendrierId'] = $histo_beneficiaire[0]->getConsultant()->getCalendrierid(); // id du calendrier
+                // On stocke l'id du user pour la personnalisation du fichier credentials
+                // dans google calendar qui permet la connexion à l'agenda du consultant
+                $_SESSION['useridcredencial'] = $histo_beneficiaire[0]->getConsultant()->getId();
+                // Appel du service google calendar
+                $googleCalendar = $this->get('application_google_calendar');
+                $googleCalendar->setRedirectUri($redirectUri);
+                if (!empty($_SESSION['code'])){
+                    $client = $googleCalendar->getClient($_SESSION['code']);
+                }else {
+                    $client = $googleCalendar->getClient();
+                }
+                if (is_string($client)) {
+                    header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
+                    exit;
+                }
+            }
+        }
+        // Si le client existe alors on recupere les evenements
+        if(isset($client)){
+            foreach($histo_beneficiaire as $histo){
+                $evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
+                $heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
+                $heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
+                $heuredeb = str_replace('+01:00','',$heuredeb); 
+                $heurefin = str_replace('+01:00','',$heurefin);
+
+                $datedeb = new \DateTime($heuredeb); // date debut
+                $datefin = new \DateTime($heurefin); // date fin
+
+                $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
+                $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
+                // si les creneaux sont differents alors on fait une MAJ
+                if($heuredeb != $histo->getHeuredebut() || $heurefin != $histo->getHeurefin()){
+                    // Mise à jour en BD  
+                    /*$histo->setHeuredebut($heuredeb);
+                    $histo->setHeurefin($heurefin);*/
+                    $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
+                }
+            }
+        }
+        
+        if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
         }else{
             throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
@@ -47,19 +117,11 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-        /**
-        $lastNews = [];
-        $lastNews = end($beneficiaire->getNews());
-        var_dump($lastNews);die;
-         */
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
-
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
-
         if ($request->isMethod('POST') && $editForm->isValid()) {
             $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
-
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
@@ -94,7 +156,6 @@ class BeneficiaireController extends Controller
                 ->getQuery();
             $p = $q->execute();
         }
-
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'form_consultant' => $editConsultantForm->createView(),

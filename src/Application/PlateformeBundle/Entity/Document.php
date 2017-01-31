@@ -33,7 +33,6 @@ class Document
     public $path;
 
     /**
-     * @Assert\File(maxSize="4M")
      * @Assert\File(mimeTypes={
      *          "image/jpeg",
      *          "image/png",

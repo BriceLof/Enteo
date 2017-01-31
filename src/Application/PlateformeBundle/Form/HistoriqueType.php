@@ -17,7 +17,7 @@ class HistoriqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type_rdv', HiddenType::class, array(
+            ->add('typerdv', HiddenType::class, array(
                 'attr' => array('class' => 'letyperdv', 'value' => 'presenciel')
             ))
             ->add('summary',     TextType::class, array(

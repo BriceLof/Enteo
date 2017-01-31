@@ -429,7 +429,7 @@ $("document").ready(function () {
                                       // On met à jour les champs ville, bureau
                                       $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
-                                      $('.bureauselect').val(item.nombureau); // bureau selectionner
+                                      $('.bureauselect').val(item.id); // bureau selectionner
                                       $("#villeh").val(item.nom); // ville
                                       $('#adresse').val(item.adresse); // adresse
                                       $('#adresseh').val(item.adresse); // adresse 
@@ -771,3 +771,11 @@ function plusMoins(element) {
         span.className = 'glyphicon glyphicon-minus';
     }
 }
+
+
+(function(){
+    var element = document.getElementById('espace_documentaire_submit');
+    element.addEventListener('click', function () {
+        document.getElementById("loading").style.width = "100%";
+    }, true);
+})();

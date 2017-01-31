@@ -13,3 +13,4 @@ parameters:
     mailer_password: 1660277felinx9743121
     mailer_encryption: ssl
     secret: ThisTokenIsNotSoSecretChangeIt
+

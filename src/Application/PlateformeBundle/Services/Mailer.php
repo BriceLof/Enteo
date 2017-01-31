@@ -58,6 +58,9 @@ class Mailer
             $beneficiaireID = $rv->getBeneficiaire()->getId();
             // beneficiaire ayant fini le RV1 
             $nextStep = $newsRepo->findOneBy(array('beneficiaire' => $beneficiaireID, 'statut' => '4'));
+            
+            var_dump("beneficiaire ID : ".$beneficiaireID." | RV2 : ".count($nextStep));
+
 
             // envoi email en fonction du temps passé entre la RV1 et la date du jour 
             if(is_null($nextStep))
@@ -106,6 +109,7 @@ class Mailer
                 ));
                 
                 $this->sendMessage($this->from, $to, $cc, $subject, $body);
+
                 
                 return "mail envoyé";
             }

@@ -97,6 +97,8 @@ class DocumentController extends Controller
             'path' => $path,
         ));
 
+
+
         $beneficiaire = $document->getBeneficiaire();
 
         return $this->render('ApplicationPlateformeBundle:Document:show.html.twig', array(

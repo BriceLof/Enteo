@@ -79,8 +79,11 @@ class HistoriqueController extends Controller
      */
     public function showAllAction(Beneficiaire $beneficiaire)
     {
+        // On recupere les historiques du beneficiaire 
+        $em = $this->getDoctrine()->getManager();
+        $historiquepast = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquepast(new \DateTime('now'), $beneficiaire);
         return $this->render('ApplicationPlateformeBundle:Historique:showAll.html.twig', array(
-            'beneficiaire' => $beneficiaire,
+            'historiques' => $historiquepast,
         ));
     }
 
