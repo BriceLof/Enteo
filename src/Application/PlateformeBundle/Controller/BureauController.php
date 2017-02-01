@@ -93,18 +93,22 @@ class BureauController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+            if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
+            }else{
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+            }
 
             $ville->addBureaux($bureau);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Bureau', 'u')
                 ->set('u.ville', '?1')
                 ->set('u.adresse', '?2')
-                ->set('u.nom', '?3')
+                ->set('u.nombureau', '?3')
                 ->where('u.id = ?4')
                 ->setParameter(1, $ville)
                 ->setParameter(2, $bureau->getAdresse())
-                ->setParameter(3, $bureau->getNom())
+                ->setParameter(3, $bureau->getNombureau())
                 ->setParameter(4, $id)
                 ->getQuery();
             $p = $q->execute();
@@ -133,6 +137,29 @@ class BureauController extends Controller
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('info', 'bureau bien supprimé');
+
+        return $this->redirect($this->generateUrl('application_index_bureau'));
+    }
+
+    /**
+     * activer ou desactiver un bureau
+     */
+    public function actifInactifAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($id);
+        if (!$bureau) {
+            throw $this->createNotFoundException('Unable to find Bureau.');
+        }
+        if($bureau->getActifInactif()== true){
+            $bureau->setActifInactif(false);
+            $em->persist($bureau);
+            $em->flush($bureau);
+        }else{
+            $bureau->setActifInactif(true);
+            $em->persist($bureau);
+            $em->flush($bureau);
+        }
 
         return $this->redirect($this->generateUrl('application_index_bureau'));
     }

@@ -43,7 +43,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($this->from,$to,$subject,$body);
+        $this->sendMessage($this->from,$to,null,$subject,$body);
     }
 
 

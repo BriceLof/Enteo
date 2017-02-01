@@ -1,30 +1,31 @@
-<form method="POST" id="bureauEditForm" action="{{ path('application_edit_bureau', { 'id' : bureau.id }) }}" >
-    <table>
-        <tr>
-            <td>Nom du Bureau : </td>
-            <td colspan="3">{{ form_widget(edit_form.nom) }}</td>
-        </tr>
-        <tr>
-            <td>Adresse : </td>
-            <td colspan="3">{{ form_widget(edit_form.adresse) }}</td>
-        </tr>
-        <tr>
-            <td>Ville : </td>
-            <td colspan="3">{{ form_widget(edit_form.ville.nom) }}</td>
-        </tr>
-        <tr>
-            <td>Code Postal : </td>
-            <td colspan="3">{{ form_widget(edit_form.ville.cp) }}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td class="valider">{{ form_widget(edit_form.submit) }}</td>
-        </tr>
-        <tr>
-            <td>{{ form_rest(edit_form) }}</td>
-            <td>{{ form_errors(edit_form) }}</td>
-        </tr>
-    </table>
-</form>
+
+    <div class="modal-body">
+        <div>
+            <div class="form-group">
+                <label>Nom du Bureau : </label>
+                {{ form_widget(edit_form.nombureau) }}
+            </div>
+            <div class="form-group">
+                <label>Adresse : </label>
+                {{ form_widget(edit_form.adresse) }}
+            </div>
+            <div class="form-group">
+                <label>Code Postal : </label>
+               {{ form_widget(edit_form.ville.cp) }}
+            </div>
+            <div class="form-group">
+                <label>Ville : </label>
+                {{ form_widget(edit_form.ville.nom) }}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+            {{ form_widget(edit_form.submit, {'attr': {'class' : 'btn btn-primary'}}) }}
+        </div>
+        <div>
+            {{ form_rest(edit_form) }}
+            {{ form_errors(edit_form) }}
+        </div>
+    </div>
