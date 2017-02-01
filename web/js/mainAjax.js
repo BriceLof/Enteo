@@ -281,7 +281,7 @@ $("document").ready(function () {
     });
 
     $(".cp").keyup(function () {
-        if ($(this).val().length === 5){
+        if ($(this).val().length >= 2){
             $.ajax({
                 type: 'get',
                 url: Routing.generate('application_search_ville', {cp : $(this).val()}),
@@ -292,11 +292,17 @@ $("document").ready(function () {
                     var id = $(".ville").attr("id");
                     var name = $(".ville").attr("name");
                     $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
-                    $.each(data.ville, function(index,value){
-                        $(".ville").append($('<option>',{value: value, text: value}));
-                    });
 
-                    console.log('ville ok');
+                    $.each(data.ville, function(index,value){
+                        $(".ville").append("<option data-cp="+value.cp+" value="+value.id+">"+value.nom+"</option>")
+                    });
+                       
+                    $("#recherche_beneficiaire_ville_nom").change(function()
+                    {
+                        villeSelected = $('option:selected',this).attr('data-cp');
+                        $(".cp").val(villeSelected)
+                    })
+                    //console.log('ville ok');
                 }
             })
         }else{
@@ -765,3 +771,11 @@ function plusMoins(element) {
         span.className = 'glyphicon glyphicon-minus';
     }
 }
+
+
+(function(){
+    var element = document.getElementById('espace_documentaire_submit');
+    element.addEventListener('click', function () {
+        document.getElementById("loading").style.width = "100%";
+    }, true);
+})();

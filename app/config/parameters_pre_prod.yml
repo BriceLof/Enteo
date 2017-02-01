@@ -11,4 +11,8 @@ parameters:
     mailer_port: 587
     mailer_user: contact@dev.application.entheor.com
     mailer_password: contactEnteo2017#
+<<<<<<< HEAD
+=======
+    mailer_encryption: ssl
+>>>>>>> ddd6355cf77722651ab91ece18e850c4c22f664c
     secret: ThisTokenIsNotSoSecretChangeIt

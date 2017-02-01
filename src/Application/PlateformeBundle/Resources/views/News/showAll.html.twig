@@ -1,6 +1,6 @@
 <div id="afficheListNews">
         <h5 style="text-decoration: underline">Toutes les News</h5>
-            {% for news in beneficiaire.news %}
+            {% for news in beneficiaire.news|reverse %}
 
                 <div class="row newsBoucle">
                     <div class="col-sm-2"><span> {{ news.dateHeure|date('d/m/Y à h:m') }} </span></div>

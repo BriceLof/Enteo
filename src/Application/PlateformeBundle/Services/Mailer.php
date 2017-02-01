@@ -8,12 +8,12 @@ use Doctrine\ORM\EntityManager;
 
 class Mailer
 {
-    private $em;
+    protected $em;
     protected $mailer;
     protected $templating;
-    private $from = "admin@enteo.fr";
-    private $reply = "contact@enteo.fr";
-    private $name = "Equipe Anteo";
+    protected $from = "admin@enteo.fr";
+    protected $reply = "contact@enteo.fr";
+    protected $name = "Equipe Anteo";
     
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em)
     {
@@ -22,12 +22,13 @@ class Mailer
         $this->templating = $templating;   
     }
 
-    protected function sendMessage($from, $to, $subject, $body){
+    protected function sendMessage($from, $to, $cc = null, $subject, $body){
         $mail = \Swift_Message::newInstance();
 
         $mail
             ->setFrom($from)
             ->setTo($to)
+            ->setCc($cc)
             ->setSubject($subject)
             ->setBody($body)
             ->setContentType('text/html');
@@ -42,40 +43,22 @@ class Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($this->from,$to,$subject,$body);
+        $this->sendMessage($this->from,$to,null,$subject,$body);
     }
-    
-    public function alerteSuiteRv1()
-    {
-        $newsRepo = $this->em->getRepository("ApplicationPlateformeBundle:News");
-        $listeRv = $newsRepo->getNewsByStatut();
-        $sucess = "";
-        foreach($listeRv as $rv)
-        {   
-            $beneficiaireID = $rv->getBeneficiaire()->getId();
-            // beneficiaire ayant fini le RV1
-            $nextStep = $newsRepo->findOneBy(array('beneficiaire' => $beneficiaireID, 'statut' => '4'));
-            var_dump("beneficiaire ID : ".$beneficiaireID." | RV2 : ".count($nextStep));
 
-            // envoi email en fonction du temps passé entre la RV1 et la date du jour 
-            if(is_null($nextStep))
-            {
-				
-                $subject = "Post RV1";
-                $template = "@Apb/Alert/Mail/postRv1.html.twig";
-                $body = $this->templating->render($template, array(
-                    'consultant' => $rv->getBeneficiaire()->getConsultant()
-                ));
-                
-                $this->sendMessage($this->from, array("b.lof@iciformation.fr" => "Brice IF", "brice.lof@gmail.com" => "Brice privé") , $subject, $body);
-                
-                return "mail envoyé";
-            }
-            
-            
-        }
-        
-        
+
+    /**
+     * envoi de mail pour le rapport hebdomadaire de la suppression des documents
+     * non-compressés
+     */
+    public function mailRecapCronDocument($compteur){
+        $subject = "Rapport CRON suppression des documents Enteo";
+        $template = '@Apb/Alert/Mail/rapportCronDocument.html.twig';
+        $to = "n.ranaivoson@iciformation.fr";
+        $body = $this->templating->render($template, array(
+            'compteur' => $compteur,
+        ));
+        $this->sendMessage($this->from,$to,null,$subject,$body);
     }
 }
 ?>

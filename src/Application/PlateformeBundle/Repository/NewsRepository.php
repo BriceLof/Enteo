@@ -16,7 +16,8 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
         //RV1 à faire
         $queryBuilder = $this->createQueryBuilder('n')
                 ->where('n.statut = :statut')
-                ->setParameter('statut', 3);
+                ->setParameter('statut', 3)
+                ->orderBy("n.id", "DESC");
         
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();

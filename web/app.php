@@ -7,7 +7,7 @@ $loader = require __DIR__.'/../app/autoload.php';
 //Debug::enable();
 //include_once __DIR__.'/../var/bootstrap.php.cache';
 
-$kernel = new AppKernel('prod', true);
+$kernel = new AppKernel('prod', false);
 $kernel->loadClassCache();
 //$kernel = new AppCache($kernel);
 

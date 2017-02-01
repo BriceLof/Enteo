@@ -23,12 +23,12 @@ class VilleController extends Controller
         if ($request->isXmlHttpRequest()) {
 
             $em = $this->getDoctrine()->getManager();
-            $villeCodePostal = $em->getRepository('ApplicationPlateformeBundle:Ville')->findBy(array('cp' => $cp));
+            $villeCodePostal = $em->getRepository('ApplicationPlateformeBundle:Ville')->findByDepartement($cp);
 
             if ($villeCodePostal) {
                 $villes = array();
                 foreach ($villeCodePostal as $ville) {
-                    $villes[] = $ville->getNom();
+                    $villes[] = array("id" => $ville->getId(), "nom" => $ville->getNom(), "cp" => $ville->getCp());
                 }
 
             } else {

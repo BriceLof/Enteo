@@ -1,5 +1,11 @@
-Bonjour Brice, 
+{% extends "::mail/layout.html.twig" %}
 
-<p>
-	Vous n'avez toujours pas mis à jour le profile de votre bénéficiaire après son RV1
-</p>
+{% block contentMail %}
+    <h4>Sujet : {{ sujet }}</h4>
+    <p>
+       Bonjour {{ consultant.nom ~ consultant.prenom}},<br><br>
+        
+       {{ message | raw }}
+    <p>
+{% endblock %}
+

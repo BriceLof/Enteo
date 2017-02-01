@@ -13,3 +13,7 @@ application_edit_bureau:
 application_index_bureau:
     path:     /
     defaults: { _controller: "ApplicationPlateformeBundle:Bureau:index" }
+
+application_actif_inactif_bureau:
+    path:     /actifInactif/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Bureau:actifInactif" }

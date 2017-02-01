@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<style>
+			html{background-color:#dedede;padding-top:10px;padding-bottom:10px;}
+			body{ width:65%; margin:auto;background-color:white; }
+			header, footer{ text-align:center;padding-top:20px;padding-bottom:20px; }
+			#content{ padding:25px; margin:auto; }
+		</style>
+    </head>
+<body>
+    <header> 
+        <h1 style="color:#428bca">ENTEO</h1>
+    </header>
+    
+	<div id="content">
+		{% block contentMail %}
+		{% endblock %}
+	</div>
+
+    <footer>
+        <p>
+            L'Equipe d'Enteo <br>
+            <a href="mailto:contact@enteo.fr" >contact@enteo.fr</a>
+        </p>
+        <p>
+            29, bld de Reuilly - 75012 Paris <br>
+            SAS au capital de 40.084 € - RCS Paris B 477795314 
+        </p>
+    </footer>  
+
+</body>
+</html>

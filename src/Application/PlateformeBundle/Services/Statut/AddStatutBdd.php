@@ -1,7 +1,7 @@
 <?php
-namespace Application\PlateformeBundle\Services;
+namespace Application\PlateformeBundle\Services\Statut;
 
-class Statut
+class AddStatutBdd
 {
     private $em = null;
     
@@ -45,8 +45,10 @@ class Statut
         }
         
         // code à placer dans le controlleur pour appeler le service 
-        // $this->container->get('application_plateforme.statut')->addStatutAndDetail();
+        // $this->container->get('application_plateforme.statut.add_statut')->addStatutAndDetail();
     }
+    
+    
     
     
     
