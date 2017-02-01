@@ -28,7 +28,7 @@ class BeneficiaireController extends Controller
      *
      */
     public function showAction(Request $request,$id){
-        $em = $this->getDoctrine()->getManager();        
+        $em = $this->getDoctrine()->getManager();
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -121,7 +121,7 @@ class BeneficiaireController extends Controller
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
         if ($request->isMethod('POST') && $editForm->isValid()) {
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
