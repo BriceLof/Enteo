@@ -41,10 +41,18 @@ class Bureau
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nombureau;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $actifInactif;
     
     public function __construct()
     {
         //$this->historique = new ArrayCollection();
+        $this->actifInactif = true;
     }
 
 
@@ -167,5 +175,29 @@ class Bureau
     public function getNombureau()
     {
         return $this->nombureau;
+    }
+
+    /**
+     * Set actifInactif
+     *
+     * @param boolean $actifInactif
+     *
+     * @return Bureau
+     */
+    public function setActifInactif($actifInactif)
+    {
+        $this->actifInactif = $actifInactif;
+
+        return $this;
+    }
+
+    /**
+     * Get actifInactif
+     *
+     * @return boolean
+     */
+    public function getActifInactif()
+    {
+        return $this->actifInactif;
     }
 }

@@ -326,7 +326,11 @@
 }
 
 #afficheAllBureau{
-    border:1px solid;
+    border: 1px solid;
+}
+
+.corpsAfficheBureau{
+    margin-left: 1%;
 }
 
 /*formulaire qui n'affiche pas le input mais seulement quand on passe la souris dessus*/

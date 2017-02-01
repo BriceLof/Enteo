@@ -121,7 +121,11 @@ class BeneficiaireController extends Controller
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
         if ($request->isMethod('POST') && $editForm->isValid()) {
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
+            if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
+            }else{
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+            }
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
@@ -138,6 +142,8 @@ class BeneficiaireController extends Controller
                 ->set('u.pays', '?12')
                 ->set('u.numSecu', '?13')
                 ->set('u.dateNaissance', '?14')
+                ->set('u.adresse', '?15')
+                ->set('u.adresseComplement', '?16')
                 ->where('u.id = ?2')
                 ->setParameter(1, $ville)
                 ->setParameter(2, $id)
@@ -153,6 +159,8 @@ class BeneficiaireController extends Controller
                 ->setParameter(12, $beneficiaire->getPays())
                 ->setParameter(13, $beneficiaire->getNumSecu())
                 ->setParameter(14, $beneficiaire->getDateNaissance())
+                ->setParameter(15, $beneficiaire->getAdresse())
+                ->setParameter(16, $beneficiaire->getAdresseComplement())
                 ->getQuery();
             $p = $q->execute();
         }
@@ -178,8 +186,6 @@ class BeneficiaireController extends Controller
 
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editConsultantForm->handleRequest($request);
-
-
 
         if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
             $beneficiaire = $editConsultantForm->getData();
