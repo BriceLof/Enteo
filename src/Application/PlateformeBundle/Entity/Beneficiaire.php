@@ -41,11 +41,6 @@ class Beneficiaire
     protected $consultant;
 
     /**
-     * @ORM\OneToMany(targetEntity="Historique", mappedBy="beneficiaire")
-     */
-    protected $historique;
-
-    /**
      * @ORM\OneToMany(targetEntity="SuiviAdministratif", mappedBy="beneficiaire")
      */
     protected $suiviAdministratif;
@@ -239,7 +234,6 @@ class Beneficiaire
     public function __construct()
     {
         $this->news = new ArrayCollection();
-        $this->historique = new ArrayCollection();
         $this->documents = new ArrayCollection();
     }
 
@@ -366,42 +360,6 @@ class Beneficiaire
     public function getNews()
     {
         return $this->news;
-    }
-
-    /**
-     * Add historique
-     *
-     * @param \Application\PlateformeBundle\Entity\Historique $historique
-     *
-     * @return Beneficiaire
-     */
-    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
-    {
-        $this->historique[] = $historique;
-
-        $historique->setBeneficiaire($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove historique
-     *
-     * @param \Application\PlateformeBundle\Entity\Historique $historique
-     */
-    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
-    {
-        $this->historique->removeElement($historique);
-    }
-
-    /**
-     * Get historique
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getHistorique()
-    {
-        return $this->historique;
     }
 
     /**
@@ -866,7 +824,6 @@ class Beneficiaire
     }
 
     /**
-
      * Set email2
      *
      * @param string $email2

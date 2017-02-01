@@ -16,15 +16,26 @@ class AgendaController extends Controller
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if($request->query->get('sentinel') == 1){
+            $nomc = '%'.$request->query->get('term').'%';
+            $idbenef = $request->query->get('id');
             // nom
-            $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
-            $query->setParameter('nom', $request->query->get('term').'%');
+            $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.consultant = :id AND b.nomConso LIKE :nom');
+            $query->setParameters(array('id'=>$idbenef, 'nom'=>$nomc));
             (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();
         }
         else if($request->query->get('sentinel') == 2){
-            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE v.departementId LIKE :nom');
-            $query->setParameter('nom', $request->query->get('term').'%');
-            (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
+            if(!empty($request->query->get('idb'))){
+                $dept = '%'.$request->query->get('term').'%';
+                $idbenef = $request->query->get('idb');
+                $query = $em->createQuery('SELECT be.id, b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Ville v  
+                                                        JOIN v.bureaux b JOIN v.beneficiaire be WHERE be.id = :idb AND v.departementId LIKE :nom');
+                $query->setParameters(array('idb'=>$idbenef,'nom'=>$dept));
+                (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
+            }
+            else{
+                $results = array('nom' => -1);
+            }
+            
         }
         return new JsonResponse(json_encode($results));
     }

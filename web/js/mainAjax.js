@@ -399,7 +399,8 @@ $("document").ready(function () {
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2
+                    sentinel: 2,
+                    idb : $('#idbeneficiaire').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -459,7 +460,8 @@ $("document").ready(function () {
                 url : urlautocompletion, // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
-                    sentinel: 1
+                    sentinel: 1,
+                    id: $('.consultantcalendrierid').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -604,6 +606,7 @@ $('#consultantC').change(function(){
         idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+        $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du nom du consultant
         $('.nameconsultant').text($('#consultantC option:selected').text());

@@ -1,15 +1,15 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 {% block body %}
     <div class="container-fluid blocagendaprincipal">
-			{% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
-			<div class="row">
-				<div class="col-mg-12">
-					<div class="alert alert-danger msg-errors" role="alert">
-						<strong>Oops! </strong> <span>ce creneau est dejà occupé</span>
-					</div>
-				</div>
+            {% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
+		<div class="row">
+			<div class="col-mg-12">
+                            <div class="alert alert-danger msg-errors" role="alert">
+				<strong>Oops! </strong> <span>ce creneau est dejà occupé</span>
+                            </div>
 			</div>
-			{% endif %}
+		</div>
+            {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 {# bloc Agenda pour Admin #}
                  <div class="row">
@@ -22,6 +22,7 @@
                                         <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
                                     {% endfor %}
                                 </select>
+                                <input type="hidden" class="consultantcalendrierid">
                             </div>
                             <div id="nomconsultant">
                                 <span class="nomconsultant">Agenda de </span>
@@ -130,6 +131,7 @@
             {% elseif is_granted('ROLE_CONSULTANT') %}
                 {# bloc Agenda pour consultant #}
                    <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
+                   <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
                    <div class="row">
                        <div class="col-md-12">
                            <div id="nomconsultant">
