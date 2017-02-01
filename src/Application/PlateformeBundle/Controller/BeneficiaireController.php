@@ -302,7 +302,7 @@ class BeneficiaireController extends Controller
             if (!is_null($form["ville"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]["nom"]->getData(),
+                    'id' => $form["ville"]["nom"]->getData(),
                 ));
                 $beneficiaire->setVille($ville);
             }
@@ -365,12 +365,12 @@ class BeneficiaireController extends Controller
 
         $dateDebut = null;
         $dateFin = null;
-
         $ville = new Ville();
+        
         if (!is_null($form["ville"]["nom"]->getData())) {
             $em = $this->getDoctrine()->getManager();
             $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                'nom' => $form["ville"]["nom"]->getData(),
+                'id' => $form["ville"]["nom"]->getData(),
             ));
             $beneficiaire->setVille($ville);
         }

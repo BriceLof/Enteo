@@ -292,12 +292,9 @@ $("document").ready(function () {
                     var id = $(".ville").attr("id");
                     var name = $(".ville").attr("name");
                     $(".ville").replaceWith('<select id='+id+' name='+name+' class="ville form-control">');
-                    var firstOption = "";
+
                     $.each(data.ville, function(index,value){
-                        if(index == 0) firstOption = value.cp
-                       
                         $(".ville").append("<option data-cp="+value.cp+" value="+value.id+">"+value.nom+"</option>")
-                        $(".cp").val(firstOption)
                     });
                        
                     $("#recherche_beneficiaire_ville_nom").change(function()

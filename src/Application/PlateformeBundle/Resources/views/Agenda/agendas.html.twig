@@ -1,4 +1,7 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block title %}Agenda{% endblock %}
+
 {% block body %}
     <div class="container-fluid blocagendaprincipal">
 			{% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
