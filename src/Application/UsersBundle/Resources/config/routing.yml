@@ -28,3 +28,7 @@ user_turn_off:
 my_account:
     path: /account/
     defaults: {_controller: ApplicationUsersBundle:Users:myAccount }
+    
+my_account_edit:
+    path: /account/edit
+    defaults: {_controller: ApplicationUsersBundle:Users:myAccountEdit }

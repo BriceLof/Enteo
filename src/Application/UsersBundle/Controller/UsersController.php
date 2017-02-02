@@ -10,10 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-/**
- * User controller.
- * @Security("has_role('ROLE_ADMIN')")
- */
+
 class UsersController extends Controller
 {
     
@@ -70,6 +67,11 @@ class UsersController extends Controller
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
         $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
         $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
+        $editForm->get('idVilleHidden')->setData($user->getVille()->getId());
+
+        $typeUser = $this->container->get('application_users.getTypeUser');
+        $editForm->get('typeUserHidden')->setData($typeUser->typeUser($this->getUser()));
+        
         if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -132,9 +134,42 @@ class UsersController extends Controller
     public function myAccountAction(Request $request)
     {
         $myself = $this->getUser();
+        $typeUser = $this->container->get('application_users.getTypeUser');
         return $this->render('ApplicationUsersBundle:Users:account.html.twig', array(
-            'user' => $myself,  
+            'user' => $myself, 
+            'typeUser' => $typeUser->typeUser($myself)
         ));
         
+    }
+    
+    public function myAccountEditAction(Request $request)
+    {
+        $user = $this->getUser();
+        // supression du salt dans le password avant de le mettre dans le champs du form 
+        $user->setPassword(substr($user->getPassword(), 0,-45));
+        
+        //$user->setRoles(array("ROLE_CONSULTANT"));
+        //var_dump($user->getRoles());
+        $editForm = $this->get("form.factory")->create(UsersType::class, $user);
+        $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
+        $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
+        $editForm->get('idVilleHidden')->setData($user->getVille()->getId());
+
+        $typeUser = $this->container->get('application_users.getTypeUser');
+        $editForm->get('typeUserHidden')->setData($typeUser->typeUser($this->getUser()));
+        
+        if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('info', 'Votre compte a été modifié avec succès');
+            return $this->redirectToRoute('my_account');  
+        }
+       
+        return $this->render('ApplicationUsersBundle:Users:edit.html.twig', array(
+            'user' => $user,
+            'form' => $editForm->createView()
+        ));
     }
 }
