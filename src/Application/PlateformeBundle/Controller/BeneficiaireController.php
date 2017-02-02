@@ -120,7 +120,8 @@ class BeneficiaireController extends Controller
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
-        if ($request->isMethod('POST') && $editForm->isValid()) {
+        if ($request->isMethod('POST') /*&& $editForm->isValid()*/) {
+           // var_dump($beneficiaire->getTelConso());die;
             if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
             }else{
@@ -163,6 +164,11 @@ class BeneficiaireController extends Controller
                 ->setParameter(16, $beneficiaire->getAdresseComplement())
                 ->getQuery();
             $p = $q->execute();
+
+            return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'id' => $beneficiaire->getId(),
+                )
+            ));
         }
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(

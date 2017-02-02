@@ -97,7 +97,7 @@
                                         {% if beneficiaire.ville is not null %}
                                             <tr>
                                                 <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                                <td>{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
+                                                <td id="inputVilleBeneficiaire">{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
                                             </tr>
                                         {% else %}
                                             <tr>

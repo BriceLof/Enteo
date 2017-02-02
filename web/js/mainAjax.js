@@ -241,11 +241,11 @@ $("document").ready(function () {
                 },
                 "beneficiaire[telConso]":{
                     "required": true,
-                    "tel": /^0[1-8][0-9]{8}$/
+                    "tel": /^0[1-8]([\s]?[0-9]{2}){4}$/
                 },
                 "beneficiaire[tel2]":{
                     "required": false,
-                    "tel": /^0[1-8][0-9]{8}$/
+                    "tel": /^0[1-8]([\s]?[0-9]{2}){4}$/
                 },
                 "beneficiaire[emailConso]":{
                     "required": true,
@@ -775,4 +775,56 @@ function plusMoins(element) {
     element.addEventListener('click', function () {
         document.getElementById("loading").style.width = "100%";
     }, true);
+})();
+
+
+/*reglage numéro de téléphone*/
+(function(){
+    var tels = document.getElementsByClassName('telephoneConso');
+    for(var i=0;i<tels.length;i++){
+        tels[i].addEventListener('keypress',function () {
+
+            var s = this.value.replace(/ /g,"");
+            console.log('s = '+ s.length);
+            if (s.length%2 == 0 && s.length<10 && s.length>1){
+                this.value += " ";
+            }
+            console.log(this.value);
+        });
+    }
+
+    var form1 = document.getElementById('ficheBeneficiaireForm');
+    form1.addEventListener('submit',function () {
+        var tels = document.getElementsByClassName('telephoneConso');
+        for(var i=0;i<tels.length;i++){
+            tels[i].value = tels[i].value.replace(/ /g,"");
+        }
+        return true;
+    });
+
+})();
+
+(function(){
+    window.onload = function () {
+        var tels = document.getElementsByClassName('telephoneConso');
+        for(var i=0;i<tels.length;i++) {
+            var result = "";
+                var s = ""+tels[i].value;
+            var t=0;
+                for (var j = 0;j<s.length;j++){
+                    if(t == 2){
+                        String.prototype.splice = function(idx, rem, str) {
+                            return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+                        };
+                        s = s.splice(j, 0, " ");
+                        t = 0;
+                    }
+                    else {
+                        t++;
+                    }
+                }
+            tels[i].value = s;
+
+        }
+    }
 })();
