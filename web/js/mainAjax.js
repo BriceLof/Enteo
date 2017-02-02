@@ -818,22 +818,114 @@ function urlParam(name){
         var tels = document.getElementsByClassName('telephoneConso');
         for(var i=0;i<tels.length;i++) {
             var result = "";
-                var s = ""+tels[i].value;
+            var s = ""+tels[i].value;
             var t=0;
-                for (var j = 0;j<s.length;j++){
-                    if(t == 2){
-                        String.prototype.splice = function(idx, rem, str) {
-                            return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
-                        };
-                        s = s.splice(j, 0, " ");
-                        t = 0;
-                    }
-                    else {
-                        t++;
-                    }
+            for (var j = 0;j<s.length;j++){
+                if(t == 2){
+                    result+=" ";
+                    result+=s[j];
+                    t = 1;
                 }
-            tels[i].value = s;
+                else {
+                    result = result+s[j];
+                    t++;
+                }
+                console.log(t);
+            }
+            tels[i].value = result;
 
         }
+    }
+})();
+
+//la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
+(function(){
+    var element = document.getElementById('editBeneficiaire');
+    var enfant = element.getElementsByTagName('input');
+    for(var i=0;i<enfant.length;i++){
+        enfant[i].addEventListener('change',function () {
+            if(this.classList.contains('modified')){
+
+            }else{
+                this.className += ' modified';
+            }
+        });
+    }
+
+    var element2 = document.getElementById('ProjetBeneficiaire');
+    var enfant2 = element2.getElementsByTagName('input');
+    for(var j=0;j<enfant2.length;j++){
+        enfant2[j].addEventListener('click',function () {
+            for(var i=0;i<enfant.length;i++){
+                if(enfant[i].classList.contains('modified')){
+                    var test = false;
+                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
+                                        '<div class="modal-dialog">' +
+                                        '<div class="modal-content">' +
+                                        '<div class="modal-header">' +
+                                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3>' +
+                                        '</div>' +
+                                        '<div class="modal-body"><p>Des modifications ont été faites sur la fiche bénéficiaire</p><p>Voulez vous les enregistrer ?</p></div>' +
+                                        '<div class="modal-footer">' +
+                                        '<button class="btn" data-dismiss="modal" aria-hidden="true">Non</button>' +
+                                        '<button class="btn btn-danger" id="dataConfirmOK">Enregistrer</button>' +
+                                        '</div></div></div></div>');
+                    $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+                    $('#dataConfirmModal').modal({show:true});
+                    $('#dataConfirmOK').click(
+                        function () {
+                            window.document.forms["ficheBeneficiaireForm"].submit();
+                        }
+                    );
+                }
+
+            }
+        })
+    }
+})();
+
+//la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur le projet bénéficiaire
+(function(){
+    var element3 = document.getElementById('ProjetBeneficiaire');
+    var enfant3 = element3.getElementsByTagName('input');
+    for(var i=0;i<enfant3.length;i++){
+        enfant3[i].addEventListener('change',function () {
+            if(this.classList.contains('modified')){
+
+            }else{
+                this.className += ' modified';
+            }
+        });
+    }
+
+    var element4 = document.getElementById('editBeneficiaire');
+    var enfant4 = element4.getElementsByTagName('input');
+    for(var j=0;j<enfant4.length;j++){
+        enfant4[j].addEventListener('click',function () {
+            for(var i=0;i<enfant3.length;i++){
+                if(enfant3[i].classList.contains('modified')){
+                    var test = false;
+                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
+                        '<div class="modal-dialog">' +
+                        '<div class="modal-content">' +
+                        '<div class="modal-header">' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3>' +
+                        '</div>' +
+                        '<div class="modal-body"><p>Des modifications ont été faites sur le Projet bénéficiaire</p><p>Voulez vous les enregistrer ?</p></div>' +
+                        '<div class="modal-footer">' +
+                        '<button class="btn" data-dismiss="modal" aria-hidden="true">Non</button>' +
+                        '<button class="btn btn-danger" id="dataConfirmOK">Enregistrer</button>' +
+                        '</div></div></div></div>');
+                    $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+                    $('#dataConfirmModal').modal({show:true});
+                    $('#dataConfirmOK').click(
+                        function () {
+                            window.document.forms["projetEditForm"].submit();
+                        }
+                    );
+                }
+
+            }
+        })
     }
 })();

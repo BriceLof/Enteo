@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="sectionBeneficiaire">
-                    <div id="editBeneficiaire" class="tableOnglet">
+                    <div id="editBeneficiaire" class="tableOnglet" onblur="enregistrer(this)">
                         <table>
                             <caption class="titreSection"><a href="#collapseFicheBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseFicheBeneficiaire"><span class="glyphicon glyphicon-minus"></span><span>Fiche Bénéficiaire</span></a></caption>
                         </table>
@@ -105,9 +105,6 @@
                                                 <td>{{ form_widget(edit_form.ville.nom ) }}</td>
                                             </tr>
                                         {% endif %}
-                                        <tr>
-                                            <td>{{ form_errors(edit_form.ville.nom) }}</td>
-                                        </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.pays) }}</td>
                                             <td>{{ form_widget(edit_form.pays) }}</td>
