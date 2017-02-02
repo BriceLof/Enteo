@@ -142,7 +142,20 @@
                     <div class="table-responsive col-md-12" >
                         <button title="Ajouter une news" class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
                         <a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
-                        <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-info"  type="button" >Agenda</a>
+                        
+                        <!-- Lien Agenda uniquement si un consultant est rattaché au bénéficiaire -->
+                        {% if beneficiaire.consultant is not null %}
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                                {% set agendaUserId = beneficiaire.consultant.id %}
+                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                            {% else %}  
+                                {% set agendaUserId = app.user.id %}
+                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                            {% endif %}
+                          {% endif %}        
+                        
+            
+                        
                         <!--<img src="{{ asset("images/icon_calendar.jpg") }}" alt="Agenda" title="Agenda" width="31px" />-->
                         <br>
                         <table class="table table-bordered tab-benef" id="b{{ beneficiaire.id }}">

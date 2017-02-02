@@ -592,6 +592,13 @@ $("document").ready(function () {
 // ---------------------------------------------- //
 // ------------- Affichage pour Admin ----------- //
 // ---------------------------------------------- //
+
+/*
+// 1) Récupération de l'id du consultant dans l'url 
+consultantID = urlParam('consultantid')
+// 2) Choisir le l'option qui commencera par l'id consultant de l'url 
+$('#consultantC').children('option').find("[value")*/
+
 $('#consultantC').change(function(){
     emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
     if($('#consultantC').val() != ""){
@@ -776,3 +783,13 @@ function plusMoins(element) {
         document.getElementById("loading").style.width = "100%";
     }, true);
 })();
+
+
+function urlParam(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+        return null;
+    }else{
+        return results[1] || 0;
+    }	
+}

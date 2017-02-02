@@ -30,34 +30,39 @@ class AgendaController extends Controller
     }
 
     // Traitement des liens des calendriers de beneficiaires
-    public function agendasAction(Request $request){
-		switch(true){
-			case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
-				// remote
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
-					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-			break;
-			default:
-				// localhost
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
-					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-			break;
-		}
+    public function agendasAction(Request $request){        
+        switch(true){
+                case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
+                        // remote
+                        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
+                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+                break;
+                default:
+                        // localhost
+                        
+                        // Test si l'utilisateur n'a pas le role Admin il ne peut pas switcher sur l'agenda d'un autre consultant
+                        if(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+                        {
+                            if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
+                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
+                        }
+                break;
+        }
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if(empty($request->query->get('userid'))){
             // Recuperer tous les consultants (Pour Admin)
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT');
         }
         else{
-            // Recuperer le consultant
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
         }
+        
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
-            'form' => $form->createView()
+            'form' => $form->createView(), 
         ));
     }
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
