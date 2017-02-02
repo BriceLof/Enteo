@@ -30,7 +30,6 @@ class UsersType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       
         $builder
                 ->add('roles', ChoiceType::class, array(
                     'choices' => array(
@@ -99,7 +98,7 @@ class UsersType extends AbstractType
                     'expanded' => true,
                     'multiple' => false,
                     'data' => 0,
-                    'label_attr' => array('class' => 'format_label', 'style' => 'display:none;'),
+                    /*'label_attr' => array('class' => 'format_label', 'style' => 'display:none;'),*/
                     'choice_attr' => function($val, $key, $index) {
                        return ['class' => 'format_input'];
                     },
@@ -112,7 +111,9 @@ class UsersType extends AbstractType
                     'required' => true, 
                     'attr' => array("maxlength" => 2, "class" => "departementInputForAjax")
                 ))
-                ->add('codePostalHidden', HiddenType::class, array("mapped" => false));
+                ->add('codePostalHidden', HiddenType::class, array("mapped" => false))
+                ->add('typeUserHidden', HiddenType::class, array("mapped" => false))
+                ->add('idVilleHidden', HiddenType::class, array("mapped" => false));
                /* if(isset($options['data']))
                 {
                     //var_dump($options['data']);
