@@ -24,12 +24,12 @@
                         {% if beneficiaire.consultant is not null %}
                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
                                 {% set agendaUserId = beneficiaire.consultant.id %}
-                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
                             {% else %}  
                                 {% set agendaUserId = app.user.id %}
-                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
                             {% endif %}
-                          {% endif %}        
+                        {% endif %}         
                         
             
                         
@@ -162,12 +162,12 @@
                         {% if beneficiaire.consultant is not null %}
                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
                                 {% set agendaUserId = beneficiaire.consultant.id %}
-                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
                             {% else %}  
                                 {% set agendaUserId = app.user.id %}
-                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
                             {% endif %}
-                          {% endif %}        
+                        {% endif %}        
                         
             
                         

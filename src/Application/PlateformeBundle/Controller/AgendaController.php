@@ -57,12 +57,17 @@ class AgendaController extends Controller
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
         }
         
+        $beneficiaire = null;
+        if(!is_null($request->query->get('benef')))
+            $beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->query->get('benef'));
+        
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
-            'form' => $form->createView(), 
+            'form' => $form->createView(),
+            'beneficiaire' => $beneficiaire
         ));
     }
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
