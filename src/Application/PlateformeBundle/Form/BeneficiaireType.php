@@ -73,6 +73,7 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Tél ',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'telephoneConso'
                 )
             ))
 
@@ -81,6 +82,7 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'telephoneConso'
                 )
             ))
 
