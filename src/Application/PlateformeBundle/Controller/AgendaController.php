@@ -41,20 +41,23 @@ class AgendaController extends Controller
     }
 
     // Traitement des liens des calendriers de beneficiaires
-    public function agendasAction(Request $request){
-                $tabColor = ["#00FFFF", "#0000FF", "#FF00FF", "#808080", "#00FF00", "#800000", "#000080", "#808000", "#800080", "#FF0000", "#C0C0C0", "#008080", "#FFFF00"];
-		switch(true){
-			case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
-				// remote
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
-					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-			break;
-			default:
-				// localhost
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/teo/web/app_dev.php/agenda')
-					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-			break;
-		}
+    public function agendasAction(Request $request){    
+        $tabColor = ["#00FFFF", "#0000FF", "#FF00FF", "#808080", "#00FF00", "#800000", "#000080", "#808000", "#800080", "#FF0000", "#C0C0C0", "#008080", "#FFFF00"];
+        switch(true){
+                case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
+                        // remote
+                        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
+                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+                break;
+                default:
+                        // Test si l'utilisateur n'a pas le role Admin il ne peut pas switcher sur l'agenda d'un autre consultant
+                        if(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+                        {
+                            if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
+                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
+                        }
+                break;
+        }
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if(empty($request->query->get('userid'))){
             // Recuperer tous les consultants (Pour Admin)
@@ -62,7 +65,6 @@ class AgendaController extends Controller
             $cons = 1;
         }
         else{
-            // Recuperer le consultant
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
             $cons = 0;
         }

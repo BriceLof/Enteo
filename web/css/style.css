@@ -312,6 +312,11 @@
 #editBeneficiaire input:hover{
   border: 1px solid ;
 }
+
+#editBeneficiaire #inputVilleBeneficiaire > input{
+    border: none;
+}
+
 #editBeneficiaire select:hover{
     border: 1px solid ;
 }
