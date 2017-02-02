@@ -17,6 +17,7 @@
                 {# bloc Agenda pour Admin #}
                  <div class="row">
                         <div class="col-md-12">
+                            <div class="colorcalendar"></div>
                             <div class="blocconsultant">
                                 <span>Voir l'agenda du consultant: </span>
                                 <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
@@ -71,6 +72,7 @@
                                             <label>Bureau</label>
                                             <input name="bureauRdv" id="bureauRdv" class="form-control new_input" disabled="true">
                                             <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
+                                            <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect">
                                             <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                             <table style="width: 100%;" border="0">
                                                 <tr>
@@ -137,6 +139,7 @@
                    <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
                    <div class="row">
                        <div class="col-md-12">
+                           <div style="padding: 3px; background: {{couleurs}}"></div>
                            <div id="nomconsultant">
                                 <span class="nomconsultant">Agenda de </span>
                                 <span class="nomconsultant" style="color: #668cd9;">{{'Agenda de '~consultant.nom~' '~consultant.prenom}}</span>
@@ -181,6 +184,7 @@
                                           <label>Bureau</label>
                                           <input name="bureauRdv" id="bureauRdv" class="form-control new_input" disabled="true">
                                           <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
+                                          <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect">
                                           <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                           <table style="width: 100%;" border="0">
                                               <tr>

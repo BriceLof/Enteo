@@ -42,6 +42,7 @@ class AgendaController extends Controller
 
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){
+                $tabColor = ["#00FFFF", "#0000FF", "#FF00FF", "#808080", "#00FF00", "#800000", "#000080", "#808000", "#800080", "#FF0000", "#C0C0C0", "#008080", "#FFFF00"];
 		switch(true){
 			case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
 				// remote
@@ -50,7 +51,7 @@ class AgendaController extends Controller
 			break;
 			default:
 				// localhost
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
+				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/teo/web/app_dev.php/agenda')
 					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
 			break;
 		}
@@ -58,16 +59,43 @@ class AgendaController extends Controller
         if(empty($request->query->get('userid'))){
             // Recuperer tous les consultants (Pour Admin)
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT');
+            $cons = 1;
         }
         else{
             // Recuperer le consultant
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
+            $cons = 0;
         }
+        
+        // Definition de la couleur associé au calendrie
+        if(!empty($_SESSION['colorcalendar']) && $cons == 1){
+            $array_color_non_utilise = array_diff ($tabColor , $_SESSION['colorcalendar']);
+            
+            if(is_null($array_color_non_utilise)){
+                // On reinitialise la session
+                $array_color_utilise[] = $tabColor[0];
+                $color_a_utilise = $tabColor[0];
+                $_SESSION['colorcalendar'] = $array_color_utilise;
+            }
+            else{
+                $array_color_utilise[] = $array_color_non_utilise[0];
+                $color_a_utilise = $array_color_non_utilise[0];
+                $_SESSION['colorcalendar'] = $array_color_utilise;
+            }
+        } 
+        else{
+            // Initialisation de la session
+            $array_color_utilise[] = $tabColor[0];
+            $color_a_utilise = $tabColor[0];
+            $_SESSION['colorcalendar'] = $array_color_utilise;
+        }
+        
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
+            'couleurs' => $color_a_utilise,
             'form' => $form->createView()
         ));
     }
@@ -110,7 +138,7 @@ class AgendaController extends Controller
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
                     'prenom' => $request->request->get('prenombeneficiaire'),
-                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('bureauselect'):'',
+                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('namebureauselect'):'',
                     'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
                     'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
                     'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
@@ -157,8 +185,7 @@ class AgendaController extends Controller
             $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($_SESSION['benef']) : NULL;
             $_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
             // On recupere les rendez-vous du beneficiaire 
-            $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]+1, $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]+1, $hf[1], $hf[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s'), $benef);
-            
+            $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $benef);
             if(count($resultats) > 0){
                 // Erreur sur l'heure reservée
                 $this->get('session')->set('erreurs', true);
@@ -182,19 +209,15 @@ class AgendaController extends Controller
                     $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
                     $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
                 }
-                
-                // On recupere le user pour le stcker en BD
-                $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
-                $_SESSION['agenda'][1]->setConsultant($userbd); // le consultant
                 // On enregistre l'historique en BD
                 $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
                 $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
                 $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
                 $em->flush();
-                unset($_SESSION['agenda']);
                 $this->get('session')->set('erreurs', false);
             }
             // On supprime les sessions pour soulager le gc
+            unset($_SESSION['agenda']);
             $this->get('session')->remove('benef');
             $this->get('session')->remove('bureau');
             $this->get('session')->remove('agenda');

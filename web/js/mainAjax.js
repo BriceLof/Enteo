@@ -384,13 +384,20 @@ $("document").ready(function () {
     });*/
 
 
+    // ======================================================================= //
+    // ========== Masquer le message apres 5 secondes d'affichage ============ //
+    // ======================================================================= //
+    setTimeout(function(){
+        $('.msg-errors').css('display', 'none');
+    }, 2000);
    
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
     var urlautocompletion;
+    console.log(location.pathname);
     switch(true){
-        case (location.pathname == '/web/app_dev.php/agenda/evenements'):
+        case (location.pathname == '/teo/web/app_dev.php/agenda/evenements'):
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
             break;
         default:
@@ -428,6 +435,7 @@ $("document").ready(function () {
                                       $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
                                       $('.bureauselect').val(item.id); // bureau selectionner
+                                      $('.namebureauselect').val(item.nombureau); // bureau
                                       $("#villeh").val(item.nom); // ville
                                       $('#adresse').val(item.adresse); // adresse
                                       $('#adresseh').val(item.adresse); // adresse 
@@ -440,6 +448,7 @@ $("document").ready(function () {
                                       // on reinitialise tous les champs
                                       $('#dpttest').val(''); // departement
                                       $('#bureauRdv').val(); // bureau
+                                      $('.namebureauselect').val(); // bureau
                                       $('.bureauselect').val(-1); // bureau selectionner
                                       $("#villeh").val(); // ville
                                       $("#ville").val(); // ville
@@ -550,8 +559,12 @@ $("document").ready(function () {
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
+            // Heure debut
             if(j<7 || j>20){
                 selectheuresd[j].remove(); // heure debut
+            }
+            // Heure fin
+            if(j<8 || j>21){
                 selectheuresf[j].remove(); // heure fin
             }
         }
@@ -590,7 +603,6 @@ $("document").ready(function () {
     });
 });
 
-
 // ---------------------------------------------- //
 // ------------- Affichage pour Admin ----------- //
 // ---------------------------------------------- //
@@ -601,8 +613,12 @@ $('#consultantC').change(function(){
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
+            // Heure debut
             if(j<7 || j>20){
                 selectheuresd[j].remove(); // heure debut
+            }
+            // Heure fin
+            if(j<8 || j>21){
                 selectheuresf[j].remove(); // heure fin
             }
         }
