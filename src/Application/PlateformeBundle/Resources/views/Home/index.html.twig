@@ -55,7 +55,7 @@
                                 <tr>
                                     <td><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" id="{{ beneficiaire.id }}"><b>{{ beneficiaire.nomConso|capitalize }}</b></a></td>
                                     <td><b>{{ beneficiaire.prenomConso|capitalize }}</b></td>
-                                    <td>{{ beneficiaire.ville.nom|capitalize }}</td>
+                                    <td>{{ beneficiaire.villeMer.nom|capitalize }}</td>
                                     <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
                                     <!-- heure de la première news du bénéficiaire, cad l'heure de la confirmation de la mer à qq secondes près -->
                                     <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
@@ -193,7 +193,7 @@
                                 <tr>
                                     <td><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" id="{{ beneficiaire.id }}"><b>{{ beneficiaire.nomConso|capitalize }}</b></a></td>
                                     <td><b>{{ beneficiaire.prenomConso|capitalize }}</b></td>
-                                    <td>{{ beneficiaire.ville.nom|capitalize }}</td>
+                                    <td>{{ beneficiaire.villeMer.nom|capitalize }}</td>
                                     <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
                                     <!-- heure de la première news du bénéficiaire, cad l'heure de la confirmation de la mer à qq secondes près -->
                                     <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
