@@ -30,10 +30,10 @@ class Beneficiaire
     protected $ville;
     
      /**
-     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="beneficiaire")
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $bureau;
+    protected $villeMer;
     
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
@@ -1117,21 +1117,6 @@ class Beneficiaire
     {
         return $this->documents;
     }
-
-
-    
-
-    /**
-     * Set bureau
-     *
-     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
-     *
-     * @return Beneficiaire
-     */
-    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
-    {
-        $this->bureau = $bureau;
-    }
     
     /**
      * Set formationInitiale
@@ -1170,15 +1155,6 @@ class Beneficiaire
         return $this;
     }
 
-    /**
-     * Get bureau
-     *
-     * @return \Application\PlateformeBundle\Entity\Bureau
-     */
-    public function getBureau()
-    {
-        return $this->bureau;
-    }
     
     /**
      * Get numSecuCle
@@ -1188,5 +1164,29 @@ class Beneficiaire
     public function getNumSecuCle()
     {
         return $this->numSecuCle;
+    }
+
+    /**
+     * Set villeMer
+     *
+     * @param \Application\PlateformeBundle\Entity\Ville $villeMer
+     *
+     * @return Beneficiaire
+     */
+    public function setVilleMer(\Application\PlateformeBundle\Entity\Ville $villeMer = null)
+    {
+        $this->villeMer = $villeMer;
+
+        return $this;
+    }
+
+    /**
+     * Get villeMer
+     *
+     * @return \Application\PlateformeBundle\Entity\Ville
+     */
+    public function getVilleMer()
+    {
+        return $this->villeMer;
     }
 }
