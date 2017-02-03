@@ -276,6 +276,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tableOnglet" id="agenda_consultant_pour_beneficiaire">
+                        <table>
+                            <caption class="titreSection"><a  id="agendaCollapse" href="#collapseAgenda" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Consultant</span></a></caption>
+                        </table>
+                        <div id="collapseAgenda" class="collapse in">
+                            {% set agendaUserId = beneficiaire.consultant.id %}
+                            <a style="width:90px;" title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                        </div>
+                    </div>
     {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">
                             <table>
