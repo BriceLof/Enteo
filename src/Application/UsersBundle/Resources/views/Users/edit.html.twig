@@ -24,6 +24,11 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6">
+                    {{ form_label(form.roles) }}
+                    {{ form_errors(form.roles) }}
+                    {{ form_widget(form.roles) }}
+                </div>
+                <div class="col-md-6">
                     {{ form_label(form.email, "Email *") }}
                     {{ form_errors(form.email) }}
                     {{ form_widget(form.email) }}
@@ -76,12 +81,6 @@
                     {{ form_label(form.tel2) }}
                     {{ form_errors(form.tel2) }}
                     {{ form_widget(form.tel2) }}
-                </div>
-
-                <div class="col-md-6 block_form_role_user">
-                    {{ form_label(form.roles) }}
-                    {{ form_errors(form.roles) }}
-                    {{ form_widget(form.roles) }}
                 </div>
 
                 <div class="col-md-6 block_form_format_presence" >

@@ -28,7 +28,13 @@ class Beneficiaire
      * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
-
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $villeMer;
+    
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
      */
@@ -1111,7 +1117,7 @@ class Beneficiaire
     {
         return $this->documents;
     }
-
+    
     /**
      * Set formationInitiale
      *
@@ -1146,10 +1152,10 @@ class Beneficiaire
     public function setNumSecuCle($numSecuCle)
     {
         $this->numSecuCle = $numSecuCle;
-
         return $this;
     }
 
+    
     /**
      * Get numSecuCle
      *
@@ -1158,5 +1164,29 @@ class Beneficiaire
     public function getNumSecuCle()
     {
         return $this->numSecuCle;
+    }
+
+    /**
+     * Set villeMer
+     *
+     * @param \Application\PlateformeBundle\Entity\Ville $villeMer
+     *
+     * @return Beneficiaire
+     */
+    public function setVilleMer(\Application\PlateformeBundle\Entity\Ville $villeMer = null)
+    {
+        $this->villeMer = $villeMer;
+
+        return $this;
+    }
+
+    /**
+     * Get villeMer
+     *
+     * @return \Application\PlateformeBundle\Entity\Ville
+     */
+    public function getVilleMer()
+    {
+        return $this->villeMer;
     }
 }
