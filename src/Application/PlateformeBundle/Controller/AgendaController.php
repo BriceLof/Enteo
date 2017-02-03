@@ -78,7 +78,7 @@ class AgendaController extends Controller
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
-            'couleurs' => $tabColor[$array_color_non_utilise],
+            'couleurs' => (isset($array_color_non_utilise))? $tabColor[$array_color_non_utilise]: 0,
             'form' => $form->createView()
         ));
     }
