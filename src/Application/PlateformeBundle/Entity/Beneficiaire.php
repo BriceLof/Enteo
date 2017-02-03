@@ -28,7 +28,13 @@ class Beneficiaire
      * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
-
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="beneficiaire")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
+    
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
      */
@@ -1141,5 +1147,31 @@ class Beneficiaire
     public function getDocuments()
     {
         return $this->documents;
+    }
+
+    
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Beneficiaire
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
     }
 }
