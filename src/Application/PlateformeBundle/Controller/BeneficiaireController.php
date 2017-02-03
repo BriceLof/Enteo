@@ -207,7 +207,6 @@ class BeneficiaireController extends Controller
             $historique->setTypeRdv("");
             $historique->setBeneficiaire($beneficiaire);
             $historique->setDescription("Ajout/modification de consultant");
-            $historique->setConsultant($beneficiaire->getConsultant());
             $historique->setEventId("0");
 
             $em->persist($beneficiaire);

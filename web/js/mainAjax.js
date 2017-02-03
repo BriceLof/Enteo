@@ -401,6 +401,9 @@ $("document").ready(function () {
         case (location.pathname == '/teo/web/app_dev.php/agenda/evenements'):
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
             break;
+        case (location.pathname == '/teo/teo/web/app_dev.php/agenda/evenements'):
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
+            break;
         default:
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
             break;
@@ -500,6 +503,8 @@ $("document").ready(function () {
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       $('#historique_Enregistrer').removeAttr('disabled');
                                       $('#idbeneficiaire').val(item.id);
+                                      console.log('beneficiaire id: '+item.id);
+
                                       return item.nomConso;
                                   }
                                   else{

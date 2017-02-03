@@ -15,6 +15,7 @@ class AgendaController extends Controller
     // Autocompletion
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
+
         if($request->query->get('sentinel') == 1){
             $nomc = '%'.$request->query->get('term').'%';
             $idbenef = $request->query->get('id');

@@ -46,7 +46,7 @@
                             <span >{{historique.heureDebut|date('h:m')}}</span>
                         </td>
                         <td colspan=3>
-                            <span>{{ historique.description~" "~historique.consultant.prenom|capitalize~" "~historique.consultant.nom|capitalize }}</span>
+                            <span>{{ historique.description~" "~historique.beneficiaire.consultant.prenom|capitalize~" "~historique.beneficiaire.consultant.nom|capitalize }}</span>
                         </td>
                     </tr>
                 {% endif %}
