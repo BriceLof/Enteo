@@ -70,34 +70,15 @@ class AgendaController extends Controller
         }
         
         // Definition de la couleur associé au calendrie
-        if(!empty($_SESSION['colorcalendar']) && $cons == 1){
-            $array_color_non_utilise = array_diff ($tabColor , $_SESSION['colorcalendar']);
-            
-            if(is_null($array_color_non_utilise)){
-                // On reinitialise la session
-                $array_color_utilise[] = $tabColor[0];
-                $color_a_utilise = $tabColor[0];
-                $_SESSION['colorcalendar'] = $array_color_utilise;
-            }
-            else{
-                $array_color_utilise[] = $array_color_non_utilise[0];
-                $color_a_utilise = $array_color_non_utilise[0];
-                $_SESSION['colorcalendar'] = $array_color_utilise;
-            }
-        } 
-        else{
-            // Initialisation de la session
-            $array_color_utilise[] = $tabColor[0];
-            $color_a_utilise = $tabColor[0];
-            $_SESSION['colorcalendar'] = $array_color_utilise;
+        if($cons == 1){
+            $array_color_non_utilise = array_rand($tabColor,1); // Tirage d'une couleur
         }
-        
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
-            'couleurs' => $color_a_utilise,
+            'couleurs' => $tabColor[$array_color_non_utilise],
             'form' => $form->createView()
         ));
     }

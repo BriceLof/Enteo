@@ -223,11 +223,6 @@
 /**
  / =============== Parie Agenda ==================== /
 */
-.colorcalendar{
-    background: red;
-    padding:10px;
-}
-
 .msg-errors{
     padding-left: 42px;
     padding-right: 10px;

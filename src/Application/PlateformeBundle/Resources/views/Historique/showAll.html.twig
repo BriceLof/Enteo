@@ -19,7 +19,7 @@
                         <span >{{ historique.heureFin|date('h:m') }}</span>
                     </td>
                     <td style="border:none;">
-                        {% if historique.bureau is defined %}
+                        {% if historique.bureau is not null %}
                             <span>
                                {{ historique.bureau.nombureau }}
                             </span>
