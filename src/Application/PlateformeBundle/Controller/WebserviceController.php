@@ -40,8 +40,9 @@ class WebserviceController extends Controller
         $mer->setOrigineMer($request->query->get('origine_mer'));
         $em->persist($mer);
         
-        // Ville 
+        // Ville du bénéficiaire par défaut sur la ville du centre entheor 
         $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array("nom" => $mer->getVilleConso()));
+        
         /**
         if(is_null($ville))
         {
@@ -51,9 +52,11 @@ class WebserviceController extends Controller
             $em->persist($ville);
         }
         */
+       
         // Benéficiaire 
         $beneficiaire = new Beneficiaire;
         $beneficiaire->setVille($ville);
+        $beneficiaire->setVilleMer($ville);
         $beneficiaire->setStatut($mer->getStatut());
         $beneficiaire->setClientId($mer->getClientId());
         $beneficiaire->setCiviliteConso($mer->getCiviliteConso());
