@@ -170,6 +170,8 @@ class BeneficiaireController extends Controller
                 ->getQuery();
             $p = $q->execute();
 
+            $this->get('session')->getFlashBag()->add('info', 'Fiche Bénéficiaire modifié avec succès');
+
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
@@ -208,12 +210,13 @@ class BeneficiaireController extends Controller
             $historique->setSummary("");
             $historique->setTypeRdv("");
             $historique->setBeneficiaire($beneficiaire);
-            $historique->setDescription("Ajout/modification de consultant");
+            $historique->setDescription("Ajout/modification de consultant : ".ucfirst(strtolower($beneficiaire->getConsultant()->getPrenom()))." ".ucfirst(strtolower($beneficiaire->getConsultant()->getNom())));
             $historique->setEventId("0");
 
             $em->persist($beneficiaire);
             $em->persist($historique);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('info', 'Consultant modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
@@ -249,6 +252,7 @@ class BeneficiaireController extends Controller
             $beneficiaire = $projetForm->getData();
             $em->persist($beneficiaire);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('info', 'Projet bénéficiaire modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
