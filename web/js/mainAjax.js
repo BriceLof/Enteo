@@ -55,7 +55,7 @@ $("document").ready(function () {
         function(value, element, params) {
 
             if (!/Invalid|NaN/.test(new Date(value))) {
-                return new Date(value) > new Date($(params).val());
+                return new Date.parse(value) > new Date.parse($(params).val());
             }
 
             return isNaN(value) && isNaN($(params).val())
@@ -94,8 +94,6 @@ $("document").ready(function () {
             return this.optional(element) || regexp.test(value);
         },"ce numéro de sécurité sociale n'est pas valide"
     );
-
-
 
     jQuery.validator.addMethod(
         "dateBR",
@@ -150,7 +148,7 @@ $("document").ready(function () {
                 },
                 "accompagnement[dateFin]": {
                     "dateBR" : /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
-                    "greaterThan" : "accompagnement[dateDebut]"
+                    "greaterThan" : "#accompagnement[dateDebut]"
                 }
             },
             errorElement: 'div'
@@ -270,7 +268,10 @@ $("document").ready(function () {
                 },
                 "beneficiaire[numSecu]":{
                     "required": false,
-                    "numSecu": /^[12][0-9]{14}$/
+                    "numSecu": /^[12][0-9]{12}$/
+                },
+                "beneficiaire[numSecuCle]":{
+                    "required": false,
                 },
                 "beneficiaire[dateNaissance]":{
                     "required": false
@@ -384,13 +385,23 @@ $("document").ready(function () {
     });*/
 
 
+    // ======================================================================= //
+    // ========== Masquer le message apres 5 secondes d'affichage ============ //
+    // ======================================================================= //
+    setTimeout(function(){
+        $('.msg-errors').css('display', 'none');
+    }, 2000);
    
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
     var urlautocompletion;
+    console.log(location.pathname);
     switch(true){
-        case (location.pathname == '/web/app_dev.php/agenda/evenements'):
+        case (location.pathname == '/teo/web/app_dev.php/agenda/evenements'):
+            urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
+            break;
+        case (location.pathname == '/teo/teo/web/app_dev.php/agenda/evenements'):
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
             break;
         default:
@@ -405,7 +416,8 @@ $("document").ready(function () {
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2
+                    sentinel: 2,
+                    idb : $('#idbeneficiaire').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -427,6 +439,7 @@ $("document").ready(function () {
                                       $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
                                       $('.bureauselect').val(item.id); // bureau selectionner
+                                      $('.namebureauselect').val(item.nombureau); // bureau
                                       $("#villeh").val(item.nom); // ville
                                       $('#adresse').val(item.adresse); // adresse
                                       $('#adresseh').val(item.adresse); // adresse 
@@ -439,6 +452,7 @@ $("document").ready(function () {
                                       // on reinitialise tous les champs
                                       $('#dpttest').val(''); // departement
                                       $('#bureauRdv').val(); // bureau
+                                      $('.namebureauselect').val(); // bureau
                                       $('.bureauselect').val(-1); // bureau selectionner
                                       $("#villeh").val(); // ville
                                       $("#ville").val(); // ville
@@ -465,7 +479,8 @@ $("document").ready(function () {
                 url : urlautocompletion, // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
-                    sentinel: 1
+                    sentinel: 1,
+                    id: $('.consultantcalendrierid').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -488,6 +503,8 @@ $("document").ready(function () {
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       $('#historique_Enregistrer').removeAttr('disabled');
                                       $('#idbeneficiaire').val(item.id);
+                                      console.log('beneficiaire id: '+item.id);
+
                                       return item.nomConso;
                                   }
                                   else{
@@ -548,8 +565,12 @@ $("document").ready(function () {
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
+            // Heure debut
             if(j<7 || j>20){
                 selectheuresd[j].remove(); // heure debut
+            }
+            // Heure fin
+            if(j<8 || j>21){
                 selectheuresf[j].remove(); // heure fin
             }
         }
@@ -588,6 +609,12 @@ $("document").ready(function () {
     });
 });
 
+// Couleur Agenda pour Admin
+$('.colorcalendar').css({
+    'padding':'7px',
+    'margin-bottom':'10px',
+    'background':$('.color_agenda_admin').val()
+});
 
 // ---------------------------------------------- //
 // ------------- Affichage pour Admin ----------- //
@@ -599,8 +626,12 @@ $('#consultantC').change(function(){
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
+            // Heure debut
             if(j<7 || j>20){
                 selectheuresd[j].remove(); // heure debut
+            }
+            // Heure fin
+            if(j<8 || j>21){
                 selectheuresf[j].remove(); // heure fin
             }
         }
@@ -610,6 +641,7 @@ $('#consultantC').change(function(){
         idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+        $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du nom du consultant
         $('.nameconsultant').text($('#consultantC option:selected').text());
@@ -818,22 +850,114 @@ function urlParam(name){
         var tels = document.getElementsByClassName('telephoneConso');
         for(var i=0;i<tels.length;i++) {
             var result = "";
-                var s = ""+tels[i].value;
+            var s = ""+tels[i].value;
             var t=0;
-                for (var j = 0;j<s.length;j++){
-                    if(t == 2){
-                        String.prototype.splice = function(idx, rem, str) {
-                            return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
-                        };
-                        s = s.splice(j, 0, " ");
-                        t = 0;
-                    }
-                    else {
-                        t++;
-                    }
+            for (var j = 0;j<s.length;j++){
+                if(t == 2){
+                    result+=" ";
+                    result+=s[j];
+                    t = 1;
                 }
-            tels[i].value = s;
+                else {
+                    result = result+s[j];
+                    t++;
+                }
+                console.log(t);
+            }
+            tels[i].value = result;
 
         }
+    }
+})();
+
+//la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
+(function(){
+    var element = document.getElementById('editBeneficiaire');
+    var enfant = element.getElementsByTagName('input');
+    for(var i=0;i<enfant.length;i++){
+        enfant[i].addEventListener('change',function () {
+            if(this.classList.contains('modified')){
+
+            }else{
+                this.className += ' modified';
+            }
+        });
+    }
+
+    var element2 = document.getElementById('ProjetBeneficiaire');
+    var enfant2 = element2.getElementsByTagName('input');
+    for(var j=0;j<enfant2.length;j++){
+        enfant2[j].addEventListener('click',function () {
+            for(var i=0;i<enfant.length;i++){
+                if(enfant[i].classList.contains('modified')){
+                    var test = false;
+                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
+                                        '<div class="modal-dialog">' +
+                                        '<div class="modal-content">' +
+                                        '<div class="modal-header">' +
+                                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3>' +
+                                        '</div>' +
+                                        '<div class="modal-body"><p>Des modifications ont été faites sur la fiche bénéficiaire</p><p>Voulez vous les enregistrer ?</p></div>' +
+                                        '<div class="modal-footer">' +
+                                        '<button class="btn" data-dismiss="modal" aria-hidden="true">Non</button>' +
+                                        '<button class="btn btn-danger" id="dataConfirmOK">Enregistrer</button>' +
+                                        '</div></div></div></div>');
+                    $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+                    $('#dataConfirmModal').modal({show:true});
+                    $('#dataConfirmOK').click(
+                        function () {
+                            window.document.forms["ficheBeneficiaireForm"].submit();
+                        }
+                    );
+                }
+
+            }
+        })
+    }
+})();
+
+//la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur le projet bénéficiaire
+(function(){
+    var element3 = document.getElementById('ProjetBeneficiaire');
+    var enfant3 = element3.getElementsByTagName('input');
+    for(var i=0;i<enfant3.length;i++){
+        enfant3[i].addEventListener('change',function () {
+            if(this.classList.contains('modified')){
+
+            }else{
+                this.className += ' modified';
+            }
+        });
+    }
+
+    var element4 = document.getElementById('editBeneficiaire');
+    var enfant4 = element4.getElementsByTagName('input');
+    for(var j=0;j<enfant4.length;j++){
+        enfant4[j].addEventListener('click',function () {
+            for(var i=0;i<enfant3.length;i++){
+                if(enfant3[i].classList.contains('modified')){
+                    var test = false;
+                    $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
+                        '<div class="modal-dialog">' +
+                        '<div class="modal-content">' +
+                        '<div class="modal-header">' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de confirmer</h3>' +
+                        '</div>' +
+                        '<div class="modal-body"><p>Des modifications ont été faites sur le Projet bénéficiaire</p><p>Voulez vous les enregistrer ?</p></div>' +
+                        '<div class="modal-footer">' +
+                        '<button class="btn" data-dismiss="modal" aria-hidden="true">Non</button>' +
+                        '<button class="btn btn-danger" id="dataConfirmOK">Enregistrer</button>' +
+                        '</div></div></div></div>');
+                    $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+                    $('#dataConfirmModal').modal({show:true});
+                    $('#dataConfirmOK').click(
+                        function () {
+                            window.document.forms["projetEditForm"].submit();
+                        }
+                    );
+                }
+
+            }
+        })
     }
 })();

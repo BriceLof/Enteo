@@ -82,9 +82,11 @@ and open the template in the editor.
     font-size:19px;
     color:#d9534f;
 }
+/*
 label{
     margin-top:10px;
 }
+*/
 .block_info_chargement, label{
   display:inline-block;  
 }

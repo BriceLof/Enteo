@@ -27,20 +27,15 @@
 {% endif %}
 {% if beneficiaire.consultant is not null %}
         <tr>
-            <td>Consulant :</td>
-            <td id="nomPrenomConsultant">{{ beneficiaire.consultant.prenom~" "~beneficiaire.consultant.nom|capitalize }}</td>
-        </tr>
-        <tr>
-            <td><button type="button" data-toggle="modal" data-target="#myModal">Modifier le consultant</button></td>
+            <td id="labelConsultant">Consulant :</td>
+            <td id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span></td>
         </tr>
 {% else %}
         <tr>
-            <td>Consulant :</td>
-            <td>Pas encore de consultant assigné</td>
+            <td id="labelConsultant">Consulant :</td>
+            <td><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span></td>
         </tr>
-        <tr>
-            <td><button type="button" data-toggle="modal" data-target="#myModal">Ajouter un consultant</button></td>
-        </tr>
+
 {% endif %}
         <div id="formulaireConsultant"></div>
         <tr>
