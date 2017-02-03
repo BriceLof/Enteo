@@ -385,13 +385,20 @@ $("document").ready(function () {
     });*/
 
 
+    // ======================================================================= //
+    // ========== Masquer le message apres 5 secondes d'affichage ============ //
+    // ======================================================================= //
+    setTimeout(function(){
+        $('.msg-errors').css('display', 'none');
+    }, 2000);
    
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
     var urlautocompletion;
+    console.log(location.pathname);
     switch(true){
-        case (location.pathname == '/web/app_dev.php/agenda/evenements'):
+        case (location.pathname == '/teo/web/app_dev.php/agenda/evenements'):
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
             break;
         default:
@@ -406,7 +413,8 @@ $("document").ready(function () {
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2
+                    sentinel: 2,
+                    idb : $('#idbeneficiaire').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -428,6 +436,7 @@ $("document").ready(function () {
                                       $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
                                       $('.bureauselect').val(item.id); // bureau selectionner
+                                      $('.namebureauselect').val(item.nombureau); // bureau
                                       $("#villeh").val(item.nom); // ville
                                       $('#adresse').val(item.adresse); // adresse
                                       $('#adresseh').val(item.adresse); // adresse 
@@ -440,6 +449,7 @@ $("document").ready(function () {
                                       // on reinitialise tous les champs
                                       $('#dpttest').val(''); // departement
                                       $('#bureauRdv').val(); // bureau
+                                      $('.namebureauselect').val(); // bureau
                                       $('.bureauselect').val(-1); // bureau selectionner
                                       $("#villeh").val(); // ville
                                       $("#ville").val(); // ville
@@ -466,7 +476,8 @@ $("document").ready(function () {
                 url : urlautocompletion, // on appelle le script JSON
                 data : {
                     term : $('#nomb').val(),
-                    sentinel: 1
+                    sentinel: 1,
+                    id: $('.consultantcalendrierid').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -549,8 +560,12 @@ $("document").ready(function () {
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
+            // Heure debut
             if(j<7 || j>20){
                 selectheuresd[j].remove(); // heure debut
+            }
+            // Heure fin
+            if(j<8 || j>21){
                 selectheuresf[j].remove(); // heure fin
             }
         }
@@ -589,6 +604,12 @@ $("document").ready(function () {
     });
 });
 
+// Couleur Agenda pour Admin
+$('.colorcalendar').css({
+    'padding':'7px',
+    'margin-bottom':'10px',
+    'background':$('.color_agenda_admin').val()
+});
 
 // ---------------------------------------------- //
 // ------------- Affichage pour Admin ----------- //
@@ -600,8 +621,12 @@ $('#consultantC').change(function(){
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
+            // Heure debut
             if(j<7 || j>20){
                 selectheuresd[j].remove(); // heure debut
+            }
+            // Heure fin
+            if(j<8 || j>21){
                 selectheuresf[j].remove(); // heure fin
             }
         }
@@ -611,6 +636,7 @@ $('#consultantC').change(function(){
         idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+        $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du nom du consultant
         $('.nameconsultant').text($('#consultantC option:selected').text());

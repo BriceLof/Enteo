@@ -18,6 +18,8 @@
             {# bloc Agenda pour Admin #}
             <div class="row">
                 <div class="col-md-12">
+                    <input type="hidden" class="color_agenda_admin" value="{{couleurs}}">
+                    <div class="colorcalendar"></div>
                     <div class="blocconsultant">
                         <span>Voir l'agenda du consultant: </span>
                         <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
@@ -26,6 +28,7 @@
                                 <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
                             {% endfor %}
                         </select>
+                        <input type="hidden" class="consultantcalendrierid">
                     </div>
                     <div id="nomconsultant">
                         <span class="nomconsultant">Agenda du consultant </span>
@@ -71,6 +74,7 @@
                                     <label>Bureau</label>
                                     <input name="bureauRdv" id="bureauRdv" class="form-control new_input" disabled="true">
                                     <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
+                                    <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect">
                                     <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                     <table style="width: 100%;" border="0">
                                         <tr>
@@ -134,7 +138,7 @@
         {% elseif is_granted('ROLE_CONSULTANT') or (is_granted('ROLE_ADMIN') and app.request.query.get('userid')is not null) %}
             {# bloc Agenda pour consultant ou pour les admin qui vont dans l'agenda d'un consultant mais via la fiche bénéficiaire ou le bouton aganda lié au bénéficiaire sur le tableau en home#}
             <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
-            
+            <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
             {# Dans le cas où l'admin à pris l'agenda d'un bénéficiaire sur la home ou sur la fiche bénéficiaire #}
             {% if is_granted("ROLE_ADMIN") %}
                 <div class="row">
@@ -162,14 +166,25 @@
                                         <th><label>Nom beneficiare</label></th>
                                         <th><label>Prenom beneficiare</label></th>
                                     </tr>
+                                    
                                     <tr>
-                                        <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required></td>
-                                        <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required></td>
+                                        {% if beneficiaire is not null %}
+                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required  disabled value="{{ beneficiaire.nomConso }}"></td>
+                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required disabled value="{{ beneficiaire.prenomConso }}"></td>
+                                        {% else %}
+                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required ></td>
+                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required></td>
+                                        {% endif %} 
                                     </tr>
                                     <tr>
                                         <td colspan=2>
-                                            <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
-                                            <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
+                                            {% if beneficiaire is not null %}
+                                                <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required value="{{ beneficiaire.prenomConso }}">
+                                                <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="{{ beneficiaire.id }}" class="form-control new_input">
+                                            {% else %}
+                                                <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+                                                <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
+                                            {% endif %} 
                                         </td>
                                     </tr>
                                 </table>
@@ -185,6 +200,7 @@
                                     <label>Bureau</label>
                                     <input name="bureauRdv" id="bureauRdv" class="form-control new_input" disabled="true">
                                     <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
+                                    <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect">
                                     <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
                                     <table style="width: 100%;" border="0">
                                         <tr>
@@ -247,3 +263,4 @@
         {% endif %}
     </div>
 {% endblock %}
+

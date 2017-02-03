@@ -67,10 +67,10 @@ class BeneficiaireController extends Controller
                 $donnes[] = 'page beneficiaire';
                 $_SESSION['firstpast'] = $donnes;
                 // Données pour Google calendar
-                $_SESSION['calendrierId'] = $histo_beneficiaire[0]->getConsultant()->getCalendrierid(); // id du calendrier
+                $_SESSION['calendrierId'] = $beneficiaire->getConsultant()->getCalendrierid(); // id du calendrier
                 // On stocke l'id du user pour la personnalisation du fichier credentials
                 // dans google calendar qui permet la connexion à l'agenda du consultant
-                $_SESSION['useridcredencial'] = $histo_beneficiaire[0]->getConsultant()->getId();
+                $_SESSION['useridcredencial'] = $beneficiaire->getConsultant()->getId();
                 // Appel du service google calendar
                 $googleCalendar = $this->get('application_google_calendar');
                 $googleCalendar->setRedirectUri($redirectUri);
