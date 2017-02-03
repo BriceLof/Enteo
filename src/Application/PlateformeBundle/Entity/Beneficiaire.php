@@ -111,11 +111,19 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="num_secu", type="string", length=255, nullable=true)
-     * @Assert\Regex("#^[12][0-9]{14}$#",
+     * @Assert\Regex("#^[12][0-9]{12}$#",
      *     message = "le numéro de Sécurité sociale est invalide"
      * )
      */
     private $numSecu;
+
+    /**
+     * @ORM\Column(name="num_secu_cle", type="string", length=10, nullable=true)
+     * @Assert\Regex("#^[0-9]{2}$#",
+     *     message = "veuillez verifier la clé"
+     * )
+     */
+    private $numSecuCle;
 
     /**
      * @ORM\Column(name="date_naissance", type="date", nullable=true)
@@ -136,7 +144,6 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="heure_dif", type="integer", nullable=true)
-     * @Assert\Type("integer")
      */
     private $heureDif;
 
@@ -218,6 +225,11 @@ class Beneficiaire
      * @ORM\Column(name="diplome_vise", type="string", length=255)
      */
     private $diplomeVise;
+
+    /**
+     * @ORM\Column(name="formation_initiale", type="string", length=255, nullable=true)
+     */
+    private $formationInitiale;
 
     /**
      * @ORM\Column(name="origine_mer", type="string", length=255)
@@ -1141,5 +1153,53 @@ class Beneficiaire
     public function getDocuments()
     {
         return $this->documents;
+    }
+
+    /**
+     * Set formationInitiale
+     *
+     * @param string $formationInitiale
+     *
+     * @return Beneficiaire
+     */
+    public function setFormationInitiale($formationInitiale)
+    {
+        $this->formationInitiale = $formationInitiale;
+
+        return $this;
+    }
+
+    /**
+     * Get formationInitiale
+     *
+     * @return string
+     */
+    public function getFormationInitiale()
+    {
+        return $this->formationInitiale;
+    }
+
+    /**
+     * Set numSecuCle
+     *
+     * @param string $numSecuCle
+     *
+     * @return Beneficiaire
+     */
+    public function setNumSecuCle($numSecuCle)
+    {
+        $this->numSecuCle = $numSecuCle;
+
+        return $this;
+    }
+
+    /**
+     * Get numSecuCle
+     *
+     * @return string
+     */
+    public function getNumSecuCle()
+    {
+        return $this->numSecuCle;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
 use Application\PlateformeBundle\Form\ConsultantType;
@@ -145,6 +146,7 @@ class BeneficiaireController extends Controller
                 ->set('u.dateNaissance', '?14')
                 ->set('u.adresse', '?15')
                 ->set('u.adresseComplement', '?16')
+                ->set('u.numSecuCle', '?17')
                 ->where('u.id = ?2')
                 ->setParameter(1, $ville)
                 ->setParameter(2, $id)
@@ -162,6 +164,7 @@ class BeneficiaireController extends Controller
                 ->setParameter(14, $beneficiaire->getDateNaissance())
                 ->setParameter(15, $beneficiaire->getAdresse())
                 ->setParameter(16, $beneficiaire->getAdresseComplement())
+                ->setParameter(17, $beneficiaire->getNumSecuCle())
                 ->getQuery();
             $p = $q->execute();
 
@@ -195,7 +198,20 @@ class BeneficiaireController extends Controller
 
         if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
             $beneficiaire = $editConsultantForm->getData();
+
+            //enregistrement de l'ajout ou modification de consultant dans le
+            $historique = new Historique();
+            $historique->setHeuredebut(new \DateTime('now'));
+            $historique->setHeurefin(new \DateTime('now'));
+            $historique->setSummary("");
+            $historique->setTypeRdv("");
+            $historique->setBeneficiaire($beneficiaire);
+            $historique->setDescription("Ajout/modification de consultant");
+            $historique->setConsultant($beneficiaire->getConsultant());
+            $historique->setEventId("0");
+
             $em->persist($beneficiaire);
+            $em->persist($historique);
             $em->flush();
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),

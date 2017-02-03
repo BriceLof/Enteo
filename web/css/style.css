@@ -144,7 +144,7 @@
 .tableOnglet{
     width: 100%;
     border: 1px solid rgba(232, 227, 227, 0.59);
-    margin-bottom: 10%;
+    margin-bottom: 4%;
     background-color: rgba(228, 228, 228, 0.45);
 }
 
@@ -161,6 +161,13 @@
     width: 100%;
 }
 
+#beneficiaire_numSecu{
+    width:125px;
+}
+
+#beneficiaire_numSecuCle{
+    width: 50px;
+}
 
 .titreSection{
     margin-bottom: 10px;

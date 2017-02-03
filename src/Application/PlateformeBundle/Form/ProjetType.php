@@ -46,6 +46,13 @@ class ProjetType extends AbstractType
                     'placeholder' => '',
                 )
             ))
+            ->add('formationInitiale', TextType::class, array(
+                'label' => 'Formation Initiale :',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => '',
+                )
+            ))
             ->add('diplomeVise', TextType::class, array(
                 'label' => 'Diplôme visé :',
                 'required' => false,

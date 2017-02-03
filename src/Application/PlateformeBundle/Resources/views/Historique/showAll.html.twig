@@ -8,37 +8,52 @@
               <th style="border:none;">Type Rdv</th>
            </tr>
            {% for historique in historiques %}
-                <tr>
-                    <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
-                       {{historique.dateDebut|date('d/m/Y')}}
-                    </td>    
-                    <td style="border:none;">
-                        <span >{{historique.heureDebut|date('h:m')}}</span>
-                    </td>
-                    <td style="border:none;">
-                        <span >{{ historique.heureFin|date('h:m') }}</span>
-                    </td>
-                    <td style="border:none;">
-                        {% if historique.bureau is defined %}
-                            <span>
-                               {{ historique.bureau.nombureau }}
-                            </span>
-                        {% else %}
-                            <span>-</span>
-                        {% endif %}
-                    </td>
-                    <td style="border:none;">
-                        {% if historique.bureau is defined %}
-                            <span> {{historique.typerdv}} </span>
-                        {% else %}
-                            <span>{{historique.typerdv}}</span>
-                        {% endif %}
-                    </td>
-                </tr>
+                {% if historique.eventId != 0 %}
+                    <tr>
+                        <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
+                           {{historique.dateDebut|date('d/m/Y')}}
+                        </td>
+                        <td style="border:none;">
+                            <span >{{historique.heureDebut|date('h:m')}}</span>
+                        </td>
+                        <td style="border:none;">
+                            <span >{{ historique.heureFin|date('h:m') }}</span>
+                        </td>
+                        <td style="border:none;">
+                            {% if historique.bureau is defined %}
+                                <span>
+                                   {{ historique.bureau.nombureau }}
+                                </span>
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </td>
+                        <td style="border:none;">
+                            {% if historique.bureau is defined %}
+                                <span> {{historique.typerdv}} </span>
+                            {% else %}
+                                <span>{{historique.typerdv}}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% else %}
+                    <tr>
+                        <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
+                            {{historique.dateDebut|date('d/m/Y')}}
+                        </td>
+                        <td style="border:none;">
+                            <span >{{historique.heureDebut|date('h:m')}}</span>
+                        </td>
+                        <td colspan=3>
+                            <span>{{ historique.description~" "~historique.consultant.prenom|capitalize~" "~historique.consultant.nom|capitalize }}</span>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
      </table>
 {% else %}
-    <span style="margin-left: 6px;">Aucun rendez-vous</span>
+    <span style="margin-left: 6px;">Aucun historique</span>
 {% endif %}
 
 

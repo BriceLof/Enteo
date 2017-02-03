@@ -95,8 +95,6 @@ $("document").ready(function () {
         },"ce numéro de sécurité sociale n'est pas valide"
     );
 
-
-
     jQuery.validator.addMethod(
         "dateBR",
         function(value, element, regexp) {
@@ -270,7 +268,10 @@ $("document").ready(function () {
                 },
                 "beneficiaire[numSecu]":{
                     "required": false,
-                    "numSecu": /^[12][0-9]{14}$/
+                    "numSecu": /^[12][0-9]{12}$/
+                },
+                "beneficiaire[numSecuCle]":{
+                    "required": false,
                 },
                 "beneficiaire[dateNaissance]":{
                     "required": false
