@@ -30,7 +30,7 @@ class HistoriqueType extends AbstractType
                 'label' => 'Date', 
                 'attr' => array('class' => 'datedebut')
             ))
-			->add('dateFin', DateType::class, array(
+            ->add('dateFin', DateType::class, array(
                 'attr' => array('class' => 'datefin')))
             ->add('heureDebut', TimeType::class, array(
                 'label' => 'Heure Debut',

@@ -171,37 +171,50 @@ class AgendaController extends Controller
             // On recupere le beneficiaire
             $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($_SESSION['benef']) : NULL;
             $_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
-            // On recupere les rendez-vous du beneficiaire 
-            $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $benef);
-            if(count($resultats) > 0){
-                // Erreur sur l'heure reservée
-                $this->get('session')->set('erreurs', true);
+            
+            // ===================================================================== //
+            // ===== Verifier que les heures selectionnées ne sont pas passées ===== //
+            // ===================================================================== //
+            $dateCourant = new \DateTime('now');
+            if($dateCourant >= $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])){
+                // Affiché l'erreur dans agendas.html.twig
+                $this->get('session')->set('errorsdate', true);
+                $this->get('session')->set('heuredate', $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])->format('d-m-Y H:i:s'));
             }
             else{
-                $eventInsert = $googleCalendar->addEvent(
-                    $_SESSION['calendrierId'],
-                    $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                    $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
-                    $summary,
-                    $_SESSION['agenda'][1]->getDescription(),
-                    $eventAttendee = "",
-                    $location = $lieu,
-                    $optionalParams = [],
-                    $allDay = false
-                );
-                // On recupere l'id de l'evenement ajouté
-                $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
-                // On recupère le Bureau
-                if(!empty($_SESSION['bureau'])){
-                    $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
-                    $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
+                $this->get('session')->set('errorsdate', false);
+                // On recupere les rendez-vous du beneficiaire 
+                $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $benef);
+                if(count($resultats) > 0){
+                    // Erreur sur l'heure reservée
+                    $this->get('session')->set('erreurs', true);
                 }
-                // On enregistre l'historique en BD
-                $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
-                $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
-                $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
-                $em->flush();
-                $this->get('session')->set('erreurs', false);
+                else{
+                    $eventInsert = $googleCalendar->addEvent(
+                        $_SESSION['calendrierId'],
+                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
+                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
+                        $summary,
+                        $_SESSION['agenda'][1]->getDescription(),
+                        $eventAttendee = "",
+                        $location = $lieu,
+                        $optionalParams = [],
+                        $allDay = false
+                    );
+                    // On recupere l'id de l'evenement ajouté
+                    $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+                    // On recupère le Bureau
+                    if(!empty($_SESSION['bureau'])){
+                        $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
+                        $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
+                    }
+                    // On enregistre l'historique en BD
+                    $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
+                    $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
+                    $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
+                    $em->flush();
+                    $this->get('session')->set('erreurs', false);
+                }
             }
             // On supprime les sessions pour soulager le gc
             unset($_SESSION['agenda']);
