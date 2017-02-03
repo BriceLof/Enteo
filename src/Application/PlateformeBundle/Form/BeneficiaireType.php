@@ -155,8 +155,10 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Date de Naissance ',
                 'widget' => 'single_text',
                 'required' => false,
+                'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'date'
                 )
             ))
 
