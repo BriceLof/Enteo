@@ -28,6 +28,7 @@
                                 <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
                             {% endfor %}
                         </select>
+                        <input type="hidden" class="consultantcalendrierid">
                     </div>
                     <div id="nomconsultant">
                         <span class="nomconsultant">Agenda du consultant </span>
@@ -137,7 +138,7 @@
         {% elseif is_granted('ROLE_CONSULTANT') or (is_granted('ROLE_ADMIN') and app.request.query.get('userid')is not null) %}
             {# bloc Agenda pour consultant ou pour les admin qui vont dans l'agenda d'un consultant mais via la fiche bénéficiaire ou le bouton aganda lié au bénéficiaire sur le tableau en home#}
             <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
-            
+            <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
             {# Dans le cas où l'admin à pris l'agenda d'un bénéficiaire sur la home ou sur la fiche bénéficiaire #}
             {% if is_granted("ROLE_ADMIN") %}
                 <div class="row">

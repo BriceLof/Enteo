@@ -604,7 +604,6 @@ $("document").ready(function () {
 });
 
 // Couleur Agenda pour Admin
-console.log('*********** '+$('.color_agenda_admin').val());
 $('.colorcalendar').css({
     'padding':'7px',
     'margin-bottom':'10px',
