@@ -42,7 +42,7 @@ class AccompagnementController extends Controller
             $beneficiaire->setAccompagnement($accompagnement);
             $em->persist($beneficiaire);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('info', 'Accompagnement bien enregistré');
+            $this->get('session')->getFlashBag()->add('info', 'Accompagnement modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                 'beneficiaire' => $beneficiaire,
                 'id' => $beneficiaire->getId(),
