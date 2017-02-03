@@ -68,18 +68,22 @@ class AgendaController extends Controller
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
             $cons = 0;
         }
-        
         // Definition de la couleur associé au calendrie
         if($cons == 1){
             $array_color_non_utilise = array_rand($tabColor,1); // Tirage d'une couleur
         }
+        $beneficiaire = null;
+        if(!is_null($request->query->get('benef')))
+            $beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->query->get('benef'));
+        
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
             'couleurs' => (isset($array_color_non_utilise))? $tabColor[$array_color_non_utilise]: 0,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'beneficiaire' => $beneficiaire
         ));
     }
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant

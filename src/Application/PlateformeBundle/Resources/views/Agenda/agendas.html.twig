@@ -165,14 +165,25 @@
                                         <th><label>Nom beneficiare</label></th>
                                         <th><label>Prenom beneficiare</label></th>
                                     </tr>
+                                    
                                     <tr>
-                                        <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required></td>
-                                        <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required></td>
+                                        {% if beneficiaire is not null %}
+                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required  disabled value="{{ beneficiaire.nomConso }}"></td>
+                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required disabled value="{{ beneficiaire.prenomConso }}"></td>
+                                        {% else %}
+                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required ></td>
+                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required></td>
+                                        {% endif %} 
                                     </tr>
                                     <tr>
                                         <td colspan=2>
-                                            <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
-                                            <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
+                                            {% if beneficiaire is not null %}
+                                                <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required value="{{ beneficiaire.prenomConso }}">
+                                                <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="{{ beneficiaire.id }}" class="form-control new_input">
+                                            {% else %}
+                                                <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+                                                <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
+                                            {% endif %} 
                                         </td>
                                     </tr>
                                 </table>
