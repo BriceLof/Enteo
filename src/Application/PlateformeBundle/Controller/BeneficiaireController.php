@@ -110,7 +110,9 @@ class BeneficiaireController extends Controller
         }
         
         if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
+        
+        $authorization = $this->get('security.authorization_checker');
+        if (true === $authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
             throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
         }

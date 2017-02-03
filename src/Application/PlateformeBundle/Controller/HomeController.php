@@ -17,9 +17,6 @@ class HomeController extends Controller
     {
         $session = new Session();
  
-        
-       
-                
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
@@ -35,7 +32,8 @@ class HomeController extends Controller
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');
         
         // ADMIN et autres 
-        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+        $authorization = $this->get('security.authorization_checker');
+        if($authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL')){
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
            //var_dump($beneficiaires);
         }
