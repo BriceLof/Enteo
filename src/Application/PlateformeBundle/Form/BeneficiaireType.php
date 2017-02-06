@@ -26,6 +26,7 @@ class BeneficiaireType extends AbstractType
                 'format' => 'dd/MM/yy à hh:mm:ss',
                  'attr' => array(
                      'placeholder' => '',
+                     'class' => 'fiche'
                 )
             ))
 
@@ -33,6 +34,7 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Civilité ',
                  'attr' => array(
                     'placeholder' => '',
+                     'class' => 'fiche'
                 )
             ))
 
@@ -40,6 +42,7 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Nom ',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -47,6 +50,7 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Prénom ',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -55,6 +59,7 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -66,6 +71,10 @@ class BeneficiaireType extends AbstractType
                     '...' => '',
                     'oui' => 'oui',
                     'non' => 'non',
+                ),
+                'attr' => array(
+                    'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -74,7 +83,7 @@ class BeneficiaireType extends AbstractType
                 'attr' => array(
                     'maxlength' => 14,
                     'placeholder' => '',
-                    'class' => 'telephoneConso'
+                    'class' => 'telephoneConso fiche'
                 )
             ))
 
@@ -84,7 +93,7 @@ class BeneficiaireType extends AbstractType
                 'attr' => array(
                     'maxlength' => 14,
                     'placeholder' => '',
-                    'class' => 'telephoneConso'
+                    'class' => 'telephoneConso fiche'
                 )
             ))
 
@@ -93,6 +102,7 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -108,6 +118,7 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -116,6 +127,7 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -123,6 +135,9 @@ class BeneficiaireType extends AbstractType
                 'label' => '',
                 'required' => false,
                 'by_reference' => true,
+                'attr' => array(
+                    'class' => 'fiche'
+                )
             ))
 
             ->add('pays', TextType::class, array(
@@ -130,6 +145,7 @@ class BeneficiaireType extends AbstractType
                 'data' => 'FRANCE',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -139,6 +155,7 @@ class BeneficiaireType extends AbstractType
                 'attr' => array(
                     'maxlength' => 13,
                     'placeholder' => '13 chiffres',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -148,6 +165,7 @@ class BeneficiaireType extends AbstractType
                     'attr' => array(
                         'maxlength' => 2,
                         'placeholder' => 'clé',
+                        'class' => 'fiche'
                     )
             ))
 
@@ -158,7 +176,7 @@ class BeneficiaireType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'placeholder' => '',
-                    'class' => 'date'
+                    'class' => 'date fiche'
                 )
             ))
 
