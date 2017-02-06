@@ -35,6 +35,27 @@ $("document").ready(function () {
     $( function() {
         $("form input.date").datepicker({
             dateFormat: 'dd/mm/yy',
+            yearRange: '1940:2016',
+            firstDay:1,
+            changeMonth: true,
+            changeYear: true,
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.'
+        });
+    });
+
+    $( function() {
+        $(".accompagnementDate").datepicker({
+            dateFormat: 'dd/mm/yy',
+            yearRange: '2017:2030',
             firstDay:1,
             changeMonth: true,
             changeYear: true,
@@ -882,7 +903,7 @@ function urlParam(name){
 //la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
 (function(){
     var element = document.getElementById('editBeneficiaire');
-    var enfant = element.getElementsByTagName('input');
+    var enfant = element.getElementsByClassName('fiche');
     for(var i=0;i<enfant.length;i++){
         enfant[i].addEventListener('change',function () {
             if(this.classList.contains('modified')){
@@ -894,7 +915,7 @@ function urlParam(name){
     }
 
     var element2 = document.getElementById('ProjetBeneficiaire');
-    var enfant2 = element2.getElementsByTagName('input');
+    var enfant2 = element2.getElementsByClassName('projet');
     for(var j=0;j<enfant2.length;j++){
         enfant2[j].addEventListener('click',function () {
             for(var i=0;i<enfant.length;i++){
@@ -930,7 +951,7 @@ function urlParam(name){
 //la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur le projet bénéficiaire
 (function(){
     var element3 = document.getElementById('ProjetBeneficiaire');
-    var enfant3 = element3.getElementsByTagName('input');
+    var enfant3 = element3.getElementsByClassName('projet');
     for(var i=0;i<enfant3.length;i++){
         enfant3[i].addEventListener('change',function () {
             if(this.classList.contains('modified')){
@@ -942,7 +963,7 @@ function urlParam(name){
     }
 
     var element4 = document.getElementById('editBeneficiaire');
-    var enfant4 = element4.getElementsByTagName('input');
+    var enfant4 = element4.getElementsByClassName('fiche');
     for(var j=0;j<enfant4.length;j++){
         enfant4[j].addEventListener('click',function () {
             for(var i=0;i<enfant3.length;i++){
