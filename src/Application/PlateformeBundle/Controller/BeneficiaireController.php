@@ -373,7 +373,8 @@ class BeneficiaireController extends Controller
                 'results' => $results,
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
-                'form_news'             => $formNews->createView()
+                'form_news'             => $formNews->createView(),
+                'nombreBeneficiaire'    => count($results)
             ));
         }
 

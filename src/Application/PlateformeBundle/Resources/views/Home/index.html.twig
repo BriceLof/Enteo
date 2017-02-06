@@ -13,6 +13,7 @@
     <section class="container-fluid section-tab-home-benef">
     {% if liste_beneficiaire != null %}
         {% if results is defined %}
+            <h4 style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
             {% for beneficiaire in liste_beneficiaire %}
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef">
@@ -150,7 +151,7 @@
                 </ul>
             </div>
         {% else %}
-
+            <h4 style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
             {% for beneficiaire in liste_beneficiaire %}
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef">
