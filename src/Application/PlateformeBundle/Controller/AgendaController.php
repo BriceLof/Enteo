@@ -201,8 +201,8 @@ class AgendaController extends Controller
                 else{
                     $eventInsert = $googleCalendar->addEvent(
                         $_SESSION['calendrierId'],
-                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
+                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), // decrementation heure debut 
+                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]), // decrementation heure fin
                         $summary,
                         $_SESSION['agenda'][1]->getDescription(),
                         $eventAttendee = "",
