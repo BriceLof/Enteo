@@ -369,10 +369,7 @@
 
 
 
-#flashbag{
-    margin-bottom: 100px;
-    margin-top:-80px
-
+#flashbag {
 }
 
 select.error, textarea.error, input.error {
@@ -553,4 +550,9 @@ a.deleteBtn{
 
 textarea {
     resize: none;
+}
+
+.sectionBeneficiaire #collapseAgenda > div{
+    margin-left: 2%;
+    margin-bottom: 12px;
 }

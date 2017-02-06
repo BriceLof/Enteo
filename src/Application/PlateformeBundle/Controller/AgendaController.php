@@ -56,7 +56,8 @@ class AgendaController extends Controller
                 break;
                 default:
                         // Test si l'utilisateur n'a pas le role Admin il ne peut pas switcher sur l'agenda d'un autre consultant
-                        if(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+                        $authorization = $this->get('security.authorization_checker');
+                        if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL'))
                         {
                             if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
                                 return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));

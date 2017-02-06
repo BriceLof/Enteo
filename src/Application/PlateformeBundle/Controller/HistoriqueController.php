@@ -104,7 +104,7 @@ class HistoriqueController extends Controller
         $em->remove($historique);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', 'Historique bien supprimé');
+        $this->get('session')->getFlashBag()->add('info', 'Historique supprimé avec succès');
 
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),
@@ -147,6 +147,8 @@ class HistoriqueController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Historique modifié avec succès');
 
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                 'id' => $beneficiaire->getId(),

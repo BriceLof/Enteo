@@ -23,8 +23,8 @@
         </div>
         {% endif %}
 
-        {% if is_granted('ROLE_ADMIN') and app.request.query.get('userid')is null %}
-            {# bloc Agenda pour Admin #}
+        {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) and app.request.query.get('userid')is null %}
+            {# bloc Agenda pour Admin ou autres #}
             <div class="row">
                 <div class="col-md-12">
                     <input type="hidden" class="color_agenda_admin" value="{{couleurs}}">
@@ -144,12 +144,12 @@
                     </div>
                 </div>
             </div>
-        {% elseif is_granted('ROLE_CONSULTANT') or (is_granted('ROLE_ADMIN') and app.request.query.get('userid')is not null) %}
+        {% elseif is_granted('ROLE_CONSULTANT') or ( (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) and app.request.query.get('userid')is not null ) %}
             {# bloc Agenda pour consultant ou pour les admin qui vont dans l'agenda d'un consultant mais via la fiche bénéficiaire ou le bouton aganda lié au bénéficiaire sur le tableau en home#}
             <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
             <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
             {# Dans le cas où l'admin à pris l'agenda d'un bénéficiaire sur la home ou sur la fiche bénéficiaire #}
-            {% if is_granted("ROLE_ADMIN") %}
+            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_COMMERCIAL") %}
                 <div class="row">
                     <div class="col-md-12">
                         <div id="nomconsultant" style="display:block !important">

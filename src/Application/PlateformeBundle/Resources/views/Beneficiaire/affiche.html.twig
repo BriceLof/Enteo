@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 {% for message in app.session.flashbag.get('info') %}
-                    <h4 class="titreSection">Message flash : {{ message }}</h4>
+                    <div class="alert alert-success" role="alert">{{ message }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -276,6 +276,35 @@
                             </div>
                         </div>
                     </div>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                    <div class="tableOnglet" id="agenda_consultant_pour_beneficiaire">
+                        <table>
+                            <caption class="titreSection"><a  id="agendaCollapse" href="#collapseAgenda" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Consultant</span></a></caption>
+                        </table>
+                        <div id="collapseAgenda" class="collapse in">
+                            {% if beneficiaire.consultant is not null %}
+                                <div>
+                                    <div>
+                                        <span id="labelConsultant">Consulant :</span>
+                                        <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span></span>
+                                    </div>
+                                    <div>
+                                        {% set agendaUserId = beneficiaire.consultant.id %}
+                                        <a style="width:90px; padding: 0px 12px;" title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div>
+                                    <div>
+                                        <span id="labelConsultant">Consulant :</span>
+                                        <div><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span></div>
+                                    </div>
+                                </div>
+
+                            {% endif %}
+                        </div>
+                    </div>
+    {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">
                             <table>
@@ -310,7 +339,7 @@
                 <h4 class="titreSection">NEWS</h4>
                 <div id="tabNews">
                     <ul>
-                        <li><a href="#tabs-1">toutes les News</a></li>
+                        <li><a href="#tabs-1">Toutes les News</a></li>
                         <li><a href="#tabs-2">Ajouter une News</a></li>
                     </ul>
                     <div id="tabs-1">

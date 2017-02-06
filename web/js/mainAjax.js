@@ -52,15 +52,20 @@ $("document").ready(function () {
     });
 
     jQuery.validator.addMethod("greaterThan",
-        function(value, element, params) {
-
-            if (!/Invalid|NaN/.test(new Date(value))) {
-                return new Date.parse(value) > new Date.parse($(params).val());
-            }
-
-            return isNaN(value) && isNaN($(params).val())
-                || (Number(value) > Number($(params).val()));
-        },'La date de début doit être inferieur à la date de fin');
+            function (value, element) {
+                var startDate = $('#accompagnement_dateDebut').val().split("/");
+                var valueEntered = value.split("/");
+                if (valueEntered[2] < startDate[2]) {
+                    return false;
+                } else if (valueEntered[1] < startDate[1]) {
+                    return false;
+                } else if (valueEntered[0] < startDate[0]) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }, "vérifiez la date de fin"
+        );
 
     jQuery.validator.addMethod(
         "tarif",
@@ -148,7 +153,8 @@ $("document").ready(function () {
                 },
                 "accompagnement[dateFin]": {
                     "dateBR" : /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
-                    "greaterThan" : "#accompagnement[dateDebut]"
+                    "greaterThan" : true,
+                    "required" : false
                 }
             },
             errorElement: 'div'
@@ -833,11 +839,11 @@ function urlParam(name){
         tels[i].addEventListener('keypress',function () {
 
             var s = this.value.replace(/ /g,"");
-            console.log('s = '+ s.length);
+
             if (s.length%2 == 0 && s.length<10 && s.length>1){
                 this.value += " ";
             }
-            console.log(this.value);
+
         });
     }
 
@@ -869,7 +875,6 @@ function urlParam(name){
                     result = result+s[j];
                     t++;
                 }
-                console.log(t);
             }
             tels[i].value = result;
 
@@ -897,7 +902,6 @@ function urlParam(name){
         enfant2[j].addEventListener('click',function () {
             for(var i=0;i<enfant.length;i++){
                 if(enfant[i].classList.contains('modified')){
-                    var test = false;
                     $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
                                         '<div class="modal-dialog">' +
                                         '<div class="modal-content">' +
@@ -916,6 +920,9 @@ function urlParam(name){
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
+                    for(var k=0;i<enfant.length;k++) {
+                        enfant[k].classList.remove('modified');
+                    }
                 }
 
             }
@@ -962,6 +969,9 @@ function urlParam(name){
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
+                    for(var k=0;i<enfant3.length;k++) {
+                        enfant3[k].classList.remove('modified');
+                    }
                 }
 
             }

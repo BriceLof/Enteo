@@ -10,4 +10,14 @@ namespace Application\PlateformeBundle\Repository;
  */
 class BureauRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAll() {
+        parent::findAll();
+        $queryBuilder = $this->createQueryBuilder("b")
+                ->leftJoin('b.ville', 'v')
+                ->addSelect('v')
+                ->orderBy("b.id", "DESC");
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }

@@ -49,6 +49,8 @@ class BureauController extends Controller
             $em->persist($bureau);
             $em->flush($bureau);
 
+            $this->get('session')->getFlashBag()->add('info', 'Bureau ajouté avec succès');
+
             return $this->redirect($this->generateUrl('application_index_bureau'));
         }
 
@@ -113,6 +115,8 @@ class BureauController extends Controller
                 ->getQuery();
             $p = $q->execute();
 
+            $this->get('session')->getFlashBag()->add('info', 'Bureau modifié avec succès');
+
             return $this->redirect($this->generateUrl('application_index_bureau'));
         }
 
@@ -136,7 +140,7 @@ class BureauController extends Controller
         $em->remove($bureau);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', 'bureau bien supprimé');
+        $this->get('session')->getFlashBag()->add('info', 'bureau supprimé avec succès');
 
         return $this->redirect($this->generateUrl('application_index_bureau'));
     }
@@ -155,10 +159,14 @@ class BureauController extends Controller
             $bureau->setActifInactif(false);
             $em->persist($bureau);
             $em->flush($bureau);
+
+            $this->get('session')->getFlashBag()->add('info', 'Bureau desactivé');
         }else{
             $bureau->setActifInactif(true);
             $em->persist($bureau);
             $em->flush($bureau);
+
+            $this->get('session')->getFlashBag()->add('info', 'Bureau activé');
         }
 
         return $this->redirect($this->generateUrl('application_index_bureau'));
