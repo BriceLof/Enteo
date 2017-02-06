@@ -398,14 +398,6 @@ $("document").ready(function () {
         $('.msg-errors').css('display', 'none');
     }, 2000);
    
-   // ============================================================ //
-   // ======== Gestion du champ ville lorsque le type de rdv ===== //
-   // ============== change [presenciel ou distanciel] =========== //
-   // ============================================================ //
-   $(".typerdv").change(function(){
-        $('#dpttest').val('');
-   });
-   
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -422,6 +414,7 @@ $("document").ready(function () {
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
             break;
     }
+    
     // Autocompletion ville
     $("#dpttest").autocomplete({
         source: function($request, reponse){
@@ -429,8 +422,8 @@ $("document").ready(function () {
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2
-                    // idb : $('#idbeneficiaire').val()
+                    sentinel: 2,
+                    idb : $('#idbeneficiaire').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -449,7 +442,7 @@ $("document").ready(function () {
                               {
                                   if(item.nom != undefined){
                                       // On met à jour les champs ville, bureau
-                                      //$('#dpttest').val(item.departementId); // departement
+                                      $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
                                       $('.bureauselect').val(item.id); // bureau selectionner
                                       $('.namebureauselect').val(item.nombureau); // bureau
@@ -698,7 +691,7 @@ $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#espace_documentaire_documents');
     // On ajoute un lien pour ajouter une nouvelle catégorie
-    var $addLink = $('<a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>');
+    var $addLink = $('<a href="#" id="add_document" class="btn btn-default">Ajouter un Document</a>');
     $container.append($addLink);
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $addLink.click(function(e) {
@@ -722,7 +715,7 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Image n°' + (index+1))
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Document n°' + (index+1))
             .replace(/__name__/g, index));
         // On ajoute au prototype un lien pour pouvoir supprimer l'image
         addDeleteLink($prototype);
@@ -735,7 +728,7 @@ $(document).ready(function() {
     // La fonction qui ajoute un lien de suppression d'une image
     function addDeleteLink($prototype) {
         // Création du lien
-        $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
         // Ajout du lien
         $prototype.append($deleteLink);
         // Ajout du listener sur le clic du lien
@@ -862,6 +855,9 @@ function urlParam(name){
     window.onload = function () {
         var tels = document.getElementsByClassName('telephoneConso');
         for(var i=0;i<tels.length;i++) {
+            if(tels[i].value.length > 14){
+                tels[i].value = tels[i].value.replace(/ /g,"");
+            }
             var result = "";
             var s = ""+tels[i].value;
             var t=0;
