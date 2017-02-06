@@ -25,18 +25,7 @@
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif) }} <span>&euro;</span></td>
         </tr>
 {% endif %}
-{% if beneficiaire.consultant is not null %}
-        <tr>
-            <td id="labelConsultant">Consulant :</td>
-            <td id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span></td>
-        </tr>
-{% else %}
-        <tr>
-            <td id="labelConsultant">Consulant :</td>
-            <td><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span></td>
-        </tr>
 
-{% endif %}
         <div id="formulaireConsultant"></div>
         <tr>
             <td class="tableSection"><a href="#"></a></td>

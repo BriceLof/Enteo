@@ -551,3 +551,8 @@ a.deleteBtn{
 textarea {
     resize: none;
 }
+
+.sectionBeneficiaire #collapseAgenda > div{
+    margin-left: 2%;
+    margin-bottom: 12px;
+}
