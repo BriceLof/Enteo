@@ -65,15 +65,14 @@ class HomeController extends Controller
         //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $news = $form->getData();
-           
             $beneficiaire_id = $request->request->get('beneficiaire_id');
             $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
 
             $em->persist($news);
             $em->flush();
             
-            // Envoi d'un mail selon le statut
-            
+            // Envoi d'un mail selon le statut, ( parametres : detail du statut, bénéficiaire concerné )  
+            $service = $this->container->get('application_plateforme.statut.mail.mail_for_statut')->alerteForStatus($news->getDetailStatut(), $news->getBeneficiaire() );
             
             $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
             return $this->redirect($url);
