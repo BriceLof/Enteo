@@ -132,7 +132,7 @@ class BureauController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($id);
         if (!$bureau) {
             throw $this->createNotFoundException('Unable to find Bureau.');
@@ -150,7 +150,7 @@ class BureauController extends Controller
      */
     public function actifInactifAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($id);
         if (!$bureau) {
             throw $this->createNotFoundException('Unable to find Bureau.');

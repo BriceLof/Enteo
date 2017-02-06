@@ -73,7 +73,7 @@ class SuiviAdministratifController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $suiviAdministratif = $em->getRepository('ApplicationPlateformeBundle:SuiviAdministratif')->find($id);
         $beneficiaire = $suiviAdministratif->getBeneficiaire();
 

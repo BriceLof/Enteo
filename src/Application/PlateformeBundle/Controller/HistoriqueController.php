@@ -93,7 +93,7 @@ class HistoriqueController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
 
