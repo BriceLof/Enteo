@@ -30,7 +30,7 @@ $("document").ready(function () {
     });
 
 
-    //datepicker
+    //datepicker date de naissance
     $( function() {
         $("form input.date").datepicker({
             dateFormat: 'dd/mm/yy',
@@ -48,6 +48,8 @@ $("document").ready(function () {
             dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
             dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
             weekHeader: 'Sem.'
+        }).on('input change', function (e) {
+            this.className += ' modified';
         });
     });
 
@@ -76,13 +78,14 @@ $("document").ready(function () {
                 var startDate = $('#accompagnement_dateDebut').val().split("/");
                 var valueEntered = value.split("/");
                 if (valueEntered[2] < startDate[2]) {
-                    return false;
-                } else if (valueEntered[1] < startDate[1]) {
-                    return false;
-                } else if (valueEntered[0] < startDate[0]) {
-                    return false;
-                } else {
+                    console.log(valueEntered[2] > startDate[2]);
                     return true;
+                } else if (valueEntered[1] > startDate[1]) {
+                    return true;
+                } else if (valueEntered[0] > startDate[0]) {
+                    return true;
+                } else {
+                    return false;
                 }
             }, "vérifiez la date de fin"
         );
@@ -623,8 +626,28 @@ $("document").ready(function () {
     // ================================================================ //
     $('#historique_heureDebut_hour').change(function(){
         // On initialise l'heure de fin en fonction de l'heure de debut
+        // k = parseInt($('#historique_heureFin_hour option').val());
+        j = 8;
         heure_debut = parseInt($('#historique_heureDebut_hour').val()); // On recupère l'heure de debut
         minute_debut = parseInt($('#historique_heureDebut_minute').val()); // On recupère l'heure de debut
+        // On supprime toutes les heures inferieures ou egale à l'heure de debut pour la coherence des données
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        // Desactiver et Activer les heures en fonction de l'heure de debut
+        while(j<=21){
+            if(j<=heure_debut){
+                $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true); // desactiver
+            }
+            else{
+                $('#historique_heureFin_hour option[value="'+j+'"]').removeAttr('disabled'); // activer
+            }
+            j++;
+        }
+        
+        /*while(j<=heure_debut){
+            $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true);
+            j++;
+        }*/
+        
         majheuredebut = heure_debut+1;
         $('#historique_heureFin_hour').val(majheuredebut); // Maj de l'heure de fin
         $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin

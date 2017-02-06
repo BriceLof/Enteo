@@ -180,7 +180,6 @@ class AgendaController extends Controller
             // On recupere le beneficiaire
             $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($_SESSION['benef']) : NULL;
             $_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
-            
             // ===================================================================== //
             // ===== Verifier que les heures selectionnées ne sont pas passées ===== //
             // ===================================================================== //
