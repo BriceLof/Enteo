@@ -30,7 +30,6 @@ $("document").ready(function () {
     });
 
 
-
     //datepicker
     $( function() {
         $("form input.date").datepicker({
@@ -871,6 +870,7 @@ function urlParam(name){
             return true;
         });
     }
+
 })();
 
 (function(){
@@ -903,7 +903,7 @@ function urlParam(name){
 //la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
 (function(){
     var element = document.getElementById('editBeneficiaire');
-    var enfant = element.getElementsByClassName('fiche');
+    var enfant = element.getElementsByTagName('input');
     for(var i=0;i<enfant.length;i++){
         enfant[i].addEventListener('change',function () {
             if(this.classList.contains('modified')){
@@ -915,7 +915,7 @@ function urlParam(name){
     }
 
     var element2 = document.getElementById('ProjetBeneficiaire');
-    var enfant2 = element2.getElementsByClassName('projet');
+    var enfant2 = element2.getElementsByTagName('input');
     for(var j=0;j<enfant2.length;j++){
         enfant2[j].addEventListener('click',function () {
             for(var i=0;i<enfant.length;i++){
@@ -951,7 +951,7 @@ function urlParam(name){
 //la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur le projet bénéficiaire
 (function(){
     var element3 = document.getElementById('ProjetBeneficiaire');
-    var enfant3 = element3.getElementsByClassName('projet');
+    var enfant3 = element3.getElementsByTagName('input');
     for(var i=0;i<enfant3.length;i++){
         enfant3[i].addEventListener('change',function () {
             if(this.classList.contains('modified')){
@@ -963,7 +963,7 @@ function urlParam(name){
     }
 
     var element4 = document.getElementById('editBeneficiaire');
-    var enfant4 = element4.getElementsByClassName('fiche');
+    var enfant4 = element4.getElementsByTagName('input');
     for(var j=0;j<enfant4.length;j++){
         enfant4[j].addEventListener('click',function () {
             for(var i=0;i<enfant3.length;i++){

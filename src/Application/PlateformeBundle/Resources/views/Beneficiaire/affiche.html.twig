@@ -32,27 +32,27 @@
                                     <tbody>
                                         <tr>
                                             <td>{{ form_label(edit_form.dateConfMer) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.dateConfMer) }}</td>
+                                            <td>{{ form_widget(edit_form.dateConfMer) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.civiliteConso) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.civiliteConso) }}</td>
+                                            <td>{{ form_widget(edit_form.civiliteConso) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.nomConso) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.nomConso) }}</td>
+                                            <td>{{ form_widget(edit_form.nomConso) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.prenomConso) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.prenomConso) }}</td>
+                                            <td>{{ form_widget(edit_form.prenomConso) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.poste) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.poste) }}</td>
+                                            <td>{{ form_widget(edit_form.poste) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.encadrement) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.encadrement) }}</td>
+                                            <td>{{ form_widget(edit_form.encadrement) }}</td>
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
@@ -62,19 +62,19 @@
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.telConso) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.telConso) }}</td>
+                                            <td>{{ form_widget(edit_form.telConso) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.tel2) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.tel2) }}</td>
+                                            <td>{{ form_widget(edit_form.tel2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.emailConso) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.emailConso) }}</td>
+                                            <td>{{ form_widget(edit_form.emailConso) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.email2) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.email2) }}</td>
+                                            <td>{{ form_widget(edit_form.email2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
@@ -84,41 +84,41 @@
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.adresse) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.adresse) }}</td>
+                                            <td>{{ form_widget(edit_form.adresse) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.adresseComplement) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.adresseComplement) }}</td>
+                                            <td>{{ form_widget(edit_form.adresseComplement) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.ville.cp) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.ville.cp) }}</td>
+                                            <td>{{ form_widget(edit_form.ville.cp) }}</td>
                                         </tr>
                                         {% if beneficiaire.ville is not null %}
                                             <tr>
                                                 <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                                <td  class="fiche" id="inputVilleBeneficiaire">{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
+                                                <td id="inputVilleBeneficiaire">{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
                                             </tr>
                                         {% else %}
                                             <tr>
                                                 <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                                <td  class="fiche">{{ form_widget(edit_form.ville.nom ) }}</td>
+                                                <td>{{ form_widget(edit_form.ville.nom ) }}</td>
                                             </tr>
                                         {% endif %}
                                         <tr>
                                             <td>{{ form_label(edit_form.pays) }}</td>
-                                            <td  class="fiche">{{ form_widget(edit_form.pays) }}</td>
+                                            <td>{{ form_widget(edit_form.pays) }}</td>
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.numSecu) }}</td>
-                                            <td><span class="fiche" style="display: inline-block">{{ form_widget(edit_form.numSecu) }}</span><span class="fiche" style="display: inline-block;">{{ form_widget(edit_form.numSecuCle) }}</span></td>
+                                            <td><span style="display: inline-block">{{ form_widget(edit_form.numSecu) }}</span><span style="display: inline-block;">{{ form_widget(edit_form.numSecuCle) }}</span></td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.dateNaissance) }}</td>
-                                            <td class="fiche">{{ form_widget(edit_form.dateNaissance) }}</td>
+                                            <td>{{ form_widget(edit_form.dateNaissance) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_errors(edit_form) }}</td>
