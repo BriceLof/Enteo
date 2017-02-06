@@ -23,6 +23,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
             ->add('experience', TextType::class, array(
@@ -30,6 +31,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
             ->add('heureDif', IntegerType::class, array(
@@ -37,6 +39,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
             ->add('heureCpf', IntegerType::class, array(
@@ -44,6 +47,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
             ->add('formationInitiale', TextType::class, array(
@@ -51,6 +55,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
             ->add('diplomeVise', TextType::class, array(
@@ -58,6 +63,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
             ->add('motivation', TextareaType::class, array(
@@ -65,6 +71,7 @@ class ProjetType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'projet'
                 )
             ))
         ;

@@ -35,11 +35,13 @@ class HomeController extends Controller
         $authorization = $this->get('security.authorization_checker');
         if($authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL')){
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+            $nombreBeneficiaire = count($beneficiaires);
            //var_dump($beneficiaires);
         }
         // CONSULTANT
         else {
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage,$this->getUser()->getId() );
+            $nombreBeneficiaire = count($beneficiaires);
             //$this->getUser()->getBeneficiaire();
             if(count($beneficiaires) == 0 ) 
             {
@@ -82,7 +84,8 @@ class HomeController extends Controller
             'liste_beneficiaire'    => $beneficiaires, 
             'nbPages'               => $nbPages,
             'page'                  => $page,
-            'form_news'             => $form->createView()
+            'form_news'             => $form->createView(),
+            'nombreBeneficiaire'    => $nombreBeneficiaire
         ));
     }
     public function detailStatutAction($idStatut)

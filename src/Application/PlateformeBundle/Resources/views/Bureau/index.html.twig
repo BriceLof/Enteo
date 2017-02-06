@@ -3,117 +3,100 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-5">
-                <div id="afficheAllBureau" class="tableOnglet">
-                    <div>
-                        <table class="table-condensed">
-                            <caption class="titreSection">liste des bureaux</caption>
-                        </table>
-                        <div class="corpsAfficheBureau">
-                        {% for bureau in bureaux %}
-                            <div class="row">
-                                    <div class="col-sm-3">{{ bureau.nombureau }}</div>
-                                    <div class="col-sm-4">{{ bureau.adresse }}</div>
-                                    <div class="col-sm-3">{{ bureau.ville.nom }}</div>
-                                    <div class="col-sm-2">
-                            {% if bureau.actifInactif %}
-                                        <div class="btn col-sm-1">
-                                            <span style="color: green; float: right" data-toggle="modal" data-target="#myModalBureauDelete{{ loop.index }}" class="glyphicon glyphicon-ok-circle"></span>
-                                        </div>
-                                        <div class="modal fade" id="myModalBureauDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div>
-                                                            <span>Voulez-vous vraiment desactiver ce bureau?</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div>
-                                                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
-                                                            <a class="deleteBtn" href="{{ path('application_actif_inactif_bureau', { 'id': bureau.id }) }}">
-                                                                <button class="btn btn-primary">Desactiver</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                            {% else %}
-                                <div class="btn col-sm-1">
-                                    <span style="color: red; float: right" data-toggle="modal" data-target="#myModalBureauDelete{{ loop.index }}" class="glyphicon glyphicon-ban-circle" ></span>
-                                </div>
-                                <div class="modal fade" id="myModalBureauDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div>
-                                                    <span>Voulez-vous vraiment activer ce bureau?</span>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div>
-                                                    <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
-                                                    <a class="deleteBtn" href="{{ path('application_actif_inactif_bureau', { 'id': bureau.id }) }}">
-                                                        <button class="btn btn-primary">Activer</button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            {% endif %}
-
-
-                                        <div class="btn col-sm-1">
-                                            <span style="color: black; float: right" data-toggle="modal" data-target="#myModalBureauModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
-                                        </div>
-                                        <div class="modal fade" id="myModalBureauModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title" id="myModalLabel">Modifier
-                                                        </h4>
-                                                    </div>
-                                                    <form method="POST" id="bureauEditForm" action="{{ path('application_edit_bureau', {'id': bureau.id}) }}" >
-                                                        {{ render(controller("ApplicationPlateformeBundle:Bureau:edit",{'id': bureau.id})) }}
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                            </div>
-                    {% endfor %}
+            <div class="col-md-9">
+                    <div class="page-header">
+                        <div class="row">
+                            <h1 class="col-md-10">Gestion - Bureaux<br><small>Créer, modifier, voir les enregistrements de la base de données</small></h1>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div id="ajouteBureau" class="tableOnglet">
-                    <form method="POST" id="bureauNewForm" action="{{ path('application_new_bureau') }}" >
-                        <table class="table-condensed">
-                            <caption class="titreSection">Ajouter un bureau</caption>
-                            {{ render(controller("ApplicationPlateformeBundle:Bureau:new")) }}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Adresse</th>
+                                    <th>Ville</th>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <th colspan="2">Actions</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for bureau in bureaux %}
+                                    <tr>
+                                        <td>{{ bureau.nombureau | capitalize }}</td>
+                                        <td>{{ bureau.adresse | capitalize }}</td>
+                                        <td>{{ bureau.ville.nom | capitalize }}</td>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <td>
+                                                <span style="color: {{ bureau.actifInactif ? "green" : "red" }}; float: right" data-toggle="modal" data-target="#myModalBureauDelete{{ loop.index }}" class="glyphicon glyphicon-{{ bureau.actifInactif ? "ok" : "ban" }}-circle"></span>
+                                            </td>
+                                            <td>
+                                                <span style="color: black; float: right" data-toggle="modal" data-target="#myModalBureauModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
+                                            </td>
+
+                                            <div class="modal fade" id="myModalBureauDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div>
+                                                                <span>Voulez-vous vraiment {{ bureau.actifInactif ? "désactiver" : "activer" }} ce bureau?</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div>
+                                                                <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                                                <a class="deleteBtn" href="{{ path('application_actif_inactif_bureau', { 'id': bureau.id }) }}">
+                                                                    <button class="btn btn-primary">{{ bureau.actifInactif ? "Désactiver" : "Activer" }}</button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="modal fade" id="myModalBureauModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel">Modifier
+                                                            </h4>
+                                                        </div>
+                                                        <form method="POST" id="bureauEditForm" action="{{ path('application_edit_bureau', {'id': bureau.id}) }}" >
+                                                            {{ render(controller("ApplicationPlateformeBundle:Bureau:edit",{'id': bureau.id})) }}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
                         </table>
-                    </form>
-                </div>
+                    </div>
             </div>
+            <!-- Formulaire ajout bureau -->                
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                <div class="col-md-3" style="margin-top:177px;">
+                    <div id="ajouteBureau" class="tableOnglet">
+                        <form method="POST" id="bureauNewForm" action="{{ path('application_new_bureau') }}" >
+                            <table class="table-condensed">
+                                <caption class="titreSection">Ajouter un bureau</caption>
+                                {{ render(controller("ApplicationPlateformeBundle:Bureau:new")) }}
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

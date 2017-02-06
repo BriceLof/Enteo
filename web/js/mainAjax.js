@@ -30,11 +30,31 @@ $("document").ready(function () {
     });
 
 
-
     //datepicker
     $( function() {
         $("form input.date").datepicker({
             dateFormat: 'dd/mm/yy',
+            yearRange: '1940:2016',
+            firstDay:1,
+            changeMonth: true,
+            changeYear: true,
+            closeText: 'Fermer',
+            prevText: 'Précédent',
+            nextText: 'Suivant',
+            currentText: 'Aujourd\'hui',
+            monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+            monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+            dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+            dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+            weekHeader: 'Sem.'
+        });
+    });
+
+    $( function() {
+        $(".accompagnementDate").datepicker({
+            dateFormat: 'dd/mm/yy',
+            yearRange: '2017:2030',
             firstDay:1,
             changeMonth: true,
             changeYear: true,
@@ -398,14 +418,6 @@ $("document").ready(function () {
         $('.msg-errors').css('display', 'none');
     }, 2000);
    
-   // ============================================================ //
-   // ======== Gestion du champ ville lorsque le type de rdv ===== //
-   // ============== change [presenciel ou distanciel] =========== //
-   // ============================================================ //
-   $(".typerdv").change(function(){
-        $('#dpttest').val('');
-   });
-   
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -422,6 +434,7 @@ $("document").ready(function () {
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
             break;
     }
+    
     // Autocompletion ville
     $("#dpttest").autocomplete({
         source: function($request, reponse){
@@ -429,8 +442,8 @@ $("document").ready(function () {
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2
-                    // idb : $('#idbeneficiaire').val()
+                    sentinel: 2,
+                    idb : $('#idbeneficiaire').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -449,7 +462,7 @@ $("document").ready(function () {
                               {
                                   if(item.nom != undefined){
                                       // On met à jour les champs ville, bureau
-                                      //$('#dpttest').val(item.departementId); // departement
+                                      // $('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
                                       $('.bureauselect').val(item.id); // bureau selectionner
                                       $('.namebureauselect').val(item.nombureau); // bureau
@@ -718,7 +731,7 @@ $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#espace_documentaire_documents');
     // On ajoute un lien pour ajouter une nouvelle catégorie
-    var $addLink = $('<a href="#" id="add_image" class="btn btn-default">Ajouter une image</a>');
+    var $addLink = $('<a href="#" id="add_document" class="btn btn-default">Ajouter un Document</a>');
     $container.append($addLink);
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $addLink.click(function(e) {
@@ -742,7 +755,7 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Image n°' + (index+1))
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Document n°' + (index+1))
             .replace(/__name__/g, index));
         // On ajoute au prototype un lien pour pouvoir supprimer l'image
         addDeleteLink($prototype);
@@ -755,7 +768,7 @@ $(document).ready(function() {
     // La fonction qui ajoute un lien de suppression d'une image
     function addDeleteLink($prototype) {
         // Création du lien
-        $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
         // Ajout du lien
         $prototype.append($deleteLink);
         // Ajout du listener sur le clic du lien
@@ -853,28 +866,30 @@ function urlParam(name){
 }
 
 /*reglage numéro de téléphone*/
-(function(){
+(function() {
     var tels = document.getElementsByClassName('telephoneConso');
-    for(var i=0;i<tels.length;i++){
-        tels[i].addEventListener('keypress',function () {
+    for (var i = 0; i < tels.length; i++) {
+        tels[i].addEventListener('keypress', function () {
 
-            var s = this.value.replace(/ /g,"");
+            var s = this.value.replace(/ /g, "");
 
-            if (s.length%2 == 0 && s.length<10 && s.length>1){
+            if (s.length % 2 == 0 && s.length < 10 && s.length > 1) {
                 this.value += " ";
             }
 
         });
     }
 
-    var form1 = document.getElementById('ficheBeneficiaireForm');
-    form1.addEventListener('submit',function () {
-        var tels = document.getElementsByClassName('telephoneConso');
-        for(var i=0;i<tels.length;i++){
-            tels[i].value = tels[i].value.replace(/ /g,"");
-        }
-        return true;
-    });
+    var form = document.querySelectorAll('#afficheBeneficiaire form');
+    for (var k = 0; k < form.length; k++) {
+        form[k].addEventListener('submit', function () {
+            var tels = document.getElementsByClassName('telephoneConso');
+            for (var i = 0; i < tels.length; i++) {
+                tels[i].value = tels[i].value.replace(/ /g, "");
+            }
+            return true;
+        });
+    }
 
 })();
 
@@ -882,6 +897,9 @@ function urlParam(name){
     window.onload = function () {
         var tels = document.getElementsByClassName('telephoneConso');
         for(var i=0;i<tels.length;i++) {
+            if(tels[i].value.length > 14){
+                tels[i].value = tels[i].value.replace(/ /g,"");
+            }
             var result = "";
             var s = ""+tels[i].value;
             var t=0;
@@ -904,8 +922,7 @@ function urlParam(name){
 
 //la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
 (function(){
-    var element = document.getElementById('editBeneficiaire');
-    var enfant = element.getElementsByTagName('input');
+    var enfant = document.getElementsByClassName('fiche');
     for(var i=0;i<enfant.length;i++){
         enfant[i].addEventListener('change',function () {
             if(this.classList.contains('modified')){
@@ -916,8 +933,7 @@ function urlParam(name){
         });
     }
 
-    var element2 = document.getElementById('ProjetBeneficiaire');
-    var enfant2 = element2.getElementsByTagName('input');
+    var enfant2 = document.getElementsByClassName('projet');
     for(var j=0;j<enfant2.length;j++){
         enfant2[j].addEventListener('click',function () {
             for(var i=0;i<enfant.length;i++){
@@ -952,8 +968,7 @@ function urlParam(name){
 
 //la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur le projet bénéficiaire
 (function(){
-    var element3 = document.getElementById('ProjetBeneficiaire');
-    var enfant3 = element3.getElementsByTagName('input');
+    var enfant3 = document.getElementsByClassName('projet');
     for(var i=0;i<enfant3.length;i++){
         enfant3[i].addEventListener('change',function () {
             if(this.classList.contains('modified')){
@@ -964,8 +979,7 @@ function urlParam(name){
         });
     }
 
-    var element4 = document.getElementById('editBeneficiaire');
-    var enfant4 = element4.getElementsByTagName('input');
+    var enfant4 = document.getElementsByClassName('fiche');
     for(var j=0;j<enfant4.length;j++){
         enfant4[j].addEventListener('click',function () {
             for(var i=0;i<enfant3.length;i++){

@@ -57,7 +57,7 @@ class RechercheBeneficiaireType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'placeholder' => 'Date début',
-                    'class' => 'date',
+                    'class' => 'accompagnementDate',
                     'autocomplete' => 'off',
                 )
             ))
@@ -70,7 +70,7 @@ class RechercheBeneficiaireType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'placeholder' => 'Datefin',
-                    'class' => 'date',
+                    'class' => 'accompagnementDate',
                     'autocomplete' => 'off',
                 )
             ))

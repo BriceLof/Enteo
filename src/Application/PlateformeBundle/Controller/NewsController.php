@@ -67,7 +67,7 @@ class NewsController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('ApplicationPlateformeBundle:News')->find($id);
         $beneficiaire = $news->getBeneficiaire();
 
