@@ -826,29 +826,30 @@ function urlParam(name){
 }
 
 /*reglage numéro de téléphone*/
-(function(){
+(function() {
     var tels = document.getElementsByClassName('telephoneConso');
-    for(var i=0;i<tels.length;i++){
-        tels[i].addEventListener('keypress',function () {
+    for (var i = 0; i < tels.length; i++) {
+        tels[i].addEventListener('keypress', function () {
 
-            var s = this.value.replace(/ /g,"");
+            var s = this.value.replace(/ /g, "");
 
-            if (s.length%2 == 0 && s.length<10 && s.length>1){
+            if (s.length % 2 == 0 && s.length < 10 && s.length > 1) {
                 this.value += " ";
             }
 
         });
     }
 
-    var form1 = document.getElementById('ficheBeneficiaireForm');
-    form1.addEventListener('submit',function () {
-        var tels = document.getElementsByClassName('telephoneConso');
-        for(var i=0;i<tels.length;i++){
-            tels[i].value = tels[i].value.replace(/ /g,"");
-        }
-        return true;
-    });
-
+    var form = document.querySelectorAll('#afficheBeneficiaire form');
+    for (var k = 0; k < form.length; k++) {
+        form[k].addEventListener('submit', function () {
+            var tels = document.getElementsByClassName('telephoneConso');
+            for (var i = 0; i < tels.length; i++) {
+                tels[i].value = tels[i].value.replace(/ /g, "");
+            }
+            return true;
+        });
+    }
 })();
 
 (function(){

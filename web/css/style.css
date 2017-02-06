@@ -431,7 +431,8 @@ div.error {
 }
 
 #pageImage{
-    background-color: rgb(82, 86, 89);
+    background-color: #525659;
+    margin-top: -10px;
 }
 
 
