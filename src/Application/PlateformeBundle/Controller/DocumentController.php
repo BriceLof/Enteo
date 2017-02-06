@@ -110,7 +110,7 @@ class DocumentController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
         $beneficiaire = $document->getBeneficiaire();
 
@@ -130,7 +130,7 @@ class DocumentController extends Controller
 
     public function upAction(Request $request, $id){
         if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
             $beneficiaire = $document->getBeneficiaire();
 
