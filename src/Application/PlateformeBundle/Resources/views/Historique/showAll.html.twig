@@ -7,7 +7,7 @@
               <th style="border:none;">Bureau</th>
               <th style="border:none;">Type Rdv</th>
            </tr>
-           {% for historique in historiques %}
+           {% for historique in historiques|reverse %}
                 {% if historique.eventId != 0 %}
                     <tr>
                         <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">

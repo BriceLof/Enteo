@@ -1,28 +1,25 @@
 <form method="POST" id="suiviAdministratifNewForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
     <br>
-    <tr>
-        <td class="tableSection" style="width: 110px">Ajouter une action</td>
-    </tr>
-    <tr>
-        <td>date :</td>
-        <td style="width: 100%;">{{ form_widget(form.date) }}</td>
-    </tr>
-    <tr>
-        <td>Quoi?</td>
-        <td colspan="3">{{ form_widget(form.quoi) }}</td>
-    </tr>
-    <tr>
-        <td>Qui?</td>
-        <td colspan="3">{{ form_widget(form.qui) }}</td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td class="valider">{{ form_widget(form.submit) }}</td>
-    </tr>
-    <tr  class="form-rest">
-        <td>{{ form_rest(form) }}</td>
-        <td>{{ form_errors(form) }}</td>
-    </tr>
+    <div>
+        <span class="tableSection" style="width: 110px">Ajouter une action</span>
+    </div>
+    <div>
+        <span>date :</span>
+        <span style="width: 100%;">{{ form_widget(form.date) }}</span>
+    </div>
+    <div>
+        <span>Quoi?</span>
+        <span colspan="3">{{ form_widget(form.quoi) }}</span>
+    </div>
+    <div>
+        <span>Qui?</span>
+        <span colspan="3">{{ form_widget(form.qui) }}</span>
+    </div>
+    <div>
+        <span class="valider">{{ form_widget(form.submit) }}</span>
+    </div>
+    <div  class="form-rest">
+        <span>{{ form_rest(form) }}</span>
+        <span>{{ form_errors(form) }}</span>
+    </div>
 </form>

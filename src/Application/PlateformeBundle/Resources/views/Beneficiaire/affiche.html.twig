@@ -225,9 +225,7 @@
                                                 <td>{{ document.description }}</td>
                                                 <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
                                                 <td class="btn" width="100%">
-                                                    <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                        <span style="color: black" class="glyphicon glyphicon-remove"></span>
-                                                    </a>
+                                                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                                 </td>
                                             </tr>
                                         {% else %}
@@ -235,12 +233,35 @@
                                                 <td>{{ document.description }}</td>
                                                 <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
                                                 <td class="btn" width="100%">
-                                                    <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                        <span style="color: black" class="glyphicon glyphicon-remove"></span>
-                                                    </a>
+                                                    <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                                 </td>
                                             </tr>
                                         {% endif %}
+                                        <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">Supprimer un document</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div>
+                                                            <span>Voulez-vous vraiment supprimer ce Document?</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div>
+                                                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                                            <a style="width: 95px;float: right" class="deleteBtn" href="{{ path('application_delete_document', { 'id': document.id }) }}">
+                                                                <button class="btn btn-danger">Supprimer</button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% endfor %}
                                 </table>
                             </div>
