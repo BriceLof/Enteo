@@ -1,3 +1,8 @@
+$("document").ready(function () {
+    //affichage de news dans la partie bénéficiaire
+    $( function() {
+        $( "#tabNews" ).tabs();
+    } );
 
     $( function () {
         $(".form-control .error").css('border','1px solid red');
@@ -850,6 +855,9 @@ function urlParam(name){
     window.onload = function () {
         var tels = document.getElementsByClassName('telephoneConso');
         for(var i=0;i<tels.length;i++) {
+            if(tels[i].value.length > 14){
+                tels[i].value = tels[i].value.replace(/ /g,"");
+            }
             var result = "";
             var s = ""+tels[i].value;
             var t=0;

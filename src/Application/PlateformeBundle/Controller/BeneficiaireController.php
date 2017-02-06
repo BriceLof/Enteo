@@ -209,6 +209,7 @@ class BeneficiaireController extends Controller
             $historique->setHeurefin(new \DateTime('now'));
             $historique->setSummary("");
             $historique->setTypeRdv("");
+            $historique->setConsultant($beneficiaire->getConsultant());
             $historique->setBeneficiaire($beneficiaire);
             $historique->setDescription("Ajout/modification de consultant : ".ucfirst(strtolower($beneficiaire->getConsultant()->getPrenom()))." ".ucfirst(strtolower($beneficiaire->getConsultant()->getNom())));
             $historique->setEventId("0");
