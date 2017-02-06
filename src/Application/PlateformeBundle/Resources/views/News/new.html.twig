@@ -2,6 +2,12 @@
     <div>
     </div>
     <div>
-        {{ form_widget(form) }}
+        {{ form_label(form.statut) }}
+        {{ form_widget(form.statut, {'attr' : {'class': 'statut'}}) }}
+        {{ form_label(form.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+        {{ form_widget(form.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
+        {{ form_label(form.message) }}
+        {{ form_widget(form.message) }}
+        {{ form_rest(form) }}
     </div>
 </form>

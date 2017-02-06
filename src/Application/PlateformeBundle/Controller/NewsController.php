@@ -78,7 +78,7 @@ class NewsController extends Controller
         $em->remove($news);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', 'Historique bien supprimé');
+        $this->get('session')->getFlashBag()->add('info', 'News supprimé avec succès');
 
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),
@@ -106,7 +106,7 @@ class NewsController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', 'News bien modifié');
+            $this->get('session')->getFlashBag()->add('info', 'News modifié avec succès');
 
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),

@@ -36,6 +36,18 @@ $(function(){
         }); 
         //---------- END
     });
+    
+    //-----------------------------------------------------------------------------------------------------------------------//
+    //--------------------------  Fiche bénéficiaire : formulaire ajout d'une news ------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------------------//
+    if( $("#tabNews").length != 0)
+    {
+        $("#newsForm .statut").change(function(){
+            var statutId = $(this).children("option:selected").val()
+            $(".detailStatut").attr("disabled", "disabled") 
+            ajaxFormNews(statutId)
+        }); 
+    }
 });
 
 // Récupération de la liste de détails du statut choisi
@@ -55,7 +67,15 @@ function ajaxFormNews(statut)
         for(var i = 0; i < data.details.length; i++)
         {
             console.log(data.details[i].detail);
-            $(formDuBeneficiaire + " .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")
+            // Fiche bénéficiaire
+            if( $("#tabNews").length != 0 ){
+               $("#newsForm .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
+            }
+            // Home    
+            else{
+                $(formDuBeneficiaire + " .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
+            }
+                
         }
     });
 }

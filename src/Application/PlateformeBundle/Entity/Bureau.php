@@ -41,12 +41,18 @@ class Bureau
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nombureau;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $actifInactif;
     
     public function __construct()
     {
-        //$this->historique = new ArrayCollection();
+        $this->actifInactif = true;
     }
-
 
     /**
      * Get id
@@ -106,45 +112,6 @@ class Bureau
         return $this->ville;
     }
 
-
-
-     /**
-     * Add historique
-     *
-     * @param \Application\PlateformeBundle\Entity\Historique $historique
-     *
-     * @return Beneficiaire
-     */
-   /* public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
-    {
-        $this->historique[] = $historique;
-
-        $historique->setBureau($this);
-
-        return $this;
-    }*/
-
-    /**
-     * Remove historique
-     *
-     * @param \Application\PlateformeBundle\Entity\Historique $historique
-     */
-    /*public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
-    {
-        $this->historique->removeElement($historique);
-    }*/
-
-    /**
-     * Get historique
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-   /* public function getHistorique()
-    {
-        return $this->historique;
-    }*/
-
-
     /**
      * Set nombureau
      *
@@ -167,5 +134,29 @@ class Bureau
     public function getNombureau()
     {
         return $this->nombureau;
+    }
+
+    /**
+     * Set actifInactif
+     *
+     * @param boolean $actifInactif
+     *
+     * @return Bureau
+     */
+    public function setActifInactif($actifInactif)
+    {
+        $this->actifInactif = $actifInactif;
+
+        return $this;
+    }
+
+    /**
+     * Get actifInactif
+     *
+     * @return boolean
+     */
+    public function getActifInactif()
+    {
+        return $this->actifInactif;
     }
 }

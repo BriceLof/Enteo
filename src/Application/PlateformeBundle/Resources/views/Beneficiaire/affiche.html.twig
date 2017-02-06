@@ -1,5 +1,7 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
+{% block title %}Fiche bénéficiaire{% endblock %}
+
 {% block body %}
     <div class="overlay" id="loading">
         <div class="overlay-content">
@@ -11,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 {% for message in app.session.flashbag.get('info') %}
-                    <h4 class="titreSection">Message flash : {{ message }}</h4>
+                    <div class="alert alert-success" role="alert">{{ message }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -20,7 +22,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="sectionBeneficiaire">
-                    <div id="editBeneficiaire" class="tableOnglet">
+                    <div id="editBeneficiaire" class="tableOnglet" onblur="enregistrer(this)">
                         <table>
                             <caption class="titreSection"><a href="#collapseFicheBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseFicheBeneficiaire"><span class="glyphicon glyphicon-minus"></span><span>Fiche Bénéficiaire</span></a></caption>
                         </table>
@@ -95,7 +97,7 @@
                                         {% if beneficiaire.ville is not null %}
                                             <tr>
                                                 <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                                <td>{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
+                                                <td id="inputVilleBeneficiaire">{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
                                             </tr>
                                         {% else %}
                                             <tr>
@@ -103,9 +105,6 @@
                                                 <td>{{ form_widget(edit_form.ville.nom ) }}</td>
                                             </tr>
                                         {% endif %}
-                                        <tr>
-                                            <td>{{ form_errors(edit_form.ville.nom) }}</td>
-                                        </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.pays) }}</td>
                                             <td>{{ form_widget(edit_form.pays) }}</td>
@@ -115,7 +114,7 @@
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.numSecu) }}</td>
-                                            <td>{{ form_widget(edit_form.numSecu) }}</td>
+                                            <td><span style="display: inline-block">{{ form_widget(edit_form.numSecu) }}</span><span style="display: inline-block;">{{ form_widget(edit_form.numSecuCle) }}</span></td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.dateNaissance) }}</td>
@@ -226,9 +225,7 @@
                                                 <td>{{ document.description }}</td>
                                                 <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
                                                 <td class="btn" width="100%">
-                                                    <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                        <span style="color: black" class="glyphicon glyphicon-remove"></span>
-                                                    </a>
+                                                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                                 </td>
                                             </tr>
                                         {% else %}
@@ -236,12 +233,35 @@
                                                 <td>{{ document.description }}</td>
                                                 <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
                                                 <td class="btn" width="100%">
-                                                    <a href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                        <span style="color: black" class="glyphicon glyphicon-remove"></span>
-                                                    </a>
+                                                    <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                                 </td>
                                             </tr>
                                         {% endif %}
+                                        <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">Supprimer un document</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div>
+                                                            <span>Voulez-vous vraiment supprimer ce Document?</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div>
+                                                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                                            <a style="width: 95px;float: right" class="deleteBtn" href="{{ path('application_delete_document', { 'id': document.id }) }}">
+                                                                <button class="btn btn-danger">Supprimer</button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% endfor %}
                                 </table>
                             </div>
@@ -277,6 +297,35 @@
                             </div>
                         </div>
                     </div>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                    <div class="tableOnglet" id="agenda_consultant_pour_beneficiaire">
+                        <table>
+                            <caption class="titreSection"><a  id="agendaCollapse" href="#collapseAgenda" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Consultant</span></a></caption>
+                        </table>
+                        <div id="collapseAgenda" class="collapse in">
+                            {% if beneficiaire.consultant is not null %}
+                                <div>
+                                    <div>
+                                        <span id="labelConsultant">Consulant :</span>
+                                        <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span></span>
+                                    </div>
+                                    <div>
+                                        {% set agendaUserId = beneficiaire.consultant.id %}
+                                        <a style="width:90px; padding: 0px 12px;" title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div>
+                                    <div>
+                                        <span id="labelConsultant">Consulant :</span>
+                                        <div><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span></div>
+                                    </div>
+                                </div>
+
+                            {% endif %}
+                        </div>
+                    </div>
+    {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">
                             <table>
@@ -311,7 +360,7 @@
                 <h4 class="titreSection">NEWS</h4>
                 <div id="tabNews">
                     <ul>
-                        <li><a href="#tabs-1">toutes les News</a></li>
+                        <li><a href="#tabs-1">Toutes les News</a></li>
                         <li><a href="#tabs-2">Ajouter une News</a></li>
                     </ul>
                     <div id="tabs-1">

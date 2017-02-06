@@ -1,5 +1,5 @@
 
-<div class="modal-body">
+<div class="modal-body" id="modalEditConsultant">
     <div>
         <span class="col-md-6" style="margin-top: 10px">{{ form_label(form_consultant.consultant) }}</span>
         <span class="col-md-6">{{ form_widget(form_consultant.consultant) }}</span>
@@ -10,3 +10,4 @@
     {{ form_widget(form_consultant.submit) }}
 </div>
 <div>{{ form_rest(form_consultant) }}</div>
+<span>{{ form_errors(form_consultant) }}</span>

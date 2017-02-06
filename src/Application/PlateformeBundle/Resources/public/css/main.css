@@ -39,9 +39,25 @@ and open the template in the editor.
 .tab-home-benef{
     margin-bottom:-34px;
 }
+.tab-benef{
+    margin-top:3px;
+}
+.tab-benef a{
+    color:#333;
+    text-decoration:none;
+}
 .tab-home-benef th{
     background-color:#e5e5e5 !important;
+    font-weight:normal;
 }
+.tab-home-benef td b{
+    font-size:13px;
+}
+
+.btn_formulaire_add_news{
+    cursor:pointer;
+}
+
 
 /*---------------------------- END HOME partie tableaux informations bénéficiaires ------------------------------------*/
 
@@ -66,9 +82,11 @@ and open the template in the editor.
     font-size:19px;
     color:#d9534f;
 }
+/*
 label{
     margin-top:10px;
 }
+*/
 .block_info_chargement, label{
   display:inline-block;  
 }

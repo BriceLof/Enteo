@@ -41,11 +41,10 @@ class DocumentController extends Controller
                     $em->persist($document);
                 }
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('info', 'Document bien enregistré');
+                $this->get('session')->getFlashBag()->add('info', 'Document enregistré avec succès');
                 return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'beneficiaire' => $beneficiaire,
                     'id' => $beneficiaire->getId(),
-
                 )));
             }else{
 
@@ -56,8 +55,6 @@ class DocumentController extends Controller
                 }
 
                 $this->get('session')->getFlashBag()->add('info', 'erreur sur l\'enregistrement du document');
-
-
                 //var_dump($form->getData());die;
 
                 return $this->redirectToRoute('application_new_document', array(
@@ -124,7 +121,7 @@ class DocumentController extends Controller
         $em->remove($document);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', 'document bien supprimé');
+        $this->get('session')->getFlashBag()->add('info', 'document supprimé avec succès');
 
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),

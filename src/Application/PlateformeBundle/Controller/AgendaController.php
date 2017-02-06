@@ -16,48 +16,80 @@ class AgendaController extends Controller
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if($request->query->get('sentinel') == 1){
+            $nomc = '%'.$request->query->get('term').'%';
+            $idbenef = $request->query->get('id');
             // nom
-            $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.nomConso LIKE :nom');
-            $query->setParameter('nom', $request->query->get('term').'%');
+            $query = $em->createQuery('SELECT b.id, b.nomConso, b.prenomConso FROM ApplicationPlateformeBundle:Beneficiaire b WHERE b.consultant = :id AND b.nomConso LIKE :nom');
+            $query->setParameters(array('id'=>$idbenef, 'nom'=>$nomc));
             (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();
         }
         else if($request->query->get('sentinel') == 2){
-            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE v.departementId LIKE :nom');
-            $query->setParameter('nom', $request->query->get('term').'%');
+            $dept = $request->query->get('term').'%';
+            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE v.cp LIKE :nom');
+            $query->setParameter('nom', $dept);
             (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
+            
+            /*if(!empty($request->query->get('idb'))){
+                $dept = '%'.$request->query->get('term').'%';
+                $idbenef = $request->query->get('idb');
+                $query = $em->createQuery('SELECT be.id, b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Ville v  
+                                                        JOIN v.bureaux b JOIN v.beneficiaire be WHERE be.id = :idb AND v.departementId LIKE :nom');
+                $query->setParameters(array('idb'=>$idbenef,'nom'=>$dept));
+                (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
+            }
+            else{
+                $results = array('nom' => -1);
+            }*/
+            
         }
         return new JsonResponse(json_encode($results));
     }
 
     // Traitement des liens des calendriers de beneficiaires
-    public function agendasAction(Request $request){
-		switch(true){
-			case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
-				// remote
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
-					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-			break;
-			default:
-				// localhost
-				if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
-					return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-			break;
-		}
+    public function agendasAction(Request $request){    
+        $tabColor = ["#00FFFF", "#0000FF", "#FF00FF", "#808080", "#00FF00", "#800000", "#000080", "#808000", "#800080", "#FF0000", "#C0C0C0", "#008080", "#FFFF00"];
+        switch(true){
+                case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
+                        // remote
+                        if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
+                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+                break;
+                default:
+                        // Test si l'utilisateur n'a pas le role Admin il ne peut pas switcher sur l'agenda d'un autre consultant
+                        $authorization = $this->get('security.authorization_checker');
+                        if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL'))
+                        {
+                            if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda')
+                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
+                        }
+                break;
+        }
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if(empty($request->query->get('userid'))){
             // Recuperer tous les consultants (Pour Admin)
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT');
+            $cons = 1;
         }
         else{
-            // Recuperer le consultant
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userid'));
+            $cons = 0;
         }
+        // Definition de la couleur associé au calendrie
+        if($cons == 1){
+            $array_color_non_utilise = array_rand($tabColor,1); // Tirage d'une couleur
+        }
+        $beneficiaire = null;
+        if(!is_null($request->query->get('benef')))
+            $beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->query->get('benef'));
+        
         // Instanciation du formulaire d'ajout d'evenement
         $historique = new Historique();
         $form = $this->createForm(HistoriqueType::class, $historique);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
-            'form' => $form->createView()
+            'couleurs' => (isset($array_color_non_utilise))? $tabColor[$array_color_non_utilise]: 0,
+            'form' => $form->createView(),
+            'beneficiaire' => $beneficiaire
         ));
     }
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
@@ -99,7 +131,7 @@ class AgendaController extends Controller
                 $donnespost[] = array(
                     'nom' => $request->request->get('nomb'),
                     'prenom' => $request->request->get('prenombeneficiaire'),
-                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('bureauselect'):'',
+                    'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('namebureauselect'):'',
                     'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
                     'adresse' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('adresseh'):'',
                     'zip' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('ziph'):'',
@@ -145,45 +177,56 @@ class AgendaController extends Controller
             // On recupere le beneficiaire
             $benef = ($request->request->get('idbeneficiaire') != -1)? $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($_SESSION['benef']) : NULL;
             $_SESSION['agenda'][1]->setBeneficiaire($benef); // beneficiaire
-            // On recupere les rendez-vous du beneficiaire 
-            $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]+1, $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]+1, $hf[1], $hf[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s'), $benef);
             
-            if(count($resultats) > 0){
-                // Erreur sur l'heure reservée
-                $this->get('session')->set('erreurs', true);
+            // ===================================================================== //
+            // ===== Verifier que les heures selectionnées ne sont pas passées ===== //
+            // ===================================================================== //
+            $dateCourant = new \DateTime('now');
+            if($dateCourant >= $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])){
+                // Affiché l'erreur dans agendas.html.twig
+                $this->get('session')->set('errorsdate', true);
+                $this->get('session')->set('heuredate', $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])->format('d-m-Y H:i:s'));
             }
             else{
-                $eventInsert = $googleCalendar->addEvent(
-                    $_SESSION['calendrierId'],
-                    $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                    $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
-                    $summary,
-                    $_SESSION['agenda'][1]->getDescription(),
-                    $eventAttendee = "",
-                    $location = $lieu,
-                    $optionalParams = [],
-                    $allDay = false
-                );
-                // On recupere l'id de l'evenement ajouté
-                $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
-                // On recupère le Bureau
-                if(!empty($_SESSION['bureau'])){
-                    $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
-                    $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
+                $this->get('session')->set('errorsdate', false);
+                // On recupere les rendez-vous du beneficiaire 
+                $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s'), $benef);
+                if(count($resultats) > 0){
+                    // Erreur sur l'heure reservée
+                    $this->get('session')->set('erreurs', true);
                 }
-                
-                // On recupere le user pour le stcker en BD
-                $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
-                $_SESSION['agenda'][1]->setConsultant($userbd); // le consultant
-                // On enregistre l'historique en BD
-                $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
-                $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
-                $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
-                $em->flush();
-                unset($_SESSION['agenda']);
-                $this->get('session')->set('erreurs', false);
+                else{
+                    $eventInsert = $googleCalendar->addEvent(
+                        $_SESSION['calendrierId'],
+                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
+                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
+                        $summary,
+                        $_SESSION['agenda'][1]->getDescription(),
+                        $eventAttendee = "",
+                        $location = $lieu,
+                        $optionalParams = [],
+                        $allDay = false
+                    );
+                    // On recupere l'id de l'evenement ajouté
+                    $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+                    // On recupère le Bureau
+                    if(!empty($_SESSION['bureau'])){
+                        $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
+                        $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
+                    }
+                    // On recupere le user pour le stcker en BD
+                    $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
+                    $_SESSION['agenda'][1]->setConsultant($userbd); // le consultant
+                    // On enregistre l'historique en BD
+                    $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
+                    $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
+                    $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
+                    $em->flush();
+                    $this->get('session')->set('erreurs', false);
+                }
             }
             // On supprime les sessions pour soulager le gc
+            unset($_SESSION['agenda']);
             $this->get('session')->remove('benef');
             $this->get('session')->remove('bureau');
             $this->get('session')->remove('agenda');

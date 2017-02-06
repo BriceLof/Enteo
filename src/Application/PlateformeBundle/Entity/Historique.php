@@ -69,30 +69,28 @@ class Historique
      * @ORM\Column(name="type_rdv", type="text")
      */
     private $typerdv;
-	
-	/**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="evenetId", type="text")
      */
     private $eventId;
     
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Bureau", inversedBy="historique")
+   /**
+     * @ORM\ManyToOne(targetEntity="Bureau")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $bureau;
     
-    
     /**
-     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="historique")
+     * @ORM\ManyToOne(targetEntity="Beneficiaire")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="historique")
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $consultant;
@@ -117,29 +115,6 @@ class Historique
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set beneficiaire
-     *
-     * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
-     *
-     * @return Historique
-     */
-    public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
-    {
-        $this->beneficiaire = $beneficiaire;
-        return $this;
-    }
-
-    /**
-     * Get beneficiaire
-     *
-     * @return \Application\PlateformeBundle\Entity\Beneficiaire
-     */
-    public function getBeneficiaire()
-    {
-        return $this->beneficiaire;
     }
 
     /**
@@ -288,30 +263,6 @@ class Historique
     }
 
     /**
-     * Set bureau
-     *
-     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
-     *
-     * @return Historique
-     */
-    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
-    {
-        $this->bureau = $bureau;
-
-        return $this;
-    }
-
-    /**
-     * Get bureau
-     *
-     * @return \Application\PlateformeBundle\Entity\Bureau
-     */
-    public function getBureau()
-    {
-        return $this->bureau;
-    }
-
-    /**
      * Set dateFin
      *
      * @param \DateTime $dateFin
@@ -357,6 +308,54 @@ class Historique
     public function getEventId()
     {
         return $this->eventId;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Historique
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
+    }
+
+    /**
+     * Set beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
+     *
+     * @return Historique
+     */
+    public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
+    {
+        $this->beneficiaire = $beneficiaire;
+
+        return $this;
+    }
+
+    /**
+     * Get beneficiaire
+     *
+     * @return \Application\PlateformeBundle\Entity\Beneficiaire
+     */
+    public function getBeneficiaire()
+    {
+        return $this->beneficiaire;
     }
 
     /**

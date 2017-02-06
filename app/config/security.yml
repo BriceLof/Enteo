@@ -33,6 +33,6 @@ security:
     - { path: ^/register, role: ROLE_ADMIN }
     - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/received_mer, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/user/, role: [ROLE_ADMIN, ROLE_COMMERCIAL] }
     - { path: ^/admin/, role: ROLE_ADMIN }
-    - { path: ^/received_mer, role: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: /, role: ROLE_CONSULTANT }
+    - { path: /, role: IS_AUTHENTICATED_FULLY }

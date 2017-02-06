@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
 use Application\PlateformeBundle\Form\ConsultantType;
@@ -28,7 +29,7 @@ class BeneficiaireController extends Controller
      *
      */
     public function showAction(Request $request,$id){
-        $em = $this->getDoctrine()->getManager();        
+        $em = $this->getDoctrine()->getManager();
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -109,7 +110,9 @@ class BeneficiaireController extends Controller
         }
         
         if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') || $this->getUser()->getBeneficiaire()->contains($beneficiaire) ) {
+        
+        $authorization = $this->get('security.authorization_checker');
+        if (true === $authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
             throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
         }
@@ -120,8 +123,13 @@ class BeneficiaireController extends Controller
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
-        if ($request->isMethod('POST') && $editForm->isValid()) {
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+        if ($request->isMethod('POST') /*&& $editForm->isValid()*/) {
+           // var_dump($beneficiaire->getTelConso());die;
+            if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
+            }else{
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
+            }
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
@@ -138,6 +146,9 @@ class BeneficiaireController extends Controller
                 ->set('u.pays', '?12')
                 ->set('u.numSecu', '?13')
                 ->set('u.dateNaissance', '?14')
+                ->set('u.adresse', '?15')
+                ->set('u.adresseComplement', '?16')
+                ->set('u.numSecuCle', '?17')
                 ->where('u.id = ?2')
                 ->setParameter(1, $ville)
                 ->setParameter(2, $id)
@@ -153,8 +164,18 @@ class BeneficiaireController extends Controller
                 ->setParameter(12, $beneficiaire->getPays())
                 ->setParameter(13, $beneficiaire->getNumSecu())
                 ->setParameter(14, $beneficiaire->getDateNaissance())
+                ->setParameter(15, $beneficiaire->getAdresse())
+                ->setParameter(16, $beneficiaire->getAdresseComplement())
+                ->setParameter(17, $beneficiaire->getNumSecuCle())
                 ->getQuery();
             $p = $q->execute();
+
+            $this->get('session')->getFlashBag()->add('info', 'Fiche Bénéficiaire modifié avec succès');
+
+            return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'id' => $beneficiaire->getId(),
+                )
+            ));
         }
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
@@ -179,12 +200,24 @@ class BeneficiaireController extends Controller
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editConsultantForm->handleRequest($request);
 
-
-
         if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
             $beneficiaire = $editConsultantForm->getData();
+
+            //enregistrement de l'ajout ou modification de consultant dans le
+            $historique = new Historique();
+            $historique->setHeuredebut(new \DateTime('now'));
+            $historique->setHeurefin(new \DateTime('now'));
+            $historique->setSummary("");
+            $historique->setTypeRdv("");
+            $historique->setConsultant($beneficiaire->getConsultant());
+            $historique->setBeneficiaire($beneficiaire);
+            $historique->setDescription("Ajout/modification de consultant : ".ucfirst(strtolower($beneficiaire->getConsultant()->getPrenom()))." ".ucfirst(strtolower($beneficiaire->getConsultant()->getNom())));
+            $historique->setEventId("0");
+
             $em->persist($beneficiaire);
+            $em->persist($historique);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('info', 'Consultant modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
@@ -220,6 +253,7 @@ class BeneficiaireController extends Controller
             $beneficiaire = $projetForm->getData();
             $em->persist($beneficiaire);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('info', 'Projet bénéficiaire modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
@@ -302,7 +336,7 @@ class BeneficiaireController extends Controller
             if (!is_null($form["ville"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]["nom"]->getData(),
+                    'id' => $form["ville"]["nom"]->getData(),
                 ));
                 $beneficiaire->setVille($ville);
             }
@@ -365,12 +399,12 @@ class BeneficiaireController extends Controller
 
         $dateDebut = null;
         $dateFin = null;
-
         $ville = new Ville();
+        
         if (!is_null($form["ville"]["nom"]->getData())) {
             $em = $this->getDoctrine()->getManager();
             $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                'nom' => $form["ville"]["nom"]->getData(),
+                'id' => $form["ville"]["nom"]->getData(),
             ));
             $beneficiaire->setVille($ville);
         }

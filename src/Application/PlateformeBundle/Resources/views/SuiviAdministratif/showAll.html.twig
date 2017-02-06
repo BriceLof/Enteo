@@ -1,20 +1,20 @@
 {%  if beneficiaire.suiviAdministratif is not null %}
             {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
                 <div class="showAllSuiviAdministratif">
-                    <div class="col-sm-2">{{ suiviAdministratif.date|date('d/M/Y') }}</div>
-                    <div class="col-sm-3">{{ suiviAdministratif.quoi }}</div>
-                    <div class="col-sm-3">{{ suiviAdministratif.qui }}</div>
-                    <div class="btn col-sm-1">
-                        <span style="color: black; float: right" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
+                    <div class="elementSuivi">{{ suiviAdministratif.date|date('d/M/Y') }}</div>
+                    <div class="elementSuivi">{{ suiviAdministratif.quoi }}</div>
+                    <div class="elementSuivi">{{ suiviAdministratif.qui }}</div>
+                    <div class="elementSuivi glyphiconSuivi">
+                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                     </div>
-                    <div class="modal fade" id="myModalSuiviAdministratifDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div  class="modal fade" id="myModalSuiviAdministratifDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
+                                    <h4 class="modal-title" id="myModalLabel">Supprimer Suivi Administratif</h4>
                                 </div>
                                 <div class="modal-body">
                                     <div>
@@ -24,8 +24,8 @@
                                 <div class="modal-footer">
                                     <div>
                                         <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
-                                        <a class="deleteBtn" href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
-                                            <button class="btn btn-primary">Supprimer</button>
+                                        <a style="width: 95px;float: right" href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
+                                            <button class="btn btn-danger">Supprimer</button>
                                         </a>
                                     </div>
                                 </div>
@@ -38,8 +38,8 @@
 
 
 
-                    <div class="btn col-sm-1">
-                        <span style="color: black; float: right" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
+                    <div class="elementSuivi glyphiconSuivi">
+                        <span style="color: black;" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
                     </div>
                     <div class="modal fade" id="myModalSuiviAdministratifModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -56,6 +56,6 @@
                             </div>
                         </div>
                     </div>
-                </div><br><br>
+                </div>
             {% endfor %}
 {%  endif %}

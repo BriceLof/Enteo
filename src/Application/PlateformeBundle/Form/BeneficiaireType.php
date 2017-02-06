@@ -72,7 +72,9 @@ class BeneficiaireType extends AbstractType
             ->add('telConso', TextType::class, array(
                 'label' => 'Tél ',
                 'attr' => array(
+                    'maxlength' => 14,
                     'placeholder' => '',
+                    'class' => 'telephoneConso'
                 )
             ))
 
@@ -80,7 +82,9 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Tél 2 ',
                 'required' => false,
                 'attr' => array(
+                    'maxlength' => 14,
                     'placeholder' => '',
+                    'class' => 'telephoneConso'
                 )
             ))
 
@@ -133,16 +137,28 @@ class BeneficiaireType extends AbstractType
                 'label' => 'N° de Sécu ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'maxlength' => 13,
+                    'placeholder' => '13 chiffres',
                 )
+            ))
+
+            ->add('numSecuCle', TextType::class, array(
+                    'label' => '',
+                    'required' => false,
+                    'attr' => array(
+                        'maxlength' => 2,
+                        'placeholder' => 'clé',
+                    )
             ))
 
             ->add('dateNaissance', DateType::class, array(
                 'label' => 'Date de Naissance ',
                 'widget' => 'single_text',
                 'required' => false,
+                'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'date'
                 )
             ))
 
