@@ -392,6 +392,14 @@ $("document").ready(function () {
         $('.msg-errors').css('display', 'none');
     }, 2000);
    
+   // ============================================================ //
+   // ======== Gestion du champ ville lorsque le type de rdv ===== //
+   // ============== change [presenciel ou distanciel] =========== //
+   // ============================================================ //
+   $(".typerdv").change(function(){
+        $('#dpttest').val('');
+   });
+   
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -408,7 +416,6 @@ $("document").ready(function () {
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda", "autocompletion"); // on appelle le script JSON
             break;
     }
-    
     // Autocompletion ville
     $("#dpttest").autocomplete({
         source: function($request, reponse){
@@ -416,8 +423,8 @@ $("document").ready(function () {
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2,
-                    idb : $('#idbeneficiaire').val()
+                    sentinel: 2
+                    // idb : $('#idbeneficiaire').val()
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -436,7 +443,7 @@ $("document").ready(function () {
                               {
                                   if(item.nom != undefined){
                                       // On met à jour les champs ville, bureau
-                                      $('#dpttest').val(item.departementId); // departement
+                                      //$('#dpttest').val(item.departementId); // departement
                                       $('#bureauRdv').val(item.nombureau); // bureau
                                       $('.bureauselect').val(item.id); // bureau selectionner
                                       $('.namebureauselect').val(item.nombureau); // bureau

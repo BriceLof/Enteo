@@ -15,7 +15,6 @@ class AgendaController extends Controller
     // Autocompletion
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
-
         if($request->query->get('sentinel') == 1){
             $nomc = '%'.$request->query->get('term').'%';
             $idbenef = $request->query->get('id');
@@ -25,7 +24,12 @@ class AgendaController extends Controller
             (count($query->getResult()) <= 0)? $results = array('nomConso' => -1): $results = $query->getResult();
         }
         else if($request->query->get('sentinel') == 2){
-            if(!empty($request->query->get('idb'))){
+            $dept = $request->query->get('term').'%';
+            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE v.cp LIKE :nom');
+            $query->setParameter('nom', $dept);
+            (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
+            
+            /*if(!empty($request->query->get('idb'))){
                 $dept = '%'.$request->query->get('term').'%';
                 $idbenef = $request->query->get('idb');
                 $query = $em->createQuery('SELECT be.id, b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Ville v  
@@ -35,7 +39,7 @@ class AgendaController extends Controller
             }
             else{
                 $results = array('nom' => -1);
-            }
+            }*/
             
         }
         return new JsonResponse(json_encode($results));
@@ -209,6 +213,9 @@ class AgendaController extends Controller
                         $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
                         $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
                     }
+                    // On recupere le user pour le stcker en BD
+                    $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
+                    $_SESSION['agenda'][1]->setConsultant($userbd); // le consultant
                     // On enregistre l'historique en BD
                     $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
                     $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 

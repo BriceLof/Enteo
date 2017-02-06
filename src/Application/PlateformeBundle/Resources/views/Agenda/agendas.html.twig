@@ -17,7 +17,7 @@
         <div class="row">
            <div class="col-mg-12">
                <div class="alert alert-danger msg-errors" role="alert">
-                 <strong>Oops! </strong><span>La date et l'heure selectionnées sont dejà passées </span><span style='color:red;'>{{app.request.session.get("heuredate")}}</span>
+                 <strong>Oops! </strong><span>La date et l'heure selectionnées sont dejà passées </span><span style='color:blue;'>{{app.request.session.get("heuredate")}}</span>
                </div>
            </div>
         </div>
@@ -177,7 +177,7 @@
                                     </tr>
                                     
                                     <tr>
-                                        {% if beneficiaire is not null %}
+                                        {% if beneficiaire is defined and beneficiaire is not null %}
                                             <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required  disabled value="{{ beneficiaire.nomConso }}"></td>
                                             <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required disabled value="{{ beneficiaire.prenomConso }}"></td>
                                         {% else %}
@@ -187,7 +187,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan=2>
-                                            {% if beneficiaire is not null %}
+                                            {% if beneficiaire is defined and beneficiaire is not null %}
                                                 <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required value="{{ beneficiaire.prenomConso }}">
                                                 <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="{{ beneficiaire.id }}" class="form-control new_input">
                                             {% else %}
@@ -247,13 +247,6 @@
                                                 {{form_widget(form.dateDebut)}}
                                             </td>
                                         </tr>
-                                        {% if app.request.session.get("errorsdate") is defined and  app.request.session.get("errorsdate") == true %}
-                                        <tr>
-                                            <td colspan=2>
-                                                <span style='color:red;'>La date et l'heure selectionnées sont dejà passées</span>
-                                            </td>
-                                        </tr>
-                                        {% endif %}
                                         <tr>
                                             <th style="height:31px;" valign="bottom"><span>Heure debut</span></th>
                                             <th valign="bottom"><span>Heure fin</span></th>

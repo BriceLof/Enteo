@@ -88,6 +88,12 @@ class Historique
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $consultant;
 	
 
     /**
@@ -350,5 +356,29 @@ class Historique
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Historique
+     */
+    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 }

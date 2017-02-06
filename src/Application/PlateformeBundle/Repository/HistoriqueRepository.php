@@ -61,10 +61,11 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             return 
                 $this
                     ->createQueryBuilder('h')
-                    ->where('h.dateDebut < :h_deb')
+                    ->where('h.dateDebut <= :h_deb')
                     ->setParameter('h_deb',$datedujour)
                     ->andwhere('h.beneficiaire = :benef')
                     ->setParameter('benef',$beneficiaireid)
+                    ->orderBy('h.dateDebut','DESC')
                     ->getQuery()
                     ->getResult();
         }
