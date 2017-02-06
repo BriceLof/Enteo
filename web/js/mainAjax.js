@@ -30,7 +30,7 @@ $("document").ready(function () {
     });
 
 
-    //datepicker
+    //datepicker date de naissance
     $( function() {
         $("form input.date").datepicker({
             dateFormat: 'dd/mm/yy',
@@ -48,6 +48,8 @@ $("document").ready(function () {
             dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
             dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
             weekHeader: 'Sem.'
+        }).on('input change', function (e) {
+            this.className += ' modified';
         });
     });
 
@@ -76,13 +78,14 @@ $("document").ready(function () {
                 var startDate = $('#accompagnement_dateDebut').val().split("/");
                 var valueEntered = value.split("/");
                 if (valueEntered[2] < startDate[2]) {
-                    return false;
-                } else if (valueEntered[1] < startDate[1]) {
-                    return false;
-                } else if (valueEntered[0] < startDate[0]) {
-                    return false;
-                } else {
+                    console.log(valueEntered[2] > startDate[2]);
                     return true;
+                } else if (valueEntered[1] > startDate[1]) {
+                    return true;
+                } else if (valueEntered[0] > startDate[0]) {
+                    return true;
+                } else {
+                    return false;
                 }
             }, "vérifiez la date de fin"
         );
