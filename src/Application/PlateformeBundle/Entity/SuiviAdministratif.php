@@ -35,20 +35,27 @@ class SuiviAdministratif
      */
     private $date;
 
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Statut")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $statut;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DetailStatut")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $detailStatut;
+    
     /**
      * @var
      *
      * @ORM\Column(name="qui", type="string", length=255)
      */
     private $qui;
-
-    /**
-     * @var
-     *
-     * @ORM\Column(name="quoi", type="string", length=255)
-     */
-    private $quoi;
-
+    
     /**
      * SuiviAdministratif constructor.
      * @param $date
@@ -118,30 +125,6 @@ class SuiviAdministratif
     }
 
     /**
-     * Set quoi
-     *
-     * @param string $quoi
-     *
-     * @return SuiviAdministratif
-     */
-    public function setQuoi($quoi)
-    {
-        $this->quoi = $quoi;
-
-        return $this;
-    }
-
-    /**
-     * Get quoi
-     *
-     * @return string
-     */
-    public function getQuoi()
-    {
-        return $this->quoi;
-    }
-
-    /**
      * Set beneficiaire
      *
      * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
@@ -163,5 +146,53 @@ class SuiviAdministratif
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param \Application\PlateformeBundle\Entity\Statut $statut
+     *
+     * @return SuiviAdministratif
+     */
+    public function setStatut(\Application\PlateformeBundle\Entity\Statut $statut)
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return \Application\PlateformeBundle\Entity\Statut
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    /**
+     * Set detailStatut
+     *
+     * @param \Application\PlateformeBundle\Entity\DetailStatut $detailStatut
+     *
+     * @return SuiviAdministratif
+     */
+    public function setDetailStatut(\Application\PlateformeBundle\Entity\DetailStatut $detailStatut)
+    {
+        $this->detailStatut = $detailStatut;
+
+        return $this;
+    }
+
+    /**
+     * Get detailStatut
+     *
+     * @return \Application\PlateformeBundle\Entity\DetailStatut
+     */
+    public function getDetailStatut()
+    {
+        return $this->detailStatut;
     }
 }

@@ -1,8 +1,9 @@
 {%  if beneficiaire.suiviAdministratif is not null %}
             {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
                 <div class="showAllSuiviAdministratif">
-                    <div class="elementSuivi">{{ suiviAdministratif.date|date('d/M/Y') }}</div>
-                    <div class="elementSuivi">{{ suiviAdministratif.quoi }}</div>
+                    <div class="elementSuivi">{{ suiviAdministratif.date|date('d/m/Y') }}</div>
+                    <div class="elementSuivi">{{ suiviAdministratif.statut.nom }}</div>
+                    <div class="elementSuivi">{{ suiviAdministratif.detailStatut.detail }}</div>
                     <div class="elementSuivi">{{ suiviAdministratif.qui }}</div>
                     <div class="elementSuivi glyphiconSuivi">
                         <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
@@ -39,9 +40,9 @@
 
 
                     <div class="elementSuivi glyphiconSuivi">
-                        <span style="color: black;" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
+                        <span style="color: black;" data-boucle="{{ loop.index }}" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil updateSuivi"></span>
                     </div>
-                    <div class="modal fade" id="myModalSuiviAdministratifModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal fade" id="myModalSuiviAdministratifModify{{ loop.index }}" class="myModalSuiviAdministratifModif{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -50,9 +51,14 @@
                                     </button>
                                     <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
                                 </div>
-                                    <form method="POST" id="suiviAdministratifEditForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
+                                    <form method="POST" id="suiviAdministratifEditForm" class="suiviAdministratifForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
                                         {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
                                     </form>
+                                
+                                    <!-- ID du statut et detail statut du dernier suivi administratif du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
+                                    <input type="hidden" value="{{ suiviAdministratif.statut.id }}" class="statutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
+                                    <input type="hidden" value="{{ suiviAdministratif.detailStatut.id }}" class="detailStatutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
+                                    
                             </div>
                         </div>
                     </div>

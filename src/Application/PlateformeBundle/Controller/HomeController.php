@@ -72,7 +72,7 @@ class HomeController extends Controller
             $em->flush();
             
             // Envoi d'un mail selon le statut, ( parametres : detail du statut, bénéficiaire concerné )  
-            $service = $this->container->get('application_plateforme.statut.mail.mail_for_statut')->alerteForStatus($news->getDetailStatut(), $news->getBeneficiaire() );
+            //$service = $this->container->get('application_plateforme.statut.mail.mail_for_statut')->alerteForStatus($news->getDetailStatut(), $news->getBeneficiaire() );
             
             $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
             return $this->redirect($url);

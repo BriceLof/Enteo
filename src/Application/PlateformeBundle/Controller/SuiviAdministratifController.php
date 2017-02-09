@@ -23,18 +23,19 @@ class SuiviAdministratifController extends Controller
      */
     public function newAction(Request $request, $id)
     {
+       
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+         
         $suiviAdministratif = new SuiviAdministratif();
         $form = $this->createForm(SuiviAdministratifType::class, $suiviAdministratif);
 
-
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            if($form['quoi']->getData()== 'Facture solde'){
+            //if($form['quoi']->getData()== 'Facture solde'){
 
                 //il faudrait ajour le consultant plus tard
-                $this->get('application_plateforme.mail')->sendFactureSoldeMessage($beneficiaire);
-            }
+                //$this->get('application_plateforme.mail')->sendFactureSoldeMessage($beneficiaire);
+            //}
             $suiviAdministratif = $form->getData();
             $suiviAdministratif->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();

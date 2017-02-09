@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class SuiviAdministratifType extends AbstractType
 {
@@ -18,29 +20,22 @@ class SuiviAdministratifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateType::class, array(
-                'label' => 'date',
-                'attr' => array(
-                    'placeholder' => 'now',
-                )
+             ->add('statut', EntityType::class, array(
+                'class' => 'ApplicationPlateformeBundle:Statut',
+                'choice_label' => 'nom', 
+                'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('s')
+                                ->where('s.slug = :slug1')
+                                ->orWhere('s.slug = :slug2')
+                                ->orWhere('s.slug = :slug3')
+                                ->setParameters(array('slug1' => 'recevabilite', 'slug2' => 'financement','slug3' => 'facturation'))
+                            ;
+                },
             ))
-            ->add('quoi', ChoiceType::class, array(
-                'label' => 'Quoi',
-                'attr' => array(
-                    'placeholder' => '',
-                ),
-                'choices' => array(
-                    'Devis' => 'Devis',
-                    'Programme' => 'Programme',
-                    'Accord Devis' => 'Accord Devis',
-                    'Recevabilité' => 'Recevabilité',
-                    'Accord OPCA' => 'Accord OPCA',
-                    'Facture d\'acompte' => 'Facture d\'acompte',
-                    'Feuille de Présence OPCA' => 'Feuille de Présence OPCA',
-                    'Facture solde' => 'Facture solde',
-                    'Rappel Financeur' => 'Rappel Financeur',
-                    'Résultat Enquête Satisfaction' => 'Résultat Enquête Satisfaction'
-                )
+            ->add('detailStatut', EntityType::class, array(
+                'class' => 'ApplicationPlateformeBundle:DetailStatut',
+                'choice_label' => 'detail', 
+                'placeholder' => '',
             ))
             ->add('qui', TextType::class, array(
                 'label' => 'Qui',

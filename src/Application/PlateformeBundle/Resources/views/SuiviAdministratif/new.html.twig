@@ -1,18 +1,18 @@
-<form method="POST" id="suiviAdministratifNewForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+<form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
     <br>
     <div>
         <span class="tableSection" style="width: 110px">Ajouter une action</span>
     </div>
     <div>
-        <span>date :</span>
-        <span style="width: 100%;">{{ form_widget(form.date) }}</span>
+        <span>{{ form_label(form.statut) }}</span>
+        <span colspan="3">{{ form_widget(form.statut, {'attr' : {'class': 'statutSuiviAd'}}) }}</span>
     </div>
     <div>
-        <span>Quoi?</span>
-        <span colspan="3">{{ form_widget(form.quoi) }}</span>
+        <span>{{ form_label(form.detailStatut) }}</span><div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+        <span colspan="3">{{ form_widget(form.detailStatut, {'attr' : {'class': 'detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
     </div>
     <div>
-        <span>Qui?</span>
+        <span>{{ form_label(form.qui) }}</span>
         <span colspan="3">{{ form_widget(form.qui) }}</span>
     </div>
     <div>
