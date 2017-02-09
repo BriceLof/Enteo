@@ -14,10 +14,10 @@
                            {{historique.dateDebut|date('d/m/Y')}}
                         </td>
                         <td style="border:none;">
-                            <span >{{historique.heureDebut|date('h:m')}}</span>
+                            <span >{{historique.heureDebut|date('H:i')}}</span>
                         </td>
                         <td style="border:none;">
-                            <span >{{ historique.heureFin|date('h:m') }}</span>
+                            <span >{{ historique.heureFin|date('H:i') }}</span>
                         </td>
                         <td style="border:none;">
                             {% if historique.bureau is not null %}
@@ -43,7 +43,7 @@
                             {{historique.dateDebut|date('d/m/Y')}}
                         </td>
                         <td style="border:none;">
-                            <span >{{historique.heureDebut|date('h:m')}}</span>
+                            <span >{{historique.heureDebut|date('H:i')}}</span>
                         </td>
                         <td colspan=3>
                             <span>{{ historique.description }}</span>
