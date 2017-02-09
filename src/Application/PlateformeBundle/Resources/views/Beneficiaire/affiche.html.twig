@@ -150,21 +150,7 @@
                         <div class="collapse in" id="collapseStatut">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        {% if(beneficiaire.news | length > 0) %}
-                                            {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                                        {% endif %}
-                                        <td>Statut :</td>
-                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Détail :</td>
-                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gestionnaire Administratif</td>
-                                        <td>Select</td>
-                                    </tr>
+                                   {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
                                 </tbody>
                             </table>
                         </div>
@@ -347,7 +333,7 @@
                     </div>
                     <div id="historique" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a  id="historiqueCollapse" href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
+                            <caption class="titreSection"><a  id="historiqueCollapse" href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique bénéficiaire</span></a></caption>
                         </table>
                         <div id="collapseHistorique" class="collapse in">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -364,7 +350,7 @@
                             <div class="collapse in" id="collapseSuiviAdministratif">
                                 {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
 
-                                <form method="POST" id="suiviAdministratifNewForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+                                <form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
                                     <table>
                                         <tbody>
                                             {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:new",{'id': beneficiaire.id})) }}
@@ -372,6 +358,12 @@
                                     </table>
                                 </form>
                             </div>
+                            
+                            {% if(beneficiaire.suiviAdministratif | length > 0) %}
+                                {% set dernier_suivi = beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1] %}
+                            {% endif %}
+                            <!-- ID du statut du dernier suivi administratif du bénéficiaire ou celui de Recevabilité si aucun suivi encore. On s'en sert dans js pour avoir le statut suivant -->
+                            <input type="hidden" value="{{ beneficiaire.suiviAdministratif | length > 0 ? dernier_suivi.statut.id : 7 }}" class="statutIDCurrentSuiviAd"/>
                     </div>
     {% endif %}
                 </div>

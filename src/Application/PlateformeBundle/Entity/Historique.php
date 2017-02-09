@@ -91,7 +91,7 @@ class Historique
     
     /**
      * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $consultant;
 	
