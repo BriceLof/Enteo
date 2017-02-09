@@ -1,67 +1,82 @@
 {%  if beneficiaire.suiviAdministratif is not null %}
+        <table class="table" style="width:96%">
+            <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Statut</th>
+                  <th>Détail</th>
+                  <th>Info</th>
+                  <th colspan=2>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
             {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
-                <div class="showAllSuiviAdministratif">
-                    <div class="elementSuivi">{{ suiviAdministratif.date|date('d/m/Y') }}</div>
-                    <div class="elementSuivi">{{ suiviAdministratif.statut.nom }}</div>
-                    <div class="elementSuivi">{{ suiviAdministratif.detailStatut.detail }}</div>
-                    <div class="elementSuivi">{{ suiviAdministratif.qui }}</div>
-                    <div class="elementSuivi glyphiconSuivi">
-                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
-                    </div>
-                    <div  class="modal fade" id="myModalSuiviAdministratifDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel">Supprimer Suivi Administratif</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div>
-                                        <span>Voulez-vous vraiment supprimer ce Suivi Administratif?</span>
+                <tr style="border-bottom: 1px solid #dddddd;">
+                    <td style="border:none;margin-left:0">{{ suiviAdministratif.date|date('d/m/Y') }}</td>
+                    <td>{{ suiviAdministratif.statut.nom }}</td>
+                    <td>{{ suiviAdministratif.detailStatut.detail }}</td>
+                    <td>{{ suiviAdministratif.info }}</td>
+                    <td>
+                        <div class="elementSuivi glyphiconSuivi">
+                            <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
+                        </div>
+                        <div  class="modal fade" id="myModalSuiviAdministratifDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Supprimer Suivi Administratif</h4>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <div>
-                                        <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
-                                        <a style="width: 95px;float: right" href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
-                                            <button class="btn btn-danger">Supprimer</button>
-                                        </a>
+                                    <div class="modal-body">
+                                        <div>
+                                            <span>Voulez-vous vraiment supprimer ce Suivi Administratif?</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div>
+                                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                            <a style="width: 95px;float: right" href="{{ path('application_delete_suivi_administratif', { 'id': suiviAdministratif.id }) }}">
+                                                <button class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
 
 
 
 
-                    <div class="elementSuivi glyphiconSuivi">
-                        <span style="color: black;" data-boucle="{{ loop.index }}" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil updateSuivi"></span>
-                    </div>
-                    <div class="modal fade" id="myModalSuiviAdministratifModify{{ loop.index }}" class="myModalSuiviAdministratifModif{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
+                        <div class="elementSuivi glyphiconSuivi">
+                            <span style="color: black;" data-boucle="{{ loop.index }}" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil updateSuivi"></span>
+                        </div>
+                        <div class="modal fade" id="myModalSuiviAdministratifModify{{ loop.index }}" class="myModalSuiviAdministratifModif{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
+                                    </div>
+                                        <form method="POST" id="suiviAdministratifEditForm" class="suiviAdministratifForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
+                                            {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
+                                        </form>
+
+                                        <!-- ID du statut et detail statut du dernier suivi administratif du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
+                                        <input type="hidden" value="{{ suiviAdministratif.statut.id }}" class="statutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
+                                        <input type="hidden" value="{{ suiviAdministratif.detailStatut.id }}" class="detailStatutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
+
                                 </div>
-                                    <form method="POST" id="suiviAdministratifEditForm" class="suiviAdministratifForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
-                                        {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
-                                    </form>
-                                
-                                    <!-- ID du statut et detail statut du dernier suivi administratif du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
-                                    <input type="hidden" value="{{ suiviAdministratif.statut.id }}" class="statutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
-                                    <input type="hidden" value="{{ suiviAdministratif.detailStatut.id }}" class="detailStatutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
-                                    
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </td>
+                </tr>
             {% endfor %}
+            </tbody>
+        </table>
 {%  endif %}

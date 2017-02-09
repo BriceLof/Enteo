@@ -52,9 +52,10 @@ class SuiviAdministratif
     /**
      * @var
      *
-     * @ORM\Column(name="qui", type="string", length=255)
+     * @ORM\Column(name="info", type="string", length=255, nullable=true)
+     * 
      */
-    private $qui;
+    private $info;
     
     /**
      * SuiviAdministratif constructor.
@@ -100,29 +101,7 @@ class SuiviAdministratif
         return $this->date;
     }
 
-    /**
-     * Set qui
-     *
-     * @param string $qui
-     *
-     * @return SuiviAdministratif
-     */
-    public function setQui($qui)
-    {
-        $this->qui = $qui;
-
-        return $this;
-    }
-
-    /**
-     * Get qui
-     *
-     * @return string
-     */
-    public function getQui()
-    {
-        return $this->qui;
-    }
+    
 
     /**
      * Set beneficiaire
@@ -194,5 +173,29 @@ class SuiviAdministratif
     public function getDetailStatut()
     {
         return $this->detailStatut;
+    }
+
+    /**
+     * Set info
+     *
+     * @param string $info
+     *
+     * @return SuiviAdministratif
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
     }
 }

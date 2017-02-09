@@ -65,6 +65,7 @@ $(function(){
         // Modification d'un suivi administratif
         $(".updateSuivi").click(function(){
             var boucle = $(this).attr('data-boucle')
+            $("#myModalSuiviAdministratifModify"+boucle+" .detailStatutSuiviAd").attr("disabled", "disabled") 
             var statutIdSuiviAd = $(".statutIDCurrentSuiviAdUpdate"+boucle).val()
             var detailStatutIdSuiviAd = $(".detailStatutIDCurrentSuiviAdUpdate"+boucle).val()
             ajaxFormNews(statutIdSuiviAd, false, detailStatutIdSuiviAd)   

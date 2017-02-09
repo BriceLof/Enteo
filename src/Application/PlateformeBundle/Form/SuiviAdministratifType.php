@@ -37,13 +37,14 @@ class SuiviAdministratifType extends AbstractType
                 'choice_label' => 'detail', 
                 'placeholder' => '',
             ))
-            ->add('qui', TextType::class, array(
-                'label' => 'Qui',
+            ->add('info', TextType::class, array(
+                'label' => 'News',
                 'attr' => array(
                     'placeholder' => '',
-                )
+                ), 
+                'required' => false
             ))
-            ->add('submit', SubmitType::class, array('label' => 'Enregistrer')
+            ->add('submit', SubmitType::class, array('label' => 'Ajouter')
             )
         ;
     }
