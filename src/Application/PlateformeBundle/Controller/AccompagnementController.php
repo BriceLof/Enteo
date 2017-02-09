@@ -41,6 +41,10 @@ class AccompagnementController extends Controller
         if ($editForm->isValid()) {
             $beneficiaire->setAccompagnement($accompagnement);
             $em->persist($beneficiaire);
+            foreach ($accompagnement->getFinanceur() as $financeur){
+                $financeur->setAccompagnement($accompagnement);
+                $em->persist($financeur);
+            }
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', 'Accompagnement modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(

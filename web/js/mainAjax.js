@@ -74,21 +74,32 @@ $("document").ready(function () {
     });
 
     jQuery.validator.addMethod("greaterThan",
-            function (value, element) {
-                var startDate = $('#accompagnement_dateDebut').val().split("/");
-                var valueEntered = value.split("/");
-                if (valueEntered[2] < startDate[2]) {
-                    console.log(valueEntered[2] > startDate[2]);
-                    return true;
-                } else if (valueEntered[1] > startDate[1]) {
-                    return true;
-                } else if (valueEntered[0] > startDate[0]) {
-                    return true;
-                } else {
+        function (value, element) {
+            var startDate = $('#accompagnement_dateDebut').val().split("/");
+            var valueEntered = value.split("/");
+            if (valueEntered[2] > startDate[2]) {
+                return true;
+            }else {
+                if(valueEntered[2] == startDate[2]){
+                    if(valueEntered[1] > startDate[1]){
+                        return true;
+                    }else{
+                        if(valueEntered[1] == startDate[1]){
+                            if(valueEntered[0] > startDate[0]){
+                                return true;
+                            }else{
+                                return false;
+                            }
+                        }else{
+                            return false;
+                        }
+                    }
+                }else{
                     return false;
                 }
-            }, "vérifiez la date de fin"
-        );
+            }
+        }, "vérifiez la date de fin"
+    );
 
     jQuery.validator.addMethod(
         "tarif",
@@ -172,7 +183,7 @@ $("document").ready(function () {
                     "tarif" : /^[1-9][0-9]+(\.?([0-9]?[1-9]|[1-9][0-9]?))?$/
                 },
                 "accompagnement[dateDebut]": {
-                    "dateBR" : /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/
+                    "dateBR" : /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
                 },
                 "accompagnement[dateFin]": {
                     "dateBR" : /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
@@ -995,3 +1006,140 @@ function urlParam(name){
         })
     }
 })();
+
+
+//ajout de plusieurs financement
+$(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#accompagnement_financeur');
+    // On ajoute un lien pour ajouter une nouvelle catégorie
+    var $addLink = $('<a href="#" id="add_financement_button" >Ajouter un co-financeur</a>');
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+        addFinanceur($container);
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+    });
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+        addTwoFirstFinanceur($container);
+        addTwoFirstFinanceur($container);
+    } else if (index == 1){
+        addTwoFirstFinanceur($container);
+    }
+    $container.append($addLink);
+
+    function addTwoFirstFinanceur($container) {
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, '- Financeur ' + (index+1))
+            .replace(/__name__/g, index));
+        $container.append($prototype);
+        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+        index++;
+    }
+
+    // La fonction qui ajoute un formulaire Image
+    function addFinanceur($container) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'co-financeur '/* + (index+1)*/)
+            .replace(/__name__/g, index));
+        // On ajoute au prototype un lien pour pouvoir supprimer l'image
+        addDeleteLink($prototype);
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+        index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une image
+    function addDeleteLink($prototype) {
+        // Création du lien
+        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
+        // Ajout du lien
+        $prototype.append($deleteLink);
+        // Ajout du listener sur le clic du lien
+        $deleteLink.click(function(e) {
+            $prototype.remove();
+            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            return false;
+        });
+    }
+
+    $('.nom_organisme').change(function () {
+        parent = $(this).parent().parent();
+        element = parent.find('#'+ parent.attr('id') +'_organisme');
+        if($(this).val() == 'OPCA'){
+            $name = 'OPCA';
+            listeOpcaOpacif($name, element);
+        }else{
+            if($(this).val() == 'OPACIF'){
+                $name = 'OPACIF';
+                listeOpcaOpacif($name, element);
+            }else{
+                element.empty();
+            }
+        }
+    });
+
+
+    //modification du champ input de l'organisme en select
+    $( function () {
+        $('.organisme_organisme').each(function () {
+            parent = $(this).parent().parent();
+            nomOrganisme = $(parent).find('#'+ $(parent).attr('id') +'_nom');
+            var newElement = $('<select>');
+            $.each(this.attributes, function (i, attrib) {
+                $(newElement).attr(attrib.name, attrib.value);
+            });
+            $(this).replaceWith(newElement);
+        });
+    });
+
+    $( function () {
+        $('select.organisme_organisme').each(function () {
+            parent = $(this).parent().parent();
+            nomOrganisme = $(parent).find('#'+ $(parent).attr('id') +'_nom');
+            element = $(this);
+            console.log($(this).val());
+            if($(nomOrganisme).val() == 'OPCA'){
+                $name = 'OPCA';
+                listeOpcaOpacif($name,element);
+            }else{
+                if($(nomOrganisme).val() == 'OPACIF') {
+                    $name = 'OPACIF';
+                    listeOpcaOpacif($name, element);
+                }
+            }
+        });
+    });
+
+
+//Ajax pour recuperer la liste des opca ou opacif
+    function listeOpcaOpacif($name, element) {
+        $.ajax({
+            url: Routing.generate('application_opca_opacif_financeur', {'nom' : $name}), // le nom du fichier indiqué dans le formulaire
+            cache: true,
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                element.empty();
+                console.log('ça charge');
+            },
+            success: function (data) {
+                $.each(JSON.parse(data),function (i, item) {
+                    if($(element).attr('value') == item){
+                        element.append("<option value=" + item + " selected = \"selected\">" + item + "</option>");
+                    }else {
+                        element.append("<option value=" + item + ">" + item + "</option>");
+                    }
+               });
+               console.log('fini');
+            }
+        });
+    }
+});
+

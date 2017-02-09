@@ -68,9 +68,16 @@ class Beneficiaire
     private $poste;
 
     /**
-     * @ORM\Column(name="encadrement", type="string", length=255, nullable=true)
+     * @ORM\Column(name="csp", type="string", length=255, nullable=true)
      */
-    private $encadrement;
+    private $csp;
+
+    /**
+     * @ORM\Column(name="type", type="string", length=255, nullable=true)
+     */
+    private $type;
+
+
 
     /**
      * @ORM\Column(name="tel_2", type="string", nullable=true)
@@ -923,30 +930,6 @@ class Beneficiaire
     }
 
     /**
-     * Set encadrement
-     *
-     * @param string $encadrement
-     *
-     * @return Beneficiaire
-     */
-    public function setEncadrement($encadrement)
-    {
-        $this->encadrement = $encadrement;
-
-        return $this;
-    }
-
-    /**
-     * Get encadrement
-     *
-     * @return string
-     */
-    public function getEncadrement()
-    {
-        return $this->encadrement;
-    }
-
-    /**
      * Set pays
      *
      * @param string $pays
@@ -1188,5 +1171,53 @@ class Beneficiaire
     public function getVilleMer()
     {
         return $this->villeMer;
+    }
+
+    /**
+     * Set csp
+     *
+     * @param string $csp
+     *
+     * @return Beneficiaire
+     */
+    public function setCsp($csp)
+    {
+        $this->csp = $csp;
+
+        return $this;
+    }
+
+    /**
+     * Get csp
+     *
+     * @return string
+     */
+    public function getCsp()
+    {
+        return $this->csp;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Beneficiaire
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

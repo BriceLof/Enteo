@@ -24,13 +24,25 @@ class FinanceurType extends AbstractType
                     '...' => '',
                     'OPCA' => 'OPCA',
                     'OPACIF' => 'OPACIF',
+                    'Entreprise' => 'Entreprise',
+                    'Bénéficiaire' => 'Bénéficiaire',
+                    'Pole Emploi' => 'Pole Emploi',
+                ),
+                'attr' => array(
+                    'class' => 'nom_organisme organisme_input',
+                )
+            ))
+
+            ->add('organisme', TextType::class, array(
+                'attr' => array(
+                    'class' => 'organisme_organisme organisme_input',
                 )
             ))
 
             ->add('montant', NumberType::class, array(
                 'label' => ' Montant en euros',
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'montant_organisme organisme_input',
                 )
             ))
             ->add('dateAccord', DateType::class, array(
@@ -39,12 +51,9 @@ class FinanceurType extends AbstractType
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'class' => 'date',
+                    'class' => 'accompagnementDate organisme_input',
                 )
             ))
-
-            ->add('submit', SubmitType::class, array('label' => 'Valider')
-            )
             ;
     }
 

@@ -66,6 +66,7 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->andwhere('h.beneficiaire = :benef')
                     ->setParameter('benef',$beneficiaireid)
                     ->orderBy('h.dateDebut','DESC')
+                    ->setMaxResults(5)
                     ->getQuery()
                     ->getResult();
         }

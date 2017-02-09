@@ -33,7 +33,7 @@ class Accompagnement
     private $opcaOpacif;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Financeur", mappedBy="accompagnement")
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Financeur", mappedBy="accompagnement", cascade={"persist","remove"})
      */
     private $financeur;
 
@@ -217,6 +217,8 @@ class Accompagnement
     public function addFinanceur(\Application\PlateformeBundle\Entity\Financeur $financeur)
     {
         $this->financeur[] = $financeur;
+
+        $financeur->setAccompagnement($this);
 
         return $this;
     }
