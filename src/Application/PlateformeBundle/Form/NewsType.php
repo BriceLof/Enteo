@@ -40,7 +40,8 @@ class NewsType extends AbstractType
                 'placeholder' => '',
             ))
             ->add('message', null, array(
-                'label' => 'Message :'
+                'label' => 'Message :', 
+                'required' => false
             )) 
             ->add('Enregistrer', SubmitType::class, array(
                 'attr' => array('class' => 'btn  btn-danger'),

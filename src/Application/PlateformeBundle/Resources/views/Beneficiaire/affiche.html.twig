@@ -146,21 +146,7 @@
                         <div class="collapse in" id="collapseStatut">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        {% if(beneficiaire.news | length > 0) %}
-                                            {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                                        {% endif %}
-                                        <td>Statut :</td>
-                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Détail :</td>
-                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gestionnaire Administratif</td>
-                                        <td>Select</td>
-                                    </tr>
+                                   {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
                                 </tbody>
                             </table>
                         </div>

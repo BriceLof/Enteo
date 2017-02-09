@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Form\SuiviAdministratifType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
+use Application\PlateformeBundle\Entity\Historique;
 
 /**
  * SuiviAdministratif
@@ -39,6 +39,20 @@ class SuiviAdministratifController extends Controller
             $suiviAdministratif = $form->getData();
             $suiviAdministratif->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
+            
+            if($suiviAdministratif->getStatut()->getSlug() == "recevabilite")
+            {
+                $historique = new Historique();
+                $historique->setHeuredebut(new \DateTime('now'));
+                $historique->setHeurefin(new \DateTime('now'));
+                $historique->setSummary("");
+                $historique->setTypeRdv("");
+                $historique->setBeneficiaire($beneficiaire);
+                $historique->setDescription($suiviAdministratif->getDetailStatut()->getDetail());
+                $historique->setEventId("0");
+                $em->persist($historique);
+            }
+            
             $em->persist($suiviAdministratif);
             $em->flush();
 
