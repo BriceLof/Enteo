@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/style.css" afterPath="$PROJECT_DIR$/web/css/style.css" />
     </list>
     <ignored path="Enteo.iws" />
@@ -47,11 +48,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="426">
-              <caret line="463" column="1" selection-start-line="463" selection-start-column="1" selection-end-line="463" selection-end-column="1" />
+            <state relative-caret-position="497">
+              <caret line="470" column="17" selection-start-line="470" selection-start-column="17" selection-end-line="470" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccompagnementType.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/AccompagnementType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FinanceurType.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -129,10 +150,10 @@
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AccompagnementController.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BeneficiaireType.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" />
         <option value="&lt;6e5d061d-1319-41d8-8c5e-cee3a5f74f73&gt;/var/www/html/rahalahy/web/rahalahy-front/src/index.html" />
         <option value="$PROJECT_DIR$/web/js/mainAjax.js" />
         <option value="$PROJECT_DIR$/web/css/style.css" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" />
       </list>
     </option>
   </component>
@@ -189,38 +210,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -503,14 +492,7 @@
       <workItem from="1485939629881" duration="27329000" />
       <workItem from="1486025117064" duration="53785000" />
       <workItem from="1486370545510" duration="7238000" />
-      <workItem from="1486378271168" duration="118158000" />
-    </task>
-    <task id="LOCAL-00020" summary="- css/js fiche bénéficiaire">
-      <created>1484132754355</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1484132754355</updated>
+      <workItem from="1486378271168" duration="118467000" />
     </task>
     <task id="LOCAL-00021" summary="- css/js fiche bénéficiaire">
       <created>1484150676292</created>
@@ -848,11 +830,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486736542725</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="- financeur -&gt; css">
+      <created>1486738424920</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1486738424920</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="819337000" />
+    <option name="totallyTimeSpent" value="819646000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -930,7 +919,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- uploads+compression+affichage+ajax &#10;- TO DO// CRON" />
     <MESSAGE value="- commande pour la cron" />
     <MESSAGE value="- affichage pdf" />
     <MESSAGE value="- affichage pdf+ cron" />
@@ -955,7 +943,8 @@
     <MESSAGE value="- financeur" />
     <MESSAGE value="- financeur -&gt; controle des champs" />
     <MESSAGE value="- financeur -&gt; probleme js consultant" />
-    <option name="LAST_COMMIT_MESSAGE" value="- financeur -&gt; probleme js consultant" />
+    <MESSAGE value="- financeur -&gt; css" />
+    <option name="LAST_COMMIT_MESSAGE" value="- financeur -&gt; css" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1216,14 +1205,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/AccompagnementType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/robots.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1352,14 +1333,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="55" column="46" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1389,8 +1362,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="463" column="1" selection-start-line="463" selection-start-column="1" selection-end-line="463" selection-end-column="1" />
+        <state relative-caret-position="497">
+          <caret line="470" column="17" selection-start-line="470" selection-start-column="17" selection-end-line="470" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/AccompagnementType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
           <folding />
         </state>
       </provider>
