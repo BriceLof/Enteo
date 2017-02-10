@@ -1,4 +1,4 @@
-$("document").ready(function () {
+$("document").ready(function (initDynamicContent) {
     //affichage de news dans la partie bénéficiaire
     $( function() {
         $( "#tabNews" ).tabs();
@@ -1029,18 +1029,21 @@ function urlParam(name){
 
 
 //ajout de plusieurs financement
-$(document).ready(function() {
+$(function () {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#accompagnement_financeur');
     // On ajoute un lien pour ajouter une nouvelle catégorie
-    var $addLink = $('<a href="#" id="add_financement_button" >Ajouter un co-financeur</a>');
+    //je mets en commentaire jusqu'à ce que je trouve une solution
+    //var $addLink = $('<a href="#" id="add_financement_button" >Ajouter un co-financeur</a>');
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    $addLink.click(function(e) {
+    /**
+    $container.on('click',$addLink,function(e) {
         addFinanceur($container);
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
     });
+     */
     // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
     var index = $container.find(':input').length;
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
@@ -1050,7 +1053,6 @@ $(document).ready(function() {
     } else if (index == 1){
         addTwoFirstFinanceur($container);
     }
-    $container.append($addLink);
 
     function addTwoFirstFinanceur($container) {
         var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, '- Financeur ' + (index+1))
@@ -1065,8 +1067,8 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'co-financeur '/* + (index+1)*/)
-            .replace(/__name__/g, index));
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Financeur ' + (index+1))
+            .replace(/__name__/g, 'Financeur ' + (index+1)));
         // On ajoute au prototype un lien pour pouvoir supprimer l'image
         addDeleteLink($prototype);
         // On ajoute le prototype modifié à la fin de la balise <div>
@@ -1089,7 +1091,7 @@ $(document).ready(function() {
         });
     }
 
-    $('.nom_organisme').change(function () {
+    $('.nom_organisme').on('change',function () {
         parent = $(this).parent().parent();
         element = parent.find('#'+ parent.attr('id') +'_organisme');
         if($(this).val() == 'OPCA'){
@@ -1162,4 +1164,10 @@ $(document).ready(function() {
         });
     }
 });
+
+(function () {
+    $('.accompagnementDate').click(function () {
+        alert();
+    })
+})();
 

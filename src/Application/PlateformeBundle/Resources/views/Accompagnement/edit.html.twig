@@ -1,9 +1,13 @@
-
+<div>
+    <span class="tarif">Tarif Accompagnement <span style="font-size: 10px">(net de taxe)</span></span>
+    <span class="tarifMontant">{{ montantTotal ~" " }}<span>&euro;</span></span>
+</div>
 <div>
     <div class="widget_financeur">
         {{ form_widget(edit_form_a.financeur) }}
     </div>
 </div>
+
 {% if beneficiaire.accompagnement is not null %}
     {#
         <tr>
@@ -14,10 +18,6 @@
         <tr>
             <td>Accompagnement en Heures :</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure, { 'attr': {'value': beneficiaire.accompagnement.heure }} ) }} Heures</td>
-        </tr>
-        <tr>
-            <td>Tarif Accompagnement</td>
-            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif, { 'attr': {'value': beneficiaire.accompagnement.tarif }} ) }} <span>&euro;</span></td>
         </tr>
 {% else %}
         <tr>
