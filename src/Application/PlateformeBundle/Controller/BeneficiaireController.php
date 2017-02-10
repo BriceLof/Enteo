@@ -40,6 +40,7 @@ class BeneficiaireController extends Controller
             unset($_SESSION['beneficiaireid']);
         }
         $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
+		
         // ====================================================== //
         // ===== Mise à jour des evenements du beneficiaire ===== //
         // ====================================================== //
