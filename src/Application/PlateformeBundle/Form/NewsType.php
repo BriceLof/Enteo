@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-
+use Doctrine\ORM\EntityRepository;
 
 class NewsType extends AbstractType
 {
@@ -25,6 +25,14 @@ class NewsType extends AbstractType
             ->add('statut', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:Statut',
                 'choice_label' => 'nom', 
+                'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('s')
+                                ->where('s.slug != :slug1')
+                                ->andWhere('s.slug != :slug2')
+                                ->andWhere('s.slug != :slug3')
+                                ->setParameters(array('slug1' => 'recevabilite', 'slug2' => 'financement','slug3' => 'facturation'))
+                            ;
+                },
             ))
             ->add('detailStatut', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
@@ -32,10 +40,11 @@ class NewsType extends AbstractType
                 'placeholder' => '',
             ))
             ->add('message', null, array(
-                'label' => 'Message :'
+                'label' => 'Message :', 
+                'required' => false
             )) 
             ->add('Enregistrer', SubmitType::class, array(
-                'attr' => array('class' => 'btn  btn-danger'),
+                'attr' => array('class' => 'btn  btn-primary'),
             ))    
             ;
     }

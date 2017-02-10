@@ -11,18 +11,22 @@ namespace Application\PlateformeBundle\Repository;
 class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 {
         // Renvoie l'historique d'un beneficiaire à une datetime donnée
-	public function dateocuppee($datedeb, $heuredeb, $beneficiaireid){
+	public function dateocuppee($datedebut, $datefin, $beneficiaireid){
 		return $this
 			->createQueryBuilder('h')
 			->where('h.beneficiaire = :benef')
 			->setParameter('benef',$beneficiaireid)
-                        ->andWhere('h.dateFin >= :fin')
-			->setParameter('fin', $datedeb)
-                        ->andWhere('h.heurefin >= :hf')
-			->setParameter('hf', $heuredeb)
+                        ->andWhere('h.dateFin BETWEEN :deb AND :fin')
+			->setParameter('deb', $datedebut)
+                        ->setParameter('fin', $datefin)
+                        ->orWhere('h.dateDebut BETWEEN :deb AND :fin')
+                        ->setParameter('deb', $datedebut)
+                        ->setParameter('fin', $datefin)
+                        ->andwhere('h.beneficiaire = :benef')
+			->setParameter('benef',$beneficiaireid)
 			->getQuery()
 			->getResult();
-	}
+        }
         
         // Renvoie l'historique d'un beneficiaire données
         public function beneficiaireOne($beneficiaireid){
@@ -61,11 +65,10 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             return 
                 $this
                     ->createQueryBuilder('h')
-                    ->where('h.dateDebut <= :h_deb')
-                    ->setParameter('h_deb',$datedujour)
-                    ->andwhere('h.beneficiaire = :benef')
+                    ->where('h.beneficiaire = :benef')
                     ->setParameter('benef',$beneficiaireid)
                     ->orderBy('h.dateDebut','DESC')
+                    ->setMaxResults(5)
                     ->getQuery()
                     ->getResult();
         }

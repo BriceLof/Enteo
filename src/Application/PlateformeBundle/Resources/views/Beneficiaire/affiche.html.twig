@@ -51,8 +51,12 @@
                                             <td>{{ form_widget(edit_form.poste) }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{{ form_label(edit_form.encadrement) }}</td>
-                                            <td>{{ form_widget(edit_form.encadrement) }}</td>
+                                            <td>{{ form_label(edit_form.csp )}}</td>
+                                            <td>{{ form_widget(edit_form.csp) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ form_label(edit_form.type) }}</td>
+                                            <td>{{ form_widget(edit_form.type) }}</td>
                                         </tr>
                                         <tr>
                                             <td>&nbsp;</td>
@@ -144,27 +148,78 @@
                             <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse" onclick="plusMoins(this);" role="button" aria-expanded="false" aria-controls="collapseStatut"><span class="glyphicon glyphicon-minus"></span><span>Statut</span></a></caption>
                         </table>
                         <div class="collapse in" id="collapseStatut">
+                            {% if(beneficiaire.news | length > 0) %}
+                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
+                            {% endif %}
                             <table>
                                 <tbody>
                                     <tr>
-                                        {% if(beneficiaire.news | length > 0) %}
-                                            {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                                        {% endif %}
-                                        <td>Statut :</td>
+                                        <td>Statut</td>
                                         <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Détail :</td>
+                                        <td>Détail Statut</td>
                                         <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Gestionnaire Administratif</td>
-                                        <td>Select</td>
+                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="width:59px;color:#337ab7;border-bottom:1px solid #337ab7;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" >Maj Statut</a></td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header my_header_modal">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Maj Statut bénéficiaire</h4>  
+                                        </div>
+                                        <div class="modal-body">        
+                                            <form method="POST" id="newsForm" action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}" >
+                                                {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
                         </div>
                     </div>
+
+                    <div class="tableOnglet" id="agenda_consultant_pour_beneficiaire">
+                        <table>
+                            <caption class="titreSection"><a  id="agendaCollapse" href="#collapseAgenda" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Rendez-vous</span></a></caption>
+                        </table>
+                        <div id="collapseAgenda" class="collapse in">
+                            {% if beneficiaire.consultant is not null %}
+                                <div>
+                                    <div>
+                                        <span id="labelConsultant">Consulant :</span>
+                                        <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span>
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                                            <span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span>
+                                {% endif %}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        {% set agendaUserId = beneficiaire.consultant.id %}
+                                        <a style="width:90px; padding: 0px 12px;" title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div>
+                                    <div>
+                                        <span id="labelConsultant">Consulant :</span>
+                                        <span>
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                                            <span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span>
+                                {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            {% endif %}
+                        </div>
+                    </div>
+
                     <div id="ProjetBeneficiaire" class="tableOnglet">
                         <table>
                             <caption class="titreSection"><a href="#collapseProjetBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseProjetBeneficiaire"><span class="glyphicon glyphicon-minus"></span><span>Projet Bénéficiaire</span></a></caption>
@@ -193,6 +248,23 @@
                                 </table>
                             </form>
                         </div>
+                        {% if beneficiaire.accompagnement is not null %}
+                            <div id="bloc_add_financment">
+                                <div  class="modal fade" id="addfinancement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Ajouter un Financement</h4>
+                                            </div>
+                                            {{ render(controller("ApplicationPlateformeBundle:Financeur:new",{'id': beneficiaire.id})) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -289,7 +361,7 @@
                     </div>
                     <div id="historique" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a  id="historiqueCollapse" href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique</span></a></caption>
+                            <caption class="titreSection"><a  id="historiqueCollapse" href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique bénéficiaire</span></a></caption>
                         </table>
                         <div id="collapseHistorique" class="collapse in">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -297,35 +369,7 @@
                             </div>
                         </div>
                     </div>
-    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
-                    <div class="tableOnglet" id="agenda_consultant_pour_beneficiaire">
-                        <table>
-                            <caption class="titreSection"><a  id="agendaCollapse" href="#collapseAgenda" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Consultant</span></a></caption>
-                        </table>
-                        <div id="collapseAgenda" class="collapse in">
-                            {% if beneficiaire.consultant is not null %}
-                                <div>
-                                    <div>
-                                        <span id="labelConsultant">Consulant :</span>
-                                        <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span></span>
-                                    </div>
-                                    <div>
-                                        {% set agendaUserId = beneficiaire.consultant.id %}
-                                        <a style="width:90px; padding: 0px 12px;" title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div>
-                                    <div>
-                                        <span id="labelConsultant">Consulant :</span>
-                                        <div><span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span></div>
-                                    </div>
-                                </div>
 
-                            {% endif %}
-                        </div>
-                    </div>
-    {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
                     <div id="suiviAdministratif" class="tableOnglet">
                             <table>
@@ -334,7 +378,7 @@
                             <div class="collapse in" id="collapseSuiviAdministratif">
                                 {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
 
-                                <form method="POST" id="suiviAdministratifNewForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+                                <form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
                                     <table>
                                         <tbody>
                                             {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:new",{'id': beneficiaire.id})) }}
@@ -342,6 +386,12 @@
                                     </table>
                                 </form>
                             </div>
+                            
+                            {% if(beneficiaire.suiviAdministratif | length > 0) %}
+                                {% set dernier_suivi = beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1] %}
+                            {% endif %}
+                            <!-- ID du statut du dernier suivi administratif du bénéficiaire ou celui de Recevabilité si aucun suivi encore. On s'en sert dans js pour avoir le statut suivant -->
+                            <input type="hidden" value="{{ beneficiaire.suiviAdministratif | length > 0 ? dernier_suivi.statut.id : 7 }}" class="statutIDCurrentSuiviAd"/>
                     </div>
     {% endif %}
                 </div>

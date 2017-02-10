@@ -1,0 +1,21 @@
+application_new_financeur:
+    path:     /new/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Financeur:new" }
+
+application_showAll_financeur:
+    path:     /create
+    defaults: { _controller: "ApplicationPlateformeBundle:Financeur:index" }
+
+application_delete_financeur:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Financeur:delete" }
+
+application_edit_financeur:
+    path:     /edit/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Financeur:update" }
+
+application_opca_opacif_financeur:
+    path:     /opcaOpacif/{nom}
+    defaults: { _controller: "ApplicationPlateformeBundle:Financeur:listeOpcaOpacif" }
+    options:
+        expose:  true

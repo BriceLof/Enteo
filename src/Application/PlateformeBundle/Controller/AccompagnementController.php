@@ -30,6 +30,15 @@ class AccompagnementController extends Controller
 
 
         $accompagnement = $beneficiaire->getAccompagnement();
+
+        $montantTotal = 0;
+
+        if($accompagnement != null){
+            foreach ($accompagnement->getFinanceur() as $financeur){
+                $montantTotal += $financeur->getMontant();
+            }
+        }
+
         if(is_null($accompagnement)){
             $accompagnement = new Accompagnement();
         }
@@ -41,6 +50,10 @@ class AccompagnementController extends Controller
         if ($editForm->isValid()) {
             $beneficiaire->setAccompagnement($accompagnement);
             $em->persist($beneficiaire);
+            foreach ($accompagnement->getFinanceur() as $financeur){
+                $financeur->setAccompagnement($accompagnement);
+                $em->persist($financeur);
+            }
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', 'Accompagnement modifié avec succès');
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
@@ -49,6 +62,7 @@ class AccompagnementController extends Controller
             )).'#accompagnement');
         }
         return $this->render('ApplicationPlateformeBundle:Accompagnement:edit.html.twig', array(
+            'montantTotal' => $montantTotal,
             'beneficiaire' => $beneficiaire,
             'accompagnement' => $accompagnement,
             'edit_form_a' => $editForm->createView(),

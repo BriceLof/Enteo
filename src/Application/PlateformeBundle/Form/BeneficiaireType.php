@@ -63,14 +63,33 @@ class BeneficiaireType extends AbstractType
                 )
             ))
 
-            ->add('encadrement', ChoiceType::class, array(
-                'label' => 'Encadrement ',
+            ->add('csp', ChoiceType::class, array(
+                'label' => 'CSP ',
                 'required' => false,
-                'data' => 'oui',
                 'choices' => array(
                     '...' => '',
-                    'oui' => 'oui',
-                    'non' => 'non',
+                    'Demandeur d\'emploi' => 'demandeur d\'emploi',
+                    'Ouvrier qualifié' => 'ouvrier qualifié',
+                    'Omployé' => 'employé',
+                    'Technicien' => 'technicien',
+                    'Agent de maitrise' => 'agent de maitrise',
+                    'Cadre/ingenieur' => 'cadre/ingenieur',
+                    'Chef d\'entreprise/PL' => 'chef d\'entreprise/PL',
+                ),
+                'attr' => array(
+                    'placeholder' => '',
+                    'class' => 'fiche'
+                )
+            ))
+
+            ->add('type', ChoiceType::class, array(
+                'label' => 'Type ',
+                'required' => false,
+                'choices' => array(
+                    '...' => '',
+                    'CDD' => 'cdd',
+                    'CDI' => 'cdi',
+                    'Interim' => 'interim',
                 ),
                 'attr' => array(
                     'placeholder' => '',

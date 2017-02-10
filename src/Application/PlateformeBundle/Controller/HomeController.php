@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
+use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +68,22 @@ class HomeController extends Controller
             $news = $form->getData();
             $beneficiaire_id = $request->request->get('beneficiaire_id');
             $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
-
+            
+            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
+            {
+                $historique = new Historique();
+                $historique->setHeuredebut(new \DateTime('now'));
+                $historique->setHeurefin(new \DateTime('now'));
+                $historique->setSummary("");
+                $historique->setTypeRdv("");
+                $historique->setBeneficiaire($news->getBeneficiaire());
+                $historique->setDescription($news->getDetailStatut()->getDetail());
+                $historique->setEventId("0");
+                $em->persist($historique);
+            }
+            
+            
+            
             $em->persist($news);
             $em->flush();
             

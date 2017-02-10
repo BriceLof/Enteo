@@ -1,15 +1,29 @@
+<div>
+    <span class="tarif">Tarif Accompagnement <span style="font-size: 10px">(net de taxe)</span></span>
+    <span class="tarifMontant">{{ montantTotal ~" " }}<span>&euro;</span></span>
+</div>
+<div>
+    <div class="widget_financeur">
+        {{ form_widget(edit_form_a.financeur) }}
+    </div>
+</div>
+
 {% if beneficiaire.accompagnement is not null %}
+        {#
         <tr>
             <td>Nom OPCA/OPACIF</td>
             <td>{{ form_widget(edit_form_a.opcaOpacif,   { 'attr': {'value': beneficiaire.accompagnement.opcaOpacif }} ) }}</td>
         </tr>
+
+        <tr>
+            <td>
+                <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#addfinancement" >Ajouter un Financement</span>
+            </td>
+        </tr>
+        #}
         <tr>
             <td>Accompagnement en Heures :</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure, { 'attr': {'value': beneficiaire.accompagnement.heure }} ) }} Heures</td>
-        </tr>
-        <tr>
-            <td>Tarif Accompagnement</td>
-            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif, { 'attr': {'value': beneficiaire.accompagnement.tarif }} ) }} <span>&euro;</span></td>
         </tr>
 {% else %}
         <tr>
@@ -25,10 +39,8 @@
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif) }} <span>&euro;</span></td>
         </tr>
 {% endif %}
-
-        <div id="formulaireConsultant"></div>
         <tr>
-            <td class="tableSection"><a href="#"></a></td>
+            <td></td>
         </tr>
         <tr>
             <td colspan="3">Date prévue accompagnement :</td>
@@ -41,9 +53,6 @@
         </tr>
         <tr>
             <td class="tableSection">Détail du Financement</td>
-        </tr>
-        <tr>
-            <td>//A FAIRE</td>
         </tr>
         <tr>
             <td>&nbsp;</td>

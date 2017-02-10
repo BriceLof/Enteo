@@ -30,21 +30,28 @@ class Financeur
     /**
      * @var
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255,nullable=true)
      */
     private $nom;
 
     /**
      * @var
      *
-     * @ORM\Column(name="montant", type="float")
+     * @ORM\Column(name="organisme", type="string", length=255, nullable=true)
+     */
+    private $organisme;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="montant", type="float",nullable=true)
      */
     private $montant;
 
     /**
      * @var
      *
-     * @ORM\Column(name="date_debut", type="date")
+     * @ORM\Column(name="date_debut", type="date",nullable=true)
      */
     private $dateAccord;
 
@@ -156,5 +163,29 @@ class Financeur
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set organisme
+     *
+     * @param string $organisme
+     *
+     * @return Financeur
+     */
+    public function setOrganisme($organisme)
+    {
+        $this->organisme = $organisme;
+
+        return $this;
+    }
+
+    /**
+     * Get organisme
+     *
+     * @return string
+     */
+    public function getOrganisme()
+    {
+        return $this->organisme;
     }
 }

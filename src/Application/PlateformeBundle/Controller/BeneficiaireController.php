@@ -102,8 +102,6 @@ class BeneficiaireController extends Controller
                 // si les creneaux sont differents alors on fait une MAJ
                 if($heuredeb != $histo->getHeuredebut() || $heurefin != $histo->getHeurefin()){
                     // Mise à jour en BD  
-                    /*$histo->setHeuredebut($heuredeb);
-                    $histo->setHeurefin($heurefin);*/
                     $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
                 }
             }
@@ -138,7 +136,7 @@ class BeneficiaireController extends Controller
                 ->set('u.nomConso', '?4')
                 ->set('u.prenomConso', '?5')
                 ->set('u.poste', '?6')
-                ->set('u.encadrement', '?7')
+                ->set('u.csp', '?7')
                 ->set('u.telConso', '?8')
                 ->set('u.tel2', '?9')
                 ->set('u.emailConso', '?10')
@@ -149,6 +147,7 @@ class BeneficiaireController extends Controller
                 ->set('u.adresse', '?15')
                 ->set('u.adresseComplement', '?16')
                 ->set('u.numSecuCle', '?17')
+                ->set('u.type', '?18')
                 ->where('u.id = ?2')
                 ->setParameter(1, $ville)
                 ->setParameter(2, $id)
@@ -156,7 +155,7 @@ class BeneficiaireController extends Controller
                 ->setParameter(4, $beneficiaire->getNomConso())
                 ->setParameter(5, $beneficiaire->getPrenomConso())
                 ->setParameter(6, $beneficiaire->getPoste())
-                ->setParameter(7, $beneficiaire->getEncadrement())
+                ->setParameter(7, $beneficiaire->getCsp())
                 ->setParameter(8, $beneficiaire->getTelConso())
                 ->setParameter(9, $beneficiaire->getTel2())
                 ->setParameter(10, $beneficiaire->getEmailConso())
@@ -167,6 +166,7 @@ class BeneficiaireController extends Controller
                 ->setParameter(15, $beneficiaire->getAdresse())
                 ->setParameter(16, $beneficiaire->getAdresseComplement())
                 ->setParameter(17, $beneficiaire->getNumSecuCle())
+                ->setParameter(18, $beneficiaire->getType())
                 ->getQuery();
             $p = $q->execute();
 
