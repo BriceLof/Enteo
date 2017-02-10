@@ -22,6 +22,8 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                         ->orWhere('h.dateDebut BETWEEN :deb AND :fin')
                         ->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
+                        ->andwhere('h.beneficiaire = :benef')
+			->setParameter('benef',$beneficiaireid)
 			->getQuery()
 			->getResult();
         }

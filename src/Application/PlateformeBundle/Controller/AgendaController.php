@@ -131,7 +131,7 @@ class AgendaController extends Controller
                     $historique->setTypeRdv($request->request->get('typeRdv'));
                     // On stocke Les infos dans un tableau
                     $donnespost[] = array(
-                        'nom' => $request->request->get('bureauRdv'),
+                        'nom' => $request->request->get('nomb'),
                         'prenom' => $request->request->get('prenombeneficiaire'),
                         'bureau' => $request->request->get('namebureauselect'),
                         'ville' => $request->request->get('autrebureau'),
@@ -139,6 +139,7 @@ class AgendaController extends Controller
                         'zip' => $request->request->get('ziph'),
                         'rdv' => $request->request->get('typeRdv')
                     );
+                    $_SESSION['nom_bureau_autre'] = $request->request->get('bureauRdv');
                 }
                 else{
                     // On recupere l'id bureau
@@ -242,7 +243,7 @@ class AgendaController extends Controller
                         $bureau = new Bureau();
                         $bureau->setVille($villeObject); // ville
                         $bureau->setAdresse($_SESSION['agenda'][0]['adresse']); // adresse
-                        $bureau->setNombureau($_SESSION['agenda'][0]['bureau']); // nom bureau
+                        $bureau->setNombureau($_SESSION['nom_bureau_autre']); // nom bureau
                         $bureau->setTemporaire(true); // temporaire pour tous bureaux ajoutés par le consultant ou l'admin lors de la saisie du formulaire d'agenda
                         $bureau->setActifInactif(1); // bureau actif
                         // Sauvegarde du bureau 
@@ -266,6 +267,7 @@ class AgendaController extends Controller
             }
             // On supprime les sessions pour soulager le gc
             unset($_SESSION['agenda']);
+            unset($_SESSION['nom_bureau_autre']);
             unset($_SESSION['ville_id']);
             $this->get('session')->remove('benef');
             $this->get('session')->remove('bureau');

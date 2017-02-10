@@ -33,8 +33,10 @@ class AccompagnementController extends Controller
 
         $montantTotal = 0;
 
-        foreach ($accompagnement->getFinanceur() as $financeur){
-            $montantTotal += $financeur->getMontant();
+        if($accompagnement != null){
+            foreach ($accompagnement->getFinanceur() as $financeur){
+                $montantTotal += $financeur->getMontant();
+            }
         }
 
         if(is_null($accompagnement)){
