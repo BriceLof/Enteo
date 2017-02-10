@@ -19,6 +19,7 @@ class AddStatutBdd
             "RV1 réalisé" => array("RV1 Positif", "RV1 Négatif", "Indécis", "RV1 à reporter", "No show RV1", "RV2 à faire"),
             "RV2 à faire" => array(""),
             "RV2 réalisé" => array("RV2 Positif", "RV2 Négatif", "Indécis", "RV2 à reporter", "No show RV2"),
+            "Recevabilité" => array("Accord recevabilité", "Refus recevabilité"),
             "Financement" => array("Attente accord", "OK accord financeur", "OK financement partiel", "Refus financement"),
             "Facturation" => array("Facture acompte", "Facture solde", "Facture totale", "Avoir"),
             "Reporté" => array("Pas le moment", "Pas de Consultants"),
@@ -33,13 +34,10 @@ class AddStatutBdd
             $this->em->persist($statut);
             foreach($value as $detail)
             {
-                if(strlen($detail) != 0)
-                {
-                    $detailStatut = new \Application\PlateformeBundle\Entity\DetailStatut();
-                    $detailStatut->setDetail($detail);
-                    $detailStatut->setStatut($statut);
-                    $this->em->persist($detailStatut);  
-                }
+                $detailStatut = new \Application\PlateformeBundle\Entity\DetailStatut();
+                $detailStatut->setDetail($detail);
+                $detailStatut->setStatut($statut);
+                $this->em->persist($detailStatut);  
             }
             $this->em->flush();
         }

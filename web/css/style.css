@@ -391,6 +391,13 @@
     width: 50%;
 }
 
+.tarif{
+
+}
+.tarifMontant{
+    float: right;
+}
+
 .form-rest{
     display: none;
 }
@@ -448,6 +455,23 @@ div.error {
     margin-top: -10px;
 }
 
+#accompagnement .form-group{
+    margin-bottom: 12px;
+}
+
+#accompagnement .form-group .form-group label{
+    margin-left: 70px;
+}
+
+.organisme_input {
+    width: 200px;
+    display: inline-block;
+    float: right;
+}
+
+#add_financement_button{
+    color: blue;
+}
 
 #collapseHistorique a:link{
     text-decoration: none;

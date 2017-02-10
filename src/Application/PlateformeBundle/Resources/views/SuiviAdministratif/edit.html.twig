@@ -1,16 +1,16 @@
 <div class="modal-body">
     <div>
-        <div class="form-group">
-            <label>Date :</label>
-            {{ form_widget(edit_form.date) }}
+        <div>
+            <span>{{ form_label(edit_form.statut) }}</span>
+            <span colspan="3">{{ form_widget(edit_form.statut, {'attr' : {'class': 'statutSuiviAd'}}) }}</span>
         </div>
-        <div class="form-group">
-            <label>Quoi :</label>
-            {{ form_widget(edit_form.quoi) }}
+        <div>
+            <span>{{ form_label(edit_form.detailStatut) }}</span><div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+            <span colspan="3">{{ form_widget(edit_form.detailStatut, {'attr' : {'class': 'detailStatutSuiviAd'}}) }}</span>
         </div>
-        <div class="form-group">
-            <label>Qui :</label>
-            {{ form_widget(edit_form.qui) }}</td>
+        <div>
+            <span>{{ form_label(edit_form.info) }}</span>
+            <span colspan="3">{{ form_widget(edit_form.info) }}</span>
         </div>
     </div>
 </div>

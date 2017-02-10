@@ -58,6 +58,11 @@ application_plateforme_news:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/news.yml"
     prefix:   /news
 
+#financeur
+application_plateforme_financeur:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/financeur.yml"
+    prefix:   /financeur
+
 #ville
 application_plateforme_ville:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/ville.yml"

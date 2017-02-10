@@ -208,6 +208,8 @@ class AgendaController extends Controller
                 $this->get('session')->set('heuredate', $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])->format('d-m-Y H:i:s'));
             }
             else{
+                //$this->get('session')->set('errorsdate', false);
+
                 // On recupere les rendez-vous du beneficiaire 
                 $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]), $benef);
                 if(count($resultats) > 0){
@@ -258,7 +260,8 @@ class AgendaController extends Controller
                     $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
                     $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
                     $em->flush();
-                    
+
+                    //$this->get('session')->set('erreurs', false);
                 }
             }
             // On supprime les sessions pour soulager le gc

@@ -1,0 +1,24 @@
+ <form method="POST" id="financeurNewForm" action="{{ path('application_new_financeur', { 'id' : beneficiaire.id }) }}" >
+    <div class="modal-body">
+        <div>
+            {{ form_label(financeurform.nom) }}
+            {{ form_widget(financeurform.nom, {'attr' : {'class': ''}}) }}
+            {{ form_label(financeurform.montant) }}
+            {{ form_widget(financeurform.montant) }}
+            {{ form_label(financeurform.dateAccord) }}
+            {{ form_widget(financeurform.dateAccord) }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div>
+            <div>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                {{ form_widget(financeurform.submit, {'attr': {'class' : 'btn btn-primary'}}) }}
+            </div>
+            <div>
+                {{ form_rest(financeurform) }}
+                {{ form_errors(financeurform) }}
+            </div>
+        </div>
+    </div>
+ </form>
