@@ -44,7 +44,7 @@ class BeneficiaireController extends Controller
         // ====================================================== //
         // ===== Mise à jour des evenements du beneficiaire ===== //
         // ====================================================== //
-        if(count($histo_beneficiaire) > 0){
+        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0'){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if(!empty($_SESSION['firstpast'])){
                  unset($_SESSION['firstpast']); // On supprime la session
