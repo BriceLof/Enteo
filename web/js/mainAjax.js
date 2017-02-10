@@ -189,6 +189,47 @@ $("document").ready(function (initDynamicContent) {
                     "dateBR" : /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/,
                     "greaterThan" : true,
                     "required" : false
+                },
+                "accompagnement[financeur][0][nom]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_0_montant').val() != "" || $('#accompagnement_financeur_0_dateAccord').val() != "" );
+                    }
+                },
+                "accompagnement[financeur][0][organisme]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_0_nom').val() != 'OPCA' || $('#accompagnement_financeur_0_nom').val() != 'OPACIF' );
+                    }
+                },
+                "accompagnement[financeur][0][montant]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_0_nom').val() != "" || $('#accompagnement_financeur_0_dateAccord').val() != "" );
+                    }
+                },
+                "accompagnement[financeur][0][dateAccord]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_0_nom').val() != "" || $('#accompagnement_financeur_0_montant').val() != "" );
+                    }
+                },
+
+                "accompagnement[financeur][1][nom]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_1_montant').val() != "" || $('#accompagnement_financeur_1_dateAccord').val() != "" );
+                    }
+                },
+                "accompagnement[financeur][1][organisme]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_1_nom').val() != 'OPCA' || $('#accompagnement_financeur_1_nom').val() != 'OPACIF' );
+                    }
+                },
+                "accompagnement[financeur][1][montant]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_1_nom').val() != "" || $('#accompagnement_financeur_1_dateAccord').val() != "" );
+                    }
+                },
+                "accompagnement[financeur][1][dateAccord]":{
+                    "required": function(){
+                        return ($('#accompagnement_financeur_1_nom').val() != "" || $('#accompagnement_financeur_1_montant').val() != "" );
+                    }
                 }
             },
             errorElement: 'div'
@@ -1094,14 +1135,21 @@ $(function () {
     $('.nom_organisme').on('change',function () {
         parent = $(this).parent().parent();
         element = parent.find('#'+ parent.attr('id') +'_organisme');
+        labelElement = parent.find('.organisme_organisme_label');
         if($(this).val() == 'OPCA'){
+            element.css('display', 'inline');
+            labelElement.css('display', 'inline');
             $name = 'OPCA';
             listeOpcaOpacif($name, element);
         }else{
             if($(this).val() == 'OPACIF'){
+                element.css('display', 'inline');
+                labelElement.css('display', 'inline');
                 $name = 'OPACIF';
                 listeOpcaOpacif($name, element);
             }else{
+                labelElement.css('display', 'none');
+                element.css('display', 'none');
                 element.empty();
             }
         }
@@ -1121,17 +1169,32 @@ $(function () {
         });
     });
 
+    $(function () {
+        $a = 1;
+        $('.widget_financeur').children().children().children().each(function () {
+            if($(this).get(0).tagName == 'LABEL') {
+                $(this).text('Financeur ' + $a);
+                $a++;
+            }
+        })
+    });
+
     $( function () {
         $('select.organisme_organisme').each(function () {
             parent = $(this).parent().parent();
             nomOrganisme = $(parent).find('#'+ $(parent).attr('id') +'_nom');
+            labelElement = parent.find('.organisme_organisme_label');
             element = $(this);
             console.log($(this).val());
             if($(nomOrganisme).val() == 'OPCA'){
+                element.css('display', 'inline');
+                labelElement.css('display', 'inline');
                 $name = 'OPCA';
                 listeOpcaOpacif($name,element);
             }else{
                 if($(nomOrganisme).val() == 'OPACIF') {
+                    element.css('display', 'inline');
+                    labelElement.css('display', 'inline');
                     $name = 'OPACIF';
                     listeOpcaOpacif($name, element);
                 }
@@ -1164,10 +1227,4 @@ $(function () {
         });
     }
 });
-
-(function () {
-    $('.accompagnementDate').click(function () {
-        alert();
-    })
-})();
 

@@ -20,6 +20,7 @@ class FinanceurType extends AbstractType
     {
         $builder
             ->add('nom', ChoiceType::class, array(
+                'required' => false,
                 'choices' => array(
                     '...' => '',
                     'OPCA' => 'OPCA',
@@ -34,18 +35,26 @@ class FinanceurType extends AbstractType
             ))
 
             ->add('organisme', TextType::class, array(
+                'required' => false,
                 'attr' => array(
                     'class' => 'organisme_organisme organisme_input',
+                    'style' => 'display:none'
+                ),
+                'label_attr' => array(
+                    'class' => 'organisme_organisme_label',
+                    'style' => 'display:none'
                 )
             ))
 
             ->add('montant', NumberType::class, array(
+                'required' => false,
                 'label' => ' Montant en euros',
                 'attr' => array(
                     'class' => 'montant_organisme organisme_input',
                 )
             ))
             ->add('dateAccord', DateType::class, array(
+                'required' => false,
                 'label' => 'Accord Prise en charge',
                 'widget' => 'single_text',
                 'input' => 'datetime',
