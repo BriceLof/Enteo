@@ -148,11 +148,39 @@
                             <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse" onclick="plusMoins(this);" role="button" aria-expanded="false" aria-controls="collapseStatut"><span class="glyphicon glyphicon-minus"></span><span>Statut</span></a></caption>
                         </table>
                         <div class="collapse in" id="collapseStatut">
+                            {% if(beneficiaire.news | length > 0) %}
+                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
+                            {% endif %}
                             <table>
                                 <tbody>
-                                   {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                                    <tr>
+                                        <td>Statut</td>
+                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Détail Statut</td>
+                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="width:59px;color:#337ab7;border-bottom:1px solid #337ab7;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" >Maj Statut</a></td>
+                                    </tr>
                                 </tbody>
                             </table>
+                            <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header my_header_modal">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Maj Statut bénéficiaire</h4>  
+                                        </div>
+                                        <div class="modal-body">        
+                                            <form method="POST" id="newsForm" action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}" >
+                                                {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
                         </div>
                     </div>
 

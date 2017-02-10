@@ -271,10 +271,12 @@
                         {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
                         {{ form_label(form_news.message) }}
                         {{ form_widget(form_news.message) }}
-                    </div>
-                    <div class="modal-footer">
+                        <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
+                            {{ form_widget(form_news.Enregistrer) }}
+                        </div>
                         {{ form_rest(form_news) }}
                     </div>
+                    
                 </form>
             </div>
 
