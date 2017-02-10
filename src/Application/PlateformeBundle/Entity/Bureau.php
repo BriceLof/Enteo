@@ -49,6 +49,13 @@ class Bureau
      */
     private $actifInactif;
     
+    /**
+     * @var
+     *
+     * @ORM\Column(name="temporaire", type="boolean")
+     */
+    private $temporaire;
+    
     public function __construct()
     {
         $this->actifInactif = true;
@@ -158,5 +165,29 @@ class Bureau
     public function getActifInactif()
     {
         return $this->actifInactif;
+    }
+
+    /**
+     * Set temporaire
+     *
+     * @param boolean $temporaire
+     *
+     * @return Bureau
+     */
+    public function setTemporaire($temporaire)
+    {
+        $this->temporaire = $temporaire;
+
+        return $this;
+    }
+
+    /**
+     * Get temporaire
+     *
+     * @return boolean
+     */
+    public function getTemporaire()
+    {
+        return $this->temporaire;
     }
 }

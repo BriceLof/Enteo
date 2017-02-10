@@ -102,8 +102,6 @@ class BeneficiaireController extends Controller
                 // si les creneaux sont differents alors on fait une MAJ
                 if($heuredeb != $histo->getHeuredebut() || $heurefin != $histo->getHeurefin()){
                     // Mise à jour en BD  
-                    /*$histo->setHeuredebut($heuredeb);
-                    $histo->setHeurefin($heurefin);*/
                     $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
                 }
             }

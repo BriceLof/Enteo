@@ -27,6 +27,13 @@ class Historique
      * @ORM\Column(name="summary", type="text")
      */
     private $summary;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="autre_summary", type="text", nullable=true)
+     */
+    private $autreSummary;
 
     /**
      * @var string
@@ -381,4 +388,29 @@ class Historique
     {
         return $this->consultant;
     }
+
+    /**
+     * Set autreSummary
+     *
+     * @param string $autreSummary
+     *
+     * @return Historique
+     */
+    public function setAutreSummary($autreSummary)
+    {
+        $this->autreSummary = $autreSummary;
+
+        return $this;
+    }
+
+    /**
+     * Get autreSummary
+     *
+     * @return string
+     */
+    public function getAutreSummary()
+    {
+        return $this->autreSummary;
+    }
 }
+

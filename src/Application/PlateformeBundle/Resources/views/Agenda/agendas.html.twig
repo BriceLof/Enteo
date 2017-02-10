@@ -61,8 +61,8 @@
                                         <th><label>Prenom beneficiare</label></th>
                                     </tr>
                                     <tr>
-                                        <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required></td>
-                                        <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required></td>
+                                        <td><input type="text" name="nomb" id="nomb" class="form-control new_input allchampH" required></td>
+                                        <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input allchampH" required></td>
                                     </tr>
                                     <tr>
                                         <td colspan=2>
@@ -78,10 +78,15 @@
                                     <input type="radio" name="typeRdv" class="typerdv" id="rdvdistentiel" value="distanciel"><span style="margin-left:2%;">Distanciel</span>
                                 </p>
                                 <div class="bureau_v">
+                                    <p class="trdv">
+                                        <input type="checkbox" id="autrebureauc" name="autrebureauc"><span style="margin-left:2%;">Autre Bureau</span>
+                                    </p>
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength="2" class="form-control new_input" placeholder="Taper le numero de departement" required>
+                                    <input type="text" id="dpttest" name="dpttest" maxlength="2" class="form-control new_input allchampH" placeholder="Taper le numero de departement" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper le 3 premiers numeros du code postal">
+                                    <input type="hidden" id="ville_id" name="ville_id" >
                                     <label>Bureau</label>
-                                    <input name="bureauRdv" id="bureauRdv" class="form-control new_input" disabled="true">
+                                    <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true">
                                     <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
                                     <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect">
                                     <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
@@ -92,21 +97,22 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
-                                                <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
+                                                <input type="text" name="adresse" id="adresse" class="form-control new_input allchampH" disabled="true">
+                                                <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse allchampH">
                                             </td>
                                             <td>
-                                                <input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
+                                                <input type="text" name="zip" id="zip" class="form-control new_input allchampH" disabled="true">
                                                 <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
-                                <div>
+                                <div class="champs-historiqueT">
                                     <!-- formulaire historique -->
                                     <p>
                                         <span>Titre evenement</span>
                                         {{form_widget(form.summary)}}
+                                        {{form_widget(form.autreSummary)}}
                                     </p>
                                     <p>
                                         <span>Description evenement</span>
@@ -159,7 +165,6 @@
                     </div>
                 </div>
             {% endif %}
-            
             <div class="row">
                 <div class="col-md-9">
                     <div class="blocacalendar"></div>
@@ -178,11 +183,11 @@
                                     
                                     <tr>
                                         {% if beneficiaire is defined and beneficiaire is not null %}
-                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required  disabled value="{{ beneficiaire.nomConso }}"></td>
-                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required disabled value="{{ beneficiaire.prenomConso }}"></td>
+                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input allchampH" required  disabled value="{{ beneficiaire.nomConso }}"></td>
+                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input allchampH" required disabled value="{{ beneficiaire.prenomConso }}"></td>
                                         {% else %}
-                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input" required ></td>
-                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input" required></td>
+                                            <td><input type="text" name="nomb" id="nomb" class="form-control new_input allchampH" required ></td>
+                                            <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input allchampH" required></td>
                                         {% endif %} 
                                     </tr>
                                     <tr>
@@ -203,11 +208,16 @@
                                     <input type="radio" name="typeRdv" class="typerdv" id="rdvpresentiel" class="rdvpresentiel" checked="true" value="presenciel"><span style="margin-left:2%;">Presenciel</span>
                                     <input type="radio" name="typeRdv" class="typerdv" id="rdvdistentiel" class="rdvdistentiel" value="distanciel"><span style="margin-left:2%;">Distanciel</span>
                                 </p>
+                                <p class="trdv checkotherbureau">
+                                    <input type="checkbox" id="autrebureauc" name="autrebureauc"><span style="margin-left:2%;">Autre Bureau</span>
+                                </p>
                                 <div class="bureau_v">
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input" placeholder="Taper le numero de departement" required>
+                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero de departement" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper le 3 premiers numeros du code postal" >
+                                    <input type="hidden" id="ville_id" name="ville_id" >
                                     <label>Bureau</label>
-                                    <input name="bureauRdv" id="bureauRdv" class="form-control new_input" disabled="true">
+                                    <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true">
                                     <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="-1">
                                     <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect">
                                     <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville">
@@ -218,11 +228,11 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="text" name="adresse" id="adresse" class="form-control new_input" disabled="true">
+                                                <input type="text" name="adresse" id="adresse" class="form-control new_input allchampH" disabled="true">
                                                 <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse">
                                             </td>
                                             <td>
-                                                <input type="text" name="zip" id="zip" class="form-control new_input" disabled="true">
+                                                <input type="text" name="zip" id="zip" class="form-control new_input allchampH" disabled="true">
                                                 <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip">
                                             </td>
                                         </tr>
@@ -233,6 +243,7 @@
                                     <p>
                                         <span>Titre evenement</span>
                                         {{form_widget(form.summary)}}
+                                        {{form_widget(form.autreSummary)}}
                                     </p>
                                     <p>
                                         <span>Description evenement</span>
