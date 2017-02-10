@@ -467,6 +467,10 @@ div.error {
     height: 26px;
 }
 
+.sectionBeneficiaire select{
+    font-size: 11px;
+}
+
 .organisme_input {
     width: 200px;
     display: inline-block;

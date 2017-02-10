@@ -26,8 +26,8 @@ class FinanceurType extends AbstractType
                     'OPCA' => 'OPCA',
                     'OPACIF' => 'OPACIF',
                     'Entreprise' => 'Entreprise',
-                    'Bénéficiaire' => 'Bénéficiaire',
-                    'Pole Emploi' => 'Pole Emploi',
+                    'Bénéficiaire' => 'Beneficiaire',
+                    'Pôle Emploi' => 'Pole Emploi',
                 ),
                 'attr' => array(
                     'class' => 'nom_organisme organisme_input',
