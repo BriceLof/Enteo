@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BeneficiaireType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BeneficiaireType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Financeur/new.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Financeur/new.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/mainAjax.js" afterPath="$PROJECT_DIR$/web/js/mainAjax.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/style.css" afterPath="$PROJECT_DIR$/web/css/style.css" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,44 +27,31 @@
       <file leaf-file-name="affiche.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1626">
-              <caret line="253" column="78" selection-start-line="253" selection-start-column="78" selection-end-line="253" selection-end-column="78" />
-              <folding>
-                <element signature="e#10442#10507#0#HTML" expanded="true" />
-                <element signature="e#11278#11285#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mainAjax.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="235" column="10" selection-start-line="235" selection-start-column="10" selection-end-line="235" selection-end-column="10" />
-              <folding>
-                <marker date="1486727608982" expanded="true" signature="35908:35921" ph="..." />
-                <marker date="1486727608982" expanded="true" signature="47902:47915" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FinanceurType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="55" column="46" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+            <state relative-caret-position="149">
+              <caret line="237" column="43" selection-start-line="237" selection-start-column="29" selection-end-line="237" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BeneficiaireType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BeneficiaireType.php">
+      <file leaf-file-name="mainAjax.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="86" column="36" selection-start-line="86" selection-start-column="16" selection-end-line="86" selection-end-column="36" />
+            <state relative-caret-position="429">
+              <caret line="1230" column="0" selection-start-line="1230" selection-start-column="0" selection-end-line="1230" selection-end-column="0" />
+              <folding>
+                <marker date="1486736524605" expanded="true" signature="41995:42008" ph="..." />
+                <marker date="1486736524605" expanded="true" signature="54240:54253" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/css/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="463" column="1" selection-start-line="463" selection-start-column="1" selection-end-line="463" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -100,7 +82,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Bureau/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/css/main.css" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php" />
@@ -143,14 +124,15 @@
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/financeur.yml" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/FinanceurController.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HomeController.php" />
-        <option value="$PROJECT_DIR$/web/css/style.css" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Financeur/new.html.twig" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AccompagnementController.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BeneficiaireType.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/FinanceurType.php" />
+        <option value="&lt;6e5d061d-1319-41d8-8c5e-cee3a5f74f73&gt;/var/www/html/rahalahy/web/rahalahy-front/src/index.html" />
         <option value="$PROJECT_DIR$/web/js/mainAjax.js" />
+        <option value="$PROJECT_DIR$/web/css/style.css" />
       </list>
     </option>
   </component>
@@ -220,7 +202,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -234,59 +216,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Form" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -569,21 +503,7 @@
       <workItem from="1485939629881" duration="27329000" />
       <workItem from="1486025117064" duration="53785000" />
       <workItem from="1486370545510" duration="7238000" />
-      <workItem from="1486378271168" duration="112006000" />
-    </task>
-    <task id="LOCAL-00018" summary="- supprimer un document">
-      <created>1483451747320</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1483451747320</updated>
-    </task>
-    <task id="LOCAL-00019" summary="- supprimer un document">
-      <created>1483451906270</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1483451906270</updated>
+      <workItem from="1486378271168" duration="118158000" />
     </task>
     <task id="LOCAL-00020" summary="- css/js fiche bénéficiaire">
       <created>1484132754355</created>
@@ -914,11 +834,25 @@
       <option name="project" value="LOCAL" />
       <updated>1486658822470</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="- financeur -&gt; controle des champs">
+      <created>1486727774067</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1486727774067</updated>
+    </task>
+    <task id="LOCAL-00068" summary="- financeur -&gt; probleme js consultant">
+      <created>1486736542724</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1486736542725</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="813185000" />
+    <option name="totallyTimeSpent" value="819337000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -932,7 +866,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32649574" sideWeight="0.47049925" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991454" sideWeight="0.45612708" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.45612708" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -996,8 +930,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- modal dans la page bénéficiaire" />
-    <MESSAGE value="- uploads+compression" />
     <MESSAGE value="- uploads+compression+affichage+ajax &#10;- TO DO// CRON" />
     <MESSAGE value="- commande pour la cron" />
     <MESSAGE value="- affichage pdf" />
@@ -1021,7 +953,9 @@
     <MESSAGE value="- la demande d'enregistrement prend en charge maintenant les textarea et les selects&#10;//TO DO la date" />
     <MESSAGE value="- rectification du bug sur les dates" />
     <MESSAGE value="- financeur" />
-    <option name="LAST_COMMIT_MESSAGE" value="- financeur" />
+    <MESSAGE value="- financeur -&gt; controle des champs" />
+    <MESSAGE value="- financeur -&gt; probleme js consultant" />
+    <option name="LAST_COMMIT_MESSAGE" value="- financeur -&gt; probleme js consultant" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1098,8 +1032,8 @@
         <state relative-caret-position="-4215">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
-            <marker date="1486658846446" expanded="true" signature="883:1019" ph="SELECT b.id,... ApplicationPlateformeBundle" />
-            <marker date="1486658846446" expanded="true" signature="1369:1512" ph="SELECT b.id,... ApplicationPlateformeBundle" />
+            <marker date="1486727789290" expanded="true" signature="883:1019" ph="SELECT b.id,... ApplicationPlateformeBundle" />
+            <marker date="1486727789290" expanded="true" signature="1369:1512" ph="SELECT b.id,... ApplicationPlateformeBundle" />
           </folding>
         </state>
       </provider>
@@ -1367,14 +1301,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="384" column="17" selection-start-line="384" selection-start-column="17" selection-end-line="384" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/SuiviAdministratif/showAll.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -1399,14 +1325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-204">
-          <caret line="32" column="70" selection-start-line="32" selection-start-column="70" selection-end-line="32" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Financeur/new.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="83">
@@ -1422,17 +1340,6 @@
           <folding>
             <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#!!top" expanded="true" />
             <marker date="1486721324295" expanded="false" signature="619:668" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1626">
-          <caret line="253" column="78" selection-start-line="253" selection-start-column="78" selection-end-line="253" selection-end-column="78" />
-          <folding>
-            <element signature="e#10442#10507#0#HTML" expanded="true" />
-            <element signature="e#11278#11285#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1453,14 +1360,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="237" column="43" selection-start-line="237" selection-start-column="29" selection-end-line="237" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="235" column="10" selection-start-line="235" selection-start-column="10" selection-end-line="235" selection-end-column="10" />
+        <state relative-caret-position="429">
+          <caret line="1230" column="0" selection-start-line="1230" selection-start-column="0" selection-end-line="1230" selection-end-column="0" />
           <folding>
-            <marker date="1486727608982" expanded="true" signature="35908:35921" ph="..." />
-            <marker date="1486727608982" expanded="true" signature="47902:47915" ph="..." />
+            <marker date="1486736524605" expanded="true" signature="41995:42008" ph="..." />
+            <marker date="1486736524605" expanded="true" signature="54240:54253" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="463" column="1" selection-start-line="463" selection-start-column="1" selection-end-line="463" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>

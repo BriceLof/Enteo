@@ -1194,163 +1194,165 @@ function urlParam(name){
     }
 })();
 
-
+if(document.getElementById('accompagnement')) {
 //ajout de plusieurs financement
-$(function () {
-    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-    var $container = $('div#accompagnement_financeur');
-    // On ajoute un lien pour ajouter une nouvelle catégorie
-    //je mets en commentaire jusqu'à ce que je trouve une solution
-    //var $addLink = $('<a href="#" id="add_financement_button" >Ajouter un co-financeur</a>');
+    $(function () {
+        // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+        var $container = $('div#accompagnement_financeur');
+        // On ajoute un lien pour ajouter une nouvelle catégorie
+        //je mets en commentaire jusqu'à ce que je trouve une solution
+        //var $addLink = $('<a href="#" id="add_financement_button" >Ajouter un co-financeur</a>');
 
-    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    /**
-    $container.on('click',$addLink,function(e) {
-        addFinanceur($container);
-        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-        return false;
-    });
-     */
-    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.find(':input').length;
-    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-    if (index == 0) {
-        addTwoFirstFinanceur($container);
-        addTwoFirstFinanceur($container);
-    } else if (index == 1){
-        addTwoFirstFinanceur($container);
-    }
-
-    function addTwoFirstFinanceur($container) {
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, '- Financeur ' + (index+1))
-            .replace(/__name__/g, index));
-        $container.append($prototype);
-        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-        index++;
-    }
-
-    // La fonction qui ajoute un formulaire Image
-    function addFinanceur($container) {
-        // Dans le contenu de l'attribut « data-prototype », on remplace :
-        // - le texte "__name__label__" qu'il contient par le label du champ
-        // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Financeur ' + (index+1))
-            .replace(/__name__/g, 'Financeur ' + (index+1)));
-        // On ajoute au prototype un lien pour pouvoir supprimer l'image
-        addDeleteLink($prototype);
-        // On ajoute le prototype modifié à la fin de la balise <div>
-        $container.append($prototype);
-        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-        index++;
-    }
-
-    // La fonction qui ajoute un lien de suppression d'une image
-    function addDeleteLink($prototype) {
-        // Création du lien
-        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
-        // Ajout du lien
-        $prototype.append($deleteLink);
-        // Ajout du listener sur le clic du lien
-        $deleteLink.click(function(e) {
-            $prototype.remove();
+        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+        /**
+         $container.on('click',$addLink,function(e) {
+            addFinanceur($container);
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
         });
-    }
+         */
 
-    $('.nom_organisme').on('change',function () {
-        parent = $(this).parent().parent();
-        element = parent.find('#'+ parent.attr('id') +'_organisme');
-        labelElement = parent.find('.organisme_organisme_label');
-        if($(this).val() == 'OPCA'){
-            element.css('display', 'inline');
-            labelElement.css('display', 'inline');
-            $name = 'OPCA';
-            listeOpcaOpacif($name, element);
-        }else{
-            if($(this).val() == 'OPACIF'){
-                element.css('display', 'inline');
-                labelElement.css('display', 'inline');
-                $name = 'OPACIF';
-                listeOpcaOpacif($name, element);
-            }else{
-                labelElement.css('display', 'none');
-                element.css('display', 'none');
-                element.empty();
-            }
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+        var index = $container.find(':input').length;
+        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+        if (index == 0) {
+            addTwoFirstFinanceur($container);
+            addTwoFirstFinanceur($container);
+        } else if (index == 1) {
+            addTwoFirstFinanceur($container);
         }
-    });
+        function addTwoFirstFinanceur($container) {
+            var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, '- Financeur ' + (index + 1))
+                .replace(/__name__/g, index));
+            $container.append($prototype);
+            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+            index++;
+        }
 
+        // La fonction qui ajoute un formulaire Image
+        function addFinanceur($container) {
+            // Dans le contenu de l'attribut « data-prototype », on remplace :
+            // - le texte "__name__label__" qu'il contient par le label du champ
+            // - le texte "__name__" qu'il contient par le numéro du champ
+            var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Financeur ' + (index + 1))
+                .replace(/__name__/g, 'Financeur ' + (index + 1)));
+            // On ajoute au prototype un lien pour pouvoir supprimer l'image
+            addDeleteLink($prototype);
+            // On ajoute le prototype modifié à la fin de la balise <div>
+            $container.append($prototype);
+            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+            index++;
+        }
 
-    //modification du champ input de l'organisme en select
-    $( function () {
-        $('.organisme_organisme').each(function () {
-            parent = $(this).parent().parent();
-            nomOrganisme = $(parent).find('#'+ $(parent).attr('id') +'_nom');
-            var newElement = $('<select>');
-            $.each(this.attributes, function (i, attrib) {
-                $(newElement).attr(attrib.name, attrib.value);
+        // La fonction qui ajoute un lien de suppression d'une image
+        function addDeleteLink($prototype) {
+            // Création du lien
+            $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
+            // Ajout du lien
+            $prototype.append($deleteLink);
+            // Ajout du listener sur le clic du lien
+            $deleteLink.click(function (e) {
+                $prototype.remove();
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
             });
-            $(this).replaceWith(newElement);
-        });
-    });
+        }
 
-    $(function () {
-        $a = 1;
-        $('.widget_financeur').children().children().children().each(function () {
-            if($(this).get(0).tagName == 'LABEL') {
-                $(this).text('Financeur ' + $a);
-                $a++;
-            }
-        })
-    });
-
-    $( function () {
-        $('select.organisme_organisme').each(function () {
+        $('.nom_organisme').on('change', function () {
             parent = $(this).parent().parent();
-            nomOrganisme = $(parent).find('#'+ $(parent).attr('id') +'_nom');
+            element = parent.find('#' + parent.attr('id') + '_organisme');
             labelElement = parent.find('.organisme_organisme_label');
-            element = $(this);
-            console.log($(this).val());
-            if($(nomOrganisme).val() == 'OPCA'){
+            if ($(this).val() == 'OPCA') {
                 element.css('display', 'inline');
                 labelElement.css('display', 'inline');
                 $name = 'OPCA';
-                listeOpcaOpacif($name,element);
-            }else{
-                if($(nomOrganisme).val() == 'OPACIF') {
+                listeOpcaOpacif($name, element);
+            } else {
+                if ($(this).val() == 'OPACIF') {
                     element.css('display', 'inline');
                     labelElement.css('display', 'inline');
                     $name = 'OPACIF';
                     listeOpcaOpacif($name, element);
+                } else {
+                    labelElement.css('display', 'none');
+                    element.css('display', 'none');
+                    element.empty();
                 }
             }
         });
+
+
+        //modification du champ input de l'organisme en select
+        $(function () {
+            $('.organisme_organisme').each(function () {
+                parent = $(this).parent().parent();
+                nomOrganisme = $(parent).find('#' + $(parent).attr('id') + '_nom');
+                var newElement = $('<select>');
+                $.each(this.attributes, function (i, attrib) {
+                    $(newElement).attr(attrib.name, attrib.value);
+                });
+                $(this).replaceWith(newElement);
+            });
+        });
+
+        $(function () {
+            $a = 1;
+            $('.widget_financeur').children().children().children().each(function () {
+                if ($(this).get(0).tagName == 'LABEL') {
+                    $(this).text('Financeur ' + $a);
+                    $a++;
+                }
+            })
+        });
+
+        $(function () {
+            $('select.organisme_organisme').each(function () {
+                parent = $(this).parent().parent();
+                nomOrganisme = $(parent).find('#' + $(parent).attr('id') + '_nom');
+                labelElement = parent.find('.organisme_organisme_label');
+                element = $(this);
+                console.log($(this).val());
+                if ($(nomOrganisme).val() == 'OPCA') {
+                    element.css('display', 'inline');
+                    labelElement.css('display', 'inline');
+                    $name = 'OPCA';
+                    listeOpcaOpacif($name, element);
+                } else {
+                    if ($(nomOrganisme).val() == 'OPACIF') {
+                        element.css('display', 'inline');
+                        labelElement.css('display', 'inline');
+                        $name = 'OPACIF';
+                        listeOpcaOpacif($name, element);
+                    }
+                }
+            });
+        });
+
+
+        //Ajax pour recuperer la liste des opca ou opacif
+        function listeOpcaOpacif($name, element) {
+            $.ajax({
+                url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    element.empty();
+                    console.log('ça charge');
+                },
+                success: function (data) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        if ($(element).attr('value') == item) {
+                            element.append("<option value=" + item + " selected = \"selected\">" + item + "</option>");
+                        } else {
+                            element.append("<option value=" + item + ">" + item + "</option>");
+                        }
+                    });
+                    console.log('fini');
+                }
+            });
+        }
     });
 
-
-//Ajax pour recuperer la liste des opca ou opacif
-    function listeOpcaOpacif($name, element) {
-        $.ajax({
-            url: Routing.generate('application_opca_opacif_financeur', {'nom' : $name}), // le nom du fichier indiqué dans le formulaire
-            cache: true,
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                element.empty();
-                console.log('ça charge');
-            },
-            success: function (data) {
-                $.each(JSON.parse(data),function (i, item) {
-                    if($(element).attr('value') == item){
-                        element.append("<option value=" + item + " selected = \"selected\">" + item + "</option>");
-                    }else {
-                        element.append("<option value=" + item + ">" + item + "</option>");
-                    }
-               });
-               console.log('fini');
-            }
-        });
-    }
-});
+}
 
