@@ -44,7 +44,7 @@ class NewsType extends AbstractType
                 'required' => false
             )) 
             ->add('Enregistrer', SubmitType::class, array(
-                'attr' => array('class' => 'btn  btn-danger'),
+                'attr' => array('class' => 'btn  btn-primary'),
             ))    
             ;
     }

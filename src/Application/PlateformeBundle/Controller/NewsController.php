@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
+use Application\PlateformeBundle\Entity\Historique;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Form\NewsType;
@@ -25,11 +26,11 @@ class NewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
-        //$news = new News();
-        $news = $em->getRepository("ApplicationPlateformeBundle:News")->findOneBy(
+        $news = new News();
+        /*$news = $em->getRepository("ApplicationPlateformeBundle:News")->findOneBy(
             array("beneficiaire"    => $beneficiaire), 
             array("id"              => "DESC")
-        );
+        );*/
         //var_dump($news);
         $form = $this->createForm(NewsType::class, $news);
 
@@ -37,6 +38,20 @@ class NewsController extends Controller
             $news = $form->getData();
             $news->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
+            
+            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
+            {
+                $historique = new Historique();
+                $historique->setHeuredebut(new \DateTime('now'));
+                $historique->setHeurefin(new \DateTime('now'));
+                $historique->setSummary("");
+                $historique->setTypeRdv("");
+                $historique->setBeneficiaire($news->getBeneficiaire());
+                $historique->setDescription($news->getDetailStatut()->getDetail());
+                $historique->setEventId("0");
+                $em->persist($historique);
+            }
+            
             $em->persist($news);
             $em->flush();
 
