@@ -64,6 +64,7 @@ class UsersController extends Controller
         
         //$user->setRoles(array("ROLE_CONSULTANT"));
         //var_dump($user->getRoles());
+        
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
         $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
         $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
@@ -147,7 +148,6 @@ class UsersController extends Controller
         $user = $this->getUser();
         // supression du salt dans le password avant de le mettre dans le champs du form 
         $user->setPassword(substr($user->getPassword(), 0,-45));
-        
         //$user->setRoles(array("ROLE_CONSULTANT"));
         //var_dump($user->getRoles());
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
