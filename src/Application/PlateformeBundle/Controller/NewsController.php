@@ -59,7 +59,7 @@ class NewsController extends Controller
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                 'beneficiaire' => $beneficiaire,
                 'id' => $beneficiaire->getId(),
-            )).'#tabNews');
+            )));
         }
 
         return $this->render('ApplicationPlateformeBundle:News:new.html.twig', array(
@@ -101,7 +101,7 @@ class NewsController extends Controller
 
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),
-        )).'#tabNews');
+        )));
     }
 
     /**
@@ -130,7 +130,7 @@ class NewsController extends Controller
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'id' => $beneficiaire->getId(),
                 )
-            ).'#tabNews');
+            ));
         }
 
         return $this->render('ApplicationPlateformeBundle:News:edit.html.twig', array(
