@@ -125,6 +125,28 @@
                                             <td>{{ form_widget(edit_form.dateNaissance) }}</td>
                                         </tr>
                                         <tr>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tableSection">Employeur</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ form_label(edit_form.employeur.raisonSociale) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.raisonSociale) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ form_label(edit_form.employeur.siret) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.siret) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ form_label(edit_form.employeur.conventionCollective) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.conventionCollective) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ form_label(edit_form.employeur.apeNace) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.apeNace) }}</td>
+                                        </tr>
+                                        <tr>
                                             <td>{{ form_errors(edit_form) }}</td>
                                         </tr>
                                         <tr>
@@ -162,7 +184,7 @@
                                         <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                                     </tr>
                                     <tr>
-                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="width:59px;color:#337ab7;border-bottom:1px solid #337ab7;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" >Maj Statut</a></td>
+                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="width:59px;color:#337ab7;border-bottom:1px solid #337ab7;" id="{{ beneficiaire.id }}" class="maj" data-toggle="modal" data-target="#block_formulaire_ajout_new" >Maj Statut</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -338,6 +360,7 @@
                                 </table>
                             </div>
                             <div id="AjoutDocument" class="collapse in">
+                                <a href="#" id="add_document" class="btn btn-default maj">Ajouter un Document</a>
                                 <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                                     {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                                 </form>

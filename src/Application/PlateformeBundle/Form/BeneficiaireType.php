@@ -70,7 +70,7 @@ class BeneficiaireType extends AbstractType
                     '...' => '',
                     'Demandeur d\'emploi' => 'demandeur d\'emploi',
                     'Ouvrier qualifié' => 'ouvrier qualifié',
-                    'Omployé' => 'employé',
+                    'Employé' => 'employé',
                     'Technicien' => 'technicien',
                     'Agent de maitrise' => 'agent de maitrise',
                     'Cadre/ingenieur' => 'cadre/ingenieur',
@@ -196,6 +196,15 @@ class BeneficiaireType extends AbstractType
                 'attr' => array(
                     'placeholder' => '',
                     'class' => 'date fiche'
+                )
+            ))
+
+            ->add('employeur', EmployeurType::class, array(
+                'label' => '',
+                'required' => false,
+                'by_reference' => true,
+                'attr' => array(
+                    'class' => 'fiche'
                 )
             ))
 

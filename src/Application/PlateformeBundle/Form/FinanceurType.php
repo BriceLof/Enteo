@@ -21,6 +21,7 @@ class FinanceurType extends AbstractType
         $builder
             ->add('nom', ChoiceType::class, array(
                 'required' => false,
+                'label' => 'type ',
                 'choices' => array(
                     '...' => '',
                     'OPCA' => 'OPCA',
@@ -30,14 +31,14 @@ class FinanceurType extends AbstractType
                     'Pôle Emploi' => 'Pole Emploi',
                 ),
                 'attr' => array(
-                    'class' => 'nom_organisme organisme_input',
+                    'class' => 'nom_organisme organisme_input accompangment',
                 )
             ))
 
             ->add('organisme', TextType::class, array(
                 'required' => false,
                 'attr' => array(
-                    'class' => 'organisme_organisme organisme_input',
+                    'class' => 'organisme_organisme organisme_input accompangment',
                     'style' => 'display:none'
                 ),
                 'label_attr' => array(
@@ -50,7 +51,7 @@ class FinanceurType extends AbstractType
                 'required' => false,
                 'label' => ' Montant en euros',
                 'attr' => array(
-                    'class' => 'montant_organisme organisme_input',
+                    'class' => 'montant_organisme organisme_input accompangment',
                 )
             ))
             ->add('dateAccord', DateType::class, array(
@@ -60,7 +61,7 @@ class FinanceurType extends AbstractType
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'class' => 'accompagnementDate organisme_input',
+                    'class' => 'accompagnementDate organisme_input accompangment',
                 )
             ))
             ;

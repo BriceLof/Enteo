@@ -122,12 +122,19 @@ class BeneficiaireController extends Controller
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
         if ($request->isMethod('POST') /*&& $editForm->isValid()*/) {
-           // var_dump($beneficiaire->getTelConso());die;
+
             if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
             }else{
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
             }
+
+            $employeur = $beneficiaire->getEmployeur();
+            $em->persist($employeur);
+            $em->flush();
+
+
+
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
@@ -169,6 +176,8 @@ class BeneficiaireController extends Controller
                 ->setParameter(18, $beneficiaire->getType())
                 ->getQuery();
             $p = $q->execute();
+
+
 
             $this->get('session')->getFlashBag()->add('info', 'Fiche Bénéficiaire modifié avec succès');
 

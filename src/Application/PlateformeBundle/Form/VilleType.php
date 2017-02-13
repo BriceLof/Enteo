@@ -18,7 +18,7 @@ class VilleType extends AbstractType
             ->add('nom', TextType::class, array(
                 'label' => 'Ville ',
                 'attr' => array(
-                    'class' => 'ville',
+                    'class' => 'ville fiche',
                     'autocomplete' => 'off',
                     'readonly' => 'readonly',
                 )
@@ -28,7 +28,7 @@ class VilleType extends AbstractType
                 'label' => 'Code Postal ',
                 'attr' => array(
                     'placeholder' => '',
-                    'class' => 'cp',
+                    'class' => 'cp fiche',
                     'maxlength' => 5,
                     'autocomplete' => 'off',
                 )

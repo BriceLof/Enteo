@@ -2,11 +2,11 @@
     <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Ajout d'un suivi administratif : </p>
     <div>
         <span>{{ form_label(form.statut) }}</span>
-        <span colspan="3">{{ form_widget(form.statut, {'attr' : {'class': 'statutSuiviAd'}}) }}</span>
+        <span colspan="3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
     </div>
     <div>
         <span>{{ form_label(form.detailStatut) }}</span><div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
-        <span colspan="3">{{ form_widget(form.detailStatut, {'attr' : {'class': 'detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
+        <span colspan="3">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
     </div>
     <div>
         <span>{{ form_label(form.info) }}</span>

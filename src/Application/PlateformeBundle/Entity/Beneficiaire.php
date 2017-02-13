@@ -28,6 +28,17 @@ class Beneficiaire
      * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Employeur", inversedBy="beneficiaire")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $employeur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Contact", mappedBy="beneficiaire")
+     */
+    private $contact;
     
      /**
      * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
@@ -1219,5 +1230,63 @@ class Beneficiaire
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set employeur
+     *
+     * @param \Application\PlateformeBundle\Entity\Employeur $employeur
+     *
+     * @return Beneficiaire
+     */
+    public function setEmployeur(\Application\PlateformeBundle\Entity\Employeur $employeur = null)
+    {
+        $this->employeur = $employeur;
+
+        return $this;
+    }
+
+    /**
+     * Get employeur
+     *
+     * @return \Application\PlateformeBundle\Entity\Employeur
+     */
+    public function getEmployeur()
+    {
+        return $this->employeur;
+    }
+
+    /**
+     * Add contact
+     *
+     * @param \Application\PlateformeBundle\Entity\Contact $contact
+     *
+     * @return Beneficiaire
+     */
+    public function addContact(\Application\PlateformeBundle\Entity\Contact $contact)
+    {
+        $this->contact[] = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Remove contact
+     *
+     * @param \Application\PlateformeBundle\Entity\Contact $contact
+     */
+    public function removeContact(\Application\PlateformeBundle\Entity\Contact $contact)
+    {
+        $this->contact->removeElement($contact);
+    }
+
+    /**
+     * Get contact
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContact()
+    {
+        return $this->contact;
     }
 }
