@@ -613,7 +613,7 @@ $("document").ready(function (initDynamicContent) {
     // ======================================================================= //
     setTimeout(function(){
         $('.msg-errors').css('display', 'none');
-    }, 2000);
+    }, 7000);
    
     // Autocompletion ville
     $("#dpttest").autocomplete({
@@ -651,7 +651,7 @@ $("document").ready(function (initDynamicContent) {
                                       $('#adresseh').val(item.adresse); // adresse 
                                       $('#zip').val(item.cp); // code postal
                                       $('#ziph').val(item.cp); // code postal
-                                      $('#historique_Enregistrer').removeAttr('disabled');
+                                      // $('#historique_Enregistrer').removeAttr('disabled');
                                       return item.nom;
                                   }
                                   else{
@@ -666,7 +666,7 @@ $("document").ready(function (initDynamicContent) {
                                       $('#adresseh').val(); // adresse 
                                       $('#zip').val(); // code postal
                                       $('#ziph').val(); // code postal
-                                      $('#historique_Enregistrer').attr('disabled','true');
+                                      // $('#historique_Enregistrer').attr('disabled','true');
                                       return 'Aucun Bureau trouvé dans ce departement';
                                   }
                               }
@@ -707,7 +707,7 @@ $("document").ready(function (initDynamicContent) {
                                       $('#nomb').val(item.nomConso);
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
-                                      $('#historique_Enregistrer').removeAttr('disabled');
+                                      // $('#historique_Enregistrer').removeAttr('disabled');
                                       $('#idbeneficiaire').val(item.id);
                                       console.log('beneficiaire id: '+item.id);
 
@@ -717,7 +717,7 @@ $("document").ready(function (initDynamicContent) {
                                       $('#nomb').val('');
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
-                                      $('#historique_Enregistrer').attr('disabled','true');
+                                      // $('#historique_Enregistrer').attr('disabled','true');
                                       $('#idbeneficiaire').val(-1);
                                       return 'Aucun Beneficiaire trouvé';
                                   }

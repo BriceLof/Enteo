@@ -16,7 +16,8 @@ class HomeController extends Controller
 {
     public function indexAction(Request $request, $page)
     {
-        $session = new Session();
+        
+		$session = new Session();
  
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");

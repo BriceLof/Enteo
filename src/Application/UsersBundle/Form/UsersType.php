@@ -72,7 +72,7 @@ class UsersType extends AbstractType
                     'multiple' => false,
                     'expanded' => true,
                     'required' => true,
-                    'data'     => "mr",
+                    
                     
                 ))
                 ->add('nom', null, array(
