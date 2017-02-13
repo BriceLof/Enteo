@@ -13,7 +13,7 @@ class AddStatutBdd
     {
         /* insertion statut et detail statut */
         $statuts = array(
-            "MenR" => array("En attente Contact Tél"),
+            //"MenR" => array("En attente Contact Tél"),
             "Téléphone" => array("Tentative 1", "Tentative 2", "Tentative 3", "Email suite No Contact"),
             "RV1 à faire" => array(""),
             "RV1 réalisé" => array("RV1 Positif", "RV1 Négatif", "Indécis", "RV1 à reporter", "No show RV1", "RV2 à faire"),

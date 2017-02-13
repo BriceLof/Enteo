@@ -460,7 +460,15 @@ div.error {
 }
 
 #accompagnement .form-group .form-group label{
-    margin-left: 70px;
+    margin-left: 8%;
+}
+
+#accompagnement .form-group .form-group select{
+    height: 26px;
+}
+
+.sectionBeneficiaire select{
+    font-size: 11px;
 }
 
 .organisme_input {

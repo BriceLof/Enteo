@@ -39,7 +39,7 @@ class NewsController extends Controller
             $news->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
             
-            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
+            if($news->getDetailStatut()->getId() == 5 OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
             {
                 $historique = new Historique();
                 $historique->setHeuredebut(new \DateTime('now'));
@@ -51,7 +51,6 @@ class NewsController extends Controller
                 $historique->setEventId("0");
                 $em->persist($historique);
             }
-            
             $em->persist($news);
             $em->flush();
 

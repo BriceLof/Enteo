@@ -58,7 +58,7 @@ class HistoriqueType extends AbstractType
                 'label' => 'Heure Fin'
             ))
             ->add('Enregistrer',  SubmitType::class, array(
-                'label' => 'Enregistrer', 'disabled' => 'true'
+                'label' => 'Enregistrer'
             ))
         ;
     }
