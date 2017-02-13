@@ -413,4 +413,3 @@ class Historique
         return $this->autreSummary;
     }
 }
-

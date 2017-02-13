@@ -41,6 +41,7 @@ class SuiviAdministratifType extends AbstractType
                 'label' => 'News',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'suivi'
                 ), 
                 'required' => false
             ))

@@ -15,7 +15,7 @@
 
                     <tr>
                         <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
-                           {{historique.dateDebut|date('d/m/Y')}}
+                           {{historique.dateDebut|date('d/m/Y')}} <span style="margin-left:6px" class="glyphicon glyphicon-calendar"></span>
                         </td>
                         <td style="border:none;">
                             <span >{{historique.heureDebut|date('H:i')}}</span>
@@ -57,7 +57,6 @@
                 {% else %}
                     <tr>
                         <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
-                            
                             {{historique.dateDebut|date('d/m/Y')}}
                         </td>
                         <td style="border:none;">

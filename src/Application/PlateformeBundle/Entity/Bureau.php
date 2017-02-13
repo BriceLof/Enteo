@@ -59,6 +59,7 @@ class Bureau
     public function __construct()
     {
         $this->actifInactif = true;
+        $this->temporaire = false;
     }
 
     /**

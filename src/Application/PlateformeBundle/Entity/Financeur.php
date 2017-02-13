@@ -30,7 +30,7 @@ class Financeur
     /**
      * @var
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255,nullable=true)
      */
     private $nom;
 
@@ -44,14 +44,14 @@ class Financeur
     /**
      * @var
      *
-     * @ORM\Column(name="montant", type="float")
+     * @ORM\Column(name="montant", type="float",nullable=true)
      */
     private $montant;
 
     /**
      * @var
      *
-     * @ORM\Column(name="date_debut", type="date")
+     * @ORM\Column(name="date_debut", type="date",nullable=true)
      */
     private $dateAccord;
 

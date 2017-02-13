@@ -25,7 +25,7 @@ class AccompagnementType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => true,
                 'attr' => array(
-                    'class' => 'financeur_accompagnement',
+                    'class' => 'financeur_accompagnement accompagnement',
                 )
             ))
 
@@ -34,6 +34,7 @@ class AccompagnementType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'accompagnement',
                 )
             ))
             ->add('heure', TextType::class, array(
@@ -41,7 +42,7 @@ class AccompagnementType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
-
+                    'class' => 'accompagnement',
                 )
             ))
 
@@ -50,6 +51,7 @@ class AccompagnementType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'accompagnement',
                 )
             ))
 
@@ -59,7 +61,7 @@ class AccompagnementType extends AbstractType
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'class' => 'accompagnementDate',
+                    'class' => 'accompagnementDate accompagnement',
                     'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )
@@ -70,7 +72,7 @@ class AccompagnementType extends AbstractType
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'class' => 'accompagnementDate',
+                    'class' => 'accompagnementDate accompagnement',
                     'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )

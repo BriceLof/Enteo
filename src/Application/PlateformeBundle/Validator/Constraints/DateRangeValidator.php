@@ -26,9 +26,7 @@ class DateRangeValidator extends ConstraintValidator
                     }
                     return true;
                 } else {
-                    $this->context->buildViolation($constraint->message)
-                        ->addViolation();
-                    return false;
+                    return true;
                 }
             } else {
                 if ($entity->getDateFin() !== null) {
@@ -41,8 +39,7 @@ class DateRangeValidator extends ConstraintValidator
                 return true;
             }
         } else {
-            $this->setMessage($constraint->emptyStartDate);
-            return false;
+            return true;
         }
     }
 }

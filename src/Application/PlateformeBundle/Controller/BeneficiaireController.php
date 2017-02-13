@@ -40,10 +40,11 @@ class BeneficiaireController extends Controller
             unset($_SESSION['beneficiaireid']);
         }
         $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
+		
         // ====================================================== //
         // ===== Mise à jour des evenements du beneficiaire ===== //
         // ====================================================== //
-        if(count($histo_beneficiaire) > 0){
+        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0'){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if(!empty($_SESSION['firstpast'])){
                  unset($_SESSION['firstpast']); // On supprime la session
@@ -122,12 +123,19 @@ class BeneficiaireController extends Controller
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
         if ($request->isMethod('POST') /*&& $editForm->isValid()*/) {
-           // var_dump($beneficiaire->getTelConso());die;
+
             if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
             }else{
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
             }
+
+            $employeur = $beneficiaire->getEmployeur();
+            $em->persist($employeur);
+            $em->flush();
+
+
+
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();
             $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
@@ -169,6 +177,8 @@ class BeneficiaireController extends Controller
                 ->setParameter(18, $beneficiaire->getType())
                 ->getQuery();
             $p = $q->execute();
+
+
 
             $this->get('session')->getFlashBag()->add('info', 'Fiche Bénéficiaire modifié avec succès');
 

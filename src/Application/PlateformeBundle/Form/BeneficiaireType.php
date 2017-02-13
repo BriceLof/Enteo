@@ -68,13 +68,13 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'choices' => array(
                     '...' => '',
-                    'demandeur d\'emploi' => 'demandeur d\'emploi',
-                    'ouvrier qualifié' => 'ouvrier qualifié',
-                    'employé' => 'employé',
-                    'technicien' => 'technicien',
-                    'agent de maitrise' => 'agent de maitrise',
-                    'cadre/ingenieur' => 'cadre/ingenieur',
-                    'chef d\'entreprise/PL' => 'chef d\'entreprise/PL',
+                    'Demandeur d\'emploi' => 'demandeur d\'emploi',
+                    'Ouvrier qualifié' => 'ouvrier qualifié',
+                    'Employé' => 'employé',
+                    'Technicien' => 'technicien',
+                    'Agent de maitrise' => 'agent de maitrise',
+                    'Cadre/ingenieur' => 'cadre/ingenieur',
+                    'Chef d\'entreprise/PL' => 'chef d\'entreprise/PL',
                 ),
                 'attr' => array(
                     'placeholder' => '',
@@ -196,6 +196,15 @@ class BeneficiaireType extends AbstractType
                 'attr' => array(
                     'placeholder' => '',
                     'class' => 'date fiche'
+                )
+            ))
+
+            ->add('employeur', EmployeurType::class, array(
+                'label' => '',
+                'required' => false,
+                'by_reference' => true,
+                'attr' => array(
+                    'class' => 'fiche'
                 )
             ))
 

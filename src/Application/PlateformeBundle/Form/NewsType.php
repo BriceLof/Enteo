@@ -33,15 +33,24 @@ class NewsType extends AbstractType
                                 ->setParameters(array('slug1' => 'recevabilite', 'slug2' => 'financement','slug3' => 'facturation'))
                             ;
                 },
+                'attr' => array(
+                    'class' => 'news'
+                )
             ))
             ->add('detailStatut', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
                 'placeholder' => '',
+                'attr' => array(
+                    'class' => 'news'
+                )
             ))
             ->add('message', null, array(
                 'label' => 'Message :', 
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'class' => 'news'
+                )
             )) 
             ->add('Enregistrer', SubmitType::class, array(
                 'attr' => array('class' => 'btn  btn-primary'),
