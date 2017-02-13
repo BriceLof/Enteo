@@ -155,14 +155,11 @@
                                 <tbody>
                                     <tr>
                                         <td>Statut</td>
-                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</td>
+                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a></td>
                                     </tr>
                                     <tr>
                                         <td>Détail Statut</td>
                                         <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="width:59px;color:#337ab7;border-bottom:1px solid #337ab7;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" >Maj Statut</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -176,6 +173,7 @@
                                         <div class="modal-body">        
                                             <form method="POST" id="newsForm" action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}" >
                                                 {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                                                <input type="hidden" id="statutIDCurrentBlockStatut" value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}" />
                                             </form>
                                         </div>
                                     </div>
