@@ -6,6 +6,9 @@
               <th style="border:none;">Heure fin</th>
               <th style="border:none;">Bureau</th>
               <th style="border:none;">Type Rdv</th>
+              {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+                <th>Actions</th>
+              {% endif %}
            </tr>
            {% for historique in historiques %}
                 {% if historique.eventId != '0' %}
@@ -36,6 +39,20 @@
                                 <span>{{historique.typerdv}}</span>
                             {% endif %}
                         </td>
+                        {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+                            <td>
+                                <center>
+                                    <p>
+                                       {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
+                                           <a href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
+                                               <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous"></span>
+                                           </a>
+                                       {% endif %}
+                                       <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" title="Supprimer le rendez-vous"></span>
+                                    </p>
+                                </center>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% else %}
                     <tr>
@@ -49,6 +66,9 @@
                         <td colspan=3>
                             <span>{{ historique.description }}</span>
                         </td>
+                        {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+                            <td><span>-</span></td>
+                        {% endif %}
                     </tr>
                 {% endif %}
             {% endfor %}

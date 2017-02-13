@@ -4,6 +4,15 @@
 
 {% block body %}
     <div class="container-fluid blocagendaprincipal">
+        <div id="flashbag" class="row">
+            <div class="col-md-12">
+               {% for message in app.session.flashbag.get('info') %}
+                  {% if message != 'not message' %}
+                     <div class="alert alert-success" role="alert">{{ message }}</div>
+                  {% endif %}
+               {% endfor %}
+            </div>
+        </div>
         {% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
             <div class="row">
                 <div class="col-mg-12">
@@ -82,8 +91,8 @@
                                         <input type="checkbox" id="autrebureauc" name="autrebureauc"><span style="margin-left:2%;">Autre Bureau</span>
                                     </p>
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength="2" class="form-control new_input allchampH" placeholder="Taper le numero de departement" required>
-                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper le 3 premiers numeros du code postal">
+                                    <input type="text" id="dpttest" name="dpttest" maxlength="2" class="form-control new_input allchampH" placeholder="Taper le numero du departement" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper les 3 premiers numeros du code postal">
                                     <input type="hidden" id="ville_id" name="ville_id" >
                                     <label>Bureau</label>
                                     <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true">
@@ -213,8 +222,8 @@
                                 </p>
                                 <div class="bureau_v">
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero de departement" required>
-                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper le 3 premiers numeros du code postal" >
+                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero du departement" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper les 3 premiers numeros du code postal" >
                                     <input type="hidden" id="ville_id" name="ville_id" >
                                     <label>Bureau</label>
                                     <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true">

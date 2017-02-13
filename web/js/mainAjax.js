@@ -350,79 +350,6 @@ $("document").ready(function (initDynamicContent) {
             $(".ville").val('');
         }
     });
-
-    //ajax rechercher dans la page home
-    // desactivation de l'ajax par demande de philippe pour plus de visibilité
-    /**
-    $("#ajaxForm").submit(function (e) {
-
-        e.preventDefault();
-        $.ajax({
-            url: Routing.generate('application_list_beneficiaire'), // le nom du fichier indiqué dans le formulaire
-            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-            data: $(this).serialize(),
-            cache: true,
-            dataType: 'json',
-            beforeSend: function () {
-
-                var resultat = document.getElementById('content');
-                resultat.innerHTML = "";
-                resultat.innerHTML += '<div class="loading"></div>';
-
-            },
-            success : function (data) {
-
-                var resultat = document.getElementById('content');
-
-                resultat.innerHTML = "";
-                var table = document.createElement('table');
-                table.setAttribute('class',"table table-bordered");
-                var tr = document.createElement('tr');
-                var thNom = document.createElement('th');
-                var thPrenom = document.createElement('th');
-                thNom.innerHTML = 'nom';
-                thPrenom.innerHTML = 'prenom';
-                tr.appendChild(thNom);
-                tr.appendChild(thPrenom);
-                resultat.appendChild(table).appendChild(tr);
-
-                $.each(JSON.parse(data),function (i, item) {
-
-                    var lien = Routing.generate('application_show_beneficiaire', {id: item.id});
-
-                    var tr2 = document.createElement('tr');
-                    var tdNom = document.createElement('td');
-                    var tdprenom = document.createElement('td');
-                    tdNom.innerHTML = '<a href="'+lien+'" target="_blank">'+item.nomConso;
-                    tdprenom.innerHTML = item.prenomConso;
-                    tr2.appendChild(tdNom);
-                    tr2.appendChild(tdprenom);
-                    resultat.appendChild(table).appendChild(tr2);
-                });
-            }
-        });
-    });
-     */
-    /**
-     $("#ajaxForm").submit(function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: Routing.generate('application_ajaxSearch_beneficiaire'), // le nom du fichier indiqué dans le formulaire
-            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-            data: $(this).serialize(),
-            cache: true,
-            dataType: 'html',
-            beforeSend: function () {
-                var resultat = document.getElementById('content');
-                resultat.innerHTML = "";
-                resultat.innerHTML += '<div class="loading"></div>';
-            },
-            success: function (response) {
-                template = response;
-                $('#content').html(template.html);
-            }
-        });
-    });*/
     
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
@@ -453,7 +380,7 @@ $("document").ready(function (initDynamicContent) {
             $('#adresse').removeAttr('disabled');
             $('#adresse').attr('required',true);
             $('#bureauRdv').attr('required',true);
-            // $('#zip').removeAttr('disabled');
+            $('#ziph').attr('required',true);
             // Reinitialisation
             $('#autrebureau').val('');
             $('#bureauRdv').val('');
@@ -470,7 +397,7 @@ $("document").ready(function (initDynamicContent) {
             $('#adresse').attr('disabled', true);
             $('#adresse').removeAttr('required');
             $('#bureauRdv').removeAttr('required');
-            // $('#zip').attr('disabled', true);
+            $('#ziph').removeAttr('required');
             // Reinitialisation
             $('#autrebureau').val('');
             $('#ville_id').val('');
@@ -708,6 +635,7 @@ $("document").ready(function (initDynamicContent) {
                 $('.letyperdv').val($(this).val());
                 $("#dpttest").val("-1"); // initialisation pour eviter le blocage de la soumission du formulaire lors d'un rdv distanciel
                 $('.checkotherbureau').css('display', 'none'); // autre bureau
+                $('#ziph').removeAttr('required');
                 $('#ville_id').val(''); 
                 $('#autrebureau').removeAttr('required');
                 $('#bureauRdv').removeAttr('required');
@@ -723,11 +651,12 @@ $("document").ready(function (initDynamicContent) {
                 // On ajoute le required dans le champ bureau
                 $('#bureauRdv').attr('required','true');
                 $('.checkotherbureau').css('display', 'inline'); // autre bureau
-                if($('#autrebureauc').is(':checked')){}
+                if($('#autrebureauc').is(':checked')){
+                    $('#ziph').attr('required', true);
+                }
                 else{
                     // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
                     $('#autrebureau').removeAttr('required');
-                    
                 }
             }
     });

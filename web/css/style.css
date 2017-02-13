@@ -244,6 +244,12 @@
 /**
  / =============== Parie Agenda ==================== /
 */
+.cursor_pointer{
+    cursor:pointer;
+}
+.btn_supp{
+    margin-left:5px;
+}
 .champs-historiqueT #historique_summary, .champs-historiqueT #historique_description, 
 .champs-historiqueT #historique_dateDebut, .champs-historiqueT #historique_heureDebut,
 .champs-historiqueT #historique_heureFin{
