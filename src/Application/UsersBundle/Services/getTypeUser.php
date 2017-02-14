@@ -40,4 +40,26 @@ class getTypeUser {
             }
         }
     }
+    
+    public function typeUserForPageAdmin(Users $user)
+    {
+        $roles = $user->getRoles();    
+        foreach($roles as $role)
+        {
+            switch ($role){
+                case "ROLE_CONSULTANT":
+                    return "consultant";
+                    break;
+                case "ROLE_GESTION":
+                    return "gestion";
+                    break;
+                case "ROLE_COMMERCIAL":
+                    return "commercial";
+                    break;
+                case "ROLE_ADMIN":
+                    return "admin";
+                    break;
+            }
+        }
+    }
 }

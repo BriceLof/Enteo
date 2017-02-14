@@ -92,6 +92,30 @@ $(function(){
         }); 
     }
     
+    //-----------------------------------------------------------------------------------------------------------------------//
+    //--------------------------  Page Utilisateur  -------------------------------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------------------//
+    
+    url = window.location.href
+    console.log($(".typeUtilisateur a").text())
+    if(url.indexOf("user/type/admin") != -1){
+        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur .itemAdmin").addClass("active") 
+    }
+    else if(url.indexOf("user/type/commercial") != -1){
+        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur .itemCommercial").addClass("active") 
+    }
+    else if(url.indexOf("user/type/gestion") != -1){
+        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur .itemGestion").addClass("active") 
+    }
+    else if(url.indexOf("user/type") != -1){
+        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur .itemConsultant").addClass("active") 
+    }
+        
+    
 });
 
 // Récupération de la liste de détails du statut choisi 

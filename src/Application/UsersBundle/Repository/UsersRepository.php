@@ -18,7 +18,8 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('u');
 
         $qb ->where('u.roles LIKE :type')
-            ->setParameter('type', '%'.$slugType.'%');
+            ->setParameter('type', '%'.$slugType.'%')
+            ->orderBy('u.id', "DESC");
         ;
 
         return $qb
