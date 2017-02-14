@@ -130,7 +130,14 @@ class BeneficiaireController extends Controller
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
             }
 
+            foreach ($beneficiaire->getContactEmployeur() as $contactEmployeur){
+                $contactEmployeur->setBeneficiaire($beneficiaire);
+                $em->persist($contactEmployeur);
+            }
+
+            //enregistrement du contact employeur et de l'employeur
             $employeur = $beneficiaire->getEmployeur();
+
             $em->persist($employeur);
             $em->flush();
 
@@ -164,8 +171,8 @@ class BeneficiaireController extends Controller
                 ->setParameter(5, $beneficiaire->getPrenomConso())
                 ->setParameter(6, $beneficiaire->getPoste())
                 ->setParameter(7, $beneficiaire->getCsp())
-                ->setParameter(8, $beneficiaire->getTelConso())
-                ->setParameter(9, $beneficiaire->getTel2())
+                ->setParameter(8, str_replace(" ","",$beneficiaire->getTelConso()))
+                ->setParameter(9, str_replace(" ","",$beneficiaire->getTel2()))
                 ->setParameter(10, $beneficiaire->getEmailConso())
                 ->setParameter(11, $beneficiaire->getEmail2())
                 ->setParameter(12, $beneficiaire->getPays())

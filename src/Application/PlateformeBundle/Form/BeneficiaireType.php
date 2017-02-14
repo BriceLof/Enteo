@@ -2,7 +2,9 @@
 
 namespace Application\PlateformeBundle\Form;
 
+use Application\PlateformeBundle\Entity\ContactEmployeur;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -129,6 +131,7 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Email  ',
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
                 )
             ))
 
@@ -206,6 +209,13 @@ class BeneficiaireType extends AbstractType
                 'attr' => array(
                     'class' => 'fiche'
                 )
+            ))
+
+            ->add('contactEmployeur', CollectionType::class, array(
+                'entry_type' => ContactEmployeurType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => true,
             ))
 
             ->add('submit', SubmitType::class, array('label' => 'Rechercher'));

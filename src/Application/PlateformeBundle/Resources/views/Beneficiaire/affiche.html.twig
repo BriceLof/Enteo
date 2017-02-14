@@ -147,6 +147,17 @@
                                             <td>{{ form_widget(edit_form.employeur.apeNace) }}</td>
                                         </tr>
                                         <tr>
+                                            <td class="tableSection">contact</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {# ajout modification de contact #}
+                                        <div>
+                                            <div class="contact_employeur">{{ form_widget(edit_form.contactEmployeur) }}</div>
+                                        </div>
+                                <table>
+                                    <tbody>
+                                        <tr>
                                             <td>{{ form_errors(edit_form) }}</td>
                                         </tr>
                                         <tr>
@@ -177,7 +188,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Statut</td>
-                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a></td>
+                                        <td><a href="#" title="Mise à jour du statut bénéficiaire" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a></td>
                                     </tr>
                                     <tr>
                                         <td>Détail Statut</td>
@@ -215,7 +226,7 @@
                                         <span id="labelConsultant">Consulant :</span>
                                         <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span>
                                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
-                                            <span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Modifier</span>
+                                            <span class="modifierConsultant maj" data-toggle="modal" data-target="#myModal">Modifier</span>
                                 {% endif %}
                                         </span>
                                     </div>

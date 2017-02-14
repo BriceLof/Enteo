@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
-class ContactType extends AbstractType
+class ContactEmployeurType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -30,28 +30,28 @@ class ContactType extends AbstractType
                 ),
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'contactWidget',
                 )
             ))
             ->add('civilite', TextType::class, array(
                 'label' => 'Civilité ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'contactWidget',
                 )
             ))
             ->add('nom', TextType::class, array(
                 'label' => 'Nom ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'contactWidget',
                 )
             ))
             ->add('prenom', TextType::class, array(
                 'label' => 'Prenom ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'contactWidget',
                 )
             ))
             ->add('tel', TextType::class, array(
@@ -60,7 +60,7 @@ class ContactType extends AbstractType
                 'attr' => array(
                     'maxlength' => 14,
                     'placeholder' => '',
-                    'class' => 'telephoneConso fiche'
+                    'class' => 'telephoneConso contactWidget',
                 )
             ))
             ->add('tel', TextType::class, array(
@@ -69,21 +69,21 @@ class ContactType extends AbstractType
                 'attr' => array(
                     'maxlength' => 14,
                     'placeholder' => '',
-                    'class' => 'telephoneConso fiche'
+                    'class' => 'telephoneConso contactWidget'
                 )
             ))
             ->add('email', TextType::class, array(
                 'label' => 'Email ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'contactWidget',
                 )
             ))
             ->add('champsLibre', TextareaType::class, array(
                 'label' => 'Autres renseignement ',
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
+                    'class' => 'contactWidget',
                 )
             ));
     }
@@ -94,13 +94,13 @@ class ContactType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\PlateformeBundle\Entity\Contact'
+            'data_class' => 'Application\PlateformeBundle\Entity\ContactEmployeur'
         ));
     }
 
     public function getName()
     {
-        return 'application_plateformebundle_contactType';
+        return 'application_plateformebundle_contactEmployeurType';
     }
 }
 

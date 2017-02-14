@@ -618,3 +618,28 @@ textarea {
     margin-left: 2%;
     margin-bottom: 12px;
 }
+
+.contact_employeur{
+    margin-left: 10px;
+    margin-right: 11px;
+}
+.contactWidget{
+    width:57%;
+    display: inline-block;
+    float: right;
+}
+
+#afficheBeneficiaire .form-group {
+    margin-bottom: 5px;
+}
+#afficheBeneficiaire #accompagnement .form-group {
+    margin-bottom: 8px;
+}
+
+#afficheBeneficiaire .form-control {
+    padding:0px 12px;
+}
+#accompagnementEditForm > div{
+    margin-left: 10px;
+    margin-right: 11px;
+}

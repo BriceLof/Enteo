@@ -9,10 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Contact
  *
- * @ORM\Table(name="contact")
+ * @ORM\Table(name="contact_employeur")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\ContactRepository")
  */
-class Contact
+class ContactEmployeur
 {
     /**
      * @var integer
@@ -24,43 +24,43 @@ class Contact
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="contact", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="contactEmployeur", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;
 
     /**
-     * @ORM\Column(name="nature", type="string", length=255)
+     * @ORM\Column(name="nature", type="string", length=255, nullable=true)
      * @Assert\Type("string")
      */
     private $nature;
 
     /**
-     * @ORM\Column(name="civilite", type="string", length=255)
+     * @ORM\Column(name="civilite", type="string", length=255, nullable=true)
      * @Assert\Type("string")
      */
     private $civilite;
 
     /**
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      * @Assert\Type("string")
      */
     private $nom;
 
     /**
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      * @Assert\Type("string")
      */
     private $prenom;
 
     /**
-     * @ORM\Column(name="champs_libre", type="string", length=255)
+     * @ORM\Column(name="champs_libre", type="string", length=255, nullable=true)
      * @Assert\Type("string")
      */
     private $champsLibre;
 
     /**
-     * @ORM\Column(name="tel", type="string", length=255)
+     * @ORM\Column(name="tel", type="string", length=255, nullable=true)
      * @Assert\Regex("#^0[1-678][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
@@ -68,7 +68,7 @@ class Contact
     private $tel;
 
     /**
-     * @ORM\Column(name="tel2", type="string", length=255)
+     * @ORM\Column(name="tel2", type="string", length=255, nullable=true)
      * @Assert\Regex("#^0[1-678][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
@@ -76,7 +76,7 @@ class Contact
     private $tel2;
 
     /**
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      *
      */
     private $email;
@@ -91,12 +91,16 @@ class Contact
         return $this->id;
     }
 
+
+
+
+
     /**
      * Set nature
      *
      * @param string $nature
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setNature($nature)
     {
@@ -116,11 +120,35 @@ class Contact
     }
 
     /**
+     * Set civilite
+     *
+     * @param string $civilite
+     *
+     * @return ContactEmployeur
+     */
+    public function setCivilite($civilite)
+    {
+        $this->civilite = $civilite;
+
+        return $this;
+    }
+
+    /**
+     * Get civilite
+     *
+     * @return string
+     */
+    public function getCivilite()
+    {
+        return $this->civilite;
+    }
+
+    /**
      * Set nom
      *
      * @param string $nom
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setNom($nom)
     {
@@ -144,7 +172,7 @@ class Contact
      *
      * @param string $prenom
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setPrenom($prenom)
     {
@@ -168,7 +196,7 @@ class Contact
      *
      * @param string $champsLibre
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setChampsLibre($champsLibre)
     {
@@ -192,7 +220,7 @@ class Contact
      *
      * @param string $tel
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setTel($tel)
     {
@@ -216,7 +244,7 @@ class Contact
      *
      * @param string $tel2
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setTel2($tel2)
     {
@@ -240,7 +268,7 @@ class Contact
      *
      * @param string $email
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setEmail($email)
     {
@@ -260,59 +288,11 @@ class Contact
     }
 
     /**
-     * Set employeur
-     *
-     * @param \Application\PlateformeBundle\Entity\Employeur $employeur
-     *
-     * @return Contact
-     */
-    public function setEmployeur(\Application\PlateformeBundle\Entity\Employeur $employeur)
-    {
-        $this->employeur = $employeur;
-
-        return $this;
-    }
-
-    /**
-     * Get employeur
-     *
-     * @return \Application\PlateformeBundle\Entity\Employeur
-     */
-    public function getEmployeur()
-    {
-        return $this->employeur;
-    }
-
-    /**
-     * Set civilite
-     *
-     * @param string $civilite
-     *
-     * @return Contact
-     */
-    public function setCivilite($civilite)
-    {
-        $this->civilite = $civilite;
-
-        return $this;
-    }
-
-    /**
-     * Get civilite
-     *
-     * @return string
-     */
-    public function getCivilite()
-    {
-        return $this->civilite;
-    }
-
-    /**
      * Set beneficiaire
      *
      * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
      *
-     * @return Contact
+     * @return ContactEmployeur
      */
     public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
     {
