@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Form;
 use Application\PlateformeBundle\Entity\ContactEmployeur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 
 class BeneficiaireType extends AbstractType
@@ -153,13 +155,23 @@ class BeneficiaireType extends AbstractType
                 )
             ))
 
-            ->add('ville', VilleType::class, array(
-                'label' => '',
-                'required' => false,
-                'by_reference' => true,
-                'attr' => array(
-                    'class' => 'fiche'
-                )
+            ->add('code_postal', TextType::class, array(
+                'mapped' => false,
+                'label' => "Code postal *",
+                'required' => true,
+                'attr' => array("maxlength" => 5, "class" => "codePostalInputForAjaxBeneficiaire")
+            ))
+            ->add('codePostalHiddenBeneficiaire', HiddenType::class, array("mapped" => false))
+            ->add('idVilleHiddenBeneficiaire', HiddenType::class, array("mapped" => false))
+            ->add('ville', EntityType::class, array(
+                'class' => 'ApplicationPlateformeBundle:Ville',
+                'label' => 'Ville *',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.nom', 'ASC')
+                        ->setMaxResults( 1 );
+                },
+                'choice_label' => 'nom',
             ))
 
             ->add('pays', TextType::class, array(

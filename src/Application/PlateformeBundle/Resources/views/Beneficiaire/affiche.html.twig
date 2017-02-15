@@ -95,13 +95,13 @@
                                             <td>{{ form_widget(edit_form.adresseComplement) }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{{ form_label(edit_form.ville.cp) }}</td>
-                                            <td>{{ form_widget(edit_form.ville.cp) }}</td>
+                                            <td>{{ form_label(edit_form.code_postal) }}</td>
+                                            <td>{{ form_widget(edit_form.code_postal, {'attr':{'value': beneficiaire.ville.cp }}) }}</td>
                                         </tr>
                                         {% if beneficiaire.ville is not null %}
                                             <tr>
-                                                <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                                <td id="inputVilleBeneficiaire">{{ form_widget(edit_form.ville.nom,  {'attr': {'value': beneficiaire.ville.nom, 'text': beneficiaire.ville.nom}}) }}</td>
+                                                <td>Ville </td>
+                                                <td>{{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjaxBeneficiaire' }}) }}</td>
                                             </tr>
                                         {% else %}
                                             <tr>
@@ -456,3 +456,10 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {% javascripts filter="?jsqueeze"
+    '@ApplicationPlateformeBundle/Resources/public/js/beneficiaire.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock%}
