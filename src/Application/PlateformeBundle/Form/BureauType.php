@@ -5,7 +5,11 @@ namespace Application\PlateformeBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 
 class BureauType extends AbstractType
@@ -25,10 +29,26 @@ class BureauType extends AbstractType
                     'placeholder' => '',
                 )
             ))
-            ->add('ville', VilleType::class, array(
-                'label' => '',
-                'required' => false,
-                'by_reference' => false,
+            ->add('code_postal', TextType::class, array(
+                    'mapped' => false, 
+                    'label' => "Code postal *", 
+                    'required' => true, 
+                    'attr' => array("maxlength" => 5, "class" => "codePostalInputForAjax")
+                ))
+            ->add('codePostalHidden', HiddenType::class, array("mapped" => false))
+            ->add('idVilleHidden', HiddenType::class, array("mapped" => false))
+            ->add('ville', EntityType::class, array(
+                    'class' => 'ApplicationPlateformeBundle:Ville',
+                    'label' => 'Ville *',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('v')
+                            ->orderBy('v.nom', 'ASC')
+                            ->setMaxResults( 1 );
+                    },
+                    'choice_label' => 'nom',
+            ))
+            ->add('submit', SubmitType::class, array(
+                'label' => "Enregistrer"
             ));
     }
 
