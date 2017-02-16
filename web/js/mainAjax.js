@@ -1147,6 +1147,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1172,6 +1176,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1197,6 +1205,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1222,6 +1234,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1259,6 +1275,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1284,6 +1304,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1309,6 +1333,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1334,6 +1362,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1371,6 +1403,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1396,6 +1432,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1421,6 +1461,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1446,6 +1490,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1483,6 +1531,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1508,6 +1560,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1533,6 +1589,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1558,6 +1618,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1595,6 +1659,10 @@ function urlParam(name){
                     $('#dataConfirmModal5').modal({show:true});
                     $('#dataConfirmOK5').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1620,6 +1688,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1645,6 +1717,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1670,6 +1746,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1695,6 +1775,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1732,6 +1816,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1757,6 +1845,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1782,6 +1874,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1807,6 +1903,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -2048,6 +2148,3 @@ if(document.getElementById('beneficiaire_contactEmployeur')) {
         }
     });
 }
-
-
-

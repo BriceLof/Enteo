@@ -34,8 +34,13 @@ class BeneficiaireType extends AbstractType
                 )
             ))
 
-            ->add('civiliteConso', TextType::class, array(
+            ->add('civiliteConso', ChoiceType::class, array(
                 'label' => 'Civilité ',
+                'choices' => array(
+                    'Monsieur' => 'M.',
+                    'Madame' => 'Mme',
+                    'Mademoiselle' => 'Mlle',
+                ),
                  'attr' => array(
                     'placeholder' => '',
                      'class' => 'fiche'

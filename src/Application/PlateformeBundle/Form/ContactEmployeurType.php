@@ -33,9 +33,14 @@ class ContactEmployeurType extends AbstractType
                     'class' => 'contactWidget fiche',
                 )
             ))
-            ->add('civilite', TextType::class, array(
+            ->add('civilite', ChoiceType::class, array(
                 'label' => 'Civilité ',
                 'required' => false,
+                'choices' => array(
+                    'Monsieur' => 'M.',
+                    'Madame' => 'Mme',
+                    'Mademoiselle' => 'Mlle',
+                ),
                 'attr' => array(
                     'class' => 'contactWidget fiche',
                 )
