@@ -38,7 +38,7 @@
                                             <span title="Activer/Désactiver le bureau" style="cursor:pointer;color: {{ bureau.actifInactif ? "green" : "red" }}; float: right" data-toggle="modal" data-target="#myModalBureauDelete{{ loop.index }}" class="glyphicon glyphicon-{{ bureau.actifInactif ? "ok" : "ban" }}-circle"></span>
                                         </td>
                                         <td>
-                                            <span title="Modifier le bureau" style="cursor:pointer;color: black; float: right" data-toggle="modal" data-target="#myModalBureauModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
+                                            <span title="Modifier le bureau" style="cursor:pointer;color: black; float: right" data-toggle="modal" data-bureau-id="{{bureau.id}}" data-target="#myModalBureauModify{{ loop.index }}" class="modifierBureau glyphicon glyphicon-pencil"></span>
                                         </td>
 
                                         <div class="modal fade" id="myModalBureauDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -67,7 +67,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="modal fade" id="myModalBureauModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="myModalBureauModifier{{bureau.id}} modal fade" id="myModalBureauModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -106,3 +106,10 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {% javascripts filter="?jsqueeze"
+           '@ApplicationPlateformeBundle/Resources/public/js/bureau.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock%}

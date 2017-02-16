@@ -30,28 +30,33 @@ class ContactEmployeurType extends AbstractType
                 ),
                 'required' => false,
                 'attr' => array(
-                    'class' => 'contactWidget',
+                    'class' => 'contactWidget fiche',
                 )
             ))
-            ->add('civilite', TextType::class, array(
+            ->add('civilite', ChoiceType::class, array(
                 'label' => 'Civilité ',
                 'required' => false,
+                'choices' => array(
+                    'Monsieur' => 'M.',
+                    'Madame' => 'Mme',
+                    'Mademoiselle' => 'Mlle',
+                ),
                 'attr' => array(
-                    'class' => 'contactWidget',
+                    'class' => 'contactWidget fiche',
                 )
             ))
             ->add('nom', TextType::class, array(
                 'label' => 'Nom ',
                 'required' => false,
                 'attr' => array(
-                    'class' => 'contactWidget',
+                    'class' => 'contactWidget fiche',
                 )
             ))
             ->add('prenom', TextType::class, array(
                 'label' => 'Prenom ',
                 'required' => false,
                 'attr' => array(
-                    'class' => 'contactWidget',
+                    'class' => 'contactWidget fiche',
                 )
             ))
             ->add('tel', TextType::class, array(
@@ -60,7 +65,7 @@ class ContactEmployeurType extends AbstractType
                 'attr' => array(
                     'maxlength' => 14,
                     'placeholder' => '',
-                    'class' => 'telephoneConso contactWidget',
+                    'class' => 'telephoneConso contactWidget fiche',
                 )
             ))
             ->add('tel', TextType::class, array(
@@ -69,7 +74,7 @@ class ContactEmployeurType extends AbstractType
                 'attr' => array(
                     'maxlength' => 14,
                     'placeholder' => '',
-                    'class' => 'telephoneConso contactWidget'
+                    'class' => 'telephoneConso contactWidget fiche'
                 )
             ))
             ->add('email', TextType::class, array(
@@ -83,7 +88,7 @@ class ContactEmployeurType extends AbstractType
                 'label' => 'Autres renseignement ',
                 'required' => false,
                 'attr' => array(
-                    'class' => 'contactWidget',
+                    'class' => 'contactWidget fiche',
                 )
             ));
     }

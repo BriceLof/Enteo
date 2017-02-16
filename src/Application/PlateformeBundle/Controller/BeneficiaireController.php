@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Employeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
@@ -121,71 +122,27 @@ class BeneficiaireController extends Controller
         }
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
-        $editForm->handleRequest($request);
-        if ($request->isMethod('POST') /*&& $editForm->isValid()*/) {
 
-            if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
-            }else{
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
-            }
+        $editForm->get('codePostalHiddenBeneficiaire')->setData($beneficiaire->getVille()->getCp());
+        $editForm->get('idVilleHiddenBeneficiaire')->setData($beneficiaire->getVille()->getId());
+
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
 
             foreach ($beneficiaire->getContactEmployeur() as $contactEmployeur){
                 $contactEmployeur->setBeneficiaire($beneficiaire);
                 $em->persist($contactEmployeur);
             }
 
-            //enregistrement du contact employeur et de l'employeur
             $employeur = $beneficiaire->getEmployeur();
 
+            if ($employeur === NULL){
+                $employeur = new Employeur();
+            }
+
             $em->persist($employeur);
+            $em->persist($beneficiaire);
             $em->flush();
-
-
-
-            $ville->addBeneficiaire($beneficiaire);
-            $qb = $em->createQueryBuilder();
-            $q = $qb->update('ApplicationPlateformeBundle:Beneficiaire', 'u')
-                ->set('u.ville', '?1')
-                ->set('u.civiliteConso', '?3')
-                ->set('u.nomConso', '?4')
-                ->set('u.prenomConso', '?5')
-                ->set('u.poste', '?6')
-                ->set('u.csp', '?7')
-                ->set('u.telConso', '?8')
-                ->set('u.tel2', '?9')
-                ->set('u.emailConso', '?10')
-                ->set('u.email2', '?11')
-                ->set('u.pays', '?12')
-                ->set('u.numSecu', '?13')
-                ->set('u.dateNaissance', '?14')
-                ->set('u.adresse', '?15')
-                ->set('u.adresseComplement', '?16')
-                ->set('u.numSecuCle', '?17')
-                ->set('u.type', '?18')
-                ->where('u.id = ?2')
-                ->setParameter(1, $ville)
-                ->setParameter(2, $id)
-                ->setParameter(3, $beneficiaire->getCiviliteConso())
-                ->setParameter(4, $beneficiaire->getNomConso())
-                ->setParameter(5, $beneficiaire->getPrenomConso())
-                ->setParameter(6, $beneficiaire->getPoste())
-                ->setParameter(7, $beneficiaire->getCsp())
-                ->setParameter(8, str_replace(" ","",$beneficiaire->getTelConso()))
-                ->setParameter(9, str_replace(" ","",$beneficiaire->getTel2()))
-                ->setParameter(10, $beneficiaire->getEmailConso())
-                ->setParameter(11, $beneficiaire->getEmail2())
-                ->setParameter(12, $beneficiaire->getPays())
-                ->setParameter(13, $beneficiaire->getNumSecu())
-                ->setParameter(14, $beneficiaire->getDateNaissance())
-                ->setParameter(15, $beneficiaire->getAdresse())
-                ->setParameter(16, $beneficiaire->getAdresseComplement())
-                ->setParameter(17, $beneficiaire->getNumSecuCle())
-                ->setParameter(18, $beneficiaire->getType())
-                ->getQuery();
-            $p = $q->execute();
-
-
 
             $this->get('session')->getFlashBag()->add('info', 'Fiche Bénéficiaire modifié avec succès');
 

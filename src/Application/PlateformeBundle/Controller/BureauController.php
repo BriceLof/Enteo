@@ -37,17 +37,12 @@ class BureauController extends Controller
     {
         $bureau = new Bureau();
         $form = $this->createForm(BureauType::class, $bureau);
-        $form ->add('submit',  SubmitType::class, array(
-            'label' => 'Enregistrer'
-        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($form['ville']['nom']->getData());
-            $bureau->setVille($ville);
             $em->persist($bureau);
-            $em->flush($bureau);
+            $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', 'Bureau ajouté avec succès');
 
@@ -78,42 +73,21 @@ class BureauController extends Controller
      * Displays a form to edit an existing bureau entity.
      *
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, Bureau $bureau)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($id);
-
         if (!$bureau) {
-            throw $this->createNotFoundException('Unable to find Historique entity.');
+            throw $this->createNotFoundException('Bureau introuvable.');
         }
 
         $editForm = $this->createForm(BureauType::class, $bureau);
-        $editForm->add('submit',  SubmitType::class, array(
-            'label' => 'Enregistrer'
-        ));
+        $editForm->get('codePostalHidden')->setData($bureau->getVille()->getCp());
+        $editForm->get('idVilleHidden')->setData($bureau->getVille()->getId());
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
-            }else{
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
-            }
-
-            $ville->addBureaux($bureau);
-            $qb = $em->createQueryBuilder();
-            $q = $qb->update('ApplicationPlateformeBundle:Bureau', 'u')
-                ->set('u.ville', '?1')
-                ->set('u.adresse', '?2')
-                ->set('u.nombureau', '?3')
-                ->where('u.id = ?4')
-                ->setParameter(1, $ville)
-                ->setParameter(2, $bureau->getAdresse())
-                ->setParameter(3, $bureau->getNombureau())
-                ->setParameter(4, $id)
-                ->getQuery();
-            $p = $q->execute();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($bureau);
+            $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', 'Bureau modifié avec succès');
 

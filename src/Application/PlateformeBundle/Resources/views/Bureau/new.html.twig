@@ -8,12 +8,12 @@
         <td colspan="3">{{ form_widget(form.adresse) }}</td>
     </tr>
     <tr>
-        <td>Code Postal : </td>
-        <td colspan="3">{{ form_widget(form.ville.cp) }}</td>
+        <td>Code Postal </td>
+        <td colspan="3">{{ form_widget(form.code_postal) }}</td>
     </tr>
     <tr>
         <td>Ville : </td>
-        <td colspan="3">{{ form_widget(form.ville.nom) }}</td>
+        <td colspan="3">{{ form_widget(form.ville, {'attr':{'class': 'villeAjax' }}) }}</td>
     </tr>
 
     <tr>

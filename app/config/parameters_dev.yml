@@ -10,5 +10,6 @@ parameters:
     mailer_host: auth.smtp.1and1.fr
     mailer_port: 587
     mailer_user: contact@dev.application.entheor.com
+    mailer_name: ranaivoson
     mailer_password: contactEnteo2017#
     secret: ThisTokenIsNotSoSecretChangeIt

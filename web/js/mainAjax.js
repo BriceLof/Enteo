@@ -1037,13 +1037,14 @@ function plusMoins(element) {
     }
 }
 
-
-(function(){
-    var element = document.getElementById('espace_documentaire_submit');
-    element.addEventListener('click', function () {
-        document.getElementById("loading").style.width = "100%";
-    }, true);
-})();
+if(document.getElementById('espace_documentaire_submit')) {
+    (function () {
+        var element = document.getElementById('espace_documentaire_submit');
+        element.addEventListener('click', function () {
+            document.getElementById("loading").style.width = "100%";
+        }, true);
+    })();
+}
 
 
 function urlParam(name){
@@ -1146,6 +1147,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1171,6 +1176,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1196,6 +1205,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1221,6 +1234,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1258,6 +1275,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1283,6 +1304,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1308,6 +1333,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1333,6 +1362,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1370,6 +1403,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1395,6 +1432,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1420,6 +1461,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1445,6 +1490,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1482,6 +1531,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1507,6 +1560,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1532,6 +1589,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1557,6 +1618,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1594,6 +1659,10 @@ function urlParam(name){
                     $('#dataConfirmModal5').modal({show:true});
                     $('#dataConfirmOK5').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1619,6 +1688,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1644,6 +1717,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1669,6 +1746,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1694,6 +1775,10 @@ function urlParam(name){
                     $('#dataConfirmModal6').modal({show:true});
                     $('#dataConfirmOK6').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["suiviAdministratifNewForm"].submit();
                         }
                     );
@@ -1731,6 +1816,10 @@ function urlParam(name){
                     $('#dataConfirmModal').modal({show:true});
                     $('#dataConfirmOK').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["ficheBeneficiaireForm"].submit();
                         }
                     );
@@ -1756,6 +1845,10 @@ function urlParam(name){
                     $('#dataConfirmModal2').modal({show:true});
                     $('#dataConfirmOK2').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["projetEditForm"].submit();
                         }
                     );
@@ -1781,6 +1874,10 @@ function urlParam(name){
                     $('#dataConfirmModal3').modal({show:true});
                     $('#dataConfirmOK3').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["accompagnementEditForm"].submit();
                         }
                     );
@@ -1806,6 +1903,10 @@ function urlParam(name){
                     $('#dataConfirmModal4').modal({show:true});
                     $('#dataConfirmOK4').click(
                         function () {
+                            var tels = document.getElementsByClassName('telephoneConso');
+                            for (var i = 0; i < tels.length; i++) {
+                                tels[i].value = tels[i].value.replace(/ /g, "");
+                            }
                             window.document.forms["newsForm"].submit();
                         }
                     );
@@ -1980,69 +2081,70 @@ if(document.getElementById('accompagnement')) {
 
 }
 
-//ajouter supprimer dinamiqueme contact employeur
-$(document).ready(function() {
-    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-    var $container = $('div#beneficiaire_contactEmployeur');
-    // On ajoute un lien pour ajouter une nouvelle catégorie
-    //var $addLink = $('#add_contact_employeur');
+if(document.getElementById('beneficiaire_contactEmployeur')) {
+    //ajouter supprimer dinamiqueme contact employeur
+    $(document).ready(function () {
+        // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+        var $container = $('div#beneficiaire_contactEmployeur');
+        // On ajoute un lien pour ajouter une nouvelle catégorie
+        //var $addLink = $('#add_contact_employeur');
 
-    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    /*
-    $addLink.click(function(e) {
-        addImage($container);
-        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-        return false;
-    });
-    */
-    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.find(':input').length;
-    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-    if (index == 0) {
-        addFirstContact($container);
-    } else {
-        // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
         /*
-        $container.children('div').each(function() {
-            addDeleteLink($(this));
-        });
-        */
-    }
+         $addLink.click(function(e) {
+         addImage($container);
+         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+         return false;
+         });
+         */
+        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+        var index = $container.find(':input').length;
+        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+        if (index == 0) {
+            addFirstContact($container);
+        } else {
+            // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+            /*
+             $container.children('div').each(function() {
+             addDeleteLink($(this));
+             });
+             */
+        }
 
-    function addFirstContact($container){
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Contact n°' + (index+1))
-            .replace(/__name__/g,index));
-        $container.append($prototype);
-        index++;
-    }
+        function addFirstContact($container) {
+            var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Contact n°' + (index + 1))
+                .replace(/__name__/g, index));
+            $container.append($prototype);
+            index++;
+        }
 
-    // La fonction qui ajoute un formulaire Image
-    function addContact($container) {
-        // Dans le contenu de l'attribut « data-prototype », on remplace :
-        // - le texte "__name__label__" qu'il contient par le label du champ
-        // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Contact n°' + (index+1))
-            .replace(/__name__/g,'Contact n°' + (index+1)));
-        // On ajoute au prototype un lien pour pouvoir supprimer l'image
-        addDeleteLink($prototype);
-        // On ajoute le prototype modifié à la fin de la balise <div>
-        $container.append($prototype);
-        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-        index++;
-    }
+        // La fonction qui ajoute un formulaire Image
+        function addContact($container) {
+            // Dans le contenu de l'attribut « data-prototype », on remplace :
+            // - le texte "__name__label__" qu'il contient par le label du champ
+            // - le texte "__name__" qu'il contient par le numéro du champ
+            var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Contact n°' + (index + 1))
+                .replace(/__name__/g, 'Contact n°' + (index + 1)));
+            // On ajoute au prototype un lien pour pouvoir supprimer l'image
+            addDeleteLink($prototype);
+            // On ajoute le prototype modifié à la fin de la balise <div>
+            $container.append($prototype);
+            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+            index++;
+        }
 
-    // La fonction qui ajoute un lien de suppression d'une image
-    function addDeleteLink($prototype) {
-        // Création du lien
-        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
-        // Ajout du lien
-        $prototype.append($deleteLink);
-        // Ajout du listener sur le clic du lien
-        $deleteLink.click(function(e) {
-            $prototype.remove();
-            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-            return false;
-        });
-    }
-});
-
+        // La fonction qui ajoute un lien de suppression d'une image
+        function addDeleteLink($prototype) {
+            // Création du lien
+            $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
+            // Ajout du lien
+            $prototype.append($deleteLink);
+            // Ajout du listener sur le clic du lien
+            $deleteLink.click(function (e) {
+                $prototype.remove();
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+        }
+    });
+}
