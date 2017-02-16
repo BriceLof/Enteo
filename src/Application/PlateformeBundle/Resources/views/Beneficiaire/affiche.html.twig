@@ -369,7 +369,7 @@
                                 </table>
                             </div>
                             <div id="AjoutDocument" class="collapse in">
-                                <a href="#" id="add_document" class="btn btn-default maj">Ajouter un Document</a>
+                                <a href="#" id="add_document" class="btn btn-primary maj">Ajouter un Document</a>
                                 <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                                     {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                                 </form>
