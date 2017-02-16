@@ -2,7 +2,7 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
-      <paths name="BDC">
+      <paths name="CPF">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -24,13 +24,6 @@
         </serverdata>
       </paths>
       <paths name="IF_PROD">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="Ikoula">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

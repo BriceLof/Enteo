@@ -74,6 +74,9 @@ fos_user:
     profile:
         form:
             type: Application\UsersBundle\Form\ProfileType
+    from_email:
+        address: %mailer_user%
+        sender_name: %mailer_name%
     
 # Swiftmailer Configuration
 swiftmailer:

@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Employeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
@@ -134,6 +135,10 @@ class BeneficiaireController extends Controller
             }
 
             $employeur = $beneficiaire->getEmployeur();
+
+            if ($employeur === NULL){
+                $employeur = new Employeur();
+            }
 
             $em->persist($employeur);
             $em->persist($beneficiaire);
