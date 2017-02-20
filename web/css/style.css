@@ -244,6 +244,10 @@
 /**
  / =============== Parie Agenda ==================== /
 */
+.modif-event-maj, .modif-event-sup{
+    vertical-align: top;
+    display:inline-block;
+}
 .cursor_pointer{
     cursor:pointer;
 }

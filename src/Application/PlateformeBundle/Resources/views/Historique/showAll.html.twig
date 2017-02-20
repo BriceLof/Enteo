@@ -39,20 +39,20 @@
                                 <span>{{historique.typerdv}}</span>
                             {% endif %}
                         </td>
-                        {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
-                            <td>
-                                <center>
-                                    <p>
-                                       {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
-                                           <a href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
-                                               <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous"></span>
-                                           </a>
-                                       {% endif %}
-                                       <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" title="Supprimer le rendez-vous"></span>
-                                    </p>
-                                </center>
-                            </td>
-                        {% endif %}
+                        <td style="border:none;">
+                            {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+                              {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
+                                 <div class="modif-event-maj">
+                                    <a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
+                                        <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous"></span>
+                                    </a>
+                                 </div>
+                              {% endif %}
+                              <div class="modif-event-sup">
+                                <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" title="Supprimer le rendez-vous"></span>
+                              </div>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% else %}
                     <tr>

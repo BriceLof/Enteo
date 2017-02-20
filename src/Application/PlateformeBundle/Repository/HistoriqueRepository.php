@@ -72,4 +72,13 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()
                     ->getResult();
         }
+        
+        // Historique par rapport à evenementId
+        public function historiqueEvent($eventId){
+            return 
+                $this->getEntityManager()
+                    ->createQuery('SELECT h FROM ApplicationPlateformeBundle:Historique h where h.eventId = :eventid')
+                    ->setParameter('eventid', $eventId)
+                    ->getResult();
+        }
 }

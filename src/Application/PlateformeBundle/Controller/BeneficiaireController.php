@@ -40,11 +40,10 @@ class BeneficiaireController extends Controller
             unset($_SESSION['beneficiaireid']);
         }
         $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
-		
         // ====================================================== //
         // ===== Mise à jour des evenements du beneficiaire ===== //
         // ====================================================== //
-        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0'){
+        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if(!empty($_SESSION['firstpast'])){
                  unset($_SESSION['firstpast']); // On supprime la session
@@ -87,17 +86,15 @@ class BeneficiaireController extends Controller
             }
         }
         // Si le client existe alors on recupere les evenements
-        if(isset($client)){
+        if(isset($client) && empty($_SESSION['majevenementdanshistorique'])){
             foreach($histo_beneficiaire as $histo){
                 $evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
                 $heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
                 $heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
                 $heuredeb = str_replace('+01:00','',$heuredeb); 
                 $heurefin = str_replace('+01:00','',$heurefin);
-
                 $datedeb = new \DateTime($heuredeb); // date debut
                 $datefin = new \DateTime($heurefin); // date fin
-
                 $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
                 $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
                 // si les creneaux sont differents alors on fait une MAJ
@@ -107,15 +104,13 @@ class BeneficiaireController extends Controller
                 }
             }
         }
-        
+        if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['firstpast']); // On supprime la session
         if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
-        
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
             throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
         }
-
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
@@ -123,18 +118,14 @@ class BeneficiaireController extends Controller
         $editForm = $this->createEditForm($beneficiaire);
         $editForm->handleRequest($request);
         if ($request->isMethod('POST') /*&& $editForm->isValid()*/) {
-
             if(preg_match("/^[0-9]{5}$/",$editForm['ville']['nom']->getData())){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville']['nom']->getData());
             }else{
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneByNom($editForm['ville']['nom']->getData());
             }
-
             $employeur = $beneficiaire->getEmployeur();
             $em->persist($employeur);
             $em->flush();
-
-
 
             $ville->addBeneficiaire($beneficiaire);
             $qb = $em->createQueryBuilder();

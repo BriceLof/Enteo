@@ -1,5 +1,6 @@
 <?php
 namespace Application\PlateformeBundle\Services;
+use Application\PlateformeBundle\Entity\Historique;
 
 /**
 * Class GoogleCalendar
@@ -385,10 +386,44 @@ class GoogleCalendar
      * @param string                         $calendarId
      * @param \Google_Service_Calendar_Event $event
      */
-    public function updateEvent($calendarId, $event)
+    /*
+     * Code original
+     public function updateEvent($calendarId, $event)
     {
         $this->getCalendarService()->events->update($calendarId, $event->getId(), $event);
+    }*/
+    public function updateEvent($historiqueObject, $calendrierId, $tableauDonneesComplementaire)       
+    {
+        // On recupère l'evenement à Mettre à jour
+        $lieu = $tableauDonneesComplementaire['adresse'].' '.$tableauDonneesComplementaire['zip'];
+        $typerdv = $tableauDonneesComplementaire['rdv'];
+        $summary = $typerdv.' '.$tableauDonneesComplementaire['bureau'].', '.$tableauDonneesComplementaire['nom'].' '.$tableauDonneesComplementaire['prenom'].' '.$historiqueObject->getSummary();
+        
+        $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire['eventid'], []); // Objet Evenement
+        $event->setSummary($summary); // Titre evenement
+        // For Datestart and Dateend
+        $h_d = $historiqueObject->getHeureDebut()->format('H:i:s');
+        $h_f = $historiqueObject->getHeureFin()->format('H:i:s');
+        $hd = explode(":", $h_d); // heure debut
+        $hf = explode(":", $h_f); // heure fin
+            
+        $start = new \Google_Service_Calendar_EventDateTime();
+        $end = new \Google_Service_Calendar_EventDateTime();
+        $formattedStart = $historiqueObject->getDateDebut()->format(\DateTime::RFC3339);
+        $formattedEnd = $historiqueObject->getDateFin()->format(\DateTime::RFC3339);
+        $start->setDateTime($formattedStart);
+        $end->setDateTime($formattedEnd);
+        $event->setStart($start); // Date debut
+        $event->setEnd($end); // Date fin
+        // Pour les autres
+        $event->setDescription($historiqueObject->getDescription()); // Description
+        $event->setLocation($lieu); // Location
+        // Appel méthode maj
+        $updatedEvent = $this->getCalendarService()->events->update($calendrierId, $event->getId(), $event);
+        return $updatedEvent;
     }
+    
+    
     /**
      * Get an event
      *

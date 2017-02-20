@@ -351,7 +351,6 @@ class Historique
     public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
     {
         $this->beneficiaire = $beneficiaire;
-
         return $this;
     }
 
@@ -375,7 +374,6 @@ class Historique
     public function setConsultant(\Application\UsersBundle\Entity\Users $consultant)
     {
         $this->consultant = $consultant;
-
         return $this;
     }
 
