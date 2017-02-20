@@ -41,7 +41,7 @@ class UsersType extends AbstractType
                     ),
                     //'mapped' => false,
                     'label' => "Type Utilisateur *",
-                    
+                    'required' => true,
                     'expanded' => true,
                     'multiple' => true,
                     //'data' => array("ROLE_USER"),

@@ -29,7 +29,6 @@ class ConsultantType extends AbstractType
                             ->where('u.roles LIKE :type')
                             ->setParameter('type', '%consultant%');
                 },
-                'choice_label' => 'prenom',
 
             ))
             ->add('submit', SubmitType::class, array(

@@ -18,7 +18,7 @@ class UsersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if(is_null($typeUser))
-            $users = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
+            $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array(), array("id" => "DESC"));
         else
             $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser);
         

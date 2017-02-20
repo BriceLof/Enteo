@@ -36,9 +36,9 @@ class Beneficiaire
     protected $employeur;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Contact", mappedBy="beneficiaire")
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\ContactEmployeur", mappedBy="beneficiaire")
      */
-    private $contact;
+    private $contactEmployeur;
     
      /**
      * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
@@ -1256,37 +1256,38 @@ class Beneficiaire
         return $this->employeur;
     }
 
+
     /**
-     * Add contact
+     * Add contactEmployeur
      *
-     * @param \Application\PlateformeBundle\Entity\Contact $contact
+     * @param \Application\PlateformeBundle\Entity\ContactEmployeur $contactEmployeur
      *
      * @return Beneficiaire
      */
-    public function addContact(\Application\PlateformeBundle\Entity\Contact $contact)
+    public function addContactEmployeur(\Application\PlateformeBundle\Entity\ContactEmployeur $contactEmployeur)
     {
-        $this->contact[] = $contact;
+        $this->contactEmployeur[] = $contactEmployeur;
 
         return $this;
     }
 
     /**
-     * Remove contact
+     * Remove contactEmployeur
      *
-     * @param \Application\PlateformeBundle\Entity\Contact $contact
+     * @param \Application\PlateformeBundle\Entity\ContactEmployeur $contactEmployeur
      */
-    public function removeContact(\Application\PlateformeBundle\Entity\Contact $contact)
+    public function removeContactEmployeur(\Application\PlateformeBundle\Entity\ContactEmployeur $contactEmployeur)
     {
-        $this->contact->removeElement($contact);
+        $this->contactEmployeur->removeElement($contactEmployeur);
     }
 
     /**
-     * Get contact
+     * Get contactEmployeur
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getContact()
+    public function getContactEmployeur()
     {
-        return $this->contact;
+        return $this->contactEmployeur;
     }
 }
