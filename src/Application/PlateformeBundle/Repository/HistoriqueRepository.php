@@ -62,11 +62,14 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
         
         // Historique inferieur à la date du jour
         public function historiquepast($datedujour, $beneficiaireid){
+            $ar = 'on';
             return 
                 $this
                     ->createQueryBuilder('h')
                     ->where('h.beneficiaire = :benef')
                     ->setParameter('benef',$beneficiaireid)
+                    ->andwhere('h.eventarchive <> :arch')
+                    ->setParameter('arch',$ar)
                     ->orderBy('h.dateDebut','DESC')
                     ->setMaxResults(5)
                     ->getQuery()
@@ -80,5 +83,17 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->createQuery('SELECT h FROM ApplicationPlateformeBundle:Historique h where h.eventId = :eventid')
                     ->setParameter('eventid', $eventId)
                     ->getResult();
+        }
+        
+        // Archivage et desarchivage evenement
+        public function historiqueArchive($eventid, $value){
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $q = $qb->update('ApplicationPlateformeBundle:Historique', 'h')
+                    ->set('h.eventarchive', '?1')
+                    ->where('h.eventId = ?2')
+                    ->setParameter(1, $value)
+                    ->setParameter(2, $eventid)
+                    ->getQuery();
+            $p = $q->execute();
         }
 }

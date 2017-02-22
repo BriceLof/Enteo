@@ -13,6 +13,15 @@ use Application\PlateformeBundle\Entity\AgendaB;
 
 class AgendaController extends Controller
 {
+    // Archivage des evenements dans le calendrier
+    public function deleteevenementAction(Request $request){
+        $em = $this->getDoctrine()->getManager(); // Entity manager
+        if(!empty($request->query->get('eventid'))){
+            $query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($request->query->get('eventid'), 'on');
+            return new Response('1');
+        }
+    }
+    
     // Autocompletion
     public function autocompletionsAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
@@ -274,6 +283,7 @@ class AgendaController extends Controller
                             unset($_SESSION['ville_id']);
                         $this->get('session')->remove('calendrierId');
                         $_SESSION['majevenementdanshistorique'] = 1;
+                        $this->get('session')->getFlashBag()->add('info', 'Le rendez-vous a été modifié avec succès!');
                         return $this->redirectToRoute('application_show_beneficiaire', array('id'=>$benefId));
                     }
                     $eventInsert = $googleCalendar->addEvent(

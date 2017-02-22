@@ -1,19 +1,19 @@
 {% if historiques is not empty %}
-     <table class="table table-striped">
+    <div class="msg-erreur"></div>
+     <table class="table table-striped" id="evenementcalandar">
            <tr>
               <th style="border:none;">Date</th>
               <th style="border:none;">Heure debut</th>
               <th style="border:none;">Heure fin</th>
               <th style="border:none;">Bureau</th>
-              <th style="border:none;">Type Rdv</th>
+              <th style="border:none;">Rendez-vous</th>
               {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
                 <th>Actions</th>
               {% endif %}
            </tr>
            {% for historique in historiques %}
                 {% if historique.eventId != '0' %}
-
-                    <tr>
+                    <tr class="{{historique.eventId}}">
                         <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
                            {{historique.dateDebut|date('d/m/Y')}} <span style="margin-left:6px" class="glyphicon glyphicon-calendar"></span>
                         </td>
@@ -33,24 +33,22 @@
                             {% endif %}
                         </td>
                         <td style="border:none;">
-                            {% if historique.bureau is not null  %}
-                                <span> {{historique.typerdv}} </span>
-                            {% else %}
-                                <span>{{historique.typerdv}}</span>
-                            {% endif %}
+                            <span> {{historique.summary}} </span>
                         </td>
-                        <td style="border:none;">
+                        <td align="center" style="border:none;">
                             {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
                               {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
                                  <div class="modif-event-maj">
                                     <a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
-                                        <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous"></span>
+                                        <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
                                     </a>
                                  </div>
+                                 <div class="modif-event-sup">
+                                    <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" id="{{historique.eventId}}" title="Supprimer le rendez-vous" data-toggle="modal" data-target="#myModal"></span>
+                                 </div>
+                              {% else %}
+                                  <span>-</span>
                               {% endif %}
-                              <div class="modif-event-sup">
-                                <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" title="Supprimer le rendez-vous"></span>
-                              </div>
                             {% endif %}
                         </td>
                     </tr>
@@ -66,7 +64,7 @@
                             <span>{{ historique.description }}</span>
                         </td>
                         {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
-                            <td><span>-</span></td>
+                            <td align="center"><span>-</span></td>
                         {% endif %}
                     </tr>
                 {% endif %}
@@ -76,5 +74,7 @@
     <span style="margin-left: 6px;">Aucun historique</span>
 {% endif %}
 
+{# ------------------ POP UP pour la suppression d'un evenement ------------------- #}
+<div class="fenetre-modale"></div>
 
 

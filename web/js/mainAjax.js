@@ -370,7 +370,7 @@ $("document").ready(function (initDynamicContent) {
             errorElement: 'div'
         })
     });
-
+    
     $(".cp").keyup(function () {
         if ($(this).val().length >= 2){
             $.ajax({
@@ -416,6 +416,22 @@ $("document").ready(function (initDynamicContent) {
         }
     });
     
+    $('#dpttest').on('keyup', function(){
+        if($('#dpttest').val() == ''){
+            $('#bureauRdv').val('');
+            // on reinitialise tous les champs
+            $('#dpttest').val(''); // departement
+            $('.namebureauselect').val(''); // bureau
+            $('.bureauselect').val(-1); // bureau selectionner
+            $("#villeh").val(''); // ville
+            $("#ville").val(''); // ville
+            $('#adresse').val(''); // adresse
+            $('#adresseh').val(''); // adresse 
+            $('#zip').val(''); // code postal
+            $('#ziph').val(''); // code postal
+        }
+    });
+    
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -453,6 +469,7 @@ $("document").ready(function (initDynamicContent) {
             $('#zip').val('');
             $('#ziph').val('');
             $("#dpttest").val('-1');
+            //$("#dpttest").removeAttr('required');
             $("#dpttest").css('display', 'none');
             $('.bureauselect').val(-1); // bureau selectionner
         }
@@ -599,15 +616,15 @@ $("document").ready(function (initDynamicContent) {
                                   else{
                                       // on reinitialise tous les champs
                                       $('#dpttest').val(''); // departement
-                                      $('#bureauRdv').val(); // bureau
-                                      $('.namebureauselect').val(); // bureau
+                                      $('#bureauRdv').val(''); // bureau
+                                      $('.namebureauselect').val(''); // bureau
                                       $('.bureauselect').val(-1); // bureau selectionner
-                                      $("#villeh").val(); // ville
-                                      $("#ville").val(); // ville
-                                      $('#adresse').val(); // adresse
-                                      $('#adresseh').val(); // adresse 
-                                      $('#zip').val(); // code postal
-                                      $('#ziph').val(); // code postal
+                                      $("#villeh").val(''); // ville
+                                      $("#ville").val(''); // ville
+                                      $('#adresse').val(''); // adresse
+                                      $('#adresseh').val(''); // adresse 
+                                      $('#zip').val(''); // code postal
+                                      $('#ziph').val(''); // code postal
                                       // $('#historique_Enregistrer').attr('disabled','true');
                                       return 'Aucun Bureau trouvé dans ce departement';
                                   }
@@ -746,8 +763,6 @@ $("document").ready(function (initDynamicContent) {
         }
     }
     else{
-          if($("#dpttest").val() == -1)
-              $("#dpttest").val('');
           $('.letyperdv').val($(this).val());
           // On affiche les bureau et adresse
           $('.bureau_v').css('display', 'inline-block');
@@ -760,6 +775,8 @@ $("document").ready(function (initDynamicContent) {
           else{
                // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
                $('#autrebureau').removeAttr('required');
+               if($("#dpttest").val() == -1)
+                    $("#dpttest").val('');
           }
           if($('#historique_summary').val() == "Autre"){
             // On affiche le champ Autre
@@ -798,8 +815,6 @@ $("document").ready(function (initDynamicContent) {
                 $('#bureauRdv').removeAttr('required');
             }
             else{
-                if($("#dpttest").val() == -1)
-                    $("#dpttest").val('');
                 $('.letyperdv').val($(this).val());
                 // On affiche les bureau et adresse
                 $('.bureau_v').css('display', 'inline-block');
@@ -812,6 +827,8 @@ $("document").ready(function (initDynamicContent) {
                 else{
                     // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
                     $('#autrebureau').removeAttr('required');
+                    if($("#dpttest").val() == -1)
+                        $("#dpttest").val('');
                 }
             }
     });
@@ -938,6 +955,66 @@ $('#consultantC').change(function(){
     }
 
 });
+
+// ================================================================= //
+// ================ Suppression du rendez-vous ===================== //
+// ================================================================= //
+$('.btn_supp').click(function(){
+    // fenetre modale
+    $('.fenetre-modale').append(
+          '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+             '<div class="modal-dialog">'+
+                '<div class="modal-content">'+
+                   '<div class="modal-header my_header_modal">'+
+                      '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                      '<center><h4 class="modal-title" style="font-size:22px;">Supprimer un rendez-vous</h4></center>'+
+                    '</div>'+
+                    '<div class="modal-body">'+
+                        '<center><p style="font-size:20px; color: #668cd9;">Confirmer la suppression du rendez-vous !</p></center>'+
+                        '<input type="hidden" id="evenement-supp" value="'+$(this).attr('id')+'">'+
+                    '</div>'+
+                    '<div class="modal-footer">'+
+                      '<button type="button" class="btn btn-success" onclick="supprimer_evenement()" data-dismiss="modal">Oui</button>'+
+                      '<button type="button" class="btn btn-primary" onclick="rien_faire_evenement()" data-dismiss="modal">Non</button>'+
+                   '</div>'+
+               '</div>'+
+             '</div>'+
+          '</div>'
+    );
+});
+
+function rien_faire_evenement(){
+    $('.msg-erreur').removeAttr('style');
+    emptyelement('msg-erreur', 'class'); // on efface 
+}
+
+// Supprimer un evenement
+function supprimer_evenement(){
+    // On recupere l'id de l'evenement
+    evtid = $('#evenement-supp').val();
+    $('.msg-erreur').removeAttr('style');
+    emptyelement('msg-erreur', 'class'); // on efface 
+    $.ajax({
+          type: 'get',
+          url: Routing.generate('delete_evenement', {eventid : evtid}),
+          success: function (data) {
+             console.log('-------------- data: '+data);
+             if(data == '1'){
+                 // Archivage reussi
+                 $('.'+evtid).remove();
+                 $('.msg-erreur').css('background', '#dadada');
+                 $('.msg-erreur').append(
+                     '<div><strong>Le rendez-vous a été supprimé avec succes!</strong></div>'
+                 ).slideUp(8000).delay(9000).fadeIn(9000);
+                 emptyelement('fenetre-modale', 'class'); // on efface 
+                 if($('#evenementcalandar tr').size() == 1){
+                     // On recharge la page du beneficiaire
+                     location.reload();
+                 }
+             }
+          }
+    });
+}
 
 // vide un bloc
 function emptyelement(element, type) {
