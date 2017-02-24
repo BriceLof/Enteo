@@ -138,6 +138,7 @@ class AgendaController extends Controller
     // ####### on vera 09h au lieu de 08h (GMT+1)               ####### //
     // ################################################################ //
     public function evenementAction(Request $request){
+        
         // Initialisation des erreurs
         $this->get('session')->set('errorsdate', false);
         $this->get('session')->set('erreurs', false);
