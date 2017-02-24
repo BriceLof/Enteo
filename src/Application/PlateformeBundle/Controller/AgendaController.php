@@ -277,6 +277,7 @@ class AgendaController extends Controller
                         unset($_SESSION['calendrierId']);
                         unset($_SESSION['benef']);
                         unset($_SESSION['agenda']);
+                        unset($_SESSION['bureau']);
                         if(!empty($_SESSION['nom_bureau_autre']))
                             unset($_SESSION['nom_bureau_autre']);
                         if(!empty($_SESSION['ville_id']))
@@ -337,6 +338,7 @@ class AgendaController extends Controller
             unset($_SESSION['agenda']);
             unset($_SESSION['nom_bureau_autre']);
             unset($_SESSION['ville_id']);
+            unset($_SESSION['bureau']);
             $this->get('session')->remove('benef');
             $this->get('session')->remove('bureau');
             $this->get('session')->remove('calendrierId');

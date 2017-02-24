@@ -962,7 +962,7 @@ $('#consultantC').change(function(){
 $('.btn_supp').click(function(){
     // fenetre modale
     $('.fenetre-modale').append(
-          '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+          '<div class="modal fade" id="myModale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
              '<div class="modal-dialog">'+
                 '<div class="modal-content">'+
                    '<div class="modal-header my_header_modal">'+

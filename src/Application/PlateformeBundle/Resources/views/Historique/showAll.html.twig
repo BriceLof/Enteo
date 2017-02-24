@@ -6,7 +6,7 @@
               <th style="border:none;">Heure debut</th>
               <th style="border:none;">Heure fin</th>
               <th style="border:none;">Bureau</th>
-              <th style="border:none;">Rendez-vous</th>
+              <th style="border:none;">Rdv</th>
               {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
                 <th>Actions</th>
               {% endif %}
@@ -44,7 +44,7 @@
                                     </a>
                                  </div>
                                  <div class="modif-event-sup">
-                                    <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" id="{{historique.eventId}}" title="Supprimer le rendez-vous" data-toggle="modal" data-target="#myModal"></span>
+                                    <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" id="{{historique.eventId}}" title="Supprimer le rendez-vous" data-toggle="modal" data-target="#myModale"></span>
                                  </div>
                               {% else %}
                                   <span>-</span>
