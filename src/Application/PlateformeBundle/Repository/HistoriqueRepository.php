@@ -40,7 +40,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()
                     ->getResult();
         }
-        
         // Maj d'une historique
         public function historiquemaj($d_d, $d_f, $h_d, $h_f, $evId){
             // Mise à jour en BD
@@ -59,7 +58,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery();
             $p = $q->execute();
         }
-        
         // Historique inferieur à la date du jour
         public function historiquepast($datedujour, $beneficiaireid){
             $ar = 'on';
@@ -75,7 +73,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()
                     ->getResult();
         }
-        
         // Historique par rapport à evenementId
         public function historiqueEvent($eventId){
             return 
@@ -84,7 +81,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('eventid', $eventId)
                     ->getResult();
         }
-        
         // Archivage et desarchivage evenement
         public function historiqueArchive($eventid, $value){
             $qb = $this->getEntityManager()->createQueryBuilder();

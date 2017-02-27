@@ -343,7 +343,7 @@
                                 </p>
                                 <div class="bureau_v">
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero du departement" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.ville.nom : ''}}" required>
+                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero du departement" value="{{(historique.bureau is defined and historique.bureau is not null  and historique.bureau.temporaire == false)? historique.bureau.ville.nom : ''}}" required>
                                     <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper les 3 premiers numeros du code postal" value="{{(historique.bureau is defined and historique.bureau is not null and historique.bureau.temporaire == true )? historique.bureau.ville.nom : ''}}">
                                     <input type="hidden" id="ville_id" name="ville_id" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.ville.id : ''}}">
                                     <label>Bureau</label>

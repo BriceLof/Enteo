@@ -432,6 +432,20 @@ $("document").ready(function (initDynamicContent) {
         }
     });
     
+    $('#autrebureau').on('keyup', function(){
+        if($('#autrebureau').val() == ''){
+            // on reinitialise tous les champs
+            $('#autrebureau').val(''); // departement
+            $('#bureauRdv').val(''); // Nom du bureau
+            $("#villeh").val(''); // ville
+            $("#ville").val(''); // ville
+            $('#adresse').val(''); // adresse
+            $('#adresseh').val(''); // adresse 
+            $('#zip').val(''); // code postal
+            $('#ziph').val(''); // code postal
+        }
+    });
+    
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
@@ -449,6 +463,20 @@ $("document").ready(function (initDynamicContent) {
             break;
     }
 
+    // Lors de la modification: c'est pour distinguer bureau existant et autre bureau
+    if($('#autrebureauc').is(':checked')){
+            // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
+            $('#autrebureau').css('display','inline');
+            $('#bureauRdv').removeAttr('disabled');
+            $('#adresse').removeAttr('disabled');
+            $('#adresse').attr('required',true);
+            $('#bureauRdv').attr('required',true);
+            $('#ziph').attr('required',true);
+            $("#dpttest").val('-1');
+            //$("#dpttest").removeAttr('required');
+            $("#dpttest").css('display', 'none');
+            $('.bureauselect').val(-1); // bureau selectionner
+     }
     // ======================================================================= //
     // ========= Activation des champs Bureau, code postal et adresse ======== //
     // ============== Lorsque la case Autre bureau est coché =================//

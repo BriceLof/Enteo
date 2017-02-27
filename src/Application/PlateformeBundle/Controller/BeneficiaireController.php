@@ -104,10 +104,8 @@ class BeneficiaireController extends Controller
                     $datefin = new \DateTime($heurefin); // date fin
                     $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
                     $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
-                    if($heuredeb != $histo->getHeuredebut() || $heurefin != $histo->getHeurefin()){
-                        // Mise à jour en BD  
-                        $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
-                    }
+                    // Mise à jour en BD  
+                    $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
                 }
             }
         }
