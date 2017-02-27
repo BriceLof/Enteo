@@ -716,7 +716,8 @@ $("document").ready(function (initDynamicContent) {
             });
         }
     });
-	
+    
+    
     // ==================================================================================== //
     // ========== Gestion de la date de fin [datedebut == datefin] ======================== //
     // ==================================================================================== //
@@ -727,6 +728,22 @@ $("document").ready(function (initDynamicContent) {
     $("#historique_dateDebut_month").change(function(){
         // On met à jour le mois de datefin
         $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
+        // Si le mois changé est superieur au mois courant alors on active tous les jours 
+        if($("#historique_dateDebut_month").val() > moiscourant){
+             x=1;
+             while(x<31){
+                if($('#historique_dateDebut_day option[value="'+x+'"]') != undefined)
+                    $('#historique_dateDebut_day option[value="'+x+'"]').removeAttr('disabled'); // activer
+                x++;
+             }
+        }
+        else{
+            x=1;
+            while(x<jourcourant){
+                $('#historique_dateDebut_day option[value="'+x+'"]').attr('disabled', true); // activer
+                x++;
+            }
+        }
     });
     $("#historique_dateDebut_year").change(function(){
         // On met à jour l'année de datefin
