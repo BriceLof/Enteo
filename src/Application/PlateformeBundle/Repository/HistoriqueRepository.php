@@ -16,14 +16,16 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 			->createQueryBuilder('h')
 			->where('h.beneficiaire = :benef')
 			->setParameter('benef',$beneficiaireid)
-                        ->andWhere('h.dateFin BETWEEN :deb AND :fin')
+                        ->andWhere('h.dateFin BETWEEN :deb AND :fin AND h.eventarchive != :onOff')
 			->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
+                        ->setParameter('onOff', 'on')
                         ->orWhere('h.dateDebut BETWEEN :deb AND :fin')
                         ->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
                         ->andwhere('h.beneficiaire = :benef')
 			->setParameter('benef',$beneficiaireid)
+
 			->getQuery()
 			->getResult();
         }

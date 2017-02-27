@@ -17,6 +17,9 @@ class AgendaController extends Controller
     public function deleteevenementAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
         if(!empty($request->query->get('eventid'))){
+            $googleCalendar = $this->get('application_google_calendar');
+            $cId = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueEvent($request->query->get('eventid'))[0]->getConsultant()->getCalendrierid();
+            $googleCalendar->deleteEvent($cId, $request->query->get('eventid'));
             $query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($request->query->get('eventid'), 'on');
             return new Response('1');
         }
@@ -36,7 +39,7 @@ class AgendaController extends Controller
         else if($request->query->get('sentinel') == 2){
             // Bureau existant
             $cp = $request->query->get('term').'%';
-            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE enabled > 0 and v.cp LIKE :nom');
+            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE b.actifInactif = 1 and v.cp LIKE :nom');
             $query->setParameter('nom', $cp);
             (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
         }
@@ -309,12 +312,14 @@ class AgendaController extends Controller
                                 $em->persist($bureau);
                                 $em->flush($bureau);
                                 // On s'assure qu'on a le nouveau bureau enregistrer
-                                $em->refresh($bureau);  
+                                $em->refresh($bureau);
+                                $historiqueU->setBureau($bureau);
                             }
                             else if(!empty($_SESSION['bureau'])){
                                 $bureau = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
+                                $historiqueU->setBureau($bureau);
                             }
-                            $historiqueU->setBureau($bureau);
+
                             $historiqueU->setAutreSummary($historique->getAutreSummary());
                             
                             $em->flush($historiqueU);
