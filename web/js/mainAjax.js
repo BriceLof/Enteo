@@ -750,16 +750,37 @@ $("document").ready(function (initDynamicContent) {
         $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
     });
     
-    // =================================================================================== //
-    // ==== Gestions des heures pour la modification des evenements dans historique ====== //
-    // =================================================================================== //
-    datecourant = new Date();
-    console.log($('#historique_dateDebut_month').val());
-    moiscourant = datecourant.getMonth()+1;
-    console.log(moiscourant);
+    // ========================================================================== //
+    // =================== desactiver les dates passées ======================== //
+    // ========================================================================== //
+    jour = $("#historique_dateDebut_day").val(); // mois
+    mois = $("#historique_dateDebut_month").val(); // mois
+    an = $("#historique_dateDebut_year"); // Années
+    var datecourant = new Date();
+    var jourcourant = datecourant.getDate(); // jour
+    var moiscourant = datecourant.getMonth()+1; // mois
+    anneecourant = datecourant.getFullYear(); // année
+    x=2012;
+    // 1- desactive les années precedentes à l'année en cour
+    while(x<anneecourant){
+        $('#historique_dateDebut_year option[value="'+x+'"]').attr('disabled', true); // activer
+        x++;
+    }
+    // 2- On desactive les mois precedents par rapport a la date du jour
+    x=1;
+    while(x<moiscourant){
+        $('#historique_dateDebut_month option[value="'+x+'"]').attr('disabled', true); // activer
+        x++;
+    }
+    // 3- On desactive les jours precedents par rapport a la date du jour
+    x=1;
+    while(x<jour){
+        $('#historique_dateDebut_day option[value="'+x+'"]').attr('disabled', true); // activer
+        x++;
+    }
+    
     if($('.eventidupdate').val() != undefined && $('#historique_dateDebut_month').val() <= moiscourant){
         // On desactiver les dates passées
-
         dateencour = $('#historique_dateDebut_day').val();
         j = 1;
         while(j<dateencour){
