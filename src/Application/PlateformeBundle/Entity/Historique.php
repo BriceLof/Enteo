@@ -84,6 +84,12 @@ class Historique
      */
     private $eventId;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="eventArchive", type="text")
+     */
+    private $eventarchive;
    /**
      * @ORM\ManyToOne(targetEntity="Bureau")
      * @ORM\JoinColumn(nullable=true)
@@ -111,6 +117,7 @@ class Historique
         $this->date = new \DateTime('now');
         $this->dateDebut = new \DateTime('now');
 	$this->dateFin = new \DateTime('now');
+        $this->eventarchive = 'off';
     }
 
 
@@ -351,7 +358,6 @@ class Historique
     public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire)
     {
         $this->beneficiaire = $beneficiaire;
-
         return $this;
     }
 
@@ -375,7 +381,6 @@ class Historique
     public function setConsultant(\Application\UsersBundle\Entity\Users $consultant)
     {
         $this->consultant = $consultant;
-
         return $this;
     }
 
@@ -411,5 +416,29 @@ class Historique
     public function getAutreSummary()
     {
         return $this->autreSummary;
+    }
+
+    /**
+     * Set eventarchive
+     *
+     * @param string $eventarchive
+     *
+     * @return Historique
+     */
+    public function setEventarchive($eventarchive)
+    {
+        $this->eventarchive = $eventarchive;
+
+        return $this;
+    }
+
+    /**
+     * Get eventarchive
+     *
+     * @return string
+     */
+    public function getEventarchive()
+    {
+        return $this->eventarchive;
     }
 }

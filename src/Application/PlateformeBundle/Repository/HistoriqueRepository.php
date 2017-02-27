@@ -16,14 +16,16 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 			->createQueryBuilder('h')
 			->where('h.beneficiaire = :benef')
 			->setParameter('benef',$beneficiaireid)
-                        ->andWhere('h.dateFin BETWEEN :deb AND :fin')
+                        ->andWhere('h.dateFin BETWEEN :deb AND :fin AND h.eventarchive != :onOff')
 			->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
+                        ->setParameter('onOff', 'on')
                         ->orWhere('h.dateDebut BETWEEN :deb AND :fin')
                         ->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
                         ->andwhere('h.beneficiaire = :benef')
 			->setParameter('benef',$beneficiaireid)
+
 			->getQuery()
 			->getResult();
         }
@@ -40,7 +42,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery()
                     ->getResult();
         }
-        
         // Maj d'une historique
         public function historiquemaj($d_d, $d_f, $h_d, $h_f, $evId){
             // Mise à jour en BD
@@ -59,17 +60,38 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery();
             $p = $q->execute();
         }
-        
         // Historique inferieur à la date du jour
         public function historiquepast($datedujour, $beneficiaireid){
+            $ar = 'on';
             return 
                 $this
                     ->createQueryBuilder('h')
                     ->where('h.beneficiaire = :benef')
                     ->setParameter('benef',$beneficiaireid)
+                    ->andwhere('h.eventarchive <> :arch')
+                    ->setParameter('arch',$ar)
                     ->orderBy('h.dateDebut','DESC')
                     ->setMaxResults(5)
                     ->getQuery()
                     ->getResult();
+        }
+        // Historique par rapport à evenementId
+        public function historiqueEvent($eventId){
+            return 
+                $this->getEntityManager()
+                    ->createQuery('SELECT h FROM ApplicationPlateformeBundle:Historique h where h.eventId = :eventid')
+                    ->setParameter('eventid', $eventId)
+                    ->getResult();
+        }
+        // Archivage et desarchivage evenement
+        public function historiqueArchive($eventid, $value){
+            $qb = $this->getEntityManager()->createQueryBuilder();
+            $q = $qb->update('ApplicationPlateformeBundle:Historique', 'h')
+                    ->set('h.eventarchive', '?1')
+                    ->where('h.eventId = ?2')
+                    ->setParameter(1, $value)
+                    ->setParameter(2, $eventid)
+                    ->getQuery();
+            $p = $q->execute();
         }
 }

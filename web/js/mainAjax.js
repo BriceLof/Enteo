@@ -370,7 +370,7 @@ $("document").ready(function (initDynamicContent) {
             errorElement: 'div'
         })
     });
-
+    
     $(".cp").keyup(function () {
         if ($(this).val().length >= 2){
             $.ajax({
@@ -393,86 +393,58 @@ $("document").ready(function (initDynamicContent) {
                         villeSelected = $('option:selected',this).attr('data-cp');
                         $(".cp").val(villeSelected)
                     })
-                    //console.log('ville ok');
                 }
             })
         }else{
             $(".ville").val('');
         }
     });
-
-    //ajax rechercher dans la page home
-    // desactivation de l'ajax par demande de philippe pour plus de visibilité
-    /**
-    $("#ajaxForm").submit(function (e) {
-
-        e.preventDefault();
-        $.ajax({
-            url: Routing.generate('application_list_beneficiaire'), // le nom du fichier indiqué dans le formulaire
-            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-            data: $(this).serialize(),
-            cache: true,
-            dataType: 'json',
-            beforeSend: function () {
-
-                var resultat = document.getElementById('content');
-                resultat.innerHTML = "";
-                resultat.innerHTML += '<div class="loading"></div>';
-
-            },
-            success : function (data) {
-
-                var resultat = document.getElementById('content');
-
-                resultat.innerHTML = "";
-                var table = document.createElement('table');
-                table.setAttribute('class',"table table-bordered");
-                var tr = document.createElement('tr');
-                var thNom = document.createElement('th');
-                var thPrenom = document.createElement('th');
-                thNom.innerHTML = 'nom';
-                thPrenom.innerHTML = 'prenom';
-                tr.appendChild(thNom);
-                tr.appendChild(thPrenom);
-                resultat.appendChild(table).appendChild(tr);
-
-                $.each(JSON.parse(data),function (i, item) {
-
-                    var lien = Routing.generate('application_show_beneficiaire', {id: item.id});
-
-                    var tr2 = document.createElement('tr');
-                    var tdNom = document.createElement('td');
-                    var tdprenom = document.createElement('td');
-                    tdNom.innerHTML = '<a href="'+lien+'" target="_blank">'+item.nomConso;
-                    tdprenom.innerHTML = item.prenomConso;
-                    tr2.appendChild(tdNom);
-                    tr2.appendChild(tdprenom);
-                    resultat.appendChild(table).appendChild(tr2);
-                });
-            }
-        });
+    
+    // Si le champs ville est vide alors reinitialiser le champs code postal
+    $('#autrebureau').keyup(function(){
+        if($('#autrebureau').val() == ''){
+            $('#ziph').val('');
+            $('#zip').val('');
+        }
     });
-     */
-    /**
-     $("#ajaxForm").submit(function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: Routing.generate('application_ajaxSearch_beneficiaire'), // le nom du fichier indiqué dans le formulaire
-            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-            data: $(this).serialize(),
-            cache: true,
-            dataType: 'html',
-            beforeSend: function () {
-                var resultat = document.getElementById('content');
-                resultat.innerHTML = "";
-                resultat.innerHTML += '<div class="loading"></div>';
-            },
-            success: function (response) {
-                template = response;
-                $('#content').html(template.html);
-            }
-        });
-    });*/
+    
+    $('#nomb').keyup(function(){
+        if($('#nomb').val() == ''){
+            $('#prenomb').val(''); // prenom disabled
+            $('#prenombe').val(''); // prenom hidden
+            $('#idbeneficiaire').val(''); // id beneficiaire hidden
+        }
+    });
+    
+    $('#dpttest').on('keyup', function(){
+        if($('#dpttest').val() == ''){
+            $('#bureauRdv').val('');
+            // on reinitialise tous les champs
+            $('#dpttest').val(''); // departement
+            $('.namebureauselect').val(''); // bureau
+            $('.bureauselect').val(-1); // bureau selectionner
+            $("#villeh").val(''); // ville
+            $("#ville").val(''); // ville
+            $('#adresse').val(''); // adresse
+            $('#adresseh').val(''); // adresse 
+            $('#zip').val(''); // code postal
+            $('#ziph').val(''); // code postal
+        }
+    });
+    
+    $('#autrebureau').on('keyup', function(){
+        if($('#autrebureau').val() == ''){
+            // on reinitialise tous les champs
+            $('#autrebureau').val(''); // departement
+            $('#bureauRdv').val(''); // Nom du bureau
+            $("#villeh").val(''); // ville
+            $("#ville").val(''); // ville
+            $('#adresse').val(''); // adresse
+            $('#adresseh').val(''); // adresse 
+            $('#zip').val(''); // code postal
+            $('#ziph').val(''); // code postal
+        }
+    });
     
     // =========================================================================== //
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
@@ -491,6 +463,20 @@ $("document").ready(function (initDynamicContent) {
             break;
     }
 
+    // Lors de la modification: c'est pour distinguer bureau existant et autre bureau
+    if($('#autrebureauc').is(':checked')){
+            // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
+            $('#autrebureau').css('display','inline');
+            $('#bureauRdv').removeAttr('disabled');
+            $('#adresse').removeAttr('disabled');
+            $('#adresse').attr('required',true);
+            $('#bureauRdv').attr('required',true);
+            $('#ziph').attr('required',true);
+            $("#dpttest").val('-1');
+            //$("#dpttest").removeAttr('required');
+            $("#dpttest").css('display', 'none');
+            $('.bureauselect').val(-1); // bureau selectionner
+     }
     // ======================================================================= //
     // ========= Activation des champs Bureau, code postal et adresse ======== //
     // ============== Lorsque la case Autre bureau est coché =================//
@@ -503,7 +489,7 @@ $("document").ready(function (initDynamicContent) {
             $('#adresse').removeAttr('disabled');
             $('#adresse').attr('required',true);
             $('#bureauRdv').attr('required',true);
-            // $('#zip').removeAttr('disabled');
+            $('#ziph').attr('required',true);
             // Reinitialisation
             $('#autrebureau').val('');
             $('#bureauRdv').val('');
@@ -511,6 +497,7 @@ $("document").ready(function (initDynamicContent) {
             $('#zip').val('');
             $('#ziph').val('');
             $("#dpttest").val('-1');
+            //$("#dpttest").removeAttr('required');
             $("#dpttest").css('display', 'none');
             $('.bureauselect').val(-1); // bureau selectionner
         }
@@ -520,7 +507,7 @@ $("document").ready(function (initDynamicContent) {
             $('#adresse').attr('disabled', true);
             $('#adresse').removeAttr('required');
             $('#bureauRdv').removeAttr('required');
-            // $('#zip').attr('disabled', true);
+            $('#ziph').removeAttr('required');
             // Reinitialisation
             $('#autrebureau').val('');
             $('#ville_id').val('');
@@ -657,15 +644,15 @@ $("document").ready(function (initDynamicContent) {
                                   else{
                                       // on reinitialise tous les champs
                                       $('#dpttest').val(''); // departement
-                                      $('#bureauRdv').val(); // bureau
-                                      $('.namebureauselect').val(); // bureau
+                                      $('#bureauRdv').val(''); // bureau
+                                      $('.namebureauselect').val(''); // bureau
                                       $('.bureauselect').val(-1); // bureau selectionner
-                                      $("#villeh").val(); // ville
-                                      $("#ville").val(); // ville
-                                      $('#adresse').val(); // adresse
-                                      $('#adresseh').val(); // adresse 
-                                      $('#zip').val(); // code postal
-                                      $('#ziph').val(); // code postal
+                                      $("#villeh").val(''); // ville
+                                      $("#ville").val(''); // ville
+                                      $('#adresse').val(''); // adresse
+                                      $('#adresseh').val(''); // adresse 
+                                      $('#zip').val(''); // code postal
+                                      $('#ziph').val(''); // code postal
                                       // $('#historique_Enregistrer').attr('disabled','true');
                                       return 'Aucun Bureau trouvé dans ce departement';
                                   }
@@ -729,7 +716,8 @@ $("document").ready(function (initDynamicContent) {
             });
         }
     });
-	
+    
+    
     // ==================================================================================== //
     // ========== Gestion de la date de fin [datedebut == datefin] ======================== //
     // ==================================================================================== //
@@ -740,11 +728,143 @@ $("document").ready(function (initDynamicContent) {
     $("#historique_dateDebut_month").change(function(){
         // On met à jour le mois de datefin
         $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
+        // Si le mois changé est superieur au mois courant alors on active tous les jours 
+        if($("#historique_dateDebut_month").val() > moiscourant){
+             x=1;
+             while(x<31){
+                if($('#historique_dateDebut_day option[value="'+x+'"]') != undefined)
+                    $('#historique_dateDebut_day option[value="'+x+'"]').removeAttr('disabled'); // activer
+                x++;
+             }
+        }
+        else{
+            x=1;
+            while(x<jourcourant){
+                $('#historique_dateDebut_day option[value="'+x+'"]').attr('disabled', true); // activer
+                x++;
+            }
+        }
     });
     $("#historique_dateDebut_year").change(function(){
         // On met à jour l'année de datefin
         $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
     });
+    
+    // ========================================================================== //
+    // =================== desactiver les dates passées ======================== //
+    // ========================================================================== //
+    jour = $("#historique_dateDebut_day").val(); // mois
+    mois = $("#historique_dateDebut_month").val(); // mois
+    an = $("#historique_dateDebut_year"); // Années
+    var datecourant = new Date();
+    var jourcourant = datecourant.getDate(); // jour
+    var moiscourant = datecourant.getMonth()+1; // mois
+    anneecourant = datecourant.getFullYear(); // année
+    x=2012;
+    // 1- desactive les années precedentes à l'année en cour
+    while(x<anneecourant){
+        $('#historique_dateDebut_year option[value="'+x+'"]').attr('disabled', true); // activer
+        x++;
+    }
+    // 2- On desactive les mois precedents par rapport a la date du jour
+    x=1;
+    while(x<moiscourant){
+        $('#historique_dateDebut_month option[value="'+x+'"]').attr('disabled', true); // activer
+        x++;
+    }
+    // 3- On desactive les jours precedents par rapport a la date du jour
+    x=1;
+    while(x<jour){
+        $('#historique_dateDebut_day option[value="'+x+'"]').attr('disabled', true); // activer
+        x++;
+    }
+    
+    if($('.eventidupdate').val() != undefined && $('#historique_dateDebut_month').val() <= moiscourant){
+        // On desactiver les dates passées
+        dateencour = $('#historique_dateDebut_day').val();
+        j = 1;
+        while(j<dateencour){
+            $('#historique_dateDebut_day option[value="'+j+'"]').attr('disabled', true); // activer
+            j++;
+        }
+        
+        // On desactive les heures de fin
+        j = 7;
+        heure_debut = parseInt($('#historique_heureFin_hour').val()); // On recupère l'heure de debut
+        // Desactiver et Activer les heures en fonction de l'heure de debut
+        while(j<=21){
+            if(j<heure_debut){
+                $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true); // activer
+            }
+            j++;
+        }
+    }
+    
+    // =================================================================================== //
+    // ==================Pour la mise à jour de Rendez-vous ============================== // 
+    // =================================================================================== //
+    if($('input:radio[name="typeRdv"]').is(':checked') && $('input[type=radio][name=typeRdv]:checked').attr('value') == "distanciel" && $('input[type=radio][name=typeRdv]:checked').attr('value') != undefined){
+        // On masque les bureau et adresse
+        $('.bureau_v').css('display', 'none');
+         // On supprime le required dans le champ bureau
+         $('#bureauRdv').removeAttr('required');
+         $('.letyperdv').val($(this).val());
+         $("#dpttest").val("-1"); // initialisation pour eviter le blocage de la soumission du formulaire lors d'un rdv distanciel
+         $('.checkotherbureau').css('display', 'none'); // autre bureau
+         $('#ziph').removeAttr('required');
+         $('#ville_id').val(''); 
+         $('#autrebureau').removeAttr('required');
+         $('#bureauRdv').removeAttr('required');
+         $('#adresse').removeAttr('required');
+         $('#bureauRdv').removeAttr('required');
+         if($('#historique_summary').val() == "Autre"){
+            // On affiche le champ Autre
+            $('#historique_autreSummary').css({
+                display:'inline',
+                'margin-top': '7px'
+            });
+        }
+        else{
+            // On cache le champs Autre
+            if($('#historique_autreSummary').css("display") != "none"){
+                $('#historique_autreSummary').css("display", 'none');
+            }
+            $('#historique_autreSummary').val(""); // Reinitialisation
+            $('#historique_autreSummary').removeAttr("required");
+        }
+    }
+    else{
+          $('.letyperdv').val($(this).val());
+          // On affiche les bureau et adresse
+          $('.bureau_v').css('display', 'inline-block');
+          // On ajoute le required dans le champ bureau
+          $('#bureauRdv').attr('required','true');
+          $('.checkotherbureau').css('display', 'inline'); // autre bureau
+          if($('#autrebureauc').is(':checked')){
+             $('#ziph').attr('required', true);
+          }
+          else{
+               // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
+               $('#autrebureau').removeAttr('required');
+               if($("#dpttest").val() == -1)
+                    $("#dpttest").val('');
+          }
+          if($('#historique_summary').val() == "Autre"){
+            // On affiche le champ Autre
+            $('#historique_autreSummary').css({
+                display:'inline',
+                'margin-top': '7px'
+            });
+        }
+        else{
+            // On cache le champs Autre
+            if($('#historique_autreSummary').css("display") != "none"){
+                $('#historique_autreSummary').css("display", 'none');
+            }
+            $('#historique_autreSummary').val(""); // Reinitialisation
+            $('#historique_autreSummary').removeAttr("required");
+        }
+    }
 
     // ==================================================================================== //
     // ======= Affichage des bureau, ville, adresse en fonction du departement choisi ===== //
@@ -758,6 +878,7 @@ $("document").ready(function (initDynamicContent) {
                 $('.letyperdv').val($(this).val());
                 $("#dpttest").val("-1"); // initialisation pour eviter le blocage de la soumission du formulaire lors d'un rdv distanciel
                 $('.checkotherbureau').css('display', 'none'); // autre bureau
+                $('#ziph').removeAttr('required');
                 $('#ville_id').val(''); 
                 $('#autrebureau').removeAttr('required');
                 $('#bureauRdv').removeAttr('required');
@@ -765,19 +886,20 @@ $("document").ready(function (initDynamicContent) {
                 $('#bureauRdv').removeAttr('required');
             }
             else{
-                if($("#dpttest").val() == -1)
-                    $("#dpttest").val('');
                 $('.letyperdv').val($(this).val());
                 // On affiche les bureau et adresse
                 $('.bureau_v').css('display', 'inline-block');
                 // On ajoute le required dans le champ bureau
                 $('#bureauRdv').attr('required','true');
                 $('.checkotherbureau').css('display', 'inline'); // autre bureau
-                if($('#autrebureauc').is(':checked')){}
+                if($('#autrebureauc').is(':checked')){
+                    $('#ziph').attr('required', true);
+                }
                 else{
                     // On active les champs [Bureau, code.....] et on cache le champ ville et on l'inialise
                     $('#autrebureau').removeAttr('required');
-                    
+                    if($("#dpttest").val() == -1)
+                        $("#dpttest").val('');
                 }
             }
     });
@@ -904,6 +1026,66 @@ $('#consultantC').change(function(){
     }
 
 });
+
+// ================================================================= //
+// ================ Suppression du rendez-vous ===================== //
+// ================================================================= //
+$('.btn_supp').click(function(){
+    // fenetre modale
+    $('.fenetre-modale').append(
+          '<div class="modal fade" id="myModale" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">'+
+             '<div class="modal-dialog">'+
+                '<div class="modal-content">'+
+                   '<div class="modal-header my_header_modal">'+
+                      '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                      '<center><h4 class="modal-title" style="font-size:22px;">Supprimer un rendez-vous</h4></center>'+
+                    '</div>'+
+                    '<div class="modal-body">'+
+                        '<center><p style="font-size:20px; color: #668cd9;">Confirmer la suppression du rendez-vous !</p></center>'+
+                        '<input type="hidden" id="evenement-supp" value="'+$(this).attr('id')+'">'+
+                    '</div>'+
+                    '<div class="modal-footer">'+
+                      '<button type="button" class="btn btn-success" onclick="supprimer_evenement()" data-dismiss="modal">Oui</button>'+
+                      '<button type="button" class="btn btn-primary" onclick="rien_faire_evenement()" data-dismiss="modal">Non</button>'+
+                   '</div>'+
+               '</div>'+
+             '</div>'+
+          '</div>'
+    );
+});
+
+function rien_faire_evenement(){
+    $('.msg-erreur').removeAttr('style');
+    emptyelement('msg-erreur', 'class'); // on efface 
+}
+
+// Supprimer un evenement
+function supprimer_evenement(){
+    // On recupere l'id de l'evenement
+    evtid = $('#evenement-supp').val();
+    $('.msg-erreur').removeAttr('style');
+    emptyelement('msg-erreur', 'class'); // on efface 
+    $.ajax({
+          type: 'get',
+          url: Routing.generate('delete_evenement', {eventid : evtid}),
+          success: function (data) {
+             console.log('-------------- data: '+data);
+             if(data == '1'){
+                 // Archivage reussi
+                 $('.'+evtid).remove();
+                 $('.msg-erreur').css('background', '#dadada');
+                 $('.msg-erreur').append(
+                     '<div><strong>Le rendez-vous a été supprimé avec succes!</strong></div>'
+                 ).slideUp(8000).delay(9000).fadeIn(9000);
+                 emptyelement('fenetre-modale', 'class'); // on efface 
+                 if($('#evenementcalandar tr').size() == 1){
+                     // On recharge la page du beneficiaire
+                     location.reload();
+                 }
+             }
+          }
+    });
+}
 
 // vide un bloc
 function emptyelement(element, type) {

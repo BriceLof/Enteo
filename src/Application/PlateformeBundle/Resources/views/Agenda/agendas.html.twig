@@ -4,6 +4,16 @@
 
 {% block body %}
     <div class="container-fluid blocagendaprincipal">
+      {% if(maj == 0) %}
+        <div id="flashbag" class="row">
+            <div class="col-md-12">
+               {% for message in app.session.flashbag.get('info') %}
+                  {% if message != 'not message' %}
+                     <div class="alert alert-success" role="alert">{{ message }}</div>
+                  {% endif %}
+               {% endfor %}
+            </div>
+        </div>
         {% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
             <div class="row">
                 <div class="col-mg-12">
@@ -82,8 +92,8 @@
                                         <input type="checkbox" id="autrebureauc" name="autrebureauc"><span style="margin-left:2%;">Autre Bureau</span>
                                     </p>
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength="2" class="form-control new_input allchampH" placeholder="Taper le numero de departement" required>
-                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper le 3 premiers numeros du code postal">
+                                    <input type="text" id="dpttest" name="dpttest" maxlength="2" class="form-control new_input allchampH" placeholder="Taper le numero du departement" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper les 3 premiers numeros du code postal">
                                     <input type="hidden" id="ville_id" name="ville_id" >
                                     <label>Bureau</label>
                                     <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true">
@@ -115,7 +125,7 @@
                                         {{form_widget(form.autreSummary)}}
                                     </p>
                                     <p>
-                                        <span>Description evenement</span>
+                                        <span>Observation</span>
                                         {{form_widget(form.description)}}
                                     </p>
                                     <table style="width: 100%;" border="0">
@@ -155,7 +165,7 @@
             <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
             <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
             {# Dans le cas où l'admin à pris l'agenda d'un bénéficiaire sur la home ou sur la fiche bénéficiaire #}
-            {% if is_granted("ROLE_ADMIN") or is_granted("ROLE_COMMERCIAL") %}
+            {# if is_granted("ROLE_ADMIN") or is_granted("ROLE_COMMERCIAL") or  is_granted('ROLE_CONSULTANT') #}
                 <div class="row">
                     <div class="col-md-12">
                         <div id="nomconsultant" style="display:block !important">
@@ -164,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}
+            {# endif #}
             <div class="row">
                 <div class="col-md-9">
                     <div class="blocacalendar"></div>
@@ -213,8 +223,8 @@
                                 </p>
                                 <div class="bureau_v">
                                     <label>Ville</label>
-                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero de departement" required>
-                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper le 3 premiers numeros du code postal" >
+                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero du departement" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper les 3 premiers numeros du code postal" >
                                     <input type="hidden" id="ville_id" name="ville_id" >
                                     <label>Bureau</label>
                                     <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true">
@@ -246,7 +256,7 @@
                                         {{form_widget(form.autreSummary)}}
                                     </p>
                                     <p>
-                                        <span>Description evenement</span>
+                                        <span>Observation</span>
                                         {{form_widget(form.description)}}
                                     </p>
                                     <table style="width: 100%;" border="0">
@@ -282,6 +292,126 @@
                 </div>
             </div>
         {% endif %}
+      {% else  %}
+          {# ======================= Formulaire de Mise à jour ======================= #}
+          <input class="calendrierconsultant" type="hidden" value="{{consultant.calendrieruri}}">
+          <input type="hidden" class="consultantcalendrierid" value="{{consultant.id}}">
+          <div class="row">
+              <div class="col-md-12">
+                  <div id="nomconsultant" style="display:block !important">
+                      <span class="nomconsultant">Agenda du consultant </span>
+                      <span class="nomconsultant" style="color: #668cd9;">{{consultant.nom~' '~consultant.prenom}}</span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+                <div class="col-md-9">
+                    <div class="blocacalendar"></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="bloc_form_agenda">
+                        <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
+                            <input type="hidden" name="eventidupdate" class="eventidupdate" value="{{historique.eventId}}" > {# Id de l'evenement à mettre à jour! #}
+                            <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
+                            <div class="champs-form">
+                                <!-- champs supplementaires ajoutés statiquements -->
+                                <table style="width: 100%;" border="0">
+                                    <tr>
+                                        <th><label>Nom beneficiare</label></th>
+                                        <th><label>Prenom beneficiare</label></th>
+                                    </tr>
+                                    
+                                    <tr>
+                                       <td><input type="text" name="nomb" id="nomb" class="form-control new_input allchampH" required  disabled value="{{ beneficiaire.nomConso }}"></td>
+                                       <td><input type="text" name="prenomb" id="prenomb" disabled="true" class="form-control new_input allchampH" required disabled value="{{ beneficiaire.prenomConso }}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=2>
+                                           <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required value="{{ beneficiaire.prenomConso }}">
+                                           <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="{{ beneficiaire.id }}" class="form-control new_input">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- Type de Rendez-vous [presentiel ou distanciel] -->
+                                <label>Type de Rendez-vous: </label>
+                                <p class="trdv">
+                                   <input type="radio" name="typeRdv" class="typerdv" id="rdvpresentiel" class="rdvpresentiel" {{( historique.typerdv == 'presenciel' )? 'checked = true' : ''}} value="presenciel"><span style="margin-left:2%;">Presenciel</span>
+                                   <input type="radio" name="typeRdv" class="typerdv" id="rdvdistentiel" class="rdvdistentiel" {{( historique.typerdv == 'distanciel' )? 'checked = true' : ''}} value="distanciel"><span style="margin-left:2%;">Distanciel</span>
+                                </p>
+                                <p class="trdv checkotherbureau">
+                                    <input type="checkbox" id="autrebureauc" name="autrebureauc" {{(historique.bureau is defined and historique.bureau is not null and historique.bureau.temporaire == true)? 'checked=true' : ''}}><span style="margin-left:2%;">Autre Bureau</span>
+                                </p>
+                                <div class="bureau_v">
+                                    <label>Ville</label>
+                                    <input type="text" id="dpttest" name="dpttest" maxlength=2 class="form-control new_input allchampH" placeholder="Taper le numero du departement" value="{{(historique.bureau is defined and historique.bureau is not null  and historique.bureau.temporaire == false)? historique.bureau.ville.nom : ''}}" required>
+                                    <input type="text" id="autrebureau" name="autrebureau" maxlength=5 class="form-control new_input allchampH" placeholder="Taper les 3 premiers numeros du code postal" value="{{(historique.bureau is defined and historique.bureau is not null and historique.bureau.temporaire == true )? historique.bureau.ville.nom : ''}}">
+                                    <input type="hidden" id="ville_id" name="ville_id" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.ville.id : ''}}">
+                                    <label>Bureau</label>
+                                    <input name="bureauRdv" id="bureauRdv" class="form-control new_input allchampH" disabled="true" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.nombureau : ''}}">
+                                    <input type="hidden" name="bureauselect" class="form-control new_input bureauselect" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.id : '-1'}}">
+                                    <input type="hidden" name="namebureauselect" class="form-control new_input namebureauselect" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.nombureau : ''}}">
+                                    <input type="hidden" name="villeh" id="villeh" class="form-control new_input ville" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.ville.nom : ''}}">
+                                    <table style="width: 100%;" border="0">
+                                        <tr>
+                                            <th><label>Adresse</label></th>
+                                            <th><label>Code postal</label></th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="text" name="adresse" id="adresse" class="form-control new_input allchampH" disabled="true" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.adresse : ''}}">
+                                                <input type="hidden" name="adresseh" id="adresseh" class="form-control new_input adresse" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.adresse : ''}}">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="zip" id="zip" class="form-control new_input allchampH" disabled="true" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.ville.cp : ''}}">
+                                                <input type="hidden" name="ziph" id="ziph" class="form-control new_input zip" value="{{(historique.bureau is defined and historique.bureau is not null)? historique.bureau.ville.cp : ''}}">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div>
+                                    <!-- formulaire historique -->
+                                    <p>
+                                        <span>Titre evenement</span>
+                                        {{form_widget(form.summary)}}
+                                        {{form_widget(form.autreSummary)}}
+                                    </p>
+                                    <p>
+                                        <span>Observation</span>
+                                        {{form_widget(form.description)}}
+                                    </p>
+                                    <table style="width: 100%;" border="0">
+                                        <tr>
+                                            <th colspan=2><span>Date</span></th>
+                                        </tr>
+                                        <tr>
+                                            <td colspan=2>
+                                                {{form_widget(form.dateDebut)}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="height:31px;" valign="bottom"><span>Heure debut</span></th>
+                                            <th valign="bottom"><span>Heure fin</span></th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{form_widget(form.heureDebut)}}</td>
+                                            <td>{{form_widget(form.heureFin)}}</td>
+                                        </tr>
+                                    </table>
+                                    {{form_widget(form.dateFin)}}
+                                    {{ form_widget(form.typerdv) }}
+                                    <div style="margin-top:32px;">
+                                        {{form_widget(form.Enregistrer)}}
+                                    </div>
+                                    <div>
+                                        {{ form_rest(form) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+      {% endif %}
     </div>
 {% endblock %}
 

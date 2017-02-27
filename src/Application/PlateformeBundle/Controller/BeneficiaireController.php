@@ -41,11 +41,10 @@ class BeneficiaireController extends Controller
             unset($_SESSION['beneficiaireid']);
         }
         $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
-		
         // ====================================================== //
         // ===== Mise à jour des evenements du beneficiaire ===== //
         // ====================================================== //
-        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0'){
+        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
             if(!empty($_SESSION['firstpast'])){
                  unset($_SESSION['firstpast']); // On supprime la session
@@ -88,35 +87,35 @@ class BeneficiaireController extends Controller
             }
         }
         // Si le client existe alors on recupere les evenements
-        if(isset($client)){
+        if(isset($client) && empty($_SESSION['majevenementdanshistorique'])){           
             foreach($histo_beneficiaire as $histo){
                 $evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
-                $heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
-                $heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
-                $heuredeb = str_replace('+01:00','',$heuredeb); 
-                $heurefin = str_replace('+01:00','',$heurefin);
-
-                $datedeb = new \DateTime($heuredeb); // date debut
-                $datefin = new \DateTime($heurefin); // date fin
-
-                $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
-                $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
-                // si les creneaux sont differents alors on fait une MAJ
-                if($heuredeb != $histo->getHeuredebut() || $heurefin != $histo->getHeurefin()){
+                // Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
+                if($evenement->getStatus() == 'cancelled'){
+                    $query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
+                }
+                else{
+                    // On met à jour les evenements
+                    $heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
+                    $heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
+                    $heuredeb = str_replace('+01:00','',$heuredeb); 
+                    $heurefin = str_replace('+01:00','',$heurefin);
+                    $datedeb = new \DateTime($heuredeb); // date debut
+                    $datefin = new \DateTime($heurefin); // date fin
+                    $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
+                    $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
                     // Mise à jour en BD  
                     $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
                 }
             }
         }
-        
+        if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['majevenementdanshistorique']); // On supprime la session
         if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
-        
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
             throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
         }
-
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
@@ -133,13 +132,10 @@ class BeneficiaireController extends Controller
                 $contactEmployeur->setBeneficiaire($beneficiaire);
                 $em->persist($contactEmployeur);
             }
-
             $employeur = $beneficiaire->getEmployeur();
-
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
-
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
