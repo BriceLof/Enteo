@@ -68,7 +68,7 @@ class ContactEmployeurType extends AbstractType
                     'class' => 'telephoneConso contactWidget fiche',
                 )
             ))
-            ->add('tel', TextType::class, array(
+            ->add('tel2', TextType::class, array(
                 'label' => 'Tél 2 ',
                 'required' => false,
                 'attr' => array(

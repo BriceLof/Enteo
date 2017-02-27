@@ -753,8 +753,13 @@ $("document").ready(function (initDynamicContent) {
     // =================================================================================== //
     // ==== Gestions des heures pour la modification des evenements dans historique ====== //
     // =================================================================================== //
-    if($('.eventidupdate').val() != undefined){
+    datecourant = new Date();
+    console.log($('#historique_dateDebut_month').val());
+    moiscourant = datecourant.getMonth()+1;
+    console.log(moiscourant);
+    if($('.eventidupdate').val() != undefined && $('#historique_dateDebut_month').val() <= moiscourant){
         // On desactiver les dates passées
+
         dateencour = $('#historique_dateDebut_day').val();
         j = 1;
         while(j<dateencour){
