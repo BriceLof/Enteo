@@ -36,7 +36,7 @@ class AgendaController extends Controller
         else if($request->query->get('sentinel') == 2){
             // Bureau existant
             $cp = $request->query->get('term').'%';
-            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE v.cp LIKE :nom');
+            $query = $em->createQuery('SELECT b.id, b.adresse, v.cp, v.departementId, v.nom, b.nombureau FROM ApplicationPlateformeBundle:Bureau b JOIN b.ville v WHERE enabled > 0 and v.cp LIKE :nom');
             $query->setParameter('nom', $cp);
             (count($query->getResult()) <= 0)? $results = array('nom' => -1): $results = $query->getResult();
         }
