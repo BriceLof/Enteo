@@ -89,24 +89,26 @@ class BeneficiaireController extends Controller
         // Si le client existe alors on recupere les evenements
         if(isset($client) && empty($_SESSION['majevenementdanshistorique'])){           
             foreach($histo_beneficiaire as $histo){
-                $evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
-                // Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
-                if($evenement->getStatus() == 'cancelled'){
-                    $query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
-                }
-                else{
-                    // On met à jour les evenements
-                    $heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
-                    $heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
-                    $heuredeb = str_replace('+01:00','',$heuredeb); 
-                    $heurefin = str_replace('+01:00','',$heurefin);
-                    $datedeb = new \DateTime($heuredeb); // date debut
-                    $datefin = new \DateTime($heurefin); // date fin
-                    $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
-                    $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
-                    // Mise à jour en BD  
-                    $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
-                }
+				if($histo->getEventId() != '0'){
+					$evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
+					// Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
+					if($evenement->getStatus() == 'cancelled'){
+						$query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
+					}
+					else{
+						// On met à jour les evenements
+						$heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
+						$heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
+						$heuredeb = str_replace('+01:00','',$heuredeb); 
+						$heurefin = str_replace('+01:00','',$heurefin);
+						$datedeb = new \DateTime($heuredeb); // date debut
+						$datefin = new \DateTime($heurefin); // date fin
+						$heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
+						$heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
+						// Mise à jour en BD  
+						$em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
+					}
+				}
             }
         }
         if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['majevenementdanshistorique']); // On supprime la session
