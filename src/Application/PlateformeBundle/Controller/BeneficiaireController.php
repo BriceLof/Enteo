@@ -292,7 +292,7 @@ class BeneficiaireController extends Controller
     {
         $idUtilisateur = null;
 
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or true === $this->get('security.authorization_checker')->isGranted('ROLE_COMMERCIAL') or true === $this->get('security.authorization_checker')->isGranted('ROLE_GESTION')) {
         }else{
             $idUtilisateur = $this->getUser()->getId();
         }
