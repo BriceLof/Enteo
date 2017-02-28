@@ -227,7 +227,7 @@
                                     <div>
                                         <span id="labelConsultant">Consulant :</span>
                                         <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span>
-                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
                                             <span class="modifierConsultant maj" data-toggle="modal" data-target="#myModal">Modifier</span>
                                 {% endif %}
                                         </span>
@@ -242,7 +242,7 @@
                                     <div>
                                         <span id="labelConsultant">Consulant :</span>
                                         <span>
-                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')  %}
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
                                             <span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span>
                                 {% endif %}
                                         </span>

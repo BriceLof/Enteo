@@ -60,7 +60,7 @@ class AgendaController extends Controller
 		switch(true){
                 case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
                         // remote
-						 if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL'))
+						 if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL') && !$authorization->isGranted('ROLE_GESTION'))
                         {
 							if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
                                 return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
@@ -68,7 +68,7 @@ class AgendaController extends Controller
                 break;
                 default:
                         // Test si l'utilisateur n'a pas le role Admin il ne peut pas switcher sur l'agenda d'un autre consultant
-                        if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL') && empty($request->query->get('update')))
+                        if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL') && !$authorization->isGranted('ROLE_GESTION') && empty($request->query->get('update')))
                         {
                             if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/enteo/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/enteo/web/agenda' && $_SERVER['REQUEST_URI'] != '/teo/web/agenda')
                                 return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId())));
@@ -280,7 +280,6 @@ class AgendaController extends Controller
                             $historiqueU->setHeurefin($historique->getHeurefin());
                             $historiqueU->setTypeRdv($historique->getTypeRdv());
                             $historiqueU->setDateFin($_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]));
-                           
                             if(!empty($_SESSION['ville_id'])  && is_null($historiqueU->getBureau())){
                                 $villeObject = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($_SESSION['ville_id']);
                                 // On instancie le nouveau Bureau

@@ -18,7 +18,9 @@
                 <h1 class="col-md-10">Gestion - Utilisateurs<br><small>Créer, modifier, voir les enregistrements de la base de données</small></h1>
                 <nav class="col-md-2  typeUtilisateur" >
                     <ul class="list-group" style="margin-top: 46px;">
-                        <li class="list-group-item itemAdmin"><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="list-group-item itemAdmin"><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+                        {% endif %} 
                         <li class="list-group-item itemConsultant"><a href="{{ path('user_type', {'typeUser':'consultant'}) }}" >Consultants</a></li>
                         <li class="list-group-item itemCommercial"><a href="{{ path('user_type', {'typeUser':'commercial'}) }}" >Commerciaux</a></li>
                         <li class="list-group-item itemGestion"><a href="{{ path('user_type', {'typeUser':'gestion'}) }}" >Gestionnaire</a></li>

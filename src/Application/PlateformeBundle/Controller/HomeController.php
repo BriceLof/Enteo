@@ -35,7 +35,7 @@ class HomeController extends Controller
         
         // ADMIN et autres 
         $authorization = $this->get('security.authorization_checker');
-        if($authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL')){
+        if($authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $authorization->isGranted('ROLE_GESTION')){
             $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
             $nombreBeneficiaire = count($beneficiaires);
            //var_dump($beneficiaires);
