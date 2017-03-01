@@ -265,8 +265,8 @@ class AgendaController extends Controller
                     if($_SESSION['agenda'][0]['eventid'] != ''){
                         // Maj evenement et redirection sur la page du Beneficiaire
                         $benefId = $_SESSION['benef'];
-                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]); // decrementation heure debut 
-                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]); // decrementation heure fin
+                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // decrementation heure debut 
+                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // decrementation heure fin
                         $eventupdate = $googleCalendar->updateEvent($_SESSION['agenda'][1], $_SESSION['calendrierId'], $_SESSION['agenda'][0]);
                         // Mise à jour en BD
                         if(!is_null($eventupdate)){
@@ -343,10 +343,14 @@ class AgendaController extends Controller
                         $this->get('session')->getFlashBag()->add('info', 'Le rendez-vous a été modifié avec succès!');
                         return $this->redirectToRoute('application_show_beneficiaire', array('id'=>$benefId));
                     }
+					// Pour la date du rendez-vous, faire attention entre le localhost (localhost/enteo...) et le site en ligne (dev.application...).
+					// Ce qu'il faut faire: 
+					// Localhost mettre ca a la place de celui qui est dans addEvent: $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),
+					// En ligne ou PROD mettre ca a la place de celui qui est dans addEvent: $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]),
                     $eventInsert = $googleCalendar->addEvent(
                         $_SESSION['calendrierId'],
-                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
+                        $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), // decrementation heure debut 
+                        $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]), // decrementation heure fin
                         $summary,
                         $_SESSION['agenda'][1]->getDescription(),
                         $eventAttendee = "",
