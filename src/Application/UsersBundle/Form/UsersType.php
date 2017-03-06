@@ -53,15 +53,11 @@ class UsersType extends AbstractType
                 ))
                 ->add('calendrierid', TextType::class, array(
                     'label' => 'Calendrier ID',
-                    'label_attr' => array('style' => 'display:none;', 'class' => "calendar_id"),
                     'required' => false,
-                    'attr'  => array('style' => 'display:none;', 'class' => "calendar_id")
                 ))
                 ->add('calendrieruri', TextareaType::class, array(
                     'label' => 'Calendrier URI',
-                    'label_attr' => array('style' => 'display:none;', 'class' => "calendar_uri"),
                     'required' => false,
-                    'attr'  => array('style' => 'display:none;', 'class' => "calendar_uri")
                 ))
                 ->add('civilite', ChoiceType::class, array(
                     'choices' => array(
@@ -94,10 +90,10 @@ class UsersType extends AbstractType
                     'required'  => false
                 ))
                 ->add('distanciel', ChoiceType::class, array(
-                    'choices' => array('Présentiel'    =>  0, 'Distanciel'    =>  1 ),
+                    'choices' => array('Présentiel'    =>  'presentiel', 'Distanciel'    =>  'distanciel' ),
                     'expanded' => true,
-                    'multiple' => false,
-                    'data' => 0,
+                    'multiple' => true,
+                    'required' => true,
                     /*'label_attr' => array('class' => 'format_label', 'style' => 'display:none;'),*/
                     'choice_attr' => function($val, $key, $index) {
                        return ['class' => 'format_input'];

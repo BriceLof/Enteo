@@ -66,9 +66,13 @@ class UsersController extends Controller
         //var_dump($user->getRoles());
         
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
-        $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
-        $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
-        $editForm->get('idVilleHidden')->setData($user->getVille()->getId());
+        if(!is_null($user->getVille()))
+        {
+            $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
+            $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
+            $editForm->get('idVilleHidden')->setData($user->getVille()->getId()); 
+        }
+        
 
         $typeUser = $this->container->get('application_users.getTypeUser');
         $editForm->get('typeUserHidden')->setData($typeUser->typeUser($this->getUser()));
