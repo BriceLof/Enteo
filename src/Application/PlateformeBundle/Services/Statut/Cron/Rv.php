@@ -4,10 +4,16 @@ namespace Application\PlateformeBundle\Services\Statut\Cron;
 
 class Rv extends \Application\PlateformeBundle\Services\Mailer
 { 
+    // Alerte à +1h de l'heure du démarrage du rdv dans l'agenda (entity historique)
+    public function alerteSuiteRv1Rv2Agenda()
+    {
+        $histoRepo = $this->em->getRepository("ApplicationPlateformeBundle:Historique");
+    }
+    
     public function alerteSuiteRv1()
     {
         $newsRepo = $this->em->getRepository("ApplicationPlateformeBundle:News");
-        // Récupération des news quin sont au statut RV1 (id 3) 
+        // Récupération des news qui sont au statut RV1 (id 3) 
         $listeRv = $newsRepo->getNewsByStatut();
 
         foreach($listeRv as $rv)

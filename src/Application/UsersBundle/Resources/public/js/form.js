@@ -19,7 +19,7 @@ $(function(){
         $('.block_form_calendar_id').show();
         $('.block_form_block_form_format_presence').show();
         $('.block_form_departement').show();
-        $('.block_form_ville').showshow();
+        $('.block_form_ville').show();
     }else{
         $('.block_form_calendar_uri').hide();
         $('.block_form_calendar_id').hide();
