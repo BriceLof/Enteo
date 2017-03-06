@@ -42,11 +42,13 @@ class AccompagnementController extends Controller
         $dateDebut = 1;
         $dateFin = 1;
 
-        if ($accompagnement->getDateDebut() == null){
-            $dateDebut = 0;
-        }
-        if ($accompagnement->getDateFin() == null ) {
-            $dateFin = 0;
+        if($accompagnement != null){
+            if ($accompagnement->getDateDebut() == null){
+                $dateDebut = 0;
+            }
+            if ($accompagnement->getDateFin() == null ) {
+                $dateFin = 0;
+            }
         }
 
         if(is_null($accompagnement)){

@@ -26,23 +26,26 @@ class MailCommand extends ContainerAwareCommand{
 
         foreach ($beneficiaires as $beneficiaire){
             $news = $beneficiaire->getNews();
-            $lastNews = $news[count($news)-1];
-            $nextToNews = $news[count($news)-2];
-            $now = new \DateTime();
-            $slugLastNewsStatus = $news[count($news)-1]->getStatut->getSlug();
-            $slugNextToNewsStatus = $news[count($news)-2]->getStatut->getSlug();
+            if( !is_null($news[count($news)-2])){
+                $lastNews = $news[count($news)-1];
+                $nextToNews = $news[count($news)-2];
+                $now = new \DateTime();
+                $slugLastNewsStatus = $news[count($news)-1]->getStatut()->getSlug();
+                $slugNextToNewsStatus = $news[count($news)-2]->getStatut()->getSlug();
 
-            //si le statut est : RV1 réalisé ou RV2 réalisé
-            if( $slugLastNewsStatus == "rv1-realise" || $slugLastNewsStatus == "rv2-realise"){
+                //si le statut est : RV1 réalisé ou RV2 réalisé
 
-                //si l'avant dernier statut est : RV1 à faire ou RV2 à faire
-                if( $slugNextToNewsStatus == "rv1-a-faire" || $slugNextToNewsStatus == "rv2-a-faire" ){
+                if( $slugLastNewsStatus == "rv1-realise" || $slugLastNewsStatus == "rv2-realise"){
 
-                    //si le dernier news date de mois de 24h
-                    if( $lastNews->getDateHeure() < $now && $lastNews->getDateHeure() >= $now->modify('-1 day') ){
-                        //envoi du mail
-                        $this->getContainer()->get('application_plateforme.statut.add_statut')->mailRecapCronDocument($beneficiaire, $lastNews);
+                    //si l'avant dernier statut est : RV1 à faire ou RV2 à faire
+                    if( $slugNextToNewsStatus == "rv1-a-faire" || $slugNextToNewsStatus == "rv2-a-faire" ){
 
+                        //si le dernier news date de mois de 24h
+                        if( $lastNews->getDateHeure() < $now && $lastNews->getDateHeure() >= $now->modify('-1 day') ){
+                            //envoi du mail
+                            $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastNews);
+
+                        }
                     }
                 }
             }

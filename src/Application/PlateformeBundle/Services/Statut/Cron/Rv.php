@@ -82,13 +82,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     public function mailRvRealise(Beneficiaire $beneficiaire, News $lastNews){
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
-        $to = "n.ranaivoson@iciformation.fr";
+        $to = "ranfidy@hotmail.com";
         $cc = array(
             "support@iciformation.fr" => "Support",
             "b.lof@iciformation.fr" => "Brice");
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
-            'news' => $lastNews,
+            'lastNews' => $lastNews,
         ));
         $this->sendMessage($this->from,$to,$cc,$subject,$body);
     }
