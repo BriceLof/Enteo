@@ -89,7 +89,7 @@
                                             <td class="tableSection">Adresse Bénéficiaire</td>
                                         </tr>
                                         <tr>
-                                            <td>{{ form_label(edit_form.adresse) }}</td>
+                                            <td>{{ form_label(edit_form.adresse) }}{{ form_widget(edit_form.proposition_adresse, {'attr':{'value': beneficiaire.adresse}}) }}</td>
                                             <td>{{ form_widget(edit_form.adresse) }}</td>
                                         </tr>
                                         <tr>

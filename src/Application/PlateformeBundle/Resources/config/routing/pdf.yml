@@ -1,0 +1,7 @@
+application_new_pdf:
+    path:     /new/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Pdf:new" }
+
+application_test_pdf:
+    path:    /test/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Pdf:test" }

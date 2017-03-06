@@ -179,6 +179,10 @@ class BeneficiaireType extends AbstractType
                 'choice_label' => 'nom',
             ))
 
+            ->add('proposition_adresse', HiddenType::class, array(
+                'mapped' => false,
+            ))
+
             ->add('pays', TextType::class, array(
                 'label' => 'Pays ',
                 'data' => 'FRANCE',

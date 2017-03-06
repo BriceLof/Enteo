@@ -87,7 +87,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     #encryption: "%mailer_encryption%"
-    spool:     { type: memory }
+    #spool:     { type: memory }
 
          
 assetic:
@@ -110,3 +110,12 @@ application_plateforme:
       credentials_path: "%kernel.root_dir%/.credentials/calendar.json"
       client_secret_path: "%kernel.root_dir%/web/client_secret.json"
 
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: "C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"
+        options: []
+    image:
+        enabled: true
+        binary: "C:\\wkhtmltopdf\\bin\\wkhtmltoimage.exe"
+        options: []

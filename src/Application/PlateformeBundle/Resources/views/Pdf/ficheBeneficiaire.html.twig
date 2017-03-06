@@ -1,0 +1,452 @@
+{% extends "ApplicationPlateformeBundle::layout-pdf.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ absolute_url(asset('css/proposition.css')) }}">
+{% endblock %}
+
+{% block content %}
+    <div style="background-color: #6c6159" style="width: 100%">
+        <div class="container" style="background-color: white">
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <hr style="color: black; border-bottom: 1px solid black">
+                    </div>
+                </div>
+                <div style="height: 75px">
+
+                </div>
+                <div class="row">
+                    <div>
+                        <div style="border-bottom: 1px solid black; border-top: 1px solid black; margin: 100px;">
+                            <p style="font-size: 30px; font-weight: bold; text-align: center;font-family: Calibri; padding: 60px">
+                                PROPOSITION ACCOMPAGNEMENT A LA VALIDATION DES ACQUIS DE L’EXPERIENCE
+                                POUR <span>{{ beneficiaire.civiliteConso|upper~' '~beneficiaire.prenomConso|upper~' '~beneficiaire.nomConso|upper }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 200px">
+                    <img style="margin-left: 100px" src="{{ absolute_url(asset('images/contactEntheor.jpg')) }}"
+                         id="contact_entheor"/>
+                </div>
+
+                <div style="margin-top: 180px">
+                    <div class="row">
+                        <div>
+                            <hr style="color: black; border-bottom: 1px solid black; margin-top: 100px">
+                        </div>
+                    </div>
+
+                    <div>
+                        <p style="font-size: 14px;text-align: center; margin-top: 10px; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;">
+                            3, rue Denuziere - 69002 Lyon <br>
+                            Siret : 527 732 069 000 28 - Déclaration d'activité : 82 69 11023 69
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-md-12">
+                        <h1 class="titre">
+                            OBJECTIFS DE L'ACCOMPAGNEMENT A LA VAE
+                        </h1>
+                        <p>
+                            <span class="sous-titre_1">Pour le bénéficiaire, les objectifs de la validation des acquis de l’expérience peuvent être de différents ordres :</span>
+                        </p>
+                        <div>
+                            <ul>
+                                <li class="liste">
+                                    <span class="sous-titre_2">Reconnaissance et sentiment de fierté</span>
+                                    <ul style="list-style-type: none">
+                                        <li>
+                                            <span class="tiret_liste">-</span> Les salariés sont très sensibles à la
+                                            reconnaissance de leur valeur professionnelle et de leurs compétences,
+                                            représentée par l'obtention de la certification.
+                                        </li>
+                                        <li>
+                                            <span class="tiret_liste">-</span> Ils ressentent une immense fierté
+                                            personnelle et professionnelle.
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="liste">
+                                    <span class="sous-titre_2">Maîtrise du poste et gain de confiance</span>
+                                    <ul style="list-style-type: none">
+                                        <li>
+                                            <span class="tiret_liste">-</span>Les salariés se sentent plus à l'aise dans
+                                            leur poste, à la fois parce qu'ils ont plus clairement conscience de leur
+                                            rôle dans le processus de production et qu'ils ont gagné en autonomie.
+                                        </li>
+                                        <li>
+                                            <span class="tiret_liste">-</span>Ils ont acquis la capacité à se projeter
+                                            au-delà de leur poste actuel. Le nouveau regard porté sur leur travail
+                                            augmente leur confiance en eux et en l'avenir.
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="liste">
+                                    <span class="sous-titre_2">Possibilités d'évolution accrues</span>
+                                    <ul style="list-style-type: none">
+                                        <li>
+                                            <span class="tiret_liste">-</span>Les salariés envisagent mieux les
+                                            possibilités de changer de poste et d'évoluer dans l'entreprise.
+                                        </li>
+                                        <li>
+                                            <span class="tiret_liste">-</span>Ils sont plus en mesure de compléter et
+                                            d'adapter leurs compétences par rapport aux évolutions de leur métier et de
+                                            leur entreprise.
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="margin-top: 60px">
+                            <p>
+                                <span class="sous-titre_1">Pour l’entreprise, c’est aussi l’occasion de :</span>
+                            </p>
+                            <div>
+                                <ul>
+                                    <li class="liste">
+                                        <span class="sous-titre_2">Mieux organiser la gestion prévisionnelle des emplois et des compétences ;</span>
+                                    </li>
+                                    <li class="liste">
+                                        <span class="sous-titre_2">Favoriser la gestion des carrières et la mobilité professionnelle.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div style="margin-top: 60px">
+                            <p>
+                                L’obtention de la validation des acquis de l’expérience peut se poursuivre sur une deuxième procédure en vue d’obtenir un degré de diplôme supérieur.
+                            </p>
+                            <p>
+                                Cette prestation peut être à l’initiative de l’entreprise (elle est alors inscrite dans son plan de formation) ou du bénéficiaire (par exemple dans le cadre du CPF).
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h1 class="titre">
+                        NOS ENGAGEMENTS VIS-A-VIS DU BENEFICIAIRE
+                    </h1>
+
+                    <div id="engagement">
+                        <p>
+                            <strong>Réactivité : </strong><span>un rendez-vous </span><strong>d'accueil gratuit </strong><span>dans les 7 jours suite à votre demande de contact et un démarrage dans les 7 jours ouvrables après accord du financement.</span>
+                        </p>
+                        <p>
+                            <strong>Un consultant unique et expert </strong><span>en mobilité professionnelle, et plus particulièrement à l’accompagnement de la VAE.</span>
+                        </p>
+                        <p>
+                            <strong>Un travail de recherche, </strong><span>quand cela est nécessaire, pour identifier le diplôme que le candidat pourra valider.</span>
+                        </p>
+                        <p>
+                            <strong>Un travail d’accompagnement et de motivation,  dans un climat de confiance. </strong><span>Le consultant vous accompagne sur une durée de 24 heures par des rendez-vous de 1 à 2 h à fréquences régulières.</span>
+                        </p>
+                        <p>
+                            <span>Débuter la validation des acquis de l’expérience qu’après </span><strong>acceptation et signature du devis </strong><span>ci-joint.</span>
+                        </p>
+                        <div style="margin-top: 40px">
+                            <span>Respecter les 3 phases identifiées de la validation des acquis de l’expérience :</span>
+                            <div>
+                                <ul style="list-style-type: none">
+                                    <li>
+                                        <span class="tiret_liste">-</span>Accompagnement à la rédaction du Livret 1 ou livret de recevabilité
+                                    </li>
+                                    <li>
+                                        <span class="tiret_liste">-</span>Accompagnement après recevabilité, à la rédaction du Livret 2, ou Livret de preuves,
+                                    </li>
+                                    <li>
+                                        <span class="tiret_liste">-</span>Préparation à la présentation devant le jury de VAE et suivi post-jury.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>
+                                Dans le cadre de notre <strong>suivi qualité,</strong> un questionnaire de satisfaction et d’évaluation vous sera remis à la fin de votre validation des acquis de l’expérience. Celui-ci nous permet de toujours être en adéquation avec vos besoins, avec l’objectif du service rendu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h1 class="titre">
+                        NOS ENGAGEMENTS VIS-A-VIS DU BENEFICIAIRE
+                    </h1>
+                    <h2 style="margin-top: 40px" class="sous-titre_1">
+                        CONTENU :
+                    </h2>
+                    <div id="methodologie">
+                        <p>
+                            <span class="sous-titre_2">PHASE I – Avant recevabilité (Livret 1 ou DPO)</span>
+                            <div>
+                            <ul>
+                                <li>CHOISIR  la certification la plus adaptée à sa situation en ayant identifié les lieux et les personnes ressources et en ayant analysé les pré-requis et les démarches spécifiques à chaque certification.</li>
+                                <li>AIDER à la formalisation du livret de recevabilité.</li>
+                                <li>ACCOMPAGNER les démarches de collecte des preuves (attestations d’employeurs, bulletins de salaire, attestations de formation, attestations d’activités de bénévole.)</li>
+                                <li>ELABORER le CV par compétences et la lettre de motivation</li>
+                                <li>FACILITER le rendez-vous entre le bénéficiaire et l’organisme certificateur pour étudier le dossier de recevabilité</li>
+                            </ul>
+                        </div>
+                        </p>
+
+                        <p>
+                            <span class="sous-titre_2">PHASE II – Accompagnement après recevabilité (Livret 2)</span>
+                        <div>
+                            <ul>
+                                <li>METTRE EN CORRESPONDANCE les compétences, les savoirs faire avec le référentiel de la certification visée.</li>
+                                <li>RECONSTITUER ET ANALYSER son parcours professionnel et/ou bénévole en relation avec le contenu du référentiel.</li>
+                                <li>FORMALISER ET VALORISER ses compétences, ses fonctions et ses prises de responsabilité le cas échéant</li>
+                                <li>CONSEILLER méthodologiquement dans l’élaboration du dossier à remplir.</li>
+                                <li>RELECTURE du dossier rédigé par le candidat en fonction des attentes du jury</li>
+                            </ul>
+                        </div>
+                        </p>
+
+                        <p>
+                            <span class="sous-titre_2">PHASE III – Préparation à la présentation devant le jury de VAE et suivi post-jury</span>
+                        <div>
+                            <ul>
+                                <li>S’ENTRAINER à démontrer et à argumenter oralement face à un jury.</li>
+                                <li>IDENTIFIER les formations complémentaires dans le cadre d’une validation partielle.</li>
+                                <li>DEFINIR les stratégies à mettre en œuvre en fonction des besoins</li>
+                            </ul>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h1 id="titre_devis">
+                        DEVIS
+                    </h1>
+                    <p style="float: right">
+                        A Lyon{{ ', le '~"now"|date("d/m/Y") }}
+                    </p>
+                    <div>
+                        <p>
+                            A l'attention de : <br>
+                            {{ beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}<br>
+                            {{ beneficiaire.adresse }}<br>
+                            {{ beneficiaire.ville.cp~' '~beneficiaire.ville.nom|upper }}
+                        </p>
+                        <br>
+                    </div>
+                    <div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="page_devis">
+                            <div class="sous-titre_1" style="text-decoration: underline; width: 140px;">OBJET :<br></div>
+                            <div class="sous-titre_2" >Accompagnement à la Validation des Acquis de l’Expérience <br> de {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}
+                                <br><br>
+                                Diplôme visé : {{ beneficiaire.diplomeVise }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="table_devis">
+                        <div class="row">
+                            <div class="page_devis">
+                                <div class="sous-titre_2" style="width: 285px;">Déroulement : </div>
+                                <div style="width: 550px;">
+                                    <span class="sous-titre_2">Durée totale </span>de la prestation : <span class="sous-titre_2">{{ beneficiaire.accompagnement.heure }} Heures <br></span>
+                                    <span class="sous-titre_2">{{ heure }} RDV de 3H </span>
+                                    {% if reste == 0 %}
+                                    {% else %}
+                                        <span class="sous-titre_2"> et 1 RDV de {{ reste }}H </span>
+                                    {% endif %}
+                                    <span>environ dont suivi, relecture et préparation soutenance</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="page_devis">
+                                <div class="sous-titre_2" style="width: 285px;">Calendrier prévisionnel : </div>
+                                <div style="width: 550px;">
+                                    {% if beneficiaire.accompagnement.dateDebut is not null %}
+                                        <span>du {{ beneficiaire.accompagnement.dateDebut|date("d M Y") }} </span>
+                                    {% endif %}
+                                    {% if beneficiaire.accompagnement.dateFin is not null %}
+                                        <span>jusqu'au {{ beneficiaire.accompagnement.dateFin|date("d M Y") }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="page_devis">
+                                <div class="sous-titre_2" style="width: 285px;">Montant : </div>
+                                <div style="width: 550px;"><span class="sous-titre_2">{{ montantTotal ~" " }}</span>&euro; net de taxe</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="page_devis">
+                                <div class="sous-titre_2" style="width: 285px;">Modalités de financement : </div>
+                                <div style="width: 550px;"><span>Prise en charge de l'OPCA par le compte CPF du bénéficiaire.</span>
+                                    <br><br>
+                                    <span>Les éventuels frais annexes à la VAE (frais de jury, frais de passage d'épreuves) et  les frais engagés par le Bénéficiaire dans le cadre de son accompagnement à la VAE  (frais de transport, frais d’hébergement, frais de restauration, photocopies, etc.) ne sont pas compris dans notre prix.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="page_devis">
+                                <div class="sous-titre_2" style="width: 285px;">Règlement : </div>
+                                <div style="width: 550px;"><span>Règlement de l'OPCA : selon les règles en vigueur avec un règlement intermédiaire de 50% sur présentation de justificatifs de présence.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h1 class="titre">
+                        ANNEXE 1 : CODE DE DEONTOLOGIE
+                    </h1>
+                    <div id="methodologie">
+                        <p>
+                            <span class="sous-titre_2">Titre I – PRINCIPES GENERAUX</span>
+                        <div>
+                            <ol>
+                                <li>Respect des droits de la personne</li>
+                                <li>Compétence <br>L’accompagnateur ou conseiller VAE tient ses compétences de connaissances théoriques régulièrement mises à jour, d’une formation continue et d’une formation à discerner son implication personnelle dans la compréhension du parcours d’autrui.</li>
+                                <li>Responsabilité <br>Ses interventions se conforment aux règles du code du travail et des référentiels RNCP</li>
+                                <li>Respect du but assigné <br>Les dispositifs méthodologiques mis en place par l’accompagnateur répondent aux motifs de ses interventions, et à eux seulement</li>
+                                <li>Indépendance professionnelle <br>L’accompagnateur ne peut aliéner l’indépendance nécessaire à l’exercice de son exercice sous quelle forme que ce soit</li>
+                            </ol>
+                        </div>
+                        </p>
+
+                        <p>
+                            <span class="sous-titre_2">Titre II – EXERCICE PROFESSIONNEL</span>
+                        <div>
+                            <ol>
+                                <li>L’accompagnateur exerce dans les domaines liés à sa qualification, laquelle s’apprécie notamment par sa formation universitaire fondamentale et appliquée par des formations spécifiques, par son expérience pratique</li>
+                                <li>Avant toute intervention, l’accompagnateur s’assure du consentement de ceux qui le consultent ou participent à une évaluation</li>
+                                <li>L’accompagnateur est seul responsable de ses conclusions. <br>Les intéressés ont le droit de demander un compte rendu</li>
+                                <li>Les documents émanant de l’accompagnateur (attestation, bilan, certificat, courrier …) portent son nom, l’identification de sa fonction ainsi que ses coordonnées professionnelles, sa signature</li>
+                                <li>L’accompagnateur dispose sur le lieu de son exercice professionnel d’une installation convenable, de locaux adéquats pour permettre le respect du secret professionnel, et de moyens techniques suffisants en rapport avec la nature de ses actes professionnels</li>
+                                <li>L’accompagnateur connait les dispositions légales et réglementaires issues de la loi du 06 janvier 1978 relatives à l’informatique, aux fichiers et aux libertés</li>
+                                <li>La validation de l’expérience se fait selon des modalités officielles. Elle porte sur des disciplines acquises au cours de l’expérience et elle requiert la référence aux exigences du RNCP</li>
+                            </ol>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 1290px">
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <h1 class="titre">
+                        CONDITIONS GENERALES DE VENTE
+                    </h1>
+                    <div id="condition">
+                        <div>
+                            <p>
+                                <span>Inscription et démarrage de la Prestation <br></span>
+                                Toute demande d'accompagnement à la Validation des Acquis de l'Expérience (ci-après la Prestation) fait l'objet d’une proposition commerciale accompagnée d'un devis à compléter et à signer par le Client. Par Client, il est entendu qu'il peut s'agir du Bénéficiaire de la Prestation ou de l'entreprise qui en passe commande au bénéfice d'un de ses salariés.
+                                La Prestation pourra démarrer après réception du devis signé; le devis signé valant confirmation d'inscription et acceptation sans réserve des présentes conditions générales de vente.
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span>Organisation et déroulement des séances <br></span>
+                                La présente proposition de Prestation est remise au Client après un entretien préalable avec le Bénéficiaire. Cet entretien préalable doit permettre de valider les motivations du projet et une première approche de faisabilité.
+                                Après confirmation d'inscription, le Bénéficiaire est mis en relation avec le Consultant VAE qui l'accompagnera tout au long de la Prestation. Un planning prévisionnel de travail est établi avec le Bénéficiaire. Ce planning de travail comprend généralement une ou deux séances de travail pour la rédaction du Livret 1 puis 24h de travail pour l'accompagnement à la rédaction du Livret 2 et à la préparation à la soutenance devant le Jury VAE.
+                                Les séances pourront être réalisées en rendez-vous face-à-face individuel ou collectif, ou par téléphone ou visio-conférence. Le Bénéficiaire et le Consultant VAE seront amenés à échanger régulièrement des documents. Ces échanges se feront préférablement au travers d'une interface internet spécifique mise à la disposition du bénéficiaire et accessible par le Consultant VAE, ou à défaut par voie de courriers électroniques.
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span>Annulation et abandon <br></span>
+                                Le Bénéficiaire peut demander à modifier un calendrier de rendez-vous. Il s'adressera pour cela directement à son Consultant VAE.
+                                Cette modification est sans effet sur la durée et le coût de la Prestation si la demande du Bénéficiaire est présentée au plus tard 48h avant la tenue d'un rendez-vous.
+                                En cas d'absence du Bénéficiaire à une séance de travail planifiée, ou en cas d'annulation par la Bénéficiaire à moins de 48h de la tenue d'un rendez-vous, le temps de travail prévu pour cette séance sera décompté du temps total d'accompagnement.
+                                En cas d'abandon de la Prestation par le Bénéficiaire, la Prestation reste due dans son intégralité par le Client.
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span>Conditions financières <br></span>
+                                Les factures sont établies nettes de taxes, à l'ordre et à l'adresse indiqués sur le devis. L’échéancier de facturation est précisé sur le devis. Les factures sont payables par chèque ou virement, sans escompte. En cas de retard de paiement, sur mise en demeure préalable, une pénalité égale à trois fois le taux d'intérêt légal est due.
+                                Ainsi qu'il est indiqué sur le devis, la Prestation ne comprend pas les éventuels frais annexes à celle-ci (frais de transport, d'hébergement, et de restauration, frais de jury et de passage d'examens)
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span>Non sollicitation <br></span>
+                                Le Client et le Bénéficiaire s'interdisent d'engager, ou de faire travailler d'aucune manière, le Consultant VAE et tout collaborateur ou formateur, présent ou futur de la société ENTHEOR. La présente clause déroulera ses effets pendant 24 mois à compter de sa terminaison.
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span>Juridiction <br></span>
+                                Toute contestation ou différend relatif à l'interprétation ou à l'exécution de ces conditions générales de vente ou de la Prestation ne pouvant être réglé à l'amiable, sera porté devant le Tribunal compétent de Lyon.
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <span>Informatique et libertés <br></span>
+                                Les informations recueillies dans la proposition commerciale et dans le devis sont nécessaires à la gestion de l'inscription du Client par la société ENTHEOR. Elles font l'objet d'un traitement informatique et sont destinées à assurer le suivi du Client et du Bénéficiaire. Conformément à la loi « informatique et libertés » du 6 Janvier 1978, vous disposez d'un droit d'accès et de modification des informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez-vous adresser à ENTHEOR — 3, rue Denuzière - 69002 Lyon ou par admin@entheor.com.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

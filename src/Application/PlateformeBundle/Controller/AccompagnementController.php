@@ -39,6 +39,16 @@ class AccompagnementController extends Controller
             }
         }
 
+        $dateDebut = 1;
+        $dateFin = 1;
+
+        if ($accompagnement->getDateDebut() == null){
+            $dateDebut = 0;
+        }
+        if ($accompagnement->getDateFin() == null ) {
+            $dateFin = 0;
+        }
+
         if(is_null($accompagnement)){
             $accompagnement = new Accompagnement();
         }
@@ -66,6 +76,8 @@ class AccompagnementController extends Controller
             'beneficiaire' => $beneficiaire,
             'accompagnement' => $accompagnement,
             'edit_form_a' => $editForm->createView(),
+            'dateDebut' => $dateDebut,
+            'dateFin' => $dateFin,
         ));
     }
 

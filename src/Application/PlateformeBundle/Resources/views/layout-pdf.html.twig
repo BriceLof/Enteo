@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>{% block title %}Accueil{% endblock %}</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ absolute_url(asset('css/style.css')) }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+    {% block header %}
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+
+<footer>
+
+</footer>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
+{% block javascripts %}
+    <script type="application/javascript" src="{{ absolute_url(asset('js/mainAjax.js')) }}"></script>
+{% endblock %}
+</body>
+</html>

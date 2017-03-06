@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -46,6 +47,10 @@ class AccompagnementType extends AbstractType
                 )
             ))
 
+            ->add('proposition_heure', HiddenType::class, array(
+                'mapped' => false,
+            ))
+
             ->add('tarif', NumberType::class, array(
                 'label' => 'Tarif Accompagnement',
                 'required' => false,
@@ -66,6 +71,11 @@ class AccompagnementType extends AbstractType
                     'autocomplete' => 'off',
                 )
             ))
+
+            ->add('proposition_dateDebut', HiddenType::class, array(
+                'mapped' => false,
+            ))
+
             ->add('dateFin', DateType::class, array(
                 'label' => 'date de fin',
                 'widget' => 'single_text',
@@ -76,6 +86,10 @@ class AccompagnementType extends AbstractType
                     'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )
+            ))
+
+            ->add('proposition_dateFin', HiddenType::class, array(
+                'mapped' => false,
             ))
 
             ->add('submit', SubmitType::class, array('label' => 'Valider')
