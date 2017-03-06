@@ -2,6 +2,9 @@
 
 namespace Application\PlateformeBundle\Services\Statut\Cron;
 
+use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\News;
+
 class Rv extends \Application\PlateformeBundle\Services\Mailer
 { 
     public function alerteSuiteRv1()
@@ -74,6 +77,20 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 return "mail envoyé";
             }  
         }  
+    }
+
+    public function mailRvRealise(Beneficiaire $beneficiaire, News $lastNews){
+        $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
+        $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
+        $to = "n.ranaivoson@iciformation.fr";
+        $cc = array(
+            "support@iciformation.fr" => "Support",
+            "b.lof@iciformation.fr" => "Brice");
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
+            'news' => $lastNews,
+        ));
+        $this->sendMessage($this->from,$to,$cc,$subject,$body);
     }
 }
 ?>

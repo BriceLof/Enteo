@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="beneficiaire")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BeneficiaireRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Beneficiaire
 {
@@ -265,12 +266,18 @@ class Beneficiaire
     private $nbAppelTel;
 
     /**
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->news = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**
@@ -1289,5 +1296,27 @@ class Beneficiaire
     public function getContactEmployeur()
     {
         return $this->contactEmployeur;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = new \DateTime('now');
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

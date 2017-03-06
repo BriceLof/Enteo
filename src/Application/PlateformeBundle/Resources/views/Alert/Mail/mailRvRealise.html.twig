@@ -1,0 +1,22 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block contentMail %}
+    Bonjour, <br>
+    <p>
+        {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom~' '~beneficiaire.consultant.nom~' ' }}
+        a reçu le {{ lastNews.dateHeure|date('d/m/Y') }} à {{ beneficiaire.villeMer.nom~' ' }}
+        <a href="{{ path('application_show_beneficiaire', { 'id' : beneficiaire.id }) }}">
+            {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso~' '~beneficiaire.nomConso~' ' }}
+        </a>
+        <br>
+        <span>Le dossier administratif peut donc être complété afin d'adresser la demande de financement.</span>
+        <br>
+        <span>Merci,</span>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </p>
+{% endblock %}
