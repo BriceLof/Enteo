@@ -1,6 +1,6 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: db661016137.db.1and1.com    
+    database_host: db661016137.db.1and1.com
     database_port: 3306
     database_name: db661016137
     database_user: dbo661016137
@@ -10,6 +10,7 @@ parameters:
     mailer_host: auth.smtp.1and1.fr
     mailer_port: 587
     mailer_user: contact@dev.application.entheor.com
+    mailer_name: ranaivoson
     mailer_password: contactEnteo2017#
     secret: ThisTokenIsNotSoSecretChangeIt
 

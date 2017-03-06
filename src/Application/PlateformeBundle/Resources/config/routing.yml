@@ -45,6 +45,11 @@ application_plateforme_beneficiaire:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/beneficiaire.yml"
     prefix:   /beneficiaire
 
+#pdf
+application_plateforme_pdf:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/pdf.yml"
+    prefix:   /pdf
+
 #suivi administratif
 application_plateforme_suivi_administratif:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/suiviAdministratif.yml"

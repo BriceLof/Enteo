@@ -11,8 +11,8 @@ class Mailer
     protected $em;
     protected $mailer;
     protected $templating;
-    protected $from = "admin@enteo.fr";
-    protected $reply = "contact@enteo.fr";
+    protected $from = "admin@enteo.com";
+    protected $reply = "admin@enteo.com";
     protected $name = "Equipe Anteo";
     
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em)
