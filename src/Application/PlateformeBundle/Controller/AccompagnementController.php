@@ -39,10 +39,10 @@ class AccompagnementController extends Controller
             }
         }
 
-        if($accompagnement != null){
-            $dateDebut = 1;
-            $dateFin = 1;
+        $dateDebut = 1;
+        $dateFin = 1;
 
+        if($accompagnement != null){
             if ($accompagnement->getDateDebut() == null){
                 $dateDebut = 0;
             }
@@ -50,6 +50,7 @@ class AccompagnementController extends Controller
                 $dateFin = 0;
             }
         }
+
         if(is_null($accompagnement)){
             $accompagnement = new Accompagnement();
         }
