@@ -5,9 +5,9 @@
     <p>
         {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom~' '~beneficiaire.consultant.nom~' ' }}
         a reçu le {{ lastNews.dateHeure|date('d/m/Y') }} à {{ beneficiaire.villeMer.nom~' ' }}
-        <a href="{{ path('application_show_beneficiaire', { 'id' : beneficiaire.id }) }}">
+        <b><a href="{{ path('application_show_beneficiaire', { 'id' : beneficiaire.id }) }}">
             {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso~' '~beneficiaire.nomConso~' ' }}
-        </a>
+        </a></b>
         <br>
         <span>Le dossier administratif peut donc être complété afin d'adresser la demande de financement.</span>
         <br>

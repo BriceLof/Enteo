@@ -40,6 +40,11 @@ class Beneficiaire
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\ContactEmployeur", mappedBy="beneficiaire")
      */
     private $contactEmployeur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Historique", mappedBy="beneficiaire")
+     */
+    private $historique;
     
      /**
      * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
@@ -1318,5 +1323,39 @@ class Beneficiaire
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     *
+     * @return Beneficiaire
+     */
+    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique[] = $historique;
+
+        return $this;
+    }
+
+    /**
+     * Remove historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     */
+    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique->removeElement($historique);
+    }
+
+    /**
+     * Get historique
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistorique()
+    {
+        return $this->historique;
     }
 }
