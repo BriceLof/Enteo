@@ -85,10 +85,37 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to = "ranfidy@hotmail.com";
         $cc = array(
             "support@iciformation.fr" => "Support",
-            "b.lof@iciformation.fr" => "Brice");
+            "resp.administratif@entheor.com" => "Responsable Administratif",
+        );
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
             'lastNews' => $lastNews,
+        ));
+        $this->sendMessage($this->from,$to,$cc,$subject,$body);
+    }
+
+    public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
+        $subject = "Nouveau dossier bénéficiaire ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ." à établir";
+        $template = '@Apb/Alert/Mail/firstMailRvFicheNonMaj.html.twig';
+        $to = "n.ranaivoson@iciformation.fr";
+        $cc = array(
+            "resp.administratif@entheor.com" => "Responsable Administratif",
+        );
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
+        ));
+        $this->sendMessage($this->from,$to,$cc,$subject,$body);
+    }
+
+    public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
+        $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ." à établir";
+        $template = '@Apb/Alert/Mail/secondMailRvFicheNonMaj.html.twig';
+        $to = "n.ranaivoson@iciformation.fr";
+        $cc = array(
+            "resp.administratif@entheor.com" => "Responsable Administratif",
+        );
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
         ));
         $this->sendMessage($this->from,$to,$cc,$subject,$body);
     }
