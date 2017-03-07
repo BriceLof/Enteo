@@ -5,7 +5,7 @@
     <p>
         {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom~' '~beneficiaire.consultant.nom~' ' }}
         a reçu le {{ lastNews.dateHeure|date('d/m/Y') }} à {{ beneficiaire.villeMer.nom~' ' }}
-        <b><a href="{{ path('application_show_beneficiaire', { 'id' : beneficiaire.id }) }}">
+        <b><a href="http://dev.application.entheor.com/web/app_dev.php/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">
             {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso~' '~beneficiaire.nomConso~' ' }}
         </a></b>
         <br>
