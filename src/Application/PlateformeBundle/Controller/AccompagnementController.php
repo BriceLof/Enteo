@@ -41,6 +41,7 @@ class AccompagnementController extends Controller
 
         $dateDebut = 1;
         $dateFin = 1;
+        $heure = null;
 
         if($accompagnement != null){
             if ($accompagnement->getDateDebut() == null){
@@ -48,6 +49,9 @@ class AccompagnementController extends Controller
             }
             if ($accompagnement->getDateFin() == null ) {
                 $dateFin = 0;
+            }
+            if ($accompagnement->getHeure() == null ){
+                $heure = $accompagnement->getHeure();
             }
         }
 
@@ -80,6 +84,7 @@ class AccompagnementController extends Controller
             'edit_form_a' => $editForm->createView(),
             'dateDebut' => $dateDebut,
             'dateFin' => $dateFin,
+            'heure' => $heure,
         ));
     }
 

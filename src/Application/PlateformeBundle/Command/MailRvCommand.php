@@ -42,12 +42,14 @@ class MailRvCommand extends ContainerAwareCommand{
                     //si l'avant dernier statut est : RV1 à faire ou RV2 à faire
                     if( $slugNextToNewsStatus == "rv1-a-faire" || $slugNextToNewsStatus == "rv2-a-faire" ){
 
+                        $now->modify('-1 day');
                         //si le dernier news date de mois de 24h
-                        if( $lastNews->getDateHeure() < $now && $lastNews->getDateHeure() >= $now->modify('-1 day') ){
+                        if( $lastNews->getDateHeure() < $now && $lastNews->getDateHeure() >= $now ){
                             //envoi du mail
                             $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastNews);
 
                         }
+                        $now->modify('+1 day');
                     }
                 }
             }
@@ -64,37 +66,43 @@ class MailRvCommand extends ContainerAwareCommand{
                 //si le dernier historique, son summary commence par "RV" car les autres historique n'a pas de summary
                 if($rv == "RV"){
 
+                    $now->modify('-1 day');
+                    $lastHistorique->getDateDebut()->modify('+1 day');
                     //si la date de ce dernier historique date de mois de 24h au moment du lancement de la cron journalier
                     //et que la fiche bénéficiaire n'est pas mis a jour
                     //envoi un mail au consultant
-                    if($lastHistorique->getDateDebut()->modify('+1 day') <= $now && $lastHistorique->getDateDebut() > $now->modify('-1 day') ){
-                        //mis a jour de $now;
-                        $now->modify('+1 day');
-                        //mis a jour de la date du dernier historique
-                        $lastHistorique->getDateDebut()->modify('-1 day');
-
-
+                    if($lastHistorique->getDateDebut() <= $now && $lastHistorique->getDateDebut() > $now ){
                         //si la date du dernier historique n'est pas anterieure a la date du dernier mis a jour
                         if($lastHistorique->getDateDebut() > $beneficiaire->getUpdatedAt() ){
                             $this->getContainer()->get('application_plateforme.statut.cron.rv')->firstMailRvFicheNonMaj($beneficiaire);
                         }
                     }
 
+                    //mis a jour de $now;
+                    $now->modify('+1 day');
+                    //mis a jour de la date du dernier historique
+                    $lastHistorique->getDateDebut()->modify('-1 day');
+
+
+                    $now->modify('-2 day');
+
+                    $lastHistorique->getDateDebut()->modify('+2 day');
+
                     //si la date de ce dernier historique date de mois de 24h au moment du lancement de la cron journalier
                     //et que la fiche bénéficiaire n'est pas mis a jour
                     //envoi un mail au consultant
-                    if($lastHistorique->getDateDebut()->modify('+2 day') <= $now && $lastHistorique->getDateDebut() > $now->modify('-2 day') ){
-                        //mis a jour de $now;
-                        $now->modify('+2 day');
-                        //mis a jour de la date du dernier historique
-                        $lastHistorique->getDateDebut()->modify('-2 day');
-
-
+                    if($lastHistorique->getDateDebut() <= $now && $lastHistorique->getDateDebut() > $now ){
                         //si la date du dernier historique n'est pas anterieure a la date du dernier mis a jour
                         if($lastHistorique->getDateDebut() > $beneficiaire->getUpdatedAt() ){
                             $this->getContainer()->get('application_plateforme.statut.cron.rv')->secondMailRvFicheNonMaj($beneficiaire);
                         }
                     }
+
+                    //mis a jour de $now;
+                    $now->modify('+2 day');
+                    //mis a jour de la date du dernier historique
+                    $lastHistorique->getDateDebut()->modify('-2 day');
+
                 }
             }
         }
