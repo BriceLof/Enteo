@@ -39,18 +39,22 @@ class AccompagnementController extends Controller
             }
         }
 
-        $dateDebut = 1;
-        $dateFin = 1;
+        $dateDebut = 0;
+        $dateFin = 0;
         $heure = null;
 
         if($accompagnement != null){
             if ($accompagnement->getDateDebut() == null){
                 $dateDebut = 0;
+            }else{
+                $dateDebut = 1;
             }
             if ($accompagnement->getDateFin() == null ) {
                 $dateFin = 0;
+            }else{
+                $dateDebut = 1;
             }
-            if ($accompagnement->getHeure() == null ){
+            if ($accompagnement->getHeure() != null ){
                 $heure = $accompagnement->getHeure();
             }
         }
