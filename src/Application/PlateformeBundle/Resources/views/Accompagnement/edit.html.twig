@@ -9,34 +9,14 @@
 </div>
 
 {% if beneficiaire.accompagnement is not null %}
-        {#
-        <tr>
-            <td>Nom OPCA/OPACIF</td>
-            <td>{{ form_widget(edit_form_a.opcaOpacif,   { 'attr': {'value': beneficiaire.accompagnement.opcaOpacif }} ) }}</td>
-        </tr>
-
-        <tr>
-            <td>
-                <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#addfinancement" >Ajouter un Financement</span>
-            </td>
-        </tr>
-        #}
         <tr>
             <td>Accompagnement en Heures :</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure, { 'attr': {'value': beneficiaire.accompagnement.heure }} ) }} Heures</td>
         </tr>
 {% else %}
         <tr>
-            <td>Nom OPCA/OPACIF</td>
-            <td>{{ form_widget(edit_form_a.opcaOpacif) }}</td>
-        </tr>
-        <tr>
             <td>Accompagnement en Heures :</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure) }} Heures</td>
-        </tr>
-        <tr>
-            <td>Tarif Accompagnement</td>
-            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif) }} <span>&euro;</span></td>
         </tr>
 {% endif %}
         <tr>

@@ -7,7 +7,7 @@
 {% block content %}
     <div style="background-color: #6c6159" style="width: 100%">
         <div class="container" style="background-color: white">
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
@@ -18,13 +18,11 @@
                         <hr style="color: black; border-bottom: 1px solid black">
                     </div>
                 </div>
-                <div style="height: 75px">
 
-                </div>
                 <div class="row">
                     <div>
-                        <div style="border-bottom: 1px solid black; border-top: 1px solid black; margin: 100px;">
-                            <p style="font-size: 30px; font-weight: bold; text-align: center;font-family: Calibri; padding: 60px">
+                        <div style="border-bottom: 1px solid black; border-top: 1px solid black; margin: 80px;">
+                            <p style="font-size: 22px; font-weight: bold; text-align: center;font-family: Calibri; padding: 10px">
                                 PROPOSITION ACCOMPAGNEMENT A LA VALIDATION DES ACQUIS DE L’EXPERIENCE
                                 POUR <span>{{ beneficiaire.civiliteConso|upper~' '~beneficiaire.prenomConso|upper~' '~beneficiaire.nomConso|upper }}</span>
                             </p>
@@ -36,7 +34,7 @@
                          id="contact_entheor"/>
                 </div>
 
-                <div style="margin-top: 180px">
+                <div style="margin-top: 145px">
                     <div class="row">
                         <div>
                             <hr style="color: black; border-bottom: 1px solid black; margin-top: 100px">
@@ -53,7 +51,7 @@
             </div>
 
 
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
@@ -142,7 +140,7 @@
                 </div>
             </div>
 
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
@@ -195,7 +193,7 @@
                 </div>
             </div>
 
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
@@ -203,7 +201,7 @@
                 </div>
                 <div class="col-md-12">
                     <h1 class="titre">
-                        NOS ENGAGEMENTS VIS-A-VIS DU BENEFICIAIRE
+                        LA METHODOLOGIE ET OUTILS UTILISES
                     </h1>
                     <h2 style="margin-top: 40px" class="sous-titre_1">
                         CONTENU :
@@ -249,7 +247,7 @@
                 </div>
             </div>
 
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
@@ -287,8 +285,8 @@
                     <div id="table_devis">
                         <div class="row">
                             <div class="page_devis">
-                                <div class="sous-titre_2" style="width: 285px;">Déroulement : </div>
-                                <div style="width: 550px;">
+                                <div class="sous-titre_2" style="width: 200px;">Déroulement : </div>
+                                <div style="width: 400px;">
                                     <span class="sous-titre_2">Durée totale </span>de la prestation : <span class="sous-titre_2">{{ beneficiaire.accompagnement.heure }} Heures <br></span>
                                     <span class="sous-titre_2">{{ heure }} RDV de 3H </span>
                                     {% if reste == 0 %}
@@ -301,8 +299,8 @@
                         </div>
                         <div class="row">
                             <div class="page_devis">
-                                <div class="sous-titre_2" style="width: 285px;">Calendrier prévisionnel : </div>
-                                <div style="width: 550px;">
+                                <div class="sous-titre_2" style="width: 200px;">Calendrier prévisionnel : </div>
+                                <div style="width: 400px;">
                                     {% if beneficiaire.accompagnement.dateDebut is not null %}
                                         <span>du {{ beneficiaire.accompagnement.dateDebut|date("d M Y") }} </span>
                                     {% endif %}
@@ -315,15 +313,15 @@
 
                         <div class="row">
                             <div class="page_devis">
-                                <div class="sous-titre_2" style="width: 285px;">Montant : </div>
-                                <div style="width: 550px;"><span class="sous-titre_2">{{ montantTotal ~" " }}</span>&euro; net de taxe</div>
+                                <div class="sous-titre_2" style="width: 200px;">Montant : </div>
+                                <div style="width: 400px;"><span class="sous-titre_2">{{ montantTotal ~" " }}</span>&euro; net de taxe</div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="page_devis">
-                                <div class="sous-titre_2" style="width: 285px;">Modalités de financement : </div>
-                                <div style="width: 550px;"><span>Prise en charge de l'OPCA par le compte CPF du bénéficiaire.</span>
+                                <div class="sous-titre_2" style="width: 200px;">Modalités de financement : </div>
+                                <div style="width: 400px;"><span>Prise en charge de l'OPCA par le compte CPF du bénéficiaire.</span>
                                     <br><br>
                                     <span>Les éventuels frais annexes à la VAE (frais de jury, frais de passage d'épreuves) et  les frais engagés par le Bénéficiaire dans le cadre de son accompagnement à la VAE  (frais de transport, frais d’hébergement, frais de restauration, photocopies, etc.) ne sont pas compris dans notre prix.</span>
                                 </div>
@@ -332,8 +330,8 @@
 
                         <div class="row">
                             <div class="page_devis">
-                                <div class="sous-titre_2" style="width: 285px;">Règlement : </div>
-                                <div style="width: 550px;"><span>Règlement de l'OPCA : selon les règles en vigueur avec un règlement intermédiaire de 50% sur présentation de justificatifs de présence.</span>
+                                <div class="sous-titre_2" style="width: 200px;">Règlement : </div>
+                                <div style="width: 400px;"><span>Règlement de l'OPCA : selon les règles en vigueur avec un règlement intermédiaire de 50% sur présentation de justificatifs de présence.</span>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +340,7 @@
                 </div>
             </div>
 
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
@@ -384,7 +382,7 @@
                 </div>
             </div>
 
-            <div style="height: 1290px">
+            <div style="height: 1020px">
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <img src="{{ absolute_url(asset('images/logo_entheor.jpg')) }}" class="logo_entheor"/>
