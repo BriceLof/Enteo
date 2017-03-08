@@ -52,7 +52,7 @@ class AccompagnementController extends Controller
             if ($accompagnement->getDateFin() == null ) {
                 $dateFin = 0;
             }else{
-                $dateDebut = 1;
+                $dateFin = 1;
             }
             if ($accompagnement->getHeure() != null ){
                 $heure = $accompagnement->getHeure();

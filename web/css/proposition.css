@@ -1,11 +1,11 @@
 body{
     font-family: Calibri;
-    font-size: 20px;
+    font-size: 12px;
 }
 
 .titre{
     font-family: Tahoma;
-    font-size: 25px;
+    font-size: 16px;
     width: 100%;
     border-bottom: 1px solid blue;
     color: grey;
@@ -18,11 +18,11 @@ body{
 }
 
 .sous-titre_1{
-    font-size: 23px;
+    font-size: 14px;
     font-weight: bold;
 }
 .sous-titre_2{
-    font-size: 21px;
+    font-size: 13px;
     font-weight: bold;
 }
 
@@ -57,9 +57,13 @@ body{
 }
 
 #condition{
-    font-size: 16px;
+    font-size: 11px;
 }
 #condition span{
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
+}
+
+#titre_devis{
+    font-size: 22px;
 }
