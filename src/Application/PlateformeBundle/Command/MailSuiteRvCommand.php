@@ -22,6 +22,7 @@ class MailSuiteRvCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // recuperation du service 
-        $service = $this->container->get('application_plateforme.statut.cron.rv')->alerteSuiteRvAgenda();
+        $service = $this->getContainer()->get('application_plateforme.statut.cron.rv')->alerteSuiteRvAgenda();
+		$output->writeln($service);
     }
 }

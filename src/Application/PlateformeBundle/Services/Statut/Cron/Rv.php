@@ -27,14 +27,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $consultant = $event->getConsultant();
                 
                 $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso());
-                $to = $consultant->getEmail();
-                $cc = array(
-                        "support@iciformation.fr" => "Support",
-                        "b.lof@iciformation.fr" => "Brice");
+                $from = "christine.clement@entheor.com";
+				$to = $consultant->getEmail();
+				$cc = array();
+                $bcc = array("support@iciformation.fr" => "Support",
+                        "b.lof@iciformation.fr" => "Brice",
+						"f.azoulay@iciformation.fr" => "Franck");
                     
                 $message = "Chère/Cher ".$consultant->getPrenom().", <br><br> 
-                    Vous venez de recevoir en rendez-vous de positionnement <b>".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."</b>.<br>"
-                    . "<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO</a></b>"
+                    Vous venez de recevoir en rendez-vous de positionnement <b>".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."</b>.<br><br>"
+                    . "<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO : </a></b><br>"
                     . "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
                        - Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
                        
@@ -52,10 +54,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     'message' => $message
                 ));
                 
-                $this->sendMessage($this->from, $to, $cc, $subject, $body);
-                //var_dump("mail envoyé");
+                $this->sendMessage($from, $to, $cc, $bcc, $subject, $body);
+                //var_dump("mail envoye");
             }
         }
+		//exit;
     }
     
     public function alerteSuiteRv1()
@@ -123,7 +126,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     'message' => $message
                 ));
                 
-                $this->sendMessage($this->from, $to, $cc, $subject, $body);
+                $this->sendMessage($this->from, $to, $cc,null, $subject, $body);
 
                 return "mail envoyé";
             }  
@@ -145,7 +148,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
             'lastNews' => $lastNews,
         ));
-        $this->sendMessage($from,$to,$cc,$subject,$body);
+        $this->sendMessage($from,$to,$cc,null,$subject,$body);
     }
 
     public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -163,7 +166,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($from,$to,$cc,$subject,$body);
+        $this->sendMessage($from,$to,$cc,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -181,7 +184,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($from,$to,$cc,$subject,$body);
+        $this->sendMessage($from,$to,$cc,null,$subject,$body);
     }
 }
 ?>
