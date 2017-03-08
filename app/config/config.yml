@@ -113,7 +113,7 @@ application_plateforme:
 knp_snappy:
     pdf:
         enabled: true
-        binary: "C:\\wkhtmltopdf\\bin\\wkhtmltoimage.exe"
+        binary: "C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"
         options: []
     image:
         enabled: true
