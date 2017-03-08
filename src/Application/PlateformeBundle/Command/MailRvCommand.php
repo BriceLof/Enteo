@@ -29,7 +29,7 @@ class MailRvCommand extends ContainerAwareCommand{
             $news = $beneficiaire->getNews();
 
 
-            /*
+
             //CRON chaque jour à 21h00 et si statut bénéficiaire passe de R1 ou R2 à faire à R1 ou R2 positif +++ => Envoyer email
             if( !is_null($news[count($news)-2])){
                 $lastNews = $news[count($news)-1];
@@ -55,7 +55,7 @@ class MailRvCommand extends ContainerAwareCommand{
                     }
                 }
             }
-*/
+
             //Si à h+24 de l'heure du Rdv la fiche bénéficiaire N'EST PAS MAJ => +++ Relance email (1b) au Consultant
             $majBene = $beneficiaire->getUpdatedAt();
             $historique = $beneficiaire->getHistorique();
