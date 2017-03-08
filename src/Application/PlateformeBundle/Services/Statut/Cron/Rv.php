@@ -88,7 +88,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     public function mailRvRealise(Beneficiaire $beneficiaire, News $lastNews){
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
-        $to = "ranfidy@hotmail.com";
+        $to = "n.ranaivoson@iciformation.fr";
         $cc = array(
             "support@iciformation.fr" => "Support",
             "resp.administratif@entheor.com" => "Responsable Administratif",
@@ -101,7 +101,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
-        $subject = "Nouveau dossier bénéficiaire ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ." à établir";
+        $subject = "[URGENT] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ." à établir";
         $template = '@Apb/Alert/Mail/firstMailRvFicheNonMaj.html.twig';
         $to = "n.ranaivoson@iciformation.fr";
         $cc = array(

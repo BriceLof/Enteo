@@ -3,10 +3,10 @@
 {% block contentMail %}
     Bonjour, <br>
     <p>
-        {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom~' '~beneficiaire.consultant.nom~' ' }}
+        {{ beneficiaire.consultant.civilite|capitalize~' '~beneficiaire.consultant.prenom|capitalize~' '~beneficiaire.consultant.nom|capitalize~' ' }}
         a reçu le {{ lastNews.dateHeure|date('d/m/Y') }} à {{ beneficiaire.villeMer.nom~' ' }}
-        <b><a href="{{ path('application_show_beneficiaire', { 'id' : beneficiaire.id }) }}">
-            {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso~' '~beneficiaire.nomConso~' ' }}
+        <b><a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">
+            {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}
         </a></b>
         <br>
         <span>Le dossier administratif peut donc être complété afin d'adresser la demande de financement.</span>
