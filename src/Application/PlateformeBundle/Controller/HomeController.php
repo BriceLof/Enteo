@@ -10,23 +10,15 @@ use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class HomeController extends Controller
 {
     public function indexAction(Request $request, $page)
     {
-        
-		$session = new Session();
- 
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
 
-        //var_dump($this->getUser()->getRoles());die;
-
-        //demande de philippe pour que le nombre de beneficiaire par page soit de 50
-        //auparavant 4
         $nbPerPage = 50;
         
         $em = $this->getDoctrine()->getManager();  
@@ -83,8 +75,6 @@ class HomeController extends Controller
                 $em->persist($historique);
             }
             
-            
-            
             $em->persist($news);
             $em->flush();
             
@@ -94,8 +84,7 @@ class HomeController extends Controller
             $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
             return $this->redirect($url);
         }
-        
-        
+
         return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
             'liste_beneficiaire'    => $beneficiaires, 
             'nbPages'               => $nbPages,

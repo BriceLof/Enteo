@@ -8,9 +8,54 @@ use Application\PlateformeBundle\Entity\News;
 class Rv extends \Application\PlateformeBundle\Services\Mailer
 { 
     // Alerte à +1h de l'heure du démarrage du rdv dans l'agenda (entity historique)
-    public function alerteSuiteRv1Rv2Agenda()
+    public function alerteSuiteRvAgenda()
     {
         $histoRepo = $this->em->getRepository("ApplicationPlateformeBundle:Historique");
+        
+        $today = new \DateTime();
+        $eventAgenda = $histoRepo->findEventByDate($today->format('Y-m-d'));
+        //var_dump($today);
+        foreach($eventAgenda as $event)
+        {
+            $dateHeureDebut = $event->getDateDebut();
+            $heureDebut = $event->getDateDebut()->format('H:i:s');
+            //var_dump($dateHeureDebut);
+            // si l'heure actuel est au moins à 1h de + de l'heure de démarrage du rdv et que la cron n'a pas déjà envoyé un email, envoi de mail 
+            if($today >= $dateHeureDebut->add(new \DateInterval('PT1H')) && $dateHeureDebut->add(new \DateInterval('PT1H15M')) > $today)
+            {
+                $beneficiaire = $event->getBeneficiaire();
+                $consultant = $event->getConsultant();
+                
+                $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso());
+                $to = $consultant->getEmail();
+                $cc = array(
+                        "support@iciformation.fr" => "Support",
+                        "b.lof@iciformation.fr" => "Brice");
+                    
+                $message = "Chère/Cher ".$consultant->getPrenom().", <br><br> 
+                    Vous venez de recevoir en rendez-vous de positionnement <b>".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."</b>.<br>"
+                    . "<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO</a></b>"
+                    . "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
+                       - Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
+                       
+                    <u>Ces informations sont requises</u> pour monter le dossier de financement et vous permettre de démarrer au plus vite la prestation d'accompagnement.<br><br>
+                    
+                    Bien Cordialement,<br><br> 
+                    
+                    Christine Clément<br>
+                    <a href='mailto:christine.clement@entheor.com'>christine.clement@entheor.com</a><br>
+                    06 81 84 85 24";
+                
+                $template = "@Apb/Alert/Mail/mailPostRVAgenda.html.twig";
+                $body = $this->templating->render($template, array(
+                    'sujet' => $subject ,
+                    'message' => $message
+                ));
+                
+                $this->sendMessage($this->from, $to, $cc, $subject, $body);
+                //var_dump("mail envoyé");
+            }
+        }
     }
     
     public function alerteSuiteRv1()
