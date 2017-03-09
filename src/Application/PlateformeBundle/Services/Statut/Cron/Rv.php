@@ -30,9 +30,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $from = "christine.clement@entheor.com";
 				$to = $consultant->getEmail();
 				$cc = array();
-                $bcc = array("support@iciformation.fr" => "Support",
-                        "b.lof@iciformation.fr" => "Brice",
-						/*"f.azoulay@iciformation.fr" => "Franck"*/);
+                $bcc = array(
+						"support@iciformation.fr" => "Support",
+                        "b.lof@iciformation.fr" => "Brice Lof",
+						"f.azoulay@entheor.com" => "Franck Azoulay", 
+						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+						"christine.clement@entheor.com" => "Christine Clement",
+						"virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
 						
                 if($beneficiaire->getCiviliteConso() == "mme")
 					$cher = "Chère";
