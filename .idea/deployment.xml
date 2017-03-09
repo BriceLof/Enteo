@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
+      <paths name="BDC">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="CPF">
         <serverdata>
           <mappings>
@@ -30,6 +37,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="ITF/PO DEV">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="PO">
         <serverdata>
           <mappings>
@@ -38,6 +52,13 @@
         </serverdata>
       </paths>
       <paths name="VAE">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ikoula">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
