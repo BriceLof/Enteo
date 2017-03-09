@@ -13,5 +13,3 @@ parameters:
     mailer_name: ranaivoson
     mailer_password: contactEnteo2017#
     secret: ThisTokenIsNotSoSecretChangeIt
-
-

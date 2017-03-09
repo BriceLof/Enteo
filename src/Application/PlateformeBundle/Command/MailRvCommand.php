@@ -13,7 +13,10 @@ class MailRvCommand extends ContainerAwareCommand{
     {
         $this
             ->setName('plateforme:mail')
-            ->setDescription('effacer les images temporaires')
+            ->setDescription("
+                      1) CRON chaque jour à 21h00 et si statut bénéficiaire passe de R1 ou R2 à faire à R1 ou R2 positif
+                      2) Si à h+24 de l'heure du Rdv la fiche bénéficiaire N'EST PAS MAJ => +++ Relance email (1b) au Consultant 
+                      3) Si à h+48 de l'heure du Rdv la fiche bénéficiaire N'EST PAS MAJ => Relance email (1c) au Consultant ")
             ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules')
         ;
     }
@@ -28,8 +31,6 @@ class MailRvCommand extends ContainerAwareCommand{
         foreach ($beneficiaires as $beneficiaire){
             $news = $beneficiaire->getNews();
 
-
-            /*
             //CRON chaque jour à 21h00 et si statut bénéficiaire passe de R1 ou R2 à faire à R1 ou R2 positif +++ => Envoyer email
             if( !is_null($news[count($news)-2])){
                 $lastNews = $news[count($news)-1];
@@ -55,7 +56,7 @@ class MailRvCommand extends ContainerAwareCommand{
                     }
                 }
             }
-*/
+
             //Si à h+24 de l'heure du Rdv la fiche bénéficiaire N'EST PAS MAJ => +++ Relance email (1b) au Consultant
             $majBene = $beneficiaire->getUpdatedAt();
             $historique = $beneficiaire->getHistorique();
@@ -84,8 +85,6 @@ class MailRvCommand extends ContainerAwareCommand{
                     }else{
                         $now->modify('+1 day');
                     }
-
-
 
                     $lastHistorique->getDateDebut()->modify('+1 day');
                     //si la date de ce dernier historique date de mois de 48h au moment du lancement de la cron journalier
