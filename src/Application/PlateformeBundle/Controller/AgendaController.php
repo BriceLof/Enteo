@@ -215,6 +215,7 @@ class AgendaController extends Controller
         // Instanciation du calendrier
         $googleCalendar = $this->get('application_google_calendar');
         $googleCalendar->setRedirectUri($redirectUri);
+		
         if ($request->query->has('code') && $request->get('code')){
             $client = $googleCalendar->getClient($request->get('code'));
         }else {
@@ -224,6 +225,7 @@ class AgendaController extends Controller
             header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
             exit;
         }
+		
         // Ajout de l'evenement dans le calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
