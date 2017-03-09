@@ -26,17 +26,22 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $beneficiaire = $event->getBeneficiaire();
                 $consultant = $event->getConsultant();
                 
-                $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso());
+                $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())." ?";
                 $from = "christine.clement@entheor.com";
 				$to = $consultant->getEmail();
 				$cc = array();
                 $bcc = array("support@iciformation.fr" => "Support",
                         "b.lof@iciformation.fr" => "Brice",
-						"f.azoulay@iciformation.fr" => "Franck");
-                    
-                $message = "Chère/Cher ".$consultant->getPrenom().", <br><br> 
+						/*"f.azoulay@iciformation.fr" => "Franck"*/);
+						
+                if($beneficiaire->getCiviliteConso() == "mme")
+					$cher = "Chère";
+				else
+					$cher = "Cher";
+					
+                $message = $cher." ".$consultant->getPrenom().", <br><br> 
                     Vous venez de recevoir en rendez-vous de positionnement <b>".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."</b>.<br><br>"
-                    . "<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO : </a></b><br>"
+                    . "<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO</a> :</b><br>"
                     . "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
                        - Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
                        

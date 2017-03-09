@@ -61,7 +61,7 @@ class UsersType extends AbstractType
                 ))
                 ->add('civilite', ChoiceType::class, array(
                     'choices' => array(
-                        'Mr'                =>  "mr",
+                        'M.'                =>  "m.",
                         'Mme'               =>  "mme",
                     ),
                     'label' => "Civilité",
