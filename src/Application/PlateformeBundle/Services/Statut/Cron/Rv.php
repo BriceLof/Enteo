@@ -28,21 +28,21 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 
                 $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())." ?";
                 $from = "christine.clement@entheor.com";
-				$to = $consultant->getEmail();
-				$cc = array();
+                $to = $consultant->getEmail();
+                $cc = array();
                 $bcc = array(
-						"support@iciformation.fr" => "Support",
-                        "b.lof@iciformation.fr" => "Brice Lof",
-						"f.azoulay@entheor.com" => "Franck Azoulay", 
-						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-						"n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
-						"christine.clement@entheor.com" => "Christine Clement",
-						"virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
+                    "support@iciformation.fr" => "Support",
+                    "b.lof@iciformation.fr" => "Brice Lof",
+                    "f.azoulay@entheor.com" => "Franck Azoulay", 
+                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+                    "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
+                    "christine.clement@entheor.com" => "Christine Clement",
+                    "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
 						
                 if($beneficiaire->getCiviliteConso() == "mme")
-					$cher = "Chère";
-				else
-					$cher = "Cher";
+                    $cher = "Chère";
+                else
+                    $cher = "Cher";
 					
                 $message = $cher." ".$consultant->getPrenom().", <br><br> 
                     Vous venez de recevoir en rendez-vous de positionnement <b>".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."</b>.<br><br>"
@@ -58,7 +58,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     <a href='mailto:christine.clement@entheor.com'>christine.clement@entheor.com</a><br>
                     06 81 84 85 24";
                 
-                $template = "@Apb/Alert/Mail/mailPostRVAgenda.html.twig";
+                $template = "@Apb/Alert/Mail/mailDefault.html.twig";
                 $body = $this->templating->render($template, array(
                     'sujet' => $subject ,
                     'message' => $message
@@ -95,7 +95,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $dateMoreTwoDay = $dateRv->add(new \DateInterval('P2D'))->format('Y-m-d');
                 $dateMoreThreeDay = $dateRv->add(new \DateInterval('P3D'))->format('Y-m-d');
                 
-                $template = "@Apb/Alert/Mail/postRv1.html.twig";
+                $template = "@Apb/Alert/Mail/mailDefault.html.twig";
                 
                 $emailConsultant = $rv->getBeneficiaire()->getConsultant()->getEmail();
                 

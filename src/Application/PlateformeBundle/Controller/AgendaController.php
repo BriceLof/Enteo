@@ -432,6 +432,9 @@ class AgendaController extends Controller
                     $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
                     $em->flush();
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
+                    // mail pour le beneficiaire 
+                    $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
+                   
                     //$this->get('session')->set('erreurs', false);
                 }
             }
