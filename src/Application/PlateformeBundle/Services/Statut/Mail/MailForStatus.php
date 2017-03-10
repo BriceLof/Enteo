@@ -24,7 +24,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
             'message' => $message
         ));
 
-        return $this->sendMessage($this->from, $to, $cc, $subject, $body);
+        return $this->sendMessage($this->from, $to,null, $cc, $subject, $body);
     }
     
     

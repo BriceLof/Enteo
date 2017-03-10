@@ -22,7 +22,7 @@ class Mailer
         $this->templating = $templating;   
     }
 
-    protected function sendMessage($from, $to, $cc = null, $bcc = null, $subject, $body){
+    protected function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body){
         $mail = \Swift_Message::newInstance();
 
         $mail
@@ -32,7 +32,8 @@ class Mailer
 			->setBcc($bcc)
             ->setSubject($subject)
             ->setBody($body)
-            ->setContentType('text/html');
+            ->setContentType('text/html')
+            ->setReplyTo($replyTo);
 
         $this->mailer->send($mail);
     }

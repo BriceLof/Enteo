@@ -64,7 +64,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     'message' => $message
                 ));
                 
-                $this->sendMessage($from, $to, $cc, $bcc, $subject, $body);
+                $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
                 //var_dump("mail envoye");
             }
         }
@@ -136,7 +136,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     'message' => $message
                 ));
                 
-                $this->sendMessage($this->from, $to, $cc,null, $subject, $body);
+                $this->sendMessage($this->from, $to, null, $cc,null, $subject, $body);
 
                 return "mail envoyé";
             }  
@@ -145,10 +145,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function mailRvRealise(Beneficiaire $beneficiaire, News $lastNews){
         $from = "christine.clement@entheor.com";
+        $replyTo = "christine.clement@entheor.com";
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
         $to =  "resp.administratif@entheor.com";
-        $cc = array(
+        $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
@@ -160,15 +161,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'lastNews' => $lastNews,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr",null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
     }
 
     public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
         $from = "christine.clement@entheor.com";
+        $replyTo = "christine.clement@entheor.com";
         $subject = "[URGENT] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ."";
         $template = '@Apb/Alert/Mail/firstMailRvFicheNonMaj.html.twig';
         $to = $beneficiaire->getConsultant()->getEmail();
-        $cc = array(
+        $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
             "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
@@ -180,15 +182,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr",null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
         $from = "christine.clement@entheor.com";
+        $replyTo = "christine.clement@entheor.com";
         $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ."";
         $template = '@Apb/Alert/Mail/secondMailRvFicheNonMaj.html.twig';
         $to = $beneficiaire->getConsultant()->getEmail();
-        $cc = array(
+        $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
             "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
@@ -200,7 +203,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr",null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo,null,null,$subject,$body);
     }
 }
 ?>
