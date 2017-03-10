@@ -94,8 +94,6 @@ class Beneficiaire
      */
     private $type;
 
-
-
     /**
      * @ORM\Column(name="tel_2", type="string", nullable=true)
      * @Assert\Regex("#^0[1-678][0-9]{8}$#",
@@ -115,9 +113,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
-     * @Assert\Regex("#[0-9]+#",
-     *     message = "adresse invalide"
-     * )
+     *
      */
     private $adresse;
 

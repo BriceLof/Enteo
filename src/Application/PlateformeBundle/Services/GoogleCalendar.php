@@ -342,6 +342,12 @@ class GoogleCalendar
         if ($location != "") {
             $event->setLocation($location);
         }
+        
+        // pour eviter une duplication dans le calendrier du consultant vu que c'est le 1er  
+        // qui est appelé lors de l'ajout dans le controlleur AgendaControlleur 
+        if(empty($_SESSION['firstajout']))
+            $_SESSION['firstajout'] = 1;
+        
         // Event insert
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
@@ -393,32 +399,39 @@ class GoogleCalendar
     {
         $this->getCalendarService()->events->update($calendarId, $event->getId(), $event);
     }*/
-    public function updateEvent($historiqueObject, $calendrierId, $tableauDonneesComplementaire)       
+    public function updateEvent($historiqueObject, $calendrierId, $tableauDonneesComplementaire, $option = null)       
     {
-        // On recupère l'evenement à Mettre à jour
-        $lieu = $tableauDonneesComplementaire['adresse'].' '.$tableauDonneesComplementaire['zip'];
-        $typerdv = $tableauDonneesComplementaire['rdv'];
-        $summary = $typerdv.' '.$tableauDonneesComplementaire['bureau'].', '.$tableauDonneesComplementaire['nom'].' '.$tableauDonneesComplementaire['prenom'].' '.$historiqueObject->getSummary();
-        
-        $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire['eventid'], []); // Objet Evenement
-        $event->setSummary($summary); // Titre evenement
-        // For Datestart and Dateend
         $h_d = $historiqueObject->getHeureDebut()->format('H:i:s');
         $h_f = $historiqueObject->getHeureFin()->format('H:i:s');
         $hd = explode(":", $h_d); // heure debut
         $hf = explode(":", $h_f); // heure fin
-            
         $start = new \Google_Service_Calendar_EventDateTime();
         $end = new \Google_Service_Calendar_EventDateTime();
         $formattedStart = $historiqueObject->getDateDebut()->format(\DateTime::RFC3339);
         $formattedEnd = $historiqueObject->getDateFin()->format(\DateTime::RFC3339);
         $start->setDateTime($formattedStart);
         $end->setDateTime($formattedEnd);
-        $event->setStart($start); // Date debut
-        $event->setEnd($end); // Date fin
-        // Pour les autres
-        $event->setDescription($historiqueObject->getDescription()); // Description
-        $event->setLocation($lieu); // Location
+        // Calendrier consultant
+        if(is_null($option)){
+            // On recupère l'evenement à Mettre à jour [Pour le consultant]
+            $lieu = $tableauDonneesComplementaire['adresse'].' '.$tableauDonneesComplementaire['zip'];
+            $summary = $tableauDonneesComplementaire['bureau'].', '.$tableauDonneesComplementaire['nom'].' '.$tableauDonneesComplementaire['prenom'].' '.$historiqueObject->getSummary();
+            $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire['eventid'], []); // Objet Evenement
+            $event->setSummary($summary); // Titre evenement
+            // Pour les autres
+            $event->setDescription($historiqueObject->getDescription()); // Description
+            $event->setLocation($lieu); // Location
+            // For Datestart and Dateend
+            $event->setStart($start); // Date debut
+            $event->setEnd($end); // Date fin
+        }
+        // Calendrier Bureau
+        else{
+            // For Datestart and Dateend
+            $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire, []); // Objet Evenement
+            $event->setStart($start); // Date debut
+            $event->setEnd($end); // Date fin
+        }
         // Appel méthode maj
         $updatedEvent = $this->getCalendarService()->events->update($calendrierId, $event->getId(), $event);
         return $updatedEvent;

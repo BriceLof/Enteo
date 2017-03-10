@@ -29,6 +29,23 @@ class Employeur
     protected $beneficiaire;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="employeur")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $ville;
+
+    /**
+     * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
+     *
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(name="adresse_complement", type="string", length=255, nullable=true)
+     */
+    private $adresseComplement;
+
+    /**
      * @ORM\Column(name="raison_sociale", type="string", length=255, nullable=true)
      */
     private $raisonSociale;
@@ -62,6 +79,13 @@ class Employeur
      */
     private $apeNace;
 
+    /**
+     * @ORM\Column(name="pays", type="string", length=255, nullable=true)
+     * @Assert\Regex("#^[a-zA-Z]+$#i",
+     *     message = "Erreur sur le nom du Pays"
+     * )
+     */
+    private $pays;
 
     /**
      * Get id
@@ -255,5 +279,101 @@ class Employeur
         $this->organisme = $organisme;
 
         return $this;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param string $adresse
+     *
+     * @return Employeur
+     */
+    public function setAdresse($adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return string
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+    /**
+     * Set adresseComplement
+     *
+     * @param string $adresseComplement
+     *
+     * @return Employeur
+     */
+    public function setAdresseComplement($adresseComplement)
+    {
+        $this->adresseComplement = $adresseComplement;
+
+        return $this;
+    }
+
+    /**
+     * Get adresseComplement
+     *
+     * @return string
+     */
+    public function getAdresseComplement()
+    {
+        return $this->adresseComplement;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param \Application\PlateformeBundle\Entity\Ville $ville
+     *
+     * @return Employeur
+     */
+    public function setVille(\Application\PlateformeBundle\Entity\Ville $ville = null)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return \Application\PlateformeBundle\Entity\Ville
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Employeur
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Accompagnement;
 use Application\PlateformeBundle\Entity\Employeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
@@ -17,7 +18,6 @@ use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Application\PlateformeBundle\Form\RechercheBeneficiaireType;
 use Symfony\Component\HttpFoundation\Response;
-
 
 /**
  * Announce controller.
@@ -87,7 +87,7 @@ class BeneficiaireController extends Controller
             }
         }
         // Si le client existe alors on recupere les evenements
-        if(isset($client) && empty($_SESSION['majevenementdanshistorique'])){           
+        if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){
             foreach($histo_beneficiaire as $histo){
 				if($histo->getEventId() != '0'){
 					$evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
@@ -127,6 +127,14 @@ class BeneficiaireController extends Controller
         $editForm->get('codePostalHiddenBeneficiaire')->setData($beneficiaire->getVille()->getCp());
         $editForm->get('idVilleHiddenBeneficiaire')->setData($beneficiaire->getVille()->getId());
 
+        $codePostalHiddenEmployeur = 0;
+        $idVilleHiddenEmployeur = 0;
+
+        if($beneficiaire->getEmployeur()->getVille() != null){
+            $codePostalHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getCp();
+            $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
+        }
+
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
@@ -139,15 +147,14 @@ class BeneficiaireController extends Controller
                 $employeur = new Employeur();
             }
 
-            if ($beneficiaire->getAccompagnement() != null) {
-                $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-                if ($financeur != null) {
-                    $financeur->setNom($employeur->getType());
-                    $financeur->setOrganisme($employeur->getOrganisme());
-                    $em->persist($financeur);
-                }
+            $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+
+            if($financeur != null){
+                $financeur->setNom($employeur->getType());
+                $financeur->setOrganisme($employeur->getOrganisme());
             }
 
+            $em->persist($financeur);
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
@@ -160,7 +167,15 @@ class BeneficiaireController extends Controller
             ));
         }
 
+        if($beneficiaire->getAccompagnement() == null){
+            $accompagnement = new Accompagnement();
+            $em->persist($accompagnement);
+        }
+        $em->flush();
+
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
+            'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
+            'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
             'form_consultant' => $editConsultantForm->createView(),
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),

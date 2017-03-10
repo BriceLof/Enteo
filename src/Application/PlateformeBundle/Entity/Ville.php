@@ -28,6 +28,11 @@ class Ville
     protected $beneficiaire;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Employeur", mappedBy="ville", cascade={"persist"})
+     */
+    protected $employeur;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Bureau", mappedBy="ville", cascade={"persist"})
      */
     protected $bureaux;
@@ -365,5 +370,39 @@ class Ville
     public function getBureaux()
     {
         return $this->bureaux;
+    }
+
+    /**
+     * Add employeur
+     *
+     * @param \Application\PlateformeBundle\Entity\Employeur $employeur
+     *
+     * @return Ville
+     */
+    public function addEmployeur(\Application\PlateformeBundle\Entity\Employeur $employeur)
+    {
+        $this->employeur[] = $employeur;
+
+        return $this;
+    }
+
+    /**
+     * Remove employeur
+     *
+     * @param \Application\PlateformeBundle\Entity\Employeur $employeur
+     */
+    public function removeEmployeur(\Application\PlateformeBundle\Entity\Employeur $employeur)
+    {
+        $this->employeur->removeElement($employeur);
+    }
+
+    /**
+     * Get employeur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmployeur()
+    {
+        return $this->employeur;
     }
 }
