@@ -187,15 +187,31 @@ $(function(){
     if(typeUtilisateur != "Administrateur") $(".block_form_role_user").hide();
         
     //---------- Afficher les champs en suivant du type d'utilisateur choisi
-    $('.block_form_format_presence').hide();
-    
+    if($('.role_user:checked').val() == "ROLE_CONSULTANT")
+    {
+        $('.block_form_calendar_uri').show();
+        $('.block_form_calendar_id').show();
+        $('.block_form_block_form_format_presence').show();
+        $('.block_form_departement').show();
+        $('.block_form_ville').show();
+    }else{
+        $('.block_form_calendar_uri').hide();
+        $('.block_form_calendar_id').hide();
+        $('.block_form_format_presence').hide();
+        $('.block_form_departement').hide();
+        $('.departementInputForAjax').val("0");
+        $('.block_form_ville').hide();
+    }
+
     $('.role_user').click(function() {
-        console.log($(this).val())
         switch($(this).val()){
             case "ROLE_CONSULTANT" :
-                $('.calendar_uri')[this.checked ? "show" : "hide"]();
-                $('.calendar_id')[this.checked ? "show" : "hide"]();
+                $('.block_form_calendar_uri')[this.checked ? "show" : "hide"]();
+                $('.block_form_calendar_id')[this.checked ? "show" : "hide"]();
                 $('.block_form_format_presence')[this.checked ? "show" : "hide"]();
+                $('.block_form_departement')[this.checked ? "show" : "hide"]();
+                $('.block_form_ville')[this.checked ? "show" : "hide"]();
+                
                 break;
            /* case "ROLE_CONSULTANT" :
                 break;  */     

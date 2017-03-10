@@ -35,6 +35,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                         "b.lof@iciformation.fr" => "Brice Lof",
 						"f.azoulay@entheor.com" => "Franck Azoulay", 
 						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+						"n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
 						"christine.clement@entheor.com" => "Christine Clement",
 						"virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
 						
@@ -150,6 +151,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cc = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
+            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
@@ -157,7 +159,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
             'lastNews' => $lastNews,
         ));
-        $this->sendMessage($from,$to,$cc,null,$subject,$body);
+//        $this->sendMessage($from,$to,$cc,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr",null,null,$subject,$body);
     }
 
     public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -168,6 +171,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cc = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
+            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
@@ -175,7 +179,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($from,$to,$cc,null,$subject,$body);
+//        $this->sendMessage($from,$to,$cc,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr",null,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -186,6 +191,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cc = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
+            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
@@ -193,7 +199,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($from,$to,$cc,null,$subject,$body);
+//        $this->sendMessage($from,$to,$cc,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr",null,null,$subject,$body);
     }
 }
 ?>

@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Application\PlateformeBundle\Form\RechercheBeneficiaireType;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * Announce controller.
  *
@@ -88,7 +87,7 @@ class BeneficiaireController extends Controller
             }
         }
         // Si le client existe alors on recupere les evenements
-        if(isset($client) && empty($_SESSION['majevenementdanshistorique'])){           
+        if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){
             foreach($histo_beneficiaire as $histo){
 				if($histo->getEventId() != '0'){
 					$evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
@@ -147,7 +146,6 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
-
 
             $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
 

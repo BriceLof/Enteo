@@ -108,6 +108,12 @@ class Historique
      */
     protected $consultant;
 	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="evenetid_bureau", type="text", nullable=true)
+     */
+    private $eventIdBureau;
 
     /**
      * Historique constructor.
@@ -441,4 +447,32 @@ class Historique
     {
         return $this->eventarchive;
     }
+
+
+    /**
+     * Set eventIdBureau
+     *
+     * @param string $eventIdBureau
+     *
+     * @return Historique
+     */
+    public function setEventIdBureau($eventIdBureau)
+    {
+        $this->eventIdBureau = $eventIdBureau;
+
+        return $this;
+    }
+
+    /**
+     * Get eventIdBureau
+     *
+     * @return string
+     */
+    public function getEventIdBureau()
+    {
+        return $this->eventIdBureau;
+    }
 }
+
+
+

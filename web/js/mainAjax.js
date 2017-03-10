@@ -7,8 +7,7 @@ $("document").ready(function (initDynamicContent) {
     $( function () {
         $(".form-control .error").css('border','1px solid red');
     });
-
-
+    
     jQuery.extend(jQuery.validator.messages, {
         required: "Ce champs ne peut être vide",
         remote: "votre message",
@@ -28,7 +27,6 @@ $("document").ready(function (initDynamicContent) {
         max: jQuery.validator.format("votre message  inférieur ou égal à {0}."),
         min: jQuery.validator.format("votre message  supérieur ou égal à {0}.")
     });
-
 
     //datepicker date de naissance
     $( function() {
@@ -83,7 +81,6 @@ $("document").ready(function (initDynamicContent) {
 
     jQuery.validator.addMethod("greaterThan",
         function (value, element) {
-
             if($('#accompagnement_dateDebut').val() != "" && value != "") {
                 var startDate = $('#accompagnement_dateDebut').val().split("/");
                 var valueEntered = value.split("/");
@@ -303,8 +300,7 @@ $("document").ready(function (initDynamicContent) {
             errorElement: 'div'
         })
     });
-
-
+    
     //validation jquery de la fiche beneficiaire
     $( function() {
         $("#ficheBeneficiaireForm").validate({
@@ -405,6 +401,7 @@ $("document").ready(function (initDynamicContent) {
         if($('#autrebureau').val() == ''){
             $('#ziph').val('');
             $('#zip').val('');
+            $('#bureauotherid').val('-1'); // Pour la gestion du calendrier Bureau lors de la Modification d'un evenement
         }
     });
     
@@ -429,6 +426,7 @@ $("document").ready(function (initDynamicContent) {
             $('#adresseh').val(''); // adresse 
             $('#zip').val(''); // code postal
             $('#ziph').val(''); // code postal
+            $('#bureauotherid').val('-1'); // Pour la gestion du calendrier Bureau lors de la Modification d'un evenement
         }
     });
     
@@ -450,7 +448,6 @@ $("document").ready(function (initDynamicContent) {
     // ================= Autocompletion Nom et Prenom beneficiaire =============== //
     // =========================================================================== //
     var urlautocompletion;
-    console.log(location.pathname);
     switch(true){
         case (location.pathname == '/teo/web/app_dev.php/agenda/evenements'):
             urlautocompletion = 'http://'+location.hostname+location.pathname.replace("agenda/evenements", "autocompletion"); // on appelle le script JSON
@@ -717,68 +714,106 @@ $("document").ready(function (initDynamicContent) {
         }
     });
     
-    
     // ==================================================================================== //
     // ========== Gestion de la date de fin [datedebut == datefin] ======================== //
     // ==================================================================================== //
-    $("#historique_dateDebut_day").change(function(){
-        // On met à jour le jour de datefin
-        $("#historique_dateFin_day").val($("#historique_dateDebut_day").val());
-    });
-    $("#historique_dateDebut_month").change(function(){
-        // On met à jour le mois de datefin
-        $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
-        // Si le mois changé est superieur au mois courant alors on active tous les jours 
-        if($("#historique_dateDebut_month").val() > moiscourant){
-             x=1;
-             while(x<31){
-                if($('#historique_dateDebut_day option[value="'+x+'"]') != undefined)
-                    $('#historique_dateDebut_day option[value="'+x+'"]').removeAttr('disabled'); // activer
-                x++;
-             }
-        }
-        else{
-            x=1;
-            while(x<jourcourant){
-                $('#historique_dateDebut_day option[value="'+x+'"]').attr('disabled', true); // activer
-                x++;
-            }
-        }
-    });
-    $("#historique_dateDebut_year").change(function(){
-        // On met à jour l'année de datefin
-        $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
-    });
-    
-    // ========================================================================== //
-    // =================== desactiver les dates passées ======================== //
-    // ========================================================================== //
-    jour = $("#historique_dateDebut_day").val(); // mois
-    mois = $("#historique_dateDebut_month").val(); // mois
-    an = $("#historique_dateDebut_year"); // Années
-    var datecourant = new Date();
-    var jourcourant = datecourant.getDate(); // jour
-    var moiscourant = datecourant.getMonth()+1; // mois
-    anneecourant = datecourant.getFullYear(); // année
     x=2012;
+    datecourant = new Date();
+    anneecourant = datecourant.getFullYear(); // année
     // 1- desactive les années precedentes à l'année en cour
     while(x<anneecourant){
         $('#historique_dateDebut_year option[value="'+x+'"]').attr('disabled', true); // activer
         x++;
     }
-    // 2- On desactive les mois precedents par rapport a la date du jour
-    x=1;
-    while(x<moiscourant){
-        $('#historique_dateDebut_month option[value="'+x+'"]').attr('disabled', true); // activer
-        x++;
-    }
-    // 3- On desactive les jours precedents par rapport a la date du jour
-    x=1;
-    while(x<jour){
-        $('#historique_dateDebut_day option[value="'+x+'"]').attr('disabled', true); // activer
-        x++;
-    }
-    
+    $("#historique_dateDebut_day").change(function(){
+        datecourant = new Date();
+        heuretoday = datecourant.getHours(); // heure courante
+        minutetoday = datecourant.getMinutes(); // minute en cour
+        jourcourant = datecourant.getDate(); // jour
+        moiscourant = datecourant.getMonth()+1; // mois
+        anneecourant = datecourant.getFullYear(); // année
+        jour = $("#historique_dateDebut_day").val(); // mois
+        mois = $("#historique_dateDebut_month").val(); // mois
+        an = $("#historique_dateDebut_year").val(); // Années
+        selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        // On active les autres champs
+        for(j=7; j<selectheuresd.length; j++){
+           // 1- heure debut
+           if(j<20){
+               $('#historique_heureDebut_hour option[value="'+j+'"]').removeAttr('disabled');
+           }
+           // 2- heure fin
+           if(j+1<21){
+               $('#historique_heureFin_hour option[value="'+(j+1)+'"]').removeAttr('disabled');
+           }
+        }
+        // Si la date choisi est inferieur à la date du jour alors on le positionne sur le mois suivant
+        if(jour<jourcourant && mois<=moiscourant && anneecourant == an){
+            // Passer au mois suivant si on est pas en decembre
+            if(moiscourant < 12){
+                $('#historique_dateDebut_month').val(moiscourant+1); // activer
+                // Maj de la date de fin
+                $('#historique_dateFin_month').val(moiscourant+1); // activer
+            }
+            else{
+                // On passe aussi à l'année suivante
+                $('#historique_dateDebut_month').val(1); // mois de janvier
+                $("#historique_dateDebut_year").val(anneecourant+1);
+                // Maj de la date de fin
+                $('#historique_dateFin_month').val(1); // mois de janvier
+                $("#historique_dateFin_year").val(anneecourant+1); 
+            }
+        }
+        // On met à jour le jour de datefin
+        $("#historique_dateFin_day").val($("#historique_dateDebut_day").val());
+    });
+    $("#historique_dateDebut_month").change(function(){
+        selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
+        selectheuresf = $('#historique_heureFin_hour option'); // heure fin
+        datecourant = new Date();
+        jourcourant = datecourant.getDate(); // jour
+        moiscourant = datecourant.getMonth()+1; // mois
+        jour = $("#historique_dateDebut_day").val(); // mois
+        mois = $("#historique_dateDebut_month").val(); // mois
+        an = $("#historique_dateDebut_year").val(); // Années
+        heuretoday = datecourant.getHours(); // heure courante
+        minutetoday = datecourant.getMinutes(); // minute en cour
+        // On active les autres champs
+        for(j=7; j<selectheuresd.length; j++){
+           // 1- heure debut
+           if(j<20){
+               $('#historique_heureDebut_hour option[value="'+j+'"]').removeAttr('disabled');
+           }
+           // 2- heure fin
+           if(j+1<21){
+               $('#historique_heureFin_hour option[value="'+(j+1)+'"]').removeAttr('disabled');
+           }
+        }
+        // Si la date choisi est inferieur à la date du jour alors on le positionne sur le mois suivant
+        if(mois<moiscourant && anneecourant == an){
+            // On passe à l'année suivante
+            $("#historique_dateDebut_year").val(anneecourant+1); // année
+            // Maj de la date de fin
+            $("#historique_dateFin_year").val(anneecourant+1); // année
+        }
+        else{
+            // On passe à l'année suivante
+            $("#historique_dateDebut_year").val(anneecourant); // année
+            // Maj de la date de fin
+            $("#historique_dateFin_year").val(anneecourant); // année
+        }
+        // On met à jour le mois de datefin
+        $("#historique_dateFin_month").val($("#historique_dateDebut_month").val());
+    });
+    // Date
+    datecourant = new Date();
+    jourcourant = datecourant.getDate(); // jour
+    moiscourant = datecourant.getMonth()+1; // mois
+    $("#historique_dateDebut_year").change(function(){
+        // On met à jour l'année de datefin
+        $("#historique_dateFin_year").val($("#historique_dateDebut_year").val());
+    });
     if($('.eventidupdate').val() != undefined && $('#historique_dateDebut_month').val() <= moiscourant){
         // On desactiver les dates passées
         dateencour = $('#historique_dateDebut_day').val();
@@ -799,7 +834,6 @@ $("document").ready(function (initDynamicContent) {
             j++;
         }
     }
-    
     // =================================================================================== //
     // ==================Pour la mise à jour de Rendez-vous ============================== // 
     // =================================================================================== //
@@ -865,7 +899,6 @@ $("document").ready(function (initDynamicContent) {
             $('#historique_autreSummary').removeAttr("required");
         }
     }
-
     // ==================================================================================== //
     // ======= Affichage des bureau, ville, adresse en fonction du departement choisi ===== //
     // ==================================================================================== //
@@ -884,6 +917,7 @@ $("document").ready(function (initDynamicContent) {
                 $('#bureauRdv').removeAttr('required');
                 $('#adresse').removeAttr('required');
                 $('#bureauRdv').removeAttr('required');
+                $('#bureauotherid').val('-1'); // Pour la gestion du calendrier Bureau lors de la Modification d'un evenement
             }
             else{
                 $('.letyperdv').val($(this).val());
@@ -904,17 +938,42 @@ $("document").ready(function (initDynamicContent) {
             }
     });
     if($('.calendrierconsultant').val() != undefined){
-        // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
+        datecourant = new Date();
+        heuretoday = datecourant.getHours(); // heure courante
+        minutetoday = datecourant.getMinutes(); // minute en cour
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
-        for(j=0; j<selectheuresd.length; j++){
-            // Heure debut
-            if(j<7 || j>20){
-                selectheuresd[j].remove(); // heure debut
+        if($('.eventidupdate').val() == undefined){
+            for(j=0; j<selectheuresd.length; j++){
+                // On desactive toutes les heures passées
+                // 1- heure debut
+                if(heuretoday<20){
+                    if(j<heuretoday || j>20){
+                        $('#historique_heureDebut_hour option[value="'+j+'"]').attr('disabled', true);
+                    }
+                    // 2- heure fin
+                    if(j<=heuretoday || j>21){
+                        $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true);
+                    }
+                }
+                else{
+                    if(j<7 || j>20){
+                        $('#historique_heureDebut_hour option[value="'+j+'"]').attr('disabled', true);
+                    }
+                    // 2- heure fin
+                    if(j<8 || j>21){
+                        $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true);
+                    }
+                }
             }
-            // Heure fin
-            if(j<8 || j>21){
-                selectheuresf[j].remove(); // heure fin
+            // On reinitialise les 2 heures (debut et fin )
+            if(heuretoday<20){
+                $('#historique_heureDebut_hour').val(heuretoday);
+                $('#historique_heureDebut_minute').val(minutetoday);
+            }
+            if(heuretoday<21){
+                $('#historique_heureFin_hour').val(heuretoday+1);
+                $('#historique_heureFin_minute').val(minutetoday);
             }
         }
         // Affichage du nom du consultant
@@ -956,7 +1015,6 @@ $("document").ready(function (initDynamicContent) {
             }
             j++;
         }
-        
         majheuredebut = heure_debut+1;
         $('#historique_heureFin_hour').val(majheuredebut); // Maj de l'heure de fin
         $('#historique_heureFin_minute').val(minute_debut); // Maj de la minute de fin
@@ -970,8 +1028,7 @@ $("document").ready(function (initDynamicContent) {
 // Couleur Agenda pour Admin
 $('.colorcalendar').css({
     'padding':'7px',
-    'margin-bottom':'10px',
-    'background':$('.color_agenda_admin').val()
+    'margin-bottom':'10px'
 });
 
 // ---------------------------------------------- //
@@ -980,18 +1037,42 @@ $('.colorcalendar').css({
 $('#consultantC').change(function(){
     emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
     if($('#consultantC').val() != ""){
+        datecourant = new Date();
+        heuretoday = datecourant.getHours(); // heure courante
+        minutetoday = datecourant.getMinutes(); // minute en cour
         // On vire les heures < 7 et > 20 dans heure_debut et heure_fin
         selectheuresd = $('#historique_heureDebut_hour option'); // heure debut
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         for(j=0; j<selectheuresd.length; j++){
-            // Heure debut
-            if(j<7 || j>20){
-                selectheuresd[j].remove(); // heure debut
+            // On desactive toutes les heures passées
+            // 1- heure debut
+            if(heuretoday<20){
+                if(j<heuretoday || j>20){
+                    $('#historique_heureDebut_hour option[value="'+j+'"]').attr('disabled', true);
+                }
+                // 2- heure fin
+                if(j<=heuretoday || j>21){
+                    $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true);
+                }
             }
-            // Heure fin
-            if(j<8 || j>21){
-                selectheuresf[j].remove(); // heure fin
+            else{
+                if(j<7 || j>20){
+                    $('#historique_heureDebut_hour option[value="'+j+'"]').attr('disabled', true);
+                }
+                // 2- heure fin
+                if(j<8 || j>21){
+                    $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true);
+                }
             }
+        }
+        // On reinitialise les 2 heures (debut et fin )
+        if(heuretoday<20){
+            $('#historique_heureDebut_hour').val(heuretoday);
+            $('#historique_heureDebut_minute').val(minutetoday);
+        }
+        if(heuretoday<21){
+            $('#historique_heureFin_hour').val(heuretoday+1);
+            $('#historique_heureFin_minute').val(minutetoday);
         }
         // On ajoute l'id dans l'action du formulaire Ajout Evenement
         var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
@@ -1069,7 +1150,6 @@ function supprimer_evenement(){
           type: 'get',
           url: Routing.generate('delete_evenement', {eventid : evtid}),
           success: function (data) {
-             console.log('-------------- data: '+data);
              if(data == '1'){
                  // Archivage reussi
                  $('.'+evtid).remove();

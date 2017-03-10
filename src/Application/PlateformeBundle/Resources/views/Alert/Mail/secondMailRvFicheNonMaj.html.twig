@@ -3,7 +3,7 @@
 {% block contentMail %}
     Bonjour {{ beneficiaire.consultant.prenom|capitalize }}, <br>
     <p>
-        Sauf erreur de notre part, vous navez pas encore mis à jour les informations de la fiche de <b>{{ beneficiaire.consultant.civilite|capitalize~' '~beneficiaire.consultant.prenom|capitalize~' '~beneficiaire.consultant.nom|capitalize~' ' }}</b>.
+        Sauf erreur de notre part, vous navez pas encore mis à jour les informations de la fiche de <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
         <br>
         <b>
             L'absence de votre retour d'information bloque l'avancement du dossier. <br>

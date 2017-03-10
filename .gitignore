@@ -1,4 +1,4 @@
-/app/config/
+/app/config/*
 /build/
 /phpunit.xml
 /var/*
