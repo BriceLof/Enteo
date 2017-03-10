@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Accompagnement;
 use Application\PlateformeBundle\Entity\Employeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
@@ -127,6 +128,14 @@ class BeneficiaireController extends Controller
         $editForm->get('codePostalHiddenBeneficiaire')->setData($beneficiaire->getVille()->getCp());
         $editForm->get('idVilleHiddenBeneficiaire')->setData($beneficiaire->getVille()->getId());
 
+        $codePostalHiddenEmployeur = 0;
+        $idVilleHiddenEmployeur = 0;
+
+        if($beneficiaire->getEmployeur()->getVille() != null){
+            $codePostalHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getCp();
+            $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
+        }
+
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
@@ -138,6 +147,7 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
+
 
             $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
 
@@ -159,7 +169,15 @@ class BeneficiaireController extends Controller
             ));
         }
 
+        if($beneficiaire->getAccompagnement() == null){
+            $accompagnement = new Accompagnement();
+            $em->persist($accompagnement);
+        }
+        $em->flush();
+
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
+            'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
+            'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
             'form_consultant' => $editConsultantForm->createView(),
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),

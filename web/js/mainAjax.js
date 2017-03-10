@@ -2250,10 +2250,11 @@ if(document.getElementById('accompagnement')) {
                 },
                 success: function (data) {
                     $.each(JSON.parse(data), function (i, item) {
+                        console.log(item);
                         if ($(element).attr('value') == item) {
-                            element.append("<option value=" + item + " selected = \"selected\">" + item + "</option>");
+                            element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
                         } else {
-                            element.append("<option value=" + item + ">" + item + "</option>");
+                            element.append("<option value=\"" + item + "\">" + item + "</option>");
                         }
                     });
                     console.log('fini');
