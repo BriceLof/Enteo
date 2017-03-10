@@ -69,7 +69,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             'message' => $message
         ));
 
-        return $this->sendMessage($from, $to, $cc, $bcc, $subject, $body);
+        return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
     
     
