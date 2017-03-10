@@ -3,7 +3,7 @@
 {% block contentMail %}
     {{ beneficiaire.consultant.prenom|capitalize }}, <br>
     <p>
-        Vous avez reçu hier en rendez-vous de positionnement <b>{{ beneficiaire.consultant.civilite|capitalize~' '~beneficiaire.consultant.prenom|capitalize~' '~beneficiaire.consultant.nom|capitalize~' ' }}</b>.
+        Vous avez reçu hier en rendez-vous de positionnement <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
         <br>
         <b>
             IMPORTANT : Je vous rappelle qu'après chaque rendez-vous, vous devez sans délai mettre à jour les informations du bénéficiaire sur <a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">ENTHEO</a>

@@ -242,4 +242,8 @@ class Accompagnement
     {
         return $this->financeur;
     }
+
+    public function getFirstFinanceur(){
+        return $this->financeur[0];
+    }
 }

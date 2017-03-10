@@ -2217,6 +2217,7 @@ if(document.getElementById('accompagnement')) {
                 parent = $(this).parent().parent();
                 nomOrganisme = $(parent).find('#' + $(parent).attr('id') + '_nom');
                 labelElement = parent.find('.organisme_organisme_label');
+
                 element = $(this);
                 console.log($(this).val());
                 if ($(nomOrganisme).val() == 'OPCA') {
@@ -2259,6 +2260,20 @@ if(document.getElementById('accompagnement')) {
                 }
             });
         }
+
+        $(function () {
+            $('#accompagnement_financeur_0_nom').prop('disabled', true).css({
+                'background-color': 'rgba(117, 115, 115, 0.48)',
+                'cursor' : 'not-allowed',
+                'border' : 'none'
+            });
+            $('#accompagnement_financeur_0_organisme').prop('disabled', true).css({
+                'background-color': 'rgba(117, 115, 115, 0.48)',
+                'cursor' : 'not-allowed',
+                'border' : 'none'
+            });
+            $('.organisme_organisme').parent().css('margin-bottom','13px');
+        });
     });
 
 }

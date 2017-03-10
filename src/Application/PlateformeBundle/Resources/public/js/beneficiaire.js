@@ -111,5 +111,92 @@ $(function(){
         }else{
         }
     })
+
+
+
+
+    $('.type_employeur').on('change', function () {
+        tdElement = $('#tdElement');
+        element = tdElement.find('#beneficiaire_employeur_organisme');
+        if ($(this).val() == 'OPCA') {
+            tdElement.css('display', 'table-row');
+            $name = 'OPCA';
+            listeOpcaOpacifEmployeur($name, element);
+        } else {
+            if ($(this).val() == 'OPACIF') {
+                tdElement.css('display', 'table-row');
+                $name = 'OPACIF';
+                listeOpcaOpacifEmployeur($name, element);
+            } else {
+                tdElement.css('display', 'none');
+                element.empty();
+            }
+        }
+    });
+
+    //Ajax pour recuperer la liste des opca ou opacif
+    function listeOpcaOpacifEmployeur($name, element) {
+        $.ajax({
+            url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
+            cache: true,
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                element.empty();
+                console.log('ça charge');
+            },
+            success: function (data) {
+                $.each(JSON.parse(data), function (i, item) {
+                    if ($(element).attr('value') == item) {
+                        element.append("<option value=" + item + " selected = \"selected\">" + item + "</option>");
+                    } else {
+                        element.append("<option value=" + item + ">" + item + "</option>");
+                    }
+                });
+                console.log('fini');
+            }
+        });
+    }
+
+
+    $(function () {
+        $('#beneficiaire_employeur_organisme').each(function () {
+            var newElement = $('<select>');
+            $.each(this.attributes, function (i, attrib) {
+                $(newElement).attr(attrib.name, attrib.value);
+            });
+            $(this).replaceWith(newElement);
+        });
+    });
+
+    $(function () {
+        $a = 1;
+        $('.contact_employeur').children().children().children().each(function () {
+            if ($(this).get(0).tagName == 'LABEL') {
+                $(this).css('display', 'none');
+                $a++;
+            }
+        })
+    });
+
+
+    $(function () {
+        $('select#beneficiaire_employeur_organisme').each(function () {
+            tdElement = $('#tdElement');
+            element = $(this);
+            console.log($(this).val());
+            if ($('#beneficiaire_employeur_type').val() == 'OPCA') {
+                tdElement.css('display', 'table-row');
+                $name = 'OPCA';
+                listeOpcaOpacifEmployeur($name, element);
+            } else {
+                if ($('#beneficiaire_employeur_type').val() == 'OPACIF') {
+                    tdElement.css('display', 'table-row');
+                    $name = 'OPACIF';
+                    listeOpcaOpacifEmployeur($name, element);
+                }
+            }
+        });
+    });
 })();
 

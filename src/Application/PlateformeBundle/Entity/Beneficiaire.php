@@ -1306,11 +1306,9 @@ class Beneficiaire
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
-     *
      * @ORM\PreUpdate
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt()
     {
         $this->updatedAt = new \DateTime('now');
     }
