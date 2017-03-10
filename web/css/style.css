@@ -651,9 +651,6 @@ textarea {
 #afficheBeneficiaire .form-group {
     margin-bottom: 5px;
 }
-#afficheBeneficiaire #accompagnement .form-group {
-    margin-bottom: 8px;
-}
 
 #afficheBeneficiaire .form-control {
     padding:0px 12px;

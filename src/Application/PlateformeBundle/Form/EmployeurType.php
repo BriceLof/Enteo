@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,13 +30,27 @@ class EmployeurType extends AbstractType
                 )
             ))
 
-            ->add('siret', TextType::class, array(
-                'label' => 'Siret ',
+            ->add('type', ChoiceType::class, array(
+                'required' => false,
+                'label' => 'Type ',
+                'choices' => array(
+                    '...' => '',
+                    'OPCA' => 'OPCA',
+                    'OPACIF' => 'OPACIF',
+                    'Entreprise' => 'Entreprise',
+                    'Bénéficiaire' => 'Beneficiaire',
+                    'Pôle Emploi' => 'Pole Emploi',
+                ),
+                'attr' => array(
+                    'class' => 'fiche type_employeur',
+                )
+            ))
+
+            ->add('organisme', TextType::class, array(
                 'required' => false,
                 'attr' => array(
-                    'placeholder' => '',
-                    'class' => 'fiche'
-                )
+                    'class' => 'fiche',
+                ),
             ))
 
             ->add('siret', TextType::class, array(
