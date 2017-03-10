@@ -168,22 +168,33 @@
                                             <td>{{ form_label(edit_form.employeur.adresseComplement) }}</td>
                                             <td>{{ form_widget(edit_form.employeur.adresseComplement) }}</td>
                                         </tr>
-                                        {% if beneficiaire.employeur.ville is not null %}
-                                            <tr>
-                                                <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
-                                                <td>{{ form_widget(edit_form.employeur.code_postal, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Ville </td>
-                                                <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
-                                            </tr>
+                                        {% if beneficiaire.employeur is not null %}
+                                            {% if beneficiaire.employeur.ville is not null %}
+                                                <tr>
+                                                    <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
+                                                    <td>{{ form_widget(edit_form.employeur.code_postal, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Ville </td>
+                                                    <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
+                                                    <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{ form_label(edit_form.employeur.ville) }}</td>
+                                                    <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
+                                                </tr>
+                                            {% endif %}
                                         {% else %}
                                             <tr>
                                                 <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
                                                 <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
                                             </tr>
                                             <tr>
-                                                <td>{{ form_label(edit_form.employeur.ville) }}</td>
+                                                <td>Ville </td>
                                                 <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
                                             </tr>
                                         {% endif %}
