@@ -22,6 +22,7 @@
                                 <th>Nom</th>
                                 <th>Adresse</th>
                                 <th>Ville</th>
+                                <th>Observation</th>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <th colspan="2">Actions</th>
                                 {% endif %}
@@ -33,6 +34,7 @@
                                     <td>{{ bureau.nombureau | capitalize }}{% if bureau.temporaire %}<span title="Bureau temporaire" style="margin-left:8px;" class="glyphicon glyphicon-time"></span>{% endif %}</td>
                                     <td>{{ bureau.adresse | capitalize }}</td>
                                     <td>{{ bureau.ville.nom | capitalize }}</td>
+                                    <td>{{ bureau.observation | capitalize }}</td>
                                     {% if is_granted('ROLE_ADMIN') %}
                                         <td>
                                             <span title="Activer/Désactiver le bureau" style="cursor:pointer;color: {{ bureau.actifInactif ? "green" : "red" }}; float: right" data-toggle="modal" data-target="#myModalBureauDelete{{ loop.index }}" class="glyphicon glyphicon-{{ bureau.actifInactif ? "ok" : "ban" }}-circle"></span>
