@@ -130,9 +130,11 @@ class BeneficiaireController extends Controller
         $codePostalHiddenEmployeur = 0;
         $idVilleHiddenEmployeur = 0;
 
-        if($beneficiaire->getEmployeur()->getVille() != null){
-            $codePostalHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getCp();
-            $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
+        if ($beneficiaire->getEmployeur() != null) {
+            if ($beneficiaire->getEmployeur()->getVille() != null) {
+                $codePostalHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getCp();
+                $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
+            }
         }
 
         $editForm->handleRequest($request);

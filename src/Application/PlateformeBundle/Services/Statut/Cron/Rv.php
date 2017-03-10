@@ -165,7 +165,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
         $from = "christine.clement@entheor.com";
-        $subject = "[URGENT] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ." à établir";
+        $subject = "[URGENT] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ."";
         $template = '@Apb/Alert/Mail/firstMailRvFicheNonMaj.html.twig';
         $to = $beneficiaire->getConsultant()->getEmail();
         $cc = array(
@@ -185,7 +185,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
         $from = "christine.clement@entheor.com";
-        $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ." à établir";
+        $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ."";
         $template = '@Apb/Alert/Mail/secondMailRvFicheNonMaj.html.twig';
         $to = $beneficiaire->getConsultant()->getEmail();
         $cc = array(
