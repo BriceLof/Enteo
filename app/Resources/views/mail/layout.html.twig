@@ -11,14 +11,16 @@
 		</style>
     </head>
 <body>
+    
     <header> 
+        <aside style="float:right;">{% block ref %}{% endblock %}</aside>
         <img src="http://dev.application.entheor.com/web/images/logo_entheor.jpg" width="220px" alt="Entheor" />
     </header>
-    
-	<div id="content" style="margin-top:-20px">
-		{% block contentMail %}
-		{% endblock %}
-	</div>
+        
+    <div id="content" style="margin-top:-20px">
+            {% block contentMail %}
+            {% endblock %}
+    </div>
 
     <footer>
         <p>
