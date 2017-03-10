@@ -20,4 +20,14 @@ class BureauRepository extends \Doctrine\ORM\EntityRepository
         $results = $query->getResult();
         return $results;
     }
+    // Recuperer l'id du bureau par rapport à la ville
+    public function retreiveBureau($ville){
+        return 
+                $this
+                    ->createQueryBuilder('b')
+                    ->where('b.ville = :ville')
+                    ->setParameter('ville',$ville)
+                    ->getQuery()
+                    ->getResult();
+    }
 }

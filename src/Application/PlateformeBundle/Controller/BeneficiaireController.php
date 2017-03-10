@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Application\PlateformeBundle\Form\RechercheBeneficiaireType;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * Announce controller.
  *
@@ -87,7 +86,7 @@ class BeneficiaireController extends Controller
             }
         }
         // Si le client existe alors on recupere les evenements
-        if(isset($client) && empty($_SESSION['majevenementdanshistorique'])){           
+        if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){           
             foreach($histo_beneficiaire as $histo){
                 $evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
                 // Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
@@ -147,14 +146,13 @@ class BeneficiaireController extends Controller
                 )
             ));
         }
-
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'form_consultant' => $editConsultantForm->createView(),
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),
         ));
     }
-
+    
     /**
      * editer le consultant affilié au bénéficiaire
      *

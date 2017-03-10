@@ -37,14 +37,13 @@
             {# bloc Agenda pour Admin ou autres #}
             <div class="row">
                 <div class="col-md-12">
-                    <input type="hidden" class="color_agenda_admin" value="{{couleurs}}">
                     <div class="colorcalendar"></div>
                     <div class="blocconsultant">
                         <span>Voir l'agenda du consultant: </span>
                         <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
                             <option value="">Selectionnez</option>
                             {% for user in consultant %}
-                                <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}" onClick="verification({{user.email}})">{{user.nom~' '~user.prenom}}</option>
+                                <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}">{{user.nom~' '~user.prenom}}</option>
                             {% endfor %}
                         </select>
                         <input type="hidden" class="consultantcalendrierid">
@@ -311,7 +310,9 @@
                 <div class="col-md-3">
                     <div class="bloc_form_agenda">
                         <form method="POST" class="formPagenda" id="agendaForm" action="{{ path('application_plateforme_agenda_evenement', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}" >
-                            <input type="hidden" name="eventidupdate" class="eventidupdate" value="{{historique.eventId}}" > {# Id de l'evenement à mettre à jour! #}
+                            <input type="hidden" id="bureauotherid" name="bureauotherid" value="{{(historique.bureau is not null)? historique.bureau.id : '-1'}}">
+                            <input type="hidden" name="eventidupdate" class="eventidupdate" value="{{historique.eventId}}" > {# Id de l'evenement dans le calendrier du consultant à mettre à jour! #}
+                            <input type="hidden" name="eventidbureauupdate" value="{{(historique.eventId_Bureau is not null)? historique.eventId_Bureau : '-1'}}" > {# Id de l'evenement dans le calendrier du Bureau à mettre à jour! #}
                             <center><label class="title_formulaire_agenda">Ajouter un Rendez-vous</label></center>
                             <div class="champs-form">
                                 <!-- champs supplementaires ajoutés statiquements -->

@@ -20,7 +20,7 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 			->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
                         ->setParameter('onOff', 'on')
-                        ->orWhere('h.dateDebut BETWEEN :deb AND :fin')
+                        ->orWhere('h.dateDebut BETWEEN :deb AND :fin AND h.eventarchive != :onOff')
                         ->setParameter('deb', $datedebut)
                         ->setParameter('fin', $datefin)
                         ->andwhere('h.beneficiaire = :benef')

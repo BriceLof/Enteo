@@ -56,6 +56,16 @@ class Bureau
      */
     private $temporaire;
     
+    /**
+    * @ORM\Column(name="calendarid", type="string", length=500, nullable=true)
+    */
+    private $calendrierid;
+    
+    /**
+    * @ORM\Column(name="calendrieruri", type="text", nullable=true)
+    */
+    private $calendrieruri;
+    
     public function __construct()
     {
         $this->actifInactif = true;
@@ -190,5 +200,53 @@ class Bureau
     public function getTemporaire()
     {
         return $this->temporaire;
+    }
+
+    /**
+     * Set calendrierid
+     *
+     * @param string $calendrierid
+     *
+     * @return Bureau
+     */
+    public function setCalendrierid($calendrierid)
+    {
+        $this->calendrierid = $calendrierid;
+
+        return $this;
+    }
+
+    /**
+     * Get calendrierid
+     *
+     * @return string
+     */
+    public function getCalendrierid()
+    {
+        return $this->calendrierid;
+    }
+
+    /**
+     * Set calendrieruri
+     *
+     * @param string $calendrieruri
+     *
+     * @return Bureau
+     */
+    public function setCalendrieruri($calendrieruri)
+    {
+        $this->calendrieruri = $calendrieruri;
+
+        return $this;
+    }
+
+    /**
+     * Get calendrieruri
+     *
+     * @return string
+     */
+    public function getCalendrieruri()
+    {
+        return $this->calendrieruri;
     }
 }
