@@ -1,10 +1,8 @@
 {% extends "::mail/layout.html.twig" %}
 
 {% block contentMail %}
-    <h4>Sujet : {{ sujet }}</h4>
-    
-    <div>
+    <p>
         {{ message | raw }}
-    </div>
+    </p>
 {% endblock %}
 
