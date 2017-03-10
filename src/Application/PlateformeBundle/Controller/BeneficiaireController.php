@@ -88,30 +88,32 @@ class BeneficiaireController extends Controller
         // Si le client existe alors on recupere les evenements
         if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){           
             foreach($histo_beneficiaire as $histo){
-                $evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
-                // Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
-                if($evenement->getStatus() == 'cancelled'){
-                    $query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
-                }
-                else{
-                    // On met à jour les evenements
-                    $heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
-                    $heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
-                    $heuredeb = str_replace('+01:00','',$heuredeb); 
-                    $heurefin = str_replace('+01:00','',$heurefin);
-                    $datedeb = new \DateTime($heuredeb); // date debut
-                    $datefin = new \DateTime($heurefin); // date fin
-                    $heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
-                    $heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
-                    // Mise à jour en BD  
-                    $em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
-                }
+				if($histo->getEventId() != '0'){
+					$evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
+					// Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
+					if($evenement->getStatus() == 'cancelled'){
+						$query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
+					}
+					else{
+						// On met à jour les evenements
+						$heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
+						$heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
+						$heuredeb = str_replace('+01:00','',$heuredeb); 
+						$heurefin = str_replace('+01:00','',$heurefin);
+						$datedeb = new \DateTime($heuredeb); // date debut
+						$datefin = new \DateTime($heurefin); // date fin
+						$heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
+						$heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
+						// Mise à jour en BD  
+						$em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
+					}
+				}
             }
         }
         if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['majevenementdanshistorique']); // On supprime la session
         if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
+        if (true === $authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
             throw $this->createNotFoundException('Vous n\'avez pas accès a cette page!');
         }
@@ -135,6 +137,16 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
+
+            if ($beneficiaire->getAccompagnement() != null) {
+                $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+                if ($financeur != null) {
+                    $financeur->setNom($employeur->getType());
+                    $financeur->setOrganisme($employeur->getOrganisme());
+                    $em->persist($financeur);
+                }
+            }
+
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
@@ -288,7 +300,7 @@ class BeneficiaireController extends Controller
     {
         $idUtilisateur = null;
 
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or true === $this->get('security.authorization_checker')->isGranted('ROLE_COMMERCIAL') or true === $this->get('security.authorization_checker')->isGranted('ROLE_GESTION')) {
         }else{
             $idUtilisateur = $this->getUser()->getId();
         }

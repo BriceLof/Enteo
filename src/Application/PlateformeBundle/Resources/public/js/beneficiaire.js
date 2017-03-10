@@ -72,3 +72,131 @@ $(function(){
     }
 });
 
+(function () {
+    var proposition = document.getElementById('proposition_pdf');
+    var adresse = document.getElementById('beneficiaire_proposition_adresse');
+    var heure = document.getElementById('accompagnement_proposition_heure');
+    var dateDebut = document.getElementById('accompagnement_proposition_dateDebut');
+    var dateFin = document.getElementById('accompagnement_proposition_dateFin');
+    var message = "champs manquant : <br>";
+
+    proposition.addEventListener('click',function (e) {
+        if ( adresse.value == "" || dateDebut.value == "0" || dateFin.value == "0" || heure.value == ""){
+            if( adresse.value == "" ){
+                message += '- l\'adresse du bénéficiaire <br>';
+            }
+            if( dateDebut.value == "0" ){
+                message += '- la date de début de l\'accompagnement <br>';
+            }
+            if( dateFin.value == "0" ){
+                message += '- la date de fin de l\'accompagnement <br>';
+            }
+            if( heure.value == "" ){
+                message += '- le nombre d\'accompagnement en heures <br>';
+            }
+            //ici on ajoute un modal
+            $('body').append('<div id="dataConfirmModal2" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
+                '<div class="modal-dialog">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Merci de verifier</h3>' +
+                '</div>' +
+                '<div class="modal-body"><p>'+message+'</p></div>' +
+                '<div class="modal-footer">' +
+                '<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fermer</button>' +
+                '</div></div></div></div>');
+            $('#dataConfirmModal2').find('.modal-body').text($(this).attr('data-confirm'));
+            $('#dataConfirmModal2').modal({show:true});
+            e.preventDefault();
+        }else{
+        }
+    })
+
+
+
+
+    $('.type_employeur').on('change', function () {
+        tdElement = $('#tdElement');
+        element = tdElement.find('#beneficiaire_employeur_organisme');
+        if ($(this).val() == 'OPCA') {
+            tdElement.css('display', 'table-row');
+            $name = 'OPCA';
+            listeOpcaOpacifEmployeur($name, element);
+        } else {
+            if ($(this).val() == 'OPACIF') {
+                tdElement.css('display', 'table-row');
+                $name = 'OPACIF';
+                listeOpcaOpacifEmployeur($name, element);
+            } else {
+                tdElement.css('display', 'none');
+                element.empty();
+            }
+        }
+    });
+
+    //Ajax pour recuperer la liste des opca ou opacif
+    function listeOpcaOpacifEmployeur($name, element) {
+        $.ajax({
+            url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
+            cache: true,
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                element.empty();
+                console.log('ça charge');
+            },
+            success: function (data) {
+                $.each(JSON.parse(data), function (i, item) {
+                    if ($(element).attr('value') == item) {
+                        element.append("<option value=" + item + " selected = \"selected\">" + item + "</option>");
+                    } else {
+                        element.append("<option value=" + item + ">" + item + "</option>");
+                    }
+                });
+                console.log('fini');
+            }
+        });
+    }
+
+
+    $(function () {
+        $('#beneficiaire_employeur_organisme').each(function () {
+            var newElement = $('<select>');
+            $.each(this.attributes, function (i, attrib) {
+                $(newElement).attr(attrib.name, attrib.value);
+            });
+            $(this).replaceWith(newElement);
+        });
+    });
+
+    $(function () {
+        $a = 1;
+        $('.contact_employeur').children().children().children().each(function () {
+            if ($(this).get(0).tagName == 'LABEL') {
+                $(this).css('display', 'none');
+                $a++;
+            }
+        })
+    });
+
+
+    $(function () {
+        $('select#beneficiaire_employeur_organisme').each(function () {
+            tdElement = $('#tdElement');
+            element = $(this);
+            console.log($(this).val());
+            if ($('#beneficiaire_employeur_type').val() == 'OPCA') {
+                tdElement.css('display', 'table-row');
+                $name = 'OPCA';
+                listeOpcaOpacifEmployeur($name, element);
+            } else {
+                if ($('#beneficiaire_employeur_type').val() == 'OPACIF') {
+                    tdElement.css('display', 'table-row');
+                    $name = 'OPACIF';
+                    listeOpcaOpacifEmployeur($name, element);
+                }
+            }
+        });
+    });
+})();
+

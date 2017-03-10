@@ -9,44 +9,34 @@
 </div>
 
 {% if beneficiaire.accompagnement is not null %}
-        {#
-        <tr>
-            <td>Nom OPCA/OPACIF</td>
-            <td>{{ form_widget(edit_form_a.opcaOpacif,   { 'attr': {'value': beneficiaire.accompagnement.opcaOpacif }} ) }}</td>
-        </tr>
-
-        <tr>
-            <td>
-                <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#addfinancement" >Ajouter un Financement</span>
-            </td>
-        </tr>
-        #}
         <tr>
             <td>Accompagnement en Heures :</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure, { 'attr': {'value': beneficiaire.accompagnement.heure }} ) }} Heures</td>
         </tr>
 {% else %}
         <tr>
-            <td>Nom OPCA/OPACIF</td>
-            <td>{{ form_widget(edit_form_a.opcaOpacif) }}</td>
-        </tr>
-        <tr>
             <td>Accompagnement en Heures :</td>
             <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure) }} Heures</td>
-        </tr>
-        <tr>
-            <td>Tarif Accompagnement</td>
-            <td class="inputAccompagnement">{{ form_widget(edit_form_a.tarif) }} <span>&euro;</span></td>
         </tr>
 {% endif %}
         <tr>
             <td></td>
         </tr>
         <tr>
-            <td colspan="3">Date prévue accompagnement :</td>
+            <td colspan="3">Date prévue accompagnement :
+                {{ form_widget(edit_form_a.proposition_heure, { 'attr': {'value': heure }} ) }}
+                {{ form_widget(edit_form_a.proposition_dateDebut, { 'attr': {'value': dateDebut }} ) }}
+                {{ form_widget(edit_form_a.proposition_dateFin, { 'attr': {'value': dateFin }} ) }}
+            </td>
         </tr>
         <tr>
             <td colspan="3" style="display: -webkit-box;"><span>Du :&nbsp;</span>{{ form_widget(edit_form_a.dateDebut) }} <span>&nbsp;Au :&nbsp;</span>{{ form_widget(edit_form_a.dateFin) }}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><a id="proposition_pdf" style="width: 130px;" class="btn btn-info" href="{{ path('application_new_pdf', { 'id' : beneficiaire.id }) }}" >Générer Devis</a></td>
         </tr>
         <tr>
             <td>&nbsp;</td>

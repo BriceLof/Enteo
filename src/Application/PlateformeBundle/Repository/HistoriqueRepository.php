@@ -94,4 +94,15 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->getQuery();
             $p = $q->execute();
         }
+        
+        public function findEventByDate($date)
+        {
+            $queryBuilder = $this->createQueryBuilder("h")
+                    ->where("h.dateDebut LIKE :date")
+                    ->setParameter("date", $date.'%');
+
+            $query = $queryBuilder->getQuery();
+            $results = $query->getResult();
+            return $results;
+        }
 }

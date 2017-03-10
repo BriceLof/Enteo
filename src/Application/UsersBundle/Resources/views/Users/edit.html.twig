@@ -83,29 +83,29 @@
                     {{ form_widget(form.tel2) }}
                 </div>
 
-                <div class="col-md-6 block_form_format_presence" >
+                <div class="col-md-6 block_form_format_presence" style="display:none">
                     {{ form_label(form.distanciel, "Format *") }}
                     {{ form_errors(form.distanciel) }}
                     {{ form_widget(form.distanciel) }}
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 block_form_calendar_id" style="display:none">
                     {{ form_label(form.calendrierid) }}
                     {{ form_errors(form.calendrierid) }}
                     {{ form_widget(form.calendrierid) }}
                 </div>
 
-                <div class="col-md-12">
+                <div class="col-md-12 block_form_calendar_uri" style="display:none">
                     {{ form_label(form.calendrieruri) }}
                     {{ form_errors(form.calendrieruri) }}
                     {{ form_widget(form.calendrieruri) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 block_form_departement" style="display:none">
                     {{ form_label(form.departement) }}
                     {{ form_errors(form.departement) }}
                     {{ form_widget(form.departement) }}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 block_form_ville" style="display:none">
                     {{ form_label(form.ville) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                     {{ form_errors(form.ville) }}
                     {{ form_widget(form.ville, {'attr' : {"class":"villeAjax"} }) }}

@@ -1,0 +1,30 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block contentMail %}
+    Bonjour {{ beneficiaire.consultant.prenom|capitalize }}, <br>
+    <p>
+        Sauf erreur de notre part, vous navez pas encore mis à jour les informations de la fiche de <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
+        <br>
+        <b>
+            L'absence de votre retour d'information bloque l'avancement du dossier. <br>
+            Cette étape est primoridiale pour pouvoir vous transmettre des dossiers d'accompagnement.
+        </b>
+        <b>
+            Je vous remercie donc de mettre à jour les informations du bénéficiaire sur <a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">ENTHEO</a>
+        </b>:<br>
+        <span>  -     Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)</span><br>
+        <span>  -     compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA...</span>
+        <br>
+        <u>
+            En cas d'impossibilité à nous transmettre ces informations, veuillez nous téléphoner pour une mise à jour à distance
+        </u>
+        <br>
+        <span>Bien Cordialement,</span>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </p>
+{% endblock %}

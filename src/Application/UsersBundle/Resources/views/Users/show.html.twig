@@ -5,7 +5,9 @@
 {% block menuLeft %}
     <nav class="col-md-2 list-group" >
         <ul style="margin-top: 46px;">
-            <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+            {% endif %}
             <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'consultant'}) }}" >Consultants</a></li>
             <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'commercial'}) }}" >Commerciaux</a></li>
             <li class="list-group-item" ><a href="{{ path('user_type', {'typeUser':'gestion'}) }}" >Gestionnaire</a></li>

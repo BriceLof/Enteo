@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="beneficiaire")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\BeneficiaireRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Beneficiaire
 {
@@ -39,6 +40,11 @@ class Beneficiaire
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\ContactEmployeur", mappedBy="beneficiaire")
      */
     private $contactEmployeur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Historique", mappedBy="beneficiaire")
+     */
+    private $historique;
     
      /**
      * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
@@ -265,12 +271,18 @@ class Beneficiaire
     private $nbAppelTel;
 
     /**
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->news = new ArrayCollection();
         $this->documents = new ArrayCollection();
+        $this->updatedAt = new \DateTime('now');
     }
 
     /**
@@ -1289,5 +1301,59 @@ class Beneficiaire
     public function getContactEmployeur()
     {
         return $this->contactEmployeur;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime('now');
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     *
+     * @return Beneficiaire
+     */
+    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique[] = $historique;
+
+        return $this;
+    }
+
+    /**
+     * Remove historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     */
+    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique->removeElement($historique);
+    }
+
+    /**
+     * Get historique
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistorique()
+    {
+        return $this->historique;
     }
 }

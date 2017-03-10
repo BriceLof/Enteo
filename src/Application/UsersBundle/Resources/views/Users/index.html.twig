@@ -18,7 +18,9 @@
                 <h1 class="col-md-10">Gestion - Utilisateurs<br><small>Créer, modifier, voir les enregistrements de la base de données</small></h1>
                 <nav class="col-md-2  typeUtilisateur" >
                     <ul class="list-group" style="margin-top: 46px;">
-                        <li class="list-group-item itemAdmin"><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="list-group-item itemAdmin"><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+                        {% endif %} 
                         <li class="list-group-item itemConsultant"><a href="{{ path('user_type', {'typeUser':'consultant'}) }}" >Consultants</a></li>
                         <li class="list-group-item itemCommercial"><a href="{{ path('user_type', {'typeUser':'commercial'}) }}" >Commerciaux</a></li>
                         <li class="list-group-item itemGestion"><a href="{{ path('user_type', {'typeUser':'gestion'}) }}" >Gestionnaire</a></li>
@@ -70,7 +72,13 @@
                             <td>{{ user.password | slice(0,-45)}}</td>
                             {% if app.request.get("typeUser") == "consultant" %}
                                 <td>{% if user.ville %} {{ user.ville.nom|capitalize }} {% endif %}</td>
-                                <td>{{ user.distanciel|capitalize }}</td>
+                                <td>
+                                    {% if user.distanciel | length > 0 %}
+                                        {% for format in user.distanciel %}
+                                            {{ loop.index > 1 ?  '/'~format :format }}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
                                 <td>{{ 1 }}</td>
                                 <td>{{ 20 }}</td>
                                 <td>{{ 14 }}</td>

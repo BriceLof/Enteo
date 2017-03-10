@@ -448,6 +448,7 @@ class Historique
         return $this->eventarchive;
     }
 
+
     /**
      * Set eventIdBureau
      *
@@ -472,3 +473,6 @@ class Historique
         return $this->eventIdBureau;
     }
 }
+
+
+

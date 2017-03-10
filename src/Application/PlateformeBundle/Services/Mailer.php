@@ -11,9 +11,9 @@ class Mailer
     protected $em;
     protected $mailer;
     protected $templating;
-    protected $from = "admin@enteo.fr";
-    protected $reply = "contact@enteo.fr";
-    protected $name = "Equipe Anteo";
+    protected $from = "admin@entheo.com";
+    protected $reply = "admin@entheo.com";
+    protected $name = "Equipe Entheo";
     
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em)
     {
@@ -22,13 +22,14 @@ class Mailer
         $this->templating = $templating;   
     }
 
-    protected function sendMessage($from, $to, $cc = null, $subject, $body){
+    protected function sendMessage($from, $to, $cc = null, $bcc = null, $subject, $body){
         $mail = \Swift_Message::newInstance();
 
         $mail
             ->setFrom($from)
             ->setTo($to)
             ->setCc($cc)
+			->setBcc($bcc)
             ->setSubject($subject)
             ->setBody($body)
             ->setContentType('text/html');
@@ -43,7 +44,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($this->from,$to,null,$subject,$body);
+        $this->sendMessage($this->from,$to,$cc = null, $bcc = null,$subject,$body);
     }
 
 
@@ -58,7 +59,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'compteur' => $compteur,
         ));
-        $this->sendMessage($this->from,$to,null,$subject,$body);
+        $this->sendMessage($this->from,$to,$cc = null, $bcc = null,$subject,$body);
     }
 }
 ?>
