@@ -156,9 +156,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
+        $date = $lastNews->getDateHeure()->format('l')." ".$lastNews->getDateHeure()->format('j')." ".$lastNews->getDateHeure()->format('F')." ".$lastNews->getDateHeure()->format('Y');
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
             'lastNews' => $lastNews,
+            'date' => $date,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
         $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
