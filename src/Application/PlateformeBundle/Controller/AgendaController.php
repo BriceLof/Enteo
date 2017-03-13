@@ -282,6 +282,8 @@ class AgendaController extends Controller
                                 $eventupdatebureau = $googleCalendar->deleteEvent($historiqueU[0]->getBureau()->getCalendrierid(), $historiqueU[0]->getEventIdBureau(), 1); 
                             }
                         }
+						var_dump($_SESSION['calendrierId']);
+						exit;
                         // Agenda consultant
                         $eventupdate = $googleCalendar->updateEvent($_SESSION['agenda'][1], $_SESSION['calendrierId'], $_SESSION['agenda'][0], null); 
                         // Mise à jour en BD
