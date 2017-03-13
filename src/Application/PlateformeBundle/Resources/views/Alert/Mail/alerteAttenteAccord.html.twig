@@ -1,0 +1,14 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}4{% endblock %}
+{% block contentMail %}
+    Bonjour, <br>
+    <p>
+        <b>
+            <a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">
+                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}
+            </a>
+        </b>
+        est passé au statut "Financement/Attente Accord" le {{ lastSuiviAdministratif.date|date("d/m/Y") }}
+        <br>
+    </p>
+{% endblock %}

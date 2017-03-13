@@ -1,6 +1,9 @@
 <?php
 namespace Application\PlateformeBundle\Services\Statut\Mail;
 
+use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\SuiviAdministratif;
+
 class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 {
     public function alerteForStatus($detailStatut, $beneficiaire)
@@ -26,6 +29,26 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         return $this->sendMessage($this->from, $to,null, $cc, $subject, $body);
     }
-    
+
+    public function alerteAttenteAccord(Beneficiaire $beneficiaire, SuiviAdministratif $lastSuiviAdministratif){
+        $from = "christine.clement@entheor.com";
+        $replyTo = "christine.clement@entheor.com";
+        $subject = "Financement / Attente Accord de". $beneficiaire->getCiviliteConso() ." ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." ";
+        $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
+        $to =  "resp.administratif@entheor.com";
+        $cci = array(
+            "f.azoulay@entheor.com" => "Franck AZOULAY",
+            "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
+            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
+            "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
+            "christine.clement@entheor.com" => "Christine Clement"
+        );
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
+            'lastSuiviAdministratif' => $lastSuiviAdministratif,
+        ));
+//        $this->sendMessage($from,$to,$replyTo,$cc,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
+    }
     
 }
