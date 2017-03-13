@@ -349,6 +349,7 @@ class GoogleCalendar
             $_SESSION['firstajout'] = 1;
         
         // Event insert
+		
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**

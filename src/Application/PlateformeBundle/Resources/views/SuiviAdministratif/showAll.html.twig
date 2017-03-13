@@ -10,7 +10,7 @@
                 </tr>
             </thead>
             <tbody>
-            {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
+            {% for suiviAdministratif in beneficiaire.suiviAdministratif |reverse %}
                 <tr style="border-bottom: 1px solid #dddddd;">
                     <td style="border:none;margin-left:0">{{ suiviAdministratif.date|date('d/m/Y') }}</td>
                     <td>{{ suiviAdministratif.statut.nom }}</td>

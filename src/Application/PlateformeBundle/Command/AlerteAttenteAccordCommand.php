@@ -10,7 +10,7 @@ class AlerteAttenteAccordCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('plateforme:AlerteAttenteAccord')
+            ->setName('plateforme:alerteAttenteAccord')
             ->setDescription("alerte automatique à destination des gestionnaires admn (et copie les administrateurs) 3 semaines après passage au statut adm = Financement / Attente Accord ")
             ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules');
     }
