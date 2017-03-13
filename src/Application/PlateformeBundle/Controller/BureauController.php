@@ -112,6 +112,7 @@ class BureauController extends Controller
             throw $this->createNotFoundException('Unable to find Bureau.');
         }
         $bureau->setSupprimer(true);
+		$bureau->setActifInactif(false);
 		$em->persist($bureau);
         $em->flush();
 
