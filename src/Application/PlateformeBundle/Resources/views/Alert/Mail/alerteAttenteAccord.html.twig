@@ -1,0 +1,22 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}4{% endblock %}
+{% block contentMail %}
+    Bonjour, <br>
+    <p>
+        {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}
+        est passé au statut "Financement/Attente Accord" le {{ lastSuiviAdministratif.date|date("d/m/Y") }}
+        <b><a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">
+                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}
+            </a></b>
+        <br>
+        <span>Le dossier administratif peut donc être complété afin d'adresser la demande de financement.</span>
+        <br>
+        <span>Merci,</span>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </p>
+{% endblock %}
