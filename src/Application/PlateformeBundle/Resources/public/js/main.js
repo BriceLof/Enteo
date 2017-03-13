@@ -20,7 +20,7 @@ $(function(){
         $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id) 
         
         //---------- START : Par défaut lorsqu'on ouvre le formulaire, le statut présenté est le statut supérieur à celui de la dernière news du bénéficiaire       
-        var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
+        /*var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
         
         // ID du statut supérieur au statut courant du bénéficiaire (
         // si statutId = 6 => ( c a d RV2 réalisé, je fais un +3 sur l'id pour sauter le statut recevabilité jusqu'a facturation)
@@ -30,7 +30,7 @@ $(function(){
             var nextStatutId = Number(statutId) + Number(1) 
         
         $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut 
-        ajaxFormNews(nextStatutId, true)
+        ajaxFormNews(nextStatutId, true)*/
         //---------- END 
             
         //---------- START : Si on change le statut 
@@ -70,7 +70,7 @@ $(function(){
         // Formulaire ajout d'une suivi administratif
   
         //---------- START : Par défaut lorsqu'on ouvre le formulaire, chargement des details statuts     
-        var statutIdSuiviAd = $(".statutIDCurrentSuiviAd").val()
+        /*var statutIdSuiviAd = $(".statutIDCurrentSuiviAd").val()
         $("#suiviAdministratifNewForm .statutSuiviAd").val(statutIdSuiviAd)
         ajaxFormNews(statutIdSuiviAd, false) 
         
@@ -81,7 +81,7 @@ $(function(){
             var statutIdSuiviAd = $(".statutIDCurrentSuiviAdUpdate"+boucle).val()
             var detailStatutIdSuiviAd = $(".detailStatutIDCurrentSuiviAdUpdate"+boucle).val()
             ajaxFormNews(statutIdSuiviAd, false, detailStatutIdSuiviAd)   
-        })
+        })*/
         //---------- END 
         
         $("#suiviAdministratifNewForm .statutSuiviAd").change(function(){
