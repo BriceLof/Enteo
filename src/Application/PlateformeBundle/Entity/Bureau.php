@@ -66,6 +66,11 @@ class Bureau
     */
     private $calendrieruri;
     
+    /**
+    * @ORM\Column(name="observation", type="text", nullable=true)
+    */
+    private $observation;
+    
     public function __construct()
     {
         $this->actifInactif = true;
@@ -248,5 +253,29 @@ class Bureau
     public function getCalendrieruri()
     {
         return $this->calendrieruri;
+    }
+
+    /**
+     * Set observation
+     *
+     * @param string $observation
+     *
+     * @return Bureau
+     */
+    public function setObservation($observation)
+    {
+        $this->observation = $observation;
+
+        return $this;
+    }
+
+    /**
+     * Get observation
+     *
+     * @return string
+     */
+    public function getObservation()
+    {
+        return $this->observation;
     }
 }
