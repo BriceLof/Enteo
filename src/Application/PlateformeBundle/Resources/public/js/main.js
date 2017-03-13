@@ -54,12 +54,12 @@ $(function(){
     {   
         // Formulaire ajout d'une news
         
-        $(".link_formulaire_add_news").click(function(){
+        /*$(".link_formulaire_add_news").click(function(){
             $(".detailStatut").attr("disabled", "disabled") 
             var statutId = $("#statutIDCurrentBlockStatut").val()
             $("#statut #newsForm .statut").val(statutId) // changement de la valeur du statut 
             ajaxFormNews(statutId, true)
-        })
+        })*/
  
         $("#newsForm .statut").change(function(){
             var statutId = $(this).children("option:selected").val()
