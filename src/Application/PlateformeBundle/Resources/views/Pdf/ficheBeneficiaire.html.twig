@@ -302,10 +302,10 @@
                                 <div class="sous-titre_2" style="width: 200px;">Calendrier prévisionnel : </div>
                                 <div style="width: 400px;">
                                     {% if beneficiaire.accompagnement.dateDebut is not null %}
-                                        <span>du {{ beneficiaire.accompagnement.dateDebut|date("d M Y") }} </span>
+                                        <span>du {{ dateCourtFr(beneficiaire.accompagnement.dateDebut) }} </span>
                                     {% endif %}
                                     {% if beneficiaire.accompagnement.dateFin is not null %}
-                                        <span>jusqu'au {{ beneficiaire.accompagnement.dateFin|date("d M Y") }}</span>
+                                        <span>jusqu'au {{ dateCourtFr(beneficiaire.accompagnement.dateFin) }}</span>
                                     {% endif %}
                                 </div>
                             </div>

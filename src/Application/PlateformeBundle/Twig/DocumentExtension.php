@@ -25,10 +25,25 @@ class DocumentExtension extends \Twig_Extension
         return $this->document->supprimerDocument($beneficiaire, $document);
     }
 
+    public function dateFr($date){
+        $Jour = array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi","Samedi");
+        $Mois = array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+        $datefr = $Jour[date_format($date,"w")]." ".date_format($date, "d")." ".$Mois[date_format($date,"n")]." ".date_format($date, "Y");
+        echo $datefr;
+    }
+
+    public function dateCourtFr($date){
+        $Mois = array("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+        $datefr = date_format($date, "d")." ".$Mois[date_format($date,"n")]." ".date_format($date, "Y");
+        echo $datefr;
+    }
+
     public function getFunctions(){
         return array(
             new \Twig_SimpleFunction('afficherDocument', array($this, 'afficherTwigDocument')),
             new \Twig_SimpleFunction('supprimerDocument', array($this, 'supprimerTwigDocument')),
+            new \Twig_SimpleFunction('dateFr', array($this, 'dateFr')),
+            new \Twig_SimpleFunction('dateCourtFr', array($this, 'dateCourtFr')),
         );
     }
 

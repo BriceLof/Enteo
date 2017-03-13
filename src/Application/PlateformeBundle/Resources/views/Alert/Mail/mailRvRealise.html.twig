@@ -4,7 +4,7 @@
     Bonjour, <br>
     <p>
         {{ beneficiaire.consultant.civilite|capitalize~' '~beneficiaire.consultant.prenom|capitalize~' '~beneficiaire.consultant.nom|capitalize~' ' }}
-        a reçu le {{ date }} à {{ beneficiaire.villeMer.nom~' ' }}
+        a reçu le {{ dateFr(lastNews.dateHeure) }} à {{ beneficiaire.villeMer.nom~' ' }}
         <b><a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">
             {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}
         </a></b>
