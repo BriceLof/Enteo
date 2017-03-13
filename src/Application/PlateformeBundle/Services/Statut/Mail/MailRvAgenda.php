@@ -36,7 +36,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
                 ".$consultant->getEmail()."<br><br>
                 <b>Adresse :</b><br>".
                 $rdv->getBureau()->getAdresse()."<br>".
-                $rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNom()."<br><br>
+                $rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNombureau()."<br><br>
                 Je vous remercie de venir <u>impérativement</u> avec :<br>";
         }else{
             $message = $beneficiaire->getCiviliteConso()." ".$beneficiaire->getNomConso().", <br><br>"
