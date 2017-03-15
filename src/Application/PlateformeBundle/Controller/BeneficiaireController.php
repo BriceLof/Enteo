@@ -148,15 +148,19 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
+			
+			if(!is_null($beneficiaire->getAccompagnement())){
+			
+				$financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+				if($financeur != null){
+					$financeur->setNom($employeur->getType());
+					$financeur->setOrganisme($employeur->getOrganisme());
+					$em->persist($financeur);
+				}
+			}
+            
 
-            $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-
-            if($financeur != null){
-                $financeur->setNom($employeur->getType());
-                $financeur->setOrganisme($employeur->getOrganisme());
-            }
-
-            $em->persist($financeur);
+            
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
