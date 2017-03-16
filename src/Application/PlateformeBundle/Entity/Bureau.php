@@ -71,10 +71,18 @@ class Bureau
     */
     private $observation;
     
+	/**
+     * @var
+     *
+     * @ORM\Column(name="supprimer", type="boolean")
+     */
+    private $supprimer;
+	
     public function __construct()
     {
         $this->actifInactif = true;
         $this->temporaire = false;
+		$this->supprimer = false;
     }
 
     /**
@@ -277,5 +285,29 @@ class Bureau
     public function getObservation()
     {
         return $this->observation;
+    }
+
+    /**
+     * Set supprimer
+     *
+     * @param boolean $supprimer
+     *
+     * @return Bureau
+     */
+    public function setSupprimer($supprimer)
+    {
+        $this->supprimer = $supprimer;
+
+        return $this;
+    }
+
+    /**
+     * Get supprimer
+     *
+     * @return boolean
+     */
+    public function getSupprimer()
+    {
+        return $this->supprimer;
     }
 }

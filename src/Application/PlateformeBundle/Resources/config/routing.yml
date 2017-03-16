@@ -108,5 +108,7 @@ application_plateforme_homepage:
         page:        1
         requirements:
         page: \d*
+    options:
+        expose: true
 
 

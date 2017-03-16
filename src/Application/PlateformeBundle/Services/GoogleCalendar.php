@@ -373,6 +373,7 @@ class GoogleCalendar
             $event->setLocation($location);
         }
         // Event insert
+		
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**

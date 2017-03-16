@@ -15,7 +15,8 @@ class BureauRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder = $this->createQueryBuilder("b")
                 ->leftJoin('b.ville', 'v')
                 ->addSelect('v')
-                ->orderBy("b.id", "DESC");
+				->where('b.supprimer = 0')
+                ->orderBy("v.nom", "ASC");
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
         return $results;

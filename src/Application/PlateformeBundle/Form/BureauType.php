@@ -50,6 +50,7 @@ class BureauType extends AbstractType
             ))
             ->add('observation', TextareaType::class, array(
                 'label' => 'Observation ',
+				'required' => false
             ))               
             ->add('submit', SubmitType::class, array(
                 'label' => "Enregistrer"

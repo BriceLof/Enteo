@@ -2,7 +2,7 @@
 {% block ref %}2b{% endblock %}
 
 {% block contentMail %}
-    {{ beneficiaire.consultant.prenom|capitalize }}, <br>
+    {{ beneficiaire.consultant.prenom|capitalize }}, <br><br>
     <div>
         Vous avez reçu hier en rendez-vous de positionnement <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
         <br>
@@ -14,6 +14,7 @@
         <br>
         <ul type="disc">
             <li><span>Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)</span></li>
+            <br>
             <li><span>Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA...</span></li>
         </ul>
         <br>
