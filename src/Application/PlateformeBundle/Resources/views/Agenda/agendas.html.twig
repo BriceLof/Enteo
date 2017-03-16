@@ -16,7 +16,7 @@
         </div>
         {% if app.request.session.get("erreurs") is defined and  app.request.session.get("erreurs") == true %}
             <div class="row">
-                <div class="col-mg-12">
+                <div class="col-md-12">
                     <div class="alert alert-danger msg-errors" role="alert">
                         <strong>Oops! </strong> <span>ce creneau est dejà occupé</span>
                     </div>
@@ -25,7 +25,7 @@
         {% endif %}
         {% if app.request.session.get("errorsdate") is defined and  app.request.session.get("errorsdate") == true %}
         <div class="row">
-           <div class="col-mg-12">
+           <div class="col-md-12">
                <div class="alert alert-danger msg-errors" role="alert">
                  <strong>Oops! </strong><span>La date et l'heure selectionnées sont dejà passées </span><span style='color:blue;'>{{app.request.session.get("heuredate")}}</span>
                </div>

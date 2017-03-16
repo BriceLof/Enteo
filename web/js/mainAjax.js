@@ -969,11 +969,11 @@ $("document").ready(function (initDynamicContent) {
             // On reinitialise les 2 heures (debut et fin )
             if(heuretoday<20){
                 $('#historique_heureDebut_hour').val(heuretoday);
-                $('#historique_heureDebut_minute').val(minutetoday);
+                // $('#historique_heureDebut_minute').val(minutetoday);
             }
             if(heuretoday<21){
                 $('#historique_heureFin_hour').val(heuretoday+1);
-                $('#historique_heureFin_minute').val(minutetoday);
+                // $('#historique_heureFin_minute').val(minutetoday);
             }
         }
         // Affichage du nom du consultant
@@ -1068,11 +1068,11 @@ $('#consultantC').change(function(){
         // On reinitialise les 2 heures (debut et fin )
         if(heuretoday<20){
             $('#historique_heureDebut_hour').val(heuretoday);
-            $('#historique_heureDebut_minute').val(minutetoday);
+            // $('#historique_heureDebut_minute').val(minutetoday);
         }
         if(heuretoday<21){
             $('#historique_heureFin_hour').val(heuretoday+1);
-            $('#historique_heureFin_minute').val(minutetoday);
+            // $('#historique_heureFin_minute').val(minutetoday);
         }
         // On ajoute l'id dans l'action du formulaire Ajout Evenement
         var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action

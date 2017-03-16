@@ -204,28 +204,58 @@ class GoogleCalendar
         $client->setApprovalPrompt('force');
         $client->setState($this->base64UrlEncode(json_encode($this->parameters)));
         // Load previously authorized credentials from a file.
-        //$credentialsPath = $this->credentialsPath;
-        $credentialsPath = self::PATH_CREDENTIALS.'/credentials'.$_SESSION['useridcredencial'].'.json';
-		
+        // Fichier credential
+        // (!empty($_SESSION['bureauCalId']))? $credentialsPathbureau = self::PATH_CREDENTIALS.'/credentialsbureau'.$_SESSION['bureauCalId'].'.json' : $credentialsPath = self::PATH_CREDENTIALS.'/credentials'.$_SESSION['useridcredencial'].'.json';;
+        $credentialsPath = self::PATH_CREDENTIALS.'/credentials.json';
         if ($fromFile) {
-            if (file_exists($credentialsPath)) {
-                $accessToken = json_decode(file_get_contents($credentialsPath), true);
-            } else {
-                // Request authorization from the user.
-                
-                if ($this->redirectUri) {
-                    $client->setRedirectUri($this->redirectUri);
-                }
-                
-                if ($authCode != null) {
-                    $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                    if (!file_exists(dirname($credentialsPath))) {
-                        mkdir(dirname($credentialsPath), 0700, true);
-                        // mkdir(dirname(self::PATH_CREDENTIALS), 0700, true);
-                    }
-                    file_put_contents($credentialsPath, json_encode($accessToken));
+            // ================================================== //
+            // =========== Gestion calendrier bureau ============ //
+            // ================================================== //
+            if(!empty($_SESSION['bureauCalId'])){
+                unset($_SESSION['bureauCalId']);
+                // Bureau calendrier
+                if (file_exists($credentialsPathbureau)) {
+                    $accessToken = json_decode(file_get_contents($credentialsPathbureau), true);
                 } else {
-                    return $client->createAuthUrl();
+                    // Request authorization from the user.
+
+                    if ($this->redirectUri) {
+                        $client->setRedirectUri($this->redirectUri);
+                    }
+
+                    if ($authCode != null) {
+                        $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                        if (!file_exists(dirname($credentialsPathbureau))) {
+                            mkdir(dirname($credentialsPathbureau), 0700, true);
+                            // mkdir(dirname(self::PATH_CREDENTIALS), 0700, true);
+                        }
+                        file_put_contents($credentialsPathbureau, json_encode($accessToken));
+                    } else {
+                        return $client->createAuthUrl();
+                    }
+                }
+            }
+            else{
+                // Consultant calendrier
+                if (file_exists($credentialsPath)) {
+                    $accessToken = json_decode(file_get_contents($credentialsPath), true);
+                } else {
+                    // Request authorization from the user.
+
+                    if ($this->redirectUri) {
+                        $client->setRedirectUri($this->redirectUri);
+                    }
+
+                    if ($authCode != null) {
+                        $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                        if (!file_exists(dirname($credentialsPath))) {
+                            mkdir(dirname($credentialsPath), 0700, true);
+                            // mkdir(dirname(self::PATH_CREDENTIALS), 0700, true);
+                        }
+                        file_put_contents($credentialsPath, json_encode($accessToken));
+                    } else {
+                        return $client->createAuthUrl();
+                    }
                 }
             }
         } else {
@@ -342,12 +372,6 @@ class GoogleCalendar
         if ($location != "") {
             $event->setLocation($location);
         }
-        
-        // pour eviter une duplication dans le calendrier du consultant vu que c'est le 1er  
-        // qui est appelé lors de l'ajout dans le controlleur AgendaControlleur 
-        if(empty($_SESSION['firstajout']))
-            $_SESSION['firstajout'] = 1;
-        
         // Event insert
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }

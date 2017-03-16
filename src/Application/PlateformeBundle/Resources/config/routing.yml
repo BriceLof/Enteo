@@ -34,6 +34,11 @@ application_plateforme_detail_statut:
 
     options:
         expose: true
+        
+page_erreur_agenda:
+    path:     /erreur
+    defaults: 
+        _controller: ApplicationPlateformeBundle:Agenda:agendaerror
 
 application_plateforme_received_mer:
     path:     /received_mer

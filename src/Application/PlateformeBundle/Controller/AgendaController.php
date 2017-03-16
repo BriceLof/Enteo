@@ -75,8 +75,7 @@ class AgendaController extends Controller
         }
         $em = $this->getDoctrine()->getManager(); // Entity manager
         $maj = 0; // Pour la mise à jour
-        // Instanciation du formulaire d'ajout d'evenement
-        $historique = new Historique();
+        $historique = new Historique(); // Instanciation du formulaire d'ajout d'evenement
         // Si Maj alors on recupere l'evenement correspondant
         if(!empty($request->query->get('update')) && !empty($request->query->get('eventid'))){
             $historiquevent = $em->getRepository('ApplicationPlateformeBundle:Historique')->historiqueEvent($request->query->get('eventid'));
@@ -87,14 +86,7 @@ class AgendaController extends Controller
             }
             $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($historiquevent[0]->getConsultant()->getId()); // consultant
             // Instanciation des champs du formulaire Agenda
-            $historique->setTypeRdv($historiquevent[0]->getTypeRdv()); // Rendez-vous
-            $historique->setDateDebut(new \DateTime($historiquevent[0]->getDateDebut()->format('Y-m-d H:i:s'))); // Date debut
-            $historique->setDateFin(new \DateTime($historiquevent[0]->getDateFin()->format('Y-m-d H:i:s'))); // Date fin
-            $historique->setHeuredebut($historiquevent[0]->getHeuredebut()); // Heure debut
-            $historique->setHeurefin($historiquevent[0]->getHeurefin()); // Heure fin
-            $historique->setSummary($historiquevent[0]->getSummary()); // Titre evenement
-            $historique->setEventId($historiquevent[0]->getEventId()); // evenement id
-            if(!is_null($historiquevent[0]->getAutreSummary())) $historique->setAutreSummary($historiquevent[0]->getAutreSummary());
+            $this->modifHistorique($historique, $historiquevent[0], '', '', 1);
             $cons = 1;
             $maj = 1;
         }
@@ -220,11 +212,9 @@ class AgendaController extends Controller
             header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
             exit;
         }
-        
         // Ajout de l'evenement dans le calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            // $typerdv = $_SESSION['agenda'][0]['rdv'];
             if($_SESSION['agenda'][0]['bureau'] != '')
                 $summary = $_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
             else
@@ -243,8 +233,6 @@ class AgendaController extends Controller
             // ===== Verifier que les heures selectionnées ne sont pas passées ===== //
             // ===================================================================== //
             $dateCourant = new \DateTime('now');
-            // $this->get('session')->getFlashBag()->add('info', 'not message');
-            // && $_SESSION['agenda'][0]['eventid'] == ''
             if($dateCourant >= $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])){
                 // Affiché l'erreur dans agendas.html.twig
                 $this->get('session')->set('errorsdate', true);
@@ -267,45 +255,18 @@ class AgendaController extends Controller
                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]) : $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]); // decrementation heure debut 
                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]) : $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]); // decrementation heure fin
                         $historiqueU = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueEvent($_SESSION['agenda'][0]['eventid']);
-                        // On recupère le bureau [On a 2 types de bureau: bureau existant et Autre bureau]
-                        if(!empty($_SESSION['bureauotherid'])){
-                            $bureaueventcourant = $_SESSION['bureauotherid']; 
-                        }
-                        if($bureaueventcourant == $historiqueU[0]->getBureau()->getId()){
-                            // Agenda Bureau
-                            $eventupdatebureau = $googleCalendar->updateEvent($_SESSION['agenda'][1], $historiqueU[0]->getBureau()->getCalendrierid(), $historiqueU[0]->getEventIdBureau(), 1); 
-                        }
-                        else{
-                            // On supprime l'evenement dans le calendrier s'il contient un evenementid
-                            if(!is_null($historiqueU[0]->getEventIdBureau())){
-                                // Agenda Bureau
-                                $eventupdatebureau = $googleCalendar->deleteEvent($historiqueU[0]->getBureau()->getCalendrierid(), $historiqueU[0]->getEventIdBureau(), 1); 
-                            }
-                        }
                         // Agenda consultant
                         $eventupdate = $googleCalendar->updateEvent($_SESSION['agenda'][1], $_SESSION['calendrierId'], $_SESSION['agenda'][0], null); 
                         // Mise à jour en BD
                         if(!is_null($eventupdate)){
                             $historiqueU = $historiqueU[0];
-                            // Modification objet historique
-                            $historiqueU->setSummary($historique->getSummary());
-                            $historiqueU->setDescription($historique->getDescription());
-                            $historiqueU->setDateDebut($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]));
-                            $historiqueU->setHeuredebut($historique->getHeuredebut());
-                            $historiqueU->setHeurefin($historique->getHeurefin());
-                            $historiqueU->setTypeRdv($historique->getTypeRdv());
-                            $historiqueU->setDateFin($_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]));
+                            $this->modifHistorique($historiqueU, $historique, $hd, $hf);
                             if(!empty($_SESSION['ville_id'])  && is_null($historiqueU->getBureau())){
                                 $villeObject = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($_SESSION['ville_id']);
                                 // On instancie le nouveau Bureau
                                 $bureau  = new Bureau();
-                                $bureau->setVille($villeObject); // ville
-                                $bureau->setAdresse($_SESSION['agenda'][0]['adresse']); // adresse
-                                $bureau->setNombureau($_SESSION['nom_bureau_autre']); // nom bureau
-                                $bureau->setTemporaire(true); // temporaire pour tous bureaux ajoutés par le consultant ou l'admin lors de la saisie du formulaire d'agenda
-                                $bureau->setActifInactif(true); // bureau actif
+                                $this->nouveauBureau($bureau, $villeObject); // Ajout Bureau
                                 $em->persist($bureau);
-                                // $em->flush($bureau);
                                 $em->flush();
                                 // On s'assure qu'on a le nouveau bureau enregistrer
                                 $em->refresh($bureau);  
@@ -314,13 +275,8 @@ class AgendaController extends Controller
                                 $villeObject = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($_SESSION['ville_id']);
                                 // On instancie le nouveau Bureau
                                 $bureau  = new Bureau();
-                                $bureau->setVille($villeObject); // ville
-                                $bureau->setAdresse($_SESSION['agenda'][0]['adresse']); // adresse
-                                $bureau->setNombureau($_SESSION['nom_bureau_autre']); // nom bureau
-                                $bureau->setTemporaire(true); // temporaire pour tous bureaux ajoutés par le consultant ou l'admin lors de la saisie du formulaire d'agenda
-                                $bureau->setActifInactif(true); // bureau actif
+                                $this->nouveauBureau($bureau, $villeObject); // Ajout Bureau
                                 $em->persist($bureau);
-                                // $em->flush($bureau);
                                 $em->flush();
                                 // On s'assure qu'on a le nouveau bureau enregistrer
                                 $em->refresh($bureau);
@@ -331,7 +287,6 @@ class AgendaController extends Controller
                                 $historiqueU->setBureau($bureau);
                             }
                             $historiqueU->setAutreSummary($historique->getAutreSummary());
-                            // $em->flush($historiqueU);
                             $em->flush();
                         }
                         unset($_SESSION['calendrierId']);
@@ -348,8 +303,7 @@ class AgendaController extends Controller
                         return $this->redirectToRoute('application_show_beneficiaire', array('id'=>$benefId));
                     }
                     // Ajout RDV dans le calendrier
-                    if(empty($_SESSION['firstajout'])){
-                        $eventInsert = $googleCalendar->addEvent(
+                    $eventInsert = $googleCalendar->addEvent(
                             $_SESSION['calendrierId'],
                             ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
                             ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
@@ -359,67 +313,24 @@ class AgendaController extends Controller
                             $lieu,
                             [],
                             false
-                        );
-                        // On recupere l'id de l'evenement ajouté
-                        $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
-                    }
-                    // Renseignez l'occupation du bureau dans le calendrier s'il existe
+                     );
+                     // On recupere l'id de l'evenement ajouté
+                     $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+                     // Renseignez l'occupation du bureau dans le calendrier s'il existe
                     $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
-                    
                     // On recupère le Bureau
                     if(!empty($_SESSION['bureau'])){
                         $bureauObject = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($_SESSION['bureau']);
                         $_SESSION['agenda'][1]->setBureau($bureauObject); // bureau
                     }
-                    if(isset($bureauObject) && !is_null($bureauObject->getCalendrierid()) && !empty($_SESSION['bureau'])){
-                        unset($_SESSION['bureau']);
-                        // Ajout dans l'agenda Bureau
-                        $eventInsertBureau = $googleCalendar->addEvent(
-                              $bureauObject->getCalendrierid(),
-                              ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                              ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
-                              $bureauObject->getNombureau().'-'.$userbd->getNom().' '.$userbd->getPrenom(), 
-                              "",
-                              $eventAttendee = "",
-                              $lieu,
-                              [],
-                              false
-                        );
-                        // On recupère l'id de l'evenement ajouté dans le Bureau
-                        $_SESSION['agenda'][1]->setEventIdBureau($eventInsertBureau["id"]);
-                    }
-                    elseif(isset($bureau) && !is_null($bureau->getCalendrierid())  && !empty($_SESSION['bureau'])){
-                        unset($_SESSION['bureau']);
-                        // Ajout dans l'agenda Bureau
-                        $eventInsertBureau = $googleCalendar->addEvent(
-                              $bureau->getCalendrierid(),
-                              ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                              ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]), // decrementation heure fin
-                              $bureau->getNombureau().'-'.$userbd->getNom().' '.$userbd->getPrenom(), 
-                              "",
-                              $eventAttendee = "",
-                              $lieu,
-                              [],
-                              false
-                        );
-                        // On recupère l'id de l'evenement ajouté dans le Bureau
-                        $_SESSION['agenda'][1]->setEventIdBureau($eventInsertBureau["id"]);
-                    }
-                    
-                    unset($_SESSION['firstajout']);
                     // On recupere la ville                    
                     if(!empty($_SESSION['ville_id'])){
                         $villeObject = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($_SESSION['ville_id']);
                         // On instancie le nouveau Bureau
                         $bureau = new Bureau();
-                        $bureau->setVille($villeObject); // ville
-                        $bureau->setAdresse($_SESSION['agenda'][0]['adresse']); // adresse
-                        $bureau->setNombureau($_SESSION['nom_bureau_autre']); // nom bureau
-                        $bureau->setTemporaire(true); // temporaire pour tous bureaux ajoutés par le consultant ou l'admin lors de la saisie du formulaire d'agenda
-                        $bureau->setActifInactif(1); // bureau actif
+                        $this->nouveauBureau($bureau, $villeObject); // Ajout Bureau
                         // Sauvegarde du bureau 
                         $em->persist($bureau);
-                        // $em->flush($bureau);
                         $em->flush();
                         // On s'assure qu'on a le nouveau bureau enregistrer
                         $em->refresh($bureau);
@@ -429,7 +340,6 @@ class AgendaController extends Controller
                     if(!isset($userbd)){
                         $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
                     }
-                     
                     $_SESSION['agenda'][1]->setConsultant($userbd); // le consultant
                     // On enregistre l'historique en BD
                     $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]); // incrementation heure debut 
@@ -439,9 +349,7 @@ class AgendaController extends Controller
                     
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
                     // mail pour le beneficiaire 
-                    $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
-                   
-                    //$this->get('session')->set('erreurs', false);
+                    // $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
                 }
             }
             // On supprime les sessions pour soulager le gc
@@ -494,11 +402,6 @@ class AgendaController extends Controller
             }
         }
     }
-    
-    // Maj historique
-    /*function updateHistorique(&$historique){
-        
-    }*/
 
     /**
      * Expands the home directory alias '~' to the full path.
@@ -511,6 +414,28 @@ class AgendaController extends Controller
             $homeDirectory = getenv('HOMEDRIVE') . getenv('HOMEPATH');
         }
         return str_replace('~', realpath($homeDirectory), $path);
+    }
+    
+    // Modification Historique
+    function modifHistorique(&$historiqueU, $historique, $hd, $hf, $option=0){
+        ($option==1) ? $historiqueU->setEventId($historique->getEventId()) : ''; // evenement id
+        $historiqueU->setSummary($historique->getSummary());
+        $historiqueU->setDescription($historique->getDescription());
+        ($option==0) ? $historiqueU->setDateDebut($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])): $historiqueU->setDateDebut(new \DateTime($historique->getDateDebut()->format('Y-m-d H:i:s'))); // Date debut
+        $historiqueU->setHeuredebut($historique->getHeuredebut());
+        $historiqueU->setHeurefin($historique->getHeurefin());
+        $historiqueU->setTypeRdv($historique->getTypeRdv());
+        ($option==0) ? $historiqueU->setDateFin($_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2])) : $historiqueU->setDateFin(new \DateTime($historique->getDateFin()->format('Y-m-d H:i:s')));
+        if(!is_null($historique->getAutreSummary())) $historiqueU->setAutreSummary($historique->getAutreSummary());
+    }
+    
+    // Ajout New Bureau
+    function nouveauBureau(&$bureau, $villeObject){
+        $bureau->setVille($villeObject); // ville
+        $bureau->setAdresse($_SESSION['agenda'][0]['adresse']); // adresse
+        $bureau->setNombureau($_SESSION['nom_bureau_autre']); // nom bureau
+        $bureau->setTemporaire(true); // temporaire pour tous bureaux ajoutés par le consultant ou l'admin lors de la saisie du formulaire d'agenda
+        $bureau->setActifInactif(true); // bureau actif
     }
 }
 
