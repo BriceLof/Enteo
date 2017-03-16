@@ -10,88 +10,125 @@ use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
     public function indexAction(Request $request, $page)
     {
-        if ($page < 1) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
-
-        $nbPerPage = 50;
-        
-        $em = $this->getDoctrine()->getManager();  
+        $em = $this->getDoctrine()->getManager();
         // Récupération liste béneficiaires
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');
-        
-        // ADMIN et autres 
-        $authorization = $this->get('security.authorization_checker');
-        if($authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $authorization->isGranted('ROLE_GESTION')){
-            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
-            $nombreBeneficiaire = count($beneficiaires);
-           //var_dump($beneficiaires);
-        }
-        // CONSULTANT
-        else {
-            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage,$this->getUser()->getId() );
-            $nombreBeneficiaire = count($beneficiaires);
-            //$this->getUser()->getBeneficiaire();
-            if(count($beneficiaires) == 0 ) 
-            {
-                $beneficiaires = null;
-                return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array('liste_beneficiaire'    => $beneficiaires));
-            }
-            
-        }
-        
-        // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
-        $nbPages = ceil(count($beneficiaires) / $nbPerPage);
 
-        // Si la page n'existe pas, on retourne une 404
-        if ($page > $nbPages) {
-            throw $this->createNotFoundException("La page ".$page." n'existe pas.");
-        }
-    
-        // Formulaire d'ajout d'une news à un bénéficiaire
-        $news = new News;
-        $form = $this->get("form.factory")->create(NewsType::class, $news);
-        //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $news = $form->getData();
-            $beneficiaire_id = $request->request->get('beneficiaire_id');
-            $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
-            
-            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
-            {
-                $historique = new Historique();
-                $historique->setHeuredebut(new \DateTime('now'));
-                $historique->setHeurefin(new \DateTime('now'));
-                $historique->setSummary("");
-                $historique->setTypeRdv("");
-                $historique->setBeneficiaire($news->getBeneficiaire());
-                $historique->setDescription($news->getDetailStatut()->getDetail());
-                $historique->setEventId("0");
-                $em->persist($historique);
-            }
-            
-            $em->persist($news);
-            $em->flush();
-            
-            // Envoi d'un mail selon le statut, ( parametres : detail du statut, bénéficiaire concerné )  
-            //$service = $this->container->get('application_plateforme.statut.mail.mail_for_statut')->alerteForStatus($news->getDetailStatut(), $news->getBeneficiaire() );
-            
-            $url = $this->get('router')->generate('application_plateforme_homepage').'#b'.$beneficiaire_id;
-            return $this->redirect($url);
-        }
+        //verifie si la requete est une requete AJAX
+        if ($request->isXmlHttpRequest()) {
 
-        return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
-            'liste_beneficiaire'    => $beneficiaires, 
-            'nbPages'               => $nbPages,
-            'page'                  => $page,
-            'form_news'             => $form->createView(),
-            'nombreBeneficiaire'    => $nombreBeneficiaire
-        ));
+            $news = new News;
+            $form = $this->get("form.factory")->create(NewsType::class, $news);
+            //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $news = $form->getData();
+                $beneficiaire_id = $request->request->get('beneficiaire_id');
+                $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
+
+                if ($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise")) {
+                    $historique = new Historique();
+                    $historique->setHeuredebut(new \DateTime('now'));
+                    $historique->setHeurefin(new \DateTime('now'));
+                    $historique->setSummary("");
+                    $historique->setTypeRdv("");
+                    $historique->setBeneficiaire($news->getBeneficiaire());
+                    $historique->setDescription($news->getDetailStatut()->getDetail());
+                    $historique->setEventId("0");
+                    $em->persist($historique);
+                }
+
+                $em->persist($news);
+                $em->flush();
+
+                //recuperation du bénéficiaire
+                $beneficiaire = $repository_beneficiaire->findOneById($beneficiaire_id);
+
+                $template = $this->forward('ApplicationPlateformeBundle:Home:infoBeneficiaire', (array('beneficiaire' => $beneficiaire)))->getContent();
+                $json = json_encode($template);
+                $response = new Response($json, 200);
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            }
+
+        }else {
+
+            if ($page < 1) {
+                throw $this->createNotFoundException("La page " . $page . " n'existe pas.");
+            }
+
+            $nbPerPage = 50;
+
+            // ADMIN et autres
+            $authorization = $this->get('security.authorization_checker');
+            if ($authorization->isGranted('ROLE_ADMIN') || $authorization->isGranted('ROLE_COMMERCIAL') || $authorization->isGranted('ROLE_GESTION')) {
+                $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage);
+                $nombreBeneficiaire = count($beneficiaires);
+                //var_dump($beneficiaires);
+            } // CONSULTANT
+            else {
+                $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage, $this->getUser()->getId());
+                $nombreBeneficiaire = count($beneficiaires);
+                //$this->getUser()->getBeneficiaire();
+                if (count($beneficiaires) == 0) {
+                    $beneficiaires = null;
+                    return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array('liste_beneficiaire' => $beneficiaires));
+                }
+
+            }
+
+            // On calcule le nombre total de pages grâce au count($listAdverts) qui retourne le nombre total d'annonces
+            $nbPages = ceil(count($beneficiaires) / $nbPerPage);
+
+            // Si la page n'existe pas, on retourne une 404
+            if ($page > $nbPages) {
+                throw $this->createNotFoundException("La page " . $page . " n'existe pas.");
+            }
+
+            // Formulaire d'ajout d'une news à un bénéficiaire
+            $news = new News;
+            $form = $this->get("form.factory")->create(NewsType::class, $news);
+            //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
+            if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $news = $form->getData();
+                $beneficiaire_id = $request->request->get('beneficiaire_id');
+                $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
+
+                if ($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise")) {
+                    $historique = new Historique();
+                    $historique->setHeuredebut(new \DateTime('now'));
+                    $historique->setHeurefin(new \DateTime('now'));
+                    $historique->setSummary("");
+                    $historique->setTypeRdv("");
+                    $historique->setBeneficiaire($news->getBeneficiaire());
+                    $historique->setDescription($news->getDetailStatut()->getDetail());
+                    $historique->setEventId("0");
+                    $em->persist($historique);
+                }
+
+                $em->persist($news);
+                $em->flush();
+
+                // Envoi d'un mail selon le statut, ( parametres : detail du statut, bénéficiaire concerné )
+                //$service = $this->container->get('application_plateforme.statut.mail.mail_for_statut')->alerteForStatus($news->getDetailStatut(), $news->getBeneficiaire() );
+
+                $url = $this->get('router')->generate('application_plateforme_homepage') . '#b' . $beneficiaire_id;
+                return $this->redirect($url);
+            }
+
+            return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
+                'liste_beneficiaire' => $beneficiaires,
+                'nbPages' => $nbPages,
+                'page' => $page,
+                'form_news' => $form->createView(),
+                'nombreBeneficiaire' => $nombreBeneficiaire
+            ));
+        }
     }
     public function detailStatutAction($idStatut)
     {
@@ -107,6 +144,10 @@ class HomeController extends Controller
 
         $response = new JsonResponse();
         return $response->setData(array('details' => $tabDetail));
+    }
+
+    public function infoBeneficiaireAction(Beneficiaire $beneficiaire){
+        return $this->render('ApplicationPlateformeBundle:Home:infoBeneficiaire.html.twig', (array('beneficiaire' => $beneficiaire)));
     }
 }
 

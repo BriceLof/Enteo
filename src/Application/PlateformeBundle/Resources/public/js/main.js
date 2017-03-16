@@ -10,7 +10,7 @@ $(function(){
         // Supprime tout les formulaires d'ouvert
         $(".modal-dialog form").remove();
         
-        formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id 
+        formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id
         
         // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire 
         // (car au début le formulaire n'est pas dans la boucle)
@@ -27,9 +27,9 @@ $(function(){
         if(statutId == 6)
             var nextStatutId = Number(statutId) + Number(4)
         else
-            var nextStatutId = Number(statutId) + Number(1) 
+            var nextStatutId = Number(statutId) + Number(1)
         
-        $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut 
+        $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut
         ajaxFormNews(nextStatutId, true)
         //---------- END 
             
@@ -38,15 +38,35 @@ $(function(){
             var statutId = $("option:selected").val()
             $(".detailStatut").attr("disabled", "disabled") 
             ajaxFormNews(statutId, true)
-        }); 
+        });
         //---------- END
-    });
-    
-    $(".submit_news button").on("click",function(){
-        //e.preventDefault();
-        alert();
 
-    })
+        $("#form_add_news").on("submit",function(e){
+            //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
+            e.preventDefault();
+
+            $.ajax({
+                url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
+                type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
+                data: $(this).serialize(),
+                cache: true,
+                dataType: 'json',
+                beforeSend: function () {
+                    //à rajouter un chargement
+                },
+                success: function (data) {
+                    template = data;
+
+                    //rechargement du html dans le block table du bénéficiaire
+                    $('#b'+beneficiaire_id).html(template);
+
+                    //ferme le modal
+                    $('#block_formulaire_ajout_new_'+beneficiaire_id).modal('toggle');
+                }
+            });
+        })
+    });
+
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Fiche bénéficiaire  -----------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
@@ -177,3 +197,4 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
         }
     });
 }
+

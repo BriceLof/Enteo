@@ -21,7 +21,7 @@ class FinanceurType extends AbstractType
         $builder
             ->add('nom', ChoiceType::class, array(
                 'required' => false,
-                'label' => 'Type ',
+                'label' => 'Type Financeur',
                 'choices' => array(
                     '...' => '',
                     'OPCA' => 'OPCA',
