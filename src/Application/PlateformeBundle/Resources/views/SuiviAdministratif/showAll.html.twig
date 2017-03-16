@@ -6,11 +6,11 @@
                   <th>Statut</th>
                   <th>Détail</th>
                   <th>Info</th>
-                  <!--<th colspan=2>Actions</th>-->
+                  <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-            {% for suiviAdministratif in beneficiaire.suiviAdministratif %}
+            {% for suiviAdministratif in beneficiaire.suiviAdministratif |reverse %}
                 <tr style="border-bottom: 1px solid #dddddd;">
                     <td style="border:none;margin-left:0">{{ suiviAdministratif.date|date('d/m/Y') }}</td>
                     <td>{{ suiviAdministratif.statut.nom }}</td>
@@ -25,7 +25,7 @@
                           </div>
                         </div>
                     </div>
-                    <!--<td>
+                    <td>
                         <div class="elementSuivi glyphiconSuivi">
                             <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalSuiviAdministratifDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                         </div>
@@ -59,7 +59,7 @@
 
 
 
-
+                        <!--                            
                         <div class="elementSuivi glyphiconSuivi">
                             <span style="color: black;" data-boucle="{{ loop.index }}" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil updateSuivi"></span>
                         </div>
@@ -76,14 +76,14 @@
                                             {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
                                         </form>
 
-                                        <!-- ID du statut et detail statut du dernier suivi administratif du bénéficiaire. On s'en sert dans js pour avoir le statut suivant 
+                                        <!-- ID du statut et detail statut du dernier suivi administratif du bénéficiaire. On s'en sert dans js pour avoir le statut suivant  
                                         <input type="hidden" value="{{ suiviAdministratif.statut.id }}" class="statutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
                                         <input type="hidden" value="{{ suiviAdministratif.detailStatut.id }}" class="detailStatutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
 
                                 </div>
                             </div>
-                        </div>
-                    </td>-->
+                        </div>-->
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

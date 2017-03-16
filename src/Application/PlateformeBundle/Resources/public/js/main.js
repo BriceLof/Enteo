@@ -10,7 +10,7 @@ $(function(){
         // Supprime tout les formulaires d'ouvert
         $(".modal-dialog form").remove();
         
-        formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id
+        formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id 
         
         // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire 
         // (car au début le formulaire n'est pas dans la boucle)
@@ -20,17 +20,17 @@ $(function(){
         $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id) 
         
         //---------- START : Par défaut lorsqu'on ouvre le formulaire, le statut présenté est le statut supérieur à celui de la dernière news du bénéficiaire       
-        var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
+        /*var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
         
         // ID du statut supérieur au statut courant du bénéficiaire (
         // si statutId = 6 => ( c a d RV2 réalisé, je fais un +3 sur l'id pour sauter le statut recevabilité jusqu'a facturation)
         if(statutId == 6)
             var nextStatutId = Number(statutId) + Number(4)
         else
-            var nextStatutId = Number(statutId) + Number(1)
+            var nextStatutId = Number(statutId) + Number(1) 
         
-        $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut
-        ajaxFormNews(nextStatutId, true)
+        $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut 
+        ajaxFormNews(nextStatutId, true)*/
         //---------- END 
             
         //---------- START : Si on change le statut 
@@ -74,12 +74,12 @@ $(function(){
     {   
         // Formulaire ajout d'une news
         
-        $(".link_formulaire_add_news").click(function(){
+        /*$(".link_formulaire_add_news").click(function(){
             $(".detailStatut").attr("disabled", "disabled") 
             var statutId = $("#statutIDCurrentBlockStatut").val()
             $("#statut #newsForm .statut").val(statutId) // changement de la valeur du statut 
             ajaxFormNews(statutId, true)
-        })
+        })*/
  
         $("#newsForm .statut").change(function(){
             var statutId = $(this).children("option:selected").val()
@@ -90,7 +90,7 @@ $(function(){
         // Formulaire ajout d'une suivi administratif
   
         //---------- START : Par défaut lorsqu'on ouvre le formulaire, chargement des details statuts     
-        var statutIdSuiviAd = $(".statutIDCurrentSuiviAd").val()
+        /*var statutIdSuiviAd = $(".statutIDCurrentSuiviAd").val()
         $("#suiviAdministratifNewForm .statutSuiviAd").val(statutIdSuiviAd)
         ajaxFormNews(statutIdSuiviAd, false) 
         
@@ -101,7 +101,7 @@ $(function(){
             var statutIdSuiviAd = $(".statutIDCurrentSuiviAdUpdate"+boucle).val()
             var detailStatutIdSuiviAd = $(".detailStatutIDCurrentSuiviAdUpdate"+boucle).val()
             ajaxFormNews(statutIdSuiviAd, false, detailStatutIdSuiviAd)   
-        })
+        })*/
         //---------- END 
         
         $("#suiviAdministratifNewForm .statutSuiviAd").change(function(){
@@ -197,4 +197,3 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
         }
     });
 }
-

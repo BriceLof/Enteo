@@ -21,6 +21,7 @@ class SuiviAdministratifType extends AbstractType
     {
         $builder
              ->add('statut', EntityType::class, array(
+                'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:Statut',
                 'choice_label' => 'nom', 
                 'query_builder' => function (EntityRepository $er) {
@@ -33,6 +34,7 @@ class SuiviAdministratifType extends AbstractType
                 },
             ))
             ->add('detailStatut', EntityType::class, array(
+                'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
                 'placeholder' => '',

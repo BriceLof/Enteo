@@ -111,10 +111,12 @@ class BureauController extends Controller
         if (!$bureau) {
             throw $this->createNotFoundException('Unable to find Bureau.');
         }
-        $em->remove($bureau);
+        $bureau->setSupprimer(true);
+		$bureau->setActifInactif(false);
+		$em->persist($bureau);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', 'bureau supprimé avec succès');
+        $this->get('session')->getFlashBag()->add('info', 'Bureau supprimé avec succès');
 
         return $this->redirect($this->generateUrl('application_index_bureau'));
     }

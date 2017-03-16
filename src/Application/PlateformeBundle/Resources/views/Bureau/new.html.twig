@@ -1,29 +1,26 @@
     <tr>
         <td>Nom du Bureau : </td>
-        <td colspan="3">{{ form_widget(form.nombureau) }}</td>
+        <td>{{ form_widget(form.nombureau) }}</td>
     </tr>
     <tr>
         <td>Adresse : </td>
-        <td colspan="3">{{ form_widget(form.adresse) }}</td>
+        <td>{{ form_widget(form.adresse) }}</td>
     </tr>
     <tr>
         <td>Code Postal </td>
-        <td colspan="3">{{ form_widget(form.code_postal) }}</td>
+        <td>{{ form_widget(form.code_postal) }}</td>
     </tr>
     <tr>
         <td>Ville : </td>
-        <td colspan="3">{{ form_widget(form.ville, {'attr':{'class': 'villeAjax' }}) }}</td>
+        <td>{{ form_widget(form.ville, {'attr':{'class': 'villeAjax' }}) }}</td>
     </tr>
     <tr>
         <td>Observation : </td>
-        <td colspan="3">{{ form_widget(form.observation) }}</td>
+        <td>{{ form_widget(form.observation) }}</td>
     </tr>
     
     <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+		<td></td>
         <td class="valider">{{ form_widget(form.submit) }}</td>
     </tr>
     <tr class="form-rest">

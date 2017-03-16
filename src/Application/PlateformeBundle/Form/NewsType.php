@@ -23,6 +23,7 @@ class NewsType extends AbstractType
         $builder
 
             ->add('statut', EntityType::class, array(
+                'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:Statut',
                 'choice_label' => 'nom', 
                 'query_builder' => function (EntityRepository $er) {
@@ -38,6 +39,7 @@ class NewsType extends AbstractType
                 )
             ))
             ->add('detailStatut', EntityType::class, array(
+                'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
                 'placeholder' => '',

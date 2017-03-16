@@ -118,24 +118,26 @@ if(document.getElementById('accompagnement')) {
         });
 
 
-        $('.type_employeur').on('change', function () {
-            tdElement = $('#tdElement');
-            element = tdElement.find('#beneficiaire_employeur_organisme');
-            if ($(this).val() == 'OPCA') {
+
+
+    $('.type_employeur').on('change', function () {
+        tdElement = $('#tdElement');
+        element = tdElement.find('#beneficiaire_employeur_organisme');
+        if ($(this).val() == 'OPCA') {
+            tdElement.css('display', 'table-row');
+            $name = 'OPCA';
+            listeOpcaOpacifEmployeur($name, element);
+        } else {
+            if ($(this).val() == 'OPACIF') {
                 tdElement.css('display', 'table-row');
-                $name = 'OPCA';
+                $name = 'OPACIF';
                 listeOpcaOpacifEmployeur($name, element);
             } else {
-                if ($(this).val() == 'OPACIF') {
-                    tdElement.css('display', 'table-row');
-                    $name = 'OPACIF';
-                    listeOpcaOpacifEmployeur($name, element);
-                } else {
-                    tdElement.css('display', 'none');
-                    element.empty();
-                }
+                tdElement.css('display', 'none');
+                element.empty();
             }
-        });
+        }
+    });
 
         //Ajax pour recuperer la liste des opca ou opacif
         function listeOpcaOpacifEmployeur($name, element) {
