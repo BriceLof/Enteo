@@ -6,7 +6,6 @@ $(function(){
 
     $(".btn_formulaire_add_news").click(function(){
         beneficiaire_id = $(this).attr('id')
-        
         // Supprime tout les formulaires d'ouvert
         $(".modal-dialog form").remove();
         
@@ -147,6 +146,7 @@ $(function(){
 // (param1 => ID statut, param2 => Booleen si c'est pour le formulaire de news ou non, param3 => ID detail Statut pour le formulaire de suivi administraif)
 function ajaxFormNews(statut, news, detailStatutSuiviAd)
 {
+    console.log(statut)
     $.ajax({
         type: 'get',
         url: Routing.generate("application_plateforme_detail_statut", { idStatut: statut }),
@@ -155,6 +155,7 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
             $(".block_info_chargement").show();
         }
     }).done(function(data) {
+        console.log(data)
         if(news == true)
         {
             $(".detailStatut").removeAttr("disabled")
