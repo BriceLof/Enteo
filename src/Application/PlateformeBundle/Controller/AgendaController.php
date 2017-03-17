@@ -53,16 +53,15 @@ class AgendaController extends Controller
     }
     // Traitement des liens des calendriers de beneficiaires
     public function agendasAction(Request $request){    
-        $tabColor = ["#00FFFF", "#0000FF", "#FF00FF", "#808080", "#00FF00", "#800000", "#000080", "#808000", "#800080", "#FF0000", "#C0C0C0", "#008080", "#FFFF00"];
         $authorization = $this->get('security.authorization_checker');
 		switch(true){
                 case($_SERVER['SERVER_NAME'] == 'dev.application.entheor.com'):
                         // remote
-						 if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL'))
+			if(!$authorization->isGranted('ROLE_ADMIN') && !$authorization->isGranted('ROLE_COMMERCIAL'))
                         {
-							if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
-                                return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
-						}
+                            if($this->getUser()->getId() != $request->query->get('userid') && $_SERVER['REQUEST_URI'] != '/web/app_dev.php/agenda' && $_SERVER['REQUEST_URI'] != '/web/agenda')
+                                    return $this->redirect( $this->generateUrl('application_plateforme_agenda', array('userid' => $this->getUser()->getId()))); 
+			}
                 break;
                 default:
                         // Test si l'utilisateur n'a pas le role Admin il ne peut pas switcher sur l'agenda d'un autre consultant
@@ -93,7 +92,7 @@ class AgendaController extends Controller
         else{
             if(empty($request->query->get('userid'))){
                 // Recuperer tous les consultants (Pour Admin)
-                $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT');
+                $resultat = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_CONSULTANT', 1);
                 $cons = 1;
             }
             else{
@@ -218,7 +217,7 @@ class AgendaController extends Controller
             if($_SESSION['agenda'][0]['bureau'] != '')
                 $summary = $_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
             else
-                $summary = $_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
+                $summary = $_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][1]->getSummary();
             // Changer le format en GMT+1 pour prendre en compte les heures dans l'agenda
             $h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
             $h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
