@@ -315,7 +315,7 @@ class AgendaController extends Controller
                      );
                      // On recupere l'id de l'evenement ajouté
                      $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
-                     // Renseignez l'occupation du bureau dans le calendrier s'il existe
+                     
                     $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
                     // On recupère le Bureau
                     if(!empty($_SESSION['bureau'])){
