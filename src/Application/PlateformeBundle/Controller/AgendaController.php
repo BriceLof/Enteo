@@ -304,15 +304,15 @@ class AgendaController extends Controller
                     }
                     // Ajout RDV dans le calendrier
                     $eventInsert = $googleCalendar->addEvent(
-                            $_SESSION['calendrierId'],
-                            ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                            ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
-                            $summary,
-                            $_SESSION['agenda'][1]->getDescription(),
-                            "",
-                            $lieu,
-                            [],
-                            false
+                         $_SESSION['calendrierId'],
+                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
+                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
+                         $summary,
+                         $_SESSION['agenda'][1]->getDescription(),
+                         "",
+                         $lieu,
+                         [],
+                         false
                      );
                      // On recupere l'id de l'evenement ajouté
                      $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
@@ -402,7 +402,6 @@ class AgendaController extends Controller
             }
         }
     }
-
     /**
      * Expands the home directory alias '~' to the full path.
      * @param string $path the path to expand.
@@ -415,7 +414,6 @@ class AgendaController extends Controller
         }
         return str_replace('~', realpath($homeDirectory), $path);
     }
-    
     // Modification Historique
     function modifHistorique(&$historiqueU, $historique, $hd, $hf, $option=0){
         ($option==1) ? $historiqueU->setEventId($historique->getEventId()) : ''; // evenement id
@@ -428,7 +426,6 @@ class AgendaController extends Controller
         ($option==0) ? $historiqueU->setDateFin($_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2])) : $historiqueU->setDateFin(new \DateTime($historique->getDateFin()->format('Y-m-d H:i:s')));
         if(!is_null($historique->getAutreSummary())) $historiqueU->setAutreSummary($historique->getAutreSummary());
     }
-    
     // Ajout New Bureau
     function nouveauBureau(&$bureau, $villeObject){
         $bureau->setVille($villeObject); // ville
