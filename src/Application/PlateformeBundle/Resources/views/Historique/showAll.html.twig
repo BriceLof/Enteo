@@ -7,7 +7,7 @@
               <th style="border:none;">Heure fin</th>
               <th style="border:none;">Bureau</th>
               <th style="border:none;">Rdv</th>
-              {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+              {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
                 <th style="border:none;">Actions</th>
               {% endif %}
            </tr>
@@ -36,7 +36,7 @@
                             <span> {{historique.summary}} </span>
                         </td>
                         <td align="center" style="border:none;">
-                            {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+                            {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
                               {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
                                  <div class="modif-event-maj">
                                     <a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
@@ -63,7 +63,7 @@
                         <td colspan=3>
                             <span>{{ historique.description }}</span>
                         </td>
-                        {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT')) %}
+                        {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
                             <td align="center"><span>-</span></td>
                         {% endif %}
                     </tr>
