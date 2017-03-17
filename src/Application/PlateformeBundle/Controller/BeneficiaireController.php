@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Form\BeneficiaireType;
+use Application\PlateformeBundle\Form\AddBeneficiaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Application\PlateformeBundle\Form\RechercheBeneficiaireType;
 use Symfony\Component\HttpFoundation\Response;
@@ -453,6 +454,46 @@ class BeneficiaireController extends Controller
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:recherche.html.twig',array(
             'form' => $form->createView(),
+        ));
+    }
+    
+    // Ajouter un bénéficiare manuellement (à l'opposé du webservice) 
+    public function addBeneficiaireAction(Request $request)
+    {   
+        $beneficiaire = new Beneficiaire();
+        $form = $this->createForm(AddBeneficiaireType::class,$beneficiaire);
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            // Beneficiaire
+            $beneficiaire = $form->getData();
+            $date = new \DateTime($beneficiaire->getDateConfMer());
+            $beneficiaire->setDateConfMer($date);
+            $beneficiaire->setDateHeureMer($date);
+            $beneficiaire->setVilleMer($beneficiaire->getVille());
+            
+            $em->persist($beneficiaire);
+           
+            // News par défaut
+            $news = new News;
+            $news->setBeneficiaire($beneficiaire);
+
+            $repositoryDetailStatut = $em->getRepository("ApplicationPlateformeBundle:DetailStatut");
+            $detailStatut = $repositoryDetailStatut->find(1);
+
+            $news->setStatut($detailStatut->getStatut());
+            $news->setDetailStatut($detailStatut);
+            $news->setMessage("");
+            
+            $em->persist($news);
+            
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('info', 'Bénéficiaire ajouté avec succès');
+            return $this->redirect($this->generateUrl('application_plateforme_homepage'));
+        }
+        return $this->render('ApplicationPlateformeBundle:Beneficiaire:add.html.twig',array(
+            'form' => $form->createView()
         ));
     }
 }

@@ -1,3 +1,7 @@
+application_add_beneficiaire:
+    path:     /add
+    defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:addBeneficiaire" }
+    
 application_show_beneficiaire:
     path:     /show/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:show" }

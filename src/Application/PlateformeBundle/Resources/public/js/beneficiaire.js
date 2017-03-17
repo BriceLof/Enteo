@@ -2,6 +2,10 @@ $(window).load(function() {
     console.log("Infos disponibles ");
 });
 $(function(){
+    $('.dateTimePicker').datetimepicker({
+                    locale: 'fr', 
+                    format: 'YYYY-MM-DD HH:mm:ss'
+    });
     //----------- Remplir ville en Ajax en indiquant le département
 
     // vider le premier champs qui est un vrai objet ville  (Uniquement sur la page de création d'un utilisateur)
@@ -23,11 +27,11 @@ $(function(){
                 beforeSend: function(){
                     console.log('ça charge');
                     $(".villeAjaxBeneficiaire option").remove();
-                    //$(".block_info_chargement").show();
+                    $(".block_info_chargement").show();
                 }
             })
             .done(function(data) {
-                //$(".block_info_chargement").hide();
+                $(".block_info_chargement").hide();
                 $(".villeAjaxBeneficiaire").removeAttr("disabled");
                 for(var i = 0; i < data.villes.length; i++)
                 {

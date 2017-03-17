@@ -9,7 +9,12 @@
 {% endblock %}
 
 {% block body %}
-    
+    {% for info in app.session.flashbag.get('info') %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ info }}
+        </div>
+    {% endfor %}
     <section class="container-fluid section-tab-home-benef">
     {% if liste_beneficiaire != null %}
         {% if results is defined %}
@@ -157,7 +162,10 @@
                 </ul>
             </div>
         {% else %}
-            <h4 style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
+            <div class="row">
+                <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
+                <a class="col-md-2 col-md-offset-6" href="{{path("application_add_beneficiaire")}}" alt="Ajouter un bénéficiaire">Ajouter un bénéficiaire</a>
+            </div>
             {% for beneficiaire in liste_beneficiaire %}
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef" id="tab-home-benef{{ beneficiaire.id }}">
