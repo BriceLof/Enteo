@@ -348,7 +348,7 @@ class AgendaController extends Controller
                     
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
                     // mail pour le beneficiaire 
-                    // $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
+                    $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
                 }
             }
             // On supprime les sessions pour soulager le gc

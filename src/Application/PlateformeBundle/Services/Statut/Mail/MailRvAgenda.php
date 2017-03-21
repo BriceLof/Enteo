@@ -26,36 +26,64 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             );
         
         if($typeRdv == "presenciel")
-            $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".$consultant->getCivilite()." ".$consultant->getNom()." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
+            $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
         else
-            $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".$consultant->getCivilite()." ".$consultant->getNom();
+            $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom());
         
+		
+		$Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
+        $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
+		
         if($typeRdv == "presenciel"){
-            $message = $beneficiaire->getCiviliteConso()." ".$beneficiaire->getNomConso().", <br><br>"
-                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$dateRdv->format('l')." ".$dateRdv->format('j')." ".$dateRdv->format('F')." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b>
-                dans nos locaux : <br><br><b>".
-                $consultant->getCivilite()." ".$consultant->getPrenom()." ".$consultant->getNom()."</b><br>
-                Cabinet ENTHEOR <br>
-                Tél: 06 81 85 84 28 <br>
-                ".$consultant->getEmail()."<br><br>
-                <b>Adresse :</b><br>".
-                $rdv->getBureau()->getAdresse()."<br>".
-                $rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNombureau()."<br><br>
-                Je vous remercie de venir <u>impérativement</u> avec :<br>";
+            $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
+                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b>
+                dans nos locaux : 
+				<table style='margin-top:-50px;'>
+					<tr>
+						<td><u>Votre consultant : </u></td>
+						<td style='display:block;margin-top:81px;margin-left:27px;'>
+							<b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
+							Cabinet ENTHEOR <br>
+							Tél: 06 81 85 84 28 <br>
+							Email : ".$consultant->getEmail()."<br><br>
+						</td>
+					</tr>
+					<tr>
+						<td><u>Lieu du rendez-vous : </u></td>
+						<td style='display:block;margin-top:21px;margin-left:26px;'>
+							".$rdv->getBureau()->getAdresse()."<br>".
+							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNombureau()."
+						</td>
+					</tr>
+				</table>
+				<br><br>
+                Merci de vous munir <u>impérativement</u> de :<br>";
         }else{
             $message = $beneficiaire->getCiviliteConso()." ".$beneficiaire->getNomConso().", <br><br>"
                 . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".$consultant->getCivilite()." ".$consultant->getPrenom()." ".$consultant->getNom()."<br><br><b>".
                 $consultant->getCivilite()." ".$consultant->getNom()." <u>attendra votre appel</u> le ".$dateRdv->format('l')." ".$dateRdv->format('j')." ".$dateRdv->format('F')." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises<u></b>
                     au numéro suivant : <b>06 91 85 84 28</b><br><br>
-                    Pour ce rendez-vous téléphonique, je vous remercie de vous munir <u>impérativement</u>:<br>";
+                    Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
         }
-        $message.=  "
-            - <b>CV détaillé</b> (par compétences)<br>
-            - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>
-            - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur [[ NUL si CSP bénéficiaire =/ de Demandeur Emploi et =/ de Chef Entreprise]]<br>
-            - <b>Votre dernier bulletin de paie</b> [[ NUL si CSP bénéficiaire =/ de Demandeur Emploi et =/ de Chef Entreprise]]<br><br>
+		
+		
+		$message.=  "
+			<div style='margin-left:20px;'>
+				- <b>CV détaillé</b> (par compétences)<br>
+				- <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
+				
+		if($beneficiaire->getCsp() != "demandeur d'emploi" && $beneficiaire->getCsp() != "chef d'entreprise/PL")
+			$message.=  "
+				- <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
+				- <b>Votre dernier bulletin de paie</b> ";	
 
-            <b>En cas d'empêchement, merci de bien vouloir nous prévenir au moins 24 heures avant votre rendez-vous.</b><br><br>
+			
+        $message.=  "
+			</div>
+			<br><br><br>
+
+            <center><b style='border:1px solid;padding:10px'>En cas d'empêchement, merci de bien vouloir nous prévenir au moins 24 heures avant votre rendez-vous.</b></center>
+			<br><br>
 
             Au plaisir de vous accompagner dans votre projet.<br><br>
             Bien Cordialement. <br><br>
