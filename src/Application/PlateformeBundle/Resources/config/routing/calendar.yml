@@ -1,0 +1,39 @@
+application_session_evenement:
+    path:     /set-session/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:addEvent" }
+    options:
+        expose: true
+
+application_get_client_evenement:
+    path:     /getClient
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:getClient" }
+    options:
+        expose: true
+
+application_add_evenement:
+    path:     /add-event/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:addEvent" }
+
+application_show_all_evenement:
+    path:     /show-all-event/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:showAllEvent" }
+
+application_show_evenement:
+    path:     /show-event
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:showEvent" }
+
+application_list_calendars_evenement:
+    path:     /list-calendars
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:listCalendars" }
+
+application_edit_evenement:
+    path:     /edit-event/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:editEvent" }
+
+application_show_iframe_evenement:
+    path:     /show-iframe
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:showIframe" }
+
+application_delete_evenement:
+    path:     /delete-event/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:deleteEvent" }

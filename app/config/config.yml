@@ -119,3 +119,9 @@ knp_snappy:
         enabled: true
         binary: "C:\\wkhtmltopdf\\bin\\wkhtmltoimage.exe"
         options: []
+
+fungio_google_calendar:
+    google_calendar:
+        application_name: "entheor"
+        credentials_path: "%kernel.root_dir%/.credentials/calendar.json"
+        client_secret_path: "%kernel.root_dir%/Resources/GoogleCalendarBundle/client_secret.json"

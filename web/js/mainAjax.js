@@ -211,6 +211,7 @@ $("document").ready(function (initDynamicContent) {
                     }
                 },
                 "accompagnement[financeur][0][montant]":{
+                    "number" : true,
                     "required": function(){
                         return ($('#accompagnement_financeur_0_nom').val() != "" || $('#accompagnement_financeur_0_dateAccord').val() != "" );
                     }
@@ -230,6 +231,7 @@ $("document").ready(function (initDynamicContent) {
                     }
                 },
                 "accompagnement[financeur][1][montant]":{
+                    "number" : true,
                     "required": function(){
                         return ($('#accompagnement_financeur_1_nom').val() != "" || $('#accompagnement_financeur_1_dateAccord').val() != "" );
                     }
