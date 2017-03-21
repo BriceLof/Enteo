@@ -342,11 +342,7 @@ class GoogleCalendar
         if ($location != "") {
             $event->setLocation($location);
         }
-        // Event insert
-		/*echo '<pre>';
-		var_dump($event);
-		var_dump($calendarId);
-		exit;*/
+        
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**
