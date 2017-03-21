@@ -135,7 +135,7 @@
 
             <!-- Formulaire qui sera déplacé en javascript dans la boucle pour lié à un bénéficiaire -->
             <div id="block_formulaire_add_news" style="display:none" >
-                <form action="{{ path('application_plateforme_homepage') }}" method="post">
+                <form id="form_add_news" action="{{ path('application_plateforme_homepage') }}" method="post">
                     <div class="modal-body">
                         <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
                         {{ form_label(form_news.statut) }}
