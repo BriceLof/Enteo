@@ -11,15 +11,19 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $typeRdv = $rdv->getTypeRdv();
         
         $from = "a.galois@entheor.com";
-        $to =  $beneficiaire->getEmailConso();
-        $cc = array($consultant);
-        $bcc = array(
+        // $to =  $beneficiaire->getEmailConso();
+		$to =  'f.azoulay@entheor.com';
+        // $cc = array($consultant->getEmail());
+        /*$bcc = array(
             "support@iciformation.fr" => "Support",
             "b.lof@iciformation.fr" => "Brice Lof",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
             "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
             "christine.clement@entheor.com" => "Christine Clement",
-            "a.galois@entheor.com" => "Audrey Galois");
+            "a.galois@entheor.com" => "Audrey Galois");*/
+		$bcc = array(
+            "support@iciformation.fr" => "Support",
+            );
         
         if($typeRdv == "presenciel")
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".$consultant->getCivilite()." ".$consultant->getNom()." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
@@ -69,7 +73,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             'message' => $message
         ));
 
-        return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+        return $this->sendMessage($from, $to,null, null, $bcc, $subject, $body);
     }
     
     

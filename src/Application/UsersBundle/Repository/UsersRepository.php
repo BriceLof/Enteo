@@ -1,5 +1,4 @@
 <?php
-
 namespace Application\UsersBundle\Repository;
 use Application\UsersBundle\Entity\Users;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
@@ -12,23 +11,30 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
  */
 class UsersRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByTypeUser($slugType)
+    public function findByTypeUser($slugType, $controller=null)
     {   
         
         $qb = $this->createQueryBuilder('u');
-
-        $qb ->where('u.roles LIKE :type')
-            ->setParameter('type', '%'.$slugType.'%')
-            ->orderBy('u.id', "DESC");
-        ;
-
+        
+        if($controller == 1){
+            // Consultant sur le formulaire Agenda par orde alphabetique
+            $qb ->where('u.roles LIKE :type')
+                ->setParameter('type', '%'.$slugType.'%')
+                ->orderBy('u.nom', "ASC");
+            ;
+        }
+        else{
+            $qb ->where('u.roles LIKE :type')
+                ->setParameter('type', '%'.$slugType.'%')
+                ->orderBy('u.id', "DESC");
+            ;
+        }
         return $qb
           ->getQuery()
           ->getResult()
         ; 
     }
-
-
+    
     /**
      * récupère les consultants
      *
@@ -52,5 +58,4 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
 
         return $request;
     }
-
 }

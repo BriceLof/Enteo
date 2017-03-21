@@ -25,15 +25,19 @@ class Mailer
     protected function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body){
         $mail = \Swift_Message::newInstance();
 
+        if(!empty($replyTo))
+            $mail->setReplyTo($replyTo);
+        if(!empty($cc))
+            $mail->setCc($cc);
+        if(!empty($bcc))
+            $mail->setBcc($bcc);
+        if(!empty($subject))
+            $mail->setSubject($subject);
         $mail
             ->setFrom($from)
             ->setTo($to)
-            ->setCc($cc)
-			->setBcc($bcc)
-            ->setSubject($subject)
             ->setBody($body)
-            ->setContentType('text/html')
-            ->setReplyTo($replyTo);
+            ->setContentType('text/html');
 
         $this->mailer->send($mail);
     }
