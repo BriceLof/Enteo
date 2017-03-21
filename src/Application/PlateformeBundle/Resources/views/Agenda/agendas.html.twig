@@ -43,7 +43,7 @@
                         <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
                             <option value="">Selectionnez</option>
                             {% for user in consultant %}
-                                <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}">{{user.nom~' '~user.prenom}}</option>
+                                <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}">{{user.nom | capitalize ~' '~user.prenom | capitalize}}</option>
                             {% endfor %}
                         </select>
                         <input type="hidden" class="consultantcalendrierid">
