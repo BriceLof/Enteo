@@ -38,15 +38,35 @@ $(function(){
             var statutId = $("option:selected").val()
             $(".detailStatut").attr("disabled", "disabled") 
             ajaxFormNews(statutId, true)
-        }); 
+        });
         //---------- END
-    });
-    
-    $(".submit_news button").on("click",function(){
-        //e.preventDefault();
-        // alert();
 
-    })
+        $("#form_add_news").on("submit",function(e){
+            //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
+            e.preventDefault();
+
+            $.ajax({
+                url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
+                type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
+                data: $(this).serialize(),
+                cache: true,
+                dataType: 'json',
+                beforeSend: function () {
+                    //à rajouter un chargement
+                },
+                success: function (data) {
+                    template = data;
+
+                    //rechargement du html dans le block table du bénéficiaire
+                    $('#b'+beneficiaire_id).html(template);
+
+                    //ferme le modal
+                    $('#block_formulaire_ajout_new_'+beneficiaire_id).modal('toggle');
+                }
+            });
+        })
+    });
+
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Fiche bénéficiaire  -----------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//

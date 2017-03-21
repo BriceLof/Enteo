@@ -243,7 +243,7 @@ class Beneficiaire
     private $domaineVae;
 
     /**
-     * @ORM\Column(name="diplome_vise", type="string", length=255)
+     * @ORM\Column(name="diplome_vise", type="string", length=255, nullable=true)
      */
     private $diplomeVise;
 

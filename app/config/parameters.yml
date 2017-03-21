@@ -1,6 +1,6 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: db661016137.db.1and1.com
+    database_host: db661016137.db.1and1.com    
     database_port: 3306
     database_name: db661016137
     database_user: dbo661016137

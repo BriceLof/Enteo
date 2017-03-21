@@ -34,7 +34,7 @@ class EmployeurType extends AbstractType
 
             ->add('type', ChoiceType::class, array(
                 'required' => false,
-                'label' => 'Type ',
+                'label' => 'Type Financeur',
                 'choices' => array(
                     '...' => '',
                     'OPCA' => 'OPCA',

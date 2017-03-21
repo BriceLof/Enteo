@@ -473,6 +473,3 @@ class Historique
         return $this->eventIdBureau;
     }
 }
-
-
-

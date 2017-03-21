@@ -80,9 +80,10 @@ if(document.getElementById('accompagnement')) {
         var dateDebut = document.getElementById('accompagnement_proposition_dateDebut');
         var dateFin = document.getElementById('accompagnement_proposition_dateFin');
         var message = "champs manquant : <br>";
+        var diplomeVise = document.getElementById('projet_diplomeVise');
 
         proposition.addEventListener('click', function (e) {
-            if (adresse.value == "" || dateDebut.value == "0" || dateFin.value == "0" || heure.value == "") {
+            if (adresse.value == "" || dateDebut.value == "0" || dateFin.value == "0" || heure.value == "" || diplomeVise.value == "") {
                 if (adresse.value == "") {
                     message += '- l\'adresse du bénéficiaire <br>';
                 }
@@ -94,6 +95,9 @@ if(document.getElementById('accompagnement')) {
                 }
                 if (heure.value == "") {
                     message += '- le nombre d\'accompagnement en heures <br>';
+                }
+                if (diplomeVise.value == "") {
+                    message += '- le diplome visé <br>';
                 }
                 //ici on ajoute un modal
                 $('body').append('<div id="dataConfirmModal2" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true">' +
@@ -112,11 +116,10 @@ if(document.getElementById('accompagnement')) {
             } else {
             }
         });
-    })();
-}
 
 
-(function () {
+
+
     $('.type_employeur').on('change', function () {
         tdElement = $('#tdElement');
         element = tdElement.find('#beneficiaire_employeur_organisme');
@@ -136,72 +139,72 @@ if(document.getElementById('accompagnement')) {
         }
     });
 
-    //Ajax pour recuperer la liste des opca ou opacif
-    function listeOpcaOpacifEmployeur($name, element) {
-        $.ajax({
-            url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
-            cache: true,
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                element.empty();
-                console.log('ça charge');
-            },
-            success: function (data) {
-                $.each(JSON.parse(data), function (i, item) {
-                    if ($(element).attr('value') == item) {
-                        element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
-                    } else {
-                        element.append("<option value=\"" + item + "\">" + item + "</option>");
-                    }
-                });
-                console.log('fini');
-            }
-        });
-    }
-
-
-    $(function () {
-        $('#beneficiaire_employeur_organisme').each(function () {
-            var newElement = $('<select>');
-            $.each(this.attributes, function (i, attrib) {
-                $(newElement).attr(attrib.name, attrib.value);
-            });
-            $(this).replaceWith(newElement);
-        });
-    });
-
-    $(function () {
-        $a = 1;
-        $('.contact_employeur').children().children().children().each(function () {
-            if ($(this).get(0).tagName == 'LABEL') {
-                $(this).css('display', 'none');
-                $a++;
-            }
-        })
-    });
-
-
-    $(function () {
-        $('select#beneficiaire_employeur_organisme').each(function () {
-            tdElement = $('#tdElement');
-            element = $(this);
-            console.log($(this).val());
-            if ($('#beneficiaire_employeur_type').val() == 'OPCA') {
-                tdElement.css('display', 'table-row');
-                $name = 'OPCA';
-                listeOpcaOpacifEmployeur($name, element);
-            } else {
-                if ($('#beneficiaire_employeur_type').val() == 'OPACIF') {
-                    tdElement.css('display', 'table-row');
-                    $name = 'OPACIF';
-                    listeOpcaOpacifEmployeur($name, element);
+        //Ajax pour recuperer la liste des opca ou opacif
+        function listeOpcaOpacifEmployeur($name, element) {
+            $.ajax({
+                url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                type: 'get',
+                dataType: 'json',
+                beforeSend: function () {
+                    element.empty();
+                    console.log('ça charge');
+                },
+                success: function (data) {
+                    $.each(JSON.parse(data), function (i, item) {
+                        if ($(element).attr('value') == item) {
+                            element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
+                        } else {
+                            element.append("<option value=\"" + item + "\">" + item + "</option>");
+                        }
+                    });
+                    console.log('fini');
                 }
-            }
-        });
-    });
-})();
+            });
+        }
 
+
+        $(function () {
+            $('#beneficiaire_employeur_organisme').each(function () {
+                var newElement = $('<select>');
+                $.each(this.attributes, function (i, attrib) {
+                    $(newElement).attr(attrib.name, attrib.value);
+                });
+                $(this).replaceWith(newElement);
+            });
+        });
+
+        $(function () {
+            $a = 1;
+            $('.contact_employeur').children().children().children().each(function () {
+                if ($(this).get(0).tagName == 'LABEL') {
+                    $(this).css('display', 'none');
+                    $a++;
+                }
+            })
+        });
+
+
+        $(function () {
+            $('select#beneficiaire_employeur_organisme').each(function () {
+                tdElement = $('#tdElement');
+                element = $(this);
+                console.log($(this).val());
+                if ($('#beneficiaire_employeur_type').val() == 'OPCA') {
+                    tdElement.css('display', 'table-row');
+                    $name = 'OPCA';
+                    listeOpcaOpacifEmployeur($name, element);
+                } else {
+                    if ($('#beneficiaire_employeur_type').val() == 'OPACIF') {
+                        tdElement.css('display', 'table-row');
+                        $name = 'OPACIF';
+                        listeOpcaOpacifEmployeur($name, element);
+                    }
+                }
+            });
+        });
+    })();
+}
 
 $(function(){
     //----------- Remplir ville en Ajax en indiquant le département

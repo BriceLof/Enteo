@@ -66,11 +66,41 @@
                                     <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
                                     <td>{{ beneficiaire.heureRappel|capitalize }}</td>
                                     {% if beneficiaire.consultant is not null %}
-                                        <td><b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b></td>
+                                        <td>
+                                            <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
+                                            {#
+                                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                                                    <span class="modifierConsultant maj" data-toggle="modal" data-target="#myModal{{ beneficiaire.id }}">Modifier</span>
+                                                {% endif %}
+                                            #}
+                                        </td>
                                     {% else %}
-                                        <td><b>Pas encore de consultant</b></td>
+                                        <td>
+                                            <b>Pas encore de consultant</b>
+                                            {#
+                                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                                                    <span class="modifierConsultant" data-toggle="modal" data-target="#myModal{{ beneficiaire.id }}">Ajouter un consultant</span>
+                                                {% endif %}
+                                            #}
+                                        </td>
                                     {% endif %}
                                 </tr>
+
+                                <div class="modal fade" id="myModal{{ beneficiaire.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Changement de Consultant</h4>
+                                            </div>
+                                            <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
+                                                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 {% if(beneficiaire.news | length > 0) %}
                                     {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
@@ -154,7 +184,7 @@
             <h4 style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
             {% for beneficiaire in liste_beneficiaire %}
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
-                <div class="row tab-home-benef">
+                <div class="row tab-home-benef" id="tab-home-benef{{ beneficiaire.id }}">
                     <div class="table-responsive col-md-12" >
                         <button title="Ajouter une news" class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
                         <a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
@@ -204,11 +234,41 @@
                                     <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
                                     <td>{{ beneficiaire.heureRappel|capitalize }}</td>
                                     {% if beneficiaire.consultant is not null %}
-                                        <td><b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b></td>
+                                        <td>
+                                            <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
+                                            {#
+                                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                                                    <span class="modifierConsultant maj" data-toggle="modal" data-target="#myModal{{ beneficiaire.id }}">Modifier</span>
+                                                {% endif %}
+                                            #}
+                                        </td>
                                     {% else %}
-                                        <td><b>Pas encore de consultant</b></td>
+                                        <td>
+                                            <b>Pas encore de consultant</b>
+                                            {#
+                                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                                                    <span class="modifierConsultant" data-toggle="modal" data-target="#myModal{{ beneficiaire.id }}">Ajouter un consultant</span>
+                                                {% endif %}
+                                            #}
+                                        </td>
                                     {% endif %}
                                 </tr>
+
+                                <div class="modal fade" id="myModal{{ beneficiaire.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">Changement de Consultant</h4>
+                                            </div>
+                                            <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
+                                                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 {% if(beneficiaire.news | length > 0) %}
                                     {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
@@ -262,7 +322,7 @@
             
             <!-- Formulaire qui sera déplacé en javascript dans la boucle pour lié à un bénéficiaire -->
             <div id="block_formulaire_add_news" style="display:none" >
-                <form action="{{ path('application_plateforme_homepage') }}" method="post">
+                <form id="form_add_news" action="{{ path('application_plateforme_homepage') }}" method="post">
                     <div class="modal-body">
                         <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value="" />
                         {{ form_label(form_news.statut) }}
@@ -276,7 +336,6 @@
                         </div>
                         {{ form_rest(form_news) }}
                     </div>
-                    
                 </form>
             </div>
 
