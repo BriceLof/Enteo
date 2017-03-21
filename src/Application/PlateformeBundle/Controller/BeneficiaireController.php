@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Accompagnement;
 use Application\PlateformeBundle\Entity\Employeur;
+use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
@@ -32,6 +33,9 @@ class BeneficiaireController extends Controller
      */
     public function showAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        /**
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -122,6 +126,8 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
+         */
+
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
 
@@ -176,9 +182,15 @@ class BeneficiaireController extends Controller
 
         if($beneficiaire->getAccompagnement() == null){
             $accompagnement = new Accompagnement();
-            $em->persist($accompagnement);
+            $financeur = new Financeur();
+            $financeur2 = new Financeur();
+            $accompagnement->addFinanceur($financeur);
+            $accompagnement->addFinanceur($financeur2);
+            $beneficiaire->setAccompagnement($accompagnement);
+            $em->persist($beneficiaire);
+            $em->flush();
         }
-        $em->flush();
+
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
@@ -330,10 +342,9 @@ class BeneficiaireController extends Controller
         }
 
         $beneficiaire = new Beneficiaire();
+
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
-
         $form->add('submit', SubmitType::class, array('label' => 'Affiner'));
-
         $form->handleRequest($request);
 
         if ($form->isValid()){

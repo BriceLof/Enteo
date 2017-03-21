@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Fungio\GoogleCalendarBundle\FungioGoogleCalendarBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test', 'pre_prod'], true)) {

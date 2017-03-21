@@ -1,0 +1,32 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% block title %}Agenda de {{ historique.consultant.prenom ~' '~historique.consultant.nom }}{% endblock%}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="row">
+                    <div>
+                        <h2>
+                            Beneficiaire :<br>
+                            {{ historique.beneficiaire.civiliteConso~' '~historique.beneficiaire.prenomConso ~' '~historique.beneficiaire.nomConso }}
+                        </h2>
+                    </div>
+                </div>
+                <div class="well row">
+                    {{ form(form) }}
+                </div>
+            </div>
+
+            <div class="col-md-9" id="iframe">
+                <div class="row">
+                    <h2>Agenda de {{ historique.consultant.civilite~' '~historique.consultant.prenom ~' '~historique.consultant.nom }}</h2>
+                </div>
+                <div class="row">
+                    {{ historique.consultant.calendrieruri|raw }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock%}

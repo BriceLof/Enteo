@@ -50,6 +50,13 @@ application_plateforme_beneficiaire:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/beneficiaire.yml"
     prefix:   /beneficiaire
 
+
+#calendar
+application_plateforme_calendar:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/calendar.yml"
+    prefix:   /calendar
+
+
 #pdf
 application_plateforme_pdf:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/pdf.yml"
