@@ -76,7 +76,7 @@ fos_user:
             type: Application\UsersBundle\Form\ProfileType
     from_email:
         address: %mailer_user%
-        sender_name: %mailer_name%
+        sender_name: 'Brice'
     
 # Swiftmailer Configuration
 swiftmailer:
@@ -125,3 +125,9 @@ fungio_google_calendar:
         application_name: "entheor"
         credentials_path: "%kernel.root_dir%/.credentials/calendar.json"
         client_secret_path: "%kernel.root_dir%/Resources/GoogleCalendarBundle/client_secret.json"
+        
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations

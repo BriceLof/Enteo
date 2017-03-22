@@ -24,7 +24,10 @@ services:
             - "@application_plateforme.document"
         tags:
             - { name: twig.extension }
-            
+    
+    application_plateforme.date:
+       class: Application\PlateformeBundle\Services\Date
+       arguments: ["@doctrine.orm.entity_manager"]
 ################################################################################
 ###################################  STATUT  ###################################
 ################################################################################
