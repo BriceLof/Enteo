@@ -11,20 +11,16 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $typeRdv = $rdv->getTypeRdv();
         
         $from = "a.galois@entheor.com";
-        // $to =  $beneficiaire->getEmailConso();
-		$to =  'f.azoulay@entheor.com';
-        // $cc = array($consultant->getEmail());
-        /*$bcc = array(
+        $to =  $beneficiaire->getEmailConso();
+        $cc = array($consultant->getEmail());
+        $bcc = array(
             "support@iciformation.fr" => "Support",
             "b.lof@iciformation.fr" => "Brice Lof",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
             "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
             "christine.clement@entheor.com" => "Christine Clement",
-            "a.galois@entheor.com" => "Audrey Galois");*/
-		$bcc = array(
-            "support@iciformation.fr" => "Support",
-            );
-        
+            "a.galois@entheor.com" => "Audrey Galois");
+
         if($typeRdv == "presenciel")
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
         else
@@ -33,6 +29,10 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 		
 		$Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
+		
+		$observation = "";
+		if(!is_null($rdv->getBureau()->getObservation())) 
+			$observation = "Observations : ".$rdv->getBureau()->getObservation();
 		
         if($typeRdv == "presenciel"){
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
@@ -44,7 +44,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 						<td style='display:block;margin-top:81px;margin-left:27px;'>
 							<b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
 							Cabinet ENTHEOR <br>
-							Tél: 06 81 85 84 28 <br>
+							Tél: ".$consultant->getTel1()."<br>
 							Email : ".$consultant->getEmail()."<br><br>
 						</td>
 					</tr>
@@ -52,7 +52,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 						<td><u>Lieu du rendez-vous : </u></td>
 						<td style='display:block;margin-top:21px;margin-left:26px;'>
 							".$rdv->getBureau()->getAdresse()."<br>".
-							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNombureau()."
+							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNombureau()."<br>".
+							$observation."
 						</td>
 					</tr>
 				</table>
@@ -80,9 +81,9 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 			
         $message.=  "
 			</div>
-			<br><br><br>
+			<br><br>
 
-            <center><b style='border:1px solid;padding:10px'>En cas d'empêchement, merci de bien vouloir nous prévenir au moins 24 heures avant votre rendez-vous.</b></center>
+           <div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au moins 24 heures avant votre rendez-vous.</b></div>
 			<br><br>
 
             Au plaisir de vous accompagner dans votre projet.<br><br>
