@@ -8,6 +8,7 @@ use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
+use Application\PlateformeBundle\Entity\SuiviAdministratif;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,8 @@ class HomeController extends Controller
                 $news = $form->getData();
                 $beneficiaire_id = $request->request->get('beneficiaire_id');
                 $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
-
+                
+                // ajouter un historique
                 if ($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise")) {
                     $historique = new Historique();
                     $historique->setHeuredebut(new \DateTime('now'));
@@ -42,7 +44,20 @@ class HomeController extends Controller
                     $historique->setEventId("0");
                     $em->persist($historique);
                 }
+                
+                // ajouter un suivi administratif 
+                if($news->getDetailStatut()->getDetail() == "RV1 Positif" OR $news->getDetailStatut()->getDetail() == "RV2 Positif")
+                {
+                    $statutRepo = $em->getRepository('ApplicationPlateformeBundle:Statut')->findOneBySlug("dossier-en-cours");
+                    $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByStatut($statutRepo->getId());
 
+                    $suiviAdministraif = new SuiviAdministratif();
+                    $suiviAdministraif->setBeneficiaire($news->getBeneficiaire());
+                    $suiviAdministraif->setStatut($statutRepo);
+                    $suiviAdministraif->setDetailStatut($detailStatutRepo);
+                    $em->persist($suiviAdministraif);
+                }
+            
                 $em->persist($news);
                 $em->flush();
 
@@ -110,7 +125,20 @@ class HomeController extends Controller
                     $historique->setEventId("0");
                     $em->persist($historique);
                 }
+                
+                // ajouter un suivi administratif 
+                if($news->getDetailStatut()->getDetail() == "RV1 Positif" OR $news->getDetailStatut()->getDetail() == "RV2 Positif")
+                {
+                    $statutRepo = $em->getRepository('ApplicationPlateformeBundle:Statut')->findOneBySlug("dossier-en-cours");
+                    $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByStatut($statutRepo->getId());
 
+                    $suiviAdministraif = new SuiviAdministratif();
+                    $suiviAdministraif->setBeneficiaire($news->getBeneficiaire());
+                    $suiviAdministraif->setStatut($statutRepo);
+                    $suiviAdministraif->setDetailStatut($detailStatutRepo);
+                    $em->persist($suiviAdministraif);
+                }
+                
                 $em->persist($news);
                 $em->flush();
 
