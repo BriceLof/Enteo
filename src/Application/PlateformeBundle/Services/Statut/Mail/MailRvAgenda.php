@@ -10,7 +10,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
         
-        $from = "a.galois@entheor.com";
+        $from = "audrey.azoulay@entheor.com";
         $to =  $beneficiaire->getEmailConso();
         $cc = array($consultant->getEmail());
         $bcc = array(
@@ -19,7 +19,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             "f.azoulay@entheor.com" => "Franck Azoulay", 
             "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
             "christine.clement@entheor.com" => "Christine Clement",
-            "a.galois@entheor.com" => "Audrey Galois");
+            "audrey.azoulay@entheor.com" => "Audrey Azoulay");
 
         if($typeRdv == "presenciel")
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
@@ -41,18 +41,19 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 				<table style='margin-top:-50px;'>
 					<tr>
 						<td><u>Votre consultant : </u></td>
-						<td style='display:block;margin-top:81px;margin-left:27px;'>
+						<td style='display:block;margin-top:64px;margin-left:27px;'>
 							<b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
 							Cabinet ENTHEOR <br>
 							Tél: ".$consultant->getTel1()."<br>
-							Email : ".$consultant->getEmail()."<br><br>
+							Email : ".$consultant->getEmail()."
 						</td>
 					</tr>
 					<tr>
 						<td><u>Lieu du rendez-vous : </u></td>
-						<td style='display:block;margin-top:21px;margin-left:26px;'>
+						<td style='display:block;margin-top:63px;margin-left:26px;'>
+							".$rdv->getBureau()->getNombureau()."<br>
 							".$rdv->getBureau()->getAdresse()."<br>".
-							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getNombureau()."<br>".
+							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getVille()->getNom()."<br>".
 							$observation."
 						</td>
 					</tr>
@@ -90,9 +91,9 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             Bien Cordialement. <br><br>
             
             --<br>
-            Audrey GALOIS<br>
+            Audrey AZOULAY<br>
             ENTHEOR<br>
-            <a href='mailto:a.galois@entheor.com'>a.galois@entheor.com</a><br>
+            <a href='mailto:audrey.azoulay@entheor.com'>audrey.azoulay@entheor.com</a><br>
             06.89.33.87.83";
 
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";

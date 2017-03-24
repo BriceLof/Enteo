@@ -409,7 +409,7 @@ class GoogleCalendar
         if(is_null($option)){
             // On recupère l'evenement à Mettre à jour [Pour le consultant]
             $lieu = $tableauDonneesComplementaire['adresse'].' '.$tableauDonneesComplementaire['zip'];
-            $summary = $tableauDonneesComplementaire['bureau'].', '.$tableauDonneesComplementaire['nom'].' '.$tableauDonneesComplementaire['prenom'].' '.$historiqueObject->getSummary();
+            $summary = $tableauDonneesComplementaire['ville'].', '.$tableauDonneesComplementaire['nom'].', '.$historiqueObject->getSummary();
             $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire['eventid'], []); // Objet Evenement
             $event->setSummary($summary); // Titre evenement
             // Pour les autres
