@@ -27,12 +27,16 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom());
         
 		
-		$Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
+        $Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
 		
-		$observation = "";
-		if(!is_null($rdv->getBureau()->getObservation())) 
-			$observation = "Observations : ".$rdv->getBureau()->getObservation();
+        $acces = "";
+        if(!is_null($rdv->getBureau()->getAcces())) 
+            $acces = "Accès : ".$rdv->getBureau()->getAcces();
+        
+        $commentaire = "";
+        if(!is_null($rdv->getBureau()->getCommentaire())) 
+            $commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
 		
         if($typeRdv == "presenciel"){
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
@@ -54,7 +58,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 							".$rdv->getBureau()->getNombureau()."<br>
 							".$rdv->getBureau()->getAdresse()."<br>".
 							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getVille()->getNom()."<br>".
-							$observation."
+							$acces."<br>".
+                                                        $commentaire."    
 						</td>
 					</tr>
 				</table>
