@@ -107,8 +107,8 @@ stof_doctrine_extensions:
 application_plateforme:
    google_calendar:
       application_name: "Google_calendar"
-      credentials_path: "%kernel.root_dir%/.credentials/calendar.json"
-      client_secret_path: "%kernel.root_dir%/web/client_secret.json"
+      #credentials_path: "%kernel.root_dir%/.credentials/calendar.json"
+      #client_secret_path: "%kernel.root_dir%/web/client_secret.json"
 
 knp_snappy:
     pdf:

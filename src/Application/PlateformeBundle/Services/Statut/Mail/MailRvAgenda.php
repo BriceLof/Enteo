@@ -9,10 +9,9 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
-        
         $from = "a.galois@entheor.com";
         $to =  $beneficiaire->getEmailConso();
-        $cc = array($consultant);
+        $cc = array($consultant->getEmail());
         $bcc = array(
             "support@iciformation.fr" => "Support",
             "b.lof@iciformation.fr" => "Brice Lof",
@@ -63,7 +62,6 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             06.89.33.87.83";
 
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
-        
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
             'message' => $message

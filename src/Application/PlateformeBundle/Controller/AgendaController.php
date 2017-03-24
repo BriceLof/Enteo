@@ -202,7 +202,8 @@ class AgendaController extends Controller
         // Instanciation du calendrier
         $googleCalendar = $this->get('application_google_calendar');
         $googleCalendar->setRedirectUri($redirectUri);
-        if ($request->query->has('code') && $request->get('code')){
+        
+        /*if ($request->query->has('code') && $request->get('code')){
             $client = $googleCalendar->getClient($request->get('code'));
         }else {
             $client = $googleCalendar->getClient();
@@ -210,7 +211,8 @@ class AgendaController extends Controller
         if (is_string($client)) {
             header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
             exit;
-        }
+        }*/
+        
         // Ajout de l'evenement dans le calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
@@ -313,9 +315,22 @@ class AgendaController extends Controller
                          [],
                          false
                      );
-                     // On recupere l'id de l'evenement ajouté
-                     $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
-                     
+                    $_SESSION['test'] = 1;
+                    $eventbureau = $googleCalendar->addEvent(
+                         '3v46kt8aoonnfing1t6qv7tjg8@group.calendar.google.com',
+                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
+                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
+                         $summary,
+                         $_SESSION['agenda'][1]->getDescription(),
+                         "",
+                         $lieu,
+                         [],
+                         false
+                     );
+                    var_dump($googleCalendar->getRefreshToken());
+                    exit;
+                    // On recupere l'id de l'evenement ajouté
+                    $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
                     $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
                     // On recupère le Bureau
                     if(!empty($_SESSION['bureau'])){
@@ -348,7 +363,7 @@ class AgendaController extends Controller
                     
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
                     // mail pour le beneficiaire 
-                    // $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
+                    $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
                 }
             }
             // On supprime les sessions pour soulager le gc

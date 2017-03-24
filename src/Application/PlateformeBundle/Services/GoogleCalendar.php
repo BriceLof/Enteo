@@ -211,51 +211,21 @@ class GoogleCalendar
             // ================================================== //
             // =========== Gestion calendrier bureau ============ //
             // ================================================== //
-            if(!empty($_SESSION['bureauCalId'])){
-                unset($_SESSION['bureauCalId']);
-                // Bureau calendrier
-                if (file_exists($credentialsPathbureau)) {
-                    $accessToken = json_decode(file_get_contents($credentialsPathbureau), true);
-                } else {
-                    // Request authorization from the user.
-
-                    if ($this->redirectUri) {
-                        $client->setRedirectUri($this->redirectUri);
-                    }
-
-                    if ($authCode != null) {
-                        $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                        if (!file_exists(dirname($credentialsPathbureau))) {
-                            mkdir(dirname($credentialsPathbureau), 0700, true);
-                            // mkdir(dirname(self::PATH_CREDENTIALS), 0700, true);
-                        }
-                        file_put_contents($credentialsPathbureau, json_encode($accessToken));
-                    } else {
-                        return $client->createAuthUrl();
-                    }
+            if (file_exists($credentialsPath)) {
+                 $accessToken = json_decode(file_get_contents($credentialsPath), true);
+            } else {
+                // Request authorization from the user.
+                if ($this->redirectUri) {
+                      $client->setRedirectUri($this->redirectUri);
                 }
-            }
-            else{
-                // Consultant calendrier
-                if (file_exists($credentialsPath)) {
-                    $accessToken = json_decode(file_get_contents($credentialsPath), true);
+                if ($authCode != null) {
+                     $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                     if (!file_exists(dirname($credentialsPath))) {
+                          mkdir(dirname($credentialsPath), 0700, true);
+                     }
+                     file_put_contents($credentialsPath, json_encode($accessToken));
                 } else {
-                    // Request authorization from the user.
-
-                    if ($this->redirectUri) {
-                        $client->setRedirectUri($this->redirectUri);
-                    }
-
-                    if ($authCode != null) {
-                        $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                        if (!file_exists(dirname($credentialsPath))) {
-                            mkdir(dirname($credentialsPath), 0700, true);
-                            // mkdir(dirname(self::PATH_CREDENTIALS), 0700, true);
-                        }
-                        file_put_contents($credentialsPath, json_encode($accessToken));
-                    } else {
-                        return $client->createAuthUrl();
-                    }
+                     return $client->createAuthUrl();
                 }
             }
         } else {
@@ -352,6 +322,7 @@ class GoogleCalendar
         }
         $event->setStart($start);
         $event->setEnd($end);
+        
         // Default status for newly created event
         $event->setStatus('tentative');
         // Set event's description
@@ -373,7 +344,12 @@ class GoogleCalendar
             $event->setLocation($location);
         }
         // Event insert
-		
+	/*if(!empty($_SESSION['test'])){
+                echo '<pre>';
+                var_dump($event);
+                unset($_SESSION['test']);
+                exit;
+            }*/
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**
