@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Accompagnement;
 use Application\PlateformeBundle\Entity\Employeur;
+use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Form\BeneficiaireType;
+use Application\PlateformeBundle\Form\AddBeneficiaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Application\PlateformeBundle\Form\RechercheBeneficiaireType;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +33,9 @@ class BeneficiaireController extends Controller
      */
     public function showAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        /**
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -121,6 +126,8 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
+         */
+
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
 
@@ -175,9 +182,15 @@ class BeneficiaireController extends Controller
 
         if($beneficiaire->getAccompagnement() == null){
             $accompagnement = new Accompagnement();
-            $em->persist($accompagnement);
+            $financeur = new Financeur();
+            $financeur2 = new Financeur();
+            $accompagnement->addFinanceur($financeur);
+            $accompagnement->addFinanceur($financeur2);
+            $beneficiaire->setAccompagnement($accompagnement);
+            $em->persist($beneficiaire);
+            $em->flush();
         }
-        $em->flush();
+
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
@@ -329,10 +342,9 @@ class BeneficiaireController extends Controller
         }
 
         $beneficiaire = new Beneficiaire();
+
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
-
         $form->add('submit', SubmitType::class, array('label' => 'Affiner'));
-
         $form->handleRequest($request);
 
         if ($form->isValid()){
@@ -453,6 +465,46 @@ class BeneficiaireController extends Controller
 
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:recherche.html.twig',array(
             'form' => $form->createView(),
+        ));
+    }
+    
+    // Ajouter un bénéficiare manuellement (à l'opposé du webservice) 
+    public function addBeneficiaireAction(Request $request)
+    {   
+        $beneficiaire = new Beneficiaire();
+        $form = $this->createForm(AddBeneficiaireType::class,$beneficiaire);
+        
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            // Beneficiaire
+            $beneficiaire = $form->getData();
+            $date = new \DateTime($beneficiaire->getDateConfMer());
+            $beneficiaire->setDateConfMer($date);
+            $beneficiaire->setDateHeureMer($date);
+            $beneficiaire->setVilleMer($beneficiaire->getVille());
+            
+            $em->persist($beneficiaire);
+           
+            // News par défaut
+            $news = new News;
+            $news->setBeneficiaire($beneficiaire);
+
+            $repositoryDetailStatut = $em->getRepository("ApplicationPlateformeBundle:DetailStatut");
+            $detailStatut = $repositoryDetailStatut->find(1);
+
+            $news->setStatut($detailStatut->getStatut());
+            $news->setDetailStatut($detailStatut);
+            $news->setMessage("");
+            
+            $em->persist($news);
+            
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('info', 'Bénéficiaire ajouté avec succès');
+            return $this->redirect($this->generateUrl('application_plateforme_homepage'));
+        }
+        return $this->render('ApplicationPlateformeBundle:Beneficiaire:add.html.twig',array(
+            'form' => $form->createView()
         ));
     }
 }

@@ -43,7 +43,7 @@
                         <select name="consultantC" id="consultantC" class="selectpicker" style="height: 32px;">
                             <option value="">Selectionnez</option>
                             {% for user in consultant %}
-                                <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}">{{user.nom~' '~user.prenom}}</option>
+                                <option id="{{user.id~'-'~user.calendrierid}}" value="{{user.calendrieruri}}">{{user.nom | capitalize ~' '~user.prenom | capitalize}}</option>
                             {% endfor %}
                         </select>
                         <input type="hidden" class="consultantcalendrierid">
@@ -76,6 +76,7 @@
                                     <tr>
                                         <td colspan=2>
                                             <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+											<input type="hidden" name="nombeneficiaire" id="nombe" class="form-control new_input" required>
                                             <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
                                         </td>
                                     </tr>
@@ -203,9 +204,11 @@
                                         <td colspan=2>
                                             {% if beneficiaire is defined and beneficiaire is not null %}
                                                 <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required value="{{ beneficiaire.prenomConso }}">
+												<input type="hidden" name="nombeneficiaire" id="nombe" class="form-control new_input" required value="{{ beneficiaire.nomConso }}">
                                                 <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="{{ beneficiaire.id }}" class="form-control new_input">
                                             {% else %}
                                                 <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required>
+												<input type="hidden" name="nombeneficiaire" id="nombe" class="form-control new_input" required>
                                                 <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="-1" class="form-control new_input">
                                             {% endif %} 
                                         </td>
@@ -329,6 +332,7 @@
                                     <tr>
                                         <td colspan=2>
                                            <input type="hidden" name="prenombeneficiaire" id="prenombe" class="form-control new_input" required value="{{ beneficiaire.prenomConso }}">
+										   <input type="hidden" name="nombeneficiaire" id="nombe" class="form-control new_input" required value="{{ beneficiaire.nomConso }}">
                                            <input type="hidden" name="idbeneficiaire" id="idbeneficiaire" value="{{ beneficiaire.id }}" class="form-control new_input">
                                         </td>
                                     </tr>

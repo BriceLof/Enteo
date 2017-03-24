@@ -205,29 +205,29 @@ class GoogleCalendar
         $client->setState($this->base64UrlEncode(json_encode($this->parameters)));
         // Load previously authorized credentials from a file.
         // Fichier credential
-        // (!empty($_SESSION['bureauCalId']))? $credentialsPathbureau = self::PATH_CREDENTIALS.'/credentialsbureau'.$_SESSION['bureauCalId'].'.json' : $credentialsPath = self::PATH_CREDENTIALS.'/credentials'.$_SESSION['useridcredencial'].'.json';;
-        $credentialsPath = self::PATH_CREDENTIALS.'/credentials.json';
+        (!empty($_SESSION['bureauCalId']))? $credentialsPathbureau = self::PATH_CREDENTIALS.'/credentialsbureau'.$_SESSION['bureauCalId'].'.json' : $credentialsPath = self::PATH_CREDENTIALS.'/credentials'.$_SESSION['useridcredencial'].'.json';;
+        // $credentialsPath = self::PATH_CREDENTIALS.'/credentials.json';
         if ($fromFile) {
-            // ================================================== //
-            // =========== Gestion calendrier bureau ============ //
-            // ================================================== //
+            // Consultant calendrier
             if (file_exists($credentialsPath)) {
-                 $accessToken = json_decode(file_get_contents($credentialsPath), true);
+                $accessToken = json_decode(file_get_contents($credentialsPath), true);
             } else {
-                // Request authorization from the user.
-                if ($this->redirectUri) {
-                      $client->setRedirectUri($this->redirectUri);
-                }
-                if ($authCode != null) {
-                     $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-                     if (!file_exists(dirname($credentialsPath))) {
-                          mkdir(dirname($credentialsPath), 0700, true);
-                     }
-                     file_put_contents($credentialsPath, json_encode($accessToken));
-                } else {
-                     return $client->createAuthUrl();
-                }
-            }
+				// Request authorization from the user.
+				if ($this->redirectUri) {
+					$client->setRedirectUri($this->redirectUri);
+				}
+				if ($authCode != null) {
+					$accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+					if (!file_exists(dirname($credentialsPath))) {
+						mkdir(dirname($credentialsPath), 0700, true);
+						// mkdir(dirname(self::PATH_CREDENTIALS), 0700, true);
+					}
+					file_put_contents($credentialsPath, json_encode($accessToken));
+				} else {
+					return $client->createAuthUrl();
+				}
+			}
+           
         } else {
             if ($this->accessToken != null) {
                 $accessToken = json_decode($this->accessToken, true);
@@ -322,7 +322,6 @@ class GoogleCalendar
         }
         $event->setStart($start);
         $event->setEnd($end);
-        
         // Default status for newly created event
         $event->setStatus('tentative');
         // Set event's description
@@ -343,13 +342,7 @@ class GoogleCalendar
         if ($location != "") {
             $event->setLocation($location);
         }
-        // Event insert
-	/*if(!empty($_SESSION['test'])){
-                echo '<pre>';
-                var_dump($event);
-                unset($_SESSION['test']);
-                exit;
-            }*/
+        
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**
@@ -416,7 +409,7 @@ class GoogleCalendar
         if(is_null($option)){
             // On recupère l'evenement à Mettre à jour [Pour le consultant]
             $lieu = $tableauDonneesComplementaire['adresse'].' '.$tableauDonneesComplementaire['zip'];
-            $summary = $tableauDonneesComplementaire['bureau'].', '.$tableauDonneesComplementaire['nom'].' '.$tableauDonneesComplementaire['prenom'].' '.$historiqueObject->getSummary();
+            $summary = $tableauDonneesComplementaire['ville'].', '.$tableauDonneesComplementaire['nom'].', '.$historiqueObject->getSummary();
             $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire['eventid'], []); // Objet Evenement
             $event->setSummary($summary); // Titre evenement
             // Pour les autres

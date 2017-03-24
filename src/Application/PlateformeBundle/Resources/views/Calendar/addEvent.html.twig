@@ -1,0 +1,32 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% block title %}Agenda de {{ beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}{% endblock%}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div>
+                    <h2>
+                        Beneficiaire :<br>
+                        {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso ~' '~beneficiaire.nomConso }}
+                    </h2>
+                </div>
+            </div>
+            <div class="well row">
+                {{ form(form) }}
+            </div>
+        </div>
+
+        <div class="col-md-9" id="iframe">
+            <div class="row">
+                <h2>Agenda de {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</h2>
+            </div>
+            <div class="row">
+                {{ beneficiaire.consultant.calendrieruri|raw }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

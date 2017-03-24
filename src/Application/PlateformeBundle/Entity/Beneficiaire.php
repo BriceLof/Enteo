@@ -186,7 +186,7 @@ class Beneficiaire
     private $motivation;
 
     /**
-     * @ORM\Column(name="client_id", type="integer")
+     * @ORM\Column(name="client_id", type="integer", nullable=true)
      */
     private $clientId;
 
@@ -253,7 +253,7 @@ class Beneficiaire
     private $formationInitiale;
 
     /**
-     * @ORM\Column(name="origine_mer", type="string", length=255)
+     * @ORM\Column(name="origine_mer", type="string", length=255, nullable=true)
      */
     private $origineMer;
 

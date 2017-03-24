@@ -154,10 +154,10 @@ class AgendaController extends Controller
                     $historique->setTypeRdv($request->request->get('typeRdv'));
                     // On stocke Les infos dans un tableau
                     $donnespost[0] = array(
-                        'nom' => $request->request->get('nomb'),
+                        'nom' => $request->request->get('nombeneficiaire'),
                         'prenom' => $request->request->get('prenombeneficiaire'),
                         'bureau' => $request->request->get('namebureauselect'),
-                        'ville' => $request->request->get('autrebureau'),
+                        'ville' => $request->request->get('villeh'),
                         'adresse' => $request->request->get('adresse'),
                         'zip' => $request->request->get('ziph'),
                         'rdv' => $request->request->get('typeRdv'),
@@ -176,7 +176,7 @@ class AgendaController extends Controller
                     $historique->setTypeRdv($request->request->get('typeRdv'));
                     // On stocke Les infos dans un tableau
                     $donnespost[0] = array(
-                        'nom' => $request->request->get('nomb'),
+                        'nom' => $request->request->get('nombeneficiaire'),
                         'prenom' => $request->request->get('prenombeneficiaire'),
                         'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('namebureauselect'):'',
                         'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
@@ -202,8 +202,7 @@ class AgendaController extends Controller
         // Instanciation du calendrier
         $googleCalendar = $this->get('application_google_calendar');
         $googleCalendar->setRedirectUri($redirectUri);
-        
-        /*if ($request->query->has('code') && $request->get('code')){
+        if ($request->query->has('code') && $request->get('code')){
             $client = $googleCalendar->getClient($request->get('code'));
         }else {
             $client = $googleCalendar->getClient();
@@ -211,15 +210,11 @@ class AgendaController extends Controller
         if (is_string($client)) {
             header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
             exit;
-        }*/
-        
+        }
         // Ajout de l'evenement dans le calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            if($_SESSION['agenda'][0]['bureau'] != '')
-                $summary = $_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-            else
-                $summary = $_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][1]->getSummary();
+            $summary = $_SESSION['agenda'][0]['ville'].', '.$_SESSION['agenda'][0]['nom'].', '.$_SESSION['agenda'][1]->getSummary();
             // Changer le format en GMT+1 pour prendre en compte les heures dans l'agenda
             $h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
             $h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
@@ -315,22 +310,9 @@ class AgendaController extends Controller
                          [],
                          false
                      );
-                    $_SESSION['test'] = 1;
-                    $eventbureau = $googleCalendar->addEvent(
-                         '3v46kt8aoonnfing1t6qv7tjg8@group.calendar.google.com',
-                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
-                         $summary,
-                         $_SESSION['agenda'][1]->getDescription(),
-                         "",
-                         $lieu,
-                         [],
-                         false
-                     );
-                    var_dump($googleCalendar->getRefreshToken());
-                    exit;
-                    // On recupere l'id de l'evenement ajouté
-                    $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+                     // On recupere l'id de l'evenement ajouté
+                     $_SESSION['agenda'][1]->setEventId($eventInsert["id"]);
+                     // Renseignez l'occupation du bureau dans le calendrier s'il existe
                     $userbd = $em->getRepository("ApplicationUsersBundle:Users")->find($_SESSION['useridcredencial']);
                     // On recupère le Bureau
                     if(!empty($_SESSION['bureau'])){
