@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * TestCalendar controller.
@@ -22,11 +23,11 @@ class CalendarController extends Controller
         $session->set('id', $id);
     }
 
-    public function getClient(Request $request){
+    public function getClientAction(Request $request){
         $googleCalendar = $this->get('fungio.google_calendar');
 
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client

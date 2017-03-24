@@ -10,7 +10,9 @@ function getClient() {
 }
 
 (function () {
-    div = $('#iframe');
-    var iframe = document.querySelector('#iframe iframe');
-    iframe.width = div.width();
+    if(document.getElementById('iframe')){
+        div = $('#iframe');
+        var iframe = document.querySelector('#iframe iframe');
+        iframe.width = div.width();
+    }
 })();

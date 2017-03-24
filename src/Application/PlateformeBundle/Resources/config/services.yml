@@ -28,6 +28,7 @@ services:
     application_plateforme.date:
        class: Application\PlateformeBundle\Services\Date
        arguments: ["@doctrine.orm.entity_manager"]
+
 ################################################################################
 ###################################  STATUT  ###################################
 ################################################################################

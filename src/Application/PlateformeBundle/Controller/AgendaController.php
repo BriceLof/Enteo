@@ -154,10 +154,10 @@ class AgendaController extends Controller
                     $historique->setTypeRdv($request->request->get('typeRdv'));
                     // On stocke Les infos dans un tableau
                     $donnespost[0] = array(
-                        'nom' => $request->request->get('nomb'),
+                        'nom' => $request->request->get('nombeneficiaire'),
                         'prenom' => $request->request->get('prenombeneficiaire'),
                         'bureau' => $request->request->get('namebureauselect'),
-                        'ville' => $request->request->get('autrebureau'),
+                        'ville' => $request->request->get('villeh'),
                         'adresse' => $request->request->get('adresse'),
                         'zip' => $request->request->get('ziph'),
                         'rdv' => $request->request->get('typeRdv'),
@@ -176,7 +176,7 @@ class AgendaController extends Controller
                     $historique->setTypeRdv($request->request->get('typeRdv'));
                     // On stocke Les infos dans un tableau
                     $donnespost[0] = array(
-                        'nom' => $request->request->get('nomb'),
+                        'nom' => $request->request->get('nombeneficiaire'),
                         'prenom' => $request->request->get('prenombeneficiaire'),
                         'bureau' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('namebureauselect'):'',
                         'ville' => ($request->request->get('typeRdv') == 'presenciel')? $request->request->get('villeh'):'',
@@ -214,10 +214,7 @@ class AgendaController extends Controller
         // Ajout de l'evenement dans le calendrier
         if(isset($_SESSION['agenda']) && isset($_SESSION['calendrierId'])){
             $lieu = $_SESSION['agenda'][0]['adresse'].' '.$_SESSION['agenda'][0]['zip'];
-            if($_SESSION['agenda'][0]['bureau'] != '')
-                $summary = $_SESSION['agenda'][0]['bureau'].', '.$_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][0]['prenom'].' '.$_SESSION['agenda'][1]->getSummary();
-            else
-                $summary = $_SESSION['agenda'][0]['nom'].' '.$_SESSION['agenda'][1]->getSummary();
+            $summary = $_SESSION['agenda'][0]['ville'].', '.$_SESSION['agenda'][0]['nom'].', '.$_SESSION['agenda'][1]->getSummary();
             // Changer le format en GMT+1 pour prendre en compte les heures dans l'agenda
             $h_d = $_SESSION['agenda'][1]->getHeureDebut()->format('H:i:s');
             $h_f = $_SESSION['agenda'][1]->getHeureFin()->format('H:i:s');
@@ -348,7 +345,7 @@ class AgendaController extends Controller
                     
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
                     // mail pour le beneficiaire 
-                    // $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
+                    $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
                 }
             }
             // On supprime les sessions pour soulager le gc

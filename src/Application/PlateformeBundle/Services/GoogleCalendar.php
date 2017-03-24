@@ -342,11 +342,7 @@ class GoogleCalendar
         if ($location != "") {
             $event->setLocation($location);
         }
-        // Event insert
-		/*echo '<pre>';
-		var_dump($event);
-		var_dump($calendarId);
-		exit;*/
+        
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**
@@ -413,7 +409,7 @@ class GoogleCalendar
         if(is_null($option)){
             // On recupère l'evenement à Mettre à jour [Pour le consultant]
             $lieu = $tableauDonneesComplementaire['adresse'].' '.$tableauDonneesComplementaire['zip'];
-            $summary = $tableauDonneesComplementaire['bureau'].', '.$tableauDonneesComplementaire['nom'].' '.$tableauDonneesComplementaire['prenom'].' '.$historiqueObject->getSummary();
+            $summary = $tableauDonneesComplementaire['ville'].', '.$tableauDonneesComplementaire['nom'].', '.$historiqueObject->getSummary();
             $event = $this->getEvent($calendrierId, $tableauDonneesComplementaire['eventid'], []); // Objet Evenement
             $event->setSummary($summary); // Titre evenement
             // Pour les autres

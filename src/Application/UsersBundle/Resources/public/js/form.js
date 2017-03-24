@@ -20,6 +20,7 @@ $(function(){
         $('.block_form_block_form_format_presence').show();
         $('.block_form_departement').show();
         $('.block_form_ville').show();
+        $('.block_form_adresse').show();
     }else{
         $('.block_form_calendar_uri').hide();
         $('.block_form_calendar_id').hide();
@@ -27,6 +28,7 @@ $(function(){
         $('.block_form_departement').hide();
         $('.departementInputForAjax').val("0");
         $('.block_form_ville').hide();
+        $('.block_form_adresse').hide();
     }
 
     $('.role_user').click(function() {
@@ -37,7 +39,7 @@ $(function(){
                 $('.block_form_format_presence')[this.checked ? "show" : "hide"]();
                 $('.block_form_departement')[this.checked ? "show" : "hide"]();
                 $('.block_form_ville')[this.checked ? "show" : "hide"]();
-                
+                $('.block_form_adresse')[this.checked ? "show" : "hide"]();
                 break;
            /* case "ROLE_CONSULTANT" :
                 break;  */     

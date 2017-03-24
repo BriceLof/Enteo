@@ -1,3 +1,6 @@
+!/app/config/parameters.yml
+!/app/config/parameters_dev.yml
+!/app/config/parameters_pre_prod.yml
 /app/config/*
 /build/
 /phpunit.xml

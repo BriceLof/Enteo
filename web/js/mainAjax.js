@@ -522,7 +522,7 @@ $("document").ready(function (initDynamicContent) {
     });
     
     // Autocompletion pour champ #autrbureau 
-    $("#autrebureau").autocomplete({
+    $('#autrebureau').autocomplete({
         source: function($request, reponse){
             // Si le length du code postal n'est pas = 5 alors pas de requete envoyé
             if($('#autrebureau').val().length >= 3){
@@ -543,6 +543,7 @@ $("document").ready(function (initDynamicContent) {
                                   {
                                      if(item.nom != undefined){
                                         $('#ville_id').val(item.id);
+										$('#villeh').val(item.nom);
                                         $('#zip').val(item.cp); // code postal
                                         $('#ziph').val(item.cp); // code postal
                                         return item.nom;
@@ -556,6 +557,7 @@ $("document").ready(function (initDynamicContent) {
                                       else{
                                           // on reinitialise tous les champs
                                           $('#ville_id').val('');
+										  $('#villeh').val('');
                                           $('#autrebureau').val(''); // departement
                                           $('#zip').val(''); // code postal
                                           $('#ziph').val(''); // code postal
@@ -665,7 +667,7 @@ $("document").ready(function (initDynamicContent) {
     });
     
     // Autocompletion nom
-    $("#nomb").autocomplete({
+    $('#nomb').autocomplete({
         source : function(requete, reponse){ // les deux arguments représentent les données nécessaires au plugin
             $.ajax({
                 url : urlautocompletion, // on appelle le script JSON
@@ -691,6 +693,7 @@ $("document").ready(function (initDynamicContent) {
                               {
                                   if(item.prenomConso != undefined){
                                       $('#nomb').val(item.nomConso);
+									  $('#nombe').val(item.nomConso); 
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       // $('#historique_Enregistrer').removeAttr('disabled');
@@ -701,6 +704,7 @@ $("document").ready(function (initDynamicContent) {
                                   }
                                   else{
                                       $('#nomb').val('');
+									  $('#nombe').val(''); 
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
                                       // $('#historique_Enregistrer').attr('disabled','true');
@@ -824,7 +828,6 @@ $("document").ready(function (initDynamicContent) {
             $('#historique_dateDebut_day option[value="'+j+'"]').attr('disabled', true); // activer
             j++;
         }
-        
         // On desactive les heures de fin
         j = 7;
         heure_debut = parseInt($('#historique_heureFin_hour').val()); // On recupère l'heure de debut
@@ -971,11 +974,11 @@ $("document").ready(function (initDynamicContent) {
             // On reinitialise les 2 heures (debut et fin )
             if(heuretoday<20){
                 $('#historique_heureDebut_hour').val(heuretoday);
-                // $('#historique_heureDebut_minute').val(minutetoday);
+                $('#historique_heureDebut_minute').val('0');
             }
             if(heuretoday<21){
                 $('#historique_heureFin_hour').val(heuretoday+1);
-                // $('#historique_heureFin_minute').val(minutetoday);
+                $('#historique_heureFin_minute').val('0');
             }
         }
         // Affichage du nom du consultant
@@ -1070,11 +1073,11 @@ $('#consultantC').change(function(){
         // On reinitialise les 2 heures (debut et fin )
         if(heuretoday<20){
             $('#historique_heureDebut_hour').val(heuretoday);
-            // $('#historique_heureDebut_minute').val(minutetoday);
+            $('#historique_heureDebut_minute').val('0');
         }
         if(heuretoday<21){
             $('#historique_heureFin_hour').val(heuretoday+1);
-            // $('#historique_heureFin_minute').val(minutetoday);
+            $('#historique_heureFin_minute').val('0');
         }
         // On ajoute l'id dans l'action du formulaire Ajout Evenement
         var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
@@ -1235,7 +1238,6 @@ $(document).ready(function() {
 });
 
 (function(){
-
     var plusMoins = document.getElementById('plusMoins');
     if(plusMoins != undefined) {
         plusMoins.onclick = function () {
@@ -1266,7 +1268,6 @@ $(document).ready(function() {
         document.getElementById('ajouteNews').style.display = 'block';
     };
      */
-
     var input = document.querySelectorAll('#editBeneficiaire input');
     var content = [];
     for(var i=0;i<input.length;i++) {
@@ -1277,7 +1278,6 @@ $(document).ready(function() {
             this.style.color = 'inherit';
         },true);
     }
-
     function afficheMessageFlash() {
         var flash = document.getElementById("flashbag");
         if (flash != undefined) {
@@ -1291,7 +1291,6 @@ function plusMoins(element) {
     parent = element.parentNode.parentNode.parentNode;
     body = parent.getElementsByClassName('collapse')[0];
     span  = element.getElementsByClassName('glyphicon')[0];
-
     //alert(span);
     //alert(element.getElementsByClassName('glyphicon')[0].className);
     if(body.className == 'collapse in'){
