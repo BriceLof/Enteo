@@ -178,10 +178,15 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
                 // Formulaire news
                 if(news == true)
                 {
+                    if(i == 0 ) $("#newsForm .detailStatut").append("<option value=''>Choisissez</option>")
                     $("#newsForm .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")  
                 }
                 // Formulaire suivi administratif
                 else{
+                    if(i == 0 ){
+                        $("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
+                        $("#suiviAdministratifEditForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
+                    }
                     $("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")
                     
                     // En modification : selectionne par défaut le detail statut qui était présent à la base
@@ -193,6 +198,7 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
             }
             // Home    
             else{
+                if(i == 0 ) $(formDuBeneficiaire + " .detailStatut").append("<option value=''>Choisissez</option>")
                 $(formDuBeneficiaire + " .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
             }     
         }

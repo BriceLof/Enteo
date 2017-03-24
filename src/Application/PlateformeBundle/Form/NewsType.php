@@ -42,7 +42,6 @@ class NewsType extends AbstractType
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
-                'placeholder' => '',
                 'attr' => array(
                     'class' => 'news'
                 )
