@@ -1,0 +1,12 @@
+.champ_agenda div.form-group{
+    display: inline-block;
+    width: 48%;
+}
+.radio{
+    display: inline-block;
+    width: 30%;
+    margin-left: 10%;
+}
+#form_admin_event > div{
+    margin-left: 2%;
+}

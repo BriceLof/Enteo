@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,11 +15,67 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class CalendarType extends AbstractType
+class AdminCalendarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('consultant', EntityType::class, array(
+                'class' => 'ApplicationUsersBundle:Users',
+                'label' => 'Consultant ',
+                'placeholder' => 'choisissez',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.roles LIKE :type')
+                        ->setParameter('type', '%consultant%');
+                },
+            ))
+
+            ->add('beneficiaire', EntityType::class, array(
+                'class' => 'ApplicationPlateformeBundle:Beneficiaire',
+                'label' => 'beneficiaire',
+                'choice_label' => 'nomConso',
+            ))
+
+            ->add('nom', TextType::class, array(
+                'label' => 'Nom bénéficiaire',
+                "mapped" => false
+            ))
+
+            ->add('prenom', TextType::class, array(
+                'label' => 'Prenom bénéficiaire',
+                "mapped" => false
+            ))
+
+            ->add('ville', TextType::class, array(
+                "mapped" => false
+            ))
+
+            ->add('nomBureau', TextType::class, array(
+                "mapped" => false,
+                'label' => 'Nom du Bureau',
+            ))
+
+            ->add('adresseBureau', TextType::class, array(
+                "mapped" => false,
+                 'label' => 'Adresse',
+            ))
+
+            ->add('cpBureau', TextType::class, array(
+                "mapped" => false,
+                "label" => 'Code postal'
+            ))
+
+            ->add('typerdv', ChoiceType::class, array(
+                'choices' => array(
+                    'presentiel' => 'presentiel',
+                    'distantiel' => 'distantiel',
+                ),
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Type de Rendez-vous'
+            ))
+
             ->add('bureau', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:Bureau',
                 'label' => 'Bureau',
@@ -60,7 +117,7 @@ class CalendarType extends AbstractType
             ))
 
             ->add('description', TextType::class, array(
-                'attr'=>array('class'=>'allchampH'),
+                'attr'=>array('class'=>''),
                 'label' => 'Observation',
                 'required' => false
             ))
@@ -80,6 +137,6 @@ class CalendarType extends AbstractType
 
     public function getName()
     {
-        return 'application_plateformebundle_calendar_type';
+        return 'application_plateformebundle_admin_calendar_type';
     }
 }
