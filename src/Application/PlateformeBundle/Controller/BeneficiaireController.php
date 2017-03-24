@@ -475,13 +475,18 @@ class BeneficiaireController extends Controller
         $form = $this->createForm(AddBeneficiaireType::class,$beneficiaire);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             // Beneficiaire
             $beneficiaire = $form->getData();
-            $date = new \DateTime($beneficiaire->getDateConfMer());
-            $beneficiaire->setDateConfMer($date);
-            $beneficiaire->setDateHeureMer($date);
+            $beneficiaire->setDateConfMer(new \DateTime());
+            $beneficiaire->setDateHeureMer(new \DateTime());
             $beneficiaire->setVilleMer($beneficiaire->getVille());
+            // origine beneficiaire 
+            $origineBene1 =$form->get('origineMerQui')->getData();
+            $origineBene2 =$form->get('origineMerComment')->getData();
+            $origineBene3 =$form->get('origineMerDetailComment')->getData();
+            $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2."_".$origineBene3);
             
             $em->persist($beneficiaire);
            
