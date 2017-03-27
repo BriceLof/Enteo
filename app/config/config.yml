@@ -126,8 +126,8 @@ fungio_google_calendar:
         credentials_path: "%kernel.root_dir%/.credentials/calendar.json"
         client_secret_path: "%kernel.root_dir%/Resources/GoogleCalendarBundle/client_secret.json"
         
-doctrine_migrations:
-    dir_name: "%kernel.root_dir%/DoctrineMigrations"
-    namespace: Application\Migrations
-    table_name: migration_versions
-    name: Application Migrations
+#doctrine_migrations:
+ #   dir_name: "%kernel.root_dir%/DoctrineMigrations"
+  #  namespace: Application\Migrations
+   # table_name: migration_versions
+    #name: Application Migrations

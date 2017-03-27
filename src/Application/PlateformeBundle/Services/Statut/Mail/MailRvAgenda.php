@@ -15,7 +15,6 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $cc = array($consultant->getEmail());
         $bcc = array(
             "support@iciformation.fr" => "Support",
-            "b.lof@iciformation.fr" => "Brice Lof",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
             "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
             "christine.clement@entheor.com" => "Christine Clement",

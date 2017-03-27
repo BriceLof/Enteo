@@ -1012,7 +1012,7 @@ $("document").ready(function (initDynamicContent) {
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         // Desactiver et Activer les heures en fonction de l'heure de debut
         while(j<=21){
-            if(j<=heure_debut){
+            if(j<heure_debut){
                 $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true); // activer
             }
             else{
