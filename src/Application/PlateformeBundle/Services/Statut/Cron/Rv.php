@@ -163,7 +163,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'date' => $date,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
     public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -184,7 +184,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -205,7 +205,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo,null,null,$subject,$body);
+        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
     }
 }
 ?>

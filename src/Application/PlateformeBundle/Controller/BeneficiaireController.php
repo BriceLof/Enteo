@@ -35,7 +35,7 @@ class BeneficiaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
-        /**
+        
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -126,7 +126,7 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-         */
+         
 
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);

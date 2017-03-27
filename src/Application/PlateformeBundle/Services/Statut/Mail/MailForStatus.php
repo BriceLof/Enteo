@@ -48,7 +48,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
             'lastSuiviAdministratif' => $lastSuiviAdministratif,
         ));
 //        $this->sendMessage($from,$to,$replyTo,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
     }
     
 }

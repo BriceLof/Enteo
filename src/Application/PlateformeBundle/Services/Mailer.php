@@ -64,7 +64,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'compteur' => $compteur,
         ));
-        $this->sendMessage($this->from,$to,$cc = null, $bcc = null,$subject,$body);
+        $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
     }
 }
 ?>
