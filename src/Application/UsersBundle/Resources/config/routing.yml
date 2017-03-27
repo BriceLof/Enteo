@@ -6,6 +6,12 @@ user_type:
     defaults: 
         _controller: ApplicationUsersBundle:Users:index 
         typeUser: consultant
+
+user_ajax_get_user:
+    path: /user/get_user/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Users:ajaxGetUser" }
+    options:
+        expose: true
             
 user_show:
     path: /user/{id}/show

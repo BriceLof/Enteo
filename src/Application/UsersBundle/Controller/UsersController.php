@@ -7,6 +7,7 @@ use Application\UsersBundle\Form\UsersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -175,5 +176,21 @@ class UsersController extends Controller
             'user' => $user,
             'form' => $editForm->createView()
         ));
+    }
+
+    public function ajaxGetUserAction(Request $request, $id){
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
+            $consultant[] = array(
+                'nom' => $user->getNom(),
+                'prenom' => $user->getPrenom(),
+                'calendrieruri' => $user->getCalendrieruri()
+            );
+            $response = new JsonResponse();
+            return $response->setData(array('data' => $consultant));
+        }else{
+            throw new \Exception('erreur');
+        }
     }
 }

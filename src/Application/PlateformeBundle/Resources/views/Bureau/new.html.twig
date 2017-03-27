@@ -15,12 +15,16 @@
         <td>{{ form_widget(form.ville, {'attr':{'class': 'villeAjax' }}) }}</td>
     </tr>
     <tr>
-        <td>Observation : </td>
-        <td>{{ form_widget(form.observation) }}</td>
+        <td>Accès : </td>
+        <td>{{ form_widget(form.acces) }}</td>
+    </tr>
+    <tr>
+        <td>Commentaires : </td>
+        <td>{{ form_widget(form.commentaire) }}</td>
     </tr>
     
     <tr>
-		<td></td>
+        <td></td>
         <td class="valider">{{ form_widget(form.submit) }}</td>
     </tr>
     <tr class="form-rest">

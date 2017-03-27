@@ -1,6 +1,7 @@
 <?php
 
 namespace Application\PlateformeBundle\Repository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * BureauRepository
@@ -30,5 +31,23 @@ class BureauRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('ville',$ville)
                     ->getQuery()
                     ->getResult();
+    }
+
+    public function getBureaux($ville){
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Bureau','b');
+
+        $query = 'SELECT b.* FROM bureau b WHERE 1';
+        $params = array();
+
+        if(!is_null($ville)) {
+            $query .= ' AND b.ville_id = :villeId';
+            $params['villeId'] = $ville->getId();
+        }
+
+        $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
+        $request->setParameters($params);
+
+        return $request;
     }
 }
