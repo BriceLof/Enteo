@@ -48,6 +48,6 @@ class DocumentExtension extends \Twig_Extension
     }
 
     public function getName(){
-        return 'aplication_document';
+        return 'application_document';
     }
 }

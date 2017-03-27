@@ -693,7 +693,7 @@ $("document").ready(function (initDynamicContent) {
                               {
                                   if(item.prenomConso != undefined){
                                       $('#nomb').val(item.nomConso);
-									  $('#nombe').val(item.nomConso); 
+									  $('#nombe').val(item.nomConso);
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       // $('#historique_Enregistrer').removeAttr('disabled');
@@ -704,7 +704,7 @@ $("document").ready(function (initDynamicContent) {
                                   }
                                   else{
                                       $('#nomb').val('');
-									  $('#nombe').val(''); 
+									  $('#nombe').val('');
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
                                       // $('#historique_Enregistrer').attr('disabled','true');

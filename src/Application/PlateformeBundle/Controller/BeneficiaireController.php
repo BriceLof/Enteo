@@ -371,9 +371,6 @@ class BeneficiaireController extends Controller
                 $dateFin = $form['dateFin']->getData();
             }
 
-
-
-
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
             $nbPages = ceil(count($results) / 50);
@@ -405,7 +402,11 @@ class BeneficiaireController extends Controller
     public function ajaxSearchAction(Request $request)
     {
 
+        $idUser = null;
+
         $beneficiaire = new Beneficiaire();
+
+        $nom = $request->query->get('nom');
 
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
 
@@ -425,13 +426,14 @@ class BeneficiaireController extends Controller
             $beneficiaire->setVille($ville);
         }
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
+        if ($nom != null ){
+            $beneficiaire->setNomConso($nom);
+        }
+
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUser);
+
         $results = $query->getArrayResult();
         $resultats = new JsonResponse(json_encode($results));
-        $resultats->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
-        $resultats->headers->set('Access-Control-Allow-Origin', '*');
-        $resultats->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
-
 
         return $resultats;
     }

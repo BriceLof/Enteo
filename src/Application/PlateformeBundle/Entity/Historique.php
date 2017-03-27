@@ -122,7 +122,6 @@ class Historique
     {
         $this->date = new \DateTime('now');
         $this->dateDebut = new \DateTime('now');
-	    $this->dateFin = new \DateTime('now');
         $this->eventarchive = 'off';
         $this->heuredebut = new \DateTime('now');
         $this->typerdv = 'presentiel';

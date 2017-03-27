@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Controller;
 use Application\PlateformeBundle\Entity\Bureau;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Application\PlateformeBundle\Form\BureauType;
 
@@ -146,5 +147,33 @@ class BureauController extends Controller
         }
 
         return $this->redirect($this->generateUrl('application_index_bureau'));
+    }
+
+    public function ajaxSearchAction(Request $request){
+//        if ($request->isXmlHttpRequest()) {
+            $nomVille = $request->query->get('nomVille');
+
+            $em = $this->getDoctrine()->getManager();
+            $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll();
+
+            foreach ($bureaux as $bureau){
+                if(stristr($bureau->getVille()->getNom(),$nomVille) === false){
+                }else{
+                    $list[] = array(
+                        'id' => $bureau->getId(),
+                        'nom' => $bureau->getNombureau(),
+                        'adresse' => $bureau->getAdresse(),
+                        'cp' => $bureau->getVille()->getCp(),
+                        'ville' => $bureau->getVille()->getNom(),
+                    );
+                }
+            }
+
+            $resultats = new JsonResponse(json_encode($list));
+            return $resultats;
+
+//        }else{
+//            throw new \Exception('erreur');
+//        }
     }
 }
