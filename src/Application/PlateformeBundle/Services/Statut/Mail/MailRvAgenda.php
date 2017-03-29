@@ -30,11 +30,11 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
 		
         $acces = "";
-        if(!is_null($rdv->getBureau()->getAcces())) 
+        if(!is_null($rdv->getBureau())) 
             $acces = "Accès : ".$rdv->getBureau()->getAcces();
         
         $commentaire = "";
-        if(!is_null($rdv->getBureau()->getCommentaire())) 
+        if(!is_null($rdv->getBureau())) 
             $commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
 		
         if($typeRdv == "presenciel"){
