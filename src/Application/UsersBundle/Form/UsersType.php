@@ -139,7 +139,8 @@ class UsersType extends AbstractType
                     ));
                // }
                 $builder->add('adresse', TextType::class, array(
-                    'label' => 'Adresse *'
+                    'label' => 'Adresse ', 
+                    'required' => false, 
                 ))
                 ;
                 //if(isset($options['data'])) var_dump($options['data']->getVille());

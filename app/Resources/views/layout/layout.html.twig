@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>{% block title %}Accueil{% endblock %}</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -38,8 +39,10 @@
                                             <li><a href="{{ path('user_type', {'typeUser': 'admin' }) }}">Administrateurs</a></li>
                                         {% endif %}
                                         <li><a href="{{ path('user_type', {'typeUser': 'consultant' }) }}">Consultants VAE</a></li>
-										<li><a href="{{ path('user_type', {'typeUser': 'commercial' }) }}">Commerciaux Téléphone</a></li>
-										<li><a href="{{ path('user_type', {'typeUser': 'gestion' }) }}">Gestionnaires Administratifs</a></li>
+                                        <li><a href="{{ path('user_type', {'typeUser': 'commercial' }) }}">Commerciaux Téléphone</a></li>
+                                        <li><a href="{{ path('user_type', {'typeUser': 'gestion' }) }}">Gestionnaires Administratifs</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('application_add_beneficiaire') }}">Ajout Bénéficiaires</a></li>                                        
                                         <li role="separator" class="divider"></li>
                                         <li><a href="{{ path('application_index_bureau') }}">Bureaux</a></li>
                                     </ul>

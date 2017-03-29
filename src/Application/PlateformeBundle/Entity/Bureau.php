@@ -67,9 +67,14 @@ class Bureau
     private $calendrieruri;
     
     /**
-    * @ORM\Column(name="observation", type="text", nullable=true)
+    * @ORM\Column(name="acces", type="text", nullable=true)
     */
-    private $observation;
+    private $acces;
+    
+    /**
+    * @ORM\Column(name="commentaire", type="text", nullable=true)
+    */
+    private $commentaire;
     
 	/**
      * @var
@@ -264,30 +269,6 @@ class Bureau
     }
 
     /**
-     * Set observation
-     *
-     * @param string $observation
-     *
-     * @return Bureau
-     */
-    public function setObservation($observation)
-    {
-        $this->observation = $observation;
-
-        return $this;
-    }
-
-    /**
-     * Get observation
-     *
-     * @return string
-     */
-    public function getObservation()
-    {
-        return $this->observation;
-    }
-
-    /**
      * Set supprimer
      *
      * @param boolean $supprimer
@@ -309,5 +290,59 @@ class Bureau
     public function getSupprimer()
     {
         return $this->supprimer;
+    }
+
+    /**
+     * Set acces
+     *
+     * @param string $acces
+     *
+     * @return Bureau
+     */
+    public function setAcces($acces)
+    {
+        $this->acces = $acces;
+
+        return $this;
+    }
+
+    /**
+     * Get acces
+     *
+     * @return string
+     */
+    public function getAcces()
+    {
+        return $this->acces;
+    }
+
+    /**
+     * Set commentaire
+     *
+     * @param string $commentaire
+     *
+     * @return Bureau
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return string
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return (ucfirst($this->getNombureau()).', '.$this->getAdresse().' '.$this->getVille()->getCp().' ').' '.strtoupper($this->getVille()->getNom());
     }
 }

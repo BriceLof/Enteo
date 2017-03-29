@@ -31,27 +31,31 @@ class BureauType extends AbstractType
                 )
             ))
             ->add('code_postal', TextType::class, array(
-                    'mapped' => false, 
-                    'label' => "Code postal *", 
-                    'required' => true, 
-                    'attr' => array("maxlength" => 5, "class" => "codePostalInputForAjax")
-                ))
+                'mapped' => false, 
+                'label' => "Code postal *", 
+                'required' => true, 
+                'attr' => array("maxlength" => 5, "class" => "codePostalInputForAjax")
+            ))
             ->add('codePostalHidden', HiddenType::class, array("mapped" => false))
             ->add('idVilleHidden', HiddenType::class, array("mapped" => false))
             ->add('ville', EntityType::class, array(
-                    'class' => 'ApplicationPlateformeBundle:Ville',
-                    'label' => 'Ville *',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('v')
-                            ->orderBy('v.nom', 'ASC')
-                            ->setMaxResults( 1 );
-                    },
-                    'choice_label' => 'nom',
+                'class' => 'ApplicationPlateformeBundle:Ville',
+                'label' => 'Ville *',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('v')
+                        ->orderBy('v.nom', 'ASC')
+                        ->setMaxResults( 1 );
+                },
+                'choice_label' => 'nom',
             ))
-            ->add('observation', TextareaType::class, array(
-                'label' => 'Observation ',
-				'required' => false
-            ))               
+            ->add('acces', TextareaType::class, array(
+                'label' => 'Accès ',
+                'required' => false
+            )) 
+            ->add('commentaire', TextareaType::class, array(
+                'label' => 'Commentaires ',
+                'required' => false
+            ))                
             ->add('submit', SubmitType::class, array(
                 'label' => "Enregistrer"
             ));

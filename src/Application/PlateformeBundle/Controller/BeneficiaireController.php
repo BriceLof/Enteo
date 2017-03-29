@@ -35,7 +35,7 @@ class BeneficiaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
-        /**
+        
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -126,7 +126,7 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-         */
+         
 
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
@@ -371,9 +371,6 @@ class BeneficiaireController extends Controller
                 $dateFin = $form['dateFin']->getData();
             }
 
-
-
-
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
             $nbPages = ceil(count($results) / 50);
@@ -405,7 +402,11 @@ class BeneficiaireController extends Controller
     public function ajaxSearchAction(Request $request)
     {
 
+        $idUser = null;
+
         $beneficiaire = new Beneficiaire();
+
+        $nom = $request->query->get('nom');
 
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
 
@@ -425,13 +426,14 @@ class BeneficiaireController extends Controller
             $beneficiaire->setVille($ville);
         }
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin);
+        if ($nom != null ){
+            $beneficiaire->setNomConso($nom);
+        }
+
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUser);
+
         $results = $query->getArrayResult();
         $resultats = new JsonResponse(json_encode($results));
-        $resultats->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
-        $resultats->headers->set('Access-Control-Allow-Origin', '*');
-        $resultats->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
-
 
         return $resultats;
     }
@@ -475,13 +477,18 @@ class BeneficiaireController extends Controller
         $form = $this->createForm(AddBeneficiaireType::class,$beneficiaire);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             // Beneficiaire
             $beneficiaire = $form->getData();
-            $date = new \DateTime($beneficiaire->getDateConfMer());
-            $beneficiaire->setDateConfMer($date);
-            $beneficiaire->setDateHeureMer($date);
+            $beneficiaire->setDateConfMer(new \DateTime());
+            $beneficiaire->setDateHeureMer(new \DateTime());
             $beneficiaire->setVilleMer($beneficiaire->getVille());
+            // origine beneficiaire 
+            $origineBene1 =$form->get('origineMerQui')->getData();
+            $origineBene2 =$form->get('origineMerComment')->getData();
+            $origineBene3 =$form->get('origineMerDetailComment')->getData();
+            $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2."_".$origineBene3);
             
             $em->persist($beneficiaire);
            

@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Historique;
+use Application\PlateformeBundle\Form\AdminCalendarType;
 use Application\PlateformeBundle\Form\CalendarType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,11 +24,17 @@ class CalendarController extends Controller
         $session->set('id', $id);
     }
 
-    public function getClientAction(Request $request){
+    /**
+     * fonction AJAX qui permet de récuperer le client au moment de l'ajout d'un evenement dans la page home
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function getClient(Request $request){
         $googleCalendar = $this->get('fungio.google_calendar');
 
         //url de redirection
-        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
@@ -43,6 +50,13 @@ class CalendarController extends Controller
         return $response->setData(array('client' => $client));
     }
 
+    /**
+     *
+     *
+     * @param Request $request
+     * @param $id (beneficiaire)
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function addEventAction(Request $request, $id)
     {
         //recuperation du bénéficiaire
@@ -65,17 +79,17 @@ class CalendarController extends Controller
             $historique->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
 
-            $historique->setDateFin($historique->getDateDebut());
-            $eventSummary = $historique->getSummary();
+            $eventSummary = $historique->getBureau()->getNombureau().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
             $eventDescription = $historique->getDescription();
-            $dateDebut = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'), $historique->getHeureDebut()->format('i'));
-            $dateFin = $historique->getDateFin()->setTime($historique->getHeureFin()->format('H'), $historique->getHeureFin()->format('i'));
+            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
+            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
             //utiliser event pour jouer avec l'evenement
             $event = $googleCalendar->addEvent($calendarId, $dateDebut, $dateFin, $eventSummary, $eventDescription);
-            $historique->setConsultant($beneficiaire->getConsultant());
 
+            $historique->setConsultant($beneficiaire->getConsultant());
             $historique->setEventId($event['id']);
+            $historique->setDateFin($dateFin);
 
             $em->persist($historique);
             $em->flush();
@@ -95,6 +109,63 @@ class CalendarController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+
+    public function adminAddEventAction(Request $request){
+
+        //recuperation du service
+        $googleCalendar = $this->get('fungio.google_calendar');
+
+        $historique = new Historique();
+        $form = $this->createForm(AdminCalendarType::class, $historique);
+        $form->add('submit', SubmitType::class, array('label' => 'Ajouter'));
+
+        //si le formulaire est validé et qu'il ne présente pas d'erreur
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            //recuperation du bénéficiaire
+            $beneficiaire = $historique->getBeneficiaire();
+
+            //recuperation du consultant renseigné dans le formulaire
+            //si le consultant n'est pas celui du bénéficiaire ou il n'a pas encore de consultant, on fait comment???
+            ////////////A FAIRE/////////////
+            $consultant = $historique->getConsultant();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $eventSummary = $historique->getBureau()->getNombureau().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
+            $eventDescription = $historique->getDescription();
+            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
+            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
+
+            //utiliser event pour jouer avec l'evenement
+            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription);
+            //ajouter l'evenement dans le calendrier du bureau
+            $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription);
+
+            $historique->setConsultant($beneficiaire->getConsultant());
+            $historique->setEventId($event['id']);
+            $historique->setEventIdBureau($eventBureau['id']);
+            $historique->setDateFin($dateFin);
+
+            $em->persist($historique);
+            $em->flush();
+
+            //returne à n'importe lequel url eventuellement au show agenda??
+            //à changer peut être?/////////////////////////////////////////////////
+            return $this->redirect($this->generateUrl('application_admin_add_evenement', array(
+                )
+            ));
+        }
+
+        //cet event servira a l'enregister au niveau du bureau////////////////////////////////
+        //$event2 = $googleCalendar->addEvent($calendarId2, (new \DateTime('now'))->modify('+1 day'), (new \DateTime('now'))->modify('+2 day'), $eventSummary, $eventDescription);
+        return $this->render('ApplicationPlateformeBundle:Calendar:adminAddEvent.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+
 
     public function showAllEventAction(Request $request, $id)
     {

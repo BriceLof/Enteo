@@ -735,7 +735,7 @@ $("document").ready(function (initDynamicContent) {
                               {
                                   if(item.prenomConso != undefined){
                                       $('#nomb').val(item.nomConso);
-                                      $('#nombe').val(item.nomConso); 
+                                      $('#nombe').val(item.nomConso);
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       // $('#historique_Enregistrer').removeAttr('disabled');
@@ -745,7 +745,7 @@ $("document").ready(function (initDynamicContent) {
                                   }
                                   else{
                                       $('#nomb').val('');
-                                      $('#nombe').val(''); 
+                                      $('#nombe').val('');
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
                                       // $('#historique_Enregistrer').attr('disabled','true');
@@ -1053,7 +1053,7 @@ $("document").ready(function (initDynamicContent) {
         selectheuresf = $('#historique_heureFin_hour option'); // heure fin
         // Desactiver et Activer les heures en fonction de l'heure de debut
         while(j<=21){
-            if(j<=heure_debut){
+            if(j<heure_debut){
                 $('#historique_heureFin_hour option[value="'+j+'"]').attr('disabled', true); // activer
             }
             else{

@@ -17,3 +17,9 @@ application_index_bureau:
 application_actif_inactif_bureau:
     path:     /actifInactif/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Bureau:actifInactif" }
+
+application_ajax_search_bureau:
+    path:     /ajaxSearch
+    defaults: { _controller: "ApplicationPlateformeBundle:Bureau:ajaxSearch" }
+    options:
+        expose: true
