@@ -9,9 +9,87 @@ use Application\PlateformeBundle\Entity\Bureau;
 use Application\PlateformeBundle\Form\HistoriqueType;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\AgendaB;
+use Application\PlateformeBundle\Form\DisponibilitesType;
+use Application\PlateformeBundle\Entity\Disponibilites;
 
 class AgendaController extends Controller
 {
+    // Disponibilite des consultants
+    public function disponibiliteAction(Request $request){
+        // Instanciation du calendrier
+        $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
+        switch(true){
+           case (!empty($request->query->get('userId'))):
+               $_SESSION['calendrierId'] = $request->query->get('calendrierid');
+               $_SESSION['calendrierIdbureau'] = (!empty($request->query->get('eventidbureauupdate')))? $request->query->get('eventidbureauupdate') : '';
+               // On stocke l'id du user pour la personnalisation du fichier credentials
+               // dans google calendar qui permet la connexion à l'agenda du consultant
+               $_SESSION['useridcredencial'] = $request->query->get('userId');
+           break;
+        }
+        $googleCalendar = $this->get('application_google_calendar');
+        $googleCalendar->setRedirectUri($redirectUri);
+        if ($request->query->has('code') && $request->get('code')){
+            $client = $googleCalendar->getClient($request->get('code'));
+        }else {
+            $client = $googleCalendar->getClient();
+        }
+        if (is_string($client)) {
+            header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
+            exit;
+        }
+        // On recuepere les données du formulaira
+        if ($request->isMethod('POST')){
+            $disponibilite = new Disponibilites(); // Instanciation 
+            $formdisponibilite = $this->createForm(DisponibilitesType::class, $disponibilite); // Definition de la couleur associé au calendrie
+            $formdisponibilite->handleRequest($request); // Le lien Requête <-> Formulaire pourque l'objet Disponibilites contient les valeurs entrées dans le formulaire 
+            // On recupere le consultant
+            $em = $this->getDoctrine()->getManager(); // Entity manager
+            $consultant = $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($_SESSION['useridcredencial']);
+            $disponibilite->setConsultant($consultant);
+            // Ajout RDV dans le calendrier
+            $eventInsert = $googleCalendar->addEvent(
+                 $_SESSION['calendrierId'],
+                 $disponibilite->getDateDebuts(), // decrementation heure debut 
+                 $disponibilite->getDateFins(),// decrementation heure fin
+                 $disponibilite->getSummary(),
+                 '',
+                 '',
+                 '',
+                 [],
+                 false
+            );
+            $_SESSION['useridcredencial'] = 35;
+            // On recupère l'id de l'evenement
+            $disponibilite->setEventId($eventInsert["id"]);
+            $em->persist($disponibilite);
+            $em->flush();
+            
+            // Redirection sur la page de l'admin
+            if($this->getUser()->getRoles()[0] == 'ROLE_ADMIN'){
+                // Redirection sur la page agenda de l'Admin
+                return $this->redirectToRoute('application_plateforme_agenda');
+            }
+            else{
+                $resultat = $em->getRepository('ApplicationUsersBundle:Users')->find($request->query->get('userId'));
+                $historique = new Historique(); // Historique
+                $form = $this->createForm(HistoriqueType::class, $historique);
+                
+                $disponibilite = new Disponibilites(); // Instanciation du formulaire disponibilite
+                // Definition de la couleur associé au calendrie
+                $form = $this->createForm(HistoriqueType::class, $historique);
+                $formdisponibilite = $this->createForm(DisponibilitesType::class, $disponibilite);
+                $maj = 0;
+                return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
+                   'consultant' => $resultat,
+                   'form' => $form->createView(),
+                   'maj' => $maj,
+                   'formdispo' => $formdisponibilite->createView()
+                ));
+            }
+        }
+    } 
+    
     // Archivage des evenements dans le calendrier
     public function deleteevenementAction(Request $request){
         $em = $this->getDoctrine()->getManager(); // Entity manager
@@ -104,14 +182,17 @@ class AgendaController extends Controller
                 $beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Beneficiaire")->find($request->query->get('benef'));
             }
         }
+        $disponibilite = new Disponibilites(); // Instanciation du formulaire disponibilite
         // Definition de la couleur associé au calendrie
         $form = $this->createForm(HistoriqueType::class, $historique);
+        $formdisponibilite = $this->createForm(DisponibilitesType::class, $disponibilite);
         return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
             'consultant' => $resultat,
             'form' => $form->createView(),
             'beneficiaire' => $beneficiaire,
             'maj' => $maj,
-            'historique'=> (!empty($request->query->get('eventid'))) ? $historique : ''
+            'historique'=> (!empty($request->query->get('eventid'))) ? $historique : '',
+            'formdispo' => $formdisponibilite->createView()
         ));
     }
     // Traitement de l'ajout d'un evenement dans le calendrier du Consultant
@@ -342,6 +423,19 @@ class AgendaController extends Controller
                     $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
                     $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
                     $em->flush();
+                    
+                    // Ajout RDV dans le calendrier
+                    $eventInsert = $googleCalendar->addEvent(
+                         '3v46kt8aoonnfing1t6qv7tjg8@group.calendar.google.com',
+                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
+                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
+                         $summary,
+                         $_SESSION['agenda'][1]->getDescription(),
+                         "",
+                         $lieu,
+                         [],
+                         false
+                     );
                     
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
                     // mail pour le beneficiaire 

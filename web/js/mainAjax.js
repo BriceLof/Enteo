@@ -398,6 +398,28 @@ $("document").ready(function (initDynamicContent) {
         }
     });
     
+    // ================================================= //
+    // ========= Affichage formulaire ================== //
+    // ================================================= //
+    $('.afficherfom').on('click', function(){
+        // On cache le formulaire
+        $('.champs-form').css('visibility', 'visible');
+        $('.title_formulaire_agenda').css('width','100%');
+        $('.reduirefom').css('display','inline');
+        $('.afficherfom').css('display','none');
+    });
+    
+    // ================================================= //
+    // =========== Reduire formulaire ================== //
+    // ================================================= //
+    $('.reduirefom').on('click', function(){
+        // On cache le formulaire
+        $('.champs-form').css('visibility', 'hidden');
+        $('.title_formulaire_agenda').css('width','352px');
+        $('.afficherfom').css('display','inline');
+        $('.reduirefom').css('display','none');
+    });
+    
     // Si le champs ville est vide alors reinitialiser le champs code postal
     $('#autrebureau').keyup(function(){
         if($('#autrebureau').val() == ''){
@@ -417,8 +439,8 @@ $("document").ready(function (initDynamicContent) {
     
     $('#dpttest').on('keyup', function(){
         if($('#dpttest').val() == ''){
-            $('#bureauRdv').val('');
             // on reinitialise tous les champs
+            $('#bureauRdv').val('');
             $('#dpttest').val(''); // departement
             $('.namebureauselect').val(''); // bureau
             $('.bureauselect').val(-1); // bureau selectionner
@@ -443,6 +465,26 @@ $("document").ready(function (initDynamicContent) {
             $('#adresseh').val(''); // adresse 
             $('#zip').val(''); // code postal
             $('#ziph').val(''); // code postal
+        }
+    });
+    
+    $(".disponibilite").on('click', function(){
+        if($('.blocdisponibilites').css('visibility') == 'visible'){
+            // On cache le formulaire
+            $('.blocdisponibilites').css('visibility', 'hidden');
+        }
+        else{
+            // On affiche le formulaire
+            $('.blocdisponibilites').css('visibility', 'visible');
+            // On adapte l'heure 
+            datecourant = new Date();
+            heuretoday = datecourant.getHours(); // heure courante
+            minutetoday = datecourant.getMinutes(); // minute en cour
+            $('#application_plateformebundle_disponibilites_dateFins_time_hour').val(heuretoday);
+            $('#application_plateformebundle_disponibilites_dateFins_time_minute').val('0');
+            
+            $('#application_plateformebundle_disponibilites_dateDebuts_time_hour').val(heuretoday);
+            $('#application_plateformebundle_disponibilites_dateDebuts_time_minute').val('0');
         }
     });
     
@@ -693,18 +735,17 @@ $("document").ready(function (initDynamicContent) {
                               {
                                   if(item.prenomConso != undefined){
                                       $('#nomb').val(item.nomConso);
-									  $('#nombe').val(item.nomConso); 
+                                      $('#nombe').val(item.nomConso); 
                                       $('#prenomb').val(item.prenomConso); // input visible
                                       $('#prenombe').val(item.prenomConso); // input hidden
                                       // $('#historique_Enregistrer').removeAttr('disabled');
                                       $('#idbeneficiaire').val(item.id);
                                       console.log('beneficiaire id: '+item.id);
-
                                       return item.nomConso;
                                   }
                                   else{
                                       $('#nomb').val('');
-									  $('#nombe').val(''); 
+                                      $('#nombe').val(''); 
                                       $('#prenomb').val(''); // input visible
                                       $('#prenombe').val(''); // input hidden
                                       // $('#historique_Enregistrer').attr('disabled','true');
@@ -1079,13 +1120,20 @@ $('#consultantC').change(function(){
             $('#historique_heureFin_hour').val(heuretoday+1);
             $('#historique_heureFin_minute').val('0');
         }
+        
+        // Disponibiltes du consultant
+        var actionDisponibite = actionMaj($('.formDisponibilite').attr('action')); // Recupère la valeur de l'attribut de l'action
+        $('.formDisponibilite').attr('action',actionDisponibite);
+        
+        
         // On ajoute l'id dans l'action du formulaire Ajout Evenement
-        var action = $('#agendaForm').attr('action'); // Recupère la valeur de l'attribut de l'action
-        action = action.split("?"); // Vire l'ancienne valeur [userId]
-        idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
+        var action = actionMaj($('#agendaForm').attr('action')); // Recupère la valeur de l'attribut de l'action
+       
+        /*idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
         idconsultant = idconsultant.split('-');
         action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
-        $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
+        $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant*/
+        
         $('#agendaForm').attr('action',action) // Maj de l'action dans le formulaire
         // Affichage du nom du consultant
         $('.nameconsultant').text($('#consultantC option:selected').text());
@@ -1112,6 +1160,16 @@ $('#consultantC').change(function(){
     }
 
 });
+
+function actionMaj(action){
+    action = action.split("?"); // Vire l'ancienne valeur [userId]
+    idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
+    idconsultant = idconsultant.split('-');
+    action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+    $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
+    
+    return action;
+}
 
 // ================================================================= //
 // ================ Suppression du rendez-vous ===================== //
