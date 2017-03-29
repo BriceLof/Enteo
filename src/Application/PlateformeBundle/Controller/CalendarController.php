@@ -156,6 +156,8 @@ class CalendarController extends Controller
 
     public function adminAddEventAction(Request $request, $id=null){
 
+
+        $this->getClientAction($request);
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
 
@@ -280,6 +282,7 @@ class CalendarController extends Controller
 
     public function showAllEventAction(Request $request, $id)
     {
+        $this->getClientAction($request);
         //recuperation du consultant
         $em = $this->getDoctrine()->getManager();
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
@@ -296,6 +299,7 @@ class CalendarController extends Controller
 
     public function showEventAction(Request $request)
     {
+        $this->getClientAction($request);
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
 
@@ -339,6 +343,7 @@ class CalendarController extends Controller
 
     public function editEventAction(Request $request, $id)
     {
+        $this->getClientAction($request);
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
 
@@ -424,7 +429,8 @@ class CalendarController extends Controller
         ));
     }
 
-    public function deleteEventAction($id){
+    public function deleteEventAction(Request $request,$id){
+        $this->getClientAction($request);
         //supprimer l'historique et l'evenement sur google agenda
         $googleCalendar = $this->get('fungio.google_calendar');
 
