@@ -38,9 +38,9 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             $commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
 		
         if($typeRdv == "presenciel"){
+            $ref = "1-a";
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b>
-                dans nos locaux : 
+                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
 				<table style='margin-top:-50px;'>
 					<tr>
 						<td><u>Votre consultant : </u></td>
@@ -65,9 +65,10 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 				<br><br>
                 Merci de vous munir <u>impérativement</u> de :<br>";
         }else{
+            $ref = "1-b";
             $message = $beneficiaire->getCiviliteConso()." ".$beneficiaire->getNomConso().", <br><br>"
                 . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".$consultant->getCivilite()." ".$consultant->getPrenom()." ".$consultant->getNom()."<br><br><b>".
-                $consultant->getCivilite()." ".$consultant->getNom()." <u>attendra votre appel</u> le ".$dateRdv->format('l')." ".$dateRdv->format('j')." ".$dateRdv->format('F')." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises<u></b>
+                $consultant->getCivilite()." ".$consultant->getNom()." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises</u></b>
                     au numéro suivant : <b>06 91 85 84 28</b><br><br>
                     Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
         }
@@ -104,7 +105,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
-            'message' => $message
+            'message' => $message,
+            'reference' => $ref
         ));
 
         return $this->sendMessage($from, $to,null, null, $bcc, $subject, $body);
