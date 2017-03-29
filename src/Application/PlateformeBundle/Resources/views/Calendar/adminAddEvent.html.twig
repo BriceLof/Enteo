@@ -15,7 +15,7 @@
                         <caption class="titreSection"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
                     </table>
                     <div class="collapse in" id="collapseEvent">
-                        <form action="{{ path('application_admin_add_evenement') }}" method="POST" id="form_admin_event" onsubmit="getClient()">
+                        <form action="{{ path('application_admin_add_evenement') }}" method="POST" id="form_admin_event">
                             <div class="champ_agenda">
                                 {{ form_row(form.consultant) }}
                             </div>
@@ -27,6 +27,9 @@
                                 {{ form_row(form.typerdv) }}
                             </div>
                             <div id="champ_bureau">
+                                <div>
+                                    {{ form_row(form.autreBureau) }}
+                                </div>
                                 <div>
                                     {{ form_row(form.ville) }}
                                 </div>
@@ -44,8 +47,13 @@
                                     {{ form_row(form.cpBureau) }}
                                 </div>
                             </div>
-                            <div>
-                                {{ form_row(form.summary) }}
+                            <div id="form_titre_evenement">
+                                <div>
+                                    {{ form_row(form.summary) }}
+                                </div>
+                                <div style="display: none" id="autre_summary">
+                                    {{ form_widget(form.autreSummary) }}
+                                </div>
                             </div>
                             <div>
                                 {{ form_row(form.description) }}
@@ -53,9 +61,12 @@
                             <div>
                                 {{ form_row(form.dateDebut) }}
                             </div>
-                            <div class="champ_agenda">
+                            <div class="champ_agenda" id="heure_debut_fin">
                                 {{ form_row(form.heureDebut) }}
                                 {{ form_row(form.heureFin) }}
+                            </div>
+                            <div id="error_slot_busy" style="color: red;display: none">
+                                <span>ce créneau n'est pas disponible</span>
                             </div>
                             <div>
                                 {{ form_row(form.submit) }}

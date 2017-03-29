@@ -3,3 +3,9 @@ application_search_ville:
     defaults: { _controller: "ApplicationPlateformeBundle:Ville:ajaxSearchByCp" }
     options:
         expose:  true
+
+application_get_ville:
+    path:     /getVille
+    defaults: { _controller: "ApplicationPlateformeBundle:Ville:ajaxGetVille" }
+    options:
+        expose: true

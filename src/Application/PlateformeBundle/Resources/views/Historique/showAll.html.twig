@@ -39,12 +39,13 @@
                             {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
                               {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
                                  <div class="modif-event-maj">
-                                    <a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
-                                        <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
-                                    </a>
-                                     {#<a style="width: 16px;" href="{{ path('application_edit_evenement', { 'id': historique.id }) }} " target="_blank" >
+                                     {#<a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
                                          <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
-                                     </a>#}
+                                     </a>
+                                     #}
+                                      <a style="width: 16px;" href="{{ path('application_edit_evenement', { 'id': historique.id }) }} " target="_blank" >
+                                          <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
+                                      </a>
 
                                  </div>
                                  <div class="modif-event-sup">

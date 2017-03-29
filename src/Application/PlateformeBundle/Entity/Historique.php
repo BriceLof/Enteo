@@ -27,7 +27,7 @@ class Historique
      * @ORM\Column(name="summary", type="text")
      */
     private $summary;
-    
+
     /**
      * @var string
      *
@@ -48,14 +48,14 @@ class Historique
      * @ORM\Column(name="date_debut", type="datetime")
      */
     private $dateDebut;
-	
-	/**
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_fin", type="datetime")
      */
     private $dateFin;
-    
+
     /**
      * @var \Time
      *
@@ -69,7 +69,7 @@ class Historique
      * @ORM\Column(name="heure_fin", type="time")
      */
     private $heurefin;
-    
+
     /**
      * @var string
      *
@@ -83,31 +83,31 @@ class Historique
      * @ORM\Column(name="evenetId", type="text")
      */
     private $eventId;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="eventArchive", type="text")
      */
     private $eventarchive;
-   /**
+    /**
      * @ORM\ManyToOne(targetEntity="Bureau")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $bureau;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Beneficiaire")
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $consultant;
-	
+
     /**
      * @var string
      *
@@ -123,7 +123,8 @@ class Historique
         $this->date = new \DateTime('now');
         $this->dateDebut = new \DateTime('now');
         $this->eventarchive = 'off';
-        $this->heuredebut = new \DateTime('now');
+        $this->heuredebut = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0);
+        $this->heurefin = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0)->modify('+1 hour');
         $this->typerdv = 'presentiel';
     }
 

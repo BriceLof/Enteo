@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Form;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +20,57 @@ class CalendarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('ville', TextType::class, array(
+                "mapped" => false,
+                "required" => false,
+                'attr' => array(
+                    'placeholder' => 'Veuillez saisir la ville',
+                    'autocomplete' => 'off'
+                )
+            ))
+
+            ->add('nomBureau', TextType::class, array(
+                "mapped" => false,
+                'label' => 'Nom du Bureau',
+                "required" => false,
+                'attr' => array(
+                    'disabled' => true
+                )
+            ))
+
+            ->add('adresseBureau', TextType::class, array(
+                "mapped" => false,
+                'label' => 'Adresse',
+                "required" => false,
+                'attr' => array(
+                    'disabled' => true
+                )
+            ))
+
+            ->add('cpBureau', TextType::class, array(
+                "mapped" => false,
+                "label" => 'Code postal',
+                "required" => false,
+                'attr' => array(
+                    'disabled' => true
+                )
+            ))
+
+            ->add('typerdv', ChoiceType::class, array(
+                'choices' => array(
+                    'presentiel' => 'presentiel',
+                    'distantiel' => 'distantiel',
+                ),
+                'expanded' => true,
+                'multiple' => false,
+                'label' => 'Type de Rendez-vous'
+            ))
+
+            ->add('autreBureau', CheckboxType::class, array(
+                'label' => 'Autre bureau',
+                'required' => false,
+                "mapped" => false,
+            ))
             ->add('bureau', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:Bureau',
                 'label' => 'Bureau',
@@ -41,7 +93,17 @@ class CalendarType extends AbstractType
                     'Autre'=>'Autre'
                 ),
                 'label' => 'Titre evenement',
-                'attr'=>array('class'=>'Titre Evenement')
+                'attr'=>array(
+                    'class'=>'Titre Evenement',
+                    'id' => 'admin_calendar_summary'
+                )
+            ))
+
+            ->add('autreSummary', TextType::class, array(
+                "required" => false,
+                'attr' => array(
+                    'placeholder' => 'Titre de rendez-vous'
+                )
             ))
 
             ->add('dateDebut', DateType::class, array(
@@ -60,7 +122,7 @@ class CalendarType extends AbstractType
             ))
 
             ->add('description', TextType::class, array(
-                'attr'=>array('class'=>'allchampH'),
+                'attr'=>array('class'=>''),
                 'label' => 'Observation',
                 'required' => false
             ))

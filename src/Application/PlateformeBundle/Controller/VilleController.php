@@ -45,9 +45,9 @@ class VilleController extends Controller
     public function getVilleAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $villesRepo = $em->getRepository("ApplicationPlateformeBundle:Ville")->findByDepartement($request->get('departement'));
-        
+
         foreach($villesRepo as $villes)
         {
             $tabVille[] = array( "id" => $villes->getId(),  "nom" => $villes->getNom(), "cp" => $villes->getCp());
@@ -55,7 +55,26 @@ class VilleController extends Controller
 
         $response = new JsonResponse();
         return $response->setData(array('villes' => $tabVille));
-        
+
     }
-    
+
+    public function ajaxGetVilleAction(Request $request)
+    {
+        $tabVille = [];
+        $em = $this->getDoctrine()->getManager();
+
+        $villesRepo = $em->getRepository("ApplicationPlateformeBundle:Ville")->getVilles($request->query->get('nomVille'));
+
+        foreach($villesRepo as $villes)
+        {
+            $tabVille[] = array( "id" => $villes->getId(),  "nom" => $villes->getNom(), "cp" => $villes->getCp());
+        }
+
+        $resultats = new JsonResponse(json_encode($tabVille));
+        return $resultats;
+
+    }
+
+
+
 }

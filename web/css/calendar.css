@@ -10,3 +10,6 @@
 #form_admin_event > div{
     margin-left: 2%;
 }
+#form_admin_event .form-group{
+    margin-bottom: 0px;
+}

@@ -150,11 +150,14 @@ class BureauController extends Controller
     }
 
     public function ajaxSearchAction(Request $request){
-//        if ($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
+            $list = [];
             $nomVille = $request->query->get('nomVille');
 
             $em = $this->getDoctrine()->getManager();
-            $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll();
+            $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findBy(array(
+                'actifInactif' => true,
+            ));
 
             foreach ($bureaux as $bureau){
                 if(stristr($bureau->getVille()->getNom(),$nomVille) === false){
@@ -168,12 +171,11 @@ class BureauController extends Controller
                     );
                 }
             }
-
             $resultats = new JsonResponse(json_encode($list));
             return $resultats;
 
-//        }else{
-//            throw new \Exception('erreur');
-//        }
+        }else{
+            throw new \Exception('erreur');
+        }
     }
 }

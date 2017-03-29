@@ -42,3 +42,10 @@ application_admin_add_evenement:
     path:     /admin-add-event
     defaults: { _controller: "ApplicationPlateformeBundle:Calendar:adminAddEvent" }
 
+application_ajax_busy_slot_evenement:
+    path:     /busy-slot
+    defaults: { _controller: "ApplicationPlateformeBundle:Calendar:ajaxBusySlot" }
+    options:
+        expose: true
+
+
