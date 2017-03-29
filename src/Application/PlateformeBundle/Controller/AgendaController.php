@@ -310,7 +310,7 @@ class AgendaController extends Controller
             // ===== Verifier que les heures selectionnées ne sont pas passées ===== //
             // ===================================================================== //
             $dateCourant = new \DateTime('now');
-            if($dateCourant >= $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])){
+            if($dateCourant > $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])){
                 // Affiché l'erreur dans agendas.html.twig
                 $this->get('session')->set('errorsdate', true);
                 $this->get('session')->set('heuredate', $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2])->format('d-m-Y H:i:s'));
@@ -318,6 +318,7 @@ class AgendaController extends Controller
             else{
                 // On recupere les rendez-vous du beneficiaire 
                 $resultats = $em->getRepository('ApplicationPlateformeBundle:Historique')->dateocuppee($_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]), $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]), $benef);
+                
                 if(count($resultats) > 0  && $_SESSION['agenda'][0]['eventid'] == ''){
                     // Erreur sur l'heure reservée
                     $this->get('session')->set('erreurs', true);
@@ -423,20 +424,6 @@ class AgendaController extends Controller
                     $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]); // incrementation heure debut 
                     $em->persist($_SESSION['agenda'][1]); // Mise en attente de sauvegarde de l'historique en BD
                     $em->flush();
-                    
-                    // Ajout RDV dans le calendrier
-                    $eventInsert = $googleCalendar->addEvent(
-                         '3v46kt8aoonnfing1t6qv7tjg8@group.calendar.google.com',
-                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0], $hd[1], $hd[2]):$_SESSION['agenda'][1]->getDateDebut()->setTime($hd[0]-1, $hd[1], $hd[2]), // decrementation heure debut 
-                         ($_SERVER['SERVER_NAME'] == "dev.application.entheor.com")? $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0], $hf[1], $hf[2]): $_SESSION['agenda'][1]->getDateFin()->setTime($hf[0]-1, $hf[1], $hf[2]),// decrementation heure fin
-                         $summary,
-                         $_SESSION['agenda'][1]->getDescription(),
-                         "",
-                         $lieu,
-                         [],
-                         false
-                     );
-                    
                     $this->get('session')->getFlashBag()->add('info', 'Le rendez a été ajouté avec succès');
                     // mail pour le beneficiaire 
                     $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($benef, $_SESSION['agenda'][1]);
