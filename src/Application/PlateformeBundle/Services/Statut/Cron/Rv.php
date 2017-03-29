@@ -211,8 +211,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     // Envoi un mail rappel au beneficiaire lui signalant son rdv pour demain 
     public function alerteRappelRdvAgenda()
     {   
-       
-		$dateCurrent = new \DateTime("NOW");
+        $dateCurrent = new \DateTime("NOW");
         $dateMoreOneDay = $dateCurrent->add(new \DateInterval('P1D'))->format('Y-m-d');
         // cherche les rdv de demain
         $histoRepo = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDate($dateMoreOneDay);
