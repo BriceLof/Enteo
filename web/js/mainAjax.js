@@ -469,6 +469,11 @@ $("document").ready(function (initDynamicContent) {
     });
     
     $(".disponibilite").on('click', function(){
+        heurecourante('id','application_plateformebundle_disponibilites_dateDebuts_time_hour',
+                      'application_plateformebundle_disponibilites_dateDebuts_time_minute',
+                      'application_plateformebundle_disponibilites_dateFins_time_hour', 
+                      'application_plateformebundle_disponibilites_dateFins_time_minute'
+                     );  
         if($('.blocdisponibilites').css('visibility') == 'visible'){
             // On cache le formulaire
             $('.blocdisponibilites').css('visibility', 'hidden');
@@ -476,15 +481,6 @@ $("document").ready(function (initDynamicContent) {
         else{
             // On affiche le formulaire
             $('.blocdisponibilites').css('visibility', 'visible');
-            // On adapte l'heure 
-            datecourant = new Date();
-            heuretoday = datecourant.getHours(); // heure courante
-            minutetoday = datecourant.getMinutes(); // minute en cour
-            $('#application_plateformebundle_disponibilites_dateFins_time_hour').val(heuretoday);
-            $('#application_plateformebundle_disponibilites_dateFins_time_minute').val('0');
-            
-            $('#application_plateformebundle_disponibilites_dateDebuts_time_hour').val(heuretoday);
-            $('#application_plateformebundle_disponibilites_dateDebuts_time_minute').val('0');
         }
     });
     
@@ -1081,6 +1077,12 @@ $('.colorcalendar').css({
 // ------------- Affichage pour Admin ----------- //
 // ---------------------------------------------- //
 $('#consultantC').change(function(){
+    // Initialisation du formulaire de disponibilité
+    heurecourante('id','application_plateformebundle_disponibilites_dateDebuts_time_hour',
+                      'application_plateformebundle_disponibilites_dateDebuts_time_minute',
+                      'application_plateformebundle_disponibilites_dateFins_time_hour', 
+                      'application_plateformebundle_disponibilites_dateFins_time_minute'
+                     );  
     emptyelement('blocacalendar', 'class'); // Vider le bloc du calendrier
     if($('#consultantC').val() != ""){
         datecourant = new Date();
@@ -1161,15 +1163,6 @@ $('#consultantC').change(function(){
 
 });
 
-function actionMaj(action){
-    action = action.split("?"); // Vire l'ancienne valeur [userId]
-    idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
-    idconsultant = idconsultant.split('-');
-    action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
-    $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
-    
-    return action;
-}
 
 // ================================================================= //
 // ================ Suppression du rendez-vous ===================== //
@@ -1241,6 +1234,45 @@ function emptyelement(element, type) {
             break;
     }
 }
+
+// Met l'action du formulaire Agenda à jour
+function actionMaj(action){
+    action = action.split("?"); // Vire l'ancienne valeur [userId]
+    idconsultant = $("#consultantC option:selected").attr("id"); // On recupere l'id de l'option selectionner
+    idconsultant = idconsultant.split('-');
+    action = action[0]+"?userId="+idconsultant[0]+'&calendrierid='+idconsultant[1]; // String de l'action finale
+    $('.consultantcalendrierid').val(idconsultant[0]); // In du consultant
+    
+    return action;
+}
+
+// Met l'heure à l'heure courante
+function heurecourante(type, heureIddebut, minuteIddebut, heureIdfin, minuteIdfin){
+    // application_plateformebundle_disponibilites_dateDebuts_time_hour
+       datecourant = new Date(); // Instanciation date
+       heuretoday = datecourant.getHours(); // heure courante
+       minutetoday = datecourant.getMinutes(); // minute en cour
+       switch(type){
+           case 'class':
+               $('.'+heureIddebut).val(heuretoday);
+               $('.'+minuteIddebut).val('0');
+               $('.'+heureIdfin).val(heuretoday);
+               $('.'+minuteIdfin).val('0');
+           break;
+           case 'id':
+               
+               $('#'+heureIddebut).val(heuretoday);
+               $('#'+minuteIddebut).val('0');
+               $('#'+heureIdfin).val(heuretoday);
+               $('#'+minuteIdfin).val('0');
+               
+               console.log('---- hdeb '+$('#'+heureIddebut).val());
+               console.log('---- mfin '+$('#'+minuteIddebut).val());
+               console.log('---- hfin '+$('#'+heureIdfin).val());
+               console.log('---- mfin '+$('#'+minuteIdfin).val());
+           break;
+       }
+ }
 
 $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
