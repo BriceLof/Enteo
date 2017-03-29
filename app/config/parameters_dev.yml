@@ -1,0 +1,14 @@
+parameters:
+    database_host: localhost
+    database_port:
+    database_name: enteo
+    database_user: root
+    database_password:
+    mailer_transport: mail
+    mailer_auth_mode: login
+    mailer_host: auth.smtp.1and1.fr
+    mailer_port: 587
+    mailer_user: contact@dev.application.entheor.com
+    mailer_name: ranaivoson
+    mailer_password: contactEnteo2017#
+    secret: ThisTokenIsNotSoSecretChangeIt

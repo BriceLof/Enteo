@@ -309,6 +309,7 @@ class GoogleCalendar
         $event->setSummary($eventSummary);
         $start = new \Google_Service_Calendar_EventDateTime();
         $end = new \Google_Service_Calendar_EventDateTime();
+ 
         if ($allDay) {
             $formattedStart = $eventStart->format('Y-m-d');
             $formattedEnd = $eventEnd->format('Y-m-d');
@@ -342,7 +343,7 @@ class GoogleCalendar
         if ($location != "") {
             $event->setLocation($location);
         }
-        
+                            
         return $this->getCalendarService()->events->insert($calendarId, $event, $optionalParams);
     }
     /**

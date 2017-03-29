@@ -244,6 +244,25 @@
 /**
  / =============== Parie Agenda ==================== /
 */
+/*.blocdisponibilites{
+    visibility: hidden;
+}*/
+.formDisponibilite{
+    margin-top: 15px;
+}
+.disponibilite{
+    float:right;
+}
+.blocdispo{
+    float: right;
+}
+
+.afficherfom, .reduirefom{
+    float:right;
+    cursor: pointer;
+    font-size: 21px !important;
+    margin-top: -3px !important;
+}
 .msg-erreur{
     padding-left: 32px;
     position: absolute;
@@ -284,12 +303,14 @@
 .datefin{
     display:none;
 }
-#agendaForm button{
+#agendaForm button, #application_plateformebundle_disponibilites_Enregistrer{
     background: rgba(51, 51, 51, 0.84);
     color: white;
+}
+#agendaForm button{
     margin-left: 70%;
 }
-#agendaForm button:hover{
+#agendaForm button:hover, #application_plateformebundle_disponibilites_Enregistrer:hover{
     background-color: #e6e6e6;
     color: rgba(51, 51, 51, 0.84);
 }
@@ -317,7 +338,7 @@
     display:none;
     font-size: 18px;
 }
-.champs-form{
+.champs-form, .blocdispo{
     background-color: #e4e4e4;
     padding: 10px;
 }
