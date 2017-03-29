@@ -446,8 +446,9 @@ class CalendarController extends Controller
 
         $calendarId = $historique->getConsultant()->getCalendrierid();
         $eventId = $historique->getEventId();
+
         if ($historique->getBureau() != null){
-            if($historique->getBureau()->getCalendrierid() != null){
+            if($historique->getBureau()->getCalendrierid() != ""){
                 $calendarBureauId = $historique->getBureau()->getCalendrierid();
                 $eventBureauId = $historique->getEventIdBureau();
                 $googleCalendar->deleteEvent($calendarBureauId,$eventBureauId);
