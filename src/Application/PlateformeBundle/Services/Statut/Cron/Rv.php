@@ -215,11 +215,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $dateMoreOneDay = $dateCurrent->add(new \DateInterval('P1D'))->format('Y-m-d');
         // cherche les rdv de demain
         $histoRepo = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDate($dateMoreOneDay);
- 
+        
+        $tabConsultant = array();
+        
         if(count($histoRepo) > 0){
             foreach($histoRepo as $rdv)
             {
                 $consultant = $rdv->getConsultant();
+                $tabConsultant[] = $rdv->getConsultant()->getId();
                 $dateRdv = $rdv->getDateDebut();
                 $typeRdv = $rdv->getTypeRdv();
 
@@ -317,9 +320,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     'reference' => $ref
                 ));
 
-                return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+                $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
             }
         }
+        
+        var_dump($tabConsultant);exit;
     }
 }
 ?>
