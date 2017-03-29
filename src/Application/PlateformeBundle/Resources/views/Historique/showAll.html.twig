@@ -39,17 +39,44 @@
                             {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
                               {% if "now"|date('Ymd H:i') < historique.dateDebut|date('Ymd H:i') %}
                                  <div class="modif-event-maj">
-                                    <a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
-                                        <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
-                                    </a>
-                                     {#<a style="width: 16px;" href="{{ path('application_edit_evenement', { 'id': historique.id }) }} " target="_blank" >
+                                     {#<a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
                                          <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
-                                     </a>#}
+                                     </a>
+                                     #}
+                                      <a style="width: 16px;" href="{{ path('application_edit_evenement', { 'id': historique.id }) }} " target="_blank" >
+                                          <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
+                                      </a>
 
                                  </div>
-                                 <div class="modif-event-sup">
-                                    <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" id="{{historique.eventId}}" title="Supprimer le rendez-vous" data-toggle="modal" data-target="#myModale"></span>
-                                 </div>
+                                  <div class="modif-event-sup">
+                                      <span title="Supprimer l'historique" style="cursor:pointer;color: black; float: right" data-toggle="modal" data-target="#myModalHistoriqueDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
+                                  </div>
+
+                                  <div  class="modal fade" id="myModalHistoriqueDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                      <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                              <div class="modal-header">
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                  <h4 class="modal-title" id="myModalLabel">Supprimer un rendez-vous</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                  <div>
+                                                      <span>Confirmer la suppression du rendez-vous !</span>
+                                                  </div>
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <div>
+                                                      <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                                      <a style="width: 95px;float: right" href="{{ path('application_delete_evenement', { 'id': historique.id }) }}">
+                                                          <button class="btn btn-danger">Supprimer</button>
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
                               {% else %}
                                   <span>-</span>
                               {% endif %}

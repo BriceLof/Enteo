@@ -106,9 +106,5 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             return $results;
         }
         
-        public function myFindByDate()
-        {
-            $dateDuJour = new \DateTime("Y-m-d");
-            
-        }
+       
 }

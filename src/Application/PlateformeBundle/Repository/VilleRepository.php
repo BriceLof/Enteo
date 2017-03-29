@@ -26,20 +26,12 @@ class VilleRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function getVilles($nomVille){
-        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
-        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville','v');
-
-        $query = 'SELECT v.* FROM ville v WHERE 1';
-        $params = array();
-
-        if(!is_null($nomVille)) {
-            $query .= ' AND v.ville LIKE :nomVille';
-            $params['nomVille'] = "%".$nomVille."%";
-        }
-
-        $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
-        $request->setParameters($params);
-
-        return $request;
+        $queryBuilder = $this->createQueryBuilder("v")
+            ->where("v.nom LIKE :nomVille")
+            ->setParameter("nomVille", '%'.$nomVille.'%')
+            ->setMaxResults(10);
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
     }
 }

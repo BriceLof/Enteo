@@ -1,23 +1,79 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 {% block title %}Agenda de {{ beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}{% endblock%}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/calendar.css') }}">
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3">
-            <div class="row">
-                <div>
+            <div id="" class="tableOnglet">
+                <table>
+                    <caption class="titreSection"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
+                </table>
+                <div class="collapse in" id="collapseEvent">
                     <h2>
                         Beneficiaire :<br>
                         {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso ~' '~beneficiaire.nomConso }}
                     </h2>
+
+                    <form action="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" method="POST" id="form_admin_event">
+                        <div>
+                            {{ form_row(form.typerdv) }}
+                        </div>
+                        <div id="champ_bureau">
+                            <div>
+                                {{ form_row(form.autreBureau) }}
+                            </div>
+                            <div>
+                                {{ form_row(form.ville) }}
+                            </div>
+                            <div style="display: none">
+                                {{ form_row(form.bureau) }}
+                            </div>
+                            <div>
+                                {{ form_row(form.nomBureau) }}
+                            </div>
+                            <div style="display: none">
+                                {{ form_row(form.beneficiaire) }}
+                            </div>
+                            <div class="champ_agenda">
+                                {{ form_row(form.adresseBureau) }}
+                                {{ form_row(form.cpBureau) }}
+                            </div>
+                        </div>
+                        <div id="form_titre_evenement">
+                            <div>
+                                {{ form_row(form.summary) }}
+                            </div>
+                            <div style="display: none" id="autre_summary">
+                                {{ form_widget(form.autreSummary) }}
+                            </div>
+                        </div>
+                        <div>
+                            {{ form_row(form.description) }}
+                        </div>
+                        <div>
+                            {{ form_row(form.dateDebut) }}
+                        </div>
+                        <div class="champ_agenda" id="heure_debut_fin">
+                            {{ form_row(form.heureDebut) }}
+                            {{ form_row(form.heureFin) }}
+                        </div>
+                        <div id="error_slot_busy" style="color: red;display: none">
+                            <span>ce créneau n'est pas disponible</span>
+                        </div>
+                        <div>
+                            {{ form_row(form.submit) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </form>
                 </div>
             </div>
-            <div class="well row">
-                {{ form(form) }}
-            </div>
         </div>
-
         <div class="col-md-9" id="iframe">
             <div class="row">
                 <h2>Agenda de {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</h2>
@@ -28,5 +84,4 @@
         </div>
     </div>
 </div>
-
 {% endblock%}
