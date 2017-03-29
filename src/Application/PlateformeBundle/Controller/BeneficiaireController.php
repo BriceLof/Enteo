@@ -35,7 +35,7 @@ class BeneficiaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
-        /**
+        
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -51,7 +51,7 @@ class BeneficiaireController extends Controller
         // ====================================================== //
         if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-            if(!empty($_SESSION['firstpast'])){
+            /*if(!empty($_SESSION['firstpast'])){
                  unset($_SESSION['firstpast']); // On supprime la session
                  // Appel des services de Google calendar
                  $googleCalendar = $this->get('application_google_calendar');
@@ -66,12 +66,13 @@ class BeneficiaireController extends Controller
                     exit;
                  } 
             }
-            else{
+            else{*/
                 // stockage des infos
                 $donnes[] = $id;
                 $donnes[] = $this->getUser()->getId();
                 $donnes[] = 'page beneficiaire';
-                $_SESSION['firstpast'] = $donnes;
+                if (!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']);
+				else $_SESSION['firstpast'] = $donnes;
                 // Données pour Google calendar
                 $_SESSION['calendrierId'] = $histo_beneficiaire[0]->getConsultant()->getCalendrierid(); // id du calendrier
                 // On stocke l'id du user pour la personnalisation du fichier credentials
@@ -89,7 +90,7 @@ class BeneficiaireController extends Controller
                     header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
                     exit;
                 }
-            }
+            //}
         }
         // Si le client existe alors on recupere les evenements
         if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){
@@ -126,7 +127,7 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-         */
+         
 
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editForm = $this->createEditForm($beneficiaire);
@@ -477,13 +478,18 @@ class BeneficiaireController extends Controller
         $form = $this->createForm(AddBeneficiaireType::class,$beneficiaire);
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             // Beneficiaire
             $beneficiaire = $form->getData();
-            $date = new \DateTime($beneficiaire->getDateConfMer());
-            $beneficiaire->setDateConfMer($date);
-            $beneficiaire->setDateHeureMer($date);
+            $beneficiaire->setDateConfMer(new \DateTime());
+            $beneficiaire->setDateHeureMer(new \DateTime());
             $beneficiaire->setVilleMer($beneficiaire->getVille());
+            // origine beneficiaire 
+            $origineBene1 =$form->get('origineMerQui')->getData();
+            $origineBene2 =$form->get('origineMerComment')->getData();
+            $origineBene3 =$form->get('origineMerDetailComment')->getData();
+            $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2."_".$origineBene3);
             
             $em->persist($beneficiaire);
            

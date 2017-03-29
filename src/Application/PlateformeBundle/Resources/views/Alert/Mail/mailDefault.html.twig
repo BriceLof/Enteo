@@ -1,5 +1,7 @@
 {% extends "::mail/layout.html.twig" %}
 
+{% block ref %}<p>Réf : {{ reference }}</p>{% endblock %}
+
 {% block contentMail %}
     <p>
         {{ message | raw }}

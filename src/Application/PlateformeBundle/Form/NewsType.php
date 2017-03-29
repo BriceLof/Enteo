@@ -31,7 +31,8 @@ class NewsType extends AbstractType
                                 ->where('s.slug != :slug1')
                                 ->andWhere('s.slug != :slug2')
                                 ->andWhere('s.slug != :slug3')
-                                ->setParameters(array('slug1' => 'recevabilite', 'slug2' => 'financement','slug3' => 'facturation'))
+                                ->andWhere('s.slug != :slug4')
+                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation'))
                             ;
                 },
                 'attr' => array(
@@ -42,7 +43,6 @@ class NewsType extends AbstractType
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
-                'placeholder' => '',
                 'attr' => array(
                     'class' => 'news'
                 )

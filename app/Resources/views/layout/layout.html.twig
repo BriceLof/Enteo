@@ -39,8 +39,10 @@
                                             <li><a href="{{ path('user_type', {'typeUser': 'admin' }) }}">Administrateurs</a></li>
                                         {% endif %}
                                         <li><a href="{{ path('user_type', {'typeUser': 'consultant' }) }}">Consultants VAE</a></li>
-										<li><a href="{{ path('user_type', {'typeUser': 'commercial' }) }}">Commerciaux Téléphone</a></li>
-										<li><a href="{{ path('user_type', {'typeUser': 'gestion' }) }}">Gestionnaires Administratifs</a></li>
+                                        <li><a href="{{ path('user_type', {'typeUser': 'commercial' }) }}">Commerciaux Téléphone</a></li>
+                                        <li><a href="{{ path('user_type', {'typeUser': 'gestion' }) }}">Gestionnaires Administratifs</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('application_add_beneficiaire') }}">Ajout Bénéficiaires</a></li>                                        
                                         <li role="separator" class="divider"></li>
                                         <li><a href="{{ path('application_index_bureau') }}">Bureaux</a></li>
                                     </ul>

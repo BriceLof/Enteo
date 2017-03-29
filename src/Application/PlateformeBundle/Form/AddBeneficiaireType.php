@@ -92,14 +92,6 @@ class AddBeneficiaireType extends AbstractType
                 ),
                 'required' => true,
             ))            
-            ->add('dateConfMer', TextType::class, array(
-                'label' => 'Date et heure de la mer *',
-                'required' => false,
-                'attr' => array(
-                    'class' => 'dateTimePicker'
-                ),
-                'required' => true,
-            ))
             ->add('telConso', TextType::class, array(
                 'label' => 'Téléphone *',
                 'required' => true,
@@ -147,10 +139,39 @@ class AddBeneficiaireType extends AbstractType
                     'Bac+3 et plus' => 'Bac+3 et plus',
                 ),
             ))
-            ->add('origineMer', TextType::class, array(
-                'label' => 'Origine mer ',
-                'required' => false,
+            ->add('origineMerQui', ChoiceType::class, array(
+                'label' => 'Origine bénéficiaire ?',
+                'placeholder' => 'Choisissez',
+                'required' => true,
+                'mapped' => false,
+                'choices' => array(
+                    'IF' => 'if',
+                    'Entheor.com' => 'entheor_com',
+                    'Entreprise' => 'entreprise',
+                ),
             ))
+            ->add('origineMerComment', ChoiceType::class, array(
+                'label' => 'Comment ?',
+                'placeholder' => 'Choisissez',
+                'required' => true,
+                'mapped' => false,
+                'choices' => array(
+                    'Naturel' => 'naturel',
+                    'Payant' => 'payant',
+                ),
+            ))
+            ->add('origineMerDetailComment', ChoiceType::class, array(
+                'label' => 'Détail',
+                'placeholder' => 'Choisissez',
+                'required' => true,
+                'mapped' => false,
+                'choices' => array(
+                    'Adwords' => 'adw',
+                    'Bing' => 'msn',
+                    'Partenaires' => 'partenaires',
+                ),
+            ))
+
             ->add('submit', SubmitType::class, array('label' => 'Enregistrer',
                 'attr' => array(
                     'class' => 'btn btn-primary'

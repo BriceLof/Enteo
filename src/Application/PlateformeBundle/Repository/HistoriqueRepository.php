@@ -105,4 +105,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             $results = $query->getResult();
             return $results;
         }
+        
+       
 }

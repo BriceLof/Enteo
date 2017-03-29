@@ -9,13 +9,13 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
-        
+		
+        $ref = "1-a";
         $from = "audrey.azoulay@entheor.com";
         $to =  $beneficiaire->getEmailConso();
         $cc = array($consultant->getEmail());
         $bcc = array(
             "support@iciformation.fr" => "Support",
-            "b.lof@iciformation.fr" => "Brice Lof",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
             "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
             "christine.clement@entheor.com" => "Christine Clement",
@@ -27,17 +27,21 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom());
         
 		
-		$Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
+        $Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
 		
-		$observation = "";
-		if(!is_null($rdv->getBureau()->getObservation())) 
-			$observation = "Observations : ".$rdv->getBureau()->getObservation();
+        $acces = "";
+		$commentaire = "";
+        if(!is_null($rdv->getBureau()))
+		{
+			if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
+			if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
+		}			
+
 		
-        if($typeRdv == "presenciel"){
+        if($typeRdv == "presenciel"){           
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b>
-                dans nos locaux : 
+                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
 				<table style='margin-top:-50px;'>
 					<tr>
 						<td><u>Votre consultant : </u></td>
@@ -54,16 +58,17 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 							".$rdv->getBureau()->getNombureau()."<br>
 							".$rdv->getBureau()->getAdresse()."<br>".
 							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getVille()->getNom()."<br>".
-							$observation."
+							$acces."<br>".
+                                                        $commentaire."    
 						</td>
 					</tr>
 				</table>
 				<br><br>
                 Merci de vous munir <u>impérativement</u> de :<br>";
         }else{
-            $message = $beneficiaire->getCiviliteConso()." ".$beneficiaire->getNomConso().", <br><br>"
-                . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".$consultant->getCivilite()." ".$consultant->getPrenom()." ".$consultant->getNom()."<br><br><b>".
-                $consultant->getCivilite()." ".$consultant->getNom()." <u>attendra votre appel</u> le ".$dateRdv->format('l')." ".$dateRdv->format('j')." ".$dateRdv->format('F')." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises<u></b>
+            $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
+                . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
+                ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises</u></b>
                     au numéro suivant : <b>06 91 85 84 28</b><br><br>
                     Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
         }
@@ -100,10 +105,11 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
-            'message' => $message
+            'message' => $message,
+            'reference' => $ref
         ));
 
-        return $this->sendMessage($from, $to,null, null, $bcc, $subject, $body);
+        return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
     
     

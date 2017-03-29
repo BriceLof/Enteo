@@ -6,88 +6,98 @@
     
     <section class="col-md-9 col-md-offset-2">
         <div class="page-header">
-            <h1>Gestion - Bénéficiaire<br><small>Ajout</small></h1>
+            <h1>Gestion - Bénéficiaire<br><small>Ajouter un bénéficiaire</small></h1>
         </div>
-        <div class="row">
-            {{ form_start(form, {'method': 'post', 'action': path('application_add_beneficiaire') }) }}
-            <div class="col-md-6">
-                {{ form_label(form.codePostal) }}
-                {{ form_errors(form.codePostal) }}
-                {{ form_widget(form.codePostal) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.ville) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
-                {{ form_errors(form.ville) }}
-                {{ form_widget(form.ville, {'attr' : {"class":"villeAjaxBeneficiaire"} }) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.statut) }}
-                {{ form_errors(form.statut) }}
-                {{ form_widget(form.statut) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.civiliteConso) }}
-                {{ form_errors(form.civiliteConso) }}
-                {{ form_widget(form.civiliteConso) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.nomConso) }}
-                {{ form_errors(form.nomConso) }}
-                {{ form_widget(form.nomConso) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.prenomConso) }}
-                {{ form_errors(form.prenomConso) }}
-                {{ form_widget(form.prenomConso) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.telConso) }}
-                {{ form_errors(form.telConso) }}
-                {{ form_widget(form.telConso) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.emailConso) }}
-                {{ form_errors(form.emailConso) }}
-                {{ form_widget(form.emailConso) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.domaineVae) }}
-                {{ form_errors(form.domaineVae) }}
-                {{ form_widget(form.domaineVae) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.diplomeVise) }}
-                {{ form_errors(form.diplomeVise) }}
-                {{ form_widget(form.diplomeVise) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.heureRappel) }}
-                {{ form_errors(form.heureRappel) }}
-                {{ form_widget(form.heureRappel) }}
-            </div>
-            <div class="col-md-offset-6 col-md-6">  
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.dateConfMer) }}
-                {{ form_errors(form.dateConfMer) }}
-                {{ form_widget(form.dateConfMer) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.origineMer) }}
-                {{ form_errors(form.origineMer) }}
-                {{ form_widget(form.origineMer) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_label(form.clientId) }}
-                {{ form_errors(form.clientId) }}
-                {{ form_widget(form.clientId) }}
-            </div>
-            <div class="col-md-6">
-                {{ form_widget(form.submit) }}
-            </div>
-            {{ form_rest(form) }}
-            <div class="col-md-12">
-                <p><i>* champs obligatoires</i></p>
+        <div class="panel panel-default" style="width:65%;margin:auto;margin-bottom:40px;">
+            <div class="panel-body">
+                <div class="row">
+                    {{ form_start(form, {'method': 'post', 'action': path('application_add_beneficiaire') }) }}
+                    <div class="col-md-6">
+                        {{ form_label(form.codePostal) }}
+                        {{ form_errors(form.codePostal) }}
+                        {{ form_widget(form.codePostal) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.ville) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+                        {{ form_errors(form.ville) }}
+                        {{ form_widget(form.ville, {'attr' : {"class":"villeAjaxBeneficiaire"} }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.statut) }}
+                        {{ form_errors(form.statut) }}
+                        {{ form_widget(form.statut) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.civiliteConso) }}
+                        {{ form_errors(form.civiliteConso) }}
+                        {{ form_widget(form.civiliteConso) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.nomConso) }}
+                        {{ form_errors(form.nomConso) }}
+                        {{ form_widget(form.nomConso) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.prenomConso) }}
+                        {{ form_errors(form.prenomConso) }}
+                        {{ form_widget(form.prenomConso) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.telConso) }}
+                        {{ form_errors(form.telConso) }}
+                        {{ form_widget(form.telConso) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.emailConso) }}
+                        {{ form_errors(form.emailConso) }}
+                        {{ form_widget(form.emailConso) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.domaineVae) }}
+                        {{ form_errors(form.domaineVae) }}
+                        {{ form_widget(form.domaineVae) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.diplomeVise) }}
+                        {{ form_errors(form.diplomeVise) }}
+                        {{ form_widget(form.diplomeVise) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.heureRappel) }}
+                        {{ form_errors(form.heureRappel) }}
+                        {{ form_widget(form.heureRappel) }}
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-md-12">
+                        <div class='row'>
+                            <div class="col-md-4">
+                                {{ form_label(form.origineMerQui) }}
+                                {{ form_errors(form.origineMerQui) }}
+                                {{ form_widget(form.origineMerQui) }}
+                            </div>
+                            <div class="col-md-4">
+                                <span style="visibility:hidden;">{{ form_label(form.origineMerComment) }}</span>
+                                {{ form_errors(form.origineMerComment) }}
+                                {{ form_widget(form.origineMerComment) }}
+                            </div>
+                            <div class="col-md-4">
+                                <span style="visibility:hidden;">{{ form_label(form.origineMerDetailComment) }}</span>
+                                {{ form_errors(form.origineMerDetailComment) }}
+                                {{ form_widget(form.origineMerDetailComment) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.clientId) }}
+                        {{ form_errors(form.clientId) }}
+                        {{ form_widget(form.clientId) }}
+                    </div>
+                    <div class="col-md-12" style="margin-top:25px;">
+                        {{ form_widget(form.submit) }}
+                        <p><i>* champs obligatoires</i></p>
+                    </div>
+                    {{ form_rest(form) }}
+                </div>
             </div>
         </div>
     </section>

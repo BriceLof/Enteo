@@ -122,6 +122,7 @@ class Historique
     {
         $this->date = new \DateTime('now');
         $this->dateDebut = new \DateTime('now');
+		$this->dateFin = new \DateTime('now');
         $this->eventarchive = 'off';
         $this->heuredebut = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0);
         $this->heurefin = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0)->modify('+1 hour');
