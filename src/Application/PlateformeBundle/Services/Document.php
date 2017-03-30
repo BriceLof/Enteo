@@ -32,7 +32,6 @@ class Document
      *
      */
     public function supprimerDocument(Beneficiaire $beneficiaire ,\Application\PlateformeBundle\Entity\Document $document){
-        sleep(20);
         $tempFile = $this->getAbsolutePath($beneficiaire,$document);
         if (file_exists($tempFile))
             unlink($tempFile);

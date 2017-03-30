@@ -119,7 +119,6 @@ class Document
         $this->oldFile = $this->getPath();
 
         if (null !== $this->file){
-            //var_dump($this->file);die;
             $this->path = sha1(uniqid(mt_rand(),true)).'.'.$this->file->guessExtension();
         }
     }

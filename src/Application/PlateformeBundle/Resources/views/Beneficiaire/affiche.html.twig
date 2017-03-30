@@ -382,16 +382,16 @@
                                         {% if 'pdf' in document.path %}
                                             {{ afficherDocument(beneficiaire, document.path) }}
                                             <tr>
-                                                <td>{{ document.description }}</td>
-                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
+                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
+                                                <td></td>
                                                 <td class="btn" width="100%">
                                                         <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                                 </td>
                                             </tr>
                                         {% else %}
                                             <tr>
-                                                <td>{{ document.description }}</td>
-                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">voir le document</span></a></td>
+                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
+                                                <td></td>
                                                 <td class="btn" width="100%">
                                                     <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                                 </td>

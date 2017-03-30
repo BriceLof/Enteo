@@ -22,6 +22,9 @@ class DocumentCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
+        ini_set('mysql.connect_timeout', 300);
+        ini_set('default_socket_timeout', 300);
+
         $compteur = 0;
 
         $em = $this->getContainer()->get('doctrine')->getManager();
