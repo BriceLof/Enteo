@@ -233,7 +233,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $ref = "1-b";
                 $from = "audrey.azoulay@entheor.com";
                 $to =  $rdv->getBeneficiaire()->getEmailConso();
-                $to = "f.azoulay@iciformation.fr";
                 $cc = "";
                 $bcc = "support@iciformation.fr";
                 
@@ -330,8 +329,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 
                 $ref = "1-c";
                 $from = "audrey.azoulay@entheor.com";
-                $to = $consultant->getEmail();
-                $to = "f.azoulay@iciformation.fr";
+                $to = $rdvConsultant[0]->getConsultant()->getEmail();
                 $cc = "";
                 $bcc = array(
                     "support@iciformation.fr" => "Support",
@@ -339,7 +337,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
                     "christine.clement@entheor.com" => "Christine Clement",
                     "audrey.azoulay@entheor.com" => "Audrey Azoulay");
-                $bcc = "";
+
                 $dateRv = new \DateTime("NOW");
                 $dateRvOneMore = $dateRv->add(new \DateInterval('P1D'));
                 
