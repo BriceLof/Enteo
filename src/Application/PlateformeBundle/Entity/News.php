@@ -200,7 +200,7 @@ class News
      */
     public function increase()
     {
-        if($this->statut->getSlug() == "telephone")
+        if($this->statut->getSlug() == "telephone" OR $this->statut->getSlug() == "rv1-a-faire" OR $this->statut->getSlug() == "rv2-a-faire" OR $this->statut->getSlug() == "abandon")
             $this->getBeneficiaire()->increaseNbAppelTel();
     }
 }
