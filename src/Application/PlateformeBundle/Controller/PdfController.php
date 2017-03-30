@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\Document;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,60 @@ class PdfController extends Controller
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->setTimeout(300);
 
+        $file = "Devis_Accompagnement_VAE_".str_replace(" ","_",str_replace(".","",$beneficiaire->getCiviliteConso())."_".$beneficiaire->getNomConso())."_".(new \DateTime('now'))->format('d')."_".(new \DateTime('now'))->format('m')."_".(new \DateTime('now'))->format('Y').'.pdf';
+        $filename =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId()."/".$file;
+        $filepath =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId();
+
+        if (file_exists($filename)){
+            unlink($filename);
+        }
+
+        $this->get('knp_snappy.pdf')->generateFromHtml($html,$filename);
+
+        $documents = $beneficiaire->getDocuments();
+
+        if (!($documents->isEmpty())){
+            foreach ($documents as $documentFile){
+                if($documentFile->getPath() == $file){
+                    $document = $documentFile;
+                    $document->setBeneficiaire($beneficiaire);
+                    $document->setPath($file);
+                    $document->setDescription($file);
+                    break;
+                }else{
+                    $document = new Document();
+                    $document->setBeneficiaire($beneficiaire);
+                    $document->setPath($file);
+                    $document->setDescription($file);
+                }
+            }
+        }else{
+            $document = new Document();
+            $document->setBeneficiaire($beneficiaire);
+            $document->setPath($file);
+            $document->setDescription($file);
+        }
+
+        $zip = new \ZipArchive();
+        $zip_path=$filepath.'/download.zip';
+
+        if($zip->open($zip_path) === TRUE){
+        }else {
+            if ($zip->open($zip_path, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
+                die ("An error occurred creating your ZIP file.");
+            }
+        }
+
+        $zip->addFile($filename, $file);
+
+        unset($filename);
+        unset($this->file);
+
+        $em->persist($document);
+        $em->flush();
+
+
+
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
                 'enable-javascript' => true,
@@ -56,7 +111,7 @@ class PdfController extends Controller
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="proposition_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+                'Content-Disposition'   => 'inline; filename="proposition_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
             )
         );
     }
