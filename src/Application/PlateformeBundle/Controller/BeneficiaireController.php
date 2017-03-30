@@ -51,22 +51,6 @@ class BeneficiaireController extends Controller
         // ====================================================== //
         if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-            /*if(!empty($_SESSION['firstpast'])){
-                 unset($_SESSION['firstpast']); // On supprime la session
-                 // Appel des services de Google calendar
-                 $googleCalendar = $this->get('application_google_calendar');
-                 $googleCalendar->setRedirectUri($redirectUri);
-                 if (!empty($_SESSION['code'])){
-                    $client = $googleCalendar->getClient($_SESSION['code']);
-                 }else {
-                    $client = $googleCalendar->getClient();
-                 }
-                 if (is_string($client)) {
-                    header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
-                    exit;
-                 } 
-            }
-            else{*/
                 // stockage des infos
                 $donnes[] = $id;
                 $donnes[] = $this->getUser()->getId();
@@ -90,7 +74,6 @@ class BeneficiaireController extends Controller
                     header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
                     exit;
                 }
-            //}
         }
         // Si le client existe alors on recupere les evenements
         if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){

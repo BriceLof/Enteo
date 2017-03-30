@@ -49,27 +49,7 @@
                     <div id="nomconsultant">
                         <span class="nomconsultant">Agenda du consultant </span>
                         <span class="nomconsultant nameconsultant" style="color: #668cd9;"></span>
-                        <button class="btn btn-primary disponibilite">Vos disponiblités</button>
-                        <!-- formulaire de disponibite -->
-                        <div class="blocdisponibilites">
-                            <form method="POST" class="formDisponibilite" action="{{ path('disponibilite_consultant') }}">
-                                <div class="blocdispo">
-                                    <table  border="0">
-                                        <tr>
-                                            <th><span>Debut</span></th>
-                                            <th style="padding-left: 6px;"><span>Fin</span></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <td>{{form_widget(formdispo.dateDebuts)}}</td>
-                                            <td style="padding-left: 6px;">{{form_widget(formdispo.dateFins)}}</td>
-                                            <td><div class="btn-default btn" style="border: none !important;">{{form_widget(formdispo.Enregistrer)}}</div></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div>{{ form_rest(formdispo) }}</div>
-                            </form>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -190,27 +170,6 @@
                         <div id="nomconsultant" style="display:block !important">
                             <span class="nomconsultant">Agenda du consultant </span>
                             <span class="nomconsultant" style="color: #668cd9;">{{consultant.nom~' '~consultant.prenom}}</span>
-                            <button class="btn btn-primary disponibilite">Vos disponiblités</button>
-                            <!-- formulaire de disponibite -->
-                            <div class="blocdisponibilites">
-                                <form method="POST" class="formDisponibilite" action="{{ path('disponibilite_consultant', {'userId':consultant.id, 'calendrierid':consultant.calendrierid}) }}">
-                                    <div class="blocdispo">
-                                        <table  border="0">
-                                            <tr>
-                                                <th><span>Debut</span></th>
-                                                <th style="padding-left: 6px;"><span>Fin</span></th>
-                                                <th></th>
-                                            </tr>
-                                            <tr>
-                                                <td>{{form_widget(formdispo.dateDebuts)}}</td>
-                                                <td style="padding-left: 6px;">{{form_widget(formdispo.dateFins)}}</td>
-                                                <td><div class="btn-default btn" style="border: none !important;">{{form_widget(formdispo.Enregistrer)}}</div></td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div>{{ form_rest(formdispo) }}</div>
-                                </form>
-                            </div>
                         </div>
                     </div
                     

@@ -233,9 +233,9 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $ref = "1-b";
                 $from = "audrey.azoulay@entheor.com";
                 $to =  $rdv->getBeneficiaire()->getEmailConso();
-                $to = "b.lof@iciformation.fr";
+                $to = "f.azoulay@iciformation.fr";
                 $cc = "";
-                $bcc = "";
+                $bcc = "support@iciformation.fr";
                 
                 if($typeRdv == "presenciel")
                     $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
@@ -331,7 +331,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $ref = "1-c";
                 $from = "audrey.azoulay@entheor.com";
                 $to = $consultant->getEmail();
-                $to = "b.lof@iciformation.fr";
+                $to = "f.azoulay@iciformation.fr";
                 $cc = "";
                 $bcc = array(
                     "support@iciformation.fr" => "Support",
