@@ -332,20 +332,21 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
-            if (!is_null($form["ville"]["nom"]->getData())) {
+           
+            if (!is_null($form["villeMer"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'id' => $form["ville"]["nom"]->getData(),
+                    'id' => $form["villeMer"]["nom"]->getData(),
                 ));
-                $beneficiaire->setVille($ville);
+                $beneficiaire->setVilleMer($ville);
             }
 
             $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
 
-            if(!is_null($form["ville"]["cp"]->getData())){
-                $codePostal = $form["ville"]["cp"]->getData();
+            if(!is_null($form["villeMer"]["cp"]->getData())){
+                $codePostal = $form["villeMer"]["cp"]->getData();
             }
 
             if(!is_null($form['dateDebut']->getData())){
@@ -357,6 +358,7 @@ class BeneficiaireController extends Controller
 
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
+            
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();
@@ -365,7 +367,6 @@ class BeneficiaireController extends Controller
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
                 'liste_beneficiaire' => $results,
                 'form' => $form->createView(),
-                'liste_beneficiaire' => $results,
                 'results' => $results,
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
