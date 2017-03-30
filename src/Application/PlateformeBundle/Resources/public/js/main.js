@@ -178,15 +178,21 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
                 // Formulaire news
                 if(news == true)
                 {
-                    if(i == 0 ) $("#newsForm .detailStatut").append("<option value=''>Choisissez</option>")
+                    if(statut == 3 || statut == 5 || statut == 7){}
+					else{ 
+						if(i == 0 ) $("#newsForm .detailStatut").append("<option value=''>Choisissez</option>")
+					}
                     $("#newsForm .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")  
                 }
                 // Formulaire suivi administratif
                 else{
-                    if(i == 0 ){
-                        $("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
-                        $("#suiviAdministratifEditForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
-                    }
+                    if(statut == 3 || statut == 5 || statut == 7){}
+					else{
+						if(i == 0 ){
+							$("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
+							$("#suiviAdministratifEditForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
+						}
+					}
                     $("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")
                     
                     // En modification : selectionne par défaut le detail statut qui était présent à la base
@@ -198,7 +204,12 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
             }
             // Home    
             else{
-                if(i == 0 ) $(formDuBeneficiaire + " .detailStatut").append("<option value=''>Choisissez</option>")
+				// si statut est egal à RV1 à faire ou RV2, ne pas mettre le choisissez car la valeur du champ selectionner sera vide en detail statut 
+				if(statut == 3 || statut == 5 || statut == 7){}
+				else{ 
+					if(i == 0 ) $(formDuBeneficiaire + " .detailStatut").append("<option value=''>Choisissez</option>")
+				}					
+                
                 $(formDuBeneficiaire + " .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
             }     
         }
