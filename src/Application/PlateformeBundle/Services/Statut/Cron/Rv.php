@@ -208,7 +208,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
     }
     
-    // Envoi un mail rappel au beneficiaire lui signalant son rdv pour demain 
+    // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 
     public function alerteRappelRdvAgenda()
     {   
         $dateCurrent = new \DateTime("NOW");
@@ -216,9 +216,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         // cherche les rdv de demain
         $histoRepo = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDate($dateMoreOneDay);
         
+        $Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
+        $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
+
         $tabConsultant = array();
         
         if(count($histoRepo) > 0){
+            // Envoi d'un mail à chaque bénéficiaire
             foreach($histoRepo as $rdv)
             {
                 $consultant = $rdv->getConsultant();
@@ -228,7 +232,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
                 $ref = "1-b";
                 $from = "audrey.azoulay@entheor.com";
-                //$to =  $rdv->getBeneficiaire()->getEmailConso();
+                $to =  $rdv->getBeneficiaire()->getEmailConso();
                 $to = "b.lof@iciformation.fr";
                 $cc = "";
                 $bcc = "";
@@ -238,17 +242,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 else
                     $subject = "[Rappel] Vous avez un rendez-vous téléphonique pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
 
-
-                $Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
-                $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
-
                 $acces = "";
-				$commentaire = "";
-				if(!is_null($rdv->getBureau()))
-				{
-					if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
-					if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
-				}
+                $commentaire = "";
+                if(!is_null($rdv->getBureau()))
+                {
+                    if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
+                    if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
+                }
 
                 if($typeRdv == "presenciel"){
                     $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso())." ".ucfirst($rdv->getBeneficiaire()->getNomConso()).", <br><br>"
@@ -284,18 +284,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                             Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
                 }
 
+                $message.=  "
+                        <div style='margin-left:20px;'>
+                                - <b>CV détaillé</b> (par compétences)<br>
+                                - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
 
+                if($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
                         $message.=  "
-                                <div style='margin-left:20px;'>
-                                        - <b>CV détaillé</b> (par compétences)<br>
-                                        - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
-
-                        if($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
-                                $message.=  "
-                                        - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
-                                        - <b>Votre dernier bulletin de paie</b> ";	
-
-
+                                - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
+                                - <b>Votre dernier bulletin de paie</b> ";	
+                        
                 $message.=  "
                                 </div>
                                 <br><br>
@@ -320,11 +318,56 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     'reference' => $ref
                 ));
 
-                $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+                $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);  
             }
+            
+            // Envoi un email recap au consultant avec la liste de ses beneficiaire a voir demain
+            $tabConsultantDedoublonner = array_unique($tabConsultant);
+
+            foreach($tabConsultantDedoublonner as $consultant_id)
+            {
+                $rdvConsultant = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDateAndConsultant($dateMoreOneDay, $consultant_id); 
+                
+                $ref = "1-c";
+                $from = "audrey.azoulay@entheor.com";
+                $to = $consultant->getEmail();
+                $to = "b.lof@iciformation.fr";
+                $cc = "";
+                $bcc = array(
+                    "support@iciformation.fr" => "Support",
+                    "f.azoulay@entheor.com" => "Franck Azoulay", 
+                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+                    "christine.clement@entheor.com" => "Christine Clement",
+                    "audrey.azoulay@entheor.com" => "Audrey Azoulay");
+                $bcc = "";
+                $dateRv = new \DateTime("NOW");
+                $dateRvOneMore = $dateRv->add(new \DateInterval('P1D'));
+                
+                $subject = "[Rappel] Vos rendez-vous pour demain ". $dateRvOneMore->format('d/m/Y');
+                
+                $message = "Bonjour ".ucfirst($rdvConsultant[0]->getConsultant()->getPrenom())." ".strtoupper($rdvConsultant[0]->getConsultant()->getNom()).", <br><br>
+                        Veuillez trouver ci-dessous la liste de vos rendez-vous prévus pour demain ".$Jour[$dateRvOneMore->format('l')]." ".$dateRvOneMore->format('j')." ".$Mois[$dateRvOneMore->format('F')]." : 
+                        <ul>";
+                // Chaque rdv du consultant
+                foreach($rdvConsultant as $rdv)
+                {
+                    $beneficiaire = $rdv->getBeneficiaire();
+                    $message .= "<li>".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso())." ".ucfirst($beneficiaire->getPrenomConso()).", ".$rdv->getDateDebut()->format('H')."h".$rdv->getDateDebut()->format('i').", ".ucfirst($rdv->getSummary()).", ".$beneficiaire->getTelConso()."</li>"; 
+                }
+                
+                $message .= "</ul>";
+                
+                $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+
+                $body = $this->templating->render($template, array(
+                    'sujet' => $subject ,
+                    'message' => $message,
+                    'reference' => $ref
+                ));
+
+                $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+            }   
         }
-        
-        var_dump($tabConsultant);exit;
     }
 }
 ?>
