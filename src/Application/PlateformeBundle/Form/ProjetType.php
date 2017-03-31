@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -50,6 +51,30 @@ class ProjetType extends AbstractType
                     'class' => 'projet'
                 )
             ))
+
+            ->add('typeFinanceur', ChoiceType::class, array(
+                'required' => false,
+                'label' => 'Type Financeur',
+                'choices' => array(
+                    '...' => '',
+                    'OPCA' => 'OPCA',
+                    'OPACIF' => 'OPACIF',
+                    'Entreprise' => 'Entreprise',
+                    'Bénéficiaire' => 'Beneficiaire',
+                    'Pôle Emploi' => 'Pole Emploi',
+                ),
+                'attr' => array(
+                    'class' => 'projet type_employeur',
+                )
+            ))
+
+            ->add('organisme', TextType::class, array(
+                'required' => false,
+                'attr' => array(
+                    'class' => 'projet',
+                ),
+            ))
+
             ->add('formationInitiale', TextType::class, array(
                 'label' => 'Formation Initiale :',
                 'required' => false,

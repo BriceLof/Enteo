@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\Document;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,36 @@ class PdfController extends Controller
 
         $this->get('knp_snappy.pdf')->getInternalGenerator()->setTimeout(300);
 
+        $file = "Devis_Accompagnement_VAE_".$beneficiaire->getCiviliteConso()."_".$beneficiaire->getNomConso()."_".(new \DateTime('now'))->format('d')."_".(new \DateTime('now'))->format('m')."_".(new \DateTime('now'))->format('Y').'.pdf';
+        $filename =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId()."/".$file;
+
+        if (file_exists($filename)){
+            unlink($filename);
+        }
+
+        if ($documents = $beneficiaire->getDocuments()){
+            foreach ($documents as $documentFile){
+                if($documentFile->getPath() == $file){
+                    $document = $documentFile;
+                    $document->setBeneficiaire($beneficiaire);
+                    $document->setPath($file);
+                    $document->setDescription($file);
+                    break;
+                }
+            }
+        }else{
+            $document = new Document();
+            $document->setBeneficiaire($beneficiaire);
+            $document->setPath($file);
+            $document->setDescription($file);
+        }
+
+
+        $em->persist($document);
+        $em->flush();
+
+        $this->get('knp_snappy.pdf')->generateFromHtml($html,$filename);
+
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
                 'enable-javascript' => true,
@@ -56,7 +87,7 @@ class PdfController extends Controller
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'attachment; filename="proposition_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+                'Content-Disposition'   => 'inline; filename="proposition_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
             )
         );
     }

@@ -51,20 +51,6 @@ class Employeur
     private $raisonSociale;
 
     /**
-     * @var
-     *
-     * @ORM\Column(name="type", type="string", length=255,nullable=true)
-     */
-    private $type;
-
-    /**
-     * @var
-     *
-     * @ORM\Column(name="organisme", type="string", length=255, nullable=true)
-     */
-    private $organisme;
-
-    /**
      * @ORM\Column(name="siret", type="string", length=255, nullable=true)
      */
     private $siret;
@@ -231,54 +217,6 @@ class Employeur
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
-    }
-
-    /**
-     * Get organisme
-     *
-     * @return string
-     */
-    public function getOrganisme()
-    {
-        return $this->organisme;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Employeur
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set organisme
-     *
-     * @param string $organisme
-     *
-     * @return Employeur
-     */
-    public function setOrganisme($organisme)
-    {
-        $this->organisme = $organisme;
-
-        return $this;
     }
 
     /**

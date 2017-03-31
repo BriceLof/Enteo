@@ -156,18 +156,6 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
-			
-			if(!is_null($beneficiaire->getAccompagnement())){
-			
-				$financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-				if($financeur != null){
-					$financeur->setNom($employeur->getType());
-					$financeur->setOrganisme($employeur->getOrganisme());
-					$em->persist($financeur);
-				}
-			}
-            
-
             
             $em->persist($employeur);
             $em->persist($beneficiaire);
@@ -268,6 +256,16 @@ class BeneficiaireController extends Controller
 
         if ($request->isMethod('POST') && $projetForm->isValid()) {
             $beneficiaire = $projetForm->getData();
+
+            if(!is_null($beneficiaire->getAccompagnement())){
+                $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+                if($financeur != null){
+                    $financeur->setNom($beneficiaire->getTypeFinanceur());
+                    $financeur->setOrganisme($beneficiaire->getOrganisme());
+                    $em->persist($financeur);
+                }
+            }
+
             $em->persist($beneficiaire);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', 'Projet bénéficiaire modifié avec succès');

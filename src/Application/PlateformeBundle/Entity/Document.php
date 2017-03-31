@@ -146,7 +146,7 @@ class Document
 
         $fileBeneficiaire = $this->file->move($this->getUploadRootDir(), $this->path);
 
-        $zip->addFile($fileBeneficiaire, $this->path) ;
+        $zip->addFile($fileBeneficiaire, $this->path);
         $zip->close();
 
         //supprimer le fichier original non-compressé

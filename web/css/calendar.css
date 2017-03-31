@@ -7,9 +7,54 @@
     width: 30%;
     margin-left: 10%;
 }
-#form_admin_event > div{
-    margin-left: 2%;
-}
 #form_admin_event .form-group{
     margin-bottom: 0px;
+}
+.calendar{
+    margin-left: 1%;
+}
+.calendar .tableOnglet{
+    background-color: #e4e4e4;
+    margin-left: 0px;
+    margin-top: 80px;
+}
+.calendar input, .calendar select{
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.calendar .valider{
+    margin-top: 30px;
+}
+.caption_calendar{
+    background-color: #668cd9;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 14px;
+    color: #f6f6f6;
+    text-align: center;
+}
+.caption_calendar a{
+    color: white;
+}
+.caption_calendar a:link{
+    text-decoration: none;
+}
+.calendar_consultant{
+    color: #668cd9;
+}
+#collapseEvent{
+    margin: 2%;
+    margin-left: 7%;
+}
+#collapseEvent h2{
+    margin-top: 0px;
+}
+.calendar h2{
+    font-size: 25px;
+}
+#admin_calendar_consultant_consultant{
+    width: 300px;
+}
+#admin_calendar{
+    display: none;
 }
