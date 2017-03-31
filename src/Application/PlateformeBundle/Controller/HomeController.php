@@ -149,7 +149,7 @@ class HomeController extends Controller
                 $url = $this->get('router')->generate('application_plateforme_homepage') . '#b' . $beneficiaire_id;
                 return $this->redirect($url);
             }
-
+            
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
                 'liste_beneficiaire' => $beneficiaires,
                 'nbPages' => $nbPages,

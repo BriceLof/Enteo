@@ -42,20 +42,21 @@
                                      <a style="width: 16px;" href="{{ path('application_plateforme_agenda', {'eventid': historique.eventId, 'update':'1'}) }} " target="_blank" >
                                          <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
                                      </a>
-                                      {#<a style="width: 16px;" href="{{ path('application_edit_evenement', { 'id': historique.id }) }} " target="_blank" >
+                                     {#
+                                      <a style="width: 16px;" href="{{ path('application_edit_evenement', { 'id': historique.id }) }} " target="_blank" >
                                           <span class="glyphicon glyphicon-pencil cursor_pointer" title="Modifier le rendez-vous" style="color: black;"></span>
                                       </a>
                                       #}
                                  </div>
-                                  {#
+
                                  <div class="modif-event-sup">
                                     <span class="glyphicon glyphicon-remove btn_supp cursor_pointer" id="{{historique.eventId}}" title="Supprimer le rendez-vous" data-toggle="modal" data-target="#myModale"></span>
                                   </div>
-                                  #}
+                                  {#
                                   <div class="modif-event-sup">
                                       <span title="Supprimer l'historique" style="cursor:pointer;color: black; float: right" data-toggle="modal" data-target="#myModalHistoriqueDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
                                   </div>
-
+                                   #}
                                   <div  class="modal fade" id="myModalHistoriqueDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                       <div class="modal-dialog" role="document">
                                           <div class="modal-content">

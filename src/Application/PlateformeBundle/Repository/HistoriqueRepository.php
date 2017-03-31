@@ -109,5 +109,20 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             return $results;
         }
         
+        public function findEventByDateAndConsultant($date, $consultant)
+        {
+            $queryBuilder = $this->createQueryBuilder("h")
+                    ->where("h.dateDebut LIKE :date")
+                    ->andWhere("h.consultant = :consultant")
+                    ->setParameters(array(
+                       "date" =>  $date.'%',
+                       "consultant" => $consultant 
+                    ));
+
+            $query = $queryBuilder->getQuery();
+            $results = $query->getResult();
+            return $results;
+        }
+        
        
 }

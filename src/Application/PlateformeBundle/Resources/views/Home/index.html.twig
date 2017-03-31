@@ -1,7 +1,7 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
 {% block header %}
-    {% if liste_beneficiaire != null %}
+    {% if (liste_beneficiaire | length > 0) or (results is defined) %}
         <div id="banner">
             {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}      
         </div>
@@ -16,7 +16,7 @@
         </div>
     {% endfor %}
     <section class="container-fluid section-tab-home-benef">
-    {% if liste_beneficiaire != null %}
+    {% if liste_beneficiaire | length > 0 %}
         {% if results is defined %}
             <h4 style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
             {% for beneficiaire in liste_beneficiaire %}
@@ -322,7 +322,11 @@
         {% endif %}
     {% else %}
         <div class="jumbotron">
-            <p class="">Vous n'avez pas encore de bénéficiaires attribués</p>
+            {% if results is defined %} 
+                {% if results | length < 1 %} <p class="">Aucun résultat trouvé</p> {% endif %}
+            {% else %}
+                <p class="">Vous n'avez pas encore de bénéficiaires attribués</p>
+            {% endif %}
         </div>      
     {% endif %}
 {% endblock %}

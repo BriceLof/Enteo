@@ -1170,8 +1170,8 @@ $('#consultantC').change(function(){
         }
         
         // Disponibiltes du consultant
-        var actionDisponibite = actionMaj($('.formDisponibilite').attr('action')); // Recupère la valeur de l'attribut de l'action
-        $('.formDisponibilite').attr('action',actionDisponibite);
+        // var actionDisponibite = actionMaj($('.formDisponibilite').attr('action')); // Recupère la valeur de l'attribut de l'action
+        // $('.formDisponibilite').attr('action',actionDisponibite);
         
         
         // On ajoute l'id dans l'action du formulaire Ajout Evenement

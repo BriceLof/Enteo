@@ -58,9 +58,9 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['prenomConso'] = "%".$beneficiaire->getPrenomConso()."%";
         }
 
-        if(!is_null($beneficiaire->getVille())) {
-            $query .= ' AND b.ville_id = :villeId';
-            $params['villeId'] = $beneficiaire->getVille()->getId();
+        if(!is_null($beneficiaire->getVilleMer())) {
+            $query .= ' AND b.ville_mer_id = :villeMerId';
+            $params['villeMerId'] = $beneficiaire->getVilleMer()->getId();
         }
 
         if(!is_null($beneficiaire->getEmailConso())){
