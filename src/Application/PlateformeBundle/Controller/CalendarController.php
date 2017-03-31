@@ -28,7 +28,7 @@ class CalendarController extends Controller
     public function getClientAction(Request $request){
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://localhost/Enteo/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
@@ -69,7 +69,7 @@ class CalendarController extends Controller
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://localhost/Enteo/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
         //recuperation du client
         if ($request->query->has('code') && $request->get('code')) {
@@ -492,7 +492,7 @@ class CalendarController extends Controller
             }
 
             //utiliser event pour jouer avec l'evenement
-            $eventUpdated = $googleCalendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
+            $eventUpdated = $googleCalendar->updateEvent($calendarId, $eventId, $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
 
             $em->persist($historique);
             $em->flush();
