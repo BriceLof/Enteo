@@ -30,14 +30,14 @@ class Disponibilites {
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_debut", type="datetime")
+     * @ORM\Column(name="date_debuts", type="datetime")
      */
     private $dateDebuts;
 	
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_fin", type="datetime")
+     * @ORM\Column(name="date_fins", type="datetime")
      */
     private $dateFins;
     
@@ -53,10 +53,16 @@ class Disponibilites {
      */
     protected $consultant;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Bureau")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
     
+    // Constructeur
     public function __construct(){
-        //$this->dateDebuts = new \DateTime('now');
-	//$this->dateFins = new \DateTime('now');
+        $this->dateDebuts = new \DateTime('now');
+	$this->dateFins = new \DateTime('now');
         $this->summary = 'Disponibilites';
     }
     
@@ -145,4 +151,52 @@ class Disponibilites {
     }
 
    
+
+    /**
+     * Set dateDebuts
+     *
+     * @param \DateTime $dateDebuts
+     *
+     * @return Disponibilites
+     */
+    public function setDateDebuts($dateDebuts)
+    {
+        $this->dateDebuts = $dateDebuts;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebuts
+     *
+     * @return \DateTime
+     */
+    public function getDateDebuts()
+    {
+        return $this->dateDebuts;
+    }
+
+    /**
+     * Set dateFins
+     *
+     * @param \DateTime $dateFins
+     *
+     * @return Disponibilites
+     */
+    public function setDateFins($dateFins)
+    {
+        $this->dateFins = $dateFins;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFins
+     *
+     * @return \DateTime
+     */
+    public function getDateFins()
+    {
+        return $this->dateFins;
+    }
 }

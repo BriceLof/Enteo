@@ -34,8 +34,6 @@ class BeneficiaireController extends Controller
     public function showAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-
-        
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -51,22 +49,6 @@ class BeneficiaireController extends Controller
         // ====================================================== //
         if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
             $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-            /*if(!empty($_SESSION['firstpast'])){
-                 unset($_SESSION['firstpast']); // On supprime la session
-                 // Appel des services de Google calendar
-                 $googleCalendar = $this->get('application_google_calendar');
-                 $googleCalendar->setRedirectUri($redirectUri);
-                 if (!empty($_SESSION['code'])){
-                    $client = $googleCalendar->getClient($_SESSION['code']);
-                 }else {
-                    $client = $googleCalendar->getClient();
-                 }
-                 if (is_string($client)) {
-                    header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
-                    exit;
-                 } 
-            }
-            else{*/
                 // stockage des infos
                 $donnes[] = $id;
                 $donnes[] = $this->getUser()->getId();
@@ -90,7 +72,6 @@ class BeneficiaireController extends Controller
                     header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
                     exit;
                 }
-            //}
         }
         // Si le client existe alors on recupere les evenements
         if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){
@@ -144,10 +125,9 @@ class BeneficiaireController extends Controller
                 $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
             }
         }
-
+        
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
             foreach ($beneficiaire->getContactEmployeur() as $contactEmployeur){
                 $contactEmployeur->setBeneficiaire($beneficiaire);
                 $em->persist($contactEmployeur);
@@ -156,16 +136,14 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
-			
-			if(!is_null($beneficiaire->getAccompagnement())){
-			
-				$financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-				if($financeur != null){
-					$financeur->setNom($employeur->getType());
-					$financeur->setOrganisme($employeur->getOrganisme());
-					$em->persist($financeur);
-				}
-			}
+            if(!is_null($beneficiaire->getAccompagnement())){
+		$financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+		if($financeur != null){
+			$financeur->setNom($employeur->getType());
+			$financeur->setOrganisme($employeur->getOrganisme());
+			$em->persist($financeur);
+		}
+	    }
             
 
             
@@ -213,11 +191,27 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-
+        
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editConsultantForm->handleRequest($request);
 
         if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
+            
+            // =================================================================================================== //
+            // ====================== Archiver tous les rendez-vous anterieurs de ================================ //
+            // ====================== ce beneficiaire s'il est lié à un autre consultant ========================= //
+            // ============= On part sur le fait que un beneficiaire est associé qu'à un seul consultant ========= //
+            // =================================================================================================== //
+            if(!empty($beneficiaire->getConsultant())){
+                // On recupere les historiques de ce beneficiaire
+                $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->beneficiaireOne($beneficiaire);
+                if(sizeof($historique)>0){
+                    foreach($historique as $objet){
+                        $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($objet->getEventId(), 'on');
+                    }
+                }
+            }
+            
             $beneficiaire = $editConsultantForm->getData();
 
             //enregistrement de l'ajout ou modification de consultant dans le
