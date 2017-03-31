@@ -28,17 +28,17 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 
                 $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())." ?";
                 $from = "christine.clement@entheor.com";
+				$ref = "2";
                 $to = $consultant->getEmail();
-                $cc = array();
+                $cc = "";
                 $bcc = array(
                     "support@iciformation.fr" => "Support",
-                    "b.lof@iciformation.fr" => "Brice Lof",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
                     "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
                     "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
                     "christine.clement@entheor.com" => "Christine Clement",
                     "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
-						
+	
                 if($beneficiaire->getCiviliteConso() == "mme")
                     $cher = "Chère";
                 else
@@ -61,14 +61,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $template = "@Apb/Alert/Mail/mailDefault.html.twig";
                 $body = $this->templating->render($template, array(
                     'sujet' => $subject ,
-                    'message' => $message
+                    'message' => $message,
+					'reference' => $ref
                 ));
                 
                 $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
-                //var_dump("mail envoye");
             }
         }
-		//exit;
     }
     
     public function alerteSuiteRv1()

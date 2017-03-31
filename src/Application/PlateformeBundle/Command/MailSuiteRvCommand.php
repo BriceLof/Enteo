@@ -13,7 +13,7 @@ class MailSuiteRvCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('plateforme:mailSuiteRv')
+            ->setName('plateforme:mail_suite_rv')
             ->setDescription("Suite R1 à faire et R2 à faire (à l'heure de démarrage du Rv +1h) : envoyer email au Consultant en charge du RV")
             ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules')
         ;

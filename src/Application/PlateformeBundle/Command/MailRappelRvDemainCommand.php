@@ -13,7 +13,7 @@ class MailRappelRvDemainCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('plateforme:mailRappelRvDemain')
+            ->setName('plateforme:mail_rappel_rv_demain')
             ->setDescription("Mail de rappel au beneficiaire + consltant, qu'il a un rdv demain")
             ->addOption('yell', null, InputOption::VALUE_NONE, 'Si définie, la tâche criera en majuscules')
         ;
