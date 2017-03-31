@@ -1,17 +1,17 @@
     <tr>
-        <td>Nom du Bureau : </td>
+        <td>Nom du Bureau * : </td>
         <td>{{ form_widget(form.nombureau) }}</td>
     </tr>
     <tr>
-        <td>Adresse : </td>
+        <td>Adresse * : </td>
         <td>{{ form_widget(form.adresse) }}</td>
     </tr>
     <tr>
-        <td>Code Postal </td>
+        <td>Code Postal * : </td>
         <td>{{ form_widget(form.code_postal) }}</td>
     </tr>
     <tr>
-        <td>Ville : </td>
+        <td>Ville * : </td>
         <td>{{ form_widget(form.ville, {'attr':{'class': 'villeAjax' }}) }}</td>
     </tr>
     <tr>
@@ -22,11 +22,21 @@
         <td>Commentaires : </td>
         <td>{{ form_widget(form.commentaire) }}</td>
     </tr>
+    <tr>
+        <td>Calendrier ID : </td>
+        <td>{{ form_widget(form.calendrierid) }}</td>
+    </tr>
+    <tr>
+        <td>Calendrier URI : </td>
+        <td>{{ form_widget(form.calendrieruri) }}</td>
+    </tr>
     
     <tr>
-        <td></td>
+        <td><p><i>* champs obligatoires</i></p></td>
         <td class="valider">{{ form_widget(form.submit) }}</td>
     </tr>
+    
+ 
     <tr class="form-rest">
         <td>{{ form_rest(form) }}</td>
         <td>{{ form_errors(form) }}</td>
