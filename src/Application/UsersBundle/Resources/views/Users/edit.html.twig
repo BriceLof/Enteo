@@ -1,6 +1,12 @@
 {% extends "ApplicationUsersBundle::layout.html.twig" %}
 
-{% block title %}Modification du compte{% endblock%}
+{% block title %}
+    {% if app.request.attributes.get('_route') == "my_account_edit" %}
+        Modification compte
+    {% else %}
+        Modification utilisateur
+    {% endif %}
+{% endblock%}
 
 {% block body %}
     

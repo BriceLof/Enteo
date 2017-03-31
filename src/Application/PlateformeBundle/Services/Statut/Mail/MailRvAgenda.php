@@ -68,7 +68,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         }else{
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
                 . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
-                ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises</u></b>
+                ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précise</u></b>
                     au numéro suivant : <b>06 91 85 84 28</b><br><br>
                     Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
         }
@@ -76,7 +76,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 		
 		$message.=  "
 			<div style='margin-left:20px;'>
-				- <b>CV détaillé</b> (par compétences)<br>
+				- <a href='http://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
 				- <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
 				
 		if($beneficiaire->getCsp() != "demandeur d'emploi" && $beneficiaire->getCsp() != "chef d'entreprise/PL")

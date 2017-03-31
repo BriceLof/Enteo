@@ -37,17 +37,11 @@ class RechercheBeneficiaireType extends AbstractType
                     'placeholder' => 'Email',
                 )
             ))
-            ->add('ville', VilleType::class, array(
+            ->add('villeMer', VilleType::class, array(
                 'label' => '',
                 'required' => false,
             ))
-            ->add('pays', TextType::class, array(
-                'label' => 'Pays ',
-                'required' => false,
-                'attr' => array(
-                    'placeholder' => 'Pays',
-                )
-            ))
+           
             ->add('dateDebut', DateType::class, array(
                 'label' => 'Date de Debut',
                 'mapped' => false,
@@ -69,7 +63,7 @@ class RechercheBeneficiaireType extends AbstractType
                 'input' => 'datetime',
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'placeholder' => 'Datefin',
+                    'placeholder' => 'Date fin',
                     'class' => 'accompagnementDate',
                     'autocomplete' => 'off',
                 )

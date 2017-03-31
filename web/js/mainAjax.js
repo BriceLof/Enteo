@@ -640,16 +640,62 @@ $("document").ready(function (initDynamicContent) {
     setTimeout(function(){
         $('.msg-errors').css('display', 'none');
     }, 7000);
+    
+    // Autocompletion Bureau dans formulaire [Disponibilite]
+    $('#villebureau').autocomplete({
+        source: function($request, reponse){
+            $.ajax({
+                url: urlautocompletion,
+                data : {
+                    term : $('#villebureau').val(),
+                    sentinel: 2,
+                },
+                dataType : 'json', // on spécifie bien que le type de données est en JSON
+                success : function(donnee){
+                    var obj = $.parseJSON(donnee);
+                    reponse($.map(obj, function (item) {
+                        return {
+                            value: function ()
+                            {
+                              if ($(this).attr('id') == 'villebureau')
+                              {
+                                 if(item.nom != undefined){
+                                    return item.nom;
+                                 }
+                              }
+                              else
+                              {
+                                  if(item.nom != undefined){
+                                      $("#bureauDispo").val(item.id); // Id bureau
+                                      $('#nomvilleDispo').val(item.nom); // Nom ville
+                                      
+                                      return item.nom;
+                                  }
+                                  else{
+                                      // on reinitialise tous les champs
+                                      $('#villebureau').val(''); // departement
+                                      $("#bureauDispo").val(''); // Id bureau
+                                      $('#nomvilleDispo').val(''); // Nom ville
+                                      // $('#historique_Enregistrer').attr('disabled','true');
+                                      return 'Aucun Bureau trouvé dans ce departement';
+                                  }
+                              }
+                            }
+                        }
+                    }));
+                }
+            });
+        }
+    });
    
     // Autocompletion ville
-    $("#dpttest").autocomplete({
+    $('#dpttest').autocomplete({
         source: function($request, reponse){
             $.ajax({
                 url: urlautocompletion,
                 data : {
                     term : $('#dpttest').val(),
-                    sentinel: 2,
-                    idb : $('#idbeneficiaire').val()
+                    sentinel: 2
                 },
                 dataType : 'json', // on spécifie bien que le type de données est en JSON
                 success : function(donnee){
@@ -1124,8 +1170,8 @@ $('#consultantC').change(function(){
         }
         
         // Disponibiltes du consultant
-        var actionDisponibite = actionMaj($('.formDisponibilite').attr('action')); // Recupère la valeur de l'attribut de l'action
-        $('.formDisponibilite').attr('action',actionDisponibite);
+        // var actionDisponibite = actionMaj($('.formDisponibilite').attr('action')); // Recupère la valeur de l'attribut de l'action
+        // $('.formDisponibilite').attr('action',actionDisponibite);
         
         
         // On ajoute l'id dans l'action du formulaire Ajout Evenement
