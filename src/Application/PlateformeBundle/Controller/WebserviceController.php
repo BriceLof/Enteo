@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Mer;
+use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\Ville;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
@@ -84,7 +85,14 @@ class WebserviceController extends Controller
         $news->setDetailStatut($detailStatut);
         $news->setMessage("");
         $em->persist($news);
-
+		
+		$historique = new Historique();
+		$historique->setSummary("");
+		$historique->setTypeRdv("");
+		$historique->setBeneficiaire($beneficiaire);
+		$historique->setDescription("Ville de MenR : ".$ville->getNom());
+		$historique->setEventId("0");
+		$em->persist($historique);
         /**
         var_dump($mer);
         var_dump($ville);

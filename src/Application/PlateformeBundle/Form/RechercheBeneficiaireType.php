@@ -38,7 +38,7 @@ class RechercheBeneficiaireType extends AbstractType
                 )
             ))
             ->add('villeMer', VilleType::class, array(
-                'label' => '',
+                'label' => 'Ville de MenR',
                 'required' => false,
             ))
            
