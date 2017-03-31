@@ -112,6 +112,20 @@ class Beneficiaire
     private $email2;
 
     /**
+     * @var
+     *
+     * @ORM\Column(name="typeFinanceur", type="string", length=255,nullable=true)
+     */
+    private $typeFinanceur;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="organisme", type="string", length=255, nullable=true)
+     */
+    private $organisme;
+
+    /**
      * @ORM\Column(name="adresse", type="string", length=255, nullable=true)
      *
      */
@@ -1351,5 +1365,53 @@ class Beneficiaire
     public function getHistorique()
     {
         return $this->historique;
+    }
+
+    /**
+     * Set typeFinanceur
+     *
+     * @param string $typeFinanceur
+     *
+     * @return Beneficiaire
+     */
+    public function setTypeFinanceur($typeFinanceur)
+    {
+        $this->typeFinanceur = $typeFinanceur;
+
+        return $this;
+    }
+
+    /**
+     * Get typeFinanceur
+     *
+     * @return string
+     */
+    public function getTypeFinanceur()
+    {
+        return $this->typeFinanceur;
+    }
+
+    /**
+     * Set organisme
+     *
+     * @param string $organisme
+     *
+     * @return Beneficiaire
+     */
+    public function setOrganisme($organisme)
+    {
+        $this->organisme = $organisme;
+
+        return $this;
+    }
+
+    /**
+     * Get organisme
+     *
+     * @return string
+     */
+    public function getOrganisme()
+    {
+        return $this->organisme;
     }
 }

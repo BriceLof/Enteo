@@ -15,6 +15,14 @@
     <td class="projet">{{ form_widget(projet_form.heureCpf) }}</td>
 </tr>
 <tr>
+    <td>{{ form_label(projet_form.typeFinanceur) }}</td>
+    <td class="projet">{{ form_widget(projet_form.typeFinanceur) }}</td>
+</tr>
+<tr style="display: none" id="tdElement">
+    <td>{{ form_label(projet_form.organisme) }}</td>
+    <td class="projet">{{ form_widget(projet_form.organisme) }}</td>
+</tr>
+<tr>
     <td>{{ form_label(projet_form.formationInitiale) }}</td>
     <td class="projet">{{ form_widget(projet_form.formationInitiale) }}</td>
 </tr>

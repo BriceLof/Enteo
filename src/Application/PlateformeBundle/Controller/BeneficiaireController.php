@@ -125,7 +125,7 @@ class BeneficiaireController extends Controller
                 $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
             }
         }
-        
+
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             foreach ($beneficiaire->getContactEmployeur() as $contactEmployeur){
@@ -136,17 +136,7 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
-            if(!is_null($beneficiaire->getAccompagnement())){
-		$financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-		if($financeur != null){
-			$financeur->setNom($employeur->getType());
-			$financeur->setOrganisme($employeur->getOrganisme());
-			$em->persist($financeur);
-		}
-	    }
-            
 
-            
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
@@ -191,12 +181,12 @@ class BeneficiaireController extends Controller
         if (!$beneficiaire) {
             throw $this->createNotFoundException('le bénéfiiaire n\'existe pas.');
         }
-        
+
         $editConsultantForm = $this->createConsultantEditForm($beneficiaire);
         $editConsultantForm->handleRequest($request);
 
         if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
-            
+
             // =================================================================================================== //
             // ====================== Archiver tous les rendez-vous anterieurs de ================================ //
             // ====================== ce beneficiaire s'il est lié à un autre consultant ========================= //
@@ -211,7 +201,7 @@ class BeneficiaireController extends Controller
                     }
                 }
             }
-            
+
             $beneficiaire = $editConsultantForm->getData();
 
             //enregistrement de l'ajout ou modification de consultant dans le
@@ -262,6 +252,16 @@ class BeneficiaireController extends Controller
 
         if ($request->isMethod('POST') && $projetForm->isValid()) {
             $beneficiaire = $projetForm->getData();
+
+            if(!is_null($beneficiaire->getAccompagnement())){
+                $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+                if($financeur != null){
+                    $financeur->setNom($beneficiaire->getTypeFinanceur());
+                    $financeur->setOrganisme($beneficiaire->getOrganisme());
+                    $em->persist($financeur);
+                }
+            }
+
             $em->persist($beneficiaire);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', 'Projet bénéficiaire modifié avec succès');
@@ -343,7 +343,7 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
-           
+
             if (!is_null($form["villeMer"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
@@ -369,7 +369,7 @@ class BeneficiaireController extends Controller
 
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
-            
+
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();

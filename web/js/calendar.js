@@ -23,24 +23,28 @@ function getClient() {
     }
 })();
 
-if(document.getElementById('admin_calendar_consultant')) {
+if(document.getElementById('admin_calendar_consultant_consultant')) {
     (function () {
-        var consultants = document.getElementById('admin_calendar_consultant');
-        consultants.addEventListener('change', function () {
-            $.ajax({
-                url: Routing.generate('user_ajax_get_user', {id: $(this).children("option:selected").val()}),
-                cache: true,
-                dataType: 'json',
-                beforeSend: function () {
-                    //à rajouter un chargement
-                },
-                success: function (data) {
-                    $('#nom_consultant').html('Agenda de <span style="color: #668cd9;">' + data.data[0].nom + ' ' + data.data[0].prenom + '</span>');
-                    $('#agenda_consultant').html(data.data[0].calendrieruri);
-                    var iframe = document.querySelector('#iframe iframe');
-                    iframe.width = div.width();
-                }
-            });
+        var consultants = document.getElementById('admin_calendar_consultant_consultant');
+            consultants.addEventListener('change', function () {
+            if($(this).val() == "" ){
+            }else {
+                $.ajax({
+                    url: Routing.generate('user_ajax_get_user', {id: $(this).children("option:selected").val()}),
+                    cache: true,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        //à rajouter un chargement
+                    },
+                    success: function (data) {
+                        $('#nom_consultant').html('Agenda de <span style="color: #668cd9;">' + data.data[0].nom + ' ' + data.data[0].prenom + '</span>');
+                        $('#agenda_consultant').html(data.data[0].calendrieruri);
+                        $('#admin_calendar_consultant option[value="'+data.data[0].id+'"]').prop('selected','selected');
+                        var iframe = document.querySelector('#iframe iframe');
+                        iframe.width = div.width();
+                    }
+                });
+            }
         })
     })();
 }
@@ -182,6 +186,16 @@ if(document.getElementById('admin_calendar_consultant')) {
         }
     });
 
+    var tableOnglet = document.getElementById('admin_calendar');
+    $('#admin_calendar_consultant_consultant').on('change',function () {
+        if($('#admin_calendar_consultant_consultant').val() == "" ){
+            tableOnglet.style.display = 'none';
+        }else{
+            tableOnglet.style.display = 'block';
+        }
+    });
+
+
 })();
 
 (function () {
@@ -243,11 +257,13 @@ if(document.getElementById('admin_calendar_consultant')) {
             },
             errorElement: 'div',
             submitHandler: function (form) {
+
+                var data = $(form).serializeArray();
                 $.ajax({
                     url: Routing.generate('application_ajax_busy_slot_evenement'),
                     type: $(form).attr('method'),
                     cache: true,
-                    data: $(form).serialize(),
+                    data: data,
                     dataType: 'json',
                     beforeSend: function () {
                     },
