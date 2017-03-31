@@ -53,6 +53,13 @@ class Disponibilites {
      */
     protected $consultant;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Bureau")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
+    
+    // Constructeur
     public function __construct(){
         $this->dateDebuts = new \DateTime('now');
 	$this->dateFins = new \DateTime('now');
@@ -191,5 +198,29 @@ class Disponibilites {
     public function getDateFins()
     {
         return $this->dateFins;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Disponibilites
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
     }
 }

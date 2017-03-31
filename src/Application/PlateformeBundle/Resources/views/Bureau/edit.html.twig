@@ -2,32 +2,41 @@
     <div class="modal-body">
         <div>
             <div class="form-group">
-                <label>Nom du Bureau : </label>
+                <label>Nom du Bureau * : </label>
                 {{ form_widget(edit_form.nombureau) }}
             </div>
             <div class="form-group">
-                <label>Adresse : </label>
+                <label>Adresse * : </label>
                 {{ form_widget(edit_form.adresse) }}
             </div>
             <div class="form-group">
-                <label>Code Postal : </label>
+                <label>Code Postal * : </label>
                {{ form_widget(edit_form.code_postal) }}
             </div>
             <div class="form-group">
-                <label>Ville : </label>
+                <label>Ville * : </label>
                 {{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjax' }}) }}
             </div>
             <div class="form-group">
                 <label>Accès : </label>
                 {{ form_widget(edit_form.acces) }}
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label>Commentaires : </label>
                 {{ form_widget(edit_form.commentaire) }}
+            </div>
+            <div class="form-group">
+                <label>Calendrier ID : </label>
+                {{ form_widget(edit_form.calendrierid) }}
+            </div>
+            <div class="form-group">
+                <label>Calendrier URI : </label>
+                {{ form_widget(edit_form.calendrieruri) }}
             </div>
         </div>
     </div>
     <div class="modal-footer">
+        <p><i>* champs obligatoires</i></p>
         <div>
             <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
             {{ form_widget(edit_form.submit, {'attr': {'class' : 'btn btn-primary'}}) }}

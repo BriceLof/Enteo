@@ -183,6 +183,7 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
             $consultant[] = array(
+                'id' => $user->getId(),
                 'nom' => $user->getNom(),
                 'prenom' => $user->getPrenom(),
                 'calendrieruri' => $user->getCalendrieruri()

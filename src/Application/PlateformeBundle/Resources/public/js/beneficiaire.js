@@ -126,7 +126,7 @@ if(document.getElementById('accompagnement')) {
 
     $('.type_employeur').on('change', function () {
         tdElement = $('#tdElement');
-        element = tdElement.find('#beneficiaire_employeur_organisme');
+        element = tdElement.find('#projet_organisme');
         if ($(this).val() == 'OPCA') {
             tdElement.css('display', 'table-row');
             $name = 'OPCA';
@@ -169,7 +169,7 @@ if(document.getElementById('accompagnement')) {
 
 
         $(function () {
-            $('#beneficiaire_employeur_organisme').each(function () {
+            $('#projet_organisme').each(function () {
                 var newElement = $('<select>');
                 $.each(this.attributes, function (i, attrib) {
                     $(newElement).attr(attrib.name, attrib.value);
@@ -190,16 +190,16 @@ if(document.getElementById('accompagnement')) {
 
 
         $(function () {
-            $('select#beneficiaire_employeur_organisme').each(function () {
+            $('select#projet_organisme').each(function () {
                 tdElement = $('#tdElement');
                 element = $(this);
                 console.log($(this).val());
-                if ($('#beneficiaire_employeur_type').val() == 'OPCA') {
+                if ($('#projet_typeFinanceur').val() == 'OPCA') {
                     tdElement.css('display', 'table-row');
                     $name = 'OPCA';
                     listeOpcaOpacifEmployeur($name, element);
                 } else {
-                    if ($('#beneficiaire_employeur_type').val() == 'OPACIF') {
+                    if ($('#projet_typeFinanceur').val() == 'OPACIF') {
                         tdElement.css('display', 'table-row');
                         $name = 'OPACIF';
                         listeOpcaOpacifEmployeur($name, element);

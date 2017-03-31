@@ -34,8 +34,6 @@ class BeneficiaireController extends Controller
     public function showAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-
-        
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -130,7 +128,6 @@ class BeneficiaireController extends Controller
 
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-
             foreach ($beneficiaire->getContactEmployeur() as $contactEmployeur){
                 $contactEmployeur->setBeneficiaire($beneficiaire);
                 $em->persist($contactEmployeur);
@@ -139,19 +136,7 @@ class BeneficiaireController extends Controller
             if ($employeur === NULL){
                 $employeur = new Employeur();
             }
-			
-			if(!is_null($beneficiaire->getAccompagnement())){
-			
-				$financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-				if($financeur != null){
-					$financeur->setNom($employeur->getType());
-					$financeur->setOrganisme($employeur->getOrganisme());
-					$em->persist($financeur);
-				}
-			}
-            
 
-            
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
@@ -201,6 +186,22 @@ class BeneficiaireController extends Controller
         $editConsultantForm->handleRequest($request);
 
         if ($request->isMethod('POST') && $editConsultantForm->isValid()) {
+
+            // =================================================================================================== //
+            // ====================== Archiver tous les rendez-vous anterieurs de ================================ //
+            // ====================== ce beneficiaire s'il est lié à un autre consultant ========================= //
+            // ============= On part sur le fait que un beneficiaire est associé qu'à un seul consultant ========= //
+            // =================================================================================================== //
+            if(!empty($beneficiaire->getConsultant())){
+                // On recupere les historiques de ce beneficiaire
+                $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->beneficiaireOne($beneficiaire);
+                if(sizeof($historique)>0){
+                    foreach($historique as $objet){
+                        $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($objet->getEventId(), 'on');
+                    }
+                }
+            }
+
             $beneficiaire = $editConsultantForm->getData();
 
             //enregistrement de l'ajout ou modification de consultant dans le
@@ -251,6 +252,16 @@ class BeneficiaireController extends Controller
 
         if ($request->isMethod('POST') && $projetForm->isValid()) {
             $beneficiaire = $projetForm->getData();
+
+            if(!is_null($beneficiaire->getAccompagnement())){
+                $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+                if($financeur != null){
+                    $financeur->setNom($beneficiaire->getTypeFinanceur());
+                    $financeur->setOrganisme($beneficiaire->getOrganisme());
+                    $em->persist($financeur);
+                }
+            }
+
             $em->persist($beneficiaire);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', 'Projet bénéficiaire modifié avec succès');
@@ -332,7 +343,7 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()){
-           
+
             if (!is_null($form["villeMer"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
@@ -358,7 +369,7 @@ class BeneficiaireController extends Controller
 
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
-            
+
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();

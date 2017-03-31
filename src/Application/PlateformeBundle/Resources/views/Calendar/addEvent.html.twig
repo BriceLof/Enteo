@@ -7,54 +7,65 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid calendar">
     <div class="row">
+        <div class="col-md-9" id="iframe">
+            <div class="row">
+                <h2>Agenda de <span class="calendar_consultant">{{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</span></h2>
+            </div>
+            <div class="row">
+                {{ beneficiaire.consultant.calendrieruri|raw }}
+            </div>
+        </div>
         <div class="col-md-3">
-            <div id="" class="tableOnglet">
+            <div id="" class="tableOnglet row">
                 <table>
-                    <caption class="titreSection"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
+                    <caption class="caption_calendar"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
                 </table>
                 <div class="collapse in" id="collapseEvent">
                     <h2>
                         Beneficiaire :<br>
-                        {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso ~' '~beneficiaire.nomConso }}
+                        {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso|capitalize ~' '~beneficiaire.nomConso|capitalize }}
                     </h2>
 
                     <form action="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" method="POST" id="form_admin_event">
+
                         <div>
                             {{ form_row(form.typerdv) }}
                         </div>
-                        <div id="champ_bureau">
-                            <div>
-                                {{ form_row(form.autreBureau) }}
+                        <div class="champs_erreur_css">
+                            <div id="champ_bureau">
+                                <div>
+                                    {{ form_row(form.autreBureau) }}
+                                </div>
+                                <div>
+                                    {{ form_row(form.ville) }}
+                                </div>
+                                <div style="display: none">
+                                    {{ form_row(form.bureau) }}
+                                </div>
+                                <div>
+                                    {{ form_row(form.nomBureau) }}
+                                </div>
+                                <div style="display: none">
+                                    {{ form_row(form.beneficiaire) }}
+                                </div>
+                                <div class="champ_agenda">
+                                    {{ form_row(form.adresseBureau) }}
+                                    {{ form_row(form.cpBureau) }}
+                                </div>
+                            </div>
+                            <div id="form_titre_evenement">
+                                <div>
+                                    {{ form_row(form.summary) }}
+                                </div>
+                                <div style="display: none" id="autre_summary">
+                                    {{ form_widget(form.autreSummary) }}
+                                </div>
                             </div>
                             <div>
-                                {{ form_row(form.ville) }}
+                                {{ form_row(form.description) }}
                             </div>
-                            <div style="display: none">
-                                {{ form_row(form.bureau) }}
-                            </div>
-                            <div>
-                                {{ form_row(form.nomBureau) }}
-                            </div>
-                            <div style="display: none">
-                                {{ form_row(form.beneficiaire) }}
-                            </div>
-                            <div class="champ_agenda">
-                                {{ form_row(form.adresseBureau) }}
-                                {{ form_row(form.cpBureau) }}
-                            </div>
-                        </div>
-                        <div id="form_titre_evenement">
-                            <div>
-                                {{ form_row(form.summary) }}
-                            </div>
-                            <div style="display: none" id="autre_summary">
-                                {{ form_widget(form.autreSummary) }}
-                            </div>
-                        </div>
-                        <div>
-                            {{ form_row(form.description) }}
                         </div>
                         <div>
                             {{ form_row(form.dateDebut) }}
@@ -67,19 +78,15 @@
                             <span>ce créneau n'est pas disponible</span>
                         </div>
                         <div>
+                            {{ form_widget(form.eventId) }}
+                            {{ form_widget(form.eventIdBureau) }}
+                        </div>
+                        <div class="valider">
                             {{ form_row(form.submit) }}
                         </div>
                         {{ form_rest(form) }}
                     </form>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-9" id="iframe">
-            <div class="row">
-                <h2>Agenda de {{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</h2>
-            </div>
-            <div class="row">
-                {{ beneficiaire.consultant.calendrieruri|raw }}
             </div>
         </div>
     </div>

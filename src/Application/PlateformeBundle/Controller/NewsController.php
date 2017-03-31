@@ -47,7 +47,7 @@ class NewsController extends Controller
                 $historique = new Historique();
                 $historique->setHeuredebut(new \DateTime('now'));
                 $historique->setHeurefin(new \DateTime('now'));
-				$historique->setDateFin(new \DateTime('now'));
+                $historique->setDateFin(new \DateTime('now'));
                 $historique->setSummary("");
                 $historique->setTypeRdv("");
                 $historique->setBeneficiaire($news->getBeneficiaire());
