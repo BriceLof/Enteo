@@ -73,7 +73,7 @@ class BeneficiaireType extends AbstractType
             ))
 
             ->add('csp', ChoiceType::class, array(
-                'label' => 'CSP ',
+                'label' => 'Statut dans le poste ',
                 'required' => false,
                 'choices' => array(
                     '...' => '',
@@ -92,7 +92,7 @@ class BeneficiaireType extends AbstractType
             ))
 
             ->add('type', ChoiceType::class, array(
-                'label' => 'Type ',
+                'label' => 'Type Contrat ',
                 'required' => false,
                 'choices' => array(
                     '...' => '',

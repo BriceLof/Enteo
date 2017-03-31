@@ -44,7 +44,7 @@ class AgendaController extends Controller
             $disponibilite = new Disponibilites(); // Instanciation 
             $formdisponibilite = $this->createForm(DisponibilitesType::class, $disponibilite); // Definition de la couleur associé au calendrie
             $formdisponibilite->handleRequest($request); // Le lien Requête <-> Formulaire pourque l'objet Disponibilites contient les valeurs entrées dans le formulaire 
-            $disponibilite->setSummary($request->request->get('nomvilleDispo').' de '.$disponibilite->getDateDebuts()->format("H").'-'.$disponibilite->getDateFins()->format("H"));
+            $disponibilite->setSummary($request->request->get('nomvilleDispo').' de '.$disponibilite->getDateDebuts()->format("H").'-'.$disponibilite->getDateFins()->format("H")."h");
             
             // On recupere le consultant
             $em = $this->getDoctrine()->getManager(); // Entity manager

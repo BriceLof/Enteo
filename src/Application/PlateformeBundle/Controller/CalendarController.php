@@ -69,7 +69,7 @@ class CalendarController extends Controller
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
-        $redirectUri = "http://localhost/Enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
         //recuperation du client
         if ($request->query->has('code') && $request->get('code')) {
@@ -167,7 +167,7 @@ class CalendarController extends Controller
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
@@ -270,11 +270,10 @@ class CalendarController extends Controller
         $bool = false;
         $historique = new Historique();
         $form = $this->createForm(AdminCalendarType::class, $historique);
-        $form->add('submit', SubmitType::class, array('label' => 'Ajouter'));
         $form->handleRequest($request);
 
         $historique = $form->getData();
-
+        
         $consultant = $historique->getBeneficiaire()->getConsultant();
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
@@ -283,7 +282,7 @@ class CalendarController extends Controller
             $bool = true;
             $googleCalendar = $this->get('fungio.google_calendar');
             //url de redirection
-            $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+            $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
             $googleCalendar->setRedirectUri($redirectUri);
             //recuperation du client
             if ($request->query->has('code') && $request->get('code')) {
@@ -382,7 +381,7 @@ class CalendarController extends Controller
         $googleCalendar = $this->get('fungio.google_calendar');
         $googleCalendar->setParameters(22);
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
@@ -420,7 +419,7 @@ class CalendarController extends Controller
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
@@ -525,7 +524,7 @@ class CalendarController extends Controller
         $googleCalendar = $this->get('fungio.google_calendar');
 
         //url de redirection
-        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
