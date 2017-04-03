@@ -21,25 +21,29 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             $heureDebut = $event->getDateDebut()->format('H:i:s');
             //var_dump($dateHeureDebut);
             // si l'heure actuel est au moins à 1h de + de l'heure de démarrage du rdv et que la cron n'a pas déjà envoyé un email, envoi de mail 
-            if($today >= $dateHeureDebut->add(new \DateInterval('PT1H')) && $dateHeureDebut->add(new \DateInterval('PT1H15M')) > $today)
+            if($today >= $dateHeureDebut->add(new \DateInterval('PT1H')) && $event->getMailPostRv() == false && $event->getEventId() != 0)
             {
                 $beneficiaire = $event->getBeneficiaire();
                 $consultant = $event->getConsultant();
-                
+				// Pour que ce mail ne se relance pas lors du passage de la prochaine cron, je met un champs à jour pour dire que le mail a déjà été envoyé pour ce rdv
+				$event->setMailPostRv(true);
+				$this->em->persist($event);
+				$this->em->flush();
+				
                 $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())." ?";
                 $from = "christine.clement@entheor.com";
 				$ref = "2";
                 $to = $consultant->getEmail();
+				//$to = "b.lof@iciformation.fr";
                 $cc = "";
                 $bcc = array(
                     "support@iciformation.fr" => "Support",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
                     "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-                    "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
                     "christine.clement@entheor.com" => "Christine Clement",
                     "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
-	
-                if($beneficiaire->getCiviliteConso() == "mme")
+				//$bcc = "";
+                if($beneficiaire->getCiviliteConso() == "Mme" || $beneficiaire->getCiviliteConso() == "Mlle")
                     $cher = "Chère";
                 else
                     $cher = "Cher";
@@ -151,7 +155,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
-            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
@@ -195,7 +198,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
-            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"

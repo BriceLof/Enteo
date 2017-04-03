@@ -114,6 +114,12 @@ class Historique
      * @ORM\Column(name="evenetid_bureau", type="text", nullable=true)
      */
     private $eventIdBureau;
+	
+	/**
+     *
+     * @ORM\Column(name="mail_post_rv", type="boolean")
+     */
+    private $mailPostRv;
 
     /**
      * Historique constructor.
@@ -127,6 +133,7 @@ class Historique
         $this->heuredebut = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0);
         $this->heurefin = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0)->modify('+1 hour');
         $this->typerdv = 'presentiel';
+		$this->mailPostRv = false;
     }
     
     /**
@@ -473,5 +480,29 @@ class Historique
     public function getEventIdBureau()
     {
         return $this->eventIdBureau;
+    }
+
+    /**
+     * Set mailPostRv
+     *
+     * @param boolean $mailPostRv
+     *
+     * @return Historique
+     */
+    public function setMailPostRv($mailPostRv)
+    {
+        $this->mailPostRv = $mailPostRv;
+
+        return $this;
+    }
+
+    /**
+     * Get mailPostRv
+     *
+     * @return boolean
+     */
+    public function getMailPostRv()
+    {
+        return $this->mailPostRv;
     }
 }
