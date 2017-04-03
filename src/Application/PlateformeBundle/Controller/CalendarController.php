@@ -148,6 +148,8 @@ class CalendarController extends Controller
             $em->persist($historique);
             $em->flush();
 
+            $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
+
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////
             return $this->redirect($this->generateUrl('application_add_evenement', array(

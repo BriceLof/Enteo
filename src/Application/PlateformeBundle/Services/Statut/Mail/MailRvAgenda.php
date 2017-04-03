@@ -6,7 +6,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
     // Envoi un mail au beneficiaire après l'ajout/modification/suppression d'un rdv dans l'agenda par le consultant
     public function alerteRdvAgenda($beneficiaire, $rdv)
     {   
-        $consultant = $beneficiaire->getConsultant();
+		$consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
 		
@@ -20,7 +20,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             "christine.clement@entheor.com" => "Christine Clement",
             "audrey.azoulay@entheor.com" => "Audrey Azoulay");
 
-        if($typeRdv == "presenciel")
+        if($typeRdv == "presenciel" || $typeRdv == "presentiel")
         {
             if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2")
                 $ref = "1-a";
@@ -48,9 +48,9 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
             if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
         }			
-
+	
 		
-        if($typeRdv == "presenciel"){           
+        if($typeRdv == "presenciel" || $typeRdv == "presentiel"){           
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
                 . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
 				<table style='margin-top:-50px;'>

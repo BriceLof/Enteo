@@ -258,7 +258,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
             errorElement: 'div',
             submitHandler: function (form) {
 
-                var data = $(form).serializeArray();
+                var data = $(form).serialize();
                 $.ajax({
                     url: Routing.generate('application_ajax_busy_slot_evenement'),
                     type: $(form).attr('method'),

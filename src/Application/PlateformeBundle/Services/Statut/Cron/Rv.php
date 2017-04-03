@@ -237,7 +237,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $cc = "";
                 $bcc = "support@iciformation.fr";
                 
-                if($typeRdv == "presenciel")
+                if($typeRdv == "presenciel" || $typeRdv == "presentiel")
                     $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
                 else
                     $subject = "[Rappel] Vous avez un rendez-vous téléphonique pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
@@ -250,7 +250,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
                 }
 
-                if($typeRdv == "presenciel"){
+                if($typeRdv == "presenciel" || $typeRdv == "presentiel"){
                     $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso())." ".ucfirst($rdv->getBeneficiaire()->getNomConso()).", <br><br>"
                         . "Nous vous rappelons que vous avez rendez-vous demain <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
                                         <table style='margin-top:-50px;'>
