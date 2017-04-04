@@ -96,7 +96,7 @@ class CalendarController extends Controller
 
             if($form['typerdv']->getData() == 'distantiel'){
                 $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().' '.$historique->getSummary();
+                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
             }
 
             if($historique->getAutreSummary() != null){
@@ -119,11 +119,11 @@ class CalendarController extends Controller
                 $bureau->setNombureau($form['nomBureau']->getData());
                 $em->persist($bureau);
                 $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$historique->getSummary();
+                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
             }else{
                 //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
                 if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$historique->getSummary();
+                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
                     if ($historique->getBureau()->getCalendrierid() != ""){
                         $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
                         $historique->setEventIdBureau($eventBureau['id']);
@@ -203,7 +203,7 @@ class CalendarController extends Controller
 
             if($form['typerdv']->getData() == 'distantiel'){
                 $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().' '.$historique->getSummary();
+                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
             }
 
             if($historique->getAutreSummary() != null){
@@ -226,11 +226,11 @@ class CalendarController extends Controller
                 $bureau->setNombureau($form['nomBureau']->getData());
                 $em->persist($bureau);
                 $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$historique->getSummary();
+                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
             }else{
                 //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
                 if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$historique->getSummary();
+                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
                     if ($historique->getBureau()->getCalendrierid() != ""){
                         $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
                         $historique->setEventIdBureau($eventBureau['id']);
@@ -454,7 +454,7 @@ class CalendarController extends Controller
 
             if($form['typerdv']->getData() == 'distantiel'){
                 $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().' '.$historique->getSummary();
+                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
             }
 
             if($historique->getAutreSummary() != null){
@@ -481,7 +481,7 @@ class CalendarController extends Controller
             }else{
                 //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
                 if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$historique->getSummary();
+                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
                     if ($historique->getBureau()->getCalendrierid() != ""){
                         $eventBureauUpdated = $googleCalendar->updateEvent($historique->getBureau()->getCalendrierid(),$eventBureauId,$dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
                     }

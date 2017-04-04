@@ -25,7 +25,7 @@
                 <div class="collapse in" id="collapseEvent">
                     <h2>
                         Beneficiaire :<br>
-                        {{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso|capitalize ~' '~beneficiaire.nomConso|capitalize }}
+                        <span class="calendar_consultant"><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}">{{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso|capitalize ~' '~beneficiaire.nomConso|capitalize }}</a></span>
                     </h2>
 
                     <form action="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" method="POST" id="form_admin_event">
