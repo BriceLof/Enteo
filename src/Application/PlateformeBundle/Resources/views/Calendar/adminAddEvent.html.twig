@@ -8,6 +8,7 @@
 
 {% block body %}
     <div class="container-fluid calendar">
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
         <div class="row">
             {{ form(form_consultant) }}
         </div>
@@ -26,9 +27,35 @@
                         <caption class="caption_calendar"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
                     </table>
                     <div class="collapse in" id="collapseEvent">
+    {% else %}
+        <div class="row" style="display: none">
+            <input id="admin_calendar_consultant_consultant" type="text" value="{{ app.user.id }}">
+        </div>
+        <div id="consultant_calendar" class="row">
+            <div class="col-md-9" id="iframe">
+                <div class="row">
+                    <h2 id="nom_consultant">
+                        Agenda de <span class="calendar_consultant">{{ app.user.nom|capitalize~' '~app.user.prenom|capitalize }}</span>
+                    </h2>
+                </div>
+                <div class="row" id="agenda_consultant">
+                    {{ app.user.calendrieruri|raw }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="admin_formulaire_calendar" class="tableOnglet row">
+                    <table>
+                        <caption class="caption_calendar"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
+                    </table>
+                    <div class="collapse in" id="collapseEvent">
+    {% endif %}
                         <form action="{{ path('application_admin_add_evenement') }}" method="POST" id="form_admin_event">
                             <div style="display: none">
-                                {{ form_row(form.consultant) }}
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                                    {{ form_row(form.consultant) }}
+                                {% else %}
+                                    {{ form_widget(form.consultant, { 'attr': { 'value': app.user.id } }) }}
+                                {% endif %}
                             </div>
                             <div class="champs_erreur_css">
                                 <div class="champ_agenda">
@@ -81,7 +108,7 @@
                                 {{ form_row(form.heureFin) }}
                             </div>
                             <div id="error_slot_busy" style="color: red;display: none">
-                                <span>ce créneau n'est pas disponible</span>
+                                <span>Ce créneau n'est pas disponible</span>
                             </div>
                             <div class="valider">
                                 {{ form_row(form.submit) }}

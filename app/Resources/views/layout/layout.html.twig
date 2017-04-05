@@ -59,9 +59,9 @@
                                     </ul>
                                 </li>
                                 <!--<li><a href="#contact">Scripts</a></li>-->
-                                <li><a href="{{ path('application_plateforme_agenda') }}" target="_blank">Agenda</a></li>
+                                <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
                             {% elseif is_granted('ROLE_CONSULTANT') %}
-                                <li><a href="{{ path('application_plateforme_agenda', {'userid':app.user.id}) }}" target="_blank">Agenda</a></li>
+                                <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
                             {% endif %}
                         </ul>
                         <ul class="nav navbar-nav navbar-right nav-connexion">

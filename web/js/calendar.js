@@ -13,6 +13,13 @@ function getClient() {
     document.addEventListener('click',function () {
         $('#error_slot_busy').css("display","none");
     })
+    function afficheMessageFlash() {
+        var flash = document.getElementById("flashbag");
+        if (flash != undefined) {
+            flash.style.display = 'none';
+        }
+    }
+    setTimeout(afficheMessageFlash,5000);
 })();
 
 (function () {
@@ -25,6 +32,7 @@ function getClient() {
 
 if(document.getElementById('admin_calendar_consultant_consultant')) {
     (function () {
+        $('#admin_calendar_consultant option[value="'+$('#admin_calendar_consultant_consultant').val()+'"]').prop('selected','selected');
         var consultants = document.getElementById('admin_calendar_consultant_consultant');
             consultants.addEventListener('change', function () {
             if($(this).val() == "" ){

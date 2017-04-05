@@ -7,6 +7,17 @@
 {% endblock %}
 
 {% block body %}
+<div id="flashbag" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in app.session.flashbag.get('info') %}
+                {% if message != 'not message' %}
+                    <div class="alert alert-success" role="alert">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
 <div class="container-fluid calendar">
     <div class="row">
         <div class="col-md-9" id="iframe">
@@ -75,7 +86,7 @@
                             {{ form_row(form.heureFin) }}
                         </div>
                         <div id="error_slot_busy" style="color: red;display: none">
-                            <span>ce créneau n'est pas disponible</span>
+                            <span>Ce créneau n'est pas disponible</span>
                         </div>
                         <div>
                             {{ form_widget(form.eventId) }}
