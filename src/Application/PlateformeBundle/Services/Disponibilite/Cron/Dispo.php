@@ -40,7 +40,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                     $arrayConsultant[] = $consultant->getId();  
             }
             
-            $message = "Bonjour, <br><br> 1) Liste des prochaine disponibilités à la journée inscrites par les Consultants VAE : <br>";
+            $message = "Bonjour, <br><br> 1) Liste des prochaines disponibilités à la journée inscrites par les Consultants VAE : <br>";
             // Disponibilité par consultant
             for($i = 0; $i < count($arrayConsultant); $i++)
             {
