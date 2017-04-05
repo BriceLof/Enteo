@@ -17,18 +17,26 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
 
         if(count($disponibilites) > 0){
-          
-            $subject = "Comment s'est passé votre rendez-vous avec";
-            $from = "christine.clement@entheor.com";
+            $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
+            $commerciaux = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_CONSULTANT");
+            $listeAdministrateurs = array();
+            $listeCommerciaux = array();
+
+            foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+            foreach($commerciaux as $commercial){ $listeCommerciaux[] = $commercial->getEmail(); }
+            
+            $subject = "Récapitulatif des disponibilités des consultants";
+            $from = $this->from;
             $ref = "5";
-            //$to = "b.lof@iciformation.fr";
+            $to = $listeCommerciaux ;
+            $to = array("b.lof@iciformation.fr" => "Brice",
+                "f.azoulay@iciformation.fr" => "Franck",) ;
+            $cc = $listeAdministrateurs;
             $cc = "";
             $bcc = array(
                 "support@iciformation.fr" => "Support",
-                "f.azoulay@entheor.com" => "Franck Azoulay", 
-                "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-                "christine.clement@entheor.com" => "Christine Clement",
-                "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
+                );
+            
             $arrayConsultant = array();
             
             // Récupération des ids des consultant concernés 
@@ -64,8 +72,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                        
                         $message .= "<tr><td style='border:1px solid;padding:5px'>".$dateDispo."</td>"
                                 . "<td style='border:1px solid;padding:5px' >".$ville->getNom()."</td>"
-                                . "<td style='border:1px solid;padding:5px' >".$creneau." créneaux dispo.</td></tr>";
-                        
+                                . "<td style='border:1px solid;padding:5px' >".$creneau." créneaux dispo.</td></tr>";   
                     }
                     $message .= "</table>";  
                 }  
@@ -80,11 +87,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                     $message .= "<p style='margin-left:10px;'><b>&bull; ".ucfirst($rdvConsultant->getPrenom())." ".strtoupper($rdvConsultant->getNom())."</b></p>";  
                 }
             }
-            //var_dump($arrayConsultant);   
-            //var_dump($nombreRdvConsultant);     
-            echo ($message);
-            
-            exit;
+  
             $template = "@Apb/Alert/Mail/mailDefault.html.twig";
             $body = $this->templating->render($template, array(
                 'sujet' => $subject ,
@@ -93,8 +96,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             ));
 
             $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
-        }
-        
+        }   
     }
 }
 ?>
