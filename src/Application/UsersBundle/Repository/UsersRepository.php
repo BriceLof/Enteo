@@ -58,4 +58,16 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
 
         return $request;
     }
+    
+    public function findByTypeAndExclude($arrayId, $type)
+    {    
+        $qb = $this->createQueryBuilder('u')
+                ->where('u.id NOT IN (:array)')
+                ->setParameter('array', implode(',',$arrayId))
+                ->andWhere('u.roles LIKE :type')
+                ->setParameter('type', '%'.$type.'%')
+                ;
+       
+        return $qb->getQuery()->getResult();
+    }
 }
