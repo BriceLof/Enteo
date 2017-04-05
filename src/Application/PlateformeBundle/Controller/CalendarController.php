@@ -158,6 +158,7 @@ class CalendarController extends Controller
             $em->flush();
 
             $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
+            $this->get('session')->getFlashBag()->add('info', 'Rendez-vous ajouté avec succès');
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////
@@ -261,6 +262,7 @@ class CalendarController extends Controller
             $historique->setDateDebut($date);
 
             $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
+            $this->get('session')->getFlashBag()->add('info', 'Rendez-vous ajouté avec succès');
 
             $em->persist($historique);
             $em->flush();
@@ -520,6 +522,8 @@ class CalendarController extends Controller
 
             $em->persist($historique);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////
