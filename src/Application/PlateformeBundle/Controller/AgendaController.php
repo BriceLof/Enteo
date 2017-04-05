@@ -459,6 +459,9 @@ class AgendaController extends Controller
             // fichier credential de l'utilisateur est crée alors pas de
             // generation de nouveau code d'autorisation par google, on passe
             // directement dans le if.
+			$disponibilite = new Disponibilites(); // Instanciation du formulaire disponibilite
+            // Definition de la couleur associé au calendrie
+            $formdisponibilite = $this->createForm(DisponibilitesType::class, $disponibilite);
             if(!empty($request->query->get('userId'))){
                 // Redirection sur la page agenda du consultant
                 if(!empty($request->query->get('calendrierid'))){
@@ -468,7 +471,8 @@ class AgendaController extends Controller
                     return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
                         'consultant' => $resultat,
                         'form' => $form->createView(),
-                        'maj' => $maj
+                        'maj' => $maj,
+						'formdispo' => $formdisponibilite->createView()
                     ));
                 }
                 else{
@@ -485,7 +489,8 @@ class AgendaController extends Controller
                 return $this->render('ApplicationPlateformeBundle:Agenda:agendas.html.twig', array(
                     'consultant' => $resultat,
                     'form' => $form->createView(),
-                    'maj' => $maj
+                    'maj' => $maj,
+					'formdispo' => $formdisponibilite->createView()
                 ));
             }
         }

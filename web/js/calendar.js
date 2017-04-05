@@ -35,6 +35,12 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     dataType: 'json',
                     beforeSend: function () {
                         //à rajouter un chargement
+                        $('#admin_calendar_nom').val("");
+                        $('#admin_calendar_prenom').val("");
+                        $('#admin_calendar_beneficiaire').val(null);
+                        $('#admin_formulaire_calendar').find("div.error").each(function (index) {
+                            $(this).remove();
+                        })
                     },
                     success: function (data) {
                         $('#nom_consultant').html('Agenda de <span style="color: #668cd9;">' + data.data[0].nom + ' ' + data.data[0].prenom + '</span>');
@@ -59,7 +65,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                 cache: true,
                 data: {
                     nom : $('#admin_calendar_nom').val(),
-                    prenom : $('#admin_calendar_prenom').val()
+                    consultant : $('#admin_calendar_consultant_consultant').val()
                 },
                 dataType: 'json',
                 beforeSend: function () {
@@ -70,36 +76,49 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     reponse($.map(beneficiaire, function (item) {
                         return{
                             value : function(){
-                                $('#admin_calendar_beneficiaire').val(item.id);
                                 $('#admin_calendar_prenom').val(item.prenomConso);
+                                id = item.id;
+                                prenom = item.prenomConso;
                                 return item.nomConso;
                             }
                         }
                     }));
+
                 }
             });
         },
         select: function (event, ui) {
-
-        }
+            $('#admin_calendar_beneficiaire').val(id);
+            $('#admin_calendar_prenom').val(prenom);
+        },
+        change: function (event, ui) {
+            if (ui.item) {
+                $('#admin_calendar_beneficiaire').val(id);
+                $('#admin_calendar_prenom').val(prenom);
+            }else{
+                $('#admin_calendar_beneficiaire').val(null);
+                $('#admin_calendar_prenom').val("");
+            }
+        },
     });
 
     $('#admin_calendar_autreBureau').on('change',function () {
         if( $('#admin_calendar_autreBureau').is(':checked')){
-            $('#admin_calendar_nomBureau').prop('disabled', false);
-            $('#admin_calendar_adresseBureau').prop('disabled', false);
-            $('#admin_calendar_cpBureau').prop('disabled', false);
-
+            $('#admin_calendar_nomBureau').prop('disabled', false).val("");
+            $('#admin_calendar_adresseBureau').prop('disabled', false).val("");
+            $('#admin_calendar_ville').prop('disabled', false).val("");
+            $('#admin_calendar_bureau').val("");
         }else{
             $('#admin_calendar_nomBureau').prop('disabled', true).empty();
             $('#admin_calendar_adresseBureau').prop('disabled', true).empty();
+            $('#admin_calendar_ville').empty();
             $('#admin_calendar_cpBureau').prop('disabled', true).empty();
+            $('#admin_calendar_bureau').val("");
         }
     });
     $('#admin_calendar_ville').autocomplete({
         source : function(requete, reponse) {
             if( $('#admin_calendar_autreBureau').is(':checked')) {
-                console.log('autre bureeau');
                 $.ajax({
                     url: Routing.generate('application_get_ville'), // le nom du fichier indiqué dans le formulaire
                     cache: true,
@@ -108,13 +127,13 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     },
                     dataType: 'json',
                     beforeSend: function () {
-
                     },
                     success: function (data) {
                         var ville = $.parseJSON(data);
                         reponse($.map(ville, function (item) {
                             return {
                                 value: function () {
+                                    cp = (item.cp)
                                     return item.nom;
                                 }
                             }
@@ -137,10 +156,13 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                         reponse($.map(bureaux, function (item) {
                             return {
                                 value: function () {
-                                    $('#admin_calendar_adresseBureau').val(item.adresse);
+                                    // $('#admin_calendar_adresseBureau').val(item.adresse);
+                                    bureau = item.adresse;
                                     $('#admin_calendar_cpBureau').val(item.cp);
+                                    $('#admin_calendar_adresseBureau').val(item.adresse);
                                     $('#admin_calendar_nomBureau').val(item.nom);
                                     $('#admin_calendar_bureau').val(item.id);
+                                    cp = (item.cp)
                                     return item.ville;
                                 }
                             }
@@ -150,7 +172,22 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
             }
         },
         select: function (event, ui) {
-
+            $('#admin_calendar_cpBureau').val(cp);
+        },
+        change: function(event, ui) {
+            if (ui.item) {
+                $('#admin_calendar_cpBureau').val(cp);
+            } else {
+                $('#admin_calendar_nomBureau').val("");
+                $('#admin_calendar_adresseBureau').val("");
+                $('#admin_calendar_cpBureau').val("");
+                $('#admin_calendar_bureau').val("");
+                if ($('#admin_calendar_ville').hasClass("testError")){
+                }else{
+                    $('#admin_calendar_ville').addClass("testError");
+                }
+            }
+            console.log("this.value: " + this.value);
         }
     })
 })();
@@ -168,6 +205,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
             if(this !== prev) {
                 prev = this;
             }
+            console.log(this.value)
             if(this.value == 'distantiel'){
                 champBureau.style.display = 'none';
             }else{
@@ -199,33 +237,29 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 })();
 
 (function () {
-    var test = false ;
     jQuery.validator.addMethod("noBeneficiaire",
         function (value, element) {
-            $.ajax({
-                url: Routing.generate('application_list_beneficiaire'), // le nom du fichier indiqué dans le formulaire
-                cache: true,
-                data: {
-                    nom : value
-                },
-                dataType: 'json',
-                beforeSend: function () {
-
-                },
-                success : function (data) {
-                    test = true;
-                    return test;
-                }
-            });
-            return test;
-        }, "aucun bénéficiaire trouvé"
+            var beneficiaire = $('#admin_calendar_beneficiaire')
+            console.log(beneficiaire.val())
+            if(value != null && beneficiaire.val() == null){
+                return false;
+            }else{
+                return true;
+            }
+        }, "Aucun bénéficiaire trouvé"
     );
 
     jQuery.validator.addMethod(
         "villeEntheor",
         function(value, element) {
             if( $('#admin_calendar_autreBureau').is(':checked')) {
-                return true;
+                if($(element).hasClass('testError')){
+                    $(element).removeClass('testError')
+                    return false;
+                }
+                else{
+                    return true;
+                }
             }else{
                 var bureau = $('#admin_calendar_nomBureau');
                 if(value != null && bureau.val() == ""){
@@ -234,7 +268,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     return true;
                 }
             }
-        },"veuillez choisir une ville entheor"
+        },"Veuillez choisir la ville"
     );
 
     //validation jquery
@@ -252,26 +286,41 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     "required": true
                 },
                 "admin_calendar[ville]":{
-                    "villeEntheor": true
-                }
+                    "villeEntheor": true,
+                },
+                "admin_calendar[nomBureau]":{
+                    "required": function () {
+                        return ($('#admin_calendar_autreBureau').is(':checked'))
+                    }
+                },
+                "admin_calendar[adresseBureau]":{
+                    "required": function () {
+                        return ($('#admin_calendar_autreBureau').is(':checked'))
+                    }
+                },
+                "admin_calendar_cpBureau":{
+                    "required": function () {
+                        return ($('#admin_calendar_autreBureau').is(':checked'))
+                    }
+                },
             },
             errorElement: 'div',
             submitHandler: function (form) {
-
-                var data = $(form).serialize();
                 $.ajax({
                     url: Routing.generate('application_ajax_busy_slot_evenement'),
                     type: $(form).attr('method'),
                     cache: true,
-                    data: data,
+                    data: $(form).serialize(),
                     dataType: 'json',
                     beforeSend: function () {
+                        $('#admin_calendar_submit').prop('disabled',true)
                     },
                     success: function (data) {
                         if(JSON.parse(data) == true){
                             form.submit();
                         }else{
                             $('#error_slot_busy').css("display","block");
+                            $('#admin_calendar_submit').prop('disabled',false)
                         }
                     }
                 });

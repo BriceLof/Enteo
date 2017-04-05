@@ -398,8 +398,8 @@ class BeneficiaireController extends Controller
     public function ajaxSearchAction(Request $request)
     {
 
-        $idUser = null;
-
+        $idUser = $request->query->get('consultant');
+        
         $beneficiaire = new Beneficiaire();
 
         $nom = $request->query->get('nom');
@@ -413,14 +413,6 @@ class BeneficiaireController extends Controller
         $dateDebut = null;
         $dateFin = null;
         $ville = new Ville();
-        
-        if (!is_null($form["ville"]["nom"]->getData())) {
-            $em = $this->getDoctrine()->getManager();
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                'id' => $form["ville"]["nom"]->getData(),
-            ));
-            $beneficiaire->setVille($ville);
-        }
 
         if ($nom != null ){
             $beneficiaire->setNomConso($nom);

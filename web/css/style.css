@@ -244,9 +244,9 @@
 /**
  / =============== Parie Agenda ==================== /
 */
-/*.blocdisponibilites{
+.blocdisponibilites{
     visibility: hidden;
-}*/
+}
 .formDisponibilite{
     margin-top: 15px;
 }

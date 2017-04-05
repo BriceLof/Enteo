@@ -1,5 +1,5 @@
 .champ_agenda div.form-group{
-    display: inline-block;
+    display: inline-table;
     width: 48%;
 }
 .radio{
@@ -25,6 +25,12 @@
 .calendar .valider{
     margin-top: 30px;
 }
+.calendar .form-control{
+    height: 25px;
+}
+.calendar label{
+    margin-bottom: 0px;
+}
 .caption_calendar{
     background-color: #668cd9;
     margin-bottom: 10px;
@@ -41,6 +47,8 @@
 }
 .calendar_consultant{
     color: #668cd9;
+    font-size: 18px;
+    font-weight: bold;
 }
 #collapseEvent{
     margin: 2%;
@@ -50,11 +58,20 @@
     margin-top: 0px;
 }
 .calendar h2{
-    font-size: 25px;
+    font-size: 16px;
 }
 #admin_calendar_consultant_consultant{
     width: 300px;
 }
 #admin_calendar{
     display: none;
+}
+.calendar .error{
+    font-size: 12px;
+}
+.calendar .radio{
+    margin-bottom: 0px;
+}
+.calendar .checkbox{
+    margin-bottom: 5px;
 }
