@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 
 /**
@@ -61,6 +62,12 @@ class CalendarController extends Controller
         //recuperation du bénéficiaire
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        $authorization = $this->get('security.authorization_checker');
+        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
+        }else{
+            return $this->redirect($this->generateUrl('application_admin_add_evenement'));
+        }
 
         //recuperation du calendarId du consultant du bénéficiaire
         $consultant = $beneficiaire->getConsultant();
@@ -141,6 +148,8 @@ class CalendarController extends Controller
             $historique->setConsultant($beneficiaire->getConsultant());
             $historique->setEventId($event['id']);
             $historique->setDateFin($dateFin);
+            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
+            $historique->setDateDebut($date);
 
             $em->persist($historique);
             $em->flush();
@@ -149,6 +158,7 @@ class CalendarController extends Controller
             $em->flush();
 
             $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
+            $this->get('session')->getFlashBag()->add('info', 'Rendez-vous ajouté avec succès');
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////
@@ -248,6 +258,11 @@ class CalendarController extends Controller
             $historique->setConsultant($beneficiaire->getConsultant());
             $historique->setEventId($event['id']);
             $historique->setDateFin($dateFin);
+            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
+            $historique->setDateDebut($date);
+
+            $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
+            $this->get('session')->getFlashBag()->add('info', 'Rendez-vous ajouté avec succès');
 
             $em->persist($historique);
             $em->flush();
@@ -437,6 +452,13 @@ class CalendarController extends Controller
         $em = $this->getDoctrine()->getManager();
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
+
+        $authorization = $this->get('security.authorization_checker');
+        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
+        }else{
+            return $this->redirect($this->generateUrl('application_plateforme_homepage'));
+        }
+
         $calendarId = $historique->getConsultant()->getCalendrierid();
         $eventId = $historique->getEventId();
         $eventBureauId = $historique->getEventIdBureau();
@@ -457,7 +479,7 @@ class CalendarController extends Controller
                 $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
             }
 
-            if($historique->getAutreSummary() != null){
+            if($historique->getSummary() == "Autre"){
                 $historique->setSummary($historique->getAutreSummary());
             }
 
@@ -495,8 +517,13 @@ class CalendarController extends Controller
             //utiliser event pour jouer avec l'evenement
             $eventUpdated = $googleCalendar->updateEvent($calendarId, $eventId, $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
 
+            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
+            $historique->setDateDebut($date);
+
             $em->persist($historique);
             $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////

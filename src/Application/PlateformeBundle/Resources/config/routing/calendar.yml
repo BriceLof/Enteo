@@ -39,7 +39,7 @@ application_delete_evenement:
     defaults: { _controller: "ApplicationPlateformeBundle:Calendar:deleteEvent" }
 
 application_admin_add_evenement:
-    path:     /admin-add-event
+    path:     /all-add-event
     defaults: { _controller: "ApplicationPlateformeBundle:Calendar:adminAddEvent" }
 
 application_ajax_busy_slot_evenement:
