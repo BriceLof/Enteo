@@ -193,7 +193,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -213,7 +213,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo,null,null,$subject,$body);
     }
     
     // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 
