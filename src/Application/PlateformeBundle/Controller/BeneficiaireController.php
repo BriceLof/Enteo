@@ -399,7 +399,7 @@ class BeneficiaireController extends Controller
     {
 
         $idUser = $request->query->get('consultant');
-        
+
         $beneficiaire = new Beneficiaire();
 
         $nom = $request->query->get('nom');

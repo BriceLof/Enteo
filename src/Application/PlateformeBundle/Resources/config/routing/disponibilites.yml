@@ -1,0 +1,3 @@
+application_new_disponibilites:
+    path:     /add-event/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Disponibilites:new" }

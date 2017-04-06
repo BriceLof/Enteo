@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/AdminCalendarConsultantType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/CalendarController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/CalendarController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/PdfController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/PdfController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Bureau.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Bureau.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Disponibilites.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Disponibilites.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Document.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Document.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Employeur.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Employeur.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Historique.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Historique.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/AdminCalendarType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/AdminCalendarType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/EmployeurType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/EmployeurType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/ProjetType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/ProjetType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/projet.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/projet.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/addEvent.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/addEvent.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/adminAddEvent.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/adminAddEvent.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/editEvent.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/editEvent.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Pdf/ficheBeneficiaire.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Pdf/ficheBeneficiaire.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/UsersBundle/Controller/UsersController.php" afterPath="$PROJECT_DIR$/src/Application/UsersBundle/Controller/UsersController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/calendar.css" afterPath="$PROJECT_DIR$/web/css/calendar.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/calendar.js" afterPath="$PROJECT_DIR$/web/js/calendar.js" />
-    </list>
+    <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="" />
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -48,13 +21,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CalendarController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CalendarController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/CalendarController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+            <state relative-caret-position="187">
+              <caret line="59" column="5" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
               <folding>
+                <element signature="e#59#106#0#PHP" expanded="true" />
                 <marker date="1490967187767" expanded="true" signature="24934:24948" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BeneficiaireType.php" pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Form/BeneficiaireType.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="94" column="41" selection-start-line="94" selection-start-column="41" selection-end-line="94" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendar.js" pinned="true" current-in-tab="false">
+        <entry file="remoteDeploymentFS://&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/web/js/calendar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="271" column="42" selection-start-line="271" selection-start-column="42" selection-end-line="271" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CalendarController.php" pinned="true" current-in-tab="true">
+        <entry file="remoteDeploymentFS://&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/CalendarController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="276" column="0" selection-start-line="276" selection-start-column="0" selection-end-line="276" selection-end-column="0" />
+              <folding>
+                <marker date="0" expanded="true" signature="24916:24930" ph="..." />
               </folding>
             </state>
           </provider>
@@ -63,13 +69,9 @@
       <file leaf-file-name="AgendaController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="103">
-              <caret line="54" column="43" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="43" />
-              <folding>
-                <marker date="1490794601152" expanded="true" signature="5973:6109" ph="SELECT b.id,... ApplicationPlateformeBundle" />
-                <marker date="1490794601152" expanded="true" signature="6488:6654" ph="SELECT b.id,... ApplicationPlateformeBundle" />
-                <marker date="1490794601152" expanded="true" signature="6999:7085" ph="SELECT v.nom... ApplicationPlateformeBundle" />
-              </folding>
+            <state relative-caret-position="188">
+              <caret line="59" column="43" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -100,8 +102,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/AccompagnementController.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AccompagnementController.php" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Resources/views/layout-pdf.html.twig" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/web/css/proposition.css" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/essai.sh" />
@@ -151,6 +151,8 @@
         <option value="$PROJECT_DIR$/web/css/calendar.css" />
         <option value="$PROJECT_DIR$/web/js/calendar.js" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/CalendarController.php" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Form/BeneficiaireType.php" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/CalendarController.php" />
       </list>
     </option>
   </component>
@@ -194,104 +196,7 @@
     <panes>
       <pane id="Scratches" />
       <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+        <subPane />
       </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
@@ -460,14 +365,7 @@
       <workItem from="1487172032143" duration="4407000" />
       <workItem from="1487176506445" duration="453000" />
       <workItem from="1488879500190" duration="41792000" />
-      <workItem from="1490691196740" duration="98662000" />
-    </task>
-    <task id="LOCAL-00030" summary="- security control">
-      <created>1484304735331</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1484304735331</updated>
+      <workItem from="1490691196740" duration="102643000" />
     </task>
     <task id="LOCAL-00031" summary="- security control">
       <created>1484305234617</created>
@@ -805,15 +703,22 @@
       <option name="project" value="LOCAL" />
       <updated>1490794064294</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="- calendar fidy v3 (fonctionnel)">
+      <created>1490968533004</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1490968533004</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1008382000" />
+    <option name="totallyTimeSpent" value="1012363000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -821,9 +726,9 @@
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43589744" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33675215" sideWeight="0.47049925" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32649574" sideWeight="0.45310137" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22844176" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2375189" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32649574" sideWeight="0.45310137" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22844176" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2375189" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -888,7 +793,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- numero de téléphone formatter" />
     <MESSAGE value="- formulaire" />
     <MESSAGE value="- date firefox" />
     <MESSAGE value="- vérification cohérence de la date dans l'accompagnement" />
@@ -913,7 +817,8 @@
     <MESSAGE value="- MailCommand.php pour les crons suite" />
     <MESSAGE value="- calendar fidy v2" />
     <MESSAGE value="- calendar fidy v2 (probleme avec le modal supprimer evenement)" />
-    <option name="LAST_COMMIT_MESSAGE" value="- calendar fidy v2 (probleme avec le modal supprimer evenement)" />
+    <MESSAGE value="- calendar fidy v3 (fonctionnel)" />
+    <option name="LAST_COMMIT_MESSAGE" value="- calendar fidy v3 (fonctionnel)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -958,7 +863,7 @@
         <state relative-caret-position="170">
           <caret line="94" column="31" selection-start-line="94" selection-start-column="31" selection-end-line="94" selection-end-column="31" />
           <folding>
-            <marker date="1490785923486" expanded="true" signature="3314:3395" ph="SELECT h FRO... ApplicationPlateformeBundle" />
+            <marker date="1490968553477" expanded="true" signature="3314:3395" ph="SELECT h FRO... ApplicationPlateformeBundle" />
           </folding>
         </state>
       </provider>
@@ -1090,9 +995,9 @@
         <state relative-caret-position="-3210">
           <caret line="89" column="13" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
           <folding>
-            <marker date="1490785923517" expanded="false" signature="16626:16643" ph="..." />
-            <marker date="1490785923517" expanded="true" signature="16644:16847" ph="..." />
-            <marker date="1490785923517" expanded="false" signature="17398:17446" ph="..." />
+            <marker date="1490968553493" expanded="false" signature="16626:16643" ph="..." />
+            <marker date="1490968553493" expanded="true" signature="16644:16847" ph="..." />
+            <marker date="1490968553493" expanded="false" signature="17398:17446" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1264,12 +1169,12 @@
         <state relative-caret-position="233">
           <caret line="2393" column="43" selection-start-line="2393" selection-start-column="43" selection-end-line="2393" selection-end-column="43" />
           <folding>
-            <marker date="1490794601189" expanded="true" signature="53495:53502" ph="×" />
-            <marker date="1490794601189" expanded="true" signature="53576:53591" ph="..." />
-            <marker date="1490794601189" expanded="true" signature="53755:53786" ph="..." />
-            <marker date="1490794601189" expanded="true" signature="59505:59518" ph="..." />
-            <marker date="1490794601189" expanded="true" signature="117990:118003" ph="..." />
-            <marker date="1490794601189" expanded="true" signature="125640:125653" ph="..." />
+            <marker date="1490968553509" expanded="true" signature="55582:55589" ph="×" />
+            <marker date="1490968553509" expanded="true" signature="55663:55678" ph="..." />
+            <marker date="1490968553509" expanded="true" signature="55842:55873" ph="..." />
+            <marker date="1490968553509" expanded="true" signature="61592:61605" ph="..." />
+            <marker date="1490968553509" expanded="true" signature="120077:120090" ph="..." />
+            <marker date="1490968553509" expanded="true" signature="127727:127740" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1289,7 +1194,7 @@
         <state relative-caret-position="136">
           <caret line="29" column="44" selection-start-line="29" selection-start-column="34" selection-end-line="29" selection-end-column="44" />
           <folding>
-            <element signature="e#53#87#0#PHP" expanded="true" />
+            <element signature="e#53#87#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1342,21 +1247,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="54" column="43" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="43" />
-          <folding>
-            <marker date="1490794601152" expanded="true" signature="5973:6109" ph="SELECT b.id,... ApplicationPlateformeBundle" />
-            <marker date="1490794601152" expanded="true" signature="6488:6654" ph="SELECT b.id,... ApplicationPlateformeBundle" />
-            <marker date="1490794601152" expanded="true" signature="6999:7085" ph="SELECT v.nom... ApplicationPlateformeBundle" />
-          </folding>
+        <state relative-caret-position="188">
+          <caret line="59" column="43" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/CalendarController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+        <state relative-caret-position="187">
+          <caret line="59" column="5" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
           <folding>
+            <element signature="e#59#106#0#PHP" expanded="true" />
             <marker date="1490967187767" expanded="true" signature="24934:24948" ph="..." />
           </folding>
         </state>

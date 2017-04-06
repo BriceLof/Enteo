@@ -1,0 +1,18 @@
+<form action="{{ path('application_new_disponibilites', { 'id' : consultant.id }) }}" method="POST" id="form_dispo">
+    <div id="champs_date_dispo">
+        {{ form_row(form_dispo.date) }}
+    </div>
+    <div id="champs_debut_dispo">
+        {{ form_row(form_dispo.dateDebuts) }}
+    </div>
+    <div id="champs_fin_dispo">
+        {{ form_row(form_dispo.dateFins) }}
+    </div>
+    <div id="champs_ville_dispo">
+        {{ form_row(form_dispo.villeNom) }}
+    </div>
+    <div id="champs_submit_dispo">
+        {{ form_row(form_dispo.submit) }}
+    </div>
+    {{ form_rest(form_dispo) }}
+</form>

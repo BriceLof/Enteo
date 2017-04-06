@@ -14,6 +14,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
 <body>
+        {% block navbar %}
     <header> 
         <!-- MENU-->
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -84,6 +85,7 @@
             </div>
         </nav>
     </nav>
+        {% endblock %}
 {% block header %}{% endblock %}
 </header>
 

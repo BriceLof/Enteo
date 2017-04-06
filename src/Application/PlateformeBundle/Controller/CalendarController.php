@@ -29,7 +29,7 @@ class CalendarController extends Controller
     public function getClientAction(Request $request){
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
-        $redirectUri = "http://localhost/Enteo/web/app_dev.php/calendar/getClient";
+        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
         $googleCalendar->setRedirectUri($redirectUri);
 
         //recuperation du client
@@ -290,7 +290,7 @@ class CalendarController extends Controller
         $form->handleRequest($request);
 
         $historique = $form->getData();
-        
+
         $consultant = $historique->getBeneficiaire()->getConsultant();
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));

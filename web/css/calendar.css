@@ -13,10 +13,13 @@
 .calendar{
     margin-left: 1%;
 }
+.calendar .row{
+    margin-right: 0px;
+}
 .calendar .tableOnglet{
     background-color: #e4e4e4;
     margin-left: 0px;
-    margin-top: 80px;
+    margin-top: 52px;
 }
 .calendar input, .calendar select{
     padding-top: 1px;
@@ -59,6 +62,7 @@
 }
 .calendar h2{
     font-size: 16px;
+    margin-top: 0px;
 }
 #admin_calendar_consultant_consultant{
     width: 300px;
@@ -74,4 +78,60 @@
 }
 .calendar .checkbox{
     margin-bottom: 5px;
+}
+#champs_date_dispo{
+    width:211px;
+    min-width: 211px;
+    margin-right: 8px;
+}
+#champs_debut_dispo{
+    width: 128px;
+    min-width: 128px;
+}
+#dispo{
+    margin-bottom: -20px;
+}
+#champs_fin_dispo{
+    width: 128px;
+    min-width: 128px;
+    margin-right: 7px;
+}
+#champs_ville_dispo{
+    width: 195px;
+    min-width: 195px;
+}
+#champs_ville_dispo .form-control{
+    width: 100%;
+}
+#champs_submit_dispo .form-group{
+    margin-bottom: 0px;
+}
+#form_dispo{
+    margin-top: -9px;
+    width: 715px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    background-color: #e4e4e4;
+    padding-top: 13px;
+}
+#form_dispo div{
+    display: inline-block;
+}
+#form_dispo label{
+    float: left;
+}
+#champs_submit_dispo{
+    display: block !important;
+}
+#champs_submit_dispo button{
+    background-color: #336f33;
+    color: white;
+}
+#application_plateformebundle_disponibilites_submit{
+    margin-top: -7px;
+}
+.disponibilite{
+    margin-top: 10px;
+    margin-bottom: 30px;
 }

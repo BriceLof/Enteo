@@ -19,6 +19,12 @@ class Disponibilites {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="disponibilites", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $ville;
     
     /**
      * @var string
@@ -61,8 +67,8 @@ class Disponibilites {
     
     // Constructeur
     public function __construct(){
-        $this->dateDebuts = new \DateTime('now');
-	$this->dateFins = new \DateTime('now');
+        $this->dateDebuts = (new \DateTime('now'))->setTime(7, 0, 0);
+	    $this->dateFins = (new \DateTime('now'))->setTime(20, 0, 0);
         $this->summary = 'Disponibilites';
     }
     
@@ -222,5 +228,29 @@ class Disponibilites {
     public function getBureau()
     {
         return $this->bureau;
+    }
+
+    /**
+     * Set ville
+     *
+     * @param \Application\PlateformeBundle\Entity\Ville $ville
+     *
+     * @return Disponibilites
+     */
+    public function setVille(\Application\PlateformeBundle\Entity\Ville $ville = null)
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * Get ville
+     *
+     * @return \Application\PlateformeBundle\Entity\Ville
+     */
+    public function getVille()
+    {
+        return $this->ville;
     }
 }
