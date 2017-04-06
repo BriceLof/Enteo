@@ -32,6 +32,15 @@ function getClient() {
 
 if(document.getElementById('admin_calendar_consultant_consultant')) {
     (function () {
+        console.log($('#numero_consultant').val());
+        if ($('#numero_consultant').val() != undefined){
+            $('#admin_calendar_consultant_consultant option[value="'+$('#numero_consultant').val()+'"]').prop('selected','selected');
+            $('#admin_calendar_consultant option[value="'+$('#numero_consultant').val()+'"]').prop('selected','selected');
+            $('#admin_calendar').css('display','block');
+            var iframe = document.querySelector('#iframe iframe');
+            iframe.width = div.width();
+        }
+
         $('#admin_calendar_consultant option[value="'+$('#admin_calendar_consultant_consultant').val()+'"]').prop('selected','selected');
         var consultants = document.getElementById('admin_calendar_consultant_consultant');
             consultants.addEventListener('change', function () {

@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block body %}
+    <div style="display: none">
+        {% if beneficiaire is not null %}
+            <input id="numero_consultant" type="number" value="{{ beneficiaire.consultant.id }}">
+        {% endif %}
+    </div>
     <div id="flashbag" class="container">
         <div class="row">
             <div class="col-md-12">
@@ -26,10 +31,16 @@
         <div id="admin_calendar" class="row">
             <div class="col-md-9" id="iframe">
                 <div class="row">
-                    <h2 id="nom_consultant"></h2>
+                    <h2 id="nom_consultant">
+                        {% if beneficiaire is not null %}
+                        Agenda de <span class="calendar_consultant">{{ beneficiaire.consultant.nom|capitalize~' '~beneficiaire.consultant.prenom|capitalize }}</span>
+                        {% endif %}
+                    </h2>
                 </div>
                 <div class="row" id="agenda_consultant">
-                    {# beneficiaire.consultant.calendrieruri|raw #}
+                    {% if beneficiaire is not null %}
+                        {{ beneficiaire.consultant.calendrieruri|raw }}
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-3">
