@@ -79,10 +79,12 @@ class DisponibilitesController extends Controller
             else{
                 $eventSummary = 'De '.$disponibilite->getDateDebuts()->format('H').'-'.$disponibilite->getDateFins()->format('H').'h';
             }
+
+            $eventDescription = '<a href="http://dev.application.entheor.com/web/user/'.$consultant->getId().'/show">(voir le profil du consultant)<a/>';
             //on ajoutera plus tard la disponibilité de la personne dans les bureaux de la ville
             //ce qui veut dire qu'il faudra récuperer le bureau a partir de la ville en bouclant sur la ville, eventuellement le dpt
 
-            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $disponibilite->getDateDebuts(), $disponibilite->getDateFins(), $eventSummary,"","",isset($location)? $location : '',[], true);
+            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $disponibilite->getDateDebuts(), $disponibilite->getDateFins(), $eventSummary,$eventDescription,"",isset($location)? $location : '',[], true);
 
             $disponibilite->setEventId($event['id']);
 
