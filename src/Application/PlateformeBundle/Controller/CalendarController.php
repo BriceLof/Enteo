@@ -175,7 +175,7 @@ class CalendarController extends Controller
     }
 
 
-    public function adminAddEventAction(Request $request, $id=null){
+    public function adminAddEventAction(Request $request, $id=null, $beneficiaire = null){
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
@@ -199,7 +199,7 @@ class CalendarController extends Controller
         $formConsultant = $this->createForm(AdminCalendarConsultantType::class, $historique);
 
         //si le formulaire est validé et qu'il ne présente pas d'erreur
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        if ($request->isMethod('POST') && $beneficiaire == null && $form->handleRequest($request)->isValid()) {
 
             //recuperation du bénéficiaire
             $beneficiaire = $historique->getBeneficiaire();
@@ -269,14 +269,16 @@ class CalendarController extends Controller
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////
-            return $this->redirect($this->generateUrl('application_admin_add_evenement', array(
+            return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
+                'beneficiaire' => $beneficiaire,
                 )
-            ));
+            );
         }
 
         return $this->render('ApplicationPlateformeBundle:Calendar:adminAddEvent.html.twig', array(
             'form' => $form->createView(),
             'form_consultant' => $formConsultant->createView(),
+            'beneficiaire' => $beneficiaire,
         ));
     }
 
