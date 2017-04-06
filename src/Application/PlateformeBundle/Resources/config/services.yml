@@ -41,6 +41,10 @@ services:
         class: Application\PlateformeBundle\Services\Statut\Cron\Rv
         parent: application_plateforme.mail
     
+    application_plateforme.disponibilite.cron.dispo:
+        class: Application\PlateformeBundle\Services\Disponibilite\Cron\Dispo
+        parent: application_plateforme.mail
+        
     application_plateforme.statut.mail.mail_rv_agenda:
         class: Application\PlateformeBundle\Services\Statut\Mail\MailRvAgenda
         parent: application_plateforme.mail

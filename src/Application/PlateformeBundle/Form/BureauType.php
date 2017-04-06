@@ -56,14 +56,7 @@ class BureauType extends AbstractType
                 'label' => 'Commentaires ',
                 'required' => false
             ))
-            ->add('calendrierid', TextType::class, array(
-                'label' => 'Calendrier ID ',
-                'required' => false
-            ))
-            ->add('calendrieruri', TextareaType::class, array(
-                'label' => 'Calendrier URI ',
-                'required' => false
-            ))
+           
             ->add('submit', SubmitType::class, array(
                 'label' => "Enregistrer"
             ));

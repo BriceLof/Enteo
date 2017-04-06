@@ -24,7 +24,7 @@ class AddStatutBdd
             "Recevabilité" => array("Accord recevabilité", "Refus recevabilité"),
             "Facturation" => array("Facture acompte", "Facture solde", "Facture totale", "Avoir"),
             "Reporté" => array("Pas le moment", "Pas de Consultants"),
-            "Abandon" => array("Faux N°", "Pas de financement", "Pas éligible", "Incompatibilité", "Renonce VAE", "Concurrent", "Distance", "Disponibilté", "No Show"),
+            "Abandon" => array("Faux N°", "Pas de financement", "Pas éligible", "Incompatibilité", "Renonce VAE", "Concurrent", "Distance", "Disponibilté", "No Show", "Doublon"),
             "Terminé" => array("Validation totale", "Validation partielle", "Rejeté"),
         );
         
