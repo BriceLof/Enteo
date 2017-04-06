@@ -2,12 +2,16 @@
 
 namespace Application\PlateformeBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 class DisponibilitesType extends AbstractType
 {
@@ -17,14 +21,40 @@ class DisponibilitesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateDebuts', DateTimeType::class, array(
-                'attr'=>array('class'=>'allchampH datedebuts')
+            ->add('date', DateType::class, array(
+                "mapped" => false,
+                'data' => (new \DateTime('now'))->modify('+1 day'),
             ))
-            ->add('dateFins', DateTimeType::class, array(
-                'attr' => array('class' => 'datefins allchampH'))
-            )
-            ->add('Enregistrer',  SubmitType::class, array(
-                'label' => 'Enregistrer'
+            ->add('dateDebuts', TimeType::class, array(
+                'label' => 'Heure Début',
+                'attr'=>array(
+                    'class'=>''
+                )
+            ))
+            ->add('dateFins', TimeType::class, array(
+                'label' => 'Heure Fin',
+                'attr' => array(
+                    'class' => ''
+                )
+            ))
+            ->add('villeNom', TextType::class, array(
+                'label' => 'Ville ',
+                "mapped" => false,
+                "required" => false,
+                'attr' => array(
+                    'placeholder' => 'Veuillez saisir la ville',
+                    'autocomplete' => 'off'
+                )
+            ))
+            ->add('villeId', IntegerType::class, array(
+                "mapped" => false,
+                'attr' => array(
+                    'style' => 'display:none;'
+                ),
+                'required' => false,
+                'label_attr' => array(
+                    'style' => 'display:none;'
+                )
             ))
         ;
     }

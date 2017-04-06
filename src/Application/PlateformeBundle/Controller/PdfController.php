@@ -2,8 +2,10 @@
 
 namespace Application\PlateformeBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Accompagnement;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\Document;
+use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Form\BeneficiaireType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,5 +148,70 @@ class PdfController extends Controller
             'heure' => $heure,
             'reste' => $reste,
         ));
+    }
+
+    /**
+     * fonction imprimer de la fiche bénéficiaire
+     */
+    public function printAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        $editConsultantForm = $this->createForm(BeneficiaireType::class, $beneficiaire);
+        $editForm = $this->createForm(BeneficiaireType::class, $beneficiaire);
+
+        $editForm->get('codePostalHiddenBeneficiaire')->setData($beneficiaire->getVille()->getCp());
+        $editForm->get('idVilleHiddenBeneficiaire')->setData($beneficiaire->getVille()->getId());
+
+        $codePostalHiddenEmployeur = 0;
+        $idVilleHiddenEmployeur = 0;
+
+        if ($beneficiaire->getEmployeur() != null) {
+            if ($beneficiaire->getEmployeur()->getVille() != null) {
+                $codePostalHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getCp();
+                $idVilleHiddenEmployeur = $beneficiaire->getEmployeur()->getVille()->getId();
+            }
+        }
+
+        if($beneficiaire->getAccompagnement() == null){
+            $accompagnement = new Accompagnement();
+            $financeur = new Financeur();
+            $financeur2 = new Financeur();
+            $accompagnement->addFinanceur($financeur);
+            $accompagnement->addFinanceur($financeur2);
+            $beneficiaire->setAccompagnement($accompagnement);
+            $em->persist($beneficiaire);
+            $em->flush();
+        }
+
+
+        $html = $this->renderView('ApplicationPlateformeBundle:Pdf:print.html.twig', array(
+            'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
+            'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
+            'form_consultant' => $editConsultantForm->createView(),
+            'beneficiaire'      => $beneficiaire,
+            'edit_form'   => $editForm->createView(),
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
+                'enable-javascript' => true,
+                'encoding' => 'utf-8',
+                'javascript-delay' => 5000,
+                'orientation'=>'Landscape',
+                'disable-smart-shrinking' => true,
+                'margin-left' => '0mm',
+                'margin-right' => '0mm',
+                'lowquality' => true,
+                'grayscale' => true,
+                'print-media-type' => true,
+                'disable-internal-links' => true,
+            )),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="fiche'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+            )
+        );
     }
 }

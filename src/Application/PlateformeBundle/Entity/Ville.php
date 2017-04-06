@@ -38,6 +38,11 @@ class Ville
     protected $bureaux;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Disponibilites", mappedBy="ville", cascade={"persist"})
+     */
+    protected $disponibilites;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="slug_ville", type="string", length=255, nullable=false)
@@ -404,5 +409,39 @@ class Ville
     public function getEmployeur()
     {
         return $this->employeur;
+    }
+
+    /**
+     * Add disponibilite
+     *
+     * @param \Application\PlateformeBundle\Entity\Disponibilites $disponibilite
+     *
+     * @return Ville
+     */
+    public function addDisponibilite(\Application\PlateformeBundle\Entity\Disponibilites $disponibilite)
+    {
+        $this->disponibilites[] = $disponibilite;
+
+        return $this;
+    }
+
+    /**
+     * Remove disponibilite
+     *
+     * @param \Application\PlateformeBundle\Entity\Disponibilites $disponibilite
+     */
+    public function removeDisponibilite(\Application\PlateformeBundle\Entity\Disponibilites $disponibilite)
+    {
+        $this->disponibilites->removeElement($disponibilite);
+    }
+
+    /**
+     * Get disponibilites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDisponibilites()
+    {
+        return $this->disponibilites;
     }
 }

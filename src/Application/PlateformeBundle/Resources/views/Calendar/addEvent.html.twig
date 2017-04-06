@@ -20,6 +20,18 @@
 </div>
 <div class="container-fluid calendar">
     <div class="row">
+        <div class="col-md-12" id="dispo">
+            <div class="row">
+                <div class="col-sm-11 collapse" id="collapseDisponibilite">
+                    {{ render(controller("ApplicationPlateformeBundle:Disponibilites:new",{'id': beneficiaire.consultant.id})) }}
+                </div>
+                <div class="col-sm-1" style="float: right">
+                    <a href="#collapseDisponibilite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDisponibilite" class="btn btn-primary disponibilite">Vos disponiblités</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-9" id="iframe">
             <div class="row">
                 <h2>Agenda de <span class="calendar_consultant">{{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</span></h2>
@@ -38,9 +50,7 @@
                         Beneficiaire :<br>
                         <span class="calendar_consultant"><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}">{{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso|capitalize ~' '~beneficiaire.nomConso|capitalize }}</a></span>
                     </h2>
-
                     <form action="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" method="POST" id="form_admin_event">
-
                         <div>
                             {{ form_row(form.typerdv) }}
                         </div>

@@ -14,7 +14,7 @@ application_plateforme_agenda:
     path:     /agenda
     defaults: 
         _controller: ApplicationPlateformeBundle:Agenda:agendas
-        
+
 autocompletion_agenda:
     path:     /autocompletion
     defaults: 
@@ -62,6 +62,11 @@ application_plateforme_beneficiaire:
 application_plateforme_calendar:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/calendar.yml"
     prefix:   /calendar
+
+#disponibilite
+application_plateforme_disponibilites:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/disponibilites.yml"
+    prefix:   /disponibilites
 
 
 #pdf

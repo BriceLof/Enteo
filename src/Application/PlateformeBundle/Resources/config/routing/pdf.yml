@@ -5,3 +5,7 @@ application_new_pdf:
 application_test_pdf:
     path:    /test/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Pdf:test" }
+
+application_print_beneficiaire:
+    path:     /print/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Pdf:print" }

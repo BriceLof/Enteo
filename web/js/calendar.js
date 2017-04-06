@@ -141,7 +141,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                         reponse($.map(ville, function (item) {
                             return {
                                 value: function () {
-                                    cp = (item.cp)
+                                    cp = (item.cp);
                                     return item.nom;
                                 }
                             }
@@ -170,7 +170,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                                     $('#admin_calendar_adresseBureau').val(item.adresse);
                                     $('#admin_calendar_nomBureau').val(item.nom);
                                     $('#admin_calendar_bureau').val(item.id);
-                                    cp = (item.cp)
+                                    cp = (item.cp);
                                     return item.ville;
                                 }
                             }
@@ -247,7 +247,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 (function () {
     jQuery.validator.addMethod("noBeneficiaire",
         function (value, element) {
-            var beneficiaire = $('#admin_calendar_beneficiaire')
+            var beneficiaire = $('#admin_calendar_beneficiaire');
             console.log(beneficiaire.val())
             if(value != null && beneficiaire.val() == null){
                 return false;
@@ -294,7 +294,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     "required": true
                 },
                 "admin_calendar[ville]":{
-                    "villeEntheor": true,
+                    "villeEntheor": true
                 },
                 "admin_calendar[nomBureau]":{
                     "required": function () {
@@ -382,5 +382,114 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     });
     $('#admin_calendar_heureDebut_minute').on('change', function () {
         $('#admin_calendar_heureFin_minute option[value="'+$(this).val()+'"]').prop('selected', true)
+    });
+})();
+
+//disponibilités
+(function () {
+    $('#application_plateformebundle_disponibilites_villeNom').autocomplete({
+        source : function(requete, reponse) {
+            $.ajax({
+                url: Routing.generate('application_get_ville'), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                data: {
+                    nomVille: $('#application_plateformebundle_disponibilites_villeNom').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    var ville = $.parseJSON(data);
+                    reponse($.map(ville, function (item) {
+                        return {
+                            value: function () {
+                                id = (item.id);
+                                return item.nom;
+                            }
+                        }
+                    }));
+                }
+            });
+        },
+        select: function (event, ui) {
+            $('#application_plateformebundle_disponibilites_villeId').val(id);
+        },
+        change: function(event, ui) {
+            if (ui.item) {
+                $('#application_plateformebundle_disponibilites_villeId').val(id);
+                $('#application_plateformebundle_disponibilites_villeNom').removeClass("villeError")
+            } else {
+                $('#application_plateformebundle_disponibilites_villeId').val(null);
+                if ($('#application_plateformebundle_disponibilites_villeNom').hasClass("villeError")){
+                }else{
+                    $('#application_plateformebundle_disponibilites_villeNom').addClass("villeError");
+                }
+            }
+        }
+    });
+
+    jQuery.validator.addMethod("noVille",
+        function (value, element) {
+            if($('#application_plateformebundle_disponibilites_villeNom').hasClass("villeError")){
+                return false;
+            }else{
+                return true;
+            }
+        }, "Veuillez choisir la ville"
+    );
+
+    //validation jquery
+    $("#form_dispo").validate({
+        rules: {
+            "application_plateformebundle_disponibilites[villeNom]":{
+                "noVille": true
+            }
+        }
+    });
+
+    dateCourant = new Date();
+    jourCourant = dateCourant.getDate(); // jour
+    moisCourant = dateCourant.getMonth()+1; // mois +1 (parce que le mois.val commence par 1)
+    anneeCourant = dateCourant.getFullYear(); // année
+    //mise a jour de la date on change
+    $('#application_plateformebundle_disponibilites_date select').on('change', function () {
+        if($('#application_plateformebundle_disponibilites_date_year').val() == anneeCourant){
+            //si le jour est inferieure a la date du jour, on augment le mois
+            if($('#application_plateformebundle_disponibilites_date_month').val() <= moisCourant && $('#application_plateformebundle_disponibilites_date_day').val() < jourCourant){
+                if($(this).attr('id') == 'application_plateformebundle_disponibilites_date_month'){
+                    value = anneeCourant + 1;
+                    $('#application_plateformebundle_disponibilites_date_year option[value="'+value+'"]').prop('selected', true)
+                }else{
+                    value = moisCourant+1;
+                    $('#application_plateformebundle_disponibilites_date_month option[value="'+value+'"]').prop('selected', true)
+                }
+            }
+        }
+    });
+    //mise à jour de l'heure et la minute
+    $('#application_plateformebundle_disponibilites_dateDebuts_hour').on('change', function () {
+        var value = $(this).val();
+        value ++;
+        if($('#application_plateformebundle_disponibilites_dateFins_hour option:selected').val() < value){
+            $('#application_plateformebundle_disponibilites_dateFins_hour option[value="'+value+'"]').prop('selected', true);
+        }
+        $('#application_plateformebundle_disponibilites_dateFins_hour option').each(function () {
+            if($(this).val() < value ){
+                $(this).attr('disabled', 'disabled');
+            }
+        })
+    });
+    $('#application_plateformebundle_disponibilites_dateDebuts_hour option').each(function () {
+        if($(this).val()>20 || $(this).val()< 7){
+            $(this).attr('disabled', 'disabled');
+        }
+    });
+    $('#application_plateformebundle_disponibilites_dateFins_hour option').each(function () {
+        if($(this).val()>21 || $(this).val()< 8){
+            $(this).attr('disabled', 'disabled');
+        }
+    });
+    $('#application_plateformebundle_disponibilites_dateDebuts_minute').on('change', function () {
+        $('#application_plateformebundle_disponibilites_dateFins_minute option[value="'+$(this).val()+'"]').prop('selected', true)
     });
 })();

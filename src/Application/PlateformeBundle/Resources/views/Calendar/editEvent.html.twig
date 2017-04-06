@@ -20,7 +20,16 @@
     </div>
     <div class="container-fluid calendar">
         <div class="row">
-
+            <div class="col-md-12" id="dispo">
+                <div class="row">
+                    <div class="col-sm-11 collapse" id="collapseDisponibilite">
+                        {{ render(controller("ApplicationPlateformeBundle:Disponibilites:new",{'id': beneficiaire.consultant.id})) }}
+                    </div>
+                    <div class="col-sm-1" style="float: right">
+                        <a href="#collapseDisponibilite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDisponibilite" class="btn btn-primary disponibilite">Vos disponiblités</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-9" id="iframe">

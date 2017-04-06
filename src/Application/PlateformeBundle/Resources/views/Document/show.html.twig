@@ -5,26 +5,27 @@
     <div id="pageImage">
         <div id="afficheImage">
             {{ afficherDocument(beneficiaire, document.path) }}
-            <img src="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" alt="{{ document.description }}">
+            <img src="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}"
+                 alt="{{ document.description }}">
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
-<script>
-    jQuery(window).load(function() {
-        var documentId = $("#document").val();
+    <script>
+        jQuery(window).load(function () {
+            var documentId = $("#document").val();
 
-        $.ajax({
-            type: 'get',
-            url: Routing.generate("application_up_document", { id: documentId }),
-            beforeSend: function(){
-                console.log('ça charge');
-                //$(".detailStatut").append(
-            }
-        }).done(function(data) {
-            console.log(data);
+            $.ajax({
+                type: 'get',
+                url: Routing.generate("application_up_document", {id: documentId}),
+                beforeSend: function () {
+                    console.log('ça charge');
+                    //$(".detailStatut").append(
+                }
+            }).done(function (data) {
+                console.log(data);
+            });
         });
-    });
-</script>
+    </script>
 {% endblock %}
