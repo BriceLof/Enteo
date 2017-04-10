@@ -683,3 +683,12 @@ textarea {
     margin-left: 10px;
     margin-right: 11px;
 }
+#form_villeBureau{
+    margin-bottom: 15px;
+}
+#liste_autre_bureau_ville{
+    margin-top: 10px;
+    font-weight: 600;
+    text-decoration: underline;
+    display: none;
+}

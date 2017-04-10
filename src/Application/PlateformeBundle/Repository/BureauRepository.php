@@ -36,6 +36,7 @@ class BureauRepository extends \Doctrine\ORM\EntityRepository
     public function getBureaux($ville){
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Bureau','b');
+        $rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville','v','b');
 
         $query = 'SELECT b.* FROM bureau b WHERE 1';
         $params = array();
@@ -49,5 +50,16 @@ class BureauRepository extends \Doctrine\ORM\EntityRepository
         $request->setParameters($params);
 
         return $request;
+    }
+
+    public function getBureauByDpt($dpt){
+        $queryBuilder = $this->createQueryBuilder('b')
+            ->innerJoin('b.ville','v')
+            ->where('v.dpt = :dpt')
+            ->setParameter('dpt',$dpt)
+            ;
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
     }
 }

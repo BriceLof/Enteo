@@ -231,15 +231,17 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
         };
     }
 
-    var summary = document.getElementById('admin_calendar_summary');
-    var autreSummary = document.getElementById('autre_summary');
-    summary.addEventListener('change',function () {
-        if(summary.options[summary.selectedIndex].value === 'Autre'){
-            autreSummary.style.display = 'block';
-        }else{
-            autreSummary.style.display = 'none';
-        }
-    });
+    if(document.getElementById('admin_calendar_summary')){
+        var summary = document.getElementById('admin_calendar_summary');
+        var autreSummary = document.getElementById('autre_summary');
+        summary.addEventListener('change',function () {
+            if(summary.options[summary.selectedIndex].value === 'Autre'){
+                autreSummary.style.display = 'block';
+            }else{
+                autreSummary.style.display = 'none';
+            }
+        });
+    }
 
     var tableOnglet = document.getElementById('admin_calendar');
     $('#admin_calendar_consultant_consultant').on('change',function () {
@@ -502,3 +504,95 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
         $('#application_plateformebundle_disponibilites_dateFins_minute option[value="'+$(this).val()+'"]').prop('selected', true)
     });
 })();
+
+
+//bureau
+(function () {
+    $('#form_villeBureau').autocomplete({
+        source : function(requete, reponse) {
+            $.ajax({
+                url: Routing.generate('application_ajax_search_bureau'), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                data: {
+                    nomVille: $('#form_villeBureau').val(),
+                    isBureauCalendar : 'yes'    //cette valeur est juste la pour differencier celui la avec le formulaire dans adminAgenda
+                },
+                dataType: 'json',
+                beforeSend: function () {
+
+                },
+                success: function (data) {
+                    console.log(data);
+                    var bureaux = $.parseJSON(data);
+                    reponse($.map(bureaux, function (item) {
+                        return {
+                            value: function () {
+                                idVille = item.idVille;
+                                return item.ville;
+                            }
+                        }
+                    }));
+                }
+            });
+        },
+        select: function (event, ui) {
+            console.log(idVille);
+            $.ajax({
+                url: Routing.generate('application_show_bureau'), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                data: {
+                    id: idVille
+                },
+                dataType: 'json',
+                beforeSend: function () {
+
+                },
+                success: function (data) {
+
+                    $('#iframe iframe').remove();
+                    $('#liste_bureau_ville div').remove();
+                    $('#liste_autre_bureau_ville').css('display','none');
+                    $('#liste_autre_bureau_ville div').remove();
+
+
+                    var resultat = $.parseJSON(data);
+                    //mise en place de l'iframe
+                    $('#iframe').html(resultat.iframe);
+                    var iframe = document.querySelector('#iframe iframe');
+                    iframe.width = div.width();
+
+                    //mise en place de la liste des villes
+                    for(var i=0; i<resultat.tabs.length;i++){
+                        if(resultat.tabs[i].sentinel == 1){
+                            html = '<div><span class="glyphicon glyphicon-stop" style="color:'+ resultat.tabs[i].color +';margin-right: 10px"></span>'+
+                                   '<span style="margin-right: 10px">'+ resultat.tabs[i].nomBureau +'</span><input type="checkbox" id="bureau_'+ i +'" data-id="'+ resultat.tabs[i].calendrierId +'" data-color ="'+ resultat.tabs[i].googleColor +'" onclick="addRemove(this)" checked></div>';
+                            $('#liste_bureau_ville').append(html);
+                        }else{
+                            $('#liste_autre_bureau_ville').css('display','block');
+                            html = '<div><span class="glyphicon glyphicon-stop" style="color:'+ resultat.tabs[i].color +';margin-right: 10px"></span>'+
+                                '<span style="margin-right: 10px">'+ resultat.tabs[i].nomBureau +'</span><input type="checkbox" id="bureau_'+ i +'" data-id="'+ resultat.tabs[i].calendrierId +'" data-color ="'+ resultat.tabs[i].googleColor +'"  onclick="addRemove(this)"></div>';
+                            $('#liste_autre_bureau_ville').append(html);
+                        }
+                    }
+                }
+            });
+        },
+        change: function(event, ui) {
+            console.log("this.value: " + this.value);
+        }
+    });
+
+})();
+
+function addRemove(el) {
+    iframe = $('#iframe');
+    calendar = "src=" + $(el).attr('data-id') + "&amp;color=" + $(el).attr('data-color') + "&amp;";
+    html = iframe.html();
+
+    if (html.includes(calendar)){
+        newHtml = html.replace(calendar,"");
+    }else{
+        newHtml = html.slice(0,144)+ calendar + html.slice(144,html.length)
+    }
+    iframe.html(newHtml);
+}

@@ -1,0 +1,38 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block title %}Agenda Bureaux{% endblock%}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9" id="iframe">
+                {{ iframe|raw }}
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            Légendes
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div id="liste_bureau_ville">
+                            {{ form_widget(form.villeBureau) }}
+                        {#{% if tabs is not empty %}#}
+                            {#{% for tab in tabs %}#}
+                                {#<div id="liste_bureau_ville">#}
+                                    {#<span class="glyphicon glyphicon-stop" style="color: {{ tab[1] }}"></span>#}
+                                    {#<span style="color: {{ tab[0].nombureau }}">{{ tab[0].nombureau }}</span>#}
+                                {#</div>#}
+                            {#{% endfor %}#}
+                        {#{% endif %}#}
+                        </div>
+                        <div id="liste_autre_bureau_ville">
+                            <span>Les autres bureaux dans le département</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock%}
