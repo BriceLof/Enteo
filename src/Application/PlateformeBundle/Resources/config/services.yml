@@ -18,6 +18,9 @@ services:
     application_plateforme.document:
         class: Application\PlateformeBundle\Services\Document
 
+    application_plateforme.calendar:
+        class: Application\PlateformeBundle\Services\Calendar
+
     application_plateforme.twig.document.extesion:
         class: Application\PlateformeBundle\Twig\DocumentExtension
         arguments:

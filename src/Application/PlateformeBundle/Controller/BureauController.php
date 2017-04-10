@@ -4,7 +4,9 @@ namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Bureau;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Application\PlateformeBundle\Form\BureauType;
@@ -113,8 +115,8 @@ class BureauController extends Controller
             throw $this->createNotFoundException('Unable to find Bureau.');
         }
         $bureau->setSupprimer(true);
-		$bureau->setActifInactif(false);
-		$em->persist($bureau);
+        $bureau->setActifInactif(false);
+        $em->persist($bureau);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('info', 'Bureau supprimé avec succès');
@@ -132,13 +134,13 @@ class BureauController extends Controller
         if (!$bureau) {
             throw $this->createNotFoundException('Unable to find Bureau.');
         }
-        if($bureau->getActifInactif()== true){
+        if ($bureau->getActifInactif() == true) {
             $bureau->setActifInactif(false);
             $em->persist($bureau);
             $em->flush($bureau);
 
             $this->get('session')->getFlashBag()->add('info', 'Bureau desactivé');
-        }else{
+        } else {
             $bureau->setActifInactif(true);
             $em->persist($bureau);
             $em->flush($bureau);
@@ -149,33 +151,126 @@ class BureauController extends Controller
         return $this->redirect($this->generateUrl('application_index_bureau'));
     }
 
-    public function ajaxSearchAction(Request $request){
+    public function ajaxSearchAction(Request $request)
+    {
         if ($request->isXmlHttpRequest()) {
             $list = [];
+            $listDpt = [];
             $nomVille = $request->query->get('nomVille');
+
+            $test = $request->query->get('isBureauCalendar');
 
             $em = $this->getDoctrine()->getManager();
             $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findBy(array(
                 'actifInactif' => true,
             ));
 
-            foreach ($bureaux as $bureau){
-                if(stristr($bureau->getVille()->getNom(),$nomVille) === false){
-                }else{
-                    $list[] = array(
-                        'id' => $bureau->getId(),
-                        'nom' => $bureau->getNombureau(),
-                        'adresse' => $bureau->getAdresse(),
-                        'cp' => $bureau->getVille()->getCp(),
-                        'ville' => $bureau->getVille()->getNom(),
-                    );
+            foreach ($bureaux as $bureau) {
+                if (stristr($bureau->getVille()->getNom(), $nomVille) === false) {
+                } else {
+                    if($test != null){
+                        if (count($list) == 0){
+                            $list[] = array(
+                                'idVille' => $bureau->getVille()->getId(),
+                                'ville' => $bureau->getVille()->getNom(),
+                                'dpt' => $bureau->getVille()->getDpt(),
+                            );
+                            $listDpt[] = $bureau->getVille()->getDpt();
+                        }else{
+                            if (!in_array($bureau->getVille()->getDpt(),$listDpt)){
+                                $list[] = array(
+                                    'idVille' => $bureau->getVille()->getId(),
+                                    'ville' => $bureau->getVille()->getNom(),
+                                    'dpt' => $bureau->getVille()->getDpt(),
+                                );
+                            }
+                        }
+                    }else{
+                        $list[] = array(
+                            'id' => $bureau->getId(),
+                            'nom' => $bureau->getNombureau(),
+                            'adresse' => $bureau->getAdresse(),
+                            'cp' => $bureau->getVille()->getCp(),
+                            'ville' => $bureau->getVille()->getNom(),
+                        );
+                    }
                 }
             }
+
             $resultats = new JsonResponse(json_encode($list));
             return $resultats;
 
-        }else{
+        } else {
             throw new \Exception('erreur');
         }
+    }
+
+    public function showCalendarAction(Request $request)
+    {
+
+        //on récupere la ville
+        $em = $this->getDoctrine()->getManager();
+        $bureau = new Bureau();
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $bureau);
+        $formBuilder
+            ->add('villeBureau', TextType::class, array(
+                'mapped' => false,
+                'attr' => array(
+                    'placeholder' => 'Veuillez saisir la ville',
+                    'autocomplete' => 'off'
+                )
+            ))
+        ;
+
+        $form = $formBuilder->getForm();
+
+        $iframe = '<iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;hl=fr&amp;bgcolor=%23FFFFFF&amp;';
+
+        //requete ajax
+        if ($request->isXmlHttpRequest()) {
+            $id = $request->query->get('id');
+
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($id);
+
+            $results = $em->getRepository('ApplicationPlateformeBundle:Bureau')->getBureauByDpt($ville->getDpt());
+
+            $color = $this->get('application_plateforme.calendar')->getColor();
+            $i = 0;
+            $tab = [];
+            foreach ($results as $bureau) {
+                if ($bureau->getCalendrierid() != null) {
+                    $sentinel = 0;
+                    if ($ville == $bureau->getVille()){
+                        $sentinel = 1;
+                        $iframe .= 'src=' . $bureau->getCalendrierid() . '&amp;color=' . $color[$i] . '&amp;';
+                    }
+                    $tab[] = array(
+                        'nomBureau' => $bureau->getNombureau(),
+                        'calendrierId' => $bureau->getCalendrierid(),
+                        'color' => $this->get('application_plateforme.calendar')->getColorName($color[$i]),
+                        'googleColor' => $color[$i],
+                        'sentinel' => $sentinel
+                    );
+                    $i++;
+                }
+            }
+
+            $iframe .= 'ctz=Europe%2FParis"style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+
+            $list = array(
+                'tabs' => $tab,
+                'iframe' => $iframe
+            );
+
+            $resultats = new JsonResponse(json_encode($list));
+            return $resultats;
+        }
+
+        $iframe .= 'ctz=Europe%2FParis"style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>';
+
+        return $this->render('ApplicationPlateformeBundle:Bureau:showCalendar.html.twig', array(
+            'iframe' => $iframe,
+            'form' => $form->createView(),
+        ));
     }
 }

@@ -13,6 +13,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
  */
 class VilleRepository extends \Doctrine\ORM\EntityRepository
 {
+    //recupere les villes par rapport au deux premiers chiffres du code postal
     public function findByDepartement($departement)
     {
         $queryBuilder = $this->createQueryBuilder("v")
@@ -30,6 +31,17 @@ class VilleRepository extends \Doctrine\ORM\EntityRepository
             ->where("v.nom LIKE :nomVille")
             ->setParameter("nomVille", '%'.$nomVille.'%')
             ->setMaxResults(10);
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
+
+    //recupere les villes par rapport au nom du departement
+    public function getVillesByDpt($dpt){
+        $queryBuilder = $this->createQueryBuilder("v")
+            ->where("v.dpt LIKE :departement")
+            ->setParameter("departement", $dpt.'%')
+            ->orderBy("v.nom", "ASC");
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
         return $results;
