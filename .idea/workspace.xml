@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Bureau/showCalendar.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Calendar.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BureauRepository.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BureauRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/VilleRepository.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/VilleRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/services.yml" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/services.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/css/style.css" afterPath="$PROJECT_DIR$/web/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/calendar.js" afterPath="$PROJECT_DIR$/web/js/calendar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="calendar.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="calendar.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/js/calendar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-578">
-              <caret line="551" column="49" selection-start-line="551" selection-start-column="49" selection-end-line="551" selection-end-column="49" />
+            <state relative-caret-position="153">
+              <caret line="585" column="0" selection-start-line="585" selection-start-column="0" selection-end-line="585" selection-end-column="0" />
               <folding>
                 <marker date="1491819494313" expanded="true" signature="2575:2590" ph="..." />
                 <marker date="1491819494313" expanded="true" signature="22923:22976" ph="..." />
@@ -44,6 +36,26 @@
                 <marker date="1491819494313" expanded="true" signature="23545:23598" ph="..." />
                 <marker date="1491819494313" expanded="true" signature="23656:23674" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout.html.twig" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-102">
+              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bureau.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -86,7 +98,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/calendar.yml" />
         <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/mailing/28_03_2017_ACE/index.html" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/CalendarType.php" />
         <option value="$PROJECT_DIR$/web/js/mainAjax.js" />
@@ -130,13 +141,14 @@
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/services.yml" />
         <option value="$PROJECT_DIR$/../../test/index.html" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Calendar.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Bureau/showCalendar.html.twig" />
         <option value="$PROJECT_DIR$/web/css/calendar.css" />
         <option value="$PROJECT_DIR$/web/css/style.css" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BureauRepository.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php" />
         <option value="$PROJECT_DIR$/web/js/calendar.js" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml" />
+        <option value="$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig" />
       </list>
     </option>
   </component>
@@ -311,32 +323,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controller" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -479,14 +465,7 @@
       <workItem from="1487176506445" duration="453000" />
       <workItem from="1488879500190" duration="41792000" />
       <workItem from="1490691196740" duration="102643000" />
-      <workItem from="1491494856317" duration="40406000" />
-    </task>
-    <task id="LOCAL-00031" summary="- security control">
-      <created>1484305234617</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1484305234617</updated>
+      <workItem from="1491494856317" duration="40983000" />
     </task>
     <task id="LOCAL-00032" summary="- security control">
       <created>1484305395352</created>
@@ -824,18 +803,25 @@
       <option name="project" value="LOCAL" />
       <updated>1490968533004</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="- calendar bureau">
+      <created>1491819724246</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1491819724248</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1052769000" />
+    <option name="totallyTimeSpent" value="1053346000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19515885" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2375189" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2375189" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32649574" sideWeight="0.54689866" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -843,7 +829,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33675215" sideWeight="0.47049925" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32649574" sideWeight="0.45310137" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32649574" sideWeight="0.45310137" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -907,7 +893,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- formulaire" />
     <MESSAGE value="- date firefox" />
     <MESSAGE value="- vérification cohérence de la date dans l'accompagnement" />
     <MESSAGE value="- message flash" />
@@ -932,7 +917,8 @@
     <MESSAGE value="- calendar fidy v2" />
     <MESSAGE value="- calendar fidy v2 (probleme avec le modal supprimer evenement)" />
     <MESSAGE value="- calendar fidy v3 (fonctionnel)" />
-    <option name="LAST_COMMIT_MESSAGE" value="- calendar fidy v3 (fonctionnel)" />
+    <MESSAGE value="- calendar bureau" />
+    <option name="LAST_COMMIT_MESSAGE" value="- calendar bureau" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -947,13 +933,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Pdf/layout.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/layout-pdf.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -1325,14 +1304,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="29" column="12" selection-start-line="29" selection-start-column="12" selection-end-line="29" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Calendar.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -1379,8 +1350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/js/calendar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-578">
-          <caret line="551" column="49" selection-start-line="551" selection-start-column="49" selection-end-line="551" selection-end-column="49" />
+        <state relative-caret-position="153">
+          <caret line="585" column="0" selection-start-line="585" selection-start-column="0" selection-end-line="585" selection-end-column="0" />
           <folding>
             <marker date="1491819494313" expanded="true" signature="2575:2590" ph="..." />
             <marker date="1491819494313" expanded="true" signature="22923:22976" ph="..." />
@@ -1388,6 +1359,22 @@
             <marker date="1491819494313" expanded="true" signature="23545:23598" ph="..." />
             <marker date="1491819494313" expanded="true" signature="23656:23674" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/bureau.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
