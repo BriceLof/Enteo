@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Application\PlateformeBundle\Form\BureauType;
 
@@ -207,6 +208,20 @@ class BureauController extends Controller
 
     public function showCalendarAction(Request $request)
     {
+        $googleCalendar = $this->get('fungio.google_calendar');
+        //url de redirection
+        $redirectUri = "http://localhost/enteo/enteo/web/app_dev.php/calendar/getClient";
+        $googleCalendar->setRedirectUri($redirectUri);
+
+        //recuperation du client
+        if ($request->query->has('code') && $request->get('code')) {
+            $client = $googleCalendar->getClient($request->get('code'));
+        } else {
+            $client = $googleCalendar->getClient();
+        }
+        if (is_string($client)) {
+            return new RedirectResponse($client);
+        }
 
         //on récupere la ville
         $em = $this->getDoctrine()->getManager();

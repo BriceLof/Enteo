@@ -30,7 +30,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             $ref = "5";
             $to = $listeCommerciaux ;
             $to = array("b.lof@iciformation.fr" => "Brice",
-                "f.azoulay@iciformation.fr" => "Franck",) ;
+                /*"f.azoulay@iciformation.fr" => "Franck",*/) ;
             $cc = $listeAdministrateurs;
             $cc = "";
             $bcc = array(
@@ -45,7 +45,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                 $consultant = $disponibilite->getConsultant();
                 // Si on a deja des lignes pour ce consultant
                 if(!in_array($consultant->getId(), $arrayConsultant))
-                    $arrayConsultant[] = $consultant->getId();  
+                    $arrayConsultant[] = (int) $consultant->getId();  
             }
             
             $message = "Bonjour, <br><br> 1) Liste des prochaines disponibilités à la journée inscrites par les Consultants VAE : <br>";
@@ -55,7 +55,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                 $dispoConsultant = $this->em->getRepository("ApplicationPlateformeBundle:Disponibilites")->findDispoFromDateDuConsultant($date, $arrayConsultant[$i]);
                 if(count($dispoConsultant) > 0){
                     $message .= "<p style='margin-left:10px;'><b>&bull; ".ucfirst($dispoConsultant[0]->getConsultant()->getPrenom())." ".strtoupper($dispoConsultant[0]->getConsultant()->getNom())."</b></p>";
-                    $message .= "<table style='border:1px solid;border-collapse: collapse;'>";
+                    $message .= "<table style='margin-left:15px;margin-top:-10px'>";
                     foreach($dispoConsultant as $dispo)
                     {
                         $dateDebut = $dispo->getDateDebuts();
@@ -70,24 +70,26 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                        
                         $creneau =  ($heureFin - $heureDebut) -  count($nombreRdvConsultant) ; 
                        
-                        $message .= "<tr><td style='border:1px solid;padding:5px'>".$dateDispo."</td>"
-                                . "<td style='border:1px solid;padding:5px' >".$ville->getNom()."</td>"
-                                . "<td style='border:1px solid;padding:5px' >".$creneau." créneaux dispo.</td></tr>";   
+                        $message .= "<tr><td style=padding:3px'>- ".$dateDispo.",</td>"
+                                . "<td style='padding:3px' >".$ville->getNom().",</td>"
+                                . "<td style='padding:3px' >".$creneau." créneaux dispo.</td></tr>";   
                     }
                     $message .= "</table>";  
                 }  
             }
             
             $message .= "<br><br>2) Consultants n'ayant pas inscrit de journées de disponibilités : <br>";
+
             $nombreRdvConsultant = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeAndExclude($arrayConsultant, "ROLE_CONSULTANT");
+
             if(count($nombreRdvConsultant) > 0)
             {
                 foreach($nombreRdvConsultant as $rdvConsultant)
-                {
+                {	
                     $message .= "<p style='margin-left:10px;'><b>&bull; ".ucfirst($rdvConsultant->getPrenom())." ".strtoupper($rdvConsultant->getNom())."</b></p>";  
                 }
             }
-  
+
             $template = "@Apb/Alert/Mail/mailDefault.html.twig";
             $body = $this->templating->render($template, array(
                 'sujet' => $subject ,

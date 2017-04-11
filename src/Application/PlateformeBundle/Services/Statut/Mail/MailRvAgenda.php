@@ -42,11 +42,9 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
 		
         $acces = "";
-        $commentaire = "";
         if(!is_null($rdv->getBureau()))
         {
             if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
-            if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
         }			
 	
 		
@@ -69,8 +67,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 							".$rdv->getBureau()->getNombureau()."<br>
 							".$rdv->getBureau()->getAdresse()."<br>".
 							$rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getVille()->getNom()."<br>".
-							$acces."<br>".
-                                                        $commentaire."    
+							$acces."  
 						</td>
 					</tr>
 				</table>";

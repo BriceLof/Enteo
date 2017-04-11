@@ -14,64 +14,71 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         
         $today = new \DateTime();
         $eventAgenda = $histoRepo->findEventByDate($today->format('Y-m-d'));
-        //var_dump($today);
-        foreach($eventAgenda as $event)
-        {
-            $dateHeureDebut = $event->getDateDebut();
-            $heureDebut = $event->getDateDebut()->format('H:i:s');
-            //var_dump($dateHeureDebut);
-            // si l'heure actuel est au moins à 1h de + de l'heure de démarrage du rdv et que la cron n'a pas déjà envoyé un email, envoi de mail 
-            if($today >= $dateHeureDebut->add(new \DateInterval('PT1H')) && $event->getMailPostRv() == false && $event->getEventId() != 0)
-            {
-                $beneficiaire = $event->getBeneficiaire();
-                $consultant = $event->getConsultant();
-				// Pour que ce mail ne se relance pas lors du passage de la prochaine cron, je met un champs à jour pour dire que le mail a déjà été envoyé pour ce rdv
-				$event->setMailPostRv(true);
-				$this->em->persist($event);
-				$this->em->flush();
-				
-                $subject = "Comment s'est passé votre rendez-vous avec ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())." ?";
-                $from = "christine.clement@entheor.com";
-				$ref = "2";
-                $to = $consultant->getEmail();
-				//$to = "b.lof@iciformation.fr";
-                $cc = "";
-                $bcc = array(
-                    "support@iciformation.fr" => "Support",
-                    "f.azoulay@entheor.com" => "Franck Azoulay", 
-                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-                    "christine.clement@entheor.com" => "Christine Clement",
-                    "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
-				//$bcc = "";
-                if($beneficiaire->getCiviliteConso() == "Mme" || $beneficiaire->getCiviliteConso() == "Mlle")
-                    $cher = "Chère";
-                else
-                    $cher = "Cher";
-					
-                $message = $cher." ".$consultant->getPrenom().", <br><br> 
-                    Vous venez de recevoir en rendez-vous de positionnement <b>".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."</b>.<br><br>"
-                    . "<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO</a> :</b><br>"
-                    . "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
-                       - Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
-                       
-                    <u>Ces informations sont requises</u> pour monter le dossier de financement et vous permettre de démarrer au plus vite la prestation d'accompagnement.<br><br>
-                    
-                    Bien Cordialement,<br><br> 
-                    
-                    Christine Clément<br>
-                    <a href='mailto:christine.clement@entheor.com'>christine.clement@entheor.com</a><br>
-                    06 81 84 85 24";
-                
-                $template = "@Apb/Alert/Mail/mailDefault.html.twig";
-                $body = $this->templating->render($template, array(
-                    'sujet' => $subject ,
-                    'message' => $message,
-					'reference' => $ref
-                ));
-                
-                $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
-            }
-        }
+		
+		$Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
+        $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
+
+		if(count($eventAgenda) > 0)
+		{
+			$consultant = $eventAgenda[0]->getConsultant();
+			// Pour que ce mail ne se relance pas lors du passage de la prochaine cron, je met un champs à jour pour dire que le mail a déjà été envoyé pour ce rdv
+			/*$event->setMailPostRv(true);
+			$this->em->persist($event);
+			$this->em->flush();*/
+			
+			$subject = "Comment se  sont passés vos rendez-vous du ".$Jour[$today->format('l')]." ".$today->format('j')." ".$Mois[$today->format('F')]." ?";
+			$from = "christine.clement@entheor.com";
+			$ref = "2";
+			$to = $consultant->getEmail();
+			$to = "b.lof@iciformation.fr";
+			$cc = "";
+			$bcc = array(
+				"support@iciformation.fr" => "Support",
+				"f.azoulay@entheor.com" => "Franck Azoulay", 
+				"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+				"christine.clement@entheor.com" => "Christine Clement",
+				"virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
+			$bcc = "";
+			if($consultant->getCivilite() == "mme")
+				$cher = "Chère";
+			else
+				$cher = "Cher";
+			
+			$message = $cher." ".$consultant->getPrenom().", <br><br> 
+						Vous avez reçu le <b>".$Jour[$today->format('l')]." ".$today->format('j')." ".$Mois[$today->format('F')]."</b> :<br>";
+						
+			foreach($eventAgenda as $event)
+			{
+				$dateHeureDebut = $event->getDateDebut();
+				$heureDebut = $event->getDateDebut()->format('H:i:s');
+				$beneficiaire = $event->getBeneficiaire();
+
+				// si l'heure actuel est au moins à 1h de + de l'heure de démarrage du rdv et que la cron n'a pas déjà envoyé un email, envoi de mail 
+				if($today->getTimestamp() >= $dateHeureDebut->add(new \DateInterval('PT1H'))->getTimestamp() && $event->getMailPostRv() == 0 && $event->getEventId() != '0')
+				{		
+					$message .= "&bull; ".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."<br>";
+
+					$message .=	"<b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>ENTHEO</a> :</b><br>"
+						. "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
+						   - Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
+						   
+						<u>Ces informations sont requises</u> pour monter le dossier de financement et vous permettre de démarrer au plus vite la prestation d'accompagnement.<br><br>
+						
+						Bien Cordialement,<br><br> 
+						
+						Christine Clément<br>
+						<a href='mailto:christine.clement@entheor.com'>christine.clement@entheor.com</a><br>
+						06 81 84 85 24";
+				}
+			}
+			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
+			$body = $this->templating->render($template, array(
+				'sujet' => $subject ,
+				'message' => $message,
+				'reference' => $ref
+			));
+			$this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
+		}
     }
     
     public function alerteSuiteRv1()
@@ -186,7 +193,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
@@ -206,7 +213,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'beneficiaire' => $beneficiaire,
         ));
 //        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
+        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo,null,null,$subject,$body);
     }
     
     // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 
