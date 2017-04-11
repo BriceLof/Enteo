@@ -502,4 +502,20 @@ class BeneficiaireController extends Controller
             'form' => $form->createView()
         ));
     }
+
+    public function printAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+        $montantTotal = 0;
+        if($beneficiaire->getAccompagnement() != null){
+            foreach ($beneficiaire->getAccompagnement()->getFinanceur() as $financeur){
+                $montantTotal += $financeur->getMontant();
+            }
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Beneficiaire:print.html.twig',array(
+            'montantTotal' => $montantTotal,
+            'beneficiaire' => $beneficiaire
+        ));
+    }
 }

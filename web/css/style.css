@@ -692,3 +692,6 @@ textarea {
     text-decoration: underline;
     display: none;
 }
+#imprimer{
+    display: none;
+}
