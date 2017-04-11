@@ -204,7 +204,6 @@ class PdfController extends Controller
                 'margin-right' => '0mm',
                 'lowquality' => true,
                 'grayscale' => true,
-                'print-media-type' => true,
                 'disable-internal-links' => true,
             )),
             200,

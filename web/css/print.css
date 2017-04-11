@@ -8,11 +8,6 @@
     filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
 
-.loading{
-    background:url('../images/loading.gif')center no-repeat;
-    height: 218px;
-}
-
 .navbar-static-top{
     margin-bottom: 8px;
 }

@@ -85,20 +85,21 @@
     margin-right: 8px;
 }
 #champs_debut_dispo{
-    width: 128px;
-    min-width: 128px;
+    width: 135px;
+    min-width: 135px;
 }
 #dispo{
     margin-bottom: -20px;
 }
 #champs_fin_dispo{
-    width: 128px;
-    min-width: 128px;
+    width: 135px;
+    min-width: 135px;
     margin-right: 7px;
 }
 #champs_ville_dispo{
     width: 195px;
     min-width: 195px;
+    vertical-align: middle;
 }
 #champs_ville_dispo .form-control{
     width: 100%;
@@ -117,6 +118,7 @@
 }
 #form_dispo div{
     display: inline-block;
+    vertical-align: middle;
 }
 #form_dispo label{
     float: left;
@@ -134,4 +136,8 @@
 .disponibilite{
     margin-top: 10px;
     margin-bottom: 30px;
+}
+#application_plateformebundle_disponibilites_date select{
+    padding: 2px;
+    width: 70px;
 }

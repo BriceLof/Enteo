@@ -193,6 +193,7 @@ class BureauController extends Controller
                             'adresse' => $bureau->getAdresse(),
                             'cp' => $bureau->getVille()->getCp(),
                             'ville' => $bureau->getVille()->getNom(),
+                            'villeId' => $bureau->getVille()->getId(),
                         );
                     }
                 }

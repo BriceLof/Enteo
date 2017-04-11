@@ -3,6 +3,11 @@ body{
     font-size: 12px;
 }
 
+.loading{
+    background:url('../images/loading.gif')center no-repeat;
+    height: 218px;
+}
+
 .titre{
     font-family: Tahoma;
     font-size: 16px;
