@@ -14,14 +14,14 @@ td{
     padding-right: 1%;
 }
 img{
-    width: 200px;
+    width: 170px;
 }
 #titre{
     font-size: 30px;
     font-weight: bold;
 }
 #image_logo{
-    height: 160px;
+    height: 100px;
 }
 .sous_titre{
     background-color: #b3acb2 !important;
@@ -31,9 +31,12 @@ img{
     font-weight: bold;
 }
 #commentaire{
-    height: 150px;
+    height: 300px;
 }
 #entheo{
     color: #b0b0b0 !important;
     -webkit-print-color-adjust: exact;
+}
+#entheo p{
+    margin-bottom: 0px;
 }

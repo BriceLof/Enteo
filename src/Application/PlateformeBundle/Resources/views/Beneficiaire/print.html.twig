@@ -5,7 +5,8 @@
             <td id="titre" colspan="4">Fiche de renseignements VAE</td>
         </tr>
         <tr>
-            <td colspan="4">Ville : {{ beneficiaire.villeMer.nom }}</td>
+            <td colspan="2">Ville MenR : {{ beneficiaire.villeMer.nom }}</td>
+            <td colspan="2">Date MenR : {{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
         </tr>
         <tr class="sous_titre">
             <td>Informations personnelles</td>
@@ -114,64 +115,47 @@
         </tr>
         {% for contact in beneficiaire.contactEmployeur %}
             <tr>
-                <td id="nom_responsable"></td>
+                <td id="nom_responsable">Nom du responsable</td>
                 <td colspan="4">{{ contact.nom|upper~' '~contact.prenom }}</td>
             </tr>
             <tr>
                 <td>Ligne direct / Mail</td>
-                <td colspan="2">{{ contact.tel~'     '~contact.tel2 }}</td>
+                <td colspan="2">{{ contact.tel~'      '~contact.tel2 }}</td>
                 <td colspan="2">{{ contact.email }}</td>
             </tr>
         {% endfor %}
         <tr id="financement">
             <td>FINANCEMENT</td>
-            <td>TARIF</td>
-            <td>OPCA</td>
-            <td>ENTREPRISE</td>
-            <td>PERSO</td>
-        </tr>
-        {% for financeur in beneficiaire.accompagnement.financeur %}
-            {% if (financeur.nom != null) or (financeur.nom != "") %}
-                <tr>
-                    <td>Détail Financement</td>
-                    <td>{{ financeur.montant }}</td>
-                    {% if financeur.nom == 'OPCA' %}
-                        <td>{{ financeur.organisme }}</td>
-                        <td></td>
-                        <td></td>
-                    {% elseif financeur.nom == 'entreprise' %}
-                        <td></td>
-                        <td class="financeur_x">X</td>
-                        <td></td>
-                    {% elseif financeur.nom == 'Beneficiaire' %}
-                        <td></td>
-                        <td></td>
-                        <td class="financeur_x">X</td>
-                    {% else %}
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    {% endif %}
-                </tr>
-                {% if financeur.nom == 'OPCA' %}
-                    <tr>
-                        <td>Date envoi dossier OPCA</td>
-                        <td colspan="4">{{ financeur.dateAccord|date("d/m/Y") }}</td>
-                    </tr>
-                {% elseif financeur.nom == 'entreprise' %}
-                    <tr>
-                        <td>Date envoi dossier ENTREPRISE</td>
-                        <td colspan="4">{{ financeur.dateAccord }}</td>
-                    </tr>
-                {% endif %}
+    {% for financeur in beneficiaire.accompagnement.financeur %}
+        {% if (financeur.nom != null) or (financeur.nom != "") %}
+            {% if (financeur.nom == 'OPCA') or (financeur.nom == 'OPACIF') %}
+                <td>{{ financeur.nom }}</td>
+                <td>{{ financeur.organisme }}</td>
+            {% else %}
+                <td colspan="2">{{ financeur.nom }}</td>
             {% endif %}
-        {% endfor %}
+        {% else %}
+            <td colspan="2"></td>
+        {% endif %}
+    {% endfor %}
+        </tr>
+        <tr>
+            <td>TARIF</td>
+    {% for financeur in beneficiaire.accompagnement.financeur %}
+        {% if (financeur.nom != null) or (financeur.nom != "") %}
+            <td></td>
+            <td>{{ financeur.montant }}</td>
+        {% else %}
+            <td colspan="2"></td>
+        {% endif %}
+    {% endfor %}
+        </tr>
         <tr>
             <td id="commentaire">COMMENTAIRE</td>
             <td colspan="4"></td>
         </tr>
     </table>
-    <br><br>
+    <br>
     <div id="entheo">
         <p>3 rue Denuziere - 69002 Lyon 06 81 85 84 28 <br>SIRET : 527 732 069 000 28 - N° Déclaration d'activité : 82
             69 110 23 69</p>
