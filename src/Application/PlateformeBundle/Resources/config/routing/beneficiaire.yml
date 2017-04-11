@@ -35,3 +35,7 @@ application_search_beneficiaire:
         page: \d*
     options:
         expose:  true
+
+application_print_beneficiaire:
+    path:     /print/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:print" }

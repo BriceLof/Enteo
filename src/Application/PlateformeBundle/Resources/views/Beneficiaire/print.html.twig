@@ -1,0 +1,179 @@
+<div id="impression_fiche">
+    <table>
+        <tr id="image_logo">
+            <td rowspan="2" style="width: 200px"><img src="{{ asset('images/logo_entheor.jpg') }}" alt="ENTHEOR"></td>
+            <td id="titre" colspan="4">Fiche de renseignements VAE</td>
+        </tr>
+        <tr>
+            <td colspan="4">Ville : {{ beneficiaire.villeMer.nom }}</td>
+        </tr>
+        <tr class="sous_titre">
+            <td>Informations personnelles</td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td>NOM et Prénom</td>
+            <td colspan="4">{{ beneficiaire.nomConso|upper~' '~beneficiaire.prenomConso|capitalize }}</td>
+        </tr>
+        <tr>
+            <td>Adresse</td>
+            <td colspan="4">{{ beneficiaire.adresse }}</td>
+        </tr>
+        {#si l'adresse a un complement#}
+        <tr>
+            <td>CP Ville</td>
+            <td colspan="4">{{ beneficiaire.ville.cp~' '~beneficiaire.ville.nom }}</td>
+        </tr>
+        <tr>
+            <td>Téléphone</td>
+            <td colspan="4">{{ beneficiaire.telConso~' '~beneficiaire.tel2 }}</td>
+        </tr>
+        <tr>
+            <td>Mail</td>
+            <td colspan="4">{{ beneficiaire.emailConso }}</td>
+        </tr>
+        <tr>
+            <td>Numéro de sécurité sociale</td>
+            <td colspan="4">{{ beneficiaire.numSecu~' '~beneficiaire.numSecuCle }}</td>
+        </tr>
+        <tr>
+            <td>Date de naissance</td>
+            <td colspan="4">{{ beneficiaire.dateNaissance|date("d/m/Y") }}</td>
+        </tr>
+        <tr>
+            <td>Poste occupé</td>
+            <td colspan="4">{{ beneficiaire.poste }}</td>
+        </tr>
+        <tr>
+            <td>Diplôme visé</td>
+            <td colspan="4">{{ beneficiaire.diplomeVise }}</td>
+        </tr>
+        <tr>
+            <td>Diplôme le plus élevé</td>
+            <td colspan="4">{{ beneficiaire.formationInitiale }}</td>
+        </tr>
+        <tr>
+            <td>Nombre d'heures DIF/CPF et nbre d'heures d'accompagnement</td>
+            <td colspan="4">/DIF : {{ beneficiaire.heureDif }}H /CPF : {{ beneficiaire.heureCpf }}H /Accompagnement
+                : {{ beneficiaire.accompagnement.heure }}H
+            </td>
+        </tr>
+        <tr>
+            <td>Statut dans le poste</td>
+            <td colspan="4">{{ beneficiaire.csp }}</td>
+        </tr>
+        <tr>
+            <td>Consultant</td>
+            <td colspan="2">{{ beneficiaire.consultant.nom|upper~' '~beneficiaire.consultant.prenom|capitalize }}</td>
+            <td>TARIF</td>
+            <td>{{ montantTotal }}</td>
+        </tr>
+        <tr class="sous_titre">
+            <td>Informations entreprise</td>
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td>Dates de l'accompagnement</td>
+            <td colspan="4">
+                {% if beneficiaire.accompagnement.dateDebut is not null %}
+                    du {{ dateCourtFr(beneficiaire.accompagnement.dateDebut) }}
+                {% endif %}
+                {% if beneficiaire.accompagnement.dateFin is not null %}
+                    au {{ dateCourtFr(beneficiaire.accompagnement.dateFin) }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>Raison sociale de l'entreprise</td>
+            <td colspan="4">{{ beneficiaire.employeur.raisonSociale }}</td>
+        </tr>
+        <tr>
+            <td>Convention collective</td>
+            <td colspan="4">{{ beneficiaire.employeur.conventionCollective }}</td>
+        </tr>
+        <tr>
+            <td>Adresse</td>
+            <td colspan="4">{{ beneficiaire.employeur.adresse }}</td>
+        </tr>
+        <tr>
+            <td>CP Ville</td>
+            {% if beneficiaire.employeur.ville is not null %}
+                <td colspan="4">{{ beneficiaire.employeur.ville.cp~' '~beneficiaire.employeur.ville.nom }}</td>
+            {% else %}
+                <td colspan="4"></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>SIRET / APE</td>
+            <td colspan="2">{{ beneficiaire.employeur.siret }}</td>
+            <td colspan="2">{{ beneficiaire.employeur.apeNace }}</td>
+        </tr>
+        <tr>
+            <td>Standard</td>
+            <td colspan="4"></td>
+        </tr>
+        {% for contact in beneficiaire.contactEmployeur %}
+            <tr>
+                <td id="nom_responsable"></td>
+                <td colspan="4">{{ contact.nom|upper~' '~contact.prenom }}</td>
+            </tr>
+            <tr>
+                <td>Ligne direct / Mail</td>
+                <td colspan="2">{{ contact.tel~'     '~contact.tel2 }}</td>
+                <td colspan="2">{{ contact.email }}</td>
+            </tr>
+        {% endfor %}
+        <tr id="financement">
+            <td>FINANCEMENT</td>
+            <td>TARIF</td>
+            <td>OPCA</td>
+            <td>ENTREPRISE</td>
+            <td>PERSO</td>
+        </tr>
+        {% for financeur in beneficiaire.accompagnement.financeur %}
+            {% if (financeur.nom != null) or (financeur.nom != "") %}
+                <tr>
+                    <td>Détail Financement</td>
+                    <td>{{ financeur.montant }}</td>
+                    {% if financeur.nom == 'OPCA' %}
+                        <td>{{ financeur.organisme }}</td>
+                        <td></td>
+                        <td></td>
+                    {% elseif financeur.nom == 'entreprise' %}
+                        <td></td>
+                        <td class="financeur_x">X</td>
+                        <td></td>
+                    {% elseif financeur.nom == 'Beneficiaire' %}
+                        <td></td>
+                        <td></td>
+                        <td class="financeur_x">X</td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    {% endif %}
+                </tr>
+                {% if financeur.nom == 'OPCA' %}
+                    <tr>
+                        <td>Date envoi dossier OPCA</td>
+                        <td colspan="4">{{ financeur.dateAccord|date("d/m/Y") }}</td>
+                    </tr>
+                {% elseif financeur.nom == 'entreprise' %}
+                    <tr>
+                        <td>Date envoi dossier ENTREPRISE</td>
+                        <td colspan="4">{{ financeur.dateAccord }}</td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <tr>
+            <td id="commentaire">COMMENTAIRE</td>
+            <td colspan="4"></td>
+        </tr>
+    </table>
+    <br><br>
+    <div id="entheo">
+        <p>3 rue Denuziere - 69002 Lyon 06 81 85 84 28 <br>SIRET : 527 732 069 000 28 - N° Déclaration d'activité : 82
+            69 110 23 69</p>
+    </div>
+</div>
