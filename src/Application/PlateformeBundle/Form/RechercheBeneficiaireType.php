@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class RechercheBeneficiaireType extends AbstractType
 {
@@ -35,6 +36,20 @@ class RechercheBeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => 'Email',
+                )
+            ))
+            ->add('consultant', EntityType::class, array(
+                'placeholder' => 'Consultant',
+                'class' => 'ApplicationUsersBundle:Users',
+                'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('u')
+                                ->where('u.roles LIKE :role ')
+                                ->setParameter('role', '%ROLE_CONSULTANT%')
+                                    ->orderBy('u.nom', 'ASC')
+                              ;
+                },
+                'attr' => array(
+                    'class' => ''
                 )
             ))
             ->add('villeMer', VilleType::class, array(

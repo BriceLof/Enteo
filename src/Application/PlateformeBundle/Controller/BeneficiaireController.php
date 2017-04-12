@@ -366,7 +366,7 @@ class BeneficiaireController extends Controller
             if(!is_null($form['dateFin']->getData())){
                 $dateFin = $form['dateFin']->getData();
             }
-
+            
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
 
