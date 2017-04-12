@@ -1,11 +1,11 @@
 <form action="{{ path('application_search_beneficiaire', { 'page' : 1 }) }}" method="POST" id="ajaxForm" >
     <div class="container-fluid">
-        <div class="text-left"><kbd><a href="{{ path('application_plateforme_homepage') }}">Revenir à l'accueil</a></kbd></div>
+        
         <div class="row">
-            <span class="col-md-1">Filtres : </span>
             <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>
             <span class="col-md-1">{{ form_widget(form.prenomConso) }}</span>
             <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
+            <span class="col-md-2">{{ form_widget(form.consultant) }}</span>
             <span class="col-md-1">{{ form_widget(form.villeMer.cp, { 'attr': {'placeholder': 'Code postal' }}) }}</span>
             <span class="col-md-2">{{ form_widget(form.villeMer.nom, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
 
@@ -18,6 +18,7 @@
             <span class="col-md-1">{{ form_widget(form.submit) }}</span>
             <span class="col-md-1">{{ form_rest(form) }}</span>
         </div>
+        <div class="text-right"><a href="{{ path('application_plateforme_homepage') }}">Reset</a></div>
         <div class="row" id="rechercherPlus">
         </div>
 {#
@@ -27,7 +28,7 @@
 #}
     </div>
 </form>
-
+        
 
 
 
