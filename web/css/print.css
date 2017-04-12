@@ -1,42 +1,44 @@
-#afficheBeneficiaire{
-    display: none;
-}
-#imprimer{
-    display: block;
-}
-table{
-    border-collapse: collapse;
-    width: 750px;
-}
-td{
-    border: 1px solid;
-    padding-left: 1%;
-    padding-right: 1%;
-}
-img{
-    width: 170px;
-}
-#titre{
-    font-size: 30px;
-    font-weight: bold;
-}
-#image_logo{
-    height: 100px;
-}
-.sous_titre{
-    background-color: #b3acb2 !important;
-    -webkit-print-color-adjust: exact;
-}
-#nom_responsable, #financement, #commentaire{
-    font-weight: bold;
-}
-#commentaire{
-    height: 300px;
-}
-#entheo{
-    color: #b0b0b0 !important;
-    -webkit-print-color-adjust: exact;
-}
-#entheo p{
-    margin-bottom: 0px;
+@media print {
+    #afficheBeneficiaire{
+        display: none;
+    }
+    #imprimer{
+        display: block;
+    }
+    table{
+        border-collapse: collapse;
+        width: 750px;
+    }
+    td{
+        border: 1px solid;
+        padding-left: 1%;
+        padding-right: 1%;
+    }
+    img{
+        width: 170px;
+    }
+    #titre{
+        font-size: 30px;
+        font-weight: bold;
+    }
+    #image_logo{
+        height: 100px;
+    }
+    .sous_titre{
+        background-color: #b3acb2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    #nom_responsable, #financement, #commentaire{
+        font-weight: bold;
+    }
+    #commentaire{
+        height: 320px;
+    }
+    #entheo{
+        color: #b0b0b0 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    #entheo p{
+        margin-bottom: 0;
+    }
 }
