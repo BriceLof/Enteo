@@ -25,6 +25,9 @@
             </div>
         </div>
     </div>
+    <div id="imprimer">
+        {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:print",{'id': beneficiaire.id })) }}
+    </div>
     <div id="afficheBeneficiaire" class="container">
         <div class="row">
             <div class="col-md-4">
@@ -505,10 +508,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="imprimer">
-        {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:print",{'id': beneficiaire.id })) }}
     </div>
 {% endblock %}
 
