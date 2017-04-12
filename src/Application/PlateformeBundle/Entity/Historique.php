@@ -122,6 +122,12 @@ class Historique
     private $mailPostRv;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $user;
+
+    /**
      * Historique constructor.
      */
     public function __construct()
@@ -504,5 +510,29 @@ class Historique
     public function getMailPostRv()
     {
         return $this->mailPostRv;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\UsersBundle\Entity\Users $user
+     *
+     * @return Historique
+     */
+    public function setUser(\Application\UsersBundle\Entity\Users $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

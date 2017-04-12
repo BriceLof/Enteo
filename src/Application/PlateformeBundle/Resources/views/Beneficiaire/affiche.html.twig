@@ -31,7 +31,13 @@
                 <div class="sectionBeneficiaire">
                     <div id="editBeneficiaire" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a href="#collapseFicheBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseFicheBeneficiaire"><span class="glyphicon glyphicon-minus"></span><span>Fiche Bénéficiaire</span></a></caption>
+                            <caption class="titreSection" style="position: relative">
+                                <a href="#collapseFicheBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseFicheBeneficiaire">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                    <span>Fiche Bénéficiaire</span>
+                                </a>
+                                <span onclick="window.print()" title="imprimer cette fiche" class="btn btn-bg glyphicon glyphicon-print" style="position: absolute;right: 1px;top: -1px;"></span>
+                            </caption>
                         </table>
                         <div class="collapse in" id="collapseFicheBeneficiaire">
                             <form action="{{ path('application_show_beneficiaire', { 'id':beneficiaire.id }) }}" method="POST" id="ficheBeneficiaireForm">

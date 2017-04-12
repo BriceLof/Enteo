@@ -89,6 +89,7 @@ class CalendarController extends Controller
         }
 
         $historique = new Historique();
+        $historique->setUser($this->getUser());
         $historique->setBeneficiaire($beneficiaire);
         $historique->setConsultant($beneficiaire->getConsultant());
         $form = $this->createForm(AdminCalendarType::class, $historique);
@@ -193,6 +194,7 @@ class CalendarController extends Controller
         }
 
         $historique = new Historique();
+        $historique->setUser($this->getUser());
         $form = $this->createForm(AdminCalendarType::class, $historique);
         $form->add('submit', SubmitType::class, array('label' => 'Ajouter'));
 
@@ -454,6 +456,7 @@ class CalendarController extends Controller
         $em = $this->getDoctrine()->getManager();
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
+        $historique->setUser($this->getUser());
 
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {

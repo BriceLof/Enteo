@@ -23,6 +23,11 @@ class Users extends BaseUser
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="consultant")
      */
     private $beneficiaire;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Historique", mappedBy="user")
+     */
+    private $historique;
     
     /**
     * @ORM\Column(name="civilite", type="string", length=255, nullable=true)
@@ -427,5 +432,39 @@ class Users extends BaseUser
     public function getDistanciel()
     {
         return $this->distanciel;
+    }
+
+    /**
+     * Add historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     *
+     * @return Users
+     */
+    public function addHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique[] = $historique;
+
+        return $this;
+    }
+
+    /**
+     * Remove historique
+     *
+     * @param \Application\PlateformeBundle\Entity\Historique $historique
+     */
+    public function removeHistorique(\Application\PlateformeBundle\Entity\Historique $historique)
+    {
+        $this->historique->removeElement($historique);
+    }
+
+    /**
+     * Get historique
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistorique()
+    {
+        return $this->historique;
     }
 }

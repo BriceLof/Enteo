@@ -9,10 +9,13 @@
         border-collapse: collapse;
         width: 750px;
     }
-    td{
+    #impr_renseignement td{
         border: 1px solid;
         padding-left: 1%;
         padding-right: 1%;
+    }
+    #impr_historique td{
+
     }
     img{
         width: 170px;
@@ -32,7 +35,7 @@
         font-weight: bold;
     }
     #commentaire{
-        height: 320px;
+        height: 300px;
     }
     #entheo{
         color: #b0b0b0 !important;
@@ -40,5 +43,15 @@
     }
     #entheo p{
         margin-bottom: 0;
+    }
+    #impr_renseignement{
+        page-break-after: always;
+    }
+    caption{
+        border: 1px solid;
+        margin-bottom: 7px;
+    }
+    #impr_historique table, #impr_news table, #impr_suivi_administratif table{
+        margin-bottom: 30px;
     }
 }

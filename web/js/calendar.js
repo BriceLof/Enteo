@@ -134,7 +134,6 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
         }
     });
     $('#admin_calendar_ville').autocomplete({
-        autoFocus: true,
         source : function(requete, reponse) {
             if( $('#admin_calendar_autreBureau').is(':checked')) {
                 $.ajax({
@@ -402,7 +401,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     $('#application_plateformebundle_disponibilites_villeNom').autocomplete({
         source : function(requete, reponse) {
             $.ajax({
-                url: Routing.generate('application_ajax_search_bureau'), // le nom du fichier indiqué dans le formulaire
+                url: Routing.generate('application_get_ville'), // le nom du fichier indiqué dans le formulaire
                 cache: true,
                 data: {
                     nomVille: $('#application_plateformebundle_disponibilites_villeNom').val()
@@ -415,9 +414,8 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     reponse($.map(ville, function (item) {
                         return {
                             value: function () {
-                                console.log(item.id)
-                                id = (item.villeId);
-                                return item.ville;
+                                id = (item.id);
+                                return item.nom;
                             }
                         }
                     }));
@@ -426,7 +424,6 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
         },
         select: function (event, ui) {
             $('#application_plateformebundle_disponibilites_villeId').val(id);
-            $('#application_plateformebundle_disponibilites_villeNom').removeClass("villeError")
         },
         change: function(event, ui) {
             if (ui.item) {
@@ -599,4 +596,3 @@ function addRemove(el) {
     }
     iframe.html(newHtml);
 }
-
