@@ -99,31 +99,33 @@
                     {% endif %}
                 </td>
             </tr>
-            <tr>
-                <td>Raison sociale de l'entreprise</td>
-                <td colspan="4">{{ beneficiaire.employeur.raisonSociale }}</td>
-            </tr>
-            <tr>
-                <td>Convention collective</td>
-                <td colspan="4">{{ beneficiaire.employeur.conventionCollective }}</td>
-            </tr>
-            <tr>
-                <td>Adresse</td>
-                <td colspan="4">{{ beneficiaire.employeur.adresse }}</td>
-            </tr>
-            <tr>
-                <td>CP Ville</td>
-                {% if beneficiaire.employeur.ville is not null %}
-                    <td colspan="4">{{ beneficiaire.employeur.ville.cp~' '~beneficiaire.employeur.ville.nom }}</td>
-                {% else %}
-                    <td colspan="4"></td>
-                {% endif %}
-            </tr>
-            <tr>
-                <td>SIRET / APE</td>
-                <td colspan="2">{{ beneficiaire.employeur.siret }}</td>
-                <td colspan="2">{{ beneficiaire.employeur.apeNace }}</td>
-            </tr>
+			{% if beneficiaire.employeur is not null %}
+				<tr>
+					<td>Raison sociale de l'entreprise</td>
+					<td colspan="4">{{ beneficiaire.employeur.raisonSociale }}</td>
+				</tr>
+				<tr>
+					<td>Convention collective</td>
+					<td colspan="4">{{ beneficiaire.employeur.conventionCollective }}</td>
+				</tr>
+				<tr>
+					<td>Adresse</td>
+					<td colspan="4">{{ beneficiaire.employeur.adresse }}</td>
+				</tr>
+				<tr>
+					<td>CP Ville</td>
+					{% if beneficiaire.employeur.ville is not null %}
+						<td colspan="4">{{ beneficiaire.employeur.ville.cp~' '~beneficiaire.employeur.ville.nom }}</td>
+					{% else %}
+						<td colspan="4"></td>
+					{% endif %}
+				</tr>
+				<tr>
+					<td>SIRET / APE</td>
+					<td colspan="2">{{ beneficiaire.employeur.siret }}</td>
+					<td colspan="2">{{ beneficiaire.employeur.apeNace }}</td>
+				</tr>
+			{% endif %}
             <tr>
                 <td>Standard</td>
                 <td colspan="4"></td>

@@ -40,12 +40,13 @@ class RechercheBeneficiaireType extends AbstractType
             ))
             ->add('consultant', EntityType::class, array(
                 'placeholder' => 'Consultant',
+				'required' => false,
                 'class' => 'ApplicationUsersBundle:Users',
                 'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('u')
                                 ->where('u.roles LIKE :role ')
                                 ->setParameter('role', '%ROLE_CONSULTANT%')
-                                    ->orderBy('u.nom', 'ASC')
+								->orderBy('u.nom', 'ASC')
                               ;
                 },
                 'attr' => array(
