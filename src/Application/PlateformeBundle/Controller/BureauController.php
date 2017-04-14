@@ -254,7 +254,7 @@ class BureauController extends Controller
             $i = 0;
             $tab = [];
             foreach ($results as $bureau) {
-                if ($bureau->getCalendrierid() != null) {
+                if ($bureau->getCalendrierid() != "" || $bureau->getCalendrierid() != null) {
                     $sentinel = 0;
                     if ($ville == $bureau->getVille()){
                         $sentinel = 1;
@@ -265,7 +265,8 @@ class BureauController extends Controller
                         'calendrierId' => $bureau->getCalendrierid(),
                         'color' => $this->get('application_plateforme.calendar')->getColorName($color[$i]),
                         'googleColor' => $color[$i],
-                        'sentinel' => $sentinel
+                        'sentinel' => $sentinel,
+                        'ville' => $bureau->getVille()->getNom(),
                     );
                     $i++;
                 }

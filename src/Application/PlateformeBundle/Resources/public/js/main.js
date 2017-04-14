@@ -34,8 +34,9 @@ $(function(){
             
         //---------- START : Si on change le statut 
         $(formDuBeneficiaire + " .statut").change(function(){
-            var statutId = $("option:selected").val()
+            var statutId = $(this).children("option:selected").val()
             $(".detailStatut").attr("disabled", "disabled") 
+			console.log(statutId)
             ajaxFormNews(statutId, true)
         });
         //---------- END

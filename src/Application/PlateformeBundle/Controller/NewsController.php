@@ -53,7 +53,8 @@ class NewsController extends Controller
                 $historique->setBeneficiaire($news->getBeneficiaire());
                 $historique->setDescription($news->getDetailStatut()->getDetail());
                 $historique->setEventId("0");
-                $em->persist($historique);  
+                $historique->setUser($this->getUser());
+                $em->persist($historique);
             }
             
             // ajouter un suivi administratif 

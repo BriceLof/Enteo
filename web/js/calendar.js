@@ -570,7 +570,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                         }else{
                             $('#liste_autre_bureau_ville').css('display','block');
                             html = '<div><span class="glyphicon glyphicon-stop" style="color:'+ resultat.tabs[i].color +';margin-right: 10px"></span>'+
-                                '<span style="margin-right: 10px">'+ resultat.tabs[i].nomBureau +'</span><input type="checkbox" id="bureau_'+ i +'" data-id="'+ resultat.tabs[i].calendrierId +'" data-color ="'+ resultat.tabs[i].googleColor +'"  onclick="addRemove(this)"></div>';
+                                '<span style="margin-right: 10px">'+ resultat.tabs[i].nomBureau +' ('+resultat.tabs[i].ville+')</span><input type="checkbox" id="bureau_'+ i +'" data-id="'+ resultat.tabs[i].calendrierId +'" data-color ="'+ resultat.tabs[i].googleColor +'"  onclick="addRemove(this)"></div>';
                             $('#liste_autre_bureau_ville').append(html);
                         }
                     }

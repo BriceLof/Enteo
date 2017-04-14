@@ -214,6 +214,7 @@ class BeneficiaireController extends Controller
             $historique->setBeneficiaire($beneficiaire);
             $historique->setDescription("Ajout/modification de consultant : ".ucfirst(strtolower($beneficiaire->getConsultant()->getPrenom()))." ".ucfirst(strtolower($beneficiaire->getConsultant()->getNom())));
             $historique->setEventId("0");
+            $historique->setUser($this->getUser());
 
             $em->persist($beneficiaire);
             $em->persist($historique);
