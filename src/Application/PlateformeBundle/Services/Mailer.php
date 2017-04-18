@@ -5,21 +5,24 @@ namespace Application\PlateformeBundle\Services;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Symfony\Component\Templating\EngineInterface;
 use Doctrine\ORM\EntityManager;
+use Application\PlateformeBundle\Services\Date;
 
 class Mailer
 {
     protected $em;
     protected $mailer;
     protected $templating;
+    protected $date;
     protected $from = "admin@entheo.com";
     protected $reply = "admin@entheo.com";
     protected $name = "Equipe Entheo";
     
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em, Date $date)
     {
         $this->em = $em;
         $this->mailer = $mailer;
-        $this->templating = $templating;   
+        $this->templating = $templating;
+        $this->date = $date;
     }
 
     protected function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body){

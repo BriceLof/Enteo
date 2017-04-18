@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Services\Statut\Cron;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Historique;
+use Application\UsersBundle\Entity\Users;
 
 class Rv extends \Application\PlateformeBundle\Services\Mailer
 { 
@@ -198,16 +199,17 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'lastNews' => $lastNews,
             'date' => $date,
         ));
-//        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,$to,null,null,$cci,$subject,$body);
+
     }
 
-    public function firstMailRvFicheNonMaj(Beneficiaire $beneficiaire){
+    public function firstMailRvFicheNonMaj(Users $consultant , $beneficiaires){
+        $dateHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
-        $subject = "[URGENT] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ."";
+        $subject = "[URGENT] Mise à Jour de vos Rendez-vous du ".$dateHier;
         $template = '@Apb/Alert/Mail/firstMailRvFicheNonMaj.html.twig';
-        $to = $beneficiaire->getConsultant()->getEmail();
+        $to = $consultant->getEmail();
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
@@ -217,18 +219,20 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             "christine.clement@entheor.com" => "Christine Clement"
         );
         $body = $this->templating->render($template, array(
-            'beneficiaire' => $beneficiaire,
+            'consultant' => $consultant,
+            'beneficiaires' => $beneficiaires,
         ));
-//        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo, null,null,$subject,$body);
+//        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
+        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
-    public function secondMailRvFicheNonMaj(Beneficiaire $beneficiaire){
+    public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
+        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
-        $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche de ". ucfirst(strtolower($beneficiaire->getPrenomConso()))." ". ucfirst(strtolower($beneficiaire->getNomConso())) ."";
+        $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche du ".$dateAvantHier;
         $template = '@Apb/Alert/Mail/secondMailRvFicheNonMaj.html.twig';
-        $to = $beneficiaire->getConsultant()->getEmail();
+        $to = $consultant->getEmail();
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
@@ -237,10 +241,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             "christine.clement@entheor.com" => "Christine Clement"
         );
         $body = $this->templating->render($template, array(
-            'beneficiaire' => $beneficiaire,
+            'consultant' => $consultant,
+            'beneficiaires' => $beneficiaires,
         ));
-//        $this->sendMessage($from,$to,$cc,null,$subject,$body);
-        $this->sendMessage($from,"n.ranaivoson@iciformation.fr", $replyTo,null,null,$subject,$body);
+//        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
+        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
     }
     
     // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 

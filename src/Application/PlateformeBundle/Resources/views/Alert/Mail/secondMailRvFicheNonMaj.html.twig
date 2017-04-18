@@ -1,25 +1,36 @@
 {% extends "::mail/layout.html.twig" %}
 {% block ref %}2c{% endblock %}
 {% block contentMail %}
-    Bonjour {{ beneficiaire.consultant.prenom|capitalize }}, <br><br>
+    Bonjour {{ consultant.prenom|capitalize }}, <br><br>
     <div>
-        Sauf erreur de notre part, vous navez pas encore mis à jour les informations de la fiche de <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
+        Sauf erreur de notre part, vous n'avez pas encore mis à jour les informations de la fiche de :<br>
+        <ul>
+        {% for beneficiaire in beneficiaires %}
+            <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
+        {% endfor %}
+        </ul>
         <br><br>
         <b>
-            L'absence de votre retour d'information bloque l'avancement du dossier.
+            L'absence de votre retour d'information bloque l'avancement des dossiers.
             <br>
             <br>
             Cette étape est primoridiale pour pouvoir vous transmettre des dossiers d'accompagnement.
         </b>
-        <b>
-            Je vous remercie donc de mettre à jour les informations du bénéficiaire sur <a href="http://dev.application.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">ENTHEO</a>
-        </b>:
+        {% if beneficiaires|length > 1 %}
+            <b>
+                Je vous remercie donc de mettre à jour les informations des bénéficiaires sur <a href="http://dev.application.entheor.com/web/" target="_blank">ENTHEO</a>
+            </b>:
+        {% else %}
+            <b>
+                Je vous remercie donc de mettre à jour les informations du bénéficiaire sur <a href="http://dev.application.entheor.com/web/" target="_blank">ENTHEO</a>
+            </b>:
+        {% endif %}
         <br>
         <br>
         <ul type="disc">
             <li><span>Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)</span></li>
             <br>
-            <li><span>Compléter les informations clés du bénéficiaire : Coordonnées, CSP, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA...</span></li>
+            <li><span>Compléter les informations clés du bénéficiaire : Coordonnées, Statut dans le poste, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA...</span></li>
         </ul>
         <br>
         <br>
