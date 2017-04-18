@@ -486,6 +486,7 @@
                             {% endif %}
                             <!-- ID du statut du dernier suivi administratif du bénéficiaire ou celui de Recevabilité si aucun suivi encore. On s'en sert dans js pour avoir le statut suivant -->
                             <input type="hidden" value="{{ beneficiaire.suiviAdministratif | length > 0 ? dernier_suivi.statut.id : 7 }}" class="statutIDCurrentSuiviAd"/>
+                            <a class="btn btn-info" href="{{ path('application_new_demande_financement_pdf', {'id':beneficiaire.id}) }}">Générer Demande de Financement</a> 
                     </div>
     {% endif %}
                 </div>

@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <td>
-                <a id="proposition_pdf" style="float:right; width: 115px; padding: 6px" class="btn btn-info" href="{{ path('application_new_pdf', { 'id' : beneficiaire.id }) }}" target="_blank" >Générer Devis</a>
+                <a id="proposition_pdf" style="float:right; width: 115px; padding: 6px" class="btn btn-info" href="{{ path('application_new_devis_pdf', { 'id' : beneficiaire.id }) }}" target="_blank" >Générer Devis</a>
             </td>
             <td colspan="2" class="valider">{{ form_widget(edit_form_a.submit) }}</td>
         </tr>

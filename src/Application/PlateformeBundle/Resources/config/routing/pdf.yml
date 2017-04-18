@@ -1,6 +1,10 @@
-application_new_pdf:
-    path:     /new/{id}
-    defaults: { _controller: "ApplicationPlateformeBundle:Pdf:new" }
+application_new_demande_financement_pdf:
+    path:     /generate_demande_financement/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Pdf:generatePdfDemandeFinancement" }
+
+application_new_devis_pdf:
+    path:     /new_devis/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Pdf:newDevis" }
 
 application_test_pdf:
     path:    /test/{id}

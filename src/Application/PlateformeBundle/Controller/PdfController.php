@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class PdfController extends Controller
 {
-    public function newAction($id){
+    public function newDevisAction($id){
         set_time_limit(0);
         ini_set('memory_limit','256M');
 
@@ -148,5 +148,37 @@ class PdfController extends Controller
             'heure' => $heure,
             'reste' => $reste,
         ));
+    }
+    
+    // Génération de PDF "Demande de gestion et de financement CPF"
+    public function generatePdfDemandeFinancementAction($id)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+        
+        $html = $this->renderView('ApplicationPlateformeBundle:Pdf:demandeFinancement.html.twig', array(
+            'beneficiaire' => $beneficiaire,
+        ));
+        
+        return new Response(
+           /* $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+            )*/
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
+                'enable-javascript' => true,
+                'encoding' => 'utf-8',
+                'lowquality' => false,
+                'javascript-delay' => 5000,
+                'images' => true,
+            )),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'inline; filename="testFi_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+            )
+        );
     }
 }
