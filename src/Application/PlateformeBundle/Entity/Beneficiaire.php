@@ -284,7 +284,17 @@ class Beneficiaire
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
+	
+	/**
+	* @ORM\Column(name="region_travail", type="string", length=255, nullable=true)
+	*/
+    private $regionTravail;
+	
+	/**
+	* @ORM\Column(name="diplome_obtenu", type="string", length=255, nullable=true)
+	*/
+    private $diplomeObtenu;
+	
     /**
      * Constructor
      */
@@ -1413,5 +1423,53 @@ class Beneficiaire
     public function getOrganisme()
     {
         return $this->organisme;
+    }
+
+    /**
+     * Set regionTravail
+     *
+     * @param string $regionTravail
+     *
+     * @return Beneficiaire
+     */
+    public function setRegionTravail($regionTravail)
+    {
+        $this->regionTravail = $regionTravail;
+
+        return $this;
+    }
+
+    /**
+     * Get regionTravail
+     *
+     * @return string
+     */
+    public function getRegionTravail()
+    {
+        return $this->regionTravail;
+    }
+
+    /**
+     * Set diplomeObtenu
+     *
+     * @param string $diplomeObtenu
+     *
+     * @return Beneficiaire
+     */
+    public function setDiplomeObtenu($diplomeObtenu)
+    {
+        $this->diplomeObtenu = $diplomeObtenu;
+
+        return $this;
+    }
+
+    /**
+     * Get diplomeObtenu
+     *
+     * @return string
+     */
+    public function getDiplomeObtenu()
+    {
+        return $this->diplomeObtenu;
     }
 }

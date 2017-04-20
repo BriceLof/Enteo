@@ -91,6 +91,26 @@ class ProjetType extends AbstractType
                     'class' => 'projet'
                 )
             ))
+			
+			->add('diplomeObtenu', ChoiceType::class, array(
+                'required' => false,
+                'label' => 'Diplôme obtenu :',
+                'choices' => array(
+                    'Sans niveau spécifique' => 'sans niveau',
+                    'Niveau VI' => 'niveau vi',
+                    'Niveau V bis (préqualification)' => 'niveau vi bis',
+                    'Niveau V (CAP, BEP, CFPA)' => 'niveau v',
+                    'Niveau IV (BP, BT)' => 'niveau iv',
+					'Niveau III (BTS, DUT)' => 'niveau iii',
+                    'Niveau II (licence ou maîtrise)' => 'niveau ii',
+                    'Niveau I (sup. à la maîtrise)' => 'niveau i',
+                ),
+                'attr' => array(
+					'placeholder' => '',
+                    'class' => 'projet',
+                )
+            ))
+			
             ->add('motivation', TextareaType::class, array(
                 'label' => 'Motivation :',
                 'required' => false,

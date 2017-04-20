@@ -155,9 +155,25 @@ class PdfController extends Controller
     {   
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-        
+        $employeur = $beneficiaire->getEmployeur();
+		$accompagnement = $beneficiaire->getAccompagnement();
+		$financeurs = $em->getRepository('ApplicationPlateformeBundle:Financeur')->findBy(
+			array('accompagnement' => $beneficiaire->getAccompagnement()->getId())
+		);
+		
+		$cout_total_financement = "";
+		if(count($financeurs) > 0){
+			foreach($financeurs as $financeur)
+			{
+				$cout_total_financement = $financeur->getMontant() + $cout_total_financement;
+			}
+		}
+
         $html = $this->renderView('ApplicationPlateformeBundle:Pdf:demandeFinancement.html.twig', array(
             'beneficiaire' => $beneficiaire,
+			'employeur' => $employeur,
+			'accompagnement' => $accompagnement,
+			'cout_total_financement' => $cout_total_financement
         ));
         
         return new Response(
@@ -177,7 +193,7 @@ class PdfController extends Controller
             200,
             array(
                 'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'inline; filename="testFi_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+                'Content-Disposition'   => 'inline; filename="financement_'.$beneficiaire->getId().'_'.$beneficiaire->getNomConso().'.pdf"',
             )
         );
     }
