@@ -3,65 +3,417 @@
 {% block title %}{% endblock %}
 
 {% block stylesheets %}
-    
+<style>
+	#block_demande_financement{
+		font-size:10px;
+	}
+	section{
+		padding: 0px 10px 3px 10px;
+		margin-bottom: -10px;
+	}
+	.block_section
+	{
+		background-color: #e4edf2;
+	}
+	
+	.block_section .row
+	{
+		margin-bottom: -3px;
+	}
+	
+	h1{
+		color:#aa3b5f;
+		font-size: 21px;
+		text-align:right;
+		margin-top:25px;
+	}
+	h2{
+		color:#aa3b5f;
+		text-decoration: underline;
+		font-size: 13px;
+		font-weight: bold;
+		padding: 7px 0px;
+		margin-bottom:-3px;
+	}
+
+	.white_bg_field{
+		background-color:white;
+		padding: 2px 4px;
+	}
+	
+	.aField{
+		display:inline-block;
+		margin-left: 15px;
+	}
+	.myLabel, input{
+		display:inline-block;
+		font-size:10px;
+	}
+	.myLabel{
+		margin-right:10px;
+	}
+	input{
+		border:none !important;
+	}
+	
+	#salarie .diplome_categorie{
+		margin-left:15px;
+		font-size:9px;
+		font-weight:normal;
+		text-align:center;
+		width:95%;
+	}
+	#salarie .diplome_categorie th, #salarie .diplome_categorie td{ 
+		padding:3px 0;
+		border:1px solid;
+		text-align:center;
+		font-weight:normal;
+	}
+	#salarie .diplome_categorie th span{ 
+		font-size:9px;
+	}
+	
+	.checkbox_inline_table{
+		margin-left:15px;
+		font-size:10px;
+		font-weight:normal;
+		text-align:center;
+	}
+	.checkbox_inline_table .white_checkbox, .checkbox_inline_table p {
+		display:inline-block;
+		vertical:align-top;
+	}
+	.checkbox_inline_table td {
+		padding:3px 10px;
+		text-align:center;
+		font-weight:normal;
+	}
+	.white_checkbox{
+		margin:auto;
+		width:14px;
+		height:14px;
+		background-color:white;
+		position:relative;
+		overflow:hidden;
+	}
+	
+	.cout_formation td{ 
+		padding:3px 5px;
+		font-weight:normal;
+	}
+	.cout_formation tr{ 
+		border-bottom:1px solid white;
+	}
+
+	
+</style> 
 {% endblock %}
 
 {% block content %}
     <div id="block_demande_financement" class='container'>
+		<div class="row">
+			<p class="col-xs-3"><img width="240px" src="http://dev.application.entheor.com/web/images/logo_mon_compte_formation.jpg" /></p>
+			<h1 class="col-xs-9">Demande de gestion et de financement CPF</h1>
+		</div>
         <section class="block_section" id="salarie">  
             <h2 class='text-uppercase'>Le salarie</h2>
-            
-            <p>N° de Sécurité Sociale <span class='white_bg_field'>1</span> <span class='white_bg_field'>1</span> <span class='white_bg_field'>1</span> <span class='white_bg_field'>1</span></p>
+			
+			<div class="row">
+                <div class="aField" style="width:100%"><p class="myLabel">N° de Sécurité Sociale</p> <input style="width:30px" type='text' value='' />   <input style="width:30px" type='text' value='' />   <input style="width:30px" type='text' value='' />   <input style="width:30px" type='text' value='' />   <input style="width:30px" type='text' value='' /></div>
+            </div>
+			<div class="row">
+                <div class="aField" style=""><p class="myLabel">Nom</p> <input style="width:255px" type='text' value='{{ beneficiaire.getNomConso() }}' /></div>
+                <div class="aField" style=""><p class="myLabel">Nom de naissance</p> <input style="width:242px" type='text' value='' /></div>  
+            </div>
             <div class="row">
-                <span class='col-xs-1'>Nom</span> <span class='white_bg_field col-xs-5'>Lof</span>
-                <span class='col-xs-2'>Nom de naissance</span> <span class='white_bg_field col-xs-4'>.</span>  
-            </div><br>
+                <div class="aField" style=""><p class="myLabel">Prénom</p> <input style="width:240px" type='text' value='{{ beneficiaire.getPrenomConso() }}' /></div>
+                <div class="aField" style=""><p class="myLabel">Date de naissance</p> <input style="width:30px" type='text' value='{{ beneficiaire.getDateNaissance() | date("d") }}' /> / <input style="width:30px" type='text' value='{{ beneficiaire.getDateNaissance() | date("m") }}' /> / <input style="width:50px" type='text' value='{{ beneficiaire.getDateNaissance() | date("Y") }}' /></div>  
+            </div>
             <div class="row">
-                <span class='col-xs-1'>Prénom</span> <span class='white_bg_field col-xs-5'>Brice</span>
-                <span class='col-xs-2'>Date de naissance</span> <span class='white_bg_field'>01</span> / <span class='white_bg_field'>04</span> / <span class='white_bg_field'>2011</span>  
-            </div><br>
+                <div class="aField" style="width:100%"><p class="myLabel">Adresse</p> <input style="width:598px" type='text' value='{{ beneficiaire.getAdresse() }}' /></div>
+            </div>
             <div class="row">
-                <span class='col-xs-1'>Adresse</span> <span class='white_bg_field col-xs-11'>28 rue du fief</span>
-            </div><br>
+				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='{{ beneficiaire.getVille().getCp() }}' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='{{ beneficiaire.getVille().getNom() }}' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='France' /></div>
+            </div>
             <div class="row">
-                <span class='col-xs-2'>Code Postal</span> <span class='white_bg_field col-xs-2'>75011</span>
-                <span class='col-xs-1'>Ville</span> <span class='white_bg_field col-xs-3'>Paris 11ème</span> 
-                <span class='col-xs-1'>Pays</span> <span class='white_bg_field col-xs-3'>France</span>
-            </div><br>
+                <div class="aField" style=""><p class="myLabel">Tél.</p> <input style="width:140px" type='text' value='{{ beneficiaire.getTelConso() }}' /></div>
+                <div class="aField" style=""><p class="myLabel">Courriel</p> <input style="width:413px" type='text' value='{{ beneficiaire.getEmailConso() }}' /></div>  
+            </div>
             <div class="row">
-                <span class='col-xs-2'>Tél.</span> <span class='white_bg_field col-xs-3'>0692601465</span>
-                <span class='col-xs-1'>Courriel</span> <span class='white_bg_field col-xs-6'>b.lof@iciformation.fr</span>  
-            </div><br>
-            <div class="row">
-                <span class='col-xs-1'>Emploi occupé</span> <span class='white_bg_field col-xs-11'>Responsable informatique</span>
-            </div><br>
-            <div class="row">
-                <span class='col-xs-1'>Emploi occupé</span> <span class='white_bg_field col-xs-11'>Responsable informatique</span>
-            </div><br>
+                 <div class="aField" style="width:100%"><p class="myLabel">Emploi occupé</p> <input style="width:567px" type='text' value='{{ beneficiaire.getPoste() }}' /></div>
+            </div>
+			<div class="row">
+                <div class="aField" style="width:65%"><p class="myLabel">Région d'exécution du contrat de travail</p> <input style="width:220px" type='text' value='Paris 11e' /></div>
+                <div class="aField" style="width:30%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='75011' /></div>  
+            </div>
+			<div class="row">
+				<div class="aField" style="margin-bottom:-8px;"><p class="myLabel">Diplôme le plus élevé obtenu (case à cocher) :</p></div>
+				<table class="diplome_categorie" >
+					<tr>
+						<th>Sans niveau spécifique</th>
+						<th>Niveau VI</th>
+						<th>Niveau V bis <br><span>(préqualification)</span></th>
+						<th>Niveau V <span>(CAP,<br> BEP, CFPA)</span></th>
+						<th>Niveau IV <br><span>(BP, BT)</span></th>
+						<th>Niveau III <br><span>(BTS, DUT)</span></th>
+						<th>Niveau II <br><span>(licence ou maîtrise)</span></th>
+						<th>Niveau I <br><span>(sup. à la maîtrise)</span></th>
+					</tr>
+					<tr>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>	
+					</tr>
+				</table>
+            </div>
+			<div class="row" style="margin-top:7px">
+				<div class="aField" style="margin-bottom:-8px;"><p class="myLabel">Catégorie socio-professionnelle (case à cocher) :</p></div>
+				<table class="diplome_categorie">
+					<tr>
+						<th>Ouvrier qualifié (OP)</th>
+						<th>Employé</th>
+						<th>Technicien</th>
+						<th>Agent de maîtrise</th>
+						<th>Cadre/Ingénieur</th>
+					</tr>
+					<tr>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+						<td><div class="white_checkbox"><img width="13px" style="display:none;" src="http://dev.application.entheor.com/web/images/closed.png" /></div></td>
+					</tr>
+				</table>
+            </div>
+			<div class="row" style="margin-top:10px;">
+				<div class="aField" style=""><p style="padding-right:40px">Type de contrat </p></div> 
+				<div class="aField" style="">
+					<input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">CDD / </p>
+					<input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">CDI</p>
+				</div>
+				<div class="aField" style="">
+					<input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Intérimaire / </p>
+					<input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Permanent</p>
+				</div>
+				<div class="aField" style="margin-left:120px;"><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">SIAE*</p></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p style="padding-right:40px">Reconnaisseur travailleur handicapé ? </p></div> 
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Oui</p></div>
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Non</p></div>
+            </div>
+			<div class="row">
+				<p style="margin-left:15px;font-size:8px;">*Structure d'insertion par l'activité économique</p>
+            </div>
         </section>
+		
         <section class="block_section" id="entreprise">
             <h2 class='text-uppercase'>Son entreprise</h2>
+			
+			<div class="row">
+                <div class="aField" style=""><p class="myLabel">Raison social</p> <input style="width:250px" type='text' value='' /></div>
+                <div class="aField" style=""><p class="myLabel">N° de SIRET (ou URSSAF) </p> <input style="width:168px" type='text' value='' /></div>  
+            </div>
+			<div class="row">
+                <div class="aField" style="width:100%"><p class="myLabel">Adresse</p> <input style="width:598px" type='text' value='' /></div> 
+            </div>
+			<div class="row">
+				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='75001' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='Paris' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='France' /></div>
+            </div>
+			<div class="row">
+                <div class="aField" style=""><p class="myLabel">Intitulé de la convention collective (code IDCC)</p> <input style="width:421px" type='text' value='' /></div> 
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">APE/NACE</p> <input style="width:120px;" type='text' value='' /></div> 
+				<div class="aField" style=""><p class="myLabel">La contribution CPF 0,2% est </p><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">versée à l'OPCA</p></div>
+				<div class="aField" style="margin-left:80px;"><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">gérée en interne</p></div>
+            </div>
         </section>
         <section class="block_section" id="projet">
             <h2 class='text-uppercase'>Projet de formation</h2>
+			<p><b>Action de formation</b></p>
+			<div class="row">
+                <div class="aField" style=""><p class="myLabel">Intitulé de la formation</p> <input style="width:532px;" type='text' value='Accompagnement VAE' /></div> 
+            </div>
+			<div class="row">
+                <div class="aField" style=""><p class="myLabel">Code CPF</p> <input style="width:240px;" type='text' value='200' /></div> 
+				<div class="aField" style=""><p class="myLabel">Identifiant dossier CPF</p> <input style="width:211px;" type='text' value='' /></div> 
+			</div>
+			<div class="row">
+                <div class="aField" style=""><p class="myLabel">Date de formation </p> du  <input style="width:20px" type='text' value='' /> / <input style="width:20px" type='text' value='' /> / <input style="width:35px" type='text' value='' />  
+					 au  <input style="width:20px" type='text' value='' /> / <input style="width:20px" type='text' value='' /> / <input style="width:35px" type='text' value='' />
+				</div> 
+				<div class="aField" style=""><p class="myLabel">Durée totale de la formation</p> <input style="width:40px" type='text' value='40.0' /> heures</div> 
+			</div>
+			<div class="row">
+				<div class="aField" style=""><p style="padding-right:40px">Type de formation : </p></div> 
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">présentielle</p></div>
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">à distance</p></div>
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">mixte</p></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel"><b>Lieu de formation : </b>Code postal</p> <input type='text' value='75001' /></div>
+                <div class="aField" style=""><p class="myLabel">Ville</p> <input type='text' value='Paris' /></div>
+                <div class="aField" style=""><p class="myLabel">Pays</p> <input type='text' value='France' /></div>
+            </div>
+			<p><b>Organisme de formation</b></p>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">Raison sociale <input style="width:577px;" type='text' value='ENTHEOR' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">N° déclaration d'activité <input style="width:230px;" type='text' value='8269 110 2369' /></div>
+				<div class="aField" style=""><p class="myLabel">N° SIRET <input style="width:227px;" type='text' value='527 732 069 000 28' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">Adresse <input style="width:606px;" type='text' value='' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='75001' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='Paris' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:179px" type='text' value='France' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p style="padding-right:40px">Assujettissement TVA : </p></div>
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Oui</p></div>
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Non</p></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">Interlocuteur OF</p><input style="width:330px" type='text' value='' /></div>
+				<div class="aField" style=""><p class="myLabel">Tél. </p><input style="width:188px" type='text' value='' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">Courriel</p> <input style="width:368px" type='text' value='christine.molier@entheor.com' /></div>
+            </div>
         </section>
-        <section class="block_section" id="tarif">
+		
+		<div class="row">
+			<p class="col-xs-3"><img width="240px" src="http://dev.application.entheor.com/web/images/logo_mon_compte_formation.jpg" /></p>
+		</div>
+		
+        <section class="block_section" id="tarif" style="">
             <h2 class='text-uppercase'>Coût total de la formation</h2>
+			<table class="cout_formation">
+				<tr style="border-top:2px solid white;border-bottom:2px solid white;">
+					<td colspan="4" style="width:530px" ><b>Coût pédagogique (HT)</b></td>
+					<td style="background-color:white;width:110px;text-align:right;">2400.00 €</td>
+				</tr>
+			</table>
+			<div class="row">
+				<div class="aField" style="margin-left:19px;margin-top:5px;"><p class="myLabel"><b>Frais annexes :</b> à renseigner <u>uniquement</u> si l'OPCA en assure le remboursement (cf. conditions de prise en charge CPF/OPCA)</p></div>
+            </div>
+			<table class="cout_formation">
+				<tr>
+					<td style="width:240px">&bull; Hébergement</td>
+					<td >Nb/ unité</td>
+					<td style="width:150px"><input style="width:50px;" type="text" value='' /> / <input style="width:50px;" type="text" value='' /> €</td>
+					<td>Montant estimé</td>
+					<td style="border-bottom:1px solid #e4edf2;"> <input type="text" value='' /> €</td>
+				</tr>
+				<tr>
+					<td>&bull; Repas</td>
+					<td>Nb/ unité</td>
+					<td><input style="width:50px;" type="text" value='' /> / <input style="width:50px;" type="text" value='' /> €</td>
+					<td>Montant estimé</td>
+					<td style="border-bottom:1px solid #e4edf2;"> <input type="text" value='' /> €</td>
+				</tr>
+				<tr>
+					<td colspan="3">&bull; Transport</td>
+					<td>Montant estimé</td>
+					<td style="border-bottom:1px solid #e4edf2;"> <input type="text" value='' /> €</td>
+				</tr>
+				<tr style="border-bottom:none;">
+					<td colspan="3">&bull; Frais de garde</td>
+					<td>Montant estimé</td>
+					<td style="border-bottom:1px solid #e4edf2;"> <input type="text" value='' /> €</td>
+				</tr>
+			</table>
+			<div class="row">
+				<div class="aField" style="margin-left:507px"><p class="myLabel"><b>Total</b></p> <input style="" type='text' value='' /> €</div>
+            </div>
         </section>
         <section class="block_section" id="autre_financement">
-            <h2 class='text-uppercase'>Autres financements en complément du cpf</h2>
+            <h2 style="margin-bottom:2px;" class='text-uppercase'>Autres financements en complément du cpf</h2>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Nombre d'heures</b> </p> <input style="width:50px" type='text' value='75001' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Montant total</b></p> <input style="width:70px" type='text' value='Paris' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Financeur</b></p> <input style="width:263px" type='text' value='France' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Nombre d'heures</b> </p> <input style="width:50px" type='text' value='75001' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Montant total</b></p> <input style="width:70px" type='text' value='Paris' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Financeur</b></p> <input style="width:263px" type='text' value='France' /></div>
+            </div>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Nombre d'heures</b> </p> <input style="width:50px" type='text' value='75001' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Montant total</b></p> <input style="width:70px" type='text' value='Paris' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Financeur</b></p> <input style="width:263px" type='text' value='France' /></div>
+            </div>
+			<div class="row">
+				<p style="margin-left:15px;font-size:9px;"><i>N.B. : A renseigner si un abondement a été trouvé par l'opérateur CEP en dehors des abondements financés par l'OPCA et l'OPACIF</i></p>
+            </div>
         </section>
         <section class="block_section" id="pieces">
             <h2 class='text-uppercase'>Pièces à joindre à la présente demande</h2>
-        </section>
+			<div class="row">
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Attestation(s) du nombre d'heures de DIF <span>(uniquement pour la première demande de financement mobilisant des heures de DIF)</span></p></div>
+			</div>
+			<div class="row">
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">Programme de formation et devis</p></div>
+			</div>
+		</section>
         <section class="block_section" id="attestation">
             <h2 class='text-uppercase'>Attestation</h2>
+			<div class="row">
+				<div class="aField" style=""><p class="myLabel">Le salarié, Mme, M., ...............................................................................(Prénom) 
+				...............................................................................(Nom) :</p></div>
+			</div>
+			<div class="row">
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> <p class="myLabel">atteste sur l'honneur l'exactitude des informations données ;</p></div>
+			</div>
+			<div class="row">
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> 
+				<p class="myLabel" >donne son accord pour mobiliser ses heures de DIF et/ou CIF inscrites sur son <b>compte personnel de formation</b> (dans la <br>
+				limite de la durée totale de la formation et pour un maximum de 150 heures) pour financer la présente formation ;</p></div>
+			</div>
+			<div class="row">
+				<div class="aField" style=""><input style="width:14px;font-weight:bold;font-size:12px;" type='text' value='X' /> 
+				<p class="myLabel">ne souhaite pas associer son employeur à la réalisation de cette action de formation et demande à ce que la<br>
+				confidantialité tu projet soit préservée.</p></div>
+			</div>
+			<div class="row" style="margin-top:20px">
+				<div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">A </b> </p> <input style="width:120px;height:15px" type='text' value='Paris' /></div>
+                <div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">, le</b></p> <input style="width:120px;height:15px" type='text' value='08/10/2017' /></div>
+            </div>
+			<div class="row" style="margin-top:20px;margin-bottom:10px;">
+				<div class="aField" style=""><p class="myLabel"><b style="color:#aa3b5f;">Signature du salarié </b> </p> <input style="width:160px;height:30px" type='text' value='' /></div>
+            </div>
         </section>
         <section id="a_savoir">
             <h2 class=''>A savoir</h2>
+			<div class="" style="text-align:justify"><p class="">Le paiement des coûts pédagogiques s'effectue par l'OPCA à l'organisme de formation. Si le (ou les) financement(s) couvert(s)
+			par l'OPCA ne couvre(nt) pas la totalité des coûts pédagogiques, le montant restant à charge dera réglé directement par le salarié à l'organisme de formation.</p></div>
         </section>
         <section id="cep">
             <h2 class=''>Conseiller en évolution professionnelle (CEP)</h2>
+			<div class="row" style="margin-top:10px;">
+				<div class="aField" style="text-align:justify"><p class="myLabel">Raison sociale : ..........................................................................................</p></div><br>
+				<div class="aField" style="text-align:justify"><p class="myLabel">Nom, prénom : &nbsp; ..........................................................................................</p></div><br>
+				<div class="aField" style="text-align:justify"><p class="myLabel">Tél : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ..........................................................................................</p></div><br>
+				<div class="aField" style="text-align:justify"><p class="myLabel">Courriel : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ..........................................................................................</p></div>
+			</div>
+			<div class="row">
+				<p style="margin-left:15px;font-size:9px;">Conformément à la loi n° 78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés, vous êtes en droit d'obtenir communication et éventuellement 
+				rectification de toute information vous concernant et figurant dans nos fichiers.</p>
+            </div>
         </section>
     </div>
 {% endblock %}

@@ -39,7 +39,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query); 
     }
     
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
@@ -92,7 +92,9 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query .= ' ORDER BY b.id DESC';
 
-        $query .= ' LIMIT 10';
+        if ($bool == true){
+            $query .= ' LIMIT 10';
+        }
 
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
         $request->setParameters($params);

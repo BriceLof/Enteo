@@ -419,7 +419,7 @@ class BeneficiaireController extends Controller
             $beneficiaire->setNomConso($nom);
         }
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUser);
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUser, true);
 
         $results = $query->getArrayResult();
         $resultats = new JsonResponse(json_encode($results));
