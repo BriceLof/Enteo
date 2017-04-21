@@ -468,6 +468,10 @@ class CalendarController extends Controller
         $eventId = $historique->getEventId();
         $eventBureauId = $historique->getEventIdBureau();
 
+        if ($eventBureauId != null){
+            $calendarBureauId = $historique->getBureau()->getCalendrierid();
+        }
+
         $form = $this->createForm(AdminCalendarType::class, $historique);
         $form->add('submit', SubmitType::class, array('label' => 'Mofidier'));
 
@@ -476,6 +480,11 @@ class CalendarController extends Controller
             $historique = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $consultant = $historique->getConsultant();
+
+            if ($eventBureauId != null){
+                $googleCalendar->deleteEvent($calendarBureauId,$eventBureauId);
+                $historique->setEventIdBureau(null);
+            }
 
             $location = "";
 
@@ -510,7 +519,8 @@ class CalendarController extends Controller
                 if($historique->getBureau() != null) {
                     $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
                     if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureauUpdated = $googleCalendar->updateEvent($historique->getBureau()->getCalendrierid(),$eventBureauId,$dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
+                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
+                        $historique->setEventIdBureau($eventBureau['id']);
                     }
                 }
             }

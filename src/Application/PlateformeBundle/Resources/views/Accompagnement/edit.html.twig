@@ -41,13 +41,11 @@
 		<tr>
             <td style="position: absolute;right: 25px;" colspan="3" class="valider">{{ form_widget(edit_form_a.submit) }}</td>
         </tr>
-		{% if app.environment == 'dev' %}
-			<tr>
-				<td>
-					<a style="width:253px" class="btn btn-info" target="_blank" href="{{ path('application_new_demande_financement_pdf', {'id':beneficiaire.id}) }}">Générer Demande de Financement</a> 
-				</td>
-			</tr>
-		{% endif %}
+		<tr>
+			<td>
+				<a style="width:253px" class="btn btn-info" target="_blank" href="{{ path('application_new_demande_financement_pdf', {'id':beneficiaire.id}) }}">Générer Demande de Financement</a> 
+			</td>
+		</tr>
 		<tr>
             <td >
                 <a id="proposition_pdf" style="width:119px" class="btn btn-info" href="{{ path('application_new_devis_pdf', { 'id' : beneficiaire.id }) }}" target="_blank" >Générer Devis</a>
