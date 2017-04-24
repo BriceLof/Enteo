@@ -227,7 +227,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
-        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
+        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-2 day"));
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
         $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche du ".$dateAvantHier;
