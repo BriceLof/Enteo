@@ -8,6 +8,10 @@ application_show_document:
     path: /show/{path}
     defaults: { _controller: "ApplicationPlateformeBundle:Document:show" }
 
+application_update_document:
+    path: /update/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Document:update" }
+
 application_delete_document:
     path:     /delete/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Document:delete" }
