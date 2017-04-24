@@ -21,11 +21,11 @@
                 <nav class="col-md-2  typeUtilisateur" >
                     <ul class="list-group" style="margin-top: 46px;">
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="list-group-item itemAdmin"><a href="{{ path('user_type', {'typeUser':'admin'}) }}" >Administrateurs</a></li>
+                            <li class="list-group-item itemAdmin"><a href="{{ path('user_type', {'typeUser':'admin'})~'?actif=true' }}" >Administrateurs</a></li>
                         {% endif %} 
-                        <li class="list-group-item itemConsultant"><a href="{{ path('user_type', {'typeUser':'consultant'}) }}" >Consultants</a></li>
-                        <li class="list-group-item itemCommercial"><a href="{{ path('user_type', {'typeUser':'commercial'}) }}" >Commerciaux</a></li>
-                        <li class="list-group-item itemGestion"><a href="{{ path('user_type', {'typeUser':'gestion'}) }}" >Gestionnaire</a></li>
+                        <li class="list-group-item itemConsultant"><a href="{{ path('user_type', {'typeUser':'consultant'})~'?actif=true' }}" >Consultants</a></li>
+                        <li class="list-group-item itemCommercial"><a href="{{ path('user_type', {'typeUser':'commercial'})~'?actif=true' }}" >Commerciaux</a></li>
+                        <li class="list-group-item itemGestion"><a href="{{ path('user_type', {'typeUser':'gestion'})~'?actif=true' }}" >Gestionnaire</a></li>
                         <br>
                         {% if is_granted('ROLE_ADMIN') %}
                             <a href="{{ path('fos_user_registration_register') }}" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Ajouter un utilisateur</a>
@@ -35,6 +35,15 @@
             </div>
             
         </div>
+
+        <aside style="margin-top:-5px;margin-bottom:14px;">
+            <center>
+                <a class="text-success" href="{{ app.request.baseUrl~app.request.pathInfo~'?actif=true' }}"><b> Actif </b></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="text-danger" href="{{ app.request.baseUrl~app.request.pathInfo~'?actif=false' }}"><b> Inactif </b></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="text-muted" href="{{ app.request.baseUrl~app.request.pathInfo }}"><b> Tout </b></a>
+            </center>    
+        </aside>
+            
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>

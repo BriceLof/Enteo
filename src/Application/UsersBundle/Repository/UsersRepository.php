@@ -11,24 +11,20 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
  */
 class UsersRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findByTypeUser($slugType, $controller=null)
-    {   
-        
+    public function findByTypeUser($slugType, $actif = NULL )
+    {    
         $qb = $this->createQueryBuilder('u');
         
-        if($controller == 1){
-            // Consultant sur le formulaire Agenda par orde alphabetique
-            $qb ->where('u.roles LIKE :type')
-                ->setParameter('type', '%'.$slugType.'%')
-                ->orderBy('u.nom', "ASC");
-            ;
+        $qb ->where('u.roles LIKE :type')
+            ->setParameter('type', '%'.$slugType.'%');
+
+        if($actif !== NULL){
+            $qb ->andWhere('u.enabled = :actif')
+            ->setParameter('actif', $actif);
         }
-        else{
-            $qb ->where('u.roles LIKE :type')
-                ->setParameter('type', '%'.$slugType.'%')
-                ->orderBy('u.id', "DESC");
-            ;
-        }
+        
+        $qb->orderBy('u.id', "DESC");
+            
         return $qb
           ->getQuery()
           ->getResult()

@@ -15,14 +15,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class UsersController extends Controller
 {
     
-    public function indexAction($typeUser = null)
+    public function indexAction($typeUser = null, Request $request)
     {
+        $etat = $request->query->get("actif");
         $em = $this->getDoctrine()->getManager();
-        if(is_null($typeUser))
-            $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array(), array("id" => "DESC"));
-        else
-            $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser);
-        
+        if(is_null($typeUser)){
+            if($etat == 'true')
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array('enabled' => 1), array("id" => "DESC"));
+            elseif($etat == 'false')
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array('enabled' => 0), array("id" => "DESC"));
+            else
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array(), array("id" => "DESC"));  
+        }
+        else{
+            if($etat == 'true')
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser, 1);
+            elseif($etat == 'false')
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser, 0);
+            else
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser($typeUser);
+        }
+            
         return $this->render('ApplicationUsersBundle:Users:index.html.twig', array(
             'users' => $users,  
         ));
