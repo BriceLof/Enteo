@@ -3,7 +3,15 @@
 parameters:
 #    parameter_name: value
 
-services:    
+services: 
+   app.twig_extension:
+       class: Application\UsersBundle\Twig\AppExtension
+       public: false
+       tags:
+           - { name: twig.extension }
+       arguments: 
+            doctrine : '@doctrine'
+            
    application_google_calendar:
        class: Application\PlateformeBundle\Services\GoogleCalendar
    
