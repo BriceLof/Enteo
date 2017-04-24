@@ -40,6 +40,7 @@ $(function(){
                 $('.block_form_departement')[this.checked ? "show" : "hide"]();
                 $('.block_form_ville')[this.checked ? "show" : "hide"]();
                 $('.block_form_adresse')[this.checked ? "show" : "hide"]();
+				$('.departementInputForAjax').val("");
                 break;
            /* case "ROLE_CONSULTANT" :
                 break;  */     

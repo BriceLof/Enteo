@@ -261,11 +261,21 @@ $("document").ready(function (initDynamicContent) {
 
     $( function() {
         $("#newDocumentsForm").validate({
-            rules: {
-                "espace_documentaire[documents][0][file]":{
-                    'extension': "jpeg|png|gif|pdf|x-pdf|jpg"
-                }
-            }
+            errorElement: 'div',
+            // c'est ici qu'on mettra la validation en jquery de l'ajax
+            // submitHandler: function (form) {
+            //
+            //     $(form).find('input').each(function () {
+            //         alert(this.val);
+            //     })
+            //
+            //     // if(JSON.parse(data) == true){
+            //     //     form.submit();
+            //     // }else{
+            //     //     $('#error_slot_busy').css("display","block");
+            //     //     $('#admin_calendar_submit').prop('disabled',false)
+            //     // }
+            // }
         })
     });
     //validation jquery
@@ -1438,14 +1448,15 @@ function plusMoins(element) {
     }
 }
 
-if(document.getElementById('espace_documentaire_submit')) {
-    (function () {
-        var element = document.getElementById('espace_documentaire_submit');
-        element.addEventListener('click', function () {
-            document.getElementById("loading").style.width = "100%";
-        }, true);
-    })();
-}
+
+// if(document.getElementById('espace_documentaire_submit')) {
+//     (function () {
+//         var element = document.getElementById('espace_documentaire_submit');
+//         element.addEventListener('click', function () {
+//             document.getElementById("loading").style.width = "100%";
+//         }, true);
+//     })();
+// }
 
 
 function urlParam(name){
