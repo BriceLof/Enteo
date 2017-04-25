@@ -1,3 +1,13 @@
 application_new_disponibilites:
     path:     /add-event/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Disponibilites:new" }
+
+application_delete_disponibilites:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Disponibilites:delete" }
+
+application_showAll_disponibilites:
+    path:     /showAll/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Disponibilites:showAll" }
+    options:
+        expose: true

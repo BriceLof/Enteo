@@ -342,7 +342,6 @@ class Bureau
 
     public function __toString()
     {
-        // TODO: Implement __toString() method.
         return (ucfirst($this->getNombureau()).', '.$this->getAdresse().' '.$this->getVille()->getCp().' ').' '.strtoupper($this->getVille()->getNom());
     }
 }
