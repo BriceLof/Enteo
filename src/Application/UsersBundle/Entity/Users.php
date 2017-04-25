@@ -28,6 +28,11 @@ class Users extends BaseUser
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Historique", mappedBy="user")
      */
     private $historique;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Disponibilites", mappedBy="consultant")
+     */
+    private $disponibilite;
     
     /**
     * @ORM\Column(name="civilite", type="string", length=255, nullable=true)
@@ -466,5 +471,39 @@ class Users extends BaseUser
     public function getHistorique()
     {
         return $this->historique;
+    }
+
+    /**
+     * Add disponibilite
+     *
+     * @param \Application\PlateformeBundle\Entity\Disponibilites $disponibilite
+     *
+     * @return Users
+     */
+    public function addDisponibilite(\Application\PlateformeBundle\Entity\Disponibilites $disponibilite)
+    {
+        $this->disponibilite[] = $disponibilite;
+
+        return $this;
+    }
+
+    /**
+     * Remove disponibilite
+     *
+     * @param \Application\PlateformeBundle\Entity\Disponibilites $disponibilite
+     */
+    public function removeDisponibilite(\Application\PlateformeBundle\Entity\Disponibilites $disponibilite)
+    {
+        $this->disponibilite->removeElement($disponibilite);
+    }
+
+    /**
+     * Get disponibilite
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDisponibilite()
+    {
+        return $this->disponibilite;
     }
 }

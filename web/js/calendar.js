@@ -65,6 +65,17 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                         $('#admin_calendar_consultant option[value="'+data.data[0].id+'"]').prop('selected','selected');
                         var iframe = document.querySelector('#iframe iframe');
                         iframe.width = div.width();
+                        $.ajax({
+                            url: Routing.generate('application_showAll_disponibilites', { 'id' : data.data[0].id }),
+                            cache: true,
+                            dataType: 'json',
+                            beforeSend: function () {
+                            },
+                            success: function (data) {
+                                template = data;
+                                $('#liste_dispo_admin').html(template);
+                            }
+                        });
                     }
                 });
             }
