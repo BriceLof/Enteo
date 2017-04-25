@@ -118,15 +118,15 @@ $(function(){
         }); 
     }
     
-    //--------- Partie ajout d'une news 
+    //--------- Partie ajout d'une news dans block Suivi Administratif 
     $("#suivi_administratif_info").keyup(function(){
         inputVal = $(this).val();
         if(inputVal.length > 0){
             $("#suivi_administratif_statut").removeAttr('required');
         }
-        
     });
     
+    //--------- Partie ajout d'une news dans block News en bas de page et sur la Home 
     
     
     
