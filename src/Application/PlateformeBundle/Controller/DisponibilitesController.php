@@ -96,7 +96,10 @@ class DisponibilitesController extends Controller
 
             $this->get('session')->getFlashBag()->add('info', 'Disponibilité ajouté avec succès');
 
-            return $this->redirect($this->generateUrl('application_admin_add_evenement'));
+            return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
+                    'consult' => $disponibilite->getConsultant(),
+                )
+            );
         }
         return $this->render('ApplicationPlateformeBundle:Disponibilites:new.html.twig', array(
             'form_dispo' => $formDispo->createView(),
@@ -139,20 +142,29 @@ class DisponibilitesController extends Controller
 
         $this->get('session')->getFlashBag()->add('info', 'disponibilité supprimé avec succès');
 
-        return $this->redirect($this->generateUrl('application_admin_add_evenement', array(
-        )));
+        return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
+                'consult' => $disponibilite->getConsultant(),
+            )
+        );
     }
 
-    public function showAllAction($id){
+    public function showAllAction($id, Request $request){
         $em = $this->getDoctrine()->getManager();
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
 
-        $template = $this->render('ApplicationPlateformeBundle:Disponibilites:showAll.html.twig', array(
-            'consultant' => $consultant,
-        ))->getContent();
-        $json = json_encode($template);
-        $response = new Response($json, 200);
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        if ($request->isXmlHttpRequest()) {
+
+            $template = $this->render('ApplicationPlateformeBundle:Disponibilites:showAll.html.twig', array(
+                'consultant' => $consultant,
+            ))->getContent();
+            $json = json_encode($template);
+            $response = new Response($json, 200);
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }else{
+            return $this->render('ApplicationPlateformeBundle:Disponibilites:showAll.html.twig', array(
+                'consultant' => $consultant,
+            ));
+        }
     }
 }
