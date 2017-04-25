@@ -224,8 +224,13 @@
                 {% for suivi in beneficiaire.suiviAdministratif|slice(0, 10) %}
                     <tr>
                         <td>{{ suivi.date|date('d/m/Y') }}</td>
-                        <td>{{ suivi.statut.nom }}</td>
-                        <td>{{ suivi.detailStatut.detail }}</td>
+                        {% if suivi.statut is not null %}
+                            <td>{{ suivi.statut.nom }}</td>
+                            <td>{{ suivi.detailStatut.detail }}</td>
+                            <td><i>{{ suivi.info | length > 0 ? suivi.info | slice(0,40) ~ "..." : "" }}</i></td>
+                        {% else %}
+                            <td colspan="3"><i>{{ suivi.info | length > 0 ? suivi.info | slice(0,70) ~ "..." : "" }}</i></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>

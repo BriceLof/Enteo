@@ -39,13 +39,13 @@ class SuiviAdministratif
     
     /**
      * @ORM\ManyToOne(targetEntity="Statut")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $statut;
 
     /**
      * @ORM\ManyToOne(targetEntity="DetailStatut")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $detailStatut;
     

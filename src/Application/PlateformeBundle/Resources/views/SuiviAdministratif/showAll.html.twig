@@ -13,12 +13,19 @@
         {% for suiviAdministratif in beneficiaire.suiviAdministratif |reverse %}
             <tr style="border-bottom: 1px solid #dddddd;">
                 <td style="border:none;margin-left:0">{{ suiviAdministratif.date|date('d/m/Y') }}</td>
-                <td>{{ suiviAdministratif.statut.nom }}</td>
-                <td>{{ suiviAdministratif.detailStatut.detail }}</td>
-                <td>{% if suiviAdministratif.info | length >= 20 %} <span title="Voir +" style="cursor:pointer"
-                                                                          data-toggle="modal"
-                                                                          data-target="#myModal{{ suiviAdministratif.id }}">{{ suiviAdministratif.info | slice(0,20) ~ "..." }}</span> {% else %} {{ suiviAdministratif.info }}{% endif %}
-                </td>
+                {% if suiviAdministratif.statut is not null %}
+                    <td>{{ suiviAdministratif.statut.nom }}</td>
+                    <td>{{ suiviAdministratif.detailStatut.detail }}</td>
+                    <td><i>{% if suiviAdministratif.info | length >= 20 %} <span title="Voir +" style="cursor:pointer"
+                                                                              data-toggle="modal"
+                                                                              data-target="#myModal{{ suiviAdministratif.id }}">{{ suiviAdministratif.info | slice(0,20) ~ "..." }}</span> {% else %} {{ suiviAdministratif.info }}{% endif %}</i>
+                    </td>
+                {% else %}
+                    <td colspan="3"><i>{% if suiviAdministratif.info | length >= 100 %} <span title="Voir +" style="cursor:pointer"
+                                                                              data-toggle="modal"
+                                                                              data-target="#myModal{{ suiviAdministratif.id }}">{{ suiviAdministratif.info | slice(0,50) ~ "..." }}</span> {% else %} {{ suiviAdministratif.info }}{% endif %}</i>
+                    </td>
+                {% endif %}
                 <div class="modal fade" id="myModal{{ suiviAdministratif.id }}" tabindex="-1" role="dialog"
                      aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -68,7 +75,7 @@
 
                     <!--
                         <div class="elementSuivi glyphiconSuivi">
-                            <span style="color: black;" data-boucle="{{ loop.index }}" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil updateSuivi"></span>
+                            <span style="color: black;" data-boucle="{# loop.index }}" data-toggle="modal" data-target="#myModalSuiviAdministratifModify{{ loop.index }}" class="glyphicon glyphicon-pencil updateSuivi"></span>
                         </div>
                         <div class="modal fade" id="myModalSuiviAdministratifModify{{ loop.index }}" class="myModalSuiviAdministratifModif{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
@@ -80,12 +87,12 @@
                                         <h4 class="modal-title" id="myModalLabel">Modifier Suivi Administratif</h4>
                                     </div>
                                         <form method="POST" id="suiviAdministratifEditForm" class="suiviAdministratifForm" action="{{ path('application_edit_suivi_administratif', {'id': suiviAdministratif.id}) }}" >
-                                            {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
+                                            {# render(controller("ApplicationPlateformeBundle:SuiviAdministratif:update",{'id': suiviAdministratif.id})) }}
                                         </form>
 
                                         <!-- ID du statut et detail statut du dernier suivi administratif du bénéficiaire. On s'en sert dans js pour avoir le statut suivant  
-                                        <input type="hidden" value="{{ suiviAdministratif.statut.id }}" class="statutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
-                                        <input type="hidden" value="{{ suiviAdministratif.detailStatut.id }}" class="detailStatutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
+                                        <input type="hidden" value="{# suiviAdministratif.statut.id }}" class="statutIDCurrentSuiviAdUpdate{{ loop.index }}"/>
+                                        <input type="hidden" value="{# suiviAdministratif.detailStatut.id }}" class="detailStatutIDCurrentSuiviAdUpdate{{ loop.index #}"/>
 
                                 </div>
                             </div>
