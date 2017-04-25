@@ -176,7 +176,7 @@ class CalendarController extends Controller
     }
 
 
-    public function adminAddEventAction(Request $request, $id=null, $beneficiaire = null){
+    public function adminAddEventAction(Request $request, $id=null, $beneficiaire = null, $consult = null){
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
         //url de redirection
@@ -281,6 +281,7 @@ class CalendarController extends Controller
             'form' => $form->createView(),
             'form_consultant' => $formConsultant->createView(),
             'beneficiaire' => $beneficiaire,
+            'consult' => $consult,
         ));
     }
 
@@ -595,7 +596,7 @@ class CalendarController extends Controller
         $eventId = $historique->getEventId();
 
         if ($historique->getBureau() != null){
-            if($historique->getBureau()->getCalendrierid() != ""){
+            if($historique->getEventIdBureau() != null){
                 $calendarBureauId = $historique->getBureau()->getCalendrierid();
                 $eventBureauId = $historique->getEventIdBureau();
                 $googleCalendar->deleteEvent($calendarBureauId,$eventBureauId);

@@ -54,7 +54,7 @@ class Disponibilites {
     private $eventId;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="disponibilite")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $consultant;

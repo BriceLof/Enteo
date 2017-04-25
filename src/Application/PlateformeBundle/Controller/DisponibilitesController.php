@@ -9,10 +9,12 @@ use Application\PlateformeBundle\Form\AdminCalendarConsultantType;
 use Application\PlateformeBundle\Form\AdminCalendarType;
 use Application\PlateformeBundle\Form\CalendarType;
 use Application\PlateformeBundle\Form\DisponibilitesType;
+use Application\UsersBundle\Entity\Users;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -87,17 +89,82 @@ class DisponibilitesController extends Controller
             $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $disponibilite->getDateDebuts(), $disponibilite->getDateFins(), $eventSummary,$eventDescription,"",isset($location)? $location : '',[], true);
 
             $disponibilite->setEventId($event['id']);
+            $disponibilite->setSummary($eventSummary);
 
             $em->persist($disponibilite);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', 'Disponibilité ajouté avec succès');
 
-            return $this->redirect($this->generateUrl('application_admin_add_evenement'));
+            return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
+                    'consult' => $disponibilite->getConsultant(),
+                )
+            );
         }
         return $this->render('ApplicationPlateformeBundle:Disponibilites:new.html.twig', array(
             'form_dispo' => $formDispo->createView(),
             'consultant' => $consultant,
         ));
+    }
+
+    public function deleteAction(Request $request,$id){
+        //supprimer l'historique et l'evenement sur google agenda
+        $googleCalendar = $this->get('fungio.google_calendar');
+
+        //url de redirection
+        $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
+        $googleCalendar->setRedirectUri($redirectUri);
+
+        //recuperation du client
+        if ($request->query->has('code') && $request->get('code')) {
+            $client = $googleCalendar->getClient($request->get('code'));
+        } else {
+            $client = $googleCalendar->getClient();
+        }
+        if (is_string($client)) {
+            return new RedirectResponse($client);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $disponibilite = $em->getRepository('ApplicationPlateformeBundle:Disponibilites')->find($id);
+
+        if (!$disponibilite) {
+            throw $this->createNotFoundException('Unable to find disponibilité.');
+        }
+
+        $calendarId = $disponibilite->getConsultant()->getCalendrierid();
+        $eventId = $disponibilite->getEventId();
+
+        $googleCalendar->deleteEvent($calendarId,$eventId);
+
+        $em->remove($disponibilite);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('info', 'disponibilité supprimé avec succès');
+
+        return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
+                'consult' => $disponibilite->getConsultant(),
+            )
+        );
+    }
+
+    public function showAllAction($id, Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
+
+        if ($request->isXmlHttpRequest()) {
+
+            $template = $this->render('ApplicationPlateformeBundle:Disponibilites:showAll.html.twig', array(
+                'consultant' => $consultant,
+            ))->getContent();
+            $json = json_encode($template);
+            $response = new Response($json, 200);
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }else{
+            return $this->render('ApplicationPlateformeBundle:Disponibilites:showAll.html.twig', array(
+                'consultant' => $consultant,
+            ));
+        }
     }
 }

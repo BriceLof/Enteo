@@ -39,6 +39,71 @@
             <div class="row">
                 {{ beneficiaire.consultant.calendrieruri|raw }}
             </div>
+            <div class="tableOnglet row">
+                <table>
+                    <caption class="caption_calendar">
+                        <a href="#collapseAllDisponibilite" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseAllDisponibilite">
+                            <span class="glyphicon glyphicon-plus" style="float: left"></span>
+                            <span>Liste de vos disponibilités</span>
+                        </a>
+                    </caption>
+                    <tbody class="collapse" id="collapseAllDisponibilite">
+                        <tr>
+                            <th>Date</th>
+                            <th>Ville</th>
+                            <th>Heure</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for disponibilite in beneficiaire.consultant.disponibilite %}
+                            {% if "now"|date('Ymd') < disponibilite.dateDebuts|date('Ymd') %}
+                                <tr>
+                                    <td>{{ disponibilite.dateDebuts|date("d/m/Y") }}</td>
+                                    {% if disponibilite.ville is not null %}
+                                        <td>{{ disponibilite.ville.nom~' ('~disponibilite.ville.cp~')' }}</td>
+                                    {% else %}
+                                        <td></td>
+                                    {% endif %}
+                                    {% if disponibilite.summary == 'Disponibilites' %}
+                                        <td>de {{ disponibilite.dateDebuts|date('h')~'-'~disponibilite.dateFins|date('h') }}H</td>
+                                    {% else %}
+                                        <td>{{ disponibilite.summary }}</td>
+                                    {% endif %}
+                                    <td><span title="Supprimer la Disponibilité" style="cursor:pointer;" data-toggle="modal" data-target="#myModalDisponibiliteDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% for disponibilite in beneficiaire.consultant.disponibilite %}
+                    {% if "now"|date('Ymd') < disponibilite.dateDebuts|date('Ymd') %}
+                        <div  class="modal fade" id="myModalDisponibiliteDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Supprimer une Disponibilité</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <span>Confirmer la suppression de la disponibilité !</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div>
+                                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                            <a style="width: 95px;float: right" href="{{ path('application_delete_disponibilites', { 'id': disponibilite.id }) }}">
+                                                <button class="btn btn-danger">Supprimer</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
         <div class="col-md-3">
             <div id="" class="tableOnglet row">
