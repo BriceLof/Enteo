@@ -394,16 +394,20 @@
                                                 <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
                                                 <td></td>
                                                 <td class="btn" width="100%">
-                                                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
-                                                </td>
+                                                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+														<span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+                                                
+												</td>
                                             </tr>
                                         {% else %}
                                             <tr>
                                                 <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
                                                 <td></td>
                                                 <td class="btn" width="100%">
-                                                    <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span>
-                                                </td>
+                                                    <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+													<span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+                                                
+												</td>
                                             </tr>
                                         {% endif %}
                                         <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -428,6 +432,29 @@
                                                             </a>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+										<div  class="modal fade" id="myModalDocumentModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+													<form method="POST" action="{{ path('application_update_document', { 'id': document.id }) }}">
+														<div class="modal-header" >
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+															<h4 class="modal-title" id="myModalLabel">Modifier un document</h4>
+														</div>
+														<div class="modal-body">
+															Nom du fichier : <input type="text" value="{{ document.description }}" name="document_nom_modifier" />
+														</div>
+														<div class="modal-footer">
+															<div>
+																<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+																<button type="submit" class="btn btn-warning">Modifier</button>											
+															</div>
+														</div>
+													</form>
                                                 </div>
                                             </div>
                                         </div>
