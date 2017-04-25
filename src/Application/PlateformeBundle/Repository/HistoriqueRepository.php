@@ -117,7 +117,8 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameters(array(
                        "date" =>  $date.'%',
                        "consultant" => $consultant 
-                    ));
+                    ))
+					->orderBy("h.heuredebut", "ASC");
 
             $query = $queryBuilder->getQuery();
             $results = $query->getResult();
