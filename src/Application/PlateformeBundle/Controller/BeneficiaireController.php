@@ -34,6 +34,8 @@ class BeneficiaireController extends Controller
     public function showAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+
+        /**
         if(isset($id)){
             // stockage de l'id du beneficiaire 
             $_SESSION['beneficiaireid'] = $id;
@@ -98,6 +100,7 @@ class BeneficiaireController extends Controller
 				}
             }
         }
+         */
         if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['majevenementdanshistorique']); // On supprime la session
         if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
         $authorization = $this->get('security.authorization_checker');
