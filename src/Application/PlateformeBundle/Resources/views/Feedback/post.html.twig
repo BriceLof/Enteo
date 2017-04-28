@@ -4,7 +4,7 @@
      <section class="col-md-9 col-md-offset-2">
         {% if type == "bug" %} {% set label = 'Décrivez l\'erreur rencontrée : *' %} {% set lien = 'application_feedback_bug' %} {% set sujet = '[Bug Report]' %}
         {% elseif type == "proposition" %} {% set label = 'Décrivez la fonction proposée ou l\'amélioration : *' %} {% set lien = 'application_feedback_proposition' %} {% set sujet = '[Proposition]' %}
-        {% elseif type == "question" %} {% set label = 'Posez ici votre question.<br> Nous vous répondrons sous 48h maximum. : *' %} {% set lien = 'application_feedback_question' %} {% set sujet = '[Question]' %}
+        {% elseif type == "question" %} {% set label = 'Posez ici votre question. Nous vous répondrons sous 48h maximum. : *' %} {% set lien = 'application_feedback_question' %} {% set sujet = '[Question]' %}
         {% endif %}
         <div class="page-header">
             <h1>Feed Back<br><small>{{ sujet }}</small></h1>

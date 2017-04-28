@@ -24,7 +24,7 @@ class FeedbackController extends Controller
             
             $file = $feedback->getImage();
             if(!is_null($file)){
-                $filename = $this->get('app.file_uploader')->upload($file, 'upload/feedback/img');
+                $filename = $this->get('app.file_uploader')->upload($file, 'uploads/feedback/img');
                 $feedback->setImage($filename);
             }
             

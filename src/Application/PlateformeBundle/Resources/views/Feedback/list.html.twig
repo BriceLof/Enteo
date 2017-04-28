@@ -19,6 +19,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
+						<th>De</th>
                         <th>Type</th>
                         <th>Description</th>
                         <th>Détail</th>
@@ -28,10 +29,11 @@
                 <tbody>
                     {% for feedback in feedbacks %}
                         <tr>
-                            <td>{{ feedback.type |capitalize }}</td>
+                            <td><a href="{{ path('user_show', {'id': feedback.user.id }) }}">{{ feedback.user.prenom |capitalize ~ " " ~ feedback.user.nom |capitalize}}</a></td>
+							<td>{{ feedback.type |capitalize }}</td>
                             <td>{{ feedback.description |capitalize }} 
                                 {% if feedback.image is not null %}
-                                    <a title="Image du bug" alt="Image du bug" target="_blank" href="{{ asset('upload/feedback/img/' ~ feedback.image) }}"><span class="glyphicon glyphicon-picture"></span></a>
+                                    <a title="Image du bug" alt="Image du bug" target="_blank" href="{{ asset('uploads/feedback/img/' ~ feedback.image) }}"><span class="glyphicon glyphicon-picture"></span></a>
                                 {% endif %}   
                             </td>
                             <td>{{ feedback.detail |capitalize }}</td>
