@@ -3,7 +3,10 @@
 parameters:
 #    parameter_name: value
 
-services: 
+services:
+   app.file_uploader:
+       class: Application\PlateformeBundle\Services\FileUploader
+       
    app.twig_extension:
        class: Application\UsersBundle\Twig\AppExtension
        public: false

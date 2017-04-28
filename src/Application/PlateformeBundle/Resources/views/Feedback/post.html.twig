@@ -1,0 +1,64 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% block title %}Feed Back {% endblock %}
+{% block body %}
+     <section class="col-md-9 col-md-offset-2">
+        {% if type == "bug" %} {% set label = 'Décrivez l\'erreur rencontrée : *' %} {% set lien = 'application_feedback_bug' %} {% set sujet = '[Bug Report]' %}
+        {% elseif type == "proposition" %} {% set label = 'Décrivez la fonction proposée ou l\'amélioration : *' %} {% set lien = 'application_feedback_proposition' %} {% set sujet = '[Proposition]' %}
+        {% elseif type == "question" %} {% set label = 'Posez ici votre question.<br> Nous vous répondrons sous 48h maximum. : *' %} {% set lien = 'application_feedback_question' %} {% set sujet = '[Question]' %}
+        {% endif %}
+        <div class="page-header">
+            <h1>Feed Back<br><small>{{ sujet }}</small></h1>
+        </div>
+        <div class="panel panel-default" style="width:65%;margin:auto;margin-bottom:40px;">
+            <div class="panel-body">
+                <div class="row">
+                    {{ form_start(form, {'method': 'post', 'action': path(lien) }) }}
+                    
+                    <div class="col-md-12"> 
+                        {{ form_label(form.description, label) }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    {% if type == "bug" %}
+                        <div class="col-md-12">
+                            {{ form_label(form.url) }}
+                            {{ form_errors(form.url) }}
+                            {{ form_widget(form.url) }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form_label(form.detail) }}
+                            {{ form_errors(form.detail) }}
+                            {{ form_widget(form.detail) }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form_label(form.image) }}
+                            {{ form_errors(form.image) }}
+                            {{ form_widget(form.image) }}
+                        </div>
+                    {% else %}
+                        <div class="col-md-12" style="display:none">
+                            {{ form_label(form.url) }}
+                            {{ form_errors(form.url) }}
+                            {{ form_widget(form.url) }}
+                        </div>
+                        <div class="col-md-12" style="display:none">
+                            {{ form_label(form.detail) }}
+                            {{ form_errors(form.detail) }}
+                            {{ form_widget(form.detail) }}
+                        </div>
+                        <div class="col-md-12" style="display:none">
+                            {{ form_label(form.image) }}
+                            {{ form_errors(form.image) }}
+                            {{ form_widget(form.image) }}
+                        </div>
+                    {% endif %}
+                    <div class="col-md-12" style="margin-top:25px;">
+                        {{ form_widget(form.Envoyer) }}
+                        <p><i>* champs obligatoires</i></p>
+                    </div>
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

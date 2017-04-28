@@ -1,0 +1,47 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% block title %}Feed Back {% endblock %}
+{% block body %}
+    <section class="col-md-12">
+        {% for info in app.session.flashbag.get('info') %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ info }}
+            </div>
+        {% endfor %}
+        <div class="page-header">
+            <div class="row">
+                <h1 class="col-md-10">Gestion - Feed Back<br><small>Bug, Proposition, Question</small></h1>
+            </div>
+            
+        </div>
+            
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Détail</th>
+                        <th>Url</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feedbacks %}
+                        <tr>
+                            <td>{{ feedback.type |capitalize }}</td>
+                            <td>{{ feedback.description |capitalize }} 
+                                {% if feedback.image is not null %}
+                                    <a title="Image du bug" alt="Image du bug" target="_blank" href="{{ asset('upload/feedback/img/' ~ feedback.image) }}"><span class="glyphicon glyphicon-picture"></span></a>
+                                {% endif %}   
+                            </td>
+                            <td>{{ feedback.detail |capitalize }}</td>
+                            <td>{{ feedback.url }}</td> 
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            
+        
+    </section>
+{% endblock %}
