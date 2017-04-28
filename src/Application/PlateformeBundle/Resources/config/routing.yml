@@ -52,6 +52,11 @@ application_plateforme_received_mer:
     defaults: 
         _controller: ApplicationPlateformeBundle:Webservice:index 
 
+#feedback
+application_plateforme_feedback:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/feedback.yml"
+    prefix:   /feedback
+
 #beneficiaire
 application_plateforme_beneficiaire:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/beneficiaire.yml"

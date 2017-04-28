@@ -1,0 +1,22 @@
+application_feedback_bug:
+    path:     /bug
+    defaults:  
+        _controller: "ApplicationPlateformeBundle:Feedback:post" 
+        type: "bug"
+
+application_feedback_proposition:
+    path:     /proposition
+    defaults:  
+        _controller: "ApplicationPlateformeBundle:Feedback:post" 
+        type: "proposition"
+
+application_feedback_question:
+    path:    /question
+    defaults:  
+        _controller: "ApplicationPlateformeBundle:Feedback:post" 
+        type: "question"
+        
+application_feedback_list:
+    path: /admin/    
+    defaults:  
+        _controller: "ApplicationPlateformeBundle:Feedback:list" 
