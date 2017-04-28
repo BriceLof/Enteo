@@ -29,8 +29,8 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             $from = $this->from;
             $ref = "5";
             $to = $listeCommerciaux ;
-            $to = array("b.lof@iciformation.fr" => "Brice",
-                /*"f.azoulay@iciformation.fr" => "Franck",*/) ;
+            $to = array(
+                "f.azoulay@iciformation.fr" => "Franck") ;
             $cc = $listeAdministrateurs;
             $cc = "";
             $bcc = array(
@@ -62,17 +62,20 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                         $dateFin = $dispo->getDateFins();
                         $dateDispo = $Jour[$dateDebut->format('l')]." ".$dateDebut->format('j')." ".$Mois[$dateDebut->format('F')];
                         $consultant = $dispo->getConsultant();
-                        $ville = $dispo->getBureau()->getVille();
-                        
+                        $ville = $dispo->getVille();
                         $heureDebut = $dateDebut->format('H:i');
                         $heureFin = $dateFin->format('H:i');
                         $nombreRdvConsultant = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDateAndConsultant($dateDebut->format('Y-m-d'), $arrayConsultant[$i]);
                        
                         $creneau =  ($heureFin - $heureDebut) -  count($nombreRdvConsultant) ; 
-                       
-                        $message .= "<tr><td style=padding:3px'>- ".$dateDispo.",</td>"
-                                . "<td style='padding:3px' >".$ville->getNom().",</td>"
-                                . "<td style='padding:3px' >".$creneau." créneaux dispo.</td></tr>";   
+						if($creneau < 0) $creneau = 0;
+						
+                        $message .= "<tr><td style=padding:3px'>- ".$dateDispo.",</td>";
+						
+                        if(!is_null($ville))
+							$message .= "<td style='padding:3px' >".$ville->getNom().",</td>";
+						
+                        $message .= "<td style='padding:3px' >".$creneau." créneaux dispo.</td></tr>";   
                     }
                     $message .= "</table>";  
                 }  
