@@ -74,9 +74,16 @@ class Feedback
     */
     private $user;
     
+    /**
+     * @var
+     *
+     * @ORM\Column(name="date_heure", type="datetime")
+     */
+    private $dateHeure;
+    
     public function __construct()
     {
-        
+        $this->dateHeure = new \DateTime();
     }
     
     /**
@@ -231,5 +238,29 @@ class Feedback
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set dateHeure
+     *
+     * @param \DateTime $dateHeure
+     *
+     * @return Feedback
+     */
+    public function setDateHeure($dateHeure)
+    {
+        $this->dateHeure = $dateHeure;
+
+        return $this;
+    }
+
+    /**
+     * Get dateHeure
+     *
+     * @return \DateTime
+     */
+    public function getDateHeure()
+    {
+        return $this->dateHeure;
     }
 }
