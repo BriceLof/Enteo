@@ -1,3 +1,5 @@
+Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
+
 # Use the front controller as index file. It serves as a fallback solution when
 # every other rewrite/redirect fails (e.g. in an aliased environment without
 # mod_rewrite). Additionally, this reduces the matching process for the
@@ -22,13 +24,15 @@ DirectoryIndex app.php
 
 	# Redirection HTTP to HTTPS : DEV
 	RewriteCond %{HTTP_HOST} ^appli-dev.entheor\.com [NC]
-	RewriteCond %{SERVER_PORT} 80 
-	RewriteRule ^(.*)$ https://appli-dev.entheor.com/$1 [R,L]
+	RewriteCond %{SERVER_PORT} 80
+	RewriteCond %{REQUEST_URI} web
+	RewriteRule ^(.*)$ https://appli-dev.entheor.com/web/$1 [R,L]
 
 	# Redirection HTTP to HTTPS : PROD
-	#RewriteCond %{HTTP_HOST} ^appli.entheor\.com [NC]
-	#RewriteCond %{SERVER_PORT} 80 
-	#RewriteRule ^(.*)$ https://appli.entheor.com/$1 [R,L] 
+	RewriteCond %{HTTP_HOST} ^appli.entheor\.com [NC]
+	RewriteCond %{SERVER_PORT} 80 
+	RewriteCond %{REQUEST_URI} web
+	RewriteRule ^(.*)$ https://appli.entheor.com/web/$1 [R,L] 
 
 	
     # Determine the RewriteBase automatically and set it as environment variable.
