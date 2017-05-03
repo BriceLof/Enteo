@@ -16,6 +16,7 @@ class DisponibilitesRepository extends \Doctrine\ORM\EntityRepository{
                 ->where('d.dateDebuts >= :date')
                 ->setParameter('date', $date)
                 ->orderBy("u.nom", "ASC")
+				
                 ;
         
         $query = $queryBuilder->getQuery();
@@ -36,7 +37,8 @@ class DisponibilitesRepository extends \Doctrine\ORM\EntityRepository{
                 ->setParameter('datelimit', $dateLimit)
                 ->andWhere('d.consultant = :consultant')
                 ->setParameter('consultant', $consultant)
-                ->orderBy("d.id", "ASC")
+                ->orderBy("d.dateDebuts", "ASC")
+				
                 ;
         
         $query = $queryBuilder->getQuery();

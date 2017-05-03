@@ -18,7 +18,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
 
         if(count($disponibilites) > 0){
             $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
-            $commerciaux = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_CONSULTANT");
+            $commerciaux = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_COMMERCIAL");
             $listeAdministrateurs = array();
             $listeCommerciaux = array();
 
@@ -29,13 +29,12 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             $from = $this->from;
             $ref = "5";
             $to = $listeCommerciaux ;
-            $to = array(
-                "f.azoulay@iciformation.fr" => "Franck") ;
+            //$to = array("b.lof@iciformation.fr" => "Brice",/* "f.azoulay@iciformation.fr" => "Franck"*/) ;
             $cc = $listeAdministrateurs;
-            $cc = "";
+            //$cc = "";
             $bcc = array(
-                "support@iciformation.fr" => "Support",
-                );
+				"support@iciformation.fr" => "Support",
+			);
             
             $arrayConsultant = array();
             
@@ -70,7 +69,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                         $creneau =  ($heureFin - $heureDebut) -  count($nombreRdvConsultant) ; 
 						if($creneau < 0) $creneau = 0;
 						
-                        $message .= "<tr><td style=padding:3px'>- ".$dateDispo.",</td>";
+                        $message .= "<tr><td style='padding:3px'>- ".$dateDispo.",</td>";
 						
                         if(!is_null($ville))
 							$message .= "<td style='padding:3px' >".$ville->getNom().",</td>";

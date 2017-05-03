@@ -464,7 +464,8 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     $("#form_dispo").validate({
         rules: {
             "application_plateformebundle_disponibilites[villeNom]":{
-                "noVille": true
+                "noVille": true,
+                "required": true
             }
         }
     });
