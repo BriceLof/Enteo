@@ -6,7 +6,7 @@
         Sauf erreur de notre part, vous n'avez pas encore mis à jour les informations de la fiche de :<br>
         <ul>
         {% for beneficiaire in beneficiaires %}
-            <b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b>.
+            <li><b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b></li>
         {% endfor %}
         </ul>
         <br><br>

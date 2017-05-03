@@ -13,8 +13,8 @@ class Mailer
     protected $mailer;
     protected $templating;
     protected $date;
-    protected $from = "admin@entheo.com";
-    protected $reply = "admin@entheo.com";
+    protected $from = "admin@entheor.com";
+    protected $reply = "";
     protected $name = "Equipe Entheo";
     
     public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em, Date $date)

@@ -62,6 +62,7 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('array', $arrayId)
                 ->andWhere('u.roles LIKE :type')
                 ->setParameter('type', '%'.$type.'%')
+				->orderBy('u.nom', 'ASC')
                 ;
        
         return $qb->getQuery()->getResult();
