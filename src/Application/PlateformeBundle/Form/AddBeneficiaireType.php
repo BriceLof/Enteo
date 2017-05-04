@@ -101,9 +101,9 @@ class AddBeneficiaireType extends AbstractType
                 'required' => true,
             )) 
             ->add('domaineVae', ChoiceType::class, array(
-                'label' => 'Domaine de la VAE ',
+                'label' => 'Domaine de la VAE *',
                 'placeholder' => 'Choisissez',
-                'required' => false,
+                'required' => true,
                 'choices' => array(
                     "Achat, Logistique et Transport" => "Achat, Logistique et Transport",
                     "Agriculture, Agroalimentaire, Soins Animaliers" => "Agriculture, Agroalimentaire, Soins Animaliers",

@@ -511,12 +511,15 @@
                                     </table>
                                 </form>
                             </div>
-                            
+                          
                             {% if(beneficiaire.suiviAdministratif | length > 0) %}
                                 {% set dernier_suivi = beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1] %}
+                                <!-- ID du statut du dernier suivi administratif du bénéficiaire ou celui de Recevabilité si aucun suivi encore. On s'en sert dans js pour avoir le statut suivant -->
+                                <input type="hidden" value="{% if dernier_suivi.statut is not null and beneficiaire.suiviAdministratif | length > 0 %} {{ dernier_suivi.statut.id }} {% else %} 7 {% endif %}" class="statutIDCurrentSuiviAd"/>
+                            {% else %}
+                                <input type="hidden" value="7" class="statutIDCurrentSuiviAd"/>
                             {% endif %}
-                            <!-- ID du statut du dernier suivi administratif du bénéficiaire ou celui de Recevabilité si aucun suivi encore. On s'en sert dans js pour avoir le statut suivant -->
-                            <input type="hidden" value="{% if dernier_suivi.statut is not null and beneficiaire.suiviAdministratif | length > 0 %} {{ dernier_suivi.statut.id }} {% else %} 7 {% endif %}" class="statutIDCurrentSuiviAd"/>
+                            
                             
 					</div>
     {% endif %}
