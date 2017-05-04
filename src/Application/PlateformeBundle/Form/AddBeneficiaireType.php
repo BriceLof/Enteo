@@ -163,7 +163,7 @@ class AddBeneficiaireType extends AbstractType
             ->add('origineMerDetailComment', ChoiceType::class, array(
                 'label' => 'Détail',
                 'placeholder' => 'Choisissez',
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'choices' => array(
                     'Adwords' => 'adw',

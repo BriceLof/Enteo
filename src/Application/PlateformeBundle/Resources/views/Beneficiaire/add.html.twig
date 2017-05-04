@@ -78,12 +78,12 @@
                             <div class="col-md-4">
                                 <span style="visibility:hidden;">{{ form_label(form.origineMerComment) }}</span>
                                 {{ form_errors(form.origineMerComment) }}
-                                {{ form_widget(form.origineMerComment) }}
+                                {{ form_widget(form.origineMerComment, {'attr' : {"class":"origineMerComment"} }) }}
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="visibility:hidden;">
                                 <span style="visibility:hidden;">{{ form_label(form.origineMerDetailComment) }}</span>
                                 {{ form_errors(form.origineMerDetailComment) }}
-                                {{ form_widget(form.origineMerDetailComment) }}
+                                {{ form_widget(form.origineMerDetailComment, {'attr' : {"class":"origineMerDetailComment"} }) }}
                             </div>
                         </div>
                     </div>

@@ -74,6 +74,23 @@ $(function(){
                 });
         }
     }
+    
+    //-----------------------------------------------------------------------------------------------------------------------//
+    //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------------------//
+    
+    $( ".origineMerComment" ).change(function() {
+        $origineMerComment = $(this).children("option:selected").val()
+        if($origineMerComment == 'payant'){
+            $(".origineMerDetailComment").css('visibility', 'initial')
+            $(".origineMerDetailComment").attr('required', 'required')
+        }else{
+            $(".origineMerDetailComment").css('visibility', 'hidden') 
+            $(".origineMerDetailComment").removeAttr('required')
+        }
+        consolelog($origineMerComment)
+    });
+    
 });
 
 if(document.getElementById('accompagnement')) {
@@ -120,7 +137,7 @@ if(document.getElementById('accompagnement')) {
             } else {
             }
         });
-
+        
 
 
 

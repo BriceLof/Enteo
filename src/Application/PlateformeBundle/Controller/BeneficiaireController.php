@@ -479,8 +479,12 @@ class BeneficiaireController extends Controller
             // origine beneficiaire 
             $origineBene1 =$form->get('origineMerQui')->getData();
             $origineBene2 =$form->get('origineMerComment')->getData();
-            $origineBene3 =$form->get('origineMerDetailComment')->getData();
-            $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2."_".$origineBene3);
+            $origineBene3 = "";
+
+            if($form->get('origineMerDetailComment')->getData() != "" )
+                $origineBene3 ="_".$form->get('origineMerDetailComment')->getData();
+
+            $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2.$origineBene3);
             
             $em->persist($beneficiaire);
            
