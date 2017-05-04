@@ -168,7 +168,7 @@ class PdfController extends Controller
 				$cout_total_financement = $financeur->getMontant() + $cout_total_financement;
 			}
 		}
-
+              
         $html = $this->renderView('ApplicationPlateformeBundle:Pdf:demandeFinancement.html.twig', array(
             'beneficiaire' => $beneficiaire,
 			'employeur' => $employeur,

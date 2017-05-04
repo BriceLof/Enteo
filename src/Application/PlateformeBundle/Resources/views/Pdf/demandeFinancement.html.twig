@@ -232,8 +232,9 @@
                 <div class="aField" style="width:100%"><p class="myLabel">Adresse</p> <input style="width:598px" type='text' value='{{ employeur is not null ? employeur.getAdresse() : "" }}' /></div> 
             </div>
 			<div class="row">
-				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='{{ employeur is not null ? employeur.getVille().getCp() : "" }}' /></div>
-                <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='{{ employeur is not null ? employeur.getVille().getNom() : "" }}' /></div>
+                           
+				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='{{ employeur.getVille() is not null ? employeur.getVille().getCp() : "" }}' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='{{ employeur.getVille() is not null ? employeur.getVille().getNom() : "" }}' /></div>
                 <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='France' /></div>
             </div>
 			<div class="row">
