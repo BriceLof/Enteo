@@ -87,7 +87,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 	if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){  	
             $message.=  "
                     <div style='margin-left:20px;'>
-                            - <a href='http://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
+                            - <a href='https://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
                             - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
 
             if($beneficiaire->getCsp() != "demandeur d'emploi" && $beneficiaire->getCsp() != "chef d'entreprise/PL"){
