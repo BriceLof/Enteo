@@ -14,7 +14,32 @@ $(function(){
     $(".villeAjaxBeneficiaire option:first-child").val("");
     $(".villeAjaxBeneficiaire option:first-child").text("");
     $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
-
+	
+	/* Si lors de la validation du formulaire, erreur de validation d'un champs coté php, la page sera racharger en montrant le champs erroner. 
+	Cependant si les champs code postal et ville qui n'étaient pas vide lors de la validation, lors du reload de la page le champs ville charger en ajax sera vide mais on pourra valider malgré tout le form
+	ce qui provoquera une erreur par la suite dans la fiche detail du benef.
+	*/
+    if($(".codePostalInputForAjaxBeneficiaire").val().length == 5 ){
+    	cp = $(".codePostalInputForAjaxBeneficiaire").val()
+    	$.ajax({
+            type: 'get',
+            url: Routing.generate("application_plateforme_get_ville_ajax", { departement: cp }),
+            beforeSend: function(){
+                console.log('ça charge');
+                $(".villeAjaxBeneficiaire option").remove();
+                $(".block_info_chargement").show();
+            }
+        })
+        .done(function(data) {
+            $(".block_info_chargement").hide();
+            $(".villeAjaxBeneficiaire").removeAttr("disabled");
+            for(var i = 0; i < data.villes.length; i++)
+            {
+                $(".villeAjaxBeneficiaire").append("<option value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
+            }
+        });
+    }
+    
     $(".codePostalInputForAjaxBeneficiaire").keyup(function(){
         $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
         cp = $(this).val();
