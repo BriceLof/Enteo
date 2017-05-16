@@ -21,11 +21,11 @@ class UsersController extends Controller
         $em = $this->getDoctrine()->getManager();
         if(is_null($typeUser)){
             if($etat == 'true')
-                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array('enabled' => 1), array("id" => "DESC"));
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array('enabled' => 1), array("nom" => "ASC"));
             elseif($etat == 'false')
-                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array('enabled' => 0), array("id" => "DESC"));
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array('enabled' => 0), array("nom" => "ASC"));
             else
-                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array(), array("id" => "DESC"));  
+                $users = $em->getRepository('ApplicationUsersBundle:Users')->findBy(array(), array("nom" => "ASC"));  
         }
         else{
             if($etat == 'true')
