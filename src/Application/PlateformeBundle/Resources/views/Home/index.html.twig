@@ -25,7 +25,10 @@
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef">
                     <div class="table-responsive col-md-12" >
-                        <button title="Ajouter une news" class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
+                        {# Bouton Maj pas afficher pour les consultants, j'ai rajouter une condition sur l'admin car il est a le role consultant egalement #}
+                        {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
+                            <button title="Ajouter une news" class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
+                        {% endif %}
                         <a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
 
                         <!-- Lien Agenda uniquement si un consultant est rattaché au bénéficiaire -->
@@ -87,13 +90,17 @@
                             
                                 <tr>
                                     <th colspan=2>Nombre total appel</th>
-                                    <th colspan=2>Dernier appel</th>
+                                    <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
                                     <th colspan=5>Dernière news</th>
                                     <th>Statut</th>
                                     <th>Détail statut</th>
                                 </tr>
                                 <tr>
-                                    <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news" id="{{beneficiaire.id}}" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}"><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                    {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
+                                        <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news" id="{{beneficiaire.id}}" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}"><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                    {% else %}
+                                        <td colspan=2></td>
+                                    {% endif %}
                                     <td colspan=2>
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
@@ -165,7 +172,10 @@
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
                 <div class="row tab-home-benef" id="tab-home-benef{{ beneficiaire.id }}">
                     <div class="table-responsive col-md-12" >
-                        <button title="Ajouter une news" class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
+                        {# Bouton Maj pas afficher pour les consultants, j'ai rajouter une condition sur l'admin car il est a le role consultant egalement #}
+                        {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
+                            <button title="Ajouter une news" class="btn_formulaire_add_news  btn btn-primary" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}" >Maj</button>
+                        {% endif %}
                         <a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
 
                         <!-- Lien Agenda uniquement si un consultant est rattaché au bénéficiaire -->
@@ -244,16 +254,20 @@
 
                                 <tr>
                                     <th colspan=2>Nombre total appel</th>
-                                    <th colspan=2>Dernier appel</th>
+                                    <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
                                     <th colspan=5>Dernière news</th>
                                     <th>Statut</th>
                                     <th>Détail statut</th>
                                 </tr>
                                 <tr>
-                                    <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news" id="{{beneficiaire.id}}" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}"><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                    {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
+                                        <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news" id="{{beneficiaire.id}}" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}"><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                    {% else %}
+                                        <td colspan=2></td>
+                                    {% endif %}
                                     <td colspan=2>
-                                        {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
-                                        {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                                     </td>
                                     <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
                                     <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
