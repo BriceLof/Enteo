@@ -523,22 +523,24 @@
                             
 					</div>
     {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="news col-md-12">
-                <h4 class="titreSection">NEWS</h4>
-                <div id="tabNews">
-                    <ul>
-                        <li><a href="#tabs-1">Toutes les News</a></li>
-                        <li><a href="#tabs-2">Ajouter une News</a></li>
-                    </ul>
-                    <div id="tabs-1">
-                        {{ render(controller("ApplicationPlateformeBundle:News:showAll",{'beneficiaire': beneficiaire})) }}
-                    </div>
-                    <div id="tabs-2" class="col-md-3">
-                        {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                    <div id="news" class="tableOnglet">
+                        <table>
+                            <caption class="titreSection"><a id="newsCollapse" href="#news" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="news"><span class="glyphicon glyphicon-minus"></span><span>News</span></a></caption>
+                        </table>
+                        <div class="collapse in" id="news_collapse">
+                            <div id="tabNews">
+                                <ul id="tablist">
+                                    <li><a href="#tabs-1">Toutes les News</a></li>
+                                    <li><a href="#tabs-2">Ajouter une News</a></li>
+                                </ul>
+                                <div id="tabs-1">
+                                    {{ render(controller("ApplicationPlateformeBundle:News:showAll",{'beneficiaire': beneficiaire})) }}
+                                </div>
+                                <div id="tabs-2">
+                                    {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
