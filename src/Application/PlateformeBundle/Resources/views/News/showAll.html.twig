@@ -1,37 +1,57 @@
 <div id="afficheListNews">
-        <h5 style="text-decoration: underline">Toutes les News</h5>
-            {% for news in beneficiaire.news|reverse %}
-                <div class="row newsBoucle">
-                    <div class="col-sm-2"><span> {{ news.dateHeure|date('d/m/Y à h:m') }} </span></div>
-                    <div class="col-sm-1" style="padding-bottom: 10px "><span>{{ news.statut.nom }}</span></div>
-                    <div class="col-sm-3"><span>{{ news.detailStatut.detail }}</span></div>
-                    <div class="col-sm-3"><span>{{ news.message }}</span></div>
-                    <div class="btn col-sm-1">
-                        <a href="{{ path('application_delete_news', { 'id': news.id }) }}">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </div>
-                    <div class="btn col-sm-1" style="text-align: center">
-                        <div>
-                            <span data-toggle="modal" data-target="#myModalNewsModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span>
-                        </div>
-                        <div class="modal fade" id="myModalNewsModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">Modifier News</h4>
-                                    </div>
-                                        <form method="POST" id="newsForm" action="{{ path('application_edit_news', { 'id' : news.id }) }}" >
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {% for news in beneficiaire.news|reverse|slice(0,5) %}
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading_news_{{ loop.index }}">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_news_{{ loop.index }}" aria-expanded="false" aria-controls="collapse_news_{{ loop.index }}">
+                        <span class="news_date">{{ news.dateHeure|date('d/m/y à h:m') }} </span>
+                        <span class="news_status_name">{{ news.statut.nom }}</span>
+                        <span class="news_status_detail">{{ news.detailStatut.detail }}</span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_news_{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_news_{{ loop.index }}">
+                <div class="panel-body">
+                    {% if news.message is not null %}
+                        <span class="news_message">{{ news.message }}</span>
+                    {% else %}
+                        <span class="news_message">pas de message</span>
+                    {% endif %}
+
+                    <div class="news_remove_modify">
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+                            <a href="{{ path('application_delete_news', { 'id': news.id }) }}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        {% endif %}
+                        <div class="btn col-sm-1" style="text-align: center">
+                            <div>
+                                <span data-toggle="modal" data-target="#myModalNewsModify{{ loop.index }}"
+                                      class="glyphicon glyphicon-pencil"></span>
+                            </div>
+                            <div class="modal fade" id="myModalNewsModify{{ loop.index }}" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">Modifier News</h4>
+                                        </div>
+                                        <form method="POST" id="newsForm"
+                                              action="{{ path('application_edit_news', { 'id' : news.id }) }}">
                                             {{ render(controller("ApplicationPlateformeBundle:News:update",{'id': news.id})) }}
                                         </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 </div>

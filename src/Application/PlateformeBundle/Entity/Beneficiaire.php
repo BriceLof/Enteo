@@ -294,6 +294,13 @@ class Beneficiaire
 	* @ORM\Column(name="diplome_obtenu", type="string", length=255, nullable=true)
 	*/
     private $diplomeObtenu;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="ref_financeur", type="string", length=255, nullable=true)
+     */
+    private $refFinanceur;
 	
     /**
      * Constructor
@@ -1471,5 +1478,29 @@ class Beneficiaire
     public function getDiplomeObtenu()
     {
         return $this->diplomeObtenu;
+    }
+
+    /**
+     * Set refFinanceur
+     *
+     * @param string $refFinanceur
+     *
+     * @return Beneficiaire
+     */
+    public function setRefFinanceur($refFinanceur)
+    {
+        $this->refFinanceur = $refFinanceur;
+
+        return $this;
+    }
+
+    /**
+     * Get refFinanceur
+     *
+     * @return string
+     */
+    public function getRefFinanceur()
+    {
+        return $this->refFinanceur;
     }
 }

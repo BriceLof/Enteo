@@ -23,12 +23,17 @@
     padding-right: 3px;
     padding-left: 3px;
 }
-
+#tablist{
+    margin-bottom: 5px;
+}
 .text-left{
     margin-top: -10px;
     margin-bottom: 10px;
 }
-
+.ui-widget.ui-widget-content {
+    border: none;
+    background-color: inherit;
+}
 .text-left a:link{
     color: #5cca42;
 }
@@ -75,9 +80,43 @@
     display: inline-block;
     width: 100%;
     max-width: 100%;
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
     font-weight: 700;
     cursor: default;
+}
+#news #newsForm{
+    margin-left: 18px;
+}
+#news #application_plateformebundle_news_message{
+    height: 100px;
+}
+#news_collapse a:link{
+    color: black;
+}
+#afficheListNews .panel-group {
+    margin-bottom: 0;
+}
+#afficheListNews .panel-heading {
+    padding: 7px 15px;
+}
+#afficheListNews .panel-title {
+    font-size: 12px;
+}
+#afficheListNews td{
+    display: inline-block;
+}
+#afficheListNews .news_date{
+    width: 14%;
+    margin-left: 0px;
+}
+#afficheListNews .news_status_name{
+    width: 18%;
+}
+#afficheListNews .news_status_detail{
+    width: 23%;
+}
+#afficheListNews .news_message{
+    width: 34%;
 }
 
 /*.showAllSuiviAdministratif div:first-of-type{
@@ -200,29 +239,18 @@
 #suiviAdministratif a{
     color: white;
 }
-
-.newsBoucle{
-    margin-bottom: 5px;
-    border: 1px solid;
-}
-
-#tabNews{
-    height: 370px;
-    overflow: hidden;
-}
-
 .newsBoucle > div{
     top: 7px;
 }
 .newsBoucle .glyphicon{
     top: -5px;
 }
-
-#afficheListNews{
-    margin: 5%;
-    margin-top: 20px;
+.news_remove_modify{
+    float: right;
 }
-
+.ui-tabs .ui-tabs-panel{
+    padding: 0em 0em;
+}
 
 #application_plateformebundle_news{
 }

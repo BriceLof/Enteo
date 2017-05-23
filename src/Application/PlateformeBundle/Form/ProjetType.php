@@ -75,6 +75,15 @@ class ProjetType extends AbstractType
                 ),
             ))
 
+            ->add('refFinanceur', TextType::class, array(
+                'label' => 'Réf. financeur',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'projet',
+                    'maxlength' => 24,
+                ),
+            ))
+
             ->add('formationInitiale', TextType::class, array(
                 'label' => 'Formation Initiale :',
                 'required' => false,
