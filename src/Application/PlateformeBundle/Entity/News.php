@@ -41,12 +41,6 @@ class News
      */
     private $detailStatut;
 
-    /**
-     * @var
-     *
-     * @ORM\Column(name="message", type="text", nullable=true)
-     */
-    private $message;
 
     /**
      * @var
@@ -118,29 +112,7 @@ class News
         return $this->detailStatut;
     }
 
-    /**
-     * Set message
-     *
-     * @param string $message
-     *
-     * @return News
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
 
-        return $this;
-    }
-
-    /**
-     * Get message
-     *
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
 
 
 
@@ -200,7 +172,10 @@ class News
      */
     public function increase()
     {
-        if($this->statut->getSlug() == "telephone" OR $this->statut->getSlug() == "rv1-a-faire" OR $this->statut->getSlug() == "rv2-a-faire" OR $this->statut->getSlug() == "abandon")
+        if($this->statut->getSlug() == "telephone" OR $this->statut->getSlug() == "rv1-a-faire" OR $this->statut->getSlug() == "rv2-a-faire" OR $this->statut->getSlug() == "abandon"
+                OR $this->statut->getSlug() == "reporte" OR $this->statut->getSlug() == "termine")
             $this->getBeneficiaire()->increaseNbAppelTel();
     }
+    
+    
 }
