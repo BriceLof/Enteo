@@ -8,7 +8,9 @@ use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
+use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Form\ConsultantType;
+use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\ProjetType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -364,12 +366,12 @@ class BeneficiaireController extends Controller
                 $codePostal = $form["villeMer"]["cp"]->getData();
             }
 
-            if(!is_null($form['dateDebut']->getData())){
+            /*if(!is_null($form['dateDebut']->getData())){
                 $dateDebut = $form['dateDebut']->getData();
             }
             if(!is_null($form['dateFin']->getData())){
                 $dateFin = $form['dateFin']->getData();
-            }
+            }*/
             
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
             $results = $query->getResult();
@@ -378,7 +380,11 @@ class BeneficiaireController extends Controller
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();
             $formNews = $this->get("form.factory")->create(NewsType::class, $news);
-
+			
+			 
+            $nouvelle = new Nouvelle;
+            $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
+			
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
                 'liste_beneficiaire' => $results,
                 'form' => $form->createView(),
@@ -386,6 +392,7 @@ class BeneficiaireController extends Controller
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
                 'form_news'             => $formNews->createView(),
+                'form_nouvelle'             => $form_nouvelle->createView(),
                 'nombreBeneficiaire'    => count($results)
             ));
         }

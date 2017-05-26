@@ -81,17 +81,18 @@ class Mailer
         $to = $listeAdministrateurs;
         $to = "b.lof@iciformation.fr";
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
-        $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</b> : <br>
+        $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b><a href='https://appli.entheor.com/web/user/".$feedback->getUser()->getId()."/show'>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</a></b> : <br>
                 <ul>
                     <li><b>Type : </b>".ucfirst($feedback->getType())."</li>
-                    <li><b>Description : </b>".ucfirst($feedback->getDescription())."</li>
-                    
-                </ul>";
+                    <li><b>Description : </b>".ucfirst($feedback->getDescription())."</li>";
+
         if($feedback->getType() == "bug"){
             $message .= "<li><b>Url : </b>".$feedback->getUrl()."</li><li><b>Détail : </b>".$feedback->getDetail()."</li>
-                    <li><img src='//appli.entheor.com/web/uploads/feedback/img/".$feedback->getImage()."'></li>";
+                    <li><img src='https://appli.entheor.com/web/uploads/feedback/img/".$feedback->getImage()."'></li>";
         }
         
+		$message .= "</ul>";
+		
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
             'message' => $message,

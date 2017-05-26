@@ -106,7 +106,16 @@
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                                     </td>
-                                    <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
+                                   <td colspan=5>
+                                        {% if(beneficiaire.nouvelle | length > 0) %}
+                                            {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}
+                                            {{ 
+                                                last_nouvelle.utilisateur.prenom |slice(0,1)| capitalize ~'. '~last_nouvelle.utilisateur.nom | capitalize ~', le '~
+                                                last_nouvelle.date | date("d/m/Y à H:i")~' : '~ ((last_nouvelle.message | length > 130) ? last_nouvelle.message | slice(0,130)~'...' :  last_nouvelle.message)
+                                            }}
+                                            {% if(beneficiaire.nouvelle | length > 1) %}<button data-toggle="modal" class="voirPlusNouvelle" id="{{beneficiaire.id}}" data-target="#voirPlusNouvelle_{{beneficiaire.id}}">Voir +</button>{% endif %}
+                                        {% endif %}
+                                    </td>
                                     <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
                                     <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                                 </tr>
@@ -175,8 +184,6 @@
                         {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
                         {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                         {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
-                        {{ form_label(form_news.message) }}
-                        {{ form_widget(form_news.message) }}
                     </div>
                     <div class="modal-footer">
                         {{ form_rest(form_news) }}

@@ -58,7 +58,7 @@ class RechercheBeneficiaireType extends AbstractType
                 'required' => false,
             ))
            
-            ->add('dateDebut', DateType::class, array(
+            /*->add('dateDebut', DateType::class, array(
                 'label' => 'Date de Debut',
                 'mapped' => false,
                 'widget' => 'single_text',
@@ -83,7 +83,7 @@ class RechercheBeneficiaireType extends AbstractType
                     'class' => 'accompagnementDate',
                     'autocomplete' => 'off',
                 )
-            ))
+            ))*/
             ->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
 
             ;
