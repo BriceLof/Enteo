@@ -1,12 +1,14 @@
-{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% if results is not defined %}
+    {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
-{% block header %}
-    {% if (liste_beneficiaire | length > 0) or (results is defined) %}
-        <div id="banner">
-            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}      
-        </div>
-    {% endif %}
-{% endblock %}
+    {% block header %}
+        {% if (liste_beneficiaire | length > 0) or (results is defined) %}
+            <div id="banner">
+                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endif %}
 
 {% block body %}
 
@@ -19,7 +21,7 @@
     <section class="container-fluid section-tab-home-benef">
     {% if liste_beneficiaire | length > 0 %}
         {% if results is defined %}
-        
+
             <h4 style="margin-top: -20px;margin-bottom: 26px;"><b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b></h4>
             {% for beneficiaire in liste_beneficiaire %}
                 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
@@ -31,7 +33,7 @@
                         {% endif %}
                         <a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                         <button title="Ajouter une news" class="btn_formulaire_add_nouvelle  btn btn-warning" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_nouvelle_{{beneficiaire.id}}" >News</button>
-                        
+
                         <!-- Lien Agenda uniquement si un consultant est rattaché au bénéficiaire -->
                         {% if beneficiaire.consultant is not null %}
                             <a target="_blank" href="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" data-id="{{ beneficiaire.id }}" onclick="getClient()" class="btn btn-info"  type="button" style="">Agenda</a>
@@ -58,58 +60,88 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" id="{{ beneficiaire.id }}"><b>{{ beneficiaire.nomConso|capitalize }}</b></a></td>
-                                    <td><b>{{ beneficiaire.prenomConso|capitalize }}</b></td>
-                                    <td>{{ beneficiaire.villeMer.nom|capitalize }}</td>
-                                    <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
-                                    <!-- heure de la première news du bénéficiaire, cad l'heure de la confirmation de la mer à qq secondes près -->
-                                    <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
-                                    <td><b>{{ beneficiaire.telConso }}</b></td>
-                                    <td>{{ beneficiaire.emailConso }}</td>
-                                    <td>{{ beneficiaire.domaineVae|capitalize }}</td>
-                                    <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
-                                    <td>{{ beneficiaire.heureRappel|capitalize }}</td>
-                                    {% if beneficiaire.consultant is not null %}
-                                        <td>
-                                            <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
-                                        
-                                        </td>
-                                    {% else %}
-                                        <td>
-                                            <b>Pas encore de consultant</b>
-                                        
-                                        </td>
-                                    {% endif %}
-                                </tr>
+                            <tr>
+                                <td><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" id="{{ beneficiaire.id }}"><b>{{ beneficiaire.nomConso|capitalize }}</b></a></td>
+                                <td><b>{{ beneficiaire.prenomConso|capitalize }}</b></td>
+                                <td>{{ beneficiaire.villeMer.nom|capitalize }}</td>
+                                <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
+                                <!-- heure de la première news du bénéficiaire, cad l'heure de la confirmation de la mer à qq secondes près -->
+                                <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
+                                <td><b>{{ beneficiaire.telConso }}</b></td>
+                                <td>{{ beneficiaire.emailConso }}</td>
+                                <td>{{ beneficiaire.domaineVae|capitalize }}</td>
+                                <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
+                                <td>{{ beneficiaire.heureRappel|capitalize }}</td>
+                                {% if beneficiaire.consultant is not null %}
+                                    <td>
+                                        <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
 
-                            
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        <b>Pas encore de consultant</b>
 
-                                {% if(beneficiaire.news | length > 0) %}
-                                    {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
+                                    </td>
                                 {% endif %}
-                            
-                                <tr>
-                                    <th colspan=2>Nombre total appel</th>
-                                    <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
-                                    <th colspan=5>Dernière news</th>
-                                    <th>Statut</th>
-                                    <th>Détail statut</th>
-                                </tr>
-                                <tr>
-                                    {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
-                                        <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news" id="{{beneficiaire.id}}" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}"><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
-                                    {% else %}
-                                        <td colspan=2></td>
+                            </tr>
+
+
+
+                            {% if(beneficiaire.news | length > 0) %}
+                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
+                            {% endif %}
+
+                            <tr>
+                                <th colspan=2>Nombre total appel</th>
+                                <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
+                                <th colspan=5>Dernière news</th>
+                                <th>Statut</th>
+                                <th>Détail statut</th>
+                            </tr>
+                            <tr>
+                                {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
+                                    <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news" id="{{beneficiaire.id}}" data-toggle="modal" data-target="#block_formulaire_ajout_new_{{beneficiaire.id}}"><span style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span> appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
+                                {% else %}
+                                    <td colspan=2></td>
+                                {% endif %}
+                                <td colspan=2>
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
+                                </td>
+
+                                <td colspan=5>
+                                    {% if(beneficiaire.nouvelle | length > 0) %}
+                                        {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}
+                                        {{
+                                        last_nouvelle.utilisateur.prenom |slice(0,1)| capitalize ~'. '~last_nouvelle.utilisateur.nom | capitalize ~', le '~
+                                        last_nouvelle.date | date("d/m/Y à H:i")~' : '~ ((last_nouvelle.message | length > 130) ? last_nouvelle.message | slice(0,130)~'...' :  last_nouvelle.message)
+                                        }}
+                                        {% if(beneficiaire.nouvelle | length > 1) %}<button data-toggle="modal" class="voirPlusNouvelle" id="{{beneficiaire.id}}" data-target="#voirPlusNouvelle_{{beneficiaire.id}}">Voir +</button>{% endif %}
                                     {% endif %}
+<<<<<<< HEAD
                                     <td colspan=2>
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                                     </td>
-                                    <td colspan=5>{{ beneficiaire.news | length > 0 ? derniere_news.message : '' }}</td>
+                                   <td colspan=5>
+                                        {% if(beneficiaire.nouvelle | length > 0) %}
+                                            {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}
+                                            {{ 
+                                                last_nouvelle.utilisateur.prenom |slice(0,1)| capitalize ~'. '~last_nouvelle.utilisateur.nom | capitalize ~', le '~
+                                                last_nouvelle.date | date("d/m/Y à H:i")~' : '~ ((last_nouvelle.message | length > 130) ? last_nouvelle.message | slice(0,130)~'...' :  last_nouvelle.message)
+                                            }}
+                                            {% if(beneficiaire.nouvelle | length > 1) %}<button data-toggle="modal" class="voirPlusNouvelle" id="{{beneficiaire.id}}" data-target="#voirPlusNouvelle_{{beneficiaire.id}}">Voir +</button>{% endif %}
+                                        {% endif %}
+                                    </td>
                                     <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
                                     <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                                 </tr>
+=======
+                                </td>
+                                <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
+                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+                            </tr>
+>>>>>>> 73f154572c9700f7ee32afc39496617b8c395137
                             </tbody>
                         </table>
                     </div>
@@ -126,7 +158,7 @@
                                     <!-- ID du statut de la dernière news du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
                                     <input type="hidden" value="{{ derniere_news.statut.id }}" class="statutIDCurrent"/>
                                 </div>
-                               
+
                                 <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
                             </div>
                         </div>
@@ -140,7 +172,7 @@
                                         <span class="text-danger">{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</span>
                                     </h4>
                                 </div>
-                               
+
                                 <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
                             </div>
                         </div>
@@ -150,19 +182,19 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">News | 
+                                    <h4 class="modal-title" id="myModalLabel">News |
                                         <span class="text-danger">{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</span>
                                     </h4>
                                 </div>
                                 <div class="modal-body" id="listeNouvelle_{{beneficiaire.id}}">
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </aside>
                 </div>
                 <br>
- 
+
             {% endfor %}
             </section>
 
@@ -175,10 +207,14 @@
                         {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
                         {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                         {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
-                        {{ form_label(form_news.message) }}
-                        {{ form_widget(form_news.message) }}
+<<<<<<< HEAD
                     </div>
                     <div class="modal-footer">
+=======
+                        <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
+                            {{ form_widget(form_news.Enregistrer) }}
+                        </div>
+>>>>>>> 73f154572c9700f7ee32afc39496617b8c395137
                         {{ form_rest(form_news) }}
                     </div>
                 </form>
@@ -195,7 +231,7 @@
                         {{ form_rest(form_nouvelle) }}
                     </div>
                 </form>
-            </div>         
+            </div>
 
             <div id="pagination" style="text-align:center">
                 <ul class="pagination">
@@ -221,30 +257,11 @@
                         {% endif %}
                         <a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}" class="btn btn-success" id="{{ beneficiaire.id }}" type="button" style="">Voir fiche</a>
                         <button title="Ajouter une news" class="btn_formulaire_add_nouvelle  btn btn-warning" id="{{ beneficiaire.id }}" type="button" data-toggle="modal" data-target="#block_formulaire_ajout_nouvelle_{{beneficiaire.id}}" >News</button>
-                        
+
                         <!-- Lien Agenda uniquement si un consultant est rattaché au bénéficiaire -->
                         {% if beneficiaire.consultant is not null %}
                             <a target="_blank" href="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" data-id="{{ beneficiaire.id }}" onclick="getClient()" class="btn btn-info"  type="button" style="">Agenda</a>
                         {% endif %}
-                        {#
-                        <!-- Lien Agenda uniquement si un consultant est rattaché au bénéficiaire -->
-                        {% if beneficiaire.consultant is not null %}
-                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
-                                {% set agendaUserId = beneficiaire.consultant.id %}
-                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
-                            {% else %}
-                                {% set agendaUserId = app.user.id %}
-                                <a title="Voir l'agenda" alt="Voir l'agenda" href="{{ path('application_plateforme_agenda', {'userid': agendaUserId, 'benef': beneficiaire.id }) }} " target="_blank" class="btn btn-info"  type="button" >Agenda</a>
-                            {% endif %}
-
-                            TEST AGENDA FIDY SEULEMENT EN ADMIN#}
-                        {#
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a target="_blank" href="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" data-id="{{ beneficiaire.id }}" onclick="getClient()" class="btn btn-success"  type="button" style="">ajouter evenement</a>
-                            {% endif %}
-                        {% endif %}
-                        #}
-
 
                         <!--<img src="{{ asset("images/icon_calendar.jpg") }}" alt="Agenda" title="Agenda" width="31px" />-->
                         <br>
@@ -280,17 +297,17 @@
                                     {% if beneficiaire.consultant is not null %}
                                         <td>
                                             <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
-                                            
+
                                         </td>
                                     {% else %}
                                         <td>
                                             <b>Pas encore de consultant</b>
-                                            
+
                                         </td>
                                     {% endif %}
                                 </tr>
 
-                               
+
 
                                 {% if(beneficiaire.news | length > 0) %}
                                     {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
@@ -313,11 +330,11 @@
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
                                     </td>
-                                    
+
                                     <td colspan=5>
                                         {% if(beneficiaire.nouvelle | length > 0) %}
                                             {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}
-                                            {{ 
+                                            {{
                                                 last_nouvelle.utilisateur.prenom |slice(0,1)| capitalize ~'. '~last_nouvelle.utilisateur.nom | capitalize ~', le '~
                                                 last_nouvelle.date | date("d/m/Y à H:i")~' : '~ ((last_nouvelle.message | length > 130) ? last_nouvelle.message | slice(0,130)~'...' :  last_nouvelle.message)
                                             }}
@@ -343,7 +360,7 @@
                                     <!-- ID du statut de la dernière news du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
                                     <input type="hidden" value="{{ derniere_news.statut.id }}" class="statutIDCurrent"/>
                                 </div>
-                               
+
                                 <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
                             </div>
                         </div>
@@ -357,7 +374,7 @@
                                         <span class="text-danger">{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</span>
                                     </h4>
                                 </div>
-                               
+
                                 <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
                             </div>
                         </div>
@@ -367,22 +384,22 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">News | 
+                                    <h4 class="modal-title" id="myModalLabel">News |
                                         <span class="text-danger">{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize}}</span>
                                     </h4>
                                 </div>
                                 <div class="modal-body" id="listeNouvelle_{{beneficiaire.id}}">
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </aside>
                 </div>
                 <br>
- 
+
             {% endfor %}
             </section>
-            
+
             <!-- Formulaire qui sera déplacé en javascript dans la boucle pour lié à un bénéficiaire -->
             <div id="block_formulaire_add_news" style="display:none" >
                 <form id="form_add_news" action="{{ path('application_plateforme_homepage') }}" method="post">
@@ -411,8 +428,8 @@
                         {{ form_rest(form_nouvelle) }}
                     </div>
                 </form>
-            </div>        
-                    
+            </div>
+
 
             <div id="pagination" style="text-align:center">
                 <ul class="pagination">

@@ -5,15 +5,13 @@
             <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>
             <span class="col-md-1">{{ form_widget(form.prenomConso) }}</span>
             <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
-            <span class="col-md-2">{{ form_widget(form.consultant) }}</span>
+            
+            {% set style = "display:none" %}
+         	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %} {% set style = "display:block" %} {% endif %}
+            <span style="{{ style }}"class="col-md-2">{{ form_widget(form.consultant) }}</span>
+            
             <span class="col-md-1">{{ form_widget(form.villeMer.cp, { 'attr': {'placeholder': 'Code postal' }}) }}</span>
             <span class="col-md-2">{{ form_widget(form.villeMer.nom, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
-
-
-            <!-- not mapped -->
-            <span class="col-md-1">{{ form_widget(form.dateDebut) }}</span>
-            <span class="col-md-1">{{ form_widget(form.dateFin) }}</span>
-            <!---------------->
 
             <span class="col-md-1">{{ form_widget(form.submit) }}</span>
             <span class="col-md-1">{{ form_rest(form) }}</span>

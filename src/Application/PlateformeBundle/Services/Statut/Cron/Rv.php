@@ -84,7 +84,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 					}
 					
 					if($canBeSend){
-						$message .=	"<br><b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='http://dev.application.entheor.com/web/'>ENTHEO</a> :</b><br>"
+						$message .=	"<br><b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='https://appli.entheor.com/web/'>ENTHEO</a> :</b><br>"
 							. "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
 							   - Compléter les informations clés du bénéficiaire : Coordonnées, Statut, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
 							   
