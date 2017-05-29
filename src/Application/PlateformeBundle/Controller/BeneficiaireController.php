@@ -7,11 +7,13 @@ use Application\PlateformeBundle\Entity\Employeur;
 use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
+use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Entity\Ville;
 use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Form\ConsultantType;
 use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\NewsType;
+use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\ProjetType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,74 +39,6 @@ class BeneficiaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
-        /**
-        if(isset($id)){
-            // stockage de l'id du beneficiaire 
-            $_SESSION['beneficiaireid'] = $id;
-            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-        }
-        else if(!empty($_SESSION['beneficiaireid'])){
-            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($_SESSION['beneficiaireid']);
-            unset($_SESSION['beneficiaireid']);
-        }
-        $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
-        // ====================================================== //
-        // ===== Mise à jour des evenements du beneficiaire ===== //
-        // ====================================================== //
-        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
-            $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-                // stockage des infos
-                $donnes[] = $id;
-                $donnes[] = $this->getUser()->getId();
-                $donnes[] = 'page beneficiaire';
-                if (!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']);
-				else $_SESSION['firstpast'] = $donnes;
-                // Données pour Google calendar
-                $_SESSION['calendrierId'] = $histo_beneficiaire[0]->getConsultant()->getCalendrierid(); // id du calendrier
-                // On stocke l'id du user pour la personnalisation du fichier credentials
-                // dans google calendar qui permet la connexion à l'agenda du consultant
-                $_SESSION['useridcredencial'] = $histo_beneficiaire[0]->getConsultant()->getId();
-                // Appel du service google calendar
-                $googleCalendar = $this->get('application_google_calendar');
-                $googleCalendar->setRedirectUri($redirectUri);
-                if (!empty($_SESSION['code'])){
-                    $client = $googleCalendar->getClient($_SESSION['code']);
-                }else {
-                    $client = $googleCalendar->getClient();
-                }
-                if (is_string($client)) {
-                    header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
-                    exit;
-                }
-        }
-        // Si le client existe alors on recupere les evenements
-        if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){
-            foreach($histo_beneficiaire as $histo){
-				if($histo->getEventId() != '0'){
-					$evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
-					// Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
-					if($evenement->getStatus() == 'cancelled'){
-						$query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
-					}
-					else{
-						// On met à jour les evenements
-						$heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
-						$heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
-						$heuredeb = str_replace('+01:00','',$heuredeb); 
-						$heurefin = str_replace('+01:00','',$heurefin);
-						$datedeb = new \DateTime($heuredeb); // date debut
-						$datefin = new \DateTime($heurefin); // date fin
-						$heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
-						$heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
-						// Mise à jour en BD  
-						$em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
-					}
-				}
-            }
-        }
-         */
-        if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['majevenementdanshistorique']); // On supprime la session
-        if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
@@ -380,16 +314,16 @@ class BeneficiaireController extends Controller
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();
             $formNews = $this->get("form.factory")->create(NewsType::class, $news);
-			
-			 
-            $nouvelle = new Nouvelle;
+
+            $nouvelle = new Nouvelle();
             $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
-			
+
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
                 'liste_beneficiaire' => $results,
                 'form' => $form->createView(),
                 'results' => $results,
                 'nbPages'               => $nbPages,
+                'form_nouvelle' => $form_nouvelle->createView(),
                 'page'                  => $page,
                 'form_news'             => $formNews->createView(),
                 'form_nouvelle'             => $form_nouvelle->createView(),

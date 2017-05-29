@@ -96,7 +96,7 @@ $(function(){
                 },
                 success: function (data) {
                     template = data;
-                    console.log(data)
+                    console.log(data).
                     //rechargement du html dans le block table du bénéficiaire
                     $('#b'+beneficiaire_id).html(template);
 
