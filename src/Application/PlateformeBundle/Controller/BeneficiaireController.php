@@ -321,7 +321,6 @@ class BeneficiaireController extends Controller
                 'form' => $form->createView(),
                 'results' => $results,
                 'nbPages'               => $nbPages,
-                'form_nouvelle' => $form_nouvelle->createView(),
                 'page'                  => $page,
                 'form_news'             => $formNews->createView(),
                 'form_nouvelle'             => $form_nouvelle->createView(),

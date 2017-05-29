@@ -21,7 +21,55 @@
     {% endfor %}
 
     {% if liste_beneficiaire | length > 0 %}
-        {% include "ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig" %}
+        <section class="container-fluid section-tab-home-benef">
+            <div id="section_home">
+            {% include "ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig" %}
+            </div>
+        </section>
+
+
+        <!-- Formulaire qui sera déplacé en javascript dans la boucle pour lié à un bénéficiaire -->
+        <div id="block_formulaire_add_news" style="display:none">
+            <form id="form_add_news" action="{{ path('application_plateforme_homepage') }}" method="post">
+                <div class="modal-body">
+                    <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value=""/>
+                    {{ form_label(form_news.statut) }}
+                    {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
+                    {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}
+                    <div style="display:none" class="block_info_chargement"><img class="img_loading"
+                                                                                 src="{{ asset('images/ajax-loader.gif') }}"/>
+                        <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+                    {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
+                    <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
+                        {{ form_widget(form_news.Enregistrer) }}
+                    </div>
+                    {{ form_rest(form_news) }}
+                </div>
+            </form>
+        </div>
+        <div id="block_formulaire_add_nouvelle" style="display:none">
+            <form id="form_add_nouvelle" action="{{ path('application_plateforme_homepage') }}" method="post">
+                <div class="modal-body">
+                    <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value=""/>
+                    {{ form_label(form_nouvelle.message) }}
+                    {{ form_widget(form_nouvelle.message) }}
+                    <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
+                        {{ form_widget(form_nouvelle.Enregistrer) }}
+                    </div>
+                    {{ form_rest(form_nouvelle) }}
+                </div>
+            </form>
+        </div>
+        <div id="pagination" style="text-align:center">
+            <ul class="pagination">
+                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                {% for p in range(1, nbPages) %}
+                    <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     {% else %}
         <div class="jumbotron">
             {% if results is defined %} 
