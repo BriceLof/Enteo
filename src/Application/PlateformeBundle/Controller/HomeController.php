@@ -25,8 +25,6 @@ class HomeController extends Controller
 
         //Mis à jour du statut : verifie si la requete est une requete AJAX
         if ($request->isXmlHttpRequest()) {
-            var_dump('aaaaa');die;
-
 
             $news = new News;
             $form = $this->get("form.factory")->create(NewsType::class, $news);

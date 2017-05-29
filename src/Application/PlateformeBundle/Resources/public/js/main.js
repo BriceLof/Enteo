@@ -1,133 +1,133 @@
-$(function(){
-    
-    //-----------------------------------------------------------------------------------------------------------------------//
-    //--------------------------  HOME : formulaire ajout d'une news ----------------------------------------------------//
-    //-----------------------------------------------------------------------------------------------------------------------//
+function addNews(el){
+    beneficiaire_id = $(el).attr('id')
+    // Supprime tout les formulaires d'ouvert
+    $(".modal-dialog form").remove();
 
-    $(".btn_formulaire_add_news").click(function(){
-        beneficiaire_id = $(this).attr('id')
-        // Supprime tout les formulaires d'ouvert
-        $(".modal-dialog form").remove();
-        
-        formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id 
-        
-        // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire 
-        // (car au début le formulaire n'est pas dans la boucle)
-        $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_news").html())
-        
-        // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
-        $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id) 
-        
-        //---------- START : Par défaut lorsqu'on ouvre le formulaire, le statut présenté est le statut supérieur à celui de la dernière news du bénéficiaire       
-        /*var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
-        
-        // ID du statut supérieur au statut courant du bénéficiaire (
-        // si statutId = 6 => ( c a d RV2 réalisé, je fais un +3 sur l'id pour sauter le statut recevabilité jusqu'a facturation)
-        if(statutId == 6)
-            var nextStatutId = Number(statutId) + Number(4)
-        else
-            var nextStatutId = Number(statutId) + Number(1) 
-        
-        $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut 
-        ajaxFormNews(nextStatutId, true)*/
-        //---------- END 
-            
-        //---------- START : Si on change le statut 
-        $(formDuBeneficiaire + " .statut").change(function(){
-            var statutId = $(this).children("option:selected").val()
-            $(".detailStatut").attr("disabled", "disabled") 
-			console.log(statutId)
-            ajaxFormNews(statutId, true)
-        });
-        //---------- END
+    formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id
 
-        $("#form_add_news").on("submit",function(e){
-            //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
-            e.preventDefault();
+    // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire
+    // (car au début le formulaire n'est pas dans la boucle)
+    $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_news").html())
 
-            $.ajax({
-                url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
-                type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-                data: $(this).serialize(),
-                cache: true,
-                dataType: 'json',
-                beforeSend: function () {
-                    //à rajouter un chargement
-                },
-                success: function (data) {
-                    template = data;
+    // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
+    $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id)
 
-                    //rechargement du html dans le block table du bénéficiaire
-                    $('#b'+beneficiaire_id).html(template);
+    //---------- START : Par défaut lorsqu'on ouvre le formulaire, le statut présenté est le statut supérieur à celui de la dernière news du bénéficiaire
+    /*var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
 
-                    //ferme le modal
-                    $('#block_formulaire_ajout_new_'+beneficiaire_id).modal('toggle');
-                }
-            });
-        })
+     // ID du statut supérieur au statut courant du bénéficiaire (
+     // si statutId = 6 => ( c a d RV2 réalisé, je fais un +3 sur l'id pour sauter le statut recevabilité jusqu'a facturation)
+     if(statutId == 6)
+     var nextStatutId = Number(statutId) + Number(4)
+     else
+     var nextStatutId = Number(statutId) + Number(1)
+
+     $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut
+     ajaxFormNews(nextStatutId, true)*/
+    //---------- END
+
+    //---------- START : Si on change le statut
+    $(formDuBeneficiaire + " .statut").change(function(){
+        var statutId = $(this).children("option:selected").val()
+        $(".detailStatut").attr("disabled", "disabled")
+        console.log(statutId)
+        ajaxFormNews(statutId, true)
     });
-    
-    $(".btn_formulaire_add_nouvelle").click(function(){
-        beneficiaire_id = $(this).attr('id')
-        // Supprime tout les formulaires d'ouvert
-        $(".modal-dialog form").remove();
-        
-        formDuBeneficiaire = "#block_formulaire_ajout_nouvelle_"+beneficiaire_id 
-        
-        // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire 
-        // (car au début le formulaire n'est pas dans la boucle)
-        $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_nouvelle").html())
-        
-        // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
-        $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id) 
+    //---------- END
 
-        $("#form_add_nouvelle").on("submit",function(e){
-            //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
-            e.preventDefault();
-
-            $.ajax({
-                url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
-                type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-                data: $(this).serialize(),
-                cache: true,
-                dataType: 'json',
-                beforeSend: function () {
-                    //à rajouter un chargement
-                },
-                success: function (data) {
-                    template = data;
-                    console.log(data).
-                    //rechargement du html dans le block table du bénéficiaire
-                    $('#b'+beneficiaire_id).html(template);
-
-                    //ferme le modal
-                    $('#block_formulaire_ajout_nouvelle_'+beneficiaire_id).modal('toggle');
-                }
-            });
-        })
-    });
-    
-    $(".voirPlusNouvelle").click(function(){
-        beneficiaire_id = $(this).attr('id')
+    $("#form_add_news").on("submit",function(e){
+        //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
+        e.preventDefault();
 
         $.ajax({
-            type: 'get',
-            url: Routing.generate("application_show_all_ajax_nouvelle", { idBeneficiaire: beneficiaire_id }),
-            beforeSend: function(){
-                console.log('ça charge')
-            }
-        }).done(function(data) {
-            console.log(data.nouvelles[0]);
-            var html = ""
-            for(i=0; i<data.nouvelles.length; i++)
-            {
-                html += "<p>&bull; "+data.nouvelles[i].from+' le <i>'+data.nouvelles[i].date+'</i> : '+data.nouvelles[i].message+"</p>"
-            }
-            $("#listeNouvelle_"+beneficiaire_id).html(html)
-        });
+            url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
+            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
+            data: $(this).serialize(),
+            cache: true,
+            dataType: 'json',
+            beforeSend: function () {
+                //à rajouter un chargement
+            },
+            success: function (data) {
+                template = data;
 
+                //rechargement du html dans le block table du bénéficiaire
+                $('#b'+beneficiaire_id).html(template);
+
+                //ferme le modal
+                $('#block_formulaire_ajout_new_'+beneficiaire_id).modal('toggle');
+            }
+        });
+    })
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+//--------------------------  HOME : formulaire ajout d'une news ----------------------------------------------------//
+//-----------------------------------------------------------------------------------------------------------------------//
+
+function addNouvelle(el){
+    beneficiaire_id = $(el).attr('id')
+    // Supprime tout les formulaires d'ouvert
+    $(".modal-dialog form").remove();
+    console.log("on y est")
+
+    formDuBeneficiaire = "#block_formulaire_ajout_nouvelle_"+beneficiaire_id
+
+    // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire
+    // (car au début le formulaire n'est pas dans la boucle)
+    $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_nouvelle").html())
+
+    // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
+    $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id)
+
+    $("#form_add_nouvelle").on("submit",function(e){
+        //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
+        e.preventDefault();
+
+        $.ajax({
+            url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
+            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
+            data: $(this).serialize(),
+            cache: true,
+            dataType: 'json',
+            beforeSend: function () {
+                //à rajouter un chargement
+            },
+            success: function (data) {
+                template = data;
+                console.log(data)
+                //rechargement du html dans le block table du bénéficiaire
+                $('#b'+beneficiaire_id).html(template);
+
+                //ferme le modal
+                $('#block_formulaire_ajout_nouvelle_'+beneficiaire_id).modal('toggle');
+            }
+        });
+    })
+}
+
+function voirNouvelle(el){
+    beneficiaire_id = $(el).attr('id')
+
+    $.ajax({
+        type: 'get',
+        url: Routing.generate("application_show_all_ajax_nouvelle", { idBeneficiaire: beneficiaire_id }),
+        beforeSend: function(){
+            console.log('ça charge')
+        }
+    }).done(function(data) {
+        console.log(data.nouvelles[0]);
+        var html = ""
+        for(i=0; i<data.nouvelles.length; i++)
+        {
+            html += "<p>&bull; "+data.nouvelles[i].from+' le <i>'+data.nouvelles[i].date+'</i> : '+data.nouvelles[i].message+"</p>"
+        }
+        $("#listeNouvelle_"+beneficiaire_id).html(html)
     });
-    
+
+}
+
+$(function(){
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Fiche bénéficiaire  -----------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//

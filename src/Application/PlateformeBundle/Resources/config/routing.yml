@@ -11,6 +11,13 @@ application_ajax_search_home:
     options:
         expose: true
 
+application_plateforme_detail_statut:
+    path:     /detail_statut/{idStatut}
+    defaults:
+        _controller: ApplicationPlateformeBundle:Home:detailStatut
+    options:
+        expose: true
+
 application_plateforme_received_mer:
     path:     /received_mer
     defaults: 

@@ -406,13 +406,14 @@ $("document").ready(function (initDynamicContent) {
             cache: true,
             dataType: 'json',
             beforeSend: function () {
-                var resultat = document.getElementById('content');
+                var resultat = document.getElementById('section_home');
                 resultat.innerHTML = "";
                 resultat.innerHTML += '<div class="loading"></div>';
+                $('#pagination').empty();
             },
             success: function (response) {
                 template = response;
-                $('#content').html(template);
+                $('#section_home').html(template);
             }
         });
     });
