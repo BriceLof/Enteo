@@ -73,9 +73,9 @@
                             <div class="col-md-4">
                                 {{ form_label(form.origineMerQui) }}
                                 {{ form_errors(form.origineMerQui) }}
-                                {{ form_widget(form.origineMerQui) }}
+                                {{ form_widget(form.origineMerQui, {'attr' : {"class":"origineMerQui"} }) }}
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="visibility:hidden;">
                                 <span style="visibility:hidden;">{{ form_label(form.origineMerComment) }}</span>
                                 {{ form_errors(form.origineMerComment) }}
                                 {{ form_widget(form.origineMerComment, {'attr' : {"class":"origineMerComment"} }) }}

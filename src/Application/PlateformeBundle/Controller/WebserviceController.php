@@ -83,16 +83,15 @@ class WebserviceController extends Controller
         
         $news->setStatut($detailStatut->getStatut());
         $news->setDetailStatut($detailStatut);
-        $news->setMessage("");
         $em->persist($news);
 		
-		$historique = new Historique();
-		$historique->setSummary("");
-		$historique->setTypeRdv("");
-		$historique->setBeneficiaire($beneficiaire);
-		$historique->setDescription("Ville de MenR : ".$ville->getNom());
-		$historique->setEventId("0");
-		$em->persist($historique);
+        $historique = new Historique();
+        $historique->setSummary("");
+        $historique->setTypeRdv("");
+        $historique->setBeneficiaire($beneficiaire);
+        $historique->setDescription("Ville de MenR : ".$ville->getNom());
+        $historique->setEventId("0");
+        $em->persist($historique);
         /**
         var_dump($mer);
         var_dump($ville);
