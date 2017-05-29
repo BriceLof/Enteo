@@ -436,9 +436,15 @@ class BeneficiaireController extends Controller
 
             $news->setStatut($detailStatut->getStatut());
             $news->setDetailStatut($detailStatut);
-            $news->setMessage("");
-            
             $em->persist($news);
+            
+            $historique = new Historique();
+            $historique->setSummary("");
+            $historique->setTypeRdv("");
+            $historique->setBeneficiaire($beneficiaire);
+            $historique->setDescription(date('d/m/y')." | ".$beneficiaire->getVille()->getNom()." | ".$beneficiaire->getOrigineMer());
+            $historique->setEventId("0");
+            $em->persist($historique);
             
             $em->flush();
             

@@ -142,18 +142,19 @@ class AddBeneficiaireType extends AbstractType
             ->add('origineMerQui', ChoiceType::class, array(
                 'label' => 'Origine bénéficiaire ?',
                 'placeholder' => 'Choisissez',
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'choices' => array(
                     'IF' => 'if',
                     'Entheor.com' => 'entheor_com',
                     'Entreprise' => 'entreprise',
+                    'Recommandation' =>'recommandation'
                 ),
             ))
             ->add('origineMerComment', ChoiceType::class, array(
                 'label' => 'Comment ?',
                 'placeholder' => 'Choisissez',
-                'required' => true,
+                'required' => false,
                 'mapped' => false,
                 'choices' => array(
                     'Naturel' => 'naturel',

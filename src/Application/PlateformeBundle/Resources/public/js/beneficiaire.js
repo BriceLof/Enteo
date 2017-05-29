@@ -97,7 +97,18 @@ $(function () {
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
-
+    $(".origineMerQui").change(function () {
+        $origineMerQui = $(this).children("option:selected").val()
+        if($origineMerQui != ''){
+            $(".origineMerComment").css('visibility', 'initial')
+            $(".origineMerComment").attr('required', 'required')
+        }
+        else{
+            $(".origineMerComment").css('visibility', 'hidden')
+            $(".origineMerComment").removeAttr('required')
+        }
+    });
+    
     $(".origineMerComment").change(function () {
         $origineMerComment = $(this).children("option:selected").val()
         if ($origineMerComment == 'payant') {
@@ -107,7 +118,6 @@ $(function () {
             $(".origineMerDetailComment").css('visibility', 'hidden')
             $(".origineMerDetailComment").removeAttr('required')
         }
-        consolelog($origineMerComment)
     });
 
 });
