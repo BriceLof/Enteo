@@ -244,7 +244,7 @@
                     <td>{{ news.dateHeure|date('d/m/Y à h:m') }}</td>
                     <td>{{ news.statut.nom }}</td>
                     <td>{{ news.detailStatut.detail }}</td>
-                    <td>{{ news.message }}</td>
+                    <td>{# news.message #}</td>
                 </tr>
             {% endfor %}
         </table>

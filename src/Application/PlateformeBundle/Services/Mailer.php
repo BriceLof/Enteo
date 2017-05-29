@@ -6,6 +6,7 @@ use Application\PlateformeBundle\Entity\Beneficiaire;
 use Symfony\Component\Templating\EngineInterface;
 use Doctrine\ORM\EntityManager;
 use Application\PlateformeBundle\Services\Date;
+use Application\PlateformeBundle\Entity\Feedback;
 
 class Mailer
 {
@@ -66,6 +67,35 @@ class Mailer
         $to = "n.ranaivoson@iciformation.fr";
         $body = $this->templating->render($template, array(
             'compteur' => $compteur,
+        ));
+        $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
+    }
+    
+    public function mailFeedback(Feedback $feedback){
+        
+        $subject = "Feedback [".ucfirst($feedback->getType())."]";
+        
+        $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
+        $listeAdministrateurs = array();
+        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+        $to = $listeAdministrateurs;
+        $to = "b.lof@iciformation.fr";
+        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+        $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</b> : <br>
+                <ul>
+                    <li><b>Type : </b>".ucfirst($feedback->getType())."</li>
+                    <li><b>Description : </b>".ucfirst($feedback->getDescription())."</li>
+                    
+                </ul>";
+        if($feedback->getType() == "bug"){
+            $message .= "<li><b>Url : </b>".$feedback->getUrl()."</li><li><b>Détail : </b>".$feedback->getDetail()."</li>
+                    <li><img src='//appli.entheor.com/web/uploads/feedback/img/".$feedback->getImage()."'></li>";
+        }
+        
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => ''
         ));
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
     }

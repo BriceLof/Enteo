@@ -1,0 +1,10 @@
+<form method="POST" id="nouvelleForm" action="{{ path('application_new_nouvelle', { 'id' : beneficiaire.id }) }}" >
+    <div>
+        {{ form_label(form.message) }}
+        {{ form_widget(form.message) }}
+        <div class="submit_nouvelle" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
+            {{ form_widget(form.Enregistrer) }}
+        </div>
+        {{ form_rest(form) }}
+    </div>
+</form>

@@ -301,6 +301,12 @@ class Beneficiaire
      * @ORM\Column(name="ref_financeur", type="string", length=255, nullable=true)
      */
     private $refFinanceur;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="Nouvelle", mappedBy="beneficiaire", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nouvelle;
 	
     /**
      * Constructor
@@ -308,6 +314,7 @@ class Beneficiaire
     public function __construct()
     {
         $this->news = new ArrayCollection();
+        $this->nouvelle = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->updatedAt = new \DateTime('now');
     }
@@ -1503,4 +1510,44 @@ class Beneficiaire
     {
         return $this->refFinanceur;
     }
+
+    /**
+     * Add nouvelle
+     *
+     * @param \Application\PlateformeBundle\Entity\Nouvelle $nouvelle
+     *
+     * @return Beneficiaire
+     */
+    public function addNouvelle(\Application\PlateformeBundle\Entity\Nouvelle $nouvelle)
+    {
+        $this->nouvelle[] = $nouvelle;
+
+        return $this;
+    }
+
+    /**
+     * Remove nouvelle
+     *
+     * @param \Application\PlateformeBundle\Entity\Nouvelle $nouvelle
+     */
+    public function removeNouvelle(\Application\PlateformeBundle\Entity\Nouvelle $nouvelle)
+    {
+        $this->nouvelle->removeElement($nouvelle);
+    }
+
+    /**
+     * Get nouvelle
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getNouvelle()
+    {
+        return $this->nouvelle;
+    }
+    
+    public function getLastNouvelle()
+    {
+      return $this->getNouvelle()[count($this->getNouvelle())-1];     
+    }
+    
 }

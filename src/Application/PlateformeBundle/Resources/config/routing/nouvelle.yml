@@ -1,0 +1,21 @@
+application_new_nouvelle:
+    path:     /new/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Nouvelle:new" }
+
+application_show_all_ajax_nouvelle:
+    path:     /show_all_ajax/{idBeneficiaire}
+    defaults: { _controller: "ApplicationPlateformeBundle:Nouvelle:showAllAjax" }
+    options:
+        expose: true
+        
+application_show_all_nouvelle:
+    path:     /showAll
+    defaults: { _controller: "ApplicationPlateformeBundle:Nouvelle:showAll" }
+
+application_delete_nouvelle:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Nouvelle:delete" }
+
+application_edit_nouvelle:
+    path:     /update/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Nouvelle:update" }
