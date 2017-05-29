@@ -316,7 +316,7 @@ class BeneficiaireController extends Controller
             $nouvelle = new Nouvelle();
             $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
 
-            return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
+            return $this->render('ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig',array(
                 'liste_beneficiaire' => $results,
                 'form' => $form->createView(),
                 'results' => $results,
