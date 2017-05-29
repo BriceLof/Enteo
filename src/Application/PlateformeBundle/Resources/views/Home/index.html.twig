@@ -1,14 +1,14 @@
-{% if results is not defined %}
-    {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
 
-    {% block header %}
-        {% if (liste_beneficiaire | length > 0) or (results is defined) %}
-            <div id="banner">
-                {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
-            </div>
-        {% endif %}
-    {% endblock %}
-{% endif %}
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block header %}
+    {% if (liste_beneficiaire | length > 0) or (results is defined) %}
+        <div id="banner">
+            {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
+        </div>
+    {% endif %}
+{% endblock %}
+
 
 {% block body %}
 
@@ -118,7 +118,6 @@
                                         }}
                                         {% if(beneficiaire.nouvelle | length > 1) %}<button data-toggle="modal" class="voirPlusNouvelle" id="{{beneficiaire.id}}" data-target="#voirPlusNouvelle_{{beneficiaire.id}}">Voir +</button>{% endif %}
                                     {% endif %}
-<<<<<<< HEAD
                                     <td colspan=2>
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                                         {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : ''}}
@@ -136,12 +135,6 @@
                                     <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
                                     <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                                 </tr>
-=======
-                                </td>
-                                <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
-                                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                            </tr>
->>>>>>> 73f154572c9700f7ee32afc39496617b8c395137
                             </tbody>
                         </table>
                     </div>
@@ -207,14 +200,10 @@
                         {{ form_widget(form_news.statut, {'attr' : {'class': 'statut'}}) }}
                         {{ form_label(form_news.detailStatut, '' ,{'label_attr' : {'class': 'labelDetailStatut'}}) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                         {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
-<<<<<<< HEAD
-                    </div>
-                    <div class="modal-footer">
-=======
+
                         <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
                             {{ form_widget(form_news.Enregistrer) }}
                         </div>
->>>>>>> 73f154572c9700f7ee32afc39496617b8c395137
                         {{ form_rest(form_news) }}
                     </div>
                 </form>
