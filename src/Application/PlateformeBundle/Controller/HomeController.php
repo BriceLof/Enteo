@@ -25,6 +25,8 @@ class HomeController extends Controller
 
         //Mis à jour du statut : verifie si la requete est une requete AJAX
         if ($request->isXmlHttpRequest()) {
+            var_dump('aaaaa');die;
+
 
             $news = new News;
             $form = $this->get("form.factory")->create(NewsType::class, $news);
@@ -175,7 +177,7 @@ class HomeController extends Controller
             
             $nouvelle = new Nouvelle;
             $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
-            
+
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
                 'liste_beneficiaire' => $beneficiaires,
                 'nbPages' => $nbPages,
@@ -204,6 +206,19 @@ class HomeController extends Controller
 
     public function infoBeneficiaireAction(Beneficiaire $beneficiaire){
         return $this->render('ApplicationPlateformeBundle:Home:infoBeneficiaire.html.twig', (array('beneficiaire' => $beneficiaire)));
+    }
+
+    /**
+     * recherche ajax du bénéficiaire
+     *
+     *
+     */
+    public function ajaxSearchBeneficiaireAction(Request $request){
+        $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:search', (array('request' => $request)))->getContent();
+        $json = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }
 
