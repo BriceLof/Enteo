@@ -67,9 +67,8 @@
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
                             {% elseif is_granted('ROLE_CONSULTANT') %}
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
-                                <li><a href="{{ path('application_show_bureau') }}" target="_blank">Agenda Bureau</a></li>
                             {% endif %}
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
                                 <li><a href="{{ path('application_show_bureau') }}" target="_blank">Agenda Bureau</a></li>
                             {% endif %}
                         </ul>

@@ -222,6 +222,7 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'maxlength' => 2,
+//                    'placeholder' => 'XX',
                     'class' => 'fiche'
                 )
             ))
