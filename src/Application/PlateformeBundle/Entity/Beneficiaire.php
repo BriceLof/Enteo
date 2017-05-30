@@ -289,6 +289,11 @@ class Beneficiaire
 	* @ORM\Column(name="region_travail", type="string", length=255, nullable=true)
 	*/
     private $regionTravail;
+
+    /**
+     * @ORM\Column(name="dpt_travail", type="string", length=255, nullable=true)
+     */
+    private $dptTravail;
 	
 	/**
 	* @ORM\Column(name="diplome_obtenu", type="string", length=255, nullable=true)
@@ -1550,4 +1555,28 @@ class Beneficiaire
       return $this->getNouvelle()[count($this->getNouvelle())-1];     
     }
     
+
+    /**
+     * Set dptTravail
+     *
+     * @param string $dptTravail
+     *
+     * @return Beneficiaire
+     */
+    public function setDptTravail($dptTravail)
+    {
+        $this->dptTravail = $dptTravail;
+
+        return $this;
+    }
+
+    /**
+     * Get dptTravail
+     *
+     * @return string
+     */
+    public function getDptTravail()
+    {
+        return $this->dptTravail;
+    }
 }

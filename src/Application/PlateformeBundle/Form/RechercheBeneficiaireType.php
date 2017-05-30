@@ -57,6 +57,11 @@ class RechercheBeneficiaireType extends AbstractType
                 'label' => 'Ville de MenR',
                 'required' => false,
             ))
+
+            ->add('refFinanceur', TextType::class, array(
+                'label' => 'Réf. Financeur',
+                'required' => false,
+            ))
            
             /*->add('dateDebut', DateType::class, array(
                 'label' => 'Date de Debut',

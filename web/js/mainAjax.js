@@ -361,6 +361,12 @@ $("document").ready(function (initDynamicContent) {
                 },
                 "beneficiaire[dateNaissance]": {
                     "required": false
+                },
+                "beneficiaire[dptTravail]": {
+                    "required": function () {
+                        return ($('#beneficiaire_regionTravail').val() != "" );
+                    },
+                    "texte": /^[0-9]{2}$/
                 }
             },
             errorElement: 'div'

@@ -216,6 +216,16 @@ class BeneficiaireType extends AbstractType
                     'class' => 'fiche'
                 )
             ))
+
+            ->add('dptTravail', TextType::class, array(
+                'label' => 'Département du travail',
+                'required' => false,
+                'attr' => array(
+                    'maxlength' => 2,
+//                    'placeholder' => 'XX',
+                    'class' => 'fiche'
+                )
+            ))
 			
             ->add('numSecu', TextType::class, array(
                 'label' => 'N° de Sécu ',
