@@ -4,9 +4,10 @@ namespace Application\PlateformeBundle\Services\Statut\Mail;
 class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 {
     // Envoi un mail au beneficiaire après l'ajout/modification/suppression d'un rdv dans l'agenda par le consultant
-    public function alerteRdvAgenda($beneficiaire, $rdv)
+    // alerteRdvAgenda(), le 3e param sert à savoir si c'est un mail après une modification de rdv 
+    public function alerteRdvAgenda($beneficiaire, $rdv, $old_rdv = null )
     {   
-		$consultant = $beneficiaire->getConsultant();
+	$consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
 		
@@ -27,6 +28,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             else
                 $ref = "1-d";
             
+            if(!is_null($old_rdv)) $ref = "1-e";
+                
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
         }
         else{
@@ -34,6 +37,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
                 $ref = "1-b";
             else
                 $ref = "1-c";
+            
+            if(!is_null($old_rdv)) $ref = "1-f";
             
             $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom());
         }
@@ -67,9 +72,15 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
                 $sentenceByRv =  "pour ".$rv;
         }
         
-        if($typeRdv == "presenciel" || $typeRdv == "presentiel"){           
-            $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> ".$sentenceByRv.". 
+        $message="";
+        if($typeRdv == "presenciel" || $typeRdv == "presentiel"){ 
+            $message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
+            if(!is_null($old_rdv))
+                $message .= "Votre rendez-vous initilament prévu le ".$old_rdv->format('d/m/Y à H:i')." a été reporté au ";
+            else
+                $message .= "Je vous confirme votre rendez-vous le ";
+            
+            $message .= "<b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> ".$sentenceByRv.". 
 				<table style='margin-top:-50px;'>
 					<tr>
 						<td><u>Votre consultant : </u></td>

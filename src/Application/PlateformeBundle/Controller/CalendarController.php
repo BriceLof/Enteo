@@ -458,7 +458,9 @@ class CalendarController extends Controller
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
         $historique->setUser($this->getUser());
-
+        
+        $old_rdv = $historique->getDateDebut();
+        
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
@@ -538,7 +540,8 @@ class CalendarController extends Controller
 
             $em->persist($historique);
             $em->flush();
-
+          
+            $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique, $old_rdv);
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
 
             //returne à n'importe lequel url eventuellement au show agenda??
