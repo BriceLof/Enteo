@@ -102,5 +102,51 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
         }   
     }
+
+	public function recapConsultantSansDispo()
+    {
+    	$date = date("Y-m-d");
+        $disponibilites = $this->em->getRepository("ApplicationPlateformeBundle:Disponibilites")->findDispoFromDate($date);
+		
+		$arrayConsultant = array();
+		// Récupération des ids des consultant qui ont mis des dispo 
+        foreach($disponibilites as $disponibilite)
+        {
+            $consultant = $disponibilite->getConsultant();
+            // Si on a deja des lignes pour ce consultant
+            if(!in_array($consultant->getId(), $arrayConsultant))
+                $arrayConsultant[] = (int) $consultant->getId();  
+        }
+		$consultantSansDispo = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeAndExclude($arrayConsultant, "ROLE_CONSULTANT");
+		
+		$subject = "Aucune disponibilté enregistrée";
+        $from = $this->from;
+        $ref = "5-b";
+		
+		foreach($consultantSansDispo as $consultantSsDispo){
+			
+			$message = ucfirst($consultantSsDispo->getPrenom()).", <br><br>
+			
+						Vous n'avez actuellement aucune disponibilité enregistrée dans votre Agenda sur la plateforme ENTHEO.<br><br>
+						Ces disponibilités facilitent la prise de rendez-vous avec les Bénéficiaires de votre région.<br><br>
+						Pour enregistrer, un créneau des disponibilités :<br>
+						1) Rendez-vous sur la plateforme ENTHEO";
+		}
+        $to = $listeCommerciaux ;
+
+        $cc = $listeAdministrateurs;
+        //$cc = "";
+        $bcc = array(
+			"support@iciformation.fr" => "Support",
+		);
+		$template = "@Apb/Alert/Mail/mailDefault.html.twig";
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => $ref
+        ));
+
+        $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
+	}
 }
 ?>
