@@ -79,7 +79,6 @@ class Mailer
         $listeAdministrateurs = array();
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         $to = $listeAdministrateurs;
-        $to = "b.lof@iciformation.fr";
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b><a href='https://appli.entheor.com/web/user/".$feedback->getUser()->getId()."/show'>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</a></b> : <br>
                 <ul>
@@ -96,7 +95,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
             'message' => $message,
-            'reference' => ''
+            'reference' => '400'
         ));
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
     }
