@@ -38,7 +38,17 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($query); 
     }
-    
+
+    /**
+     * retourne les bénéficiaires correspondant aux conditions qui sont mis en parametre
+     *
+     * @param Beneficiaire $beneficiaire
+     * @param $debut
+     * @param $fin
+     * @param null $idUtilisateur
+     * @param bool $bool
+     * @return \Doctrine\ORM\NativeQuery
+     */
     public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
@@ -86,6 +96,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if(!is_null($fin)){
             $query .= ' AND b.date_conf_mer <= :dateFin';
             $params['dateFin'] = $fin;
+        }
+
+        if(!is_null($beneficiaire->getRefFinanceur())){
+            $query .= ' AND b.ref_financeur LIKE :refFinanceur';
+            $params['refFinanceur'] = '%'.$beneficiaire->getRefFinanceur().'%';
         }
 
         //$query .= " INNER JOIN ville v ON v.id = b.id WHERE v.cp LIKE '75%'";

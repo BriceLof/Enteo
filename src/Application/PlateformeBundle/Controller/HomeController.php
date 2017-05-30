@@ -207,9 +207,12 @@ class HomeController extends Controller
     }
 
     /**
-     * recherche ajax du bénéficiaire
+     * recherche ajax du bénéficiaire dans la home qui fait appel a l'action search dans BeneficiaireController.php
+     * et renvoie un reponse json pour l'ajax
      *
+     * @param  Request $request
      *
+     * @return Response (json)
      */
     public function ajaxSearchBeneficiaireAction(Request $request){
         $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:search', (array('request' => $request)))->getContent();

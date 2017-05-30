@@ -260,8 +260,10 @@ class BeneficiaireController extends Controller
 
     /**
      * Search form for Beneficiaire entity
+     * le formulaire de recherche dans la page home et la reponse est utilisé en Ajax par l'action AjaxSearchBeneficiaire
+     * dans HomeController.php
      *
-     * @param
+     * @param $request
      *
      * @return \Symfony\Component\Form\Form The form
      */
@@ -334,6 +336,9 @@ class BeneficiaireController extends Controller
     }
 
     /**
+     * Fonction qui permet de rechercher un bénéficiaire par son nom et le retourne en Ajax
+     * notamment utilisé pour le formulaire d'ajout dans le calendrier globale d'un consultant
+     *
      * Ajax form for Beneficiaire entity
      *
      */
@@ -366,38 +371,6 @@ class BeneficiaireController extends Controller
         $resultats = new JsonResponse(json_encode($results));
 
         return $resultats;
-    }
-
-    /**
-     * Search form for Beneficiaire entity
-     */
-    public function search2Action(Request $request)
-    {
-        $beneficiaire = new Beneficiaire();
-        $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
-
-        $form->add('submit', SubmitType::class, array('label' => 'Rechercher'));
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()){
-
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
-            $results = $query->getResult();
-
-            $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:resultatRecherche.html.twig',array(
-                'results' => $results,
-            ))->getContent();
-
-            $response = new Response($template);
-            $response->headers->set('Content-Type', 'text/html');
-
-            return $response;
-        }
-
-        return $this->render('ApplicationPlateformeBundle:Beneficiaire:recherche.html.twig',array(
-            'form' => $form->createView(),
-        ));
     }
     
     // Ajouter un bénéficiare manuellement (à l'opposé du webservice) 
