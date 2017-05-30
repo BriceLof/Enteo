@@ -210,6 +210,7 @@ class BeneficiaireType extends AbstractType
                     'OCCITANIE' => 'Occitanie',
                     'PAYS DE LA LOIRE' => 'Pays de la Loire',
 					'PROVENCE-ALPES-CÔTE D\'AZUR' => 'Provence-Alpes-Côte d\'Azur',
+                    'RÉGION DOM TOM' => 'Région Dom-Tom'
                 ),
                 'attr' => array(
                     'placeholder' => '',
