@@ -222,6 +222,9 @@
 #beneficiaire_numSecuCle{
     width: 50px;
 }
+#beneficiaire_dptTravail{
+    width: 50px;
+}
 
 .titreSection{
     margin-bottom: 10px;
