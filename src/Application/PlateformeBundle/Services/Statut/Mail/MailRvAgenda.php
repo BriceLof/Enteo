@@ -22,7 +22,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 
         if($typeRdv == "presenciel" || $typeRdv == "presentiel")
         {
-            if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2")
+            if($rdv->getSummary() == "RV1")
                 $ref = "1-a";
             else
                 $ref = "1-d";
@@ -30,7 +30,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
         }
         else{
-            if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2")
+            if($rdv->getSummary() == "RV1")
                 $ref = "1-b";
             else
                 $ref = "1-c";
@@ -47,10 +47,29 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
         }			
 	
-		
+        $rv = $rdv->getSummary();
+        switch($rv)
+        {
+            case 'RV2': 
+                $sentenceByRv =  "pour un rendez-vous de pré-positionnement";
+            break;
+            case 'RV Livret1': 
+                $sentenceByRv =  "pour travailler sur votre Livret 1";
+            break;
+            case 'RV Livret2': 
+                $sentenceByRv =  "pour travailler sur votre Livret 2";
+            break;
+            case 'RV Preparation jury': 
+                $sentenceByRv =  "pour préparer votre passage devant le Jury VAE";
+            break;
+        
+            default:
+                $sentenceByRv =  "pour ".$rv;
+        }
+        
         if($typeRdv == "presenciel" || $typeRdv == "presentiel"){           
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
+                . "Je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> ".$sentenceByRv.". 
 				<table style='margin-top:-50px;'>
 					<tr>
 						<td><u>Votre consultant : </u></td>
@@ -76,7 +95,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             }
         }else{ 
             $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
+                . "Je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())." ".$sentenceByRv.".<br><br><b>".
                 ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précise</u></b>
                     au numéro suivant : <b>".$consultant->getTel1()."</b>";
             if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){   
@@ -101,15 +120,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $message.=  "
            <br><br><div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au moins 24 heures avant votre rendez-vous.</b></div>
 			<br><br>
-
-            Au plaisir de vous accompagner dans votre projet.<br><br>
-            Bien Cordialement. <br><br>
-            
-            --<br>
-            Audrey AZOULAY<br>
-            ENTHEOR<br>
-            <a href='mailto:audrey.azoulay@entheor.com'>audrey.azoulay@entheor.com</a><br>
-            06.89.33.87.83";
+            Bien Cordialement. <br>";
 
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         

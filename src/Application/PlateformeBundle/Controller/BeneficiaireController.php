@@ -8,6 +8,7 @@ use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
+use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Form\ConsultantType;
 use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\NewsType;
