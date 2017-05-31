@@ -274,7 +274,12 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $from = "audrey.azoulay@entheor.com";
                 $to =  $rdv->getBeneficiaire()->getEmailConso();
                 $cc = "";
-                $bcc = "support@iciformation.fr";
+                $bcc = array(
+                    "support@iciformation.fr" => "Support",
+                    "f.azoulay@entheor.com" => "Franck Azoulay", 
+                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+                    "christine.clement@entheor.com" => "Christine Clement",
+                    "audrey.azoulay@entheor.com" => "Audrey Azoulay");
                 
                 if($typeRdv == "presenciel" || $typeRdv == "presentiel")
                     $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
@@ -319,7 +324,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso())." ".ucfirst($rdv->getBeneficiaire()->getNomConso()).", <br><br>"
                         . "Nous vous rappelons que vous avez un rendez-vous téléphonique demain avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
                         ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises</u></b>
-                            au numéro suivant : <b>06 91 85 84 28</b><br><br>
+                            au numéro suivant : <b>".$consultant->getTel1()."</b><br><br>
                             Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
                 }
 

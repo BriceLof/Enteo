@@ -217,7 +217,7 @@
                                     <td>{{ beneficiaire.villeMer.nom|capitalize }}</td>
                                     <td>{{ beneficiaire.dateHeureMer|date("d/m/Y") }}</td>
                                     <!-- heure de la première news du bénéficiaire, cad l'heure de la confirmation de la mer à qq secondes près -->
-                                    <td>{{ beneficiaire.news[0].dateHeure|date("H:i") }}</td>
+                                    <td>{{ (beneficiaire.news[0] is defined) ? beneficiaire.news[0].dateHeure|date("H:i") : '' }}</td>
                                     <td><b>{{ beneficiaire.telConso }}</b></td>
                                     <td>{{ beneficiaire.emailConso }}</td>
                                     <td>{{ beneficiaire.domaineVae|capitalize }}</td>
