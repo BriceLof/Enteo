@@ -102,7 +102,10 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
         {
             $queryBuilder = $this->createQueryBuilder("h")
                     ->where("h.dateDebut LIKE :date")
-                    ->setParameter("date", $date.'%');
+                    ->setParameter("date", $date.'%')
+					->andWhere("h.eventarchive != :archive")
+					->setParameter("archive", 'on')
+					;
 
             $query = $queryBuilder->getQuery();
             $results = $query->getResult();
@@ -114,9 +117,11 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             $queryBuilder = $this->createQueryBuilder("h")
                     ->where("h.dateDebut LIKE :date")
                     ->andWhere("h.consultant = :consultant")
+					->andWhere("h.eventarchive != :archive")
                     ->setParameters(array(
                        "date" =>  $date.'%',
-                       "consultant" => $consultant 
+                       "consultant" => $consultant,
+                       "archive" => 'on' 
                     ))
 					->orderBy("h.heuredebut", "ASC");
 
