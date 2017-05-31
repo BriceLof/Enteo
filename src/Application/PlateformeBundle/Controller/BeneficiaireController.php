@@ -287,9 +287,6 @@ class BeneficiaireController extends Controller
             $triAlpha = (int)$form['triAlpha']->getData();
             $triDate = (int)$form['triDate']->getData();
 
-//            var_dump('c alpha: '.$triAlpha);
-//            var_dump('c date: '.$triDate);
-
             if (!is_null($form["villeMer"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
@@ -316,6 +313,9 @@ class BeneficiaireController extends Controller
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $triAlpha, $triDate);
             $results = $query->getResult();
 
+            $beneficiaires = array_slice($results,0,50);
+            $nbBeneficiaire = count($results);
+
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();
@@ -325,14 +325,14 @@ class BeneficiaireController extends Controller
             $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
 
             return $this->render('ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig',array(
-                'liste_beneficiaire' => $results,
+                'liste_beneficiaire' => $beneficiaires,
                 'form' => $form->createView(),
-                'results' => $results,
+                'results' => 'oui',
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
                 'form_news'             => $formNews->createView(),
                 'form_nouvelle'             => $form_nouvelle->createView(),
-                'nombreBeneficiaire'    => count($results)
+                'nombreBeneficiaire'    => $nbBeneficiaire
             ));
         }
 

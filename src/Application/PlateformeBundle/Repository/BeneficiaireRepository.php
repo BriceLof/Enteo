@@ -137,8 +137,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         if ($bool == true){
             $query .= ' LIMIT 10';
-        }else{
-            $query .= ' LIMIT 50';
         }
 
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
