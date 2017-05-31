@@ -118,7 +118,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
                 $arrayConsultant[] = (int) $consultant->getId();  
         }
 		$consultantSansDispo = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeAndExclude($arrayConsultant, "ROLE_CONSULTANT");
-		var_dump(count($consultantSansDispo));exit;
+
 		$subject = "Aucune disponibilté enregistrée";
         $from = $this->from;
         $ref = "5-b";
@@ -129,10 +129,24 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
 			
 						Vous n'avez actuellement aucune disponibilité enregistrée dans votre Agenda sur la plateforme ENTHEO.<br><br>
 						Ces disponibilités facilitent la prise de rendez-vous avec les Bénéficiaires de votre région.<br><br>
-						Pour enregistrer, un créneau des disponibilités :<br>
-						1) Rendez-vous sur la plateforme ENTHEO, à la rubrique <b>'Agenda'</b><br>
-						2) En haut à droite, cliquez sur le bouton :<br> 
-						3) Renseignez le lieu et votre créneau de disponibilités :<br> ";
+						Pour enregistrer, un créneau des disponibilités :
+						<div style='margin-left:15px;'>
+							1) Rendez-vous sur la plateforme ENTHEO, à la rubrique <b>'Agenda'</b><br>
+							2) En haut à droite, cliquez sur le bouton :<br>
+							<button style='
+								color:white;background-color:#428bca;    
+							    padding: 6px 12px;
+							    font-size: 14px;
+							    font-weight: 400;
+							    text-align: center;
+							    user-select: none;
+							    border: 1px solid transparent;
+							    border-radius: 4px;'>
+							    	Vos disponibilités
+							</button><br><br>
+							3) Renseignez le lieu et votre créneau de disponibilités :<br>
+							<img src='https://appli.entheor.com/web/images/mail/img_mail_tuto_dispo.JPG' /> 
+						</div>";
 						
 			$cc = "f.azoulay@entheor.com";
 	        $bcc = array("support@iciformation.fr" => "Support");
@@ -144,6 +158,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
 	        ));
 	
 	        $this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
+	
 		}
 
         
