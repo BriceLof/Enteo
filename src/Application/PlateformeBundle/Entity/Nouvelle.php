@@ -32,7 +32,14 @@ class Nouvelle
      * @ORM\JoinColumn(nullable=false)
      */
     private $beneficiaire;
-
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=255)
+     */
+    private $titre;
+	
     /**
      * @var string
      *
@@ -158,4 +165,28 @@ class Nouvelle
     }
     
    
+
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     *
+     * @return Nouvelle
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
 }

@@ -79,7 +79,9 @@ class NouvelleController extends Controller
         {
             $arrayNouvelle[] = array("from" => substr($nouvelle->getUtilisateur()->getPrenom(),0,1).'. '.$nouvelle->getUtilisateur()->getNom(),
                                      "date" => $nouvelle->getDate()->format('d/m/Y').' à '.$nouvelle->getDate()->format('H:i'),
-                                     "message" => $nouvelle->getMessage() );
+                                     "titre" => ucfirst($nouvelle->getTitre()),
+                                     "message" => ucfirst($nouvelle->getMessage())
+									 );
         }
         return  new JsonResponse(array('nouvelles' => array_reverse($arrayNouvelle) ));
     }
