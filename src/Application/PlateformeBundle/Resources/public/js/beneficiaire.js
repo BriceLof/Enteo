@@ -358,9 +358,9 @@ function ajaxListDepartement(region, element){
         success: function (data) {
             $.each(JSON.parse(data), function (i, item) {
                 if ($(element).attr('value') == item) {
-                    element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
+                    element.append("<option value=\"" + item.code + "\" selected = \"selected\">"+item.codeShow+ ' ' + item.dpt + "</option>");
                 } else {
-                    element.append("<option value=\"" + item + "\">" + item + "</option>");
+                    element.append("<option value=\"" + item.code + "\">"+item.codeShow+ ' ' + item.dpt + "</option>");
                 }
             });
             console.log('fini');
