@@ -9,3 +9,9 @@ application_get_ville:
     defaults: { _controller: "ApplicationPlateformeBundle:Ville:ajaxGetVille" }
     options:
         expose: true
+
+application_get_dpt_by_region_ville:
+    path:     /getDptByRegion/{region}
+    defaults: { _controller: "ApplicationPlateformeBundle:Ville:getDptByRegion" }
+    options:
+        expose: true
