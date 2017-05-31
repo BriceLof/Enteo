@@ -92,7 +92,7 @@
                     {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
                         <td colspan=2 title="Ajouter une news" class="btn_formulaire_add_news"
                             id="{{ beneficiaire.id }}" data-toggle="modal"
-                            data-target="#block_formulaire_ajout_new_{{ beneficiaire.id }}"><span
+                            data-target="#block_formulaire_ajout_new_{{ beneficiaire.id }}" onclick="addNews(this);"><span
                                     style="color:red"><b>{% if beneficiaire.nbAppelTel == null %}0{% endif %} {{ beneficiaire.nbAppelTel }}</b></span>
                             appel{% if beneficiaire.nbAppelTel > 1 %}s{% endif %}</td>
                     {% else %}

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class VilleController extends Controller
 {
     /**
+     * retourne une liste de ville par rapport au cp
      * Ajax form for Ville entity
      *
      */
@@ -41,7 +42,13 @@ class VilleController extends Controller
             throw new \Exception('erreur');
         }
     }
-    
+
+    /**
+     * retourne une liste de ville par rapport au departement
+     *
+     * @param Request $request
+     * @return $this
+     */
     public function getVilleAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -58,6 +65,14 @@ class VilleController extends Controller
 
     }
 
+
+    /**
+     * retourne une liste de ville par rapport a son nom
+     * utilisé par l'autocompletion
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function ajaxGetVilleAction(Request $request)
     {
         $tabVille = [];
@@ -75,6 +90,27 @@ class VilleController extends Controller
 
     }
 
+    /**
+     * retourne une liste de departement par rapport a la region
+     *
+     * @param $region
+     * @return JsonResponse
+     */
+    public function getDptByRegionAction($region){
+        $em = $this->getDoctrine()->getManager();
+        $villes = $em->getRepository("ApplicationPlateformeBundle:Ville")->findBy(array(
+            'region' => $region
+        ));
+        $tab = array();
+        $tab[] = "";
+        foreach ($villes as $ville){
+            if (!in_array($ville->getDpt(), $tab)){
+                $tab[] = $ville->getDpt();
+            }
+        }
 
+        $resultats = new JsonResponse(json_encode($tab));
+        return $resultats;
+    }
 
 }

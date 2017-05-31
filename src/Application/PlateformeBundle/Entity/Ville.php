@@ -71,6 +71,13 @@ class Ville
     private $dpt;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="region", type="string", nullable=true)
+     */
+    private $region;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="longitude", type="float", precision=10, scale=0, nullable=true)
@@ -443,5 +450,29 @@ class Ville
     public function getDisponibilites()
     {
         return $this->disponibilites;
+    }
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return Ville
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return string
+     */
+    public function getRegion()
+    {
+        return $this->region;
     }
 }

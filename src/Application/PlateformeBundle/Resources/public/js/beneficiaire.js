@@ -320,3 +320,51 @@ $(function () {
     }
 });
 
+//concernant le departement du travail
+(function () {
+
+    //modification du champ departement du travail en select car c'est un input a la base
+    //le select n'est pas pris en compte par symfony
+    //peut etre qu'il y a un moyen mais pour l'instant je sais pas
+    $('#beneficiaire_dptTravail').each(function () {
+        var newElement = $('<select>');
+        $.each(this.attributes, function (i, attrib) {
+            $(newElement).attr(attrib.name, attrib.value);
+        });
+        $(this).replaceWith(newElement);
+    });
+
+    //modification du select en premier lieu au cas ou
+    ajaxListDepartement($('#beneficiaire_regionTravail').val(), $('#beneficiaire_dptTravail'));
+
+    //quand on change la region
+    //on regenere une nouvelle liste de departement
+    $('#beneficiaire_regionTravail').on('change',function () {
+        ajaxListDepartement($(this).val(), $('#beneficiaire_dptTravail'));
+    })
+})();
+
+//l'ajax qui genere le departement en fonction de la région
+function ajaxListDepartement(region, element){
+    $.ajax({
+        url: Routing.generate('application_get_dpt_by_region_ville', {'region': region}), // le nom du fichier indiqué dans le formulaire
+        cache: true,
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+            element.empty();
+            console.log('ça charge');
+        },
+        success: function (data) {
+            $.each(JSON.parse(data), function (i, item) {
+                if ($(element).attr('value') == item) {
+                    element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
+                } else {
+                    element.append("<option value=\"" + item + "\">" + item + "</option>");
+                }
+            });
+            console.log('fini');
+        }
+    });
+}
+

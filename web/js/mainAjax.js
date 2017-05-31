@@ -365,8 +365,7 @@ $("document").ready(function (initDynamicContent) {
                 "beneficiaire[dptTravail]": {
                     "required": function () {
                         return ($('#beneficiaire_regionTravail').val() != "" );
-                    },
-                    "texte": /^[0-9]{2}$/
+                    }
                 }
             },
             errorElement: 'div'

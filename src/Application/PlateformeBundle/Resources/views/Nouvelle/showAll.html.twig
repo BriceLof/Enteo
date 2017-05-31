@@ -3,7 +3,7 @@
     {% for nouvelle in beneficiaire.nouvelle|reverse|slice(0,5) %}
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="heading_nouvelle_{{ loop.index }}">
-                <h4 class="panel-title">
+                <h4 class="panel-title" style="font-size:12px">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_nouvelle_{{ loop.index }}" aria-expanded="false" aria-controls="collapse_nouvelle_{{ loop.index }}">
                         {{ nouvelle.utilisateur.prenom |slice(0,1)| capitalize ~'. '~nouvelle.utilisateur.nom | capitalize ~', le '~nouvelle.date | date("d/m/Y à H:i")~' : '~ nouvelle.message }} 
                     </a>

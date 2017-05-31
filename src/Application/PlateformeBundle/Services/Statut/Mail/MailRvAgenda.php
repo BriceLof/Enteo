@@ -101,12 +101,15 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 						</td>
 					</tr>
 				</table>";
-	    if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){ 		
+	    	if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){ 		
                 $message .= "<br><br>Merci de vous munir <u>impérativement</u> de :<br>";
             }
-        }else{ 
-            $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())." ".$sentenceByRv.".<br><br><b>".
+        }else{
+        	$message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
+            if(!is_null($old_rdv))
+                $message .= "Votre rendez-vous initilament prévu le ".$old_rdv->format('d/m/Y à H:i')." a été modifié.<br><br>";
+                 
+            $message .= "Je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())." ".$sentenceByRv.".<br><br><b>".
                 ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précise</u></b>
                     au numéro suivant : <b>".$consultant->getTel1()."</b>";
             if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){   
