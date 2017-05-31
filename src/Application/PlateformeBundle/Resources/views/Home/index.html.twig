@@ -7,6 +7,25 @@
             <div id="banner">
                 {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
             </div>
+            <div id="tri">
+                <p>Trier par : </p>
+                <div>
+                    <label for="select_tri_alpha">Nom</label>
+                    <select onchange="tri(this)" name="select_tri_alpha" id="select_tri_alpha">
+                        <option value="0"></option>
+                        <option value="1">A->Z</option>
+                        <option value="2">Z->A</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="select_tri_date" id="label_select_tri_date">Date</label>
+                    <select onchange="tri(this)" name="select_tri_date" id="select_tri_date">
+                        <option value="0"></option>
+                        <option value="1">ASC.</option>
+                        <option value="2">DESC.</option>
+                    </select>
+                </div>
+            </div>
         {% endif %}
     {% endblock %}
 {% endif %}

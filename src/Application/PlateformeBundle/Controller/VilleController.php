@@ -102,13 +102,25 @@ class VilleController extends Controller
             'region' => $region
         ));
         $tab = array();
-        $tab[] = "";
+        $tab[] = array(
+            'dpt' => '',
+            'code' =>'',
+            'codeShow' => ''
+        );
         foreach ($villes as $ville){
-            if (!in_array($ville->getDpt(), $tab)){
-                $tab[] = $ville->getDpt();
+            if (preg_match('/^97/', $ville->getCp()) || preg_match('/^98/', $ville->getCp())){
+                $code = substr($ville->getCp(), 0, 3);
+            }else{
+                $code = substr($ville->getCp(), 0, 2);
+            }
+            if (!array_key_exists($code, $tab)){
+                $tab[$code] = array(
+                    'dpt' => $ville->getDpt(),
+                    'code' => $code,
+                    'codeShow' => '('.$code.')',
+                );
             }
         }
-
         $resultats = new JsonResponse(json_encode($tab));
         return $resultats;
     }

@@ -296,3 +296,21 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
         }
     });
 }
+
+/**
+ * trier par ordre alphabetique ou recence
+ * cette fonction attribue la valeur 0, 1 ou 2 à l'input hidder tri alpha du formulaire de recherche
+ *
+ *
+ */
+function tri(el) {
+    id = $(el).attr('id');
+    value = $(el).val();
+    if ( id == 'select_tri_alpha'){
+        $('#recherche_beneficiaire_triAlpha').val(value);
+    }
+    if ( id == 'select_tri_date'){
+        $('#recherche_beneficiaire_triDate').val(value);
+    }
+    $('#ajaxForm').submit();
+}

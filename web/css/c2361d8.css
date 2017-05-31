@@ -1,1 +1,107 @@
-.table > thead > tr > th,.table > tbody > tr > th,.table > tfoot > tr > th,.table > thead > tr > td,.table > tbody > tr > td,.table > tfoot > tr > td{padding:5px !important}.form-signin{max-width:330px;padding:15px;margin:0 auto}.nav-connexion li{color:white}.nav-connexion li a{color:white;display:inline-block}.section-tab-home-benef,.section-tab-home-benef .btn{font-size:12px !important}.section-tab-home-benef .btn{padding:5px !important;border-radius:3px;border:none}.tab-home-benef{margin-bottom:-34px}.tab-benef{margin-top:3px}.tab-benef a{color:#333;text-decoration:none}.tab-home-benef th{background-color:#e5e5e5 !important;font-weight:normal}.tab-home-benef td b{font-size:13px}.btn_formulaire_add_news{cursor:pointer}.block_formulaire_ajout_new .my_header_modal{background-color:#e7e7e7}.block_formulaire_ajout_new .my_header_modal h4{text-align:center;font-weight:bold;margin-bottom:15px;font-size:17px}.block_formulaire_ajout_new .my_header_modal p{font-size:18px;padding-top:13px;border-top:1px solid #dbdbdb}.block_formulaire_ajout_new #nom_prenom_beneficiaire{font-size:19px;color:#d9534f}.block_info_chargement,label{display:inline-block}.img_loading,.message_chargement{display:inline-block}.img_loading{width:19px;margin-left:10px}.typeUtilisateur ul .active a{color:white}
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 nov. 2016, 18:09:13
+    Author     : brice_000
+*/
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    padding: 5px !important;
+}
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+/*---------------------------- Header Menu -----------------------------*/
+.nav-connexion li {
+    color:white;
+}
+.nav-connexion li a{
+    color:white;
+    display: inline-block;
+}
+
+/*---------------------------- END Header Menu -----------------------------*/
+
+/*---------------------------- HOME partie tableaux informations bénéficiaires ----------------------------------------*/
+.section-tab-home-benef, .section-tab-home-benef .btn{
+    font-size:12px !important;
+}
+.section-tab-home-benef .btn{
+    padding: 5px !important;
+    border-radius: 3px;
+    border:none;
+}
+.tab-home-benef{
+    margin-bottom:-34px;
+}
+.tab-benef{
+    margin-top:3px;
+}
+.tab-benef a{
+    color:#333;
+    text-decoration:none;
+}
+.tab-home-benef th{
+    background-color:#e5e5e5 !important;
+    font-weight:normal;
+}
+.tab-home-benef td b{
+    font-size:13px;
+}
+
+.btn_formulaire_add_news{
+    cursor:pointer;
+}
+
+
+/*---------------------------- END HOME partie tableaux informations bénéficiaires ------------------------------------*/
+
+/*---------------------------- Formulaire ajout news bénéficiaire -----------------------------*/
+.block_formulaire_ajout_new .my_header_modal{
+  background-color: #e7e7e7;  
+}
+.block_formulaire_ajout_new .my_header_modal h4{
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 17px;
+}
+
+.block_formulaire_ajout_new .my_header_modal p{
+    font-size: 18px;
+    padding-top: 13px;
+    border-top: 1px solid #dbdbdb;
+}
+
+.block_formulaire_ajout_new #nom_prenom_beneficiaire{
+    font-size:19px;
+    color:#d9534f;
+}
+/*
+label{
+    margin-top:10px;
+}
+*/
+.block_info_chargement, label{
+  display:inline-block;  
+}
+.img_loading,.message_chargement {
+    display:inline-block;
+}
+.img_loading{
+    width:19px;
+    margin-left:10px
+}
+
+
+/*---------------------------- Page Utilisateur -----------------------------*/
+.typeUtilisateur ul .active a{
+    color:white;
+}
+
+/*---------------------------- Page Utilisateur -----------------------------*/

@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Form;
 use Application\PlateformeBundle\Entity\Ville;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,6 +62,16 @@ class RechercheBeneficiaireType extends AbstractType
             ->add('refFinanceur', TextType::class, array(
                 'label' => 'Réf. Financeur',
                 'required' => false,
+            ))
+
+            ->add('triAlpha', HiddenType::class, array(
+                'mapped' => false,
+                'data' => 0
+            ))
+
+            ->add('triDate', HiddenType::class, array(
+                'mapped' => false,
+                'data' => 0
             ))
            
             /*->add('dateDebut', DateType::class, array(
