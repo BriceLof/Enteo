@@ -284,6 +284,12 @@ class BeneficiaireController extends Controller
 
         if ($form->isValid()){
 
+            $triAlpha = (int)$form['triAlpha']->getData();
+            $triDate = (int)$form['triDate']->getData();
+
+//            var_dump('c alpha: '.$triAlpha);
+//            var_dump('c date: '.$triDate);
+
             if (!is_null($form["villeMer"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
@@ -307,7 +313,7 @@ class BeneficiaireController extends Controller
                 $dateFin = $form['dateFin']->getData();
             }*/
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $triAlpha, $triDate);
             $results = $query->getResult();
 
             $nbPages = ceil(count($results) / 50);

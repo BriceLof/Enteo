@@ -47,9 +47,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param $fin
      * @param null $idUtilisateur
      * @param bool $bool
+     * @param $triAlpha
+     * @param $triDate
      * @return \Doctrine\ORM\NativeQuery
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $triAlpha = 0, $triDate = 0)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
@@ -103,12 +105,40 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['refFinanceur'] = '%'.$beneficiaire->getRefFinanceur().'%';
         }
 
-        //$query .= " INNER JOIN ville v ON v.id = b.id WHERE v.cp LIKE '75%'";
-
-        $query .= ' ORDER BY b.id DESC';
+        if($triAlpha === 1){
+            $query .= ' ORDER BY b.nom_conso';
+            if ($triDate === 1 ){
+                $query .= ', b.date_heure_mer';
+            }else{
+                if ($triDate === 2){
+                    $query .= ', b.date_heure_mer DESC';
+                }
+            }
+        }else{
+            if($triAlpha === 2){
+                $query .= ' ORDER BY b.nom_conso DESC';
+                if ($triDate === 1 ){
+                    $query .= ', b.date_heure_mer';
+                }else{
+                    if ($triDate === 2){
+                        $query .= ', b.date_heure_mer DESC';
+                    }
+                }
+            }else{
+                if($triDate === 1){
+                    $query .= ' ORDER BY b.date_heure_mer';
+                }else{
+                    if($triDate === 2){
+                        $query .= ' ORDER BY b.date_heure_mer DESC';
+                    }
+                }
+            }
+        }
 
         if ($bool == true){
             $query .= ' LIMIT 10';
+        }else{
+            $query .= ' LIMIT 50';
         }
 
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);

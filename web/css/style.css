@@ -14,7 +14,7 @@
     width: 85%;
     margin: auto;
     margin-top: 20px;
-    margin-bottom: 42px;
+    margin-bottom: 10px;
     text-align: center;
     padding-bottom: 13px;
     border-bottom: 1px solid #e7e7e7;
@@ -722,4 +722,15 @@ textarea {
 }
 #imprimer{
     display: none;
+}
+#tri{
+    font-size: 12px;
+    text-align: center;
+}
+#tri div{
+    display: inline-block;
+    margin-top: -20px;
+}
+#tri #label_select_tri_date{
+    margin-left: 10px;
 }
