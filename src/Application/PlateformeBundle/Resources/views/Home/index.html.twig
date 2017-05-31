@@ -70,8 +70,10 @@
             <form id="form_add_nouvelle" action="{{ path('application_plateforme_homepage') }}" method="post">
                 <div class="modal-body">
                     <input id="hidden_beneficiaire_id" type="hidden" name="beneficiaire_id" value=""/>
-                    {{ form_label(form_nouvelle.message) }}
-                    {{ form_widget(form_nouvelle.message) }}
+	                    {{ form_label(form_nouvelle.titre) }}
+	                    {{ form_widget(form_nouvelle.titre) }}
+	                    {{ form_label(form_nouvelle.message) }}
+	                    {{ form_widget(form_nouvelle.message) }}
                     <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
                         {{ form_widget(form_nouvelle.Enregistrer) }}
                     </div>

@@ -120,7 +120,7 @@ function voirNouvelle(el){
         var html = ""
         for(i=0; i<data.nouvelles.length; i++)
         {
-            html += "<p>&bull; "+data.nouvelles[i].from+' le <i>'+data.nouvelles[i].date+'</i> : '+data.nouvelles[i].message+"</p>"
+            html += "<p>&bull; "+data.nouvelles[i].from+' le <i>'+data.nouvelles[i].date+'</i> : <b>'+data.nouvelles[i].titre+"</b></p><p style='margin-left:20px'>"+data.nouvelles[i].message+"</p>"
         }
         $("#listeNouvelle_"+beneficiaire_id).html(html)
     });
