@@ -13,6 +13,7 @@ use Application\PlateformeBundle\Form\ConsultantType;
 use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\ProjetType;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -267,7 +268,7 @@ class BeneficiaireController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    public function searchAction(Request $request,$page = 1 )
+    public function searchAction(Request $request)
     {
         $idUtilisateur = null;
 
@@ -286,6 +287,8 @@ class BeneficiaireController extends Controller
 
             $triAlpha = (int)$form['triAlpha']->getData();
             $triDate = (int)$form['triDate']->getData();
+            $page = (int)$form['page']->getData();
+
 
             if (!is_null($form["villeMer"]["nom"]->getData())) {
                 $em = $this->getDoctrine()->getManager();
@@ -313,8 +316,12 @@ class BeneficiaireController extends Controller
             $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $triAlpha, $triDate);
             $results = $query->getResult();
 
-            $beneficiaires = array_slice($results,0,50);
+            $start = 50*$page;
+
+            $beneficiaires = array_slice($results,$start,50);
             $nbBeneficiaire = count($results);
+
+            $page++;
 
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire

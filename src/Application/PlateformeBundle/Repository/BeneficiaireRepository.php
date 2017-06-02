@@ -105,31 +105,35 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['refFinanceur'] = '%'.$beneficiaire->getRefFinanceur().'%';
         }
 
-        if($triAlpha === 1){
-            $query .= ' ORDER BY b.nom_conso';
-            if ($triDate === 1 ){
-                $query .= ', b.date_heure_mer';
-            }else{
-                if ($triDate === 2){
-                    $query .= ', b.date_heure_mer DESC';
-                }
-            }
+        if ($triAlpha === 0 && $triDate === 0) {
+            $query .= ' ORDER BY b.id DESC';
         }else{
-            if($triAlpha === 2){
-                $query .= ' ORDER BY b.nom_conso DESC';
-                if ($triDate === 1 ){
+            if ($triAlpha === 1) {
+                $query .= ' ORDER BY b.nom_conso';
+                if ($triDate === 1) {
                     $query .= ', b.date_heure_mer';
-                }else{
-                    if ($triDate === 2){
+                } else {
+                    if ($triDate === 2) {
                         $query .= ', b.date_heure_mer DESC';
                     }
                 }
-            }else{
-                if($triDate === 1){
-                    $query .= ' ORDER BY b.date_heure_mer';
-                }else{
-                    if($triDate === 2){
-                        $query .= ' ORDER BY b.date_heure_mer DESC';
+            } else {
+                if ($triAlpha === 2) {
+                    $query .= ' ORDER BY b.nom_conso DESC';
+                    if ($triDate === 1) {
+                        $query .= ', b.date_heure_mer';
+                    } else {
+                        if ($triDate === 2) {
+                            $query .= ', b.date_heure_mer DESC';
+                        }
+                    }
+                } else {
+                    if ($triDate === 1) {
+                        $query .= ' ORDER BY b.date_heure_mer';
+                    } else {
+                        if ($triDate === 2) {
+                            $query .= ' ORDER BY b.date_heure_mer DESC';
+                        }
                     }
                 }
             }
