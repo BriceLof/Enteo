@@ -1,36 +1,26 @@
+/**
+ * function qui permet de gere le modal MAJ dans la home
+ * @param el
+ */
 function addNews(el){
-    beneficiaire_id = $(el).attr('id')
+    beneficiaire_id = $(el).attr('id');
     // Supprime tout les formulaires d'ouvert
     $(".modal-dialog form").remove();
 
-    formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id
+    formDuBeneficiaire = "#block_formulaire_ajout_new_"+beneficiaire_id;
 
     // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire
     // (car au début le formulaire n'est pas dans la boucle)
-    $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_news").html())
+    $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_news").html());
 
     // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
-    $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id)
-
-    //---------- START : Par défaut lorsqu'on ouvre le formulaire, le statut présenté est le statut supérieur à celui de la dernière news du bénéficiaire
-    /*var statutId = $(formDuBeneficiaire + " .statutIDCurrent").val()
-
-     // ID du statut supérieur au statut courant du bénéficiaire (
-     // si statutId = 6 => ( c a d RV2 réalisé, je fais un +3 sur l'id pour sauter le statut recevabilité jusqu'a facturation)
-     if(statutId == 6)
-     var nextStatutId = Number(statutId) + Number(4)
-     else
-     var nextStatutId = Number(statutId) + Number(1)
-
-     $(formDuBeneficiaire + " .statut").val(nextStatutId) // changement de la valeur du statut
-     ajaxFormNews(nextStatutId, true)*/
-    //---------- END
+    $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id);
 
     //---------- START : Si on change le statut
     $(formDuBeneficiaire + " .statut").change(function(){
-        var statutId = $(this).children("option:selected").val()
-        $(".detailStatut").attr("disabled", "disabled")
-        console.log(statutId)
+        var statutId = $(this).children("option:selected").val();
+        $(".detailStatut").attr("disabled", "disabled");
+        console.log(statutId);
         ajaxFormNews(statutId, true)
     });
     //---------- END
@@ -65,6 +55,10 @@ function addNews(el){
 //--------------------------  HOME : formulaire ajout d'une news ----------------------------------------------------//
 //-----------------------------------------------------------------------------------------------------------------------//
 
+/**
+ * function qui permet de gere le modal News dans la home
+ * @param el
+ */
 function addNouvelle(el){
     beneficiaire_id = $(el).attr('id')
     // Supprime tout les formulaires d'ouvert
@@ -106,6 +100,10 @@ function addNouvelle(el){
     })
 }
 
+/**
+ * function qui permet de gere le modal "voir +" dans la home
+ * @param el
+ */
 function voirNouvelle(el){
     beneficiaire_id = $(el).attr('id')
 
@@ -133,38 +131,12 @@ $(function(){
     //-----------------------------------------------------------------------------------------------------------------------//
     
     if( $("#tabNews").length != 0)
-    {   
-        // Formulaire ajout d'une news
-        
-        /*$(".link_formulaire_add_news").click(function(){
-            $(".detailStatut").attr("disabled", "disabled") 
-            var statutId = $("#statutIDCurrentBlockStatut").val()
-            $("#statut #newsForm .statut").val(statutId) // changement de la valeur du statut 
-            ajaxFormNews(statutId, true)
-        })*/
- 
+    {
         $("#newsForm .statut").change(function(){
             var statutId = $(this).children("option:selected").val()
             $(".detailStatut").attr("disabled", "disabled") 
             ajaxFormNews(statutId,true)
-        }); 
-        
-        // Formulaire ajout d'une suivi administratif
-  
-        //---------- START : Par défaut lorsqu'on ouvre le formulaire, chargement des details statuts     
-        /*var statutIdSuiviAd = $(".statutIDCurrentSuiviAd").val()
-        $("#suiviAdministratifNewForm .statutSuiviAd").val(statutIdSuiviAd)
-        ajaxFormNews(statutIdSuiviAd, false) 
-        
-        // Modification d'un suivi administratif
-        $(".updateSuivi").click(function(){
-            var boucle = $(this).attr('data-boucle')
-            $("#myModalSuiviAdministratifModify"+boucle+" .detailStatutSuiviAd").attr("disabled", "disabled") 
-            var statutIdSuiviAd = $(".statutIDCurrentSuiviAdUpdate"+boucle).val()
-            var detailStatutIdSuiviAd = $(".detailStatutIDCurrentSuiviAdUpdate"+boucle).val()
-            ajaxFormNews(statutIdSuiviAd, false, detailStatutIdSuiviAd)   
-        })*/
-        //---------- END 
+        });
         
         $("#suiviAdministratifNewForm .statutSuiviAd").change(function(){
             var statutId = $(this).children("option:selected").val()
@@ -186,37 +158,27 @@ $(function(){
             $("#suivi_administratif_statut").removeAttr('required');
         }
     });
-    
-    //--------- Partie ajout d'une news dans block News en bas de page et sur la Home 
-    
-    
-    
-    
-    
-    
-    
-    
   
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Utilisateur  -------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
     
-    url = window.location.href
-    console.log($(".typeUtilisateur a").text())
+    url = window.location.href;
+    console.log($(".typeUtilisateur a").text());
     if(url.indexOf("user/type/admin") != -1){
-        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur a").removeClass("active");
         $(".typeUtilisateur .itemAdmin").addClass("active") 
     }
     else if(url.indexOf("user/type/commercial") != -1){
-        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur a").removeClass("active");
         $(".typeUtilisateur .itemCommercial").addClass("active") 
     }
     else if(url.indexOf("user/type/gestion") != -1){
-        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur a").removeClass("active");
         $(".typeUtilisateur .itemGestion").addClass("active") 
     }
     else if(url.indexOf("user/type") != -1){
-        $(".typeUtilisateur a").removeClass("active")
+        $(".typeUtilisateur a").removeClass("active");
         $(".typeUtilisateur .itemConsultant").addClass("active") 
     }
         
@@ -314,3 +276,63 @@ function tri(el) {
     }
     $('#ajaxForm').submit();
 }
+
+/**
+ * ajax pour la recherche dans la home + la pagination
+ */
+(function () {
+    /**
+     * Ajax formulaire de recherche dans la home et crée un block pour acceuil le nouveaux bloc de 50 resultats
+     */
+    function pagination(page,form) {
+        $.ajax({
+            url: Routing.generate('application_ajax_search_home'), // le nom du fichier indiqué dans le formulaire
+            type: $(form).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
+            data: $(form).serialize(),
+            cache: true,
+            dataType: 'json',
+            beforeSend: function () {
+                var resultat = document.getElementById('section_home_page_'+page);
+                resultat.innerHTML = "";
+                resultat.innerHTML += '<div class="loading"></div>';
+                $('#pagination').empty();
+            },
+            success: function (response) {
+                html = '<div id="section_home_page_'+ (page+1) +'"></div>';
+                template = response;
+                $('#section_home_page_'+page).html(template);
+                $('#section_home_page_'+page).parent().append(html);
+                $('#recherche_beneficiaire_page').val(parseInt($('#recherche_beneficiaire_page').val())+1);
+                if($('#indication_page_'+page).attr('data-page') < $('#indication_page_'+page).attr('data-total') ){
+                    $('#section_home_page_1').attr('data-page', '1');
+                }
+            }
+        });
+    }
+
+    /**
+     * a chaque submit on remet a 0 la page pour que ça fausse pas le resultant dans l'ajax
+     */
+    $("#ajaxForm").submit(function (e) {
+        $('#recherche_beneficiaire_page').val(0);
+        $('#section-tab-home-benef').empty().append('<div id="section_home_page_1" data-page="0"></div>');
+        e.preventDefault();
+        history.pushState(null, null, Routing.generate('application_plateforme_homepage'));
+        pagination(parseInt($('#recherche_beneficiaire_page').val())+1,this);
+    });
+
+    /**
+     * cette fonction appel l'ajax quand l'utilisateur arrive en bas de page et recharge les 50 autres nouveaux resultats
+     *
+     * l'attribut data-page sert a verifier si l'ajax est terminer ou pas pour eviter que si jamais l'utilisateur rescroll pour aller en bas de page
+     * et ça renvoie une deuxieme fois l'ajax
+     */
+    $(window).scroll(function () {
+        if(document.getElementById('resultat_recherche_ajax')){
+            if ($(window).height() + $(window).scrollTop() == $(document).height() && $('#section_home_page_1').attr('data-page') == '1') {
+                $('#section_home_page_1').attr('data-page', '0');
+                pagination(parseInt($('#recherche_beneficiaire_page').val())+1, $("#ajaxForm"));
+            }
+        }
+    });
+})();

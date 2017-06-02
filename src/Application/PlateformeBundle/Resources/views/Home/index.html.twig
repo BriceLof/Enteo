@@ -40,9 +40,9 @@
     {% endfor %}
 
     {% if liste_beneficiaire | length > 0 %}
-        <section class="container-fluid section-tab-home-benef">
-            <div id="section_home">
-            {% include "ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig" %}
+        <section class="container-fluid section-tab-home-benef" id="section-tab-home-benef">
+            <div id="section_home_page_1" data-page="1">
+                {% include "ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig" %}
             </div>
         </section>
 
@@ -82,19 +82,12 @@
             </form>
         </div>
         <div id="pagination" style="text-align:center">
-            <ul class="pagination">
-                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                {% for p in range(1, nbPages) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% include "ApplicationPlateformeBundle:Home:pagination.html.twig" %}
         </div>
     {% else %}
         <div class="jumbotron">
             {% if results is defined %} 
-                {% if results | length < 1 %} <p class="">Aucun résultat trouvé</p> {% endif %}
+                <p class="">Aucun résultat trouvé</p>
             {% else %}
                 <p class="">Vous n'avez pas encore de bénéficiaires attribués</p>
             {% endif %}

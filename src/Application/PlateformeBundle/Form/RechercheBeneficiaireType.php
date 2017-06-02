@@ -73,6 +73,11 @@ class RechercheBeneficiaireType extends AbstractType
                 'mapped' => false,
                 'data' => 0
             ))
+
+            ->add('page', HiddenType::class, array(
+                'mapped' => false,
+                'data' => 0
+            ))
            
             /*->add('dateDebut', DateType::class, array(
                 'label' => 'Date de Debut',

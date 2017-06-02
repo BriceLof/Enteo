@@ -1,8 +1,20 @@
-<div class="row">
-    <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;">
-        <b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b>
-    </h4>
-</div>
+{% if results is not defined %}
+    <div class="row">
+        <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;">
+            <b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b>
+        </h4>
+    </div>
+{% else %}
+    {% if page == '1' %}
+        <div class="row">
+            <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;">
+                <b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b>
+                <span id="resultat_recherche_ajax"></span>
+            </h4>
+        </div>
+    {% endif %}
+{% endif %}
+<span id="indication_page_{{ page }}" data-page="{{ page }}" data-total="{{ nbPages }}" ></span>
 {% for beneficiaire in liste_beneficiaire %}
     {% include "ApplicationPlateformeBundle:Home:infoBeneficiaire.html.twig" %}
 {% endfor %}
