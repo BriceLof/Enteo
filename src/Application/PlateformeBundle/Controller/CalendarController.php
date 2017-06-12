@@ -611,7 +611,7 @@ class CalendarController extends Controller
 
         $em->persist($historique);
         $em->flush();
-		
+
 		$this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgendaSupprime($beneficiaire, $old_rdv);
         $this->get('session')->getFlashBag()->add('info', 'historique supprimé avec succès');
 

@@ -12,7 +12,7 @@ function getClient() {
 (function () {
     document.addEventListener('click',function () {
         $('#error_slot_busy').css("display","none");
-    })
+    });
     function afficheMessageFlash() {
         var flash = document.getElementById("flashbag");
         if (flash != undefined) {
