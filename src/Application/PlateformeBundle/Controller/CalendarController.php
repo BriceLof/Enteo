@@ -116,7 +116,7 @@ class CalendarController extends Controller
             $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
             $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
-            if ($form['autreBureau']->getData() == true){
+            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                     'nom' => $form["ville"]->getData(),
                 ));
@@ -227,7 +227,7 @@ class CalendarController extends Controller
             $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
             $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
-            if ($form['autreBureau']->getData() == true){
+            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                     'nom' => $form["ville"]->getData(),
                 ));
@@ -505,7 +505,7 @@ class CalendarController extends Controller
             $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
             $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
-            if ($form['autreBureau']->getData() == true){
+            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                     'nom' => $form["ville"]->getData(),
                 ));
