@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="- dpt du travail avec code postal">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/macroPagination.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/pagination.html.twig" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/AgendaController.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Agenda/agendaerror.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Agenda/agendas.html.twig" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/agenda.html.twig" afterPath="" />
+    <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/mainAjax.js" afterPath="$PROJECT_DIR$/web/js/mainAjax.js" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,68 +30,7 @@
     <favorites_list name="Enteo" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="313" column="91" selection-start-line="313" selection-start-column="91" selection-end-line="313" selection-end-column="91" />
-              <folding>
-                <element signature="n#!!block;n#addNouvelle#0" expanded="false" />
-                <element signature="n#!!block;n#voirNouvelle#0" expanded="false" />
-                <element signature="e#4895#7629#0" expanded="false" />
-                <element signature="n#!!block;n#ajaxFormNews#0" expanded="false" />
-                <element signature="n#!!block;n#tri#0" expanded="false" />
-                <marker date="1496410956479" expanded="true" signature="4631:4637" ph="•" />
-                <marker date="1496410956479" expanded="true" signature="4752:4768" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routing.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BeneficiaireController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="305" column="65" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="65" />
-              <folding>
-                <element signature="e#1313#4574#0#PHP" expanded="false" />
-                <element signature="e#4655#7775#0#PHP" expanded="false" />
-                <element signature="e#7853#9549#0#PHP" expanded="false" />
-                <element signature="e#9744#9998#0#PHP" expanded="false" />
-                <element signature="e#10204#10380#0#PHP" expanded="false" />
-                <element signature="e#10582#10750#0#PHP" expanded="false" />
-                <element signature="e#14593#15474#0#PHP" expanded="false" />
-                <element signature="e#15555#17910#0#PHP" expanded="false" />
-                <element signature="e#17916#18555#0#PHP" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BeneficiaireRepository.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="107" column="48" selection-start-line="107" selection-start-column="48" selection-end-line="107" selection-end-column="48" />
-              <folding>
-                <marker date="1496410223396" expanded="true" signature="2086:2124" ph="SELECT b.* F... beneficiaire" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FrameworkCommandLineHistory">
     <commandsHistory>
@@ -131,57 +56,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/meta/ErrorManager.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/dbcon.inc" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/inc/landing_pages_search_blocks/combi_attr_functions.inc.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/module/fc/FcModule.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/meta/Connection.php" />
-        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/model/ViewCbcForBdcPeer.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/meta/IF_link.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/model/ViewSessionVaePeer.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/model/ViewOplForOplPeer.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/model/ViewOfForIfPeer.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/model/ViewAceForAcePeer.php" />
-        <option value="&lt;8b22615b-2d58-4a6c-ac01-d9d86ed66c70&gt;/core/model/ViewCbcForBdcPeer.php" />
-        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/_detail_centre/centre/entete.php" />
-        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/fc/template/_detail_centre/centre/entete.php" />
-        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/fc/template/searchVae.php" />
-        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/fc/template/_cartouche_cbc_opl_vae.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing.yml" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/Home/infoBeneficiaire.html.twig" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/Home/search.html.twig" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/config/routing.yml" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Controller/HomeController.php" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/public/js/main.js" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/web/js/mainAjax.js" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/recherche.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/beneficiaire.yml" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig" />
-        <option value="$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Region.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Ville.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/ville.yml" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/VilleRepository.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/BeneficiaireType.php" />
-        <option value="$PROJECT_DIR$/web/css/style.css" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/VilleController.php" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/infoBeneficiaire.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js" />
-        <option value="$PROJECT_DIR$/web/js/mainAjax.js" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HomeController.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/pagination.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/macroPagination.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/helper/OfHelper.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/mobile/MobileModule.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/helper/OfHelper.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/model/DbVille.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/model/Departements.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/task/centre/ace_apparition_disparition.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/_DEV/module/bdc/BdcModule.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/module/bdc/BdcModule.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/_DEV/module/temoignage/TemoignageModule.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/module/temoignage/TemoignageModule.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/model/DbVille.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/model/Departements.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/task/centre/ace_apparition_dispartition.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/task/crontab.txt" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/task/centre/apparition_disparition_departements.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/temoignages/TemoignagesModule.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/client/ClientModule.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/client/ClientModule.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/task/bdc/bdc_temoignages_mise_en_ligne_mensuelle.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/model/ClientPeer.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/task/bdc/bdc_temoignages_mise_en_ligne_mensuelle.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/fc/FcModule.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/meta/BaseModule.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/.htaccess" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/meta/IF_link.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/meta/MobileRedirect.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/template/compoment/head.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/template/Template.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/template/type_template/default/default.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/js/mobile/search.js" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/_cartouche_of.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/css/search_result.css" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/_cartouche_cbc_opl_vae.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/searchCbc.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/searchVae.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/searchAce.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/FcModule.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/searchOpl.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/task/centre/apparition_disparition_departements.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/helper/PaginationHelper.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/fc/template/searchOf.php" />
+        <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/task/centre/vae_apparition_disparition.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/searchOf.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/css/search_result.min.css" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/css/mobile/search.css" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/helper/PaginationHelper.php" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/Pdf/ficheBeneficiaire.html.twig" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/layout-pdf.html.twig" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Resources/views/layout-pdf.html.twig" />
+        <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Resources/views/Pdf/ficheBeneficiaire.html.twig" />
       </list>
     </option>
   </component>
@@ -223,6 +148,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="enteo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Changed Files">
@@ -251,137 +187,6 @@
         </subPane>
         <subPane subId="Tests" />
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -401,125 +206,6 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\wamp64\www\Enteo\app\config" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/NouvelleController.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Nouvelle.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Form/NouvelleType.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Nouvelle/new.html.twig</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Nouvelle/showAll.html.twig</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Pdf/demandeFinancement.html.twig</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunManager">
     <configuration default="true" type="BashConfigurationType" factoryName="Bash">
@@ -660,14 +346,9 @@
       <workItem from="1495183695592" duration="62140000" />
       <workItem from="1495547703412" duration="3217000" />
       <workItem from="1495551003824" duration="43930000" />
-      <workItem from="1496046043676" duration="115344000" />
-    </task>
-    <task id="LOCAL-00050" summary="- numero de téléphone formatter">
-      <created>1486030513746</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1486030513747</updated>
+      <workItem from="1496046043676" duration="152742000" />
+      <workItem from="1496751541157" duration="11721000" />
+      <workItem from="1496765334064" duration="64927000" />
     </task>
     <task id="LOCAL-00051" summary="- formulaire">
       <created>1486116907226</created>
@@ -1005,28 +686,32 @@
       <option name="project" value="LOCAL" />
       <updated>1496245792829</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="- pagination">
+      <created>1496411106934</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1496411106934</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1622327000" />
+    <option name="totallyTimeSpent" value="1736373000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2193646" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19515885" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18910742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32649574" sideWeight="0.54689866" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19667171" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33675215" sideWeight="0.47049925" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42222223" sideWeight="0.45310137" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32136753" sideWeight="0.45310137" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1034,8 +719,11 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43589744" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1091,7 +779,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- financeur -&gt; probleme js consultant" />
     <MESSAGE value="- financeur -&gt; css" />
     <MESSAGE value="- pôle emploi" />
     <MESSAGE value="- modal qui demande l'enregistrement dans la fiche bénéficiaire" />
@@ -1116,7 +803,8 @@
     <MESSAGE value="- departement dependant de la région en toute lettre&#10;- ajout de région dom tom" />
     <MESSAGE value="- tri" />
     <MESSAGE value="- dpt du travail avec code postal" />
-    <option name="LAST_COMMIT_MESSAGE" value="- dpt du travail avec code postal" />
+    <MESSAGE value="- pagination" />
+    <option name="LAST_COMMIT_MESSAGE" value="- pagination" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1155,8 +843,13 @@
           <line>805</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/client/ClientModule.php</url>
+          <line>9114</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="14" />
+      <option name="time" value="15" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1200,7 +893,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="55" column="55" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1208,7 +900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2988">
           <caret line="181" column="7" selection-start-line="181" selection-start-column="7" selection-end-line="181" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1216,7 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
           <caret line="242" column="32" selection-start-line="242" selection-start-column="32" selection-end-line="242" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1224,13 +914,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1989">
           <caret line="330" column="43" selection-start-line="330" selection-start-column="43" selection-end-line="330" selection-end-column="43" />
-          <folding>
-            <marker date="1494579506804" expanded="true" signature="2575:2590" ph="..." />
-            <marker date="1494579506804" expanded="true" signature="23513:23566" ph="..." />
-            <marker date="1494579506804" expanded="true" signature="23627:23645" ph="..." />
-            <marker date="1494579506804" expanded="true" signature="24135:24188" ph="..." />
-            <marker date="1494579506804" expanded="true" signature="24246:24264" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1238,7 +921,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1246,7 +928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="80" selection-start-line="2" selection-start-column="80" selection-end-line="2" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1254,7 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1262,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-867">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1270,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-867">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1278,7 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1621">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1286,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1294,7 +970,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1302,23 +977,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/resultatRecherche.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/resultatRecherche.html.twig" />
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/beneficiaire.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1326,7 +992,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1334,7 +999,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1342,7 +1006,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="64" column="37" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1350,7 +1013,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="41" column="30" selection-start-line="38" selection-start-column="4" selection-end-line="41" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1358,28 +1020,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="29" column="28" selection-start-line="25" selection-start-column="4" selection-end-line="29" selection-end-column="28" />
-          <folding>
-            <element signature="e#55#87#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Region.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Region.php" />
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="143" column="88" selection-start-line="143" selection-start-column="88" selection-end-line="143" selection-end-column="88" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#td#1;n#tr#24;n#tbody#0;n#table#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#span#1;n#td#1;n#tr#24;n#tbody#0;n#table#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#3;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1387,7 +1035,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2091">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1395,7 +1042,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-959">
           <caret line="98" column="27" selection-start-line="98" selection-start-column="27" selection-end-line="98" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1403,7 +1049,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1411,7 +1056,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1419,7 +1063,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="881">
           <caret line="205" column="59" selection-start-line="205" selection-start-column="59" selection-end-line="205" selection-end-column="59" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1427,9 +1070,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1258">
           <caret line="267" column="0" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
-          <folding>
-            <marker date="1496160345220" expanded="true" signature="28140:28154" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1437,7 +1077,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1445,7 +1084,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
           <caret line="733" column="12" selection-start-line="733" selection-start-column="12" selection-end-line="733" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1453,7 +1091,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
           <caret line="107" column="21" selection-start-line="107" selection-start-column="21" selection-end-line="107" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1461,11 +1098,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="124">
           <caret line="360" column="5" selection-start-line="360" selection-start-column="5" selection-end-line="360" selection-end-column="5" />
-          <folding>
-            <element signature="e#6313#11779#0" expanded="false" />
-            <element signature="e#11879#15026#0" expanded="false" />
-            <element signature="n#!!block;n#ajaxListDepartement#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1473,7 +1105,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1217">
           <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1481,32 +1112,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="93">
           <caret line="399" column="30" selection-start-line="399" selection-start-column="29" selection-end-line="399" selection-end-column="30" />
-          <folding>
-            <element signature="e#454#1421#0" expanded="false" />
-            <element signature="e#1502#2598#0" expanded="false" />
-            <element signature="e#2673#3773#0" expanded="false" />
-            <element signature="e#3958#5083#0" expanded="false" />
-            <element signature="e#5266#5507#0" expanded="false" />
-            <element signature="e#5713#5954#0" expanded="false" />
-            <element signature="e#6168#6409#0" expanded="false" />
-            <element signature="e#6632#6873#0" expanded="false" />
-            <element signature="e#7084#7274#0" expanded="false" />
-            <element signature="e#7400#7428#0" expanded="false" />
-            <element signature="e#7586#7827#0" expanded="false" />
-            <element signature="e#7947#11517#0" expanded="false" />
-            <element signature="e#11539#11631#0" expanded="false" />
-            <element signature="e#11726#12210#0" expanded="false" />
-            <element signature="e#12301#14650#0" expanded="false" />
-            <element signature="e#17292#17916#0" expanded="false" />
-            <element signature="n#!!block;n#plusMoins#0" expanded="false" />
-            <element signature="e#18768#20265#0" expanded="false" />
-            <element signature="e#20408#71162#0" expanded="false" />
-            <element signature="e#71533#79226#0" expanded="false" />
-            <element signature="e#79517#82552#0" expanded="false" />
-            <marker date="1496310261419" expanded="true" signature="16789:16802" ph="..." />
-            <marker date="1496310261419" expanded="true" signature="74271:74284" ph="..." />
-            <marker date="1496310261419" expanded="true" signature="82149:82162" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1514,7 +1119,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="78" column="27" selection-start-line="78" selection-start-column="27" selection-end-line="78" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1522,34 +1126,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="182" column="51" selection-start-line="182" selection-start-column="51" selection-end-line="182" selection-end-column="51" />
-          <folding>
-            <element signature="e#1063#9978#0#PHP" expanded="false" />
-            <element signature="e#6952#9405#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/agenda.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Agenda/agendas.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-357">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/agenda.html.twig" />
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Agenda/agendas.html.twig" />
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="58" selection-start-line="11" selection-start-column="58" selection-end-line="11" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1557,7 +1142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="58" selection-start-line="11" selection-start-column="58" selection-end-line="11" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1565,7 +1149,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1573,9 +1156,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="327">
           <caret line="83" column="55" selection-start-line="83" selection-start-column="55" selection-end-line="83" selection-end-column="55" />
-          <folding>
-            <element signature="e#4340#4365#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1583,17 +1163,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="245">
           <caret line="305" column="65" selection-start-line="305" selection-start-column="65" selection-end-line="305" selection-end-column="65" />
-          <folding>
-            <element signature="e#1313#4574#0#PHP" expanded="false" />
-            <element signature="e#4655#7775#0#PHP" expanded="false" />
-            <element signature="e#7853#9549#0#PHP" expanded="false" />
-            <element signature="e#9744#9998#0#PHP" expanded="false" />
-            <element signature="e#10204#10380#0#PHP" expanded="false" />
-            <element signature="e#10582#10750#0#PHP" expanded="false" />
-            <element signature="e#14593#15474#0#PHP" expanded="false" />
-            <element signature="e#15555#17910#0#PHP" expanded="false" />
-            <element signature="e#17916#18555#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1601,9 +1170,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="245">
           <caret line="107" column="48" selection-start-line="107" selection-start-column="48" selection-end-line="107" selection-end-column="48" />
-          <folding>
-            <marker date="1496410223396" expanded="true" signature="2086:2124" ph="SELECT b.* F... beneficiaire" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1611,28 +1177,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="313" column="91" selection-start-line="313" selection-start-column="91" selection-end-line="313" selection-end-column="91" />
-          <folding>
-            <element signature="n#!!block;n#addNouvelle#0" expanded="false" />
-            <element signature="n#!!block;n#voirNouvelle#0" expanded="false" />
-            <element signature="e#4895#7629#0" expanded="false" />
-            <element signature="n#!!block;n#ajaxFormNews#0" expanded="false" />
-            <element signature="n#!!block;n#tri#0" expanded="false" />
-            <marker date="1496410956479" expanded="true" signature="4631:4637" ph="•" />
-            <marker date="1496410956479" expanded="true" signature="4752:4768" ph="..." />
-          </folding>
+        <state relative-caret-position="194">
+          <caret line="325" column="6" selection-start-line="325" selection-start-column="6" selection-end-line="325" selection-end-column="6" />
         </state>
       </provider>
     </entry>
   </component>
   <component name="webServersAuthStorage">
-    <data>AAAAgMw8Sia/pNlD7KWFc7JF9WiJ0h4SgvczZqeLNu8RYW1zRrxfU/lLCOzbYKM55zqUvpg2+fkn4p82BY+nhfcINIZGK060T4xbvrv7Q90Kmw2f20ThsuBktHPFVjnrhReaq97KYfTFdxf3fwJu+dz/p42VPuNEVOI9Du+JHOHERJw6EHCiQTMrRnNrOq6qMZXhSQ==</data>
+    <data>AAAAgHGPgQiG0SOWxa6ktonCdrWYuWg8tE0Scxe3nRaFdppeNBY4pwXj5h1hyBtsnu5+KNye+0vWmzD0ANyt4GwRC46YM5HEIaa24dMuBsDMWpp6u0/LklviqbLLzwxzGwEc7PeUC88oBnVLVRbfPcOimcY8+VHp2pJVEKNpuIk0mgzQVQQmc67Po9Vnz/oAV6xDJA==</data>
   </component>
 </project>
