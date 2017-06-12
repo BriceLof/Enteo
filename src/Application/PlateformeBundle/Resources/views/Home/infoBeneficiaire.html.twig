@@ -79,9 +79,9 @@
             <tr>
                 <th colspan=2>Nombre total appel</th>
                 <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
-                <th colspan=5>Dernière news</th>
                 <th>Statut</th>
                 <th>Détail statut</th>
+                <th colspan=5>Dernière news</th> 
             </tr>
             <tr>
                 {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
@@ -98,7 +98,8 @@
                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
                     {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : '' }}
                 </td>
-
+				<td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
+                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
                 <td colspan=5>
                     {% if(beneficiaire.nouvelle | length > 0) %}
                         {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}
@@ -111,8 +112,7 @@
                             +</button>{% endif %}
                     {% endif %}
                 </td>
-                <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
-                <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+                
             </tr>
             </tbody>
         </table>
