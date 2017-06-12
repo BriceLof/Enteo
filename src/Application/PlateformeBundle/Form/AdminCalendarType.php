@@ -135,14 +135,14 @@ class AdminCalendarType extends AbstractType
             ->add('summary', ChoiceType::class, array(
                 'choices' => array(
                     'Selectionner un rendez-vous' => '',
-                    'RV1'=>'RV1',
-                    'RV2'=>'RV2',
+                    'RV de positionnement n°1'=>'RV1',
+                    'RV de positionnement n°2'=>'RV2',
                     'RV Livret1'=>'RV Livret1',
                     'RV Livret2'=>'RV Livret2',
                     'RV Preparation jury'=>'RV Preparation jury',
                     'Autre'=>'Autre'
                 ),
-                'label' => 'Titre evenement',
+                'label' => 'Motif du RV',
                 'attr'=>array('class'=>'Titre Evenement')
             ))
 
