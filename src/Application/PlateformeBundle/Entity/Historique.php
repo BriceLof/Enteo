@@ -128,6 +128,13 @@ class Historique
     protected $user;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="canceled", type="integer")
+     */
+    private $canceled;
+
+    /**
      * Historique constructor.
      */
     public function __construct()
@@ -140,6 +147,7 @@ class Historique
         $this->heurefin = (new \DateTime('now'))->setTime((new \DateTime('now'))->format('H'), 0, 0)->modify('+1 hour');
         $this->typerdv = 'presentiel';
 		$this->mailPostRv = false;
+        $this->canceled = 0;
     }
     
     /**
@@ -534,5 +542,29 @@ class Historique
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set canceled
+     *
+     * @param integer $canceled
+     *
+     * @return Historique
+     */
+    public function setCanceled($canceled)
+    {
+        $this->canceled = $canceled;
+
+        return $this;
+    }
+
+    /**
+     * Get canceled
+     *
+     * @return integer
+     */
+    public function getCanceled()
+    {
+        return $this->canceled;
     }
 }

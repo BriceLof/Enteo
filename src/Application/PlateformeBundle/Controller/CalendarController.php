@@ -458,6 +458,7 @@ class CalendarController extends Controller
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
         $historique->setUser($this->getUser());
+
         
         $old_rdv = $historique->getDateDebut();
         
@@ -521,9 +522,13 @@ class CalendarController extends Controller
                 //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
                 if($historique->getBureau() != null) {
                     $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        $historique->setEventIdBureau($eventBureau['id']);
+                    if ($historique->getBureau()->getCalendrierid() != "") {
+                        if ($historique->getEventIdBureau() != null){
+                            $eventBureauUpdated = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $historique->getEventIdBureau(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
+                        }else{
+                            $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
+                            $historique->setEventIdBureau($eventBureau['id']);
+                        }
                     }
                 }
             }
@@ -538,11 +543,26 @@ class CalendarController extends Controller
             $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
             $historique->setDateDebut($date);
 
-            $em->persist($historique);
-            $em->flush();
-          
             $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique, $old_rdv);
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
+
+            if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
+                var_dump('aaaaaa');
+                $newHistorique = clone $historique;
+                $em->refresh($historique);
+                $historique->setCanceled(2);
+                $em->persist($newHistorique);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'beneficiaire' => $beneficiaire,
+                    'id' => $beneficiaire->getId(),
+                )));
+
+            }else{
+                $em->persist($historique);
+                $em->flush();
+            }
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////
@@ -568,6 +588,7 @@ class CalendarController extends Controller
     }
 
     public function deleteEventAction(Request $request,$id){
+
         //supprimer l'historique et l'evenement sur google agenda
         $googleCalendar = $this->get('fungio.google_calendar');
 
@@ -594,26 +615,33 @@ class CalendarController extends Controller
         }
 
         $beneficiaire = $historique->getBeneficiaire();
-        $historique->setEventarchive('on');
 
-        $calendarId = $historique->getConsultant()->getCalendrierid();
-        $eventId = $historique->getEventId();
-
-        if ($historique->getBureau() != null){
-            if($historique->getEventIdBureau() != null){
-                $calendarBureauId = $historique->getBureau()->getCalendrierid();
-                $eventBureauId = $historique->getEventIdBureau();
-                $googleCalendar->deleteEvent($calendarBureauId,$eventBureauId);
-            }
+        if ($historique->getDateDebut() > new \DateTime() && $historique->getDateDebut() < (new \DateTime())->modify('+1 day')){
+            $historique->setCanceled(1);
         }
+        else {
+            $historique->setEventarchive('on');
 
-        $googleCalendar->deleteEvent($calendarId,$eventId);
+            $calendarId = $historique->getConsultant()->getCalendrierid();
+            $eventId = $historique->getEventId();
+
+            if ($historique->getBureau() != null) {
+                if ($historique->getEventIdBureau() != null) {
+                    $calendarBureauId = $historique->getBureau()->getCalendrierid();
+                    $eventBureauId = $historique->getEventIdBureau();
+                    $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
+                }
+            }
+
+            $googleCalendar->deleteEvent($calendarId, $eventId);
+        }
 
         $em->persist($historique);
         $em->flush();
 
-		$this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgendaSupprime($beneficiaire, $old_rdv);
+        $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgendaSupprime($beneficiaire, $old_rdv);
         $this->get('session')->getFlashBag()->add('info', 'historique supprimé avec succès');
+
 
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),
