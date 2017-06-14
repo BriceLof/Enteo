@@ -4,6 +4,7 @@
  */
 function addNews(el){
     beneficiaire_id = $(el).attr('id');
+    console.log(beneficiaire_id);
     // Supprime tout les formulaires d'ouvert
     $(".modal-dialog form").remove();
 
@@ -41,11 +42,11 @@ function addNews(el){
             success: function (data) {
                 template = data;
 
-                //rechargement du html dans le block table du bénéficiaire
-                $('#b'+beneficiaire_id).html(template);
-
                 //ferme le modal
                 $('#block_formulaire_ajout_new_'+beneficiaire_id).modal('toggle');
+
+                //rechargement du html dans le block table du bénéficiaire
+                $('#info_beneficiaire'+beneficiaire_id).html(template);
             }
         });
     })
@@ -60,19 +61,19 @@ function addNews(el){
  * @param el
  */
 function addNouvelle(el){
-    beneficiaire_id = $(el).attr('id')
+    beneficiaire_id = $(el).attr('id');
     // Supprime tout les formulaires d'ouvert
     $(".modal-dialog form").remove();
-    console.log("on y est")
+    console.log("on y est");
 
-    formDuBeneficiaire = "#block_formulaire_ajout_nouvelle_"+beneficiaire_id
+    formDuBeneficiaire = "#block_formulaire_ajout_nouvelle_"+beneficiaire_id;
 
     // Je déplace le formulaire unique crée par defaut et je le lie à un bénéficiaire
     // (car au début le formulaire n'est pas dans la boucle)
-    $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_nouvelle").html())
+    $(formDuBeneficiaire + " .modal-content").append($("#block_formulaire_add_nouvelle").html());
 
     // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
-    $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id)
+    $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id);
 
     $("#form_add_nouvelle").on("submit",function(e){
         //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
@@ -89,12 +90,13 @@ function addNouvelle(el){
             },
             success: function (data) {
                 template = data;
-                console.log(data)
-                //rechargement du html dans le block table du bénéficiaire
-                $('#b'+beneficiaire_id).html(template);
+                console.log(data);
 
                 //ferme le modal
                 $('#block_formulaire_ajout_nouvelle_'+beneficiaire_id).modal('toggle');
+
+                //rechargement du html dans le block table du bénéficiaire
+                $('#info_beneficaiire'+beneficiaire_id).html(template);
             }
         });
     })
@@ -105,7 +107,7 @@ function addNouvelle(el){
  * @param el
  */
 function voirNouvelle(el){
-    beneficiaire_id = $(el).attr('id')
+    beneficiaire_id = $(el).attr('id');
 
     $.ajax({
         type: 'get',
@@ -115,7 +117,7 @@ function voirNouvelle(el){
         }
     }).done(function(data) {
         console.log(data.nouvelles[0]);
-        var html = ""
+        var html = "";
         for(i=0; i<data.nouvelles.length; i++)
         {
             html += "<p>&bull; "+data.nouvelles[i].from+' le <i>'+data.nouvelles[i].date+'</i> : <b>'+data.nouvelles[i].titre+"</b></p><p style='margin-left:20px'>"+data.nouvelles[i].message+"</p>"
@@ -139,13 +141,13 @@ $(function(){
         });
         
         $("#suiviAdministratifNewForm .statutSuiviAd").change(function(){
-            var statutId = $(this).children("option:selected").val()
+            var statutId = $(this).children("option:selected").val();
             $("#suiviAdministratifNewForm .detailStatutSuiviAd").attr("disabled", "disabled") 
             ajaxFormNews(statutId)
         }); 
         
         $("#suiviAdministratifEditForm .statutSuiviAd").change(function(){
-            var statutId = $(this).children("option:selected").val()
+            var statutId = $(this).children("option:selected").val();
             $("#suiviAdministratifEditForm .detailStatutSuiviAd").attr("disabled", "disabled") 
             ajaxFormNews(statutId)
         }); 
