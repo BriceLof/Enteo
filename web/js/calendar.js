@@ -127,7 +127,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                 $('#admin_calendar_beneficiaire').val(null);
                 $('#admin_calendar_prenom').val("");
             }
-        },
+        }
     });
 
     $('#admin_calendar_autreBureau').on('change',function () {

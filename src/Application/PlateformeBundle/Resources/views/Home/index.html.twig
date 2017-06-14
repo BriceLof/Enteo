@@ -8,8 +8,8 @@
                 {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
             </div>
             <div id="tri">
-                <span>Trier par : </span>
                 <div>
+                    <label for="select_tri_alpha">Trier par : </label>
                     <select onchange="tri(this)" name="select_tri_alpha" id="select_tri_alpha" class="selectpicker">
                         <option value="0"></option>
                         <optgroup label="Nom">

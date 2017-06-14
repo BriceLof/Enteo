@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/recherche.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/recherche.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/listeBeneficiaire.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/calendar.js" afterPath="$PROJECT_DIR$/web/js/calendar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/mainAjax.js" afterPath="$PROJECT_DIR$/web/js/mainAjax.js" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,12 +47,58 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-              <folding />
+            <state relative-caret-position="187">
+              <caret line="11" column="62" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
+              <folding>
+                <marker date="1497448527723" expanded="true" signature="0:1164" ph="{% if results is defined ...%}" />
+                <marker date="1497448527723" expanded="true" signature="110:1152" ph="{% block header ...%}" />
+                <marker date="1497448527723" expanded="true" signature="137:1133" ph="{% if (liste_beneficiaire | length &gt; 0) or (results is defined) ...%}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendar.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/js/calendar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-595">
+              <caret line="87" column="14" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
+              <folding>
+                <marker date="1497450101444" expanded="true" signature="2576:2591" ph="..." />
+                <marker date="1497450101444" expanded="true" signature="23513:23566" ph="..." />
+                <marker date="1497450101444" expanded="true" signature="23627:23645" ph="..." />
+                <marker date="1497450101444" expanded="true" signature="24135:24188" ph="..." />
+                <marker date="1497450101444" expanded="true" signature="24246:24264" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="beneficiaire.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="407">
+              <caret line="388" column="1" selection-start-line="388" selection-start-column="1" selection-end-line="388" selection-end-column="1" />
+              <folding>
+                <element signature="n#!!block;n#ajaxListDepartement#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mainAjax.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="523">
+              <caret line="1648" column="5" selection-start-line="1648" selection-start-column="5" selection-end-line="1648" selection-end-column="5" />
+              <folding>
+                <marker date="1497450582991" expanded="true" signature="16789:16802" ph="..." />
+                <marker date="1497450582991" expanded="true" signature="74271:74284" ph="..." />
+                <marker date="1497450582991" expanded="true" signature="82149:82162" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -124,8 +166,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/task/bdc/bdc_temoignages_mise_en_ligne_mensuelle.php" />
-        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/model/ClientPeer.php" />
         <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/core/task/bdc/bdc_temoignages_mise_en_ligne_mensuelle.php" />
         <option value="&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/module/fc/FcModule.php" />
         <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/meta/BaseModule.php" />
@@ -159,7 +199,6 @@
         <option value="$PROJECT_DIR$/web/css/print.css" />
         <option value="$PROJECT_DIR$/web/css/calendar.css" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BureauController.php" />
-        <option value="$PROJECT_DIR$/web/js/calendar.js" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/adminAddEvent.html.twig" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Controller/CalendarController.php" />
         <option value="&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/dev_cms_application/src/Application/PlateformeBundle/Resources/views/Historique/showAll.html.twig" />
@@ -175,6 +214,9 @@
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Repository/BeneficiaireRepository.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" />
+        <option value="$PROJECT_DIR$/web/js/calendar.js" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js" />
+        <option value="$PROJECT_DIR$/web/js/mainAjax.js" />
       </list>
     </option>
   </component>
@@ -273,7 +315,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -287,59 +329,11 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="web" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enteo" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlateformeBundle" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Form" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -507,14 +501,7 @@
       <workItem from="1496046043676" duration="152742000" />
       <workItem from="1496751541157" duration="11721000" />
       <workItem from="1496765334064" duration="90982000" />
-      <workItem from="1497348268572" duration="33299000" />
-    </task>
-    <task id="LOCAL-00055" summary="- message flash">
-      <created>1486140832278</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1486140832278</updated>
+      <workItem from="1497348268572" duration="36128000" />
     </task>
     <task id="LOCAL-00056" summary="- changement de la place de la partie ajouter/modifier consultant pour que ce dernier puisse etre accessible au commercial">
       <created>1486372990803</created>
@@ -852,11 +839,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497432664756</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="- changement de la recherche dans home&#10;- modification du tri">
+      <created>1497447991408</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1497447991408</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1795727000" />
+    <option name="totallyTimeSpent" value="1798556000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -938,7 +932,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- ville resolus (plus de galère! merci man)" />
     <MESSAGE value="- MailCommand.php pour les crons" />
     <MESSAGE value="- MailCommand.php pour les crons suite" />
     <MESSAGE value="- calendar fidy v2" />
@@ -963,7 +956,8 @@
     <MESSAGE value="- print" />
     <MESSAGE value="- modifier supprimer rdv moins de 24h" />
     <MESSAGE value="- rectification sur les modals de la home" />
-    <option name="LAST_COMMIT_MESSAGE" value="- rectification sur les modals de la home" />
+    <MESSAGE value="- changement de la recherche dans home&#10;- modification du tri" />
+    <option name="LAST_COMMIT_MESSAGE" value="- changement de la recherche dans home&#10;- modification du tri" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1078,13 +1072,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="360" column="5" selection-start-line="360" selection-start-column="5" selection-end-line="360" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/agenda.html.twig" />
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Agenda/agendas.html.twig" />
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/macroPagination.html.twig">
@@ -1146,13 +1133,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="426" column="38" selection-start-line="426" selection-start-column="38" selection-end-line="426" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/disponibilites.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1178,13 +1158,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/js/calendar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -1335,7 +1308,6 @@
           <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="8" />
           <folding>
             <element signature="e#263#594#0#Twig" expanded="false" />
-            <element signature="n#aside#0;n#div#2;n#!!top" expanded="false" />
             <element signature="n#aside#1;n#div#2;n#!!top" expanded="false" />
             <element signature="n#aside#2;n#div#2;n#!!top" expanded="false" />
           </folding>
@@ -1386,9 +1358,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="187">
+          <caret line="11" column="62" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
+          <folding>
+            <marker date="1497448527723" expanded="true" signature="0:1164" ph="{% if results is defined ...%}" />
+            <marker date="1497448527723" expanded="true" signature="110:1152" ph="{% block header ...%}" />
+            <marker date="1497448527723" expanded="true" signature="137:1133" ph="{% if (liste_beneficiaire | length &gt; 0) or (results is defined) ...%}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-595">
+          <caret line="87" column="14" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
+          <folding>
+            <marker date="1497450101444" expanded="true" signature="2576:2591" ph="..." />
+            <marker date="1497450101444" expanded="true" signature="23513:23566" ph="..." />
+            <marker date="1497450101444" expanded="true" signature="23627:23645" ph="..." />
+            <marker date="1497450101444" expanded="true" signature="24135:24188" ph="..." />
+            <marker date="1497450101444" expanded="true" signature="24246:24264" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/public/js/beneficiaire.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="388" column="1" selection-start-line="388" selection-start-column="1" selection-end-line="388" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!block;n#ajaxListDepartement#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="523">
+          <caret line="1648" column="5" selection-start-line="1648" selection-start-column="5" selection-end-line="1648" selection-end-column="5" />
+          <folding>
+            <marker date="1497450582991" expanded="true" signature="16789:16802" ph="..." />
+            <marker date="1497450582991" expanded="true" signature="74271:74284" ph="..." />
+            <marker date="1497450582991" expanded="true" signature="82149:82162" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
