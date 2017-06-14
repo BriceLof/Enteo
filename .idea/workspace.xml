@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Home/index.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/calendar.js" afterPath="$PROJECT_DIR$/web/js/calendar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/js/mainAjax.js" afterPath="$PROJECT_DIR$/web/js/mainAjax.js" />
     </list>
     <ignored path="Enteo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -92,8 +89,8 @@
       <file leaf-file-name="mainAjax.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="1648" column="5" selection-start-line="1648" selection-start-column="5" selection-end-line="1648" selection-end-column="5" />
+            <state relative-caret-position="391">
+              <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
               <folding>
                 <marker date="1497450582991" expanded="true" signature="16789:16802" ph="..." />
                 <marker date="1497450582991" expanded="true" signature="74271:74284" ph="..." />
@@ -501,14 +498,7 @@
       <workItem from="1496046043676" duration="152742000" />
       <workItem from="1496751541157" duration="11721000" />
       <workItem from="1496765334064" duration="90982000" />
-      <workItem from="1497348268572" duration="36128000" />
-    </task>
-    <task id="LOCAL-00056" summary="- changement de la place de la partie ajouter/modifier consultant pour que ce dernier puisse etre accessible au commercial">
-      <created>1486372990803</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1486372990804</updated>
+      <workItem from="1497348268572" duration="36686000" />
     </task>
     <task id="LOCAL-00057" summary="- Amelioration du visuel dans l'espace documentaire">
       <created>1486378286639</created>
@@ -846,11 +836,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497447991408</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="- autocompletion dans ville de recherche">
+      <created>1497450838921</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1497450838921</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1798556000" />
+    <option name="totallyTimeSpent" value="1799114000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -932,7 +929,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- MailCommand.php pour les crons" />
     <MESSAGE value="- MailCommand.php pour les crons suite" />
     <MESSAGE value="- calendar fidy v2" />
     <MESSAGE value="- calendar fidy v2 (probleme avec le modal supprimer evenement)" />
@@ -957,7 +953,8 @@
     <MESSAGE value="- modifier supprimer rdv moins de 24h" />
     <MESSAGE value="- rectification sur les modals de la home" />
     <MESSAGE value="- changement de la recherche dans home&#10;- modification du tri" />
-    <option name="LAST_COMMIT_MESSAGE" value="- changement de la recherche dans home&#10;- modification du tri" />
+    <MESSAGE value="- autocompletion dans ville de recherche" />
+    <option name="LAST_COMMIT_MESSAGE" value="- autocompletion dans ville de recherche" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1394,8 +1391,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="1648" column="5" selection-start-line="1648" selection-start-column="5" selection-end-line="1648" selection-end-column="5" />
+        <state relative-caret-position="391">
+          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
           <folding>
             <marker date="1497450582991" expanded="true" signature="16789:16802" ph="..." />
             <marker date="1497450582991" expanded="true" signature="74271:74284" ph="..." />
