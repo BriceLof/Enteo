@@ -270,12 +270,7 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
 function tri(el) {
     id = $(el).attr('id');
     value = $(el).val();
-    if ( id == 'select_tri_alpha'){
-        $('#recherche_beneficiaire_triAlpha').val(value);
-    }
-    if ( id == 'select_tri_date'){
-        $('#recherche_beneficiaire_triDate').val(value);
-    }
+    $('#recherche_beneficiaire_tri').val(value);
     $('#ajaxForm').submit();
 }
 

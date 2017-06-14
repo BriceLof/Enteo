@@ -8,21 +8,18 @@
                 {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
             </div>
             <div id="tri">
-                <p>Trier par : </p>
                 <div>
-                    <label for="select_tri_alpha">Nom</label>
-                    <select onchange="tri(this)" name="select_tri_alpha" id="select_tri_alpha">
+                    <label for="select_tri_alpha">Trier par : </label>
+                    <select onchange="tri(this)" name="select_tri_alpha" id="select_tri_alpha" class="selectpicker">
                         <option value="0"></option>
-                        <option value="1">A->Z</option>
-                        <option value="2">Z->A</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="select_tri_date" id="label_select_tri_date">Date</label>
-                    <select onchange="tri(this)" name="select_tri_date" id="select_tri_date">
-                        <option value="0"></option>
-                        <option value="1">ASC.</option>
-                        <option value="2">DESC.</option>
+                        <optgroup label="Nom">
+                            <option value="1">A->Z</option>
+                            <option value="2">Z->A</option>
+                        </optgroup>
+                        <optgroup label="Date">
+                            <option value="3">ASC.</option>
+                            <option value="4">DESC.</option>
+                        </optgroup>
                     </select>
                 </div>
             </div>

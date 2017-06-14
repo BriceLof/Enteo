@@ -1615,3 +1615,35 @@ if(document.getElementById('beneficiaire_contactEmployeur')) {
         }
     });
 }
+
+/**
+ * Ajax qui permet l'autocompletion au niveau ville dans la recherche hom
+ *
+ */
+(function () {
+    $('#recherche_beneficiaire_ville').autocomplete({
+        source: function (requete, reponse) {
+            $.ajax({
+                url: Routing.generate('application_get_ville'), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                data: {
+                    nomVille: $('#recherche_beneficiaire_ville').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    var ville = $.parseJSON(data);
+                    reponse($.map(ville, function (item) {
+                        return {
+                            value: function () {
+                                cp = (item.cp);
+                                return item.nom;
+                            }
+                        }
+                    }));
+                }
+            });
+        }
+    });
+})();

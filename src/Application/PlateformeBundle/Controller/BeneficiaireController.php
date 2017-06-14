@@ -285,35 +285,15 @@ class BeneficiaireController extends Controller
 
         if ($form->isValid()){
 
-            $triAlpha = (int)$form['triAlpha']->getData();
-            $triDate = (int)$form['triDate']->getData();
+            $tri = (int)$form['tri']->getData();
             $page = (int)$form['page']->getData();
-
-
-            if (!is_null($form["villeMer"]["nom"]->getData())) {
-                $em = $this->getDoctrine()->getManager();
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'id' => $form["villeMer"]["nom"]->getData(),
-                ));
-                $beneficiaire->setVilleMer($ville);
-            }
+            $ville = $form['ville']->getData();
 
             $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
-
-            if(!is_null($form["villeMer"]["cp"]->getData())){
-                $codePostal = $form["villeMer"]["cp"]->getData();
-            }
-
-            /*if(!is_null($form['dateDebut']->getData())){
-                $dateDebut = $form['dateDebut']->getData();
-            }
-            if(!is_null($form['dateFin']->getData())){
-                $dateFin = $form['dateFin']->getData();
-            }*/
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $triAlpha, $triDate);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville);
             $results = $query->getResult();
 
             $start = 50*$page;
@@ -441,6 +421,12 @@ class BeneficiaireController extends Controller
         ));
     }
 
+    /**
+     * la fonction qui permet de faire un print dans la fiche bénéficiaire
+     *
+     * @param $id
+     * @return Response
+     */
     public function printAction($id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);

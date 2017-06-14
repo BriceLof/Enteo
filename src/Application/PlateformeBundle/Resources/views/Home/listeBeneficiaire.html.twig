@@ -30,7 +30,9 @@
                         <h4 class="modal-title" id="myModalLabel">MAJ Bénéficiaire</h4>
                         <p>
                             <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize }}</b><br></span>
-                            {{ beneficiaire.ville.nom|capitalize }}
+                            {% if beneficiaire.ville is not null %}
+                                {{ beneficiaire.ville.nom|capitalize }}
+                            {% endif %}
                         </p>
                         <!-- ID du statut de la dernière news du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
                         <input type="hidden" value="{{ beneficiaire.news[beneficiaire.news | length -1].statut.id }}" class="statutIDCurrent"/>
