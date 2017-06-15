@@ -27,7 +27,8 @@ class ConsultantType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('u')
                             ->where('u.roles LIKE :type')
-                            ->setParameter('type', '%consultant%');
+                            ->setParameter('type', '%consultant%')
+							->orderBy('u.nom', 'ASC');
                 },
 
             ))

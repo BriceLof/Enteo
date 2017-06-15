@@ -74,13 +74,15 @@
 
 #add_document{
     font-size: 12px;
-    width:150px;
+    display: block;
+    margin-left: 15px;
+    color: #50a60d;
+    margin-top: 11px;
 }
 
 #espace_documentaire_submit{
     margin-right: 19px;
     float: right;
-    margin-top: -38px;
     background-color: #454545;
     color: white;
 }
@@ -129,21 +131,7 @@
     width: 34%;
 }
 
-/*.showAllSuiviAdministratif div:first-of-type{
-    margin-top:10px;
-    margin-left: 30px;
-    display: inline-block;
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 5px;
-    font-weight: 700;
-    cursor: default;
-}
-*/
-.sectionBeneficiaire .glyphicon-plus{
-    float: left;
-    font-size: 9px;
-}
+
 .sectionBeneficiaire .glyphicon-minus{
     float: left;
     font-size: 9px;
@@ -178,12 +166,6 @@
     cursor: default;
 }
 
-.sectionBeneficiaire a:link{
-    color:#fbfbfb;
-    text-decoration: none;
-    display: block;
-    width: 100%;
-}
 
 .sectionBeneficiaire #espace_documentaire a:link{
     width: 140px;
@@ -216,6 +198,7 @@
     width: 100%;
     border-collapse: collapse;
     empty-cells: hide;
+    color:#333;
 }
 
 .tableOnglet tr label{
@@ -241,6 +224,12 @@
     color: #f6f6f6;
     text-align: center;
 }
+.titreSection a{
+    color: #fbfbfb;
+    text-decoration: none;
+    display:block;
+}
+
 .tableSection{
     display: table-cell;
     text-decoration: underline;

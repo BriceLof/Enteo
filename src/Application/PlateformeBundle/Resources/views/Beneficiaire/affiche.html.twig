@@ -395,21 +395,21 @@
                                         {% if 'pdf' in document.path %}
                                             {{ afficherDocument(beneficiaire, document.path) }}
                                             <tr>
-                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
+                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>
                                                 <td></td>
                                                 <td class="btn" width="100%">
-                                                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
-														<span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+                                                        <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+														<span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
                                                 
 												</td>
                                             </tr>
                                         {% else %}
                                             <tr>
-                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
+                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>
                                                 <td></td>
                                                 <td class="btn" width="100%">
-                                                    <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
-													<span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+                                                    <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+													<span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
                                                 
 												</td>
                                             </tr>
@@ -466,7 +466,7 @@
                                 </table>
                             </div>
                             <div id="AjoutDocument" class="collapse in">
-                                <a href="#" id="add_document" class="btn btn-primary maj">Ajouter un Document</a>
+                                <a href="#" id="add_document" class=""><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right: 5px;"></span>Ajouter un Document</a>
                                 <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                                     {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                                 </form>

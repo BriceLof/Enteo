@@ -392,6 +392,8 @@ $("document").ready(function (initDynamicContent) {
  *
  */
 $(document).ready(function() {
+	$(".submit_upload_doc").hide();
+	$("#newDocumentsForm label:first-child").hide();
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#espace_documentaire_documents');
     // On ajoute un lien pour ajouter une nouvelle catégorie
@@ -399,6 +401,7 @@ $(document).ready(function() {
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $addLink.click(function(e) {
+    	$(".submit_upload_doc").show();
         addImage($container);
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
@@ -419,7 +422,7 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Document n°' + (index+1))
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, ' - Document n°' + (index+1))
             .replace(/__name__/g, index));
         // On ajoute au prototype un lien pour pouvoir supprimer l'image
         addDeleteLink($prototype);
@@ -432,7 +435,7 @@ $(document).ready(function() {
     // La fonction qui ajoute un lien de suppression d'une image
     function addDeleteLink($prototype) {
         // Création du lien
-        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
+        $deleteLink = $('<a href="#" style="margin-bottom:16px;padding: 0px;color:white;width:63px;font-size:11px;" class="btn btn-danger">Supprimer</a>');
         // Ajout du lien
         $prototype.append($deleteLink);
         // Ajout du listener sur le clic du lien

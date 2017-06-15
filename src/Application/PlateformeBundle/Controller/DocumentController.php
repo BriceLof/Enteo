@@ -26,7 +26,8 @@ class DocumentController extends Controller
 
         $document_form = $this->createDocumentEditForm($bene);
         $document_form->add('submit',  SubmitType::class, array(
-            'label' => 'upload'
+            'label' => 'Upload', 
+            'attr' => array('class' => 'submit_upload_doc')
         ));
         $document_form->handleRequest($request);
 

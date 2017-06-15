@@ -20,7 +20,8 @@ class EspaceDocumentaireType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => true,
-            ))
+                'label' => false,
+                 ))
         ;
 
     }
