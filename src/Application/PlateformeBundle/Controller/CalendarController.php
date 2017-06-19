@@ -51,7 +51,7 @@ class CalendarController extends Controller
     }
 
     /**
-     *
+     * cette fonction permet  d'ajouter un evenement (RDV) dans l'agenda d'un consultant et celui du bureau si celle si en a un
      *
      * @param Request $request
      * @param $id (beneficiaire)
@@ -175,7 +175,15 @@ class CalendarController extends Controller
         ));
     }
 
-
+    /**
+     * cette fonction permet d'ajouter un evenement dans un agenda mais sauf que le formulaire n'est pas dédié a un seul bénéficiaire
+     *
+     * @param Request $request
+     * @param null $id
+     * @param null $beneficiaire
+     * @param null $consult
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function adminAddEventAction(Request $request, $id=null, $beneficiaire = null, $consult = null){
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
@@ -287,6 +295,9 @@ class CalendarController extends Controller
 
     /**
      * AJAX pour verifier si le créneau entré est elle occupé ou pas
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
     public function ajaxBusySlotAction(Request $request){
         $bool = false;
@@ -436,6 +447,14 @@ class CalendarController extends Controller
         die;
     }
 
+    /**
+     * cette fonction permet d'editer un evenement sur l'agenda d'un consultant.
+     * faut faire attention car elle modifie aussi les entrées sur l'agendas des bureaux
+     *
+     * @param Request $request
+     * @param $id (historique)
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function editEventAction(Request $request, $id)
     {
         //recuperation du service
@@ -506,7 +525,7 @@ class CalendarController extends Controller
             $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
             $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
-            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
+            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel' && $historique->getBureau() == null){
                 $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                     'nom' => $form["ville"]->getData(),
                 ));
@@ -533,6 +552,7 @@ class CalendarController extends Controller
                 }
             }
 
+
             if ($historique->getBureau() != null ){
                 $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
             }
@@ -547,7 +567,6 @@ class CalendarController extends Controller
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
 
             if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
-                var_dump('aaaaaa');
                 $newHistorique = clone $historique;
                 $em->refresh($historique);
                 $historique->setCanceled(2);
@@ -587,6 +606,13 @@ class CalendarController extends Controller
         ));
     }
 
+    /**
+     * supprime un evenement sur l'agenda du consultant et celui du bureau si celle ci existe
+     *
+     * @param Request $request
+     * @param $id (historique
+     * @return RedirectResponse
+     */
     public function deleteEventAction(Request $request,$id){
 
         //supprimer l'historique et l'evenement sur google agenda

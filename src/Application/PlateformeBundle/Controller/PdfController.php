@@ -67,12 +67,14 @@ class PdfController extends Controller
                     $document->setBeneficiaire($beneficiaire);
                     $document->setPath($file);
                     $document->setDescription($file);
+                    $document->setType("devis");
                     break;
                 }else{
                     $document = new Document();
                     $document->setBeneficiaire($beneficiaire);
                     $document->setPath($file);
                     $document->setDescription($file);
+                    $document->setType("devis");
                 }
             }
         }else{
@@ -80,6 +82,7 @@ class PdfController extends Controller
             $document->setBeneficiaire($beneficiaire);
             $document->setPath($file);
             $document->setDescription($file);
+            $document->setType("devis");
         }
 
         $zip = new \ZipArchive();
