@@ -83,9 +83,12 @@ class Document
             $i = 0;
             $fileTmp = $file;
             foreach ($documents as $documentFile){
-                if($documentFile->getPath() == $fileTmp.'.pdf') {
-                    $i++;
-                    $fileTmp = $file.'_('.$i.')';
+                for ( $j = 1; $j < count($documents); $j++){
+                    if($documentFile->getPath() == $fileTmp.'.pdf') {
+                        $i++;
+                        $fileTmp = $file.'_('.$i.')';
+                        break;
+                    }
                 }
             }
             if ($i != 0){
