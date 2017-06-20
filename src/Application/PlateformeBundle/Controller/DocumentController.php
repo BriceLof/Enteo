@@ -119,8 +119,7 @@ class DocumentController extends Controller
             throw $this->createNotFoundException('Unable to find Document.');
         }
 
-        $em->remove($document);
-        $em->flush();
+        $this->get('application_plateforme.document')->removeDocument($beneficiaire, $document, true);
 
         $this->get('session')->getFlashBag()->add('info', 'document supprimé avec succès');
 

@@ -1,7 +1,7 @@
 <div id="afficheListNouvelle">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    {% for nouvelle in beneficiaire.nouvelle|reverse|slice(0,5) %}
-        <div class="panel panel-default">
+    {% for nouvelle in beneficiaire.nouvelle|reverse %}
+        <div class="panel panel-default {{ (loop.index0 > 2) ? 'hiddenNews' : '' }}" style="{{ (loop.index0 > 2) ? 'display:none' : '' }}" >
             <div class="panel-heading" role="tab" id="heading_nouvelle_{{ loop.index }}">
                 <h4 class="panel-title" style="font-size:12px">
                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_nouvelle_{{ loop.index }}" aria-expanded="false" aria-controls="collapse_nouvelle_{{ loop.index }}">
@@ -13,7 +13,7 @@
                 <div class="panel-body">
                     
                     <div class="nouvelle_remove_modify">
-                    	{{ nouvelle.message | capitalize }}<br><br>
+                    	{{ nouvelle.message | nl2br }}<br><br>
                     	<div class='row'>
                     		<a class='col-xs-1' href="#" style="width:initial" title="Modifier"><span data-toggle="modal" data-target="#myModalNewsModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span></a>
 	                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
@@ -43,5 +43,8 @@
             </div>
         </div>
     {% endfor %}
+    {% if beneficiaire.nouvelle | length > 3 %}
+    	<button class="voirPlusNouvelle" style="margin-top: 6px;">Voir +/-</button>
+    {% endif %}
     </div>
 </div>

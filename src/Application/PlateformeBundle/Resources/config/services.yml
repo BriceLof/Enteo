@@ -17,6 +17,7 @@ services:
 
     application_plateforme.document:
         class: Application\PlateformeBundle\Services\Document
+        arguments: ["@doctrine.orm.entity_manager", "@knp_snappy.pdf"]
 
     application_plateforme.calendar:
         class: Application\PlateformeBundle\Services\Calendar
