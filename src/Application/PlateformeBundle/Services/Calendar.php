@@ -133,7 +133,7 @@ class Calendar
 
         if($form['typerdv']->getData() == 'distantiel'){
             $historique->setBureau(null);
-            $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
+            $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary();
         }
 
         if($historique->getSummary() == "Autre" && $historique->getAutreSummary() != ""){
@@ -156,11 +156,11 @@ class Calendar
             $bureau->setNombureau($form['nomBureau']->getData());
             $this->em->persist($bureau);
             $historique->setBureau($bureau);
-            $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
+            $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary().', '.$historique->getBureau()->getVille()->getNom();
         }else{
             //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
             if($historique->getBureau() != null) {
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
+                $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary().', '.$historique->getBureau()->getVille()->getNom();
                 if ($historique->getBureau()->getCalendrierid() != ""){
                     if ($historique->getEventIdBureau() != "" or $historique->getEventIdBureau() != null){
                         $eventBureauUpdated = $this->calendar->addEvent($historique->getBureau()->getCalendrierid(), $historique->getEventIdBureau(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
