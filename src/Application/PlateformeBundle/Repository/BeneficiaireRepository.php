@@ -51,7 +51,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param $ville
      * @return \Doctrine\ORM\NativeQuery
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri, $ville = null)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');

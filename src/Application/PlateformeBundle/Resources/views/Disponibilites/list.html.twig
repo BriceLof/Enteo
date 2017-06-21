@@ -13,7 +13,7 @@
             <th>Heure</th>
             <th>Actions</th>
         </tr>
-        {% for disponibilite in beneficiaire.consultant.disponibilite %}
+        {% for disponibilite in tab %}
             {% if "now"|date('Ymd') < disponibilite.dateDebuts|date('Ymd') %}
                 <tr>
                     <td>{{ disponibilite.dateDebuts|date("d/m/Y") }}</td>

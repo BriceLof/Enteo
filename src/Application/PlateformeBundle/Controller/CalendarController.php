@@ -100,60 +100,7 @@ class CalendarController extends Controller
             $historique = $form->getData();
             $em = $this->getDoctrine()->getManager();
 
-            $location = "";
-
-            if($form['typerdv']->getData() == 'distantiel'){
-                $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
-            }
-
-            if($historique->getAutreSummary() != null){
-                $historique->setSummary($historique->getAutreSummary());
-            }
-
-            $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
-            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
-            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]->getData(),
-                ));
-                $bureau = new Bureau();
-                $bureau->setTemporaire(true);
-                $bureau->setVille($ville);
-                $bureau->setAdresse($form['adresseBureau']->getData());
-                $bureau->setNombureau($form['nomBureau']->getData());
-                $em->persist($bureau);
-                $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-            }else{
-                //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-                if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        $historique->setEventIdBureau($eventBureau['id']);
-                    }
-                }
-            }
-
-            if ($historique->getBureau() != null ){
-                $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
-            }
-
-            //utiliser event pour jouer avec l'evenement
-            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-            $historique->setConsultant($beneficiaire->getConsultant());
-            $historique->setEventId($event['id']);
-            $historique->setDateFin($dateFin);
-            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-            $historique->setDateDebut($date);
-
-            $em->persist($historique);
-            $em->flush();
+            $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant);
 
             $em->persist($historique);
             $em->flush();
@@ -214,62 +161,13 @@ class CalendarController extends Controller
             //recuperation du bénéficiaire
             $beneficiaire = $historique->getBeneficiaire();
 
-            $location = "";
             //recuperation du consultant renseigné dans le formulaire
             //si le consultant n'est pas celui du bénéficiaire ou il n'a pas encore de consultant, on fait comment???
             ////////////A FAIRE/////////////
             $consultant = $historique->getConsultant();
             $em = $this->getDoctrine()->getManager();
 
-            if($form['typerdv']->getData() == 'distantiel'){
-                $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
-            }
-
-            if($historique->getAutreSummary() != null){
-                $historique->setSummary($historique->getAutreSummary());
-            }
-
-            $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
-            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
-            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]->getData(),
-                ));
-                $bureau = new Bureau();
-                $bureau->setTemporaire(true);
-                $bureau->setVille($ville);
-                $bureau->setAdresse($form['adresseBureau']->getData());
-                $bureau->setNombureau($form['nomBureau']->getData());
-                $em->persist($bureau);
-                $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-            }else{
-                //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-                if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        $historique->setEventIdBureau($eventBureau['id']);
-                    }
-                }
-            }
-
-            if ($historique->getBureau() != null ){
-                $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
-            }
-
-            //utiliser event pour jouer avec l'evenement
-            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-            $historique->setConsultant($beneficiaire->getConsultant());
-            $historique->setEventId($event['id']);
-            $historique->setDateFin($dateFin);
-            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-            $historique->setDateDebut($date);
+            $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant);
 
             $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous ajouté avec succès');
@@ -392,7 +290,6 @@ class CalendarController extends Controller
         die;
     }
 
-
     public function showEventAction(Request $request)
     {
         $this->getClientAction($request);
@@ -509,79 +406,9 @@ class CalendarController extends Controller
                 $historique->setEventIdBureau(null);
             }
 
-            $location = "";
+            $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant, true, $old_rdv);
 
-            if($form['typerdv']->getData() == 'distantiel'){
-                $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
-            }
-
-            if($historique->getSummary() == "Autre"){
-                $historique->setSummary($historique->getAutreSummary());
-            }
-
-            $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
-            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
-            if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel' && $historique->getBureau() == null){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]->getData(),
-                ));
-                $bureau = new Bureau();
-                $bureau->setTemporaire(true);
-                $bureau->setVille($ville);
-                $bureau->setAdresse($form['adresseBureau']->getData());
-                $bureau->setNombureau($form['nomBureau']->getData());
-                $em->persist($bureau);
-                $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            }else{
-                //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-                if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != "") {
-                        if ($historique->getEventIdBureau() != null){
-                            $eventBureauUpdated = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $historique->getEventIdBureau(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        }else{
-                            $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                            $historique->setEventIdBureau($eventBureau['id']);
-                        }
-                    }
-                }
-            }
-
-
-            if ($historique->getBureau() != null ){
-                $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
-            }
-
-            //utiliser event pour jouer avec l'evenement
-            $eventUpdated = $googleCalendar->updateEvent($calendarId, $eventId, $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-            $historique->setDateDebut($date);
-
-            $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique, $old_rdv);
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
-
-            if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
-                $newHistorique = clone $historique;
-                $em->refresh($historique);
-                $historique->setCanceled(2);
-                $em->persist($newHistorique);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
-                    'beneficiaire' => $beneficiaire,
-                    'id' => $beneficiaire->getId(),
-                )));
-
-            }else{
-                $em->persist($historique);
-                $em->flush();
-            }
 
             //returne à n'importe lequel url eventuellement au show agenda??
             //à changer peut être?/////////////////////////////////////////////////

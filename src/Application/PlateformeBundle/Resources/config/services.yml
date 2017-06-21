@@ -11,9 +11,6 @@ services:
         class: Application\PlateformeBundle\Validator\Constraints\DateRangeValidator
         tags:
             - { name: validator.constraint_validator, alias: daterange_validator }
-            
-    application_google_calendar:
-        class: Application\PlateformeBundle\Services\GoogleCalendar
 
     application_plateforme.document:
         class: Application\PlateformeBundle\Services\Document
@@ -21,6 +18,7 @@ services:
 
     application_plateforme.calendar:
         class: Application\PlateformeBundle\Services\Calendar
+        arguments: ["@doctrine.orm.entity_manager", "@fungio.google_calendar", "@application_plateforme.statut.mail.mail_rv_agenda"]
 
     application_plateforme.twig.document.extesion:
         class: Application\PlateformeBundle\Twig\DocumentExtension
