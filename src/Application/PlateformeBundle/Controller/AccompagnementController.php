@@ -68,6 +68,14 @@ class AccompagnementController extends Controller
         $editForm = $this->createEditForm($accompagnement);
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
+
+            $financeur = $accompagnement->getFirstFinanceur();
+            if($financeur != null){
+                $financeur->setNom($beneficiaire->getTypeFinanceur());
+                $financeur->setOrganisme($beneficiaire->getOrganisme());
+                $em->persist($financeur);
+            }
+
             $beneficiaire->setAccompagnement($accompagnement);
             $em->persist($beneficiaire);
             foreach ($accompagnement->getFinanceur() as $financeur){

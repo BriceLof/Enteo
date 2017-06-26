@@ -1,9 +1,82 @@
-<div class="row">
-    <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;">
-        <b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b>
-    </h4>
-</div>
+{% if results is not defined %}
+    <div class="row">
+        <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;">
+            <b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b>
+        </h4>
+    </div>
+{% else %}
+    {% if page == '1' %}
+        <div class="row">
+            <h4 class="col-md-4" style="margin-top: -20px;margin-bottom: 26px;">
+                <b><span class="text-primary">{{ nombreBeneficiaire }}</span> Bénéficiaires</b>
+                <span id="resultat_recherche_ajax"></span>
+            </h4>
+        </div>
+    {% endif %}
+{% endif %}
+<span id="indication_page_{{ page }}" data-page="{{ page }}" data-total="{{ nbPages }}" ></span>
 {% for beneficiaire in liste_beneficiaire %}
-    {% include "ApplicationPlateformeBundle:Home:infoBeneficiaire.html.twig" %}
+    <div class="row tab-home-benef" id="tab-home-benef{{ beneficiaire.id }}">
+        <div class="table-responsive col-md-12" id="info_beneficiaire{{ beneficiaire.id }}">
+            {% include "ApplicationPlateformeBundle:Home:infoBeneficiaire.html.twig" %}
+        </div>
+        <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new_{{ beneficiaire.id }}"
+               tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header my_header_modal">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">MAJ Bénéficiaire</h4>
+                        <p>
+                            <span id="nom_prenom_beneficiaire"><b>{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize }}</b><br></span>
+                            {% if beneficiaire.ville is not null %}
+                                {{ beneficiaire.ville.nom|capitalize }}
+                            {% endif %}
+                        </p>
+                        <!-- ID du statut de la dernière news du bénéficiaire. On s'en sert dans js pour avoir le statut suivant -->
+                        <input type="hidden" value="{{ beneficiaire.news[beneficiaire.news | length -1].statut.id }}" class="statutIDCurrent"/>
+                    </div>
+
+                    <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
+                </div>
+            </div>
+        </aside>
+        <aside class="modal fade block_formulaire_ajout_nouvelle"
+               id="block_formulaire_ajout_nouvelle_{{ beneficiaire.id }}" tabindex="-1" role="dialog"
+               aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header my_header_modal">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Ajout d'une News |
+                            <span class="text-danger">{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize }}</span>
+                        </h4>
+                    </div>
+
+                    <!-- Le fomulaire déplacé via javascript viendra se loger ici -->
+                </div>
+            </div>
+        </aside>
+        <aside class="modal fade" id="voirPlusNouvelle_{{ beneficiaire.id }}" tabindex="-1" role="dialog"
+               aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">News |
+                            <span class="text-danger">{{ beneficiaire.civiliteConso|capitalize ~ ' ' ~ beneficiaire.nomConso|capitalize ~ ' ' ~ beneficiaire.prenomConso|capitalize }}</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body" id="listeNouvelle_{{ beneficiaire.id }}">
+
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+    <br>
 {% endfor %}
 

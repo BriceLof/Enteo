@@ -13,6 +13,7 @@ use Application\PlateformeBundle\Form\ConsultantType;
 use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\ProjetType;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -267,7 +268,7 @@ class BeneficiaireController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    public function searchAction(Request $request,$page = 1 )
+    public function searchAction(Request $request)
     {
         $idUtilisateur = null;
 
@@ -284,37 +285,23 @@ class BeneficiaireController extends Controller
 
         if ($form->isValid()){
 
-            $triAlpha = (int)$form['triAlpha']->getData();
-            $triDate = (int)$form['triDate']->getData();
-
-//            var_dump('c alpha: '.$triAlpha);
-//            var_dump('c date: '.$triDate);
-
-            if (!is_null($form["villeMer"]["nom"]->getData())) {
-                $em = $this->getDoctrine()->getManager();
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'id' => $form["villeMer"]["nom"]->getData(),
-                ));
-                $beneficiaire->setVilleMer($ville);
-            }
+            $tri = (int)$form['tri']->getData();
+            $page = (int)$form['page']->getData();
+            $ville = $form['ville']->getData();
 
             $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
-
-            if(!is_null($form["villeMer"]["cp"]->getData())){
-                $codePostal = $form["villeMer"]["cp"]->getData();
-            }
-
-            /*if(!is_null($form['dateDebut']->getData())){
-                $dateDebut = $form['dateDebut']->getData();
-            }
-            if(!is_null($form['dateFin']->getData())){
-                $dateFin = $form['dateFin']->getData();
-            }*/
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $triAlpha, $triDate);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville);
             $results = $query->getResult();
+
+            $start = 50*$page;
+
+            $beneficiaires = array_slice($results,$start,50);
+            $nbBeneficiaire = count($results);
+
+            $page++;
 
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
@@ -325,14 +312,14 @@ class BeneficiaireController extends Controller
             $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
 
             return $this->render('ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig',array(
-                'liste_beneficiaire' => $results,
+                'liste_beneficiaire' => $beneficiaires,
                 'form' => $form->createView(),
-                'results' => $results,
+                'results' => 'oui',
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
                 'form_news'             => $formNews->createView(),
                 'form_nouvelle'             => $form_nouvelle->createView(),
-                'nombreBeneficiaire'    => count($results)
+                'nombreBeneficiaire'    => $nbBeneficiaire
             ));
         }
 
@@ -398,7 +385,7 @@ class BeneficiaireController extends Controller
             $origineBene2 =$form->get('origineMerComment')->getData();
             $origineBene3 = "";
 
-            if($form->get('origineMerDetailComment')->getData() != "" )
+            if($form->get('origineMerDetailComment')->getData() != "" && $form->get('origineMerComment')->getData() == 'payant' )
                 $origineBene3 ="_".$form->get('origineMerDetailComment')->getData();
 
             $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2.$origineBene3);
@@ -434,6 +421,12 @@ class BeneficiaireController extends Controller
         ));
     }
 
+    /**
+     * la fonction qui permet de faire un print dans la fiche bénéficiaire
+     *
+     * @param $id
+     * @return Response
+     */
     public function printAction($id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);

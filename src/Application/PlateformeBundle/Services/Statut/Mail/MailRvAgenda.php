@@ -7,7 +7,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
     // alerteRdvAgenda(), le 3e param sert à savoir si c'est un mail après une modification de rdv 
     public function alerteRdvAgenda($beneficiaire, $rdv, $old_rdv = null )
     {   
-	$consultant = $beneficiaire->getConsultant();
+		$consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
 		
@@ -76,7 +76,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         if($typeRdv == "presenciel" || $typeRdv == "presentiel"){ 
             $message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
             if(!is_null($old_rdv))
-                $message .= "Votre rendez-vous initilament prévu le ".$old_rdv->format('d/m/Y à H:i')." a été reporté au ";
+                $message .= "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été reporté au ";
             else
                 $message .= "Je vous confirme votre rendez-vous le ";
             
@@ -107,7 +107,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         }else{
         	$message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
             if(!is_null($old_rdv))
-                $message .= "Votre rendez-vous initilament prévu le ".$old_rdv->format('d/m/Y à H:i')." a été modifié.<br><br>";
+                $message .= "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été modifié.<br><br>";
                  
             $message .= "Je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())." ".$sentenceByRv.".<br><br><b>".
                 ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précise</u></b>
@@ -147,5 +147,43 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
     
-    
+    public function alerteRdvAgendaSupprime($beneficiaire, $old_rdv)
+    {
+    	$consultant = $beneficiaire->getConsultant();	
+    	$message = "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été annulé. <br><br>
+    				Merci de rappeler votre Consultant VAE pour fixer un nouveau rendez-vous.
+    				
+					<table style='margin-top:-50px;'>
+						<tr>
+							<td><u>Votre consultant : </u></td>
+							<td style='display:block;margin-top:64px;margin-left:27px;'>
+								<b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
+								Cabinet ENTHEOR <br>
+								Tél: ".$consultant->getTel1()."<br>
+								Email : ".$consultant->getEmail()."
+							</td>
+						</tr>
+					</table>";
+		
+		$subject = "Rdv Supprimé";			
+		$from = "audrey.azoulay@entheor.com";
+        $to =  $beneficiaire->getEmailConso();
+        $cc = array($consultant->getEmail());
+        $bcc = array(
+            "support@iciformation.fr" => "Support",
+            "f.azoulay@entheor.com" => "Franck Azoulay", 
+            "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+            "christine.clement@entheor.com" => "Christine Clement",
+            "audrey.azoulay@entheor.com" => "Audrey Azoulay");
+            
+        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+            
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => "7"
+        ));
+		
+		return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+	} 
 }

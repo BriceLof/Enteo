@@ -47,18 +47,35 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param $fin
      * @param null $idUtilisateur
      * @param bool $bool
-     * @param $triAlpha
-     * @param $triDate
+     * @param $tri
+     * @param $ville
      * @return \Doctrine\ORM\NativeQuery
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $triAlpha = 0, $triDate = 0)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
-        //$rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', $beneficiaire, array( 'id' => 'vid' ));
+        if(!is_null($ville)) {
+            $rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', 'ville', array(
+                'id' => 'v_id',
+                'ville' => 'ville_nom'
+            ));
+        }
 
-        $query = 'SELECT b.* FROM beneficiaire b WHERE 1';
+        $query = 'SELECT b.* FROM beneficiaire b';
         $params = array();
+
+        if(!is_null($ville)) {
+            $query .= ' INNER JOIN ville v ON b.ville_mer_id = v.id';
+            $params['villeMerId'] = $ville;
+        }
+
+        $query .= ' WHERE 1';
+
+        if(!is_null($ville)) {
+            $query .= ' AND v.ville LIKE :villeNom';
+            $params['villeNom'] = '%'.$ville.'%';
+        }
 
         if(!is_null($beneficiaire->getNomConso())) {
             $query .= ' AND b.nom_conso LIKE :nomConso';
@@ -68,11 +85,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if(!is_null($beneficiaire->getPrenomConso())) {
             $query .= ' AND b.prenom_conso LIKE :prenomConso';
             $params['prenomConso'] = "%".$beneficiaire->getPrenomConso()."%";
-        }
-
-        if(!is_null($beneficiaire->getVilleMer())) {
-            $query .= ' AND b.ville_mer_id = :villeMerId';
-            $params['villeMerId'] = $beneficiaire->getVilleMer()->getId();
         }
 
         if(!is_null($beneficiaire->getEmailConso())){
@@ -105,40 +117,20 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['refFinanceur'] = '%'.$beneficiaire->getRefFinanceur().'%';
         }
 
-        if($triAlpha === 1){
-            $query .= ' ORDER BY b.nom_conso';
-            if ($triDate === 1 ){
-                $query .= ', b.date_heure_mer';
-            }else{
-                if ($triDate === 2){
-                    $query .= ', b.date_heure_mer DESC';
-                }
-            }
-        }else{
-            if($triAlpha === 2){
-                $query .= ' ORDER BY b.nom_conso DESC';
-                if ($triDate === 1 ){
-                    $query .= ', b.date_heure_mer';
-                }else{
-                    if ($triDate === 2){
-                        $query .= ', b.date_heure_mer DESC';
-                    }
-                }
-            }else{
-                if($triDate === 1){
-                    $query .= ' ORDER BY b.date_heure_mer';
-                }else{
-                    if($triDate === 2){
-                        $query .= ' ORDER BY b.date_heure_mer DESC';
-                    }
-                }
-            }
+        if ($tri === 0) {
+            $query .= ' ORDER BY b.id DESC';
+        }elseif ($tri === 1){
+            $query .= ' ORDER BY b.nom_conso ASC';
+        }elseif ($tri === 2){
+            $query .= ' ORDER BY b.nom_conso DESC';
+        }elseif ($tri === 3){
+            $query .= ' ORDER BY b.date_heure_mer ASC';
+        }elseif ($tri === 4){
+            $query .= ' ORDER BY b.date_heure_mer DESC';
         }
 
         if ($bool == true){
             $query .= ' LIMIT 10';
-        }else{
-            $query .= ' LIMIT 50';
         }
 
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);

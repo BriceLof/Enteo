@@ -8,21 +8,18 @@
                 {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:search")) }}
             </div>
             <div id="tri">
-                <p>Trier par : </p>
                 <div>
-                    <label for="select_tri_alpha">Nom</label>
-                    <select onchange="tri(this)" name="select_tri_alpha" id="select_tri_alpha">
+                    <label for="select_tri_alpha">Trie : </label>
+                    <select onchange="tri(this)" name="select_tri_alpha" id="select_tri_alpha" class="selectpicker">
                         <option value="0"></option>
-                        <option value="1">A->Z</option>
-                        <option value="2">Z->A</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="select_tri_date" id="label_select_tri_date">Date</label>
-                    <select onchange="tri(this)" name="select_tri_date" id="select_tri_date">
-                        <option value="0"></option>
-                        <option value="1">ASC.</option>
-                        <option value="2">DESC.</option>
+                        <optgroup label="Nom">
+                            <option value="1">A - Z</option>
+                            <option value="2">Z - A</option>
+                        </optgroup>
+                        <optgroup label="Date">
+                            <option value="3">- au + récents</option>
+                            <option value="4">+ au - récents</option>
+                        </optgroup>
                     </select>
                 </div>
             </div>
@@ -40,9 +37,9 @@
     {% endfor %}
 
     {% if liste_beneficiaire | length > 0 %}
-        <section class="container-fluid section-tab-home-benef">
-            <div id="section_home">
-            {% include "ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig" %}
+        <section class="container-fluid section-tab-home-benef" id="section-tab-home-benef">
+            <div id="section_home_page_1" data-page="1">
+                {% include "ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig" %}
             </div>
         </section>
 
@@ -82,19 +79,12 @@
             </form>
         </div>
         <div id="pagination" style="text-align:center">
-            <ul class="pagination">
-                {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
-                {% for p in range(1, nbPages) %}
-                    <li{% if p == page %} class="active"{% endif %}>
-                        <a href="{{ path('application_plateforme_homepage', {'page': p}) }}">{{ p }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% include "ApplicationPlateformeBundle:Home:pagination.html.twig" %}
         </div>
     {% else %}
         <div class="jumbotron">
             {% if results is defined %} 
-                {% if results | length < 1 %} <p class="">Aucun résultat trouvé</p> {% endif %}
+                <p class="">Aucun résultat trouvé</p>
             {% else %}
                 <p class="">Vous n'avez pas encore de bénéficiaires attribués</p>
             {% endif %}

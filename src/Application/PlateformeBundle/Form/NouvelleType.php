@@ -29,6 +29,7 @@ class NouvelleType extends AbstractType
             ->add('message', TextareaType::class, array(
                 'label' => 'Message :', 
                 'required' => true,
+                'attr' => array('rows' => '5')
             )) 
             ->add('Enregistrer', SubmitType::class, array(
                 'attr' => array('class' => 'btn  btn-primary'),

@@ -51,7 +51,7 @@ class CalendarController extends Controller
     }
 
     /**
-     *
+     * cette fonction permet  d'ajouter un evenement (RDV) dans l'agenda d'un consultant et celui du bureau si celle si en a un
      *
      * @param Request $request
      * @param $id (beneficiaire)
@@ -100,60 +100,7 @@ class CalendarController extends Controller
             $historique = $form->getData();
             $em = $this->getDoctrine()->getManager();
 
-            $location = "";
-
-            if($form['typerdv']->getData() == 'distantiel'){
-                $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
-            }
-
-            if($historique->getAutreSummary() != null){
-                $historique->setSummary($historique->getAutreSummary());
-            }
-
-            $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
-            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
-            if ($form['autreBureau']->getData() == true){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]->getData(),
-                ));
-                $bureau = new Bureau();
-                $bureau->setTemporaire(true);
-                $bureau->setVille($ville);
-                $bureau->setAdresse($form['adresseBureau']->getData());
-                $bureau->setNombureau($form['nomBureau']->getData());
-                $em->persist($bureau);
-                $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-            }else{
-                //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-                if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        $historique->setEventIdBureau($eventBureau['id']);
-                    }
-                }
-            }
-
-            if ($historique->getBureau() != null ){
-                $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
-            }
-
-            //utiliser event pour jouer avec l'evenement
-            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-            $historique->setConsultant($beneficiaire->getConsultant());
-            $historique->setEventId($event['id']);
-            $historique->setDateFin($dateFin);
-            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-            $historique->setDateDebut($date);
-
-            $em->persist($historique);
-            $em->flush();
+            $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant);
 
             $em->persist($historique);
             $em->flush();
@@ -175,7 +122,15 @@ class CalendarController extends Controller
         ));
     }
 
-
+    /**
+     * cette fonction permet d'ajouter un evenement dans un agenda mais sauf que le formulaire n'est pas dédié a un seul bénéficiaire
+     *
+     * @param Request $request
+     * @param null $id
+     * @param null $beneficiaire
+     * @param null $consult
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function adminAddEventAction(Request $request, $id=null, $beneficiaire = null, $consult = null){
         //recuperation du service
         $googleCalendar = $this->get('fungio.google_calendar');
@@ -206,62 +161,13 @@ class CalendarController extends Controller
             //recuperation du bénéficiaire
             $beneficiaire = $historique->getBeneficiaire();
 
-            $location = "";
             //recuperation du consultant renseigné dans le formulaire
             //si le consultant n'est pas celui du bénéficiaire ou il n'a pas encore de consultant, on fait comment???
             ////////////A FAIRE/////////////
             $consultant = $historique->getConsultant();
             $em = $this->getDoctrine()->getManager();
 
-            if($form['typerdv']->getData() == 'distantiel'){
-                $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
-            }
-
-            if($historique->getAutreSummary() != null){
-                $historique->setSummary($historique->getAutreSummary());
-            }
-
-            $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
-            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
-            if ($form['autreBureau']->getData() == true){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]->getData(),
-                ));
-                $bureau = new Bureau();
-                $bureau->setTemporaire(true);
-                $bureau->setVille($ville);
-                $bureau->setAdresse($form['adresseBureau']->getData());
-                $bureau->setNombureau($form['nomBureau']->getData());
-                $em->persist($bureau);
-                $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-            }else{
-                //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-                if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        $historique->setEventIdBureau($eventBureau['id']);
-                    }
-                }
-            }
-
-            if ($historique->getBureau() != null ){
-                $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
-            }
-
-            //utiliser event pour jouer avec l'evenement
-            $event = $googleCalendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-            $historique->setConsultant($beneficiaire->getConsultant());
-            $historique->setEventId($event['id']);
-            $historique->setDateFin($dateFin);
-            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-            $historique->setDateDebut($date);
+            $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant);
 
             $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique);
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous ajouté avec succès');
@@ -287,6 +193,9 @@ class CalendarController extends Controller
 
     /**
      * AJAX pour verifier si le créneau entré est elle occupé ou pas
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
     public function ajaxBusySlotAction(Request $request){
         $bool = false;
@@ -381,7 +290,6 @@ class CalendarController extends Controller
         die;
     }
 
-
     public function showEventAction(Request $request)
     {
         $this->getClientAction($request);
@@ -436,6 +344,14 @@ class CalendarController extends Controller
         die;
     }
 
+    /**
+     * cette fonction permet d'editer un evenement sur l'agenda d'un consultant.
+     * faut faire attention car elle modifie aussi les entrées sur l'agendas des bureaux
+     *
+     * @param Request $request
+     * @param $id (historique)
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function editEventAction(Request $request, $id)
     {
         //recuperation du service
@@ -458,6 +374,7 @@ class CalendarController extends Controller
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
         $beneficiaire = $historique->getBeneficiaire();
         $historique->setUser($this->getUser());
+
         
         $old_rdv = $historique->getDateDebut();
         
@@ -489,59 +406,8 @@ class CalendarController extends Controller
                 $historique->setEventIdBureau(null);
             }
 
-            $location = "";
+            $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant, true, $old_rdv);
 
-            if($form['typerdv']->getData() == 'distantiel'){
-                $historique->setBureau(null);
-                $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
-            }
-
-            if($historique->getSummary() == "Autre"){
-                $historique->setSummary($historique->getAutreSummary());
-            }
-
-            $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
-            $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-            $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
-            if ($form['autreBureau']->getData() == true){
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'nom' => $form["ville"]->getData(),
-                ));
-                $bureau = new Bureau();
-                $bureau->setTemporaire(true);
-                $bureau->setVille($ville);
-                $bureau->setAdresse($form['adresseBureau']->getData());
-                $bureau->setNombureau($form['nomBureau']->getData());
-                $em->persist($bureau);
-                $historique->setBureau($bureau);
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
-            }else{
-                //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-                if($historique->getBureau() != null) {
-                    $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
-                    if ($historique->getBureau()->getCalendrierid() != ""){
-                        $eventBureau = $googleCalendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
-                        $historique->setEventIdBureau($eventBureau['id']);
-                    }
-                }
-            }
-
-            if ($historique->getBureau() != null ){
-                $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
-            }
-
-            //utiliser event pour jouer avec l'evenement
-            $eventUpdated = $googleCalendar->updateEvent($calendarId, $eventId, $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-            $historique->setDateDebut($date);
-
-            $em->persist($historique);
-            $em->flush();
-          
-            $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgenda($beneficiaire, $historique, $old_rdv);
             $this->get('session')->getFlashBag()->add('info', 'Rendez-vous modifié avec succès');
 
             //returne à n'importe lequel url eventuellement au show agenda??
@@ -567,7 +433,15 @@ class CalendarController extends Controller
         ));
     }
 
+    /**
+     * supprime un evenement sur l'agenda du consultant et celui du bureau si celle ci existe
+     *
+     * @param Request $request
+     * @param $id (historique
+     * @return RedirectResponse
+     */
     public function deleteEventAction(Request $request,$id){
+
         //supprimer l'historique et l'evenement sur google agenda
         $googleCalendar = $this->get('fungio.google_calendar');
 
@@ -587,31 +461,40 @@ class CalendarController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
+		$old_rdv = $historique->getDateDebut();
 
         if (!$historique) {
             throw $this->createNotFoundException('Unable to find Document.');
         }
 
         $beneficiaire = $historique->getBeneficiaire();
-        $historique->setEventarchive('on');
 
-        $calendarId = $historique->getConsultant()->getCalendrierid();
-        $eventId = $historique->getEventId();
-
-        if ($historique->getBureau() != null){
-            if($historique->getEventIdBureau() != null){
-                $calendarBureauId = $historique->getBureau()->getCalendrierid();
-                $eventBureauId = $historique->getEventIdBureau();
-                $googleCalendar->deleteEvent($calendarBureauId,$eventBureauId);
-            }
+        if ($historique->getDateDebut() > new \DateTime() && $historique->getDateDebut() < (new \DateTime())->modify('+1 day')){
+            $historique->setCanceled(1);
         }
+        else {
+            $historique->setEventarchive('on');
 
-        $googleCalendar->deleteEvent($calendarId,$eventId);
+            $calendarId = $historique->getConsultant()->getCalendrierid();
+            $eventId = $historique->getEventId();
+
+            if ($historique->getBureau() != null) {
+                if ($historique->getEventIdBureau() != null) {
+                    $calendarBureauId = $historique->getBureau()->getCalendrierid();
+                    $eventBureauId = $historique->getEventIdBureau();
+                    $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
+                }
+            }
+
+            $googleCalendar->deleteEvent($calendarId, $eventId);
+        }
 
         $em->persist($historique);
         $em->flush();
 
+        $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgendaSupprime($beneficiaire, $old_rdv);
         $this->get('session')->getFlashBag()->add('info', 'historique supprimé avec succès');
+
 
         return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
             'id' => $beneficiaire->getId(),

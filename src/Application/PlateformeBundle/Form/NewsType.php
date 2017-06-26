@@ -32,7 +32,8 @@ class NewsType extends AbstractType
                                 ->andWhere('s.slug != :slug2')
                                 ->andWhere('s.slug != :slug3')
                                 ->andWhere('s.slug != :slug4')
-                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation'))
+								->andWhere('s.slug != :slug5')
+                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation','slug5' => 'reglement'))
                             ;
                 },
                 'attr' => array(

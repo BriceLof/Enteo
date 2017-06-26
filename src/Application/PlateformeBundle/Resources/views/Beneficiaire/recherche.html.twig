@@ -2,23 +2,23 @@
     <div class="container-fluid">
         
         <div class="row">
-            <span class="col-md-1">{{ form_widget(form.nomConso) }}</span>
-            <span class="col-md-1">{{ form_widget(form.prenomConso) }}</span>
+            <span class="col-md-2">{{ form_widget(form.nomConso) }}</span>
+            <span class="col-md-2">{{ form_widget(form.prenomConso) }}</span>
             <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
             
             {% set style = "display:none" %}
          	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %} {% set style = "display:block" %} {% endif %}
             <span style="{{ style }}"class="col-md-2">{{ form_widget(form.consultant) }}</span>
             <span class="col-md-1">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
-            
-            <span class="col-md-1">{{ form_widget(form.villeMer.cp, { 'attr': {'placeholder': 'Code postal' }}) }}</span>
-            <span class="col-md-2">{{ form_widget(form.villeMer.nom, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
 
+            <span class="col-md-1">{{ form_widget(form.ville, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
 
             <span class="col-md-1">{{ form_widget(form.submit) }}</span>
-            <span class="col-md-1">{{ form_rest(form) }}</span>
+            
+            <a class='col-md-1 btn btn-default' href="{{ path('application_plateforme_homepage') }}">Reset</a>
+            {{ form_rest(form) }}
         </div>
-        <div class="text-right" style="margin-bottom: -11px"><a href="{{ path('application_plateforme_homepage') }}">Reset</a></div>
+       
         <div class="row" id="rechercherPlus">
         </div>
 {#

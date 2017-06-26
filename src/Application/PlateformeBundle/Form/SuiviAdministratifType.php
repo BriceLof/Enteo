@@ -30,7 +30,8 @@ class SuiviAdministratifType extends AbstractType
                                 ->orWhere('s.slug = :slug2')
                                 ->orWhere('s.slug = :slug3')
                                 ->orWhere('s.slug = :slug4')
-                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation'))
+								->orWhere('s.slug = :slug5')
+                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation','slug5' => 'reglement'))
                             ;
                 },
             ))

@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Services\Statut\Cron;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Historique;
+use Application\PlateformeBundle\Entity\DetailStatut;
 use Application\UsersBundle\Entity\Users;
 
 class Rv extends \Application\PlateformeBundle\Services\Mailer
@@ -222,8 +223,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'consultant' => $consultant,
             'beneficiaires' => $beneficiaires,
         ));
-//        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
+        //$this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
@@ -244,8 +245,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'consultant' => $consultant,
             'beneficiaires' => $beneficiaires,
         ));
-//        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
-        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
+        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
+        //$this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
     }
     
     // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 
@@ -408,5 +409,69 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             }   
         }
     }
+    
+    
+    /* Alerte automatique à destination des gestionnaires admn (et copie les administrateurs)
+	*  3 semaines après passage au statut adm = Financement / Attente Accord si le statut n'a pas bouger depuis 
+	*/
+	public function rappelFinancement()
+	{
+		//  Récupération des suivis adminitratif antérieur à la date jour et ayant comme detail statut "attente accord" 		
+		$date = new \DateTime("NOW");	
+		$detailStatut =  $this->em->getRepository("ApplicationPlateformeBundle:DetailStatut")->findOneByDetail('Attente accord');
+		$repoSuiviAdm = $this->em->getRepository("ApplicationPlateformeBundle:SuiviAdministratif");
+		$suivis = $repoSuiviAdm->findBeforeDateAndDetailStatut($date, $detailStatut);
+		
+		$adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
+        $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
+        $listeAdministrateurs = array();
+        $listeGestionnaires = array();
+        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
+		
+		$message = "Bonjour Virgine,<br><br>
+							Cela fait 3 semaines que ce[s] dossier[s] [est] [sont] en statut : 'Financement - Attente accord'<br> 
+							Il faut secouer les Financeurs [du] [des] dossier[s] suivant[s] :<br>";
+		
+		$envoiMail = array("no");					
+		foreach($suivis as $suivi)
+		{
+			$beneficiaire = $suivi->getBeneficiaire();	
+			$dateSuivi = $suivi->getDate();
+			
+			$interval = $date->diff($dateSuivi);
+			// nombre de jour entre les 2 dates 
+			$nbJour = $interval->format('%R%a');
+			// Si il y a 3 semaines entre les deux dates (21 jours)
+			//var_dump($nbJour);	
+			if($nbJour == "-21"){
+				// Il y a t-il un suivi administratif ajouté après le financement attente accord, uniquement si ce n'est pas le cas, on envoi le mail 
+				$suiviBeneficiaire = $repoSuiviAdm->findByBeneficiaireAndDate($beneficiaire, $dateSuivi);
+				if(count($suiviBeneficiaire) == 0 ){
+					$envoiMail[] = "yes";
+					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - [".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."]</p>";
+				}
+			}
+		}
+		
+		// On peut envoyer le mail 
+		if(in_array("yes", $envoiMail)){		
+			$ref = "4";
+			$subject = "Financement - Attente accord ";
+	        $from = "audrey.azoulay@entheor.com";
+	        $to = $listeGestionnaires;
+	        $cc = $listeAdministrateurs;
+	        $bcc = "support@iciformation.fr";
+			
+			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
+	
+	        $body = $this->templating->render($template, array(
+	            'sujet' => $subject ,
+	            'message' => $message,
+	            'reference' => $ref
+	        ));
+		 	$this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+		}
+	}
 }
 ?>

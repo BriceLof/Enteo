@@ -54,9 +54,14 @@ class RechercheBeneficiaireType extends AbstractType
                     'class' => ''
                 )
             ))
-            ->add('villeMer', VilleType::class, array(
-                'label' => 'Ville de MenR',
-                'required' => false,
+
+            ->add('ville', TextType::class, array(
+                "mapped" => false,
+                "required" => false,
+                'attr' => array(
+                    'placeholder' => 'Veuillez saisir la ville',
+                    'autocomplete' => 'off'
+                )
             ))
 
             ->add('refFinanceur', TextType::class, array(
@@ -64,42 +69,16 @@ class RechercheBeneficiaireType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('triAlpha', HiddenType::class, array(
+            ->add('tri', HiddenType::class, array(
                 'mapped' => false,
                 'data' => 0
             ))
 
-            ->add('triDate', HiddenType::class, array(
+            ->add('page', HiddenType::class, array(
                 'mapped' => false,
                 'data' => 0
             ))
-           
-            /*->add('dateDebut', DateType::class, array(
-                'label' => 'Date de Debut',
-                'mapped' => false,
-                'widget' => 'single_text',
-                'input' => 'datetime',
-                'required' => false,
-                'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'Date début',
-                    'class' => 'accompagnementDate',
-                    'autocomplete' => 'off',
-                )
-            ))
-            ->add('dateFin', DateType::class, array(
-                'label' => 'Date de fin',
-                'mapped' => false,
-                'required' => false,
-                'widget' => 'single_text',
-                'input' => 'datetime',
-                'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'Date fin',
-                    'class' => 'accompagnementDate',
-                    'autocomplete' => 'off',
-                )
-            ))*/
+
             ->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
 
             ;

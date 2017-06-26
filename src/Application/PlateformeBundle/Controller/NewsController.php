@@ -42,7 +42,7 @@ class NewsController extends Controller
             $em = $this->getDoctrine()->getManager();
             
             // ajouter un historique
-            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
+            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR $news->getStatut()->getSlug() == "recevabilite" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
             {
                 $historique = new Historique();
                 $historique->setHeuredebut(new \DateTime('now'));

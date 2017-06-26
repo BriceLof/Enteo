@@ -10,4 +10,31 @@ namespace Application\PlateformeBundle\Repository;
  */
 class SuiviAdministratifRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findBeforeDateAndDetailStatut($date, $detailStatut)
+	{
+		$queryBuilder = $this->createQueryBuilder('s')
+                ->where('s.date < :date')
+                ->setParameter('date', $date)
+				->andWhere('s.detailStatut = :detailStatut')
+                ->setParameter('detailStatut', $detailStatut)
+                ;
+        
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+	}
+	
+	public function findByBeneficiaireAndDate($beneficiaire, $date)
+	{
+		$queryBuilder = $this->createQueryBuilder('s')
+                ->where('s.date > :date')
+                ->setParameter('date', $date)
+				->andWhere('s.beneficiaire = :beneficiaire')
+                ->setParameter('beneficiaire', $beneficiaire)
+                ;
+        
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+	}
 }

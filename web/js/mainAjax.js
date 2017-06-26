@@ -1,13 +1,21 @@
 $("document").ready(function (initDynamicContent) {
-    //affichage de news dans la partie bénéficiaire
+    /**
+     * les onglets dans la table news
+     */
     $(function () {
         $("#tabNews").tabs();
     });
 
+    /**
+     * modifie en rouge la bordure des champs ou il y a des erreurs
+     */
     $(function () {
         $(".form-control .error").css('border', '1px solid red');
     });
 
+    /**
+     * les message sur les erreurs de validation
+     */
     jQuery.extend(jQuery.validator.messages, {
         required: "Ce champs ne peut être vide",
         remote: "votre message",
@@ -28,7 +36,9 @@ $("document").ready(function (initDynamicContent) {
         min: jQuery.validator.format("votre message  supérieur ou égal à {0}.")
     });
 
-    //datepicker date de naissance
+    /**
+     * datepicker sur la date de naissance
+     */
     $(function () {
         $("form input.date").datepicker({
             dateFormat: 'dd/mm/yy',
@@ -54,6 +64,9 @@ $("document").ready(function (initDynamicContent) {
         });
     });
 
+    /**
+     * datepicker sur les input date
+     */
     $(function () {
         $(".accompagnementDate").datepicker({
             dateFormat: 'dd/mm/yy',
@@ -79,6 +92,9 @@ $("document").ready(function (initDynamicContent) {
         });
     });
 
+    /**
+     * regle de validation pour que la date de fin soit superieur a la date de début
+     */
     jQuery.validator.addMethod("greaterThan",
         function (value, element) {
             if ($('#accompagnement_dateDebut').val() != "" && value != "") {
@@ -110,6 +126,9 @@ $("document").ready(function (initDynamicContent) {
         }, "vérifiez la date de fin"
     );
 
+    /**
+     * regle de validation sur le tarif
+     */
     jQuery.validator.addMethod(
         "tarif",
         function (value, element, regexp) {
@@ -121,6 +140,9 @@ $("document").ready(function (initDynamicContent) {
         }, "erreur sur le tarif (format : xxx.xx )"
     );
 
+    /**
+     * regle de validation du numero de téléphone
+     */
     jQuery.validator.addMethod(
         "tel",
         function (value, element, regexp) {
@@ -132,6 +154,9 @@ $("document").ready(function (initDynamicContent) {
         }, "ce numéro de téléphone n'est pas valide"
     );
 
+    /**
+     * regle de validation du numero de secu sociale
+     */
     jQuery.validator.addMethod(
         "numSecu",
         function (value, element, regexp) {
@@ -143,6 +168,10 @@ $("document").ready(function (initDynamicContent) {
         }, "ce numéro de sécurité sociale n'est pas valide"
     );
 
+    /**
+     * regle de validation d'une date
+     * dd/mm/yyyy
+     */
     jQuery.validator.addMethod(
         "dateBR",
         function (value, element, regexp) {
@@ -154,6 +183,10 @@ $("document").ready(function (initDynamicContent) {
         }, "Date non valide ( format : dd/mm/yyyy )"
     );
 
+    /**
+     * regle de validation d'une date
+     * dd/mm/yyyy
+     */
     $.validator.addMethod(
         "australianDate",
         function (value, element) {
@@ -167,6 +200,9 @@ $("document").ready(function (initDynamicContent) {
         return true;
     };
 
+    /**
+     * regle de validation par regex d'un texte
+     */
     jQuery.validator.addMethod(
         "texte",
         function (value, element, regexp) {
@@ -178,7 +214,9 @@ $("document").ready(function (initDynamicContent) {
         }, "Verifiez votre saisie"
     );
 
-    //validation jquery accompagnement
+    /**
+     * validation jquery ui du panel accompagnement
+     */
     $(function () {
         $("#accompagnementEditForm").validate({
             rules: {
@@ -246,27 +284,15 @@ $("document").ready(function (initDynamicContent) {
         })
     });
 
-    //validation jquery
-    $(function () {
-        $("#suiviAdministratifEditForm").validate({
-            rules: {
-                "suivi_administratif[qui]": {
-                    "required": true
-                },
-                "suivi_administratif[quoi]": {
-                    "required": true
-                }
-            },
-            errorElement: 'div'
-        })
-    });
-
     $(function () {
         $("#newDocumentsForm").validate({
             errorElement: 'div'
         })
     });
-    //validation jquery
+
+    /**
+     * validation jquery ui du panel projet bénéficiaire
+     */
     $(function () {
         $("#projetEditForm").validate({
             rules: {
@@ -286,22 +312,9 @@ $("document").ready(function (initDynamicContent) {
         })
     });
 
-    //espace documentaire validate
-    $(function () {
-        $("#newDocumentsForm").validate({
-            rules: {
-                "espace_documentaire_documents_0_description": {
-                    "required": true
-                },
-                "suivi_administratif[quoi]": {
-                    "required": true
-                }
-            },
-            errorElement: 'div'
-        })
-    });
-
-    //validation jquery de la fiche beneficiaire
+    /**
+     * validation jquery ui de la fiche bénéficiaire
+     */
     $(function () {
         $("#ficheBeneficiaireForm").validate({
             rules: {
@@ -371,60 +384,16 @@ $("document").ready(function (initDynamicContent) {
             errorElement: 'div'
         })
     });
-
-    $(".cp").keyup(function () {
-        if ($(this).val().length >= 2) {
-            $.ajax({
-                type: 'get',
-                url: Routing.generate('application_search_ville', {cp: $(this).val()}),
-                beforeSend: function () {
-                    console.log('ça charge !');
-                },
-                success: function (data) {
-                    var id = $(".ville").attr("id");
-                    var name = $(".ville").attr("name");
-                    $(".ville").replaceWith('<select id=' + id + ' name=' + name + ' class="ville form-control">');
-
-                    $.each(data.ville, function (index, value) {
-                        $(".ville").append("<option data-cp=" + value.cp + " value=" + value.id + ">" + value.nom + "</option>")
-                    });
-
-                    $("#recherche_beneficiaire_ville_nom").change(function () {
-                        villeSelected = $('option:selected', this).attr('data-cp');
-                        $(".cp").val(villeSelected)
-                    })
-                }
-            })
-        } else {
-            $(".ville").val('');
-        }
-    });
-
-
-    //ajax formulaire de recherche dans la home
-    $("#ajaxForm").submit(function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: Routing.generate('application_ajax_search_home'), // le nom du fichier indiqué dans le formulaire
-            type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
-            data: $(this).serialize(),
-            cache: true,
-            dataType: 'json',
-            beforeSend: function () {
-                var resultat = document.getElementById('section_home');
-                resultat.innerHTML = "";
-                resultat.innerHTML += '<div class="loading"></div>';
-                $('#pagination').empty();
-            },
-            success: function (response) {
-                template = response;
-                $('#section_home').html(template);
-            }
-        });
-    });
 });
 
+/**
+ * cette fonction permet d'ajouter un document
+ * c'est gérer en js parce qu'on peut ajouter plusieurs documents
+ *
+ */
 $(document).ready(function() {
+	$(".submit_upload_doc").hide();
+	$("#newDocumentsForm label:first-child").hide();
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#espace_documentaire_documents');
     // On ajoute un lien pour ajouter une nouvelle catégorie
@@ -432,6 +401,7 @@ $(document).ready(function() {
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $addLink.click(function(e) {
+    	$(".submit_upload_doc").show();
         addImage($container);
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
@@ -452,7 +422,7 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Document n°' + (index+1))
+        var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, ' - Document n°' + (index+1))
             .replace(/__name__/g, index));
         // On ajoute au prototype un lien pour pouvoir supprimer l'image
         addDeleteLink($prototype);
@@ -465,7 +435,7 @@ $(document).ready(function() {
     // La fonction qui ajoute un lien de suppression d'une image
     function addDeleteLink($prototype) {
         // Création du lien
-        $deleteLink = $('<a href="#" style="padding: 0px;" class="btn btn-danger">Supprimer</a>');
+        $deleteLink = $('<a href="#" style="margin-bottom:16px;padding: 0px;color:white;width:63px;font-size:11px;" class="btn btn-danger">Supprimer</a>');
         // Ajout du lien
         $prototype.append($deleteLink);
         // Ajout du listener sur le clic du lien
@@ -477,20 +447,12 @@ $(document).ready(function() {
     }
 });
 
+/**
+ * cette fonction permet lors ce qu'on fait une modification sur la fiche bénéficiaire
+ * le champs modifier est grisé
+ *
+ */
 (function(){
-    var plusMoins = document.getElementById('plusMoins');
-    if(plusMoins != undefined) {
-        plusMoins.onclick = function () {
-            if (plusMoins.innerHTML == 'voir plus +') {
-                document.getElementById('rechercherPlus').style.display = 'block';
-                plusMoins.innerHTML = 'voir moins -';
-            } else {
-                document.getElementById('rechercherPlus').style.display = 'none';
-                plusMoins.innerHTML = 'voir plus +';
-            }
-        };
-    }
-
     var input = document.querySelectorAll('#editBeneficiaire input');
     var content = [];
     for(var i=0;i<input.length;i++) {
@@ -510,6 +472,11 @@ $(document).ready(function() {
     setTimeout(afficheMessageFlash,5000);
 })();
 
+/**
+ * cette fonction permet de modifier le glyphicon plus ou moins sur les panels commme dans fiche bénéficiaire et bureaux
+ *
+ * @param element
+ */
 function plusMoins(element) {
     parent = element.parentNode.parentNode.parentNode;
     body = parent.getElementsByClassName('collapse')[0];
@@ -523,16 +490,11 @@ function plusMoins(element) {
     }
 }
 
-function urlParam(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-        return null;
-    }else{
-        return results[1] || 0;
-    }
-}
-
-/*reglage numéro de téléphone*/
+/**
+ * la fonction qui gère les numero de telephone pour qu'ils soient formaté quand on les affiche ou quand on les rentre
+ * pour avoir le format, il faut que la classe ou le numero est present soit "telephoneConso"
+ *
+ */
 (function() {
     var tels = document.getElementsByClassName('telephoneConso');
     for (var i = 0; i < tels.length; i++) {
@@ -558,9 +520,6 @@ function urlParam(name){
         });
     }
 
-})();
-
-(function(){
     window.onload = function () {
         var tels = document.getElementsByClassName('telephoneConso');
         for(var i=0;i<tels.length;i++) {
@@ -587,7 +546,10 @@ function urlParam(name){
     }
 })();
 
-//la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
+/**
+ * la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
+ *
+ */
 (function(){
     var enfant = document.getElementsByClassName('fiche');
     var enfant2 = document.getElementsByClassName('projet');
@@ -1395,6 +1357,15 @@ function urlParam(name){
     }
 })();
 
+/**
+ * si le bloc accompagnement est visible ( user autre que consultant )
+ *
+ * on affiche le financeur en js car à la base je croyais qu'on pouvait ajouter des consultants a la volé
+ * vous remarquerer que le bouton add consultant sera masqué
+ *
+ * AJAX ici pour afficher la génération de la liste opca opacif
+ *
+ */
 if(document.getElementById('accompagnement')) {
 //ajout de plusieurs financement
     $(function () {
@@ -1573,6 +1544,13 @@ if(document.getElementById('accompagnement')) {
 
 }
 
+/**
+ * on a ici l'entité contact employeur, il suffit de decommenter le click sur addlink pour afficher le lien qui permet
+ * d'ajouter plusieurs employeur
+ *
+ * le contact employeur n'est pas visible pour les consultant
+ *
+ */
 if(document.getElementById('beneficiaire_contactEmployeur')) {
     //ajouter supprimer dinamiqueme contact employeur
     $(document).ready(function () {
@@ -1640,3 +1618,35 @@ if(document.getElementById('beneficiaire_contactEmployeur')) {
         }
     });
 }
+
+/**
+ * Ajax qui permet l'autocompletion au niveau ville dans la recherche hom
+ *
+ */
+(function () {
+    $('#recherche_beneficiaire_ville').autocomplete({
+        source: function (requete, reponse) {
+            $.ajax({
+                url: Routing.generate('application_get_ville'), // le nom du fichier indiqué dans le formulaire
+                cache: true,
+                data: {
+                    nomVille: $('#recherche_beneficiaire_ville').val()
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    var ville = $.parseJSON(data);
+                    reponse($.map(ville, function (item) {
+                        return {
+                            value: function () {
+                                cp = (item.cp);
+                                return item.nom;
+                            }
+                        }
+                    }));
+                }
+            });
+        }
+    });
+})();

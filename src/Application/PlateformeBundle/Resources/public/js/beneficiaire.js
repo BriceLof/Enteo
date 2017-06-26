@@ -1,7 +1,13 @@
 $(window).load(function () {
     console.log("Infos disponibles ");
 });
+
+/**
+ * ajax pour gerer la ville dans la fiche bénéficiaire
+ *
+ */
 $(function () {
+	
     $('.dateTimePicker').datetimepicker({
         locale: 'fr',
         format: 'YYYY-MM-DD HH:mm:ss'
@@ -119,10 +125,23 @@ $(function () {
             $(".origineMerDetailComment").removeAttr('required')
         }
     });
+    
+    //-----------------------------------------------------------------------------------------------------------------------//
+    //--------------------------------------------------  Page Bénéficiaire  ------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------------------//
+    
+    $(".voirPlusNouvelle").click(function () {
+    	$("#afficheListNouvelle .hiddenNews").toggle('slow')
+    });
 
 });
 
-
+/**
+ * affiche un modal lors de la génération d'un pdf devis s'il y a des champs manquant
+ *
+ * ajax affichage de opca et opacif dans la partie projet bénéficiaire
+ * ça fait exactement un doublon avec ce qu'il y a dans l'accompagnement
+ */
 (function () {
     if (document.getElementById('accompagnement')) {
         var proposition = document.getElementById('proposition_pdf');
@@ -254,7 +273,11 @@ $(function () {
     });
 })();
 
-
+/**
+ * Remplir ville en Ajax en indiquant le département
+ *
+ * partie brice
+ */
 $(function () {
     //----------- Remplir ville en Ajax en indiquant le département
 
@@ -320,7 +343,9 @@ $(function () {
     }
 });
 
-//concernant le departement du travail
+/**
+ * affichage dynamique du département du travail quand on change la région dans la fiche bénéficiaire
+ */
 (function () {
 
     //modification du champ departement du travail en select car c'est un input a la base
@@ -344,7 +369,11 @@ $(function () {
     })
 })();
 
-//l'ajax qui genere le departement en fonction de la région
+/**
+ * ajax qui génère la liste des départements
+ * @param region
+ * @param element
+ */
 function ajaxListDepartement(region, element){
     $.ajax({
         url: Routing.generate('application_get_dpt_by_region_ville', {'region': region}), // le nom du fichier indiqué dans le formulaire
