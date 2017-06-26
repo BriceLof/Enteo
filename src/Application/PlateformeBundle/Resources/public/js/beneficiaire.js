@@ -7,6 +7,7 @@ $(window).load(function () {
  *
  */
 $(function () {
+	
     $('.dateTimePicker').datetimepicker({
         locale: 'fr',
         format: 'YYYY-MM-DD HH:mm:ss'

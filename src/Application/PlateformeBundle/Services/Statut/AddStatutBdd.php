@@ -26,6 +26,7 @@ class AddStatutBdd
             "Reporté" => array("Pas le moment", "Pas de Consultants"),
             "Abandon" => array("Faux N°", "Pas de financement", "Pas éligible", "Incompatibilité", "Renonce VAE", "Concurrent", "Distance", "Disponibilté", "No Show", "Doublon"),
             "Terminé" => array("Validation totale", "Validation partielle", "Rejeté"),
+            "Réglement" => array("Réglement partiel", "Prestation soldée", "Avoir", "Erreur", "P&P"),
         );
         
         foreach($statuts as $key => $value)
@@ -45,6 +46,14 @@ class AddStatutBdd
         
         // code à placer dans le controlleur pour appeler le service 
         // $this->container->get('application_plateforme.statut.add_statut')->addStatutAndDetail();
+        
+        /* SQL : vider table en ignorant les contraintes de cle etrangere : 
+			SET FOREIGN_KEY_CHECKS=0;
+        	DELETE FROM `db680157709`.`statut`;
+			SET FOREIGN_KEY_CHECKS=1;
+		 * 
+		 * Puis remettre auto increment à 1 sur chaque table 
+		 */
     }
     
     

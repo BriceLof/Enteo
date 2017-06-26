@@ -19,6 +19,7 @@ class HomeController extends Controller
 {
     public function indexAction(Request $request, $page)
     {
+        	
         $em = $this->getDoctrine()->getManager();
         // Récupération liste béneficiaires
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');

@@ -96,7 +96,7 @@ function addNouvelle(el){
                 $('#block_formulaire_ajout_nouvelle_'+beneficiaire_id).modal('toggle');
 
                 //rechargement du html dans le block table du bénéficiaire
-                $('#info_beneficaiire'+beneficiaire_id).html(template);
+                $('#info_beneficiaire'+beneficiaire_id).html(template);
             }
         });
     })

@@ -9,18 +9,22 @@ use Application\PlateformeBundle\Services\Statut\Mail\MailRvAgenda;
 use Application\UsersBundle\Entity\Users;
 use Doctrine\ORM\EntityManager;
 use Fungio\GoogleCalendarBundle\Service\GoogleCalendar;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 
 class Calendar
 {
     protected $em;
     protected $calendar;
     protected $mailRv;
+    protected $router;
 
-    public function __construct(EntityManager $em, GoogleCalendar $googleCalendar, MailRvAgenda $mailRv)
+    public function __construct(EntityManager $em, GoogleCalendar $googleCalendar, MailRvAgenda $mailRv, RouterInterface $router)
     {
         $this->em = $em;
         $this->calendar = $googleCalendar;
         $this->mailRv = $mailRv;
+        $this->router = $router;
     }
 
 
@@ -196,7 +200,7 @@ class Calendar
                 $this->em->persist($newHistorique);
                 $this->em->flush();
 
-                return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                return new RedirectResponse($this->router->generate('application_show_beneficiaire', array(
                     'beneficiaire' => $beneficiaire,
                     'id' => $beneficiaire->getId(),
                 )));
