@@ -8,9 +8,12 @@ use Application\PlateformeBundle\Entity\Financeur;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Ville;
+use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Form\ConsultantType;
+use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\ProjetType;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,74 +38,6 @@ class BeneficiaireController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
-        /**
-        if(isset($id)){
-            // stockage de l'id du beneficiaire 
-            $_SESSION['beneficiaireid'] = $id;
-            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-        }
-        else if(!empty($_SESSION['beneficiaireid'])){
-            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($_SESSION['beneficiaireid']);
-            unset($_SESSION['beneficiaireid']);
-        }
-        $histo_beneficiaire = $em->getRepository("ApplicationPlateformeBundle:Historique")->beneficiaireOne($beneficiaire);
-        // ====================================================== //
-        // ===== Mise à jour des evenements du beneficiaire ===== //
-        // ====================================================== //
-        if(count($histo_beneficiaire) > 0 && $histo_beneficiaire[0]->getEventId() != '0' && empty($_SESSION['majevenementdanshistorique'])){
-            $redirectUri = 'http://'.$_SERVER['SERVER_NAME'].$this->get('router')->generate('application_plateforme_agenda_evenement', array(), true);
-                // stockage des infos
-                $donnes[] = $id;
-                $donnes[] = $this->getUser()->getId();
-                $donnes[] = 'page beneficiaire';
-                if (!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']);
-				else $_SESSION['firstpast'] = $donnes;
-                // Données pour Google calendar
-                $_SESSION['calendrierId'] = $histo_beneficiaire[0]->getConsultant()->getCalendrierid(); // id du calendrier
-                // On stocke l'id du user pour la personnalisation du fichier credentials
-                // dans google calendar qui permet la connexion à l'agenda du consultant
-                $_SESSION['useridcredencial'] = $histo_beneficiaire[0]->getConsultant()->getId();
-                // Appel du service google calendar
-                $googleCalendar = $this->get('application_google_calendar');
-                $googleCalendar->setRedirectUri($redirectUri);
-                if (!empty($_SESSION['code'])){
-                    $client = $googleCalendar->getClient($_SESSION['code']);
-                }else {
-                    $client = $googleCalendar->getClient();
-                }
-                if (is_string($client)) {
-                    header('Location: ' . filter_var($client, FILTER_SANITIZE_URL)); // Redirection sur l'url d'autorisation
-                    exit;
-                }
-        }
-        // Si le client existe alors on recupere les evenements
-        if(isset($client) && empty($_SESSION['majevenementdanshistorique']) && $histo_beneficiaire[0]->getEventId() != '0'){
-            foreach($histo_beneficiaire as $histo){
-				if($histo->getEventId() != '0'){
-					$evenement = $googleCalendar->getEvent($_SESSION['calendrierId'], $histo->getEventId(), []);
-					// Si l'evenement est supprimé dans le calendrier depuis la boite gmail alors on l'archive
-					if($evenement->getStatus() == 'cancelled'){
-						$query = $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($histo->getEventId(), 'on');
-					}
-					else{
-						// On met à jour les evenements
-						$heuredeb = str_replace('T',' ',$evenement->getStart()->getDateTime());
-						$heurefin = str_replace('T',' ',$evenement->getEnd()->getDateTime());
-						$heuredeb = str_replace('+01:00','',$heuredeb); 
-						$heurefin = str_replace('+01:00','',$heurefin);
-						$datedeb = new \DateTime($heuredeb); // date debut
-						$datefin = new \DateTime($heurefin); // date fin
-						$heuredeb = (new \DateTime($heuredeb))->format('H:i:s'); // heure debut
-						$heurefin = (new \DateTime($heurefin))->format('H:i:s'); // heure fin
-						// Mise à jour en BD  
-						$em->getRepository("ApplicationPlateformeBundle:Historique")->historiquemaj($datedeb, $datefin, $heuredeb, $heurefin, $histo->getEventId());
-					}
-				}
-            }
-        }
-         */
-        if(!empty($_SESSION['majevenementdanshistorique'])) unset($_SESSION['majevenementdanshistorique']); // On supprime la session
-        if(!empty($_SESSION['firstpast'])) unset($_SESSION['firstpast']); // On supprime la session
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
         }else{
@@ -326,12 +261,14 @@ class BeneficiaireController extends Controller
 
     /**
      * Search form for Beneficiaire entity
+     * le formulaire de recherche dans la page home et la reponse est utilisé en Ajax par l'action AjaxSearchBeneficiaire
+     * dans HomeController.php
      *
-     * @param
+     * @param $request
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    public function searchAction(Request $request,$page = 1 )
+    public function searchAction(Request $request)
     {
         $idUtilisateur = null;
 
@@ -348,45 +285,41 @@ class BeneficiaireController extends Controller
 
         if ($form->isValid()){
 
-            if (!is_null($form["villeMer"]["nom"]->getData())) {
-                $em = $this->getDoctrine()->getManager();
-                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
-                    'id' => $form["villeMer"]["nom"]->getData(),
-                ));
-                $beneficiaire->setVilleMer($ville);
-            }
+            $tri = (int)$form['tri']->getData();
+            $page = (int)$form['page']->getData();
+            $ville = $form['ville']->getData();
 
             $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
-
-            if(!is_null($form["villeMer"]["cp"]->getData())){
-                $codePostal = $form["villeMer"]["cp"]->getData();
-            }
-
-            if(!is_null($form['dateDebut']->getData())){
-                $dateDebut = $form['dateDebut']->getData();
-            }
-            if(!is_null($form['dateFin']->getData())){
-                $dateFin = $form['dateFin']->getData();
-            }
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville);
             $results = $query->getResult();
+
+            $start = 50*$page;
+
+            $beneficiaires = array_slice($results,$start,50);
+            $nbBeneficiaire = count($results);
+
+            $page++;
 
             $nbPages = ceil(count($results) / 50);
             // Formulaire d'ajout d'une news à un bénéficiaire
             $news = new News();
             $formNews = $this->get("form.factory")->create(NewsType::class, $news);
 
-            return $this->render('ApplicationPlateformeBundle:Home:index.html.twig',array(
-                'liste_beneficiaire' => $results,
+            $nouvelle = new Nouvelle();
+            $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
+
+            return $this->render('ApplicationPlateformeBundle:Home:listeBeneficiaire.html.twig',array(
+                'liste_beneficiaire' => $beneficiaires,
                 'form' => $form->createView(),
-                'results' => $results,
+                'results' => 'oui',
                 'nbPages'               => $nbPages,
                 'page'                  => $page,
                 'form_news'             => $formNews->createView(),
-                'nombreBeneficiaire'    => count($results)
+                'form_nouvelle'             => $form_nouvelle->createView(),
+                'nombreBeneficiaire'    => $nbBeneficiaire
             ));
         }
 
@@ -396,6 +329,9 @@ class BeneficiaireController extends Controller
     }
 
     /**
+     * Fonction qui permet de rechercher un bénéficiaire par son nom et le retourne en Ajax
+     * notamment utilisé pour le formulaire d'ajout dans le calendrier globale d'un consultant
+     *
      * Ajax form for Beneficiaire entity
      *
      */
@@ -429,38 +365,6 @@ class BeneficiaireController extends Controller
 
         return $resultats;
     }
-
-    /**
-     * Search form for Beneficiaire entity
-     */
-    public function search2Action(Request $request)
-    {
-        $beneficiaire = new Beneficiaire();
-        $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
-
-        $form->add('submit', SubmitType::class, array('label' => 'Rechercher'));
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()){
-
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData());
-            $results = $query->getResult();
-
-            $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:resultatRecherche.html.twig',array(
-                'results' => $results,
-            ))->getContent();
-
-            $response = new Response($template);
-            $response->headers->set('Content-Type', 'text/html');
-
-            return $response;
-        }
-
-        return $this->render('ApplicationPlateformeBundle:Beneficiaire:recherche.html.twig',array(
-            'form' => $form->createView(),
-        ));
-    }
     
     // Ajouter un bénéficiare manuellement (à l'opposé du webservice) 
     public function addBeneficiaireAction(Request $request)
@@ -481,7 +385,7 @@ class BeneficiaireController extends Controller
             $origineBene2 =$form->get('origineMerComment')->getData();
             $origineBene3 = "";
 
-            if($form->get('origineMerDetailComment')->getData() != "" )
+            if($form->get('origineMerDetailComment')->getData() != "" && $form->get('origineMerComment')->getData() == 'payant' )
                 $origineBene3 ="_".$form->get('origineMerDetailComment')->getData();
 
             $beneficiaire->setOrigineMer($origineBene1."_".$origineBene2.$origineBene3);
@@ -497,9 +401,15 @@ class BeneficiaireController extends Controller
 
             $news->setStatut($detailStatut->getStatut());
             $news->setDetailStatut($detailStatut);
-            $news->setMessage("");
-            
             $em->persist($news);
+            
+            $historique = new Historique();
+            $historique->setSummary("");
+            $historique->setTypeRdv("");
+            $historique->setBeneficiaire($beneficiaire);
+            $historique->setDescription(date('d/m/y')." | ".$beneficiaire->getVille()->getNom()." | ".$beneficiaire->getOrigineMer());
+            $historique->setEventId("0");
+            $em->persist($historique);
             
             $em->flush();
             
@@ -511,6 +421,12 @@ class BeneficiaireController extends Controller
         ));
     }
 
+    /**
+     * la fonction qui permet de faire un print dans la fiche bénéficiaire
+     *
+     * @param $id
+     * @return Response
+     */
     public function printAction($id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);

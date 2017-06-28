@@ -1,10 +1,16 @@
-$(window).load(function() {
+$(window).load(function () {
     console.log("Infos disponibles ");
 });
-$(function(){
+
+/**
+ * ajax pour gerer la ville dans la fiche bénéficiaire
+ *
+ */
+$(function () {
+
     $('.dateTimePicker').datetimepicker({
-                    locale: 'fr', 
-                    format: 'YYYY-MM-DD HH:mm:ss'
+        locale: 'fr',
+        format: 'YYYY-MM-DD HH:mm:ss'
     });
     //----------- Remplir ville en Ajax en indiquant le département
 
@@ -43,56 +49,76 @@ $(function(){
                 }
             });
     }
-    
-    $(".codePostalInputForAjaxBeneficiaire").keyup(function(){
+
+    $(".codePostalInputForAjaxBeneficiaire").keyup(function () {
         $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
         cp = $(this).val();
-        if(cp.length == 5)
-        {
-            console.log("je lance l'ajax");
+        if (cp.length == 5) {
             $.ajax({
                 type: 'get',
-                url: Routing.generate("application_plateforme_get_ville_ajax", { departement: cp }),
-                beforeSend: function(){
-                    console.log('ça charge');
+                url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
+                beforeSend: function () {
                     $(".villeAjaxBeneficiaire option").remove();
                     $(".block_info_chargement").show();
                 }
             })
-            .done(function(data) {
-                $(".block_info_chargement").hide();
-                $(".villeAjaxBeneficiaire").removeAttr("disabled");
-                for(var i = 0; i < data.villes.length; i++)
-                {
-                    $(".villeAjaxBeneficiaire").append("<option value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
-                }
-            });
-        }else{
+                .done(function (data) {
+                    $(".block_info_chargement").hide();
+                    $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                    for (var i = 0; i < data.villes.length; i++) {
+                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                    }
+                });
+        } else {
             $(".villeAjaxBeneficiaire option").remove();
             $(".villeAjaxBeneficiaire").removeAttr("disabled");
         }
     });
-    
+
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
-    
-    $( ".origineMerComment" ).change(function() {
+    $(".origineMerQui").change(function () {
+        $origineMerQui = $(this).children("option:selected").val()
+        if ($origineMerQui != '') {
+            $(".origineMerComment").css('visibility', 'initial')
+            $(".origineMerComment").attr('required', 'required')
+        }
+        else {
+            $(".origineMerComment").css('visibility', 'hidden')
+            $(".origineMerComment").removeAttr('required')
+        }
+    });
+
+    $(".origineMerComment").change(function () {
         $origineMerComment = $(this).children("option:selected").val()
-        if($origineMerComment == 'payant'){
+        if ($origineMerComment == 'payant') {
             $(".origineMerDetailComment").css('visibility', 'initial')
             $(".origineMerDetailComment").attr('required', 'required')
-        }else{
-            $(".origineMerDetailComment").css('visibility', 'hidden') 
+        } else {
+            $(".origineMerDetailComment").css('visibility', 'hidden')
             $(".origineMerDetailComment").removeAttr('required')
         }
-        consolelog($origineMerComment)
     });
-    
+
+    //-----------------------------------------------------------------------------------------------------------------------//
+    //--------------------------------------------------  Page Bénéficiaire  ------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------------------//
+
+    $(".voirPlusNouvelle").click(function () {
+        $("#afficheListNouvelle .hiddenNews").toggle('slow')
+    });
+
 });
 
-if(document.getElementById('accompagnement')) {
-    (function () {
+/**
+ * affiche un modal lors de la génération d'un pdf devis s'il y a des champs manquant
+ *
+ * ajax affichage de opca et opacif dans la partie projet bénéficiaire
+ * ça fait exactement un doublon avec ce qu'il y a dans l'accompagnement
+ */
+(function () {
+    if (document.getElementById('accompagnement')) {
         var proposition = document.getElementById('proposition_pdf');
         var adresse = document.getElementById('beneficiaire_proposition_adresse');
         var heure = document.getElementById('accompagnement_proposition_heure');
@@ -135,9 +161,7 @@ if(document.getElementById('accompagnement')) {
             } else {
             }
         });
-        
-
-
+    }
 
     $('.type_employeur').on('change', function () {
         tdElement = $('#tdElement');
@@ -158,74 +182,78 @@ if(document.getElementById('accompagnement')) {
         }
     });
 
-        //Ajax pour recuperer la liste des opca ou opacif
-        function listeOpcaOpacifEmployeur($name, element) {
-            $.ajax({
-                url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
-                cache: true,
-                type: 'get',
-                dataType: 'json',
-                beforeSend: function () {
-                    element.empty();
-                    console.log('ça charge');
-                },
-                success: function (data) {
-                    $.each(JSON.parse(data), function (i, item) {
-                        if ($(element).attr('value') == item) {
-                            element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
-                        } else {
-                            element.append("<option value=\"" + item + "\">" + item + "</option>");
-                        }
-                    });
-                    console.log('fini');
-                }
-            });
-        }
-
-
-        $(function () {
-            $('#projet_organisme').each(function () {
-                var newElement = $('<select>');
-                $.each(this.attributes, function (i, attrib) {
-                    $(newElement).attr(attrib.name, attrib.value);
-                });
-                $(this).replaceWith(newElement);
-            });
-        });
-
-        $(function () {
-            $a = 1;
-            $('.contact_employeur').children().children().children().each(function () {
-                if ($(this).get(0).tagName == 'LABEL') {
-                    $(this).css('display', 'none');
-                    $a++;
-                }
-            })
-        });
-
-
-        $(function () {
-            $('select#projet_organisme').each(function () {
-                tdElement = $('#tdElement');
-                element = $(this);
-                console.log($(this).val());
-                if ($('#projet_typeFinanceur').val() == 'OPCA') {
-                    tdElement.css('display', 'table-row');
-                    $name = 'OPCA';
-                    listeOpcaOpacifEmployeur($name, element);
-                } else {
-                    if ($('#projet_typeFinanceur').val() == 'OPACIF') {
-                        tdElement.css('display', 'table-row');
-                        $name = 'OPACIF';
-                        listeOpcaOpacifEmployeur($name, element);
+    //Ajax pour recuperer la liste des opca ou opacif
+    function listeOpcaOpacifEmployeur($name, element) {
+        $.ajax({
+            url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
+            cache: true,
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+                element.empty();
+                console.log('ça charge');
+            },
+            success: function (data) {
+                $.each(JSON.parse(data), function (i, item) {
+                    if ($(element).attr('value') == item) {
+                        element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
+                    } else {
+                        element.append("<option value=\"" + item + "\">" + item + "</option>");
                     }
-                }
-            });
+                });
+                console.log('fini');
+            }
         });
-    })();
-}
+    }
 
-$(function(){
+
+    $(function () {
+        $('#projet_organisme').each(function () {
+            var newElement = $('<select>');
+            $.each(this.attributes, function (i, attrib) {
+                $(newElement).attr(attrib.name, attrib.value);
+            });
+            $(this).replaceWith(newElement);
+        });
+    });
+
+    $(function () {
+        $a = 1;
+        $('.contact_employeur').children().children().children().each(function () {
+            if ($(this).get(0).tagName == 'LABEL') {
+                $(this).css('display', 'none');
+                $a++;
+            }
+        })
+    });
+
+
+    $(function () {
+        $('select#projet_organisme').each(function () {
+            tdElement = $('#tdElement');
+            element = $(this);
+            console.log($(this).val());
+            if ($('#projet_typeFinanceur').val() == 'OPCA') {
+                tdElement.css('display', 'table-row');
+                $name = 'OPCA';
+                listeOpcaOpacifEmployeur($name, element);
+            } else {
+                if ($('#projet_typeFinanceur').val() == 'OPACIF') {
+                    tdElement.css('display', 'table-row');
+                    $name = 'OPACIF';
+                    listeOpcaOpacifEmployeur($name, element);
+                }
+            }
+        });
+    });
+})();
+
+/**
+ * Remplir ville en Ajax en indiquant le département
+ *
+ * partie brice
+ */
+$(function () {
     //----------- Remplir ville en Ajax en indiquant le département
 
     // vider le premier champs qui est un vrai objet ville  (Uniquement sur la page de création d'un utilisateur)
@@ -234,64 +262,112 @@ $(function(){
     $(".villeAjaxEmployeur option:first-child").val("");
     $(".villeAjaxEmployeur option:first-child").text("");
     $(".villeAjaxEmployeur").attr("disabled", "disabled");
-    $(".codePostalInputForAjaxEmployeur").keyup(function(){
+    $(".codePostalInputForAjaxEmployeur").keyup(function () {
         $(".villeAjaxEmployeur").attr("disabled", "disabled");
         cp = $(this).val();
-        if(cp.length == 5)
-        {
+        if (cp.length == 5) {
             console.log("je lance l'ajax");
             $.ajax({
                 type: 'get',
-                url: Routing.generate("application_plateforme_get_ville_ajax", { departement: cp }),
-                beforeSend: function(){
+                url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
+                beforeSend: function () {
                     console.log('ça charge');
                     $(".villeAjaxEmployeur option").remove();
                     //$(".block_info_chargement").show();
                 }
             })
-                .done(function(data) {
+                .done(function (data) {
                     //$(".block_info_chargement").hide();
                     $(".villeAjaxEmployeur").removeAttr("disabled");
-                    for(var i = 0; i < data.villes.length; i++)
-                    {
-                        $(".villeAjaxEmployeur").append("<option value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
+                    for (var i = 0; i < data.villes.length; i++) {
+                        $(".villeAjaxEmployeur").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
                     }
                 });
-        }else{
+        } else {
             $(".villeAjaxEmployeur option").remove();
             $(".villeAjaxEmployeur").removeAttr("disabled");
         }
     });
 
     // Pour la modification d'un employeur, on doit cette fois ci récupérer le code postal de sa ville
-    if($("#beneficiaire_employeur_codePostalHiddenEmployeur").val() != 0)
-    {
-        cp      = $("#beneficiaire_employeur_codePostalHiddenEmployeur").val();
+    if ($("#beneficiaire_employeur_codePostalHiddenEmployeur").val() != 0) {
+        cp = $("#beneficiaire_employeur_codePostalHiddenEmployeur").val();
         idVille = $("#beneficiaire_employeur_idVilleHiddenEmployeur").val();
-        if(cp.length == 5)
-        {
+        if (cp.length == 5) {
             console.log("je lance l'ajax");
             $.ajax({
                 type: 'get',
-                url: Routing.generate("application_plateforme_get_ville_ajax", { departement: cp }),
-                beforeSend: function(){
+                url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
+                beforeSend: function () {
                     console.log('ça charge');
                     // $(".block_info_chargement").show();
                 }
             })
-                .done(function(data) {
+                .done(function (data) {
                     $(".block_info_chargement").hide();
                     $(".villeAjaxEmployeur option").remove();
                     $(".villeAjaxEmployeur").removeAttr("disabled");
-                    for(var i = 0; i < data.villes.length; i++)
-                    {
-                        if(idVille == data.villes[i].id)
-                            $(".villeAjaxEmployeur").append("<option selected data-cp="+data.villes[i].cp+" value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
+                    for (var i = 0; i < data.villes.length; i++) {
+                        if (idVille == data.villes[i].id)
+                            $(".villeAjaxEmployeur").append("<option selected data-cp=" + data.villes[i].cp + " value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
                         else
-                            $(".villeAjaxEmployeur").append("<option data-cp="+data.villes[i].cp+" value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
+                            $(".villeAjaxEmployeur").append("<option data-cp=" + data.villes[i].cp + " value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
                     }
                 });
         }
     }
 });
 
+/**
+ * affichage dynamique du département du travail quand on change la région dans la fiche bénéficiaire
+ */
+(function () {
+
+    //modification du champ departement du travail en select car c'est un input a la base
+    //le select n'est pas pris en compte par symfony
+    //peut etre qu'il y a un moyen mais pour l'instant je sais pas
+    $('#beneficiaire_dptTravail').each(function () {
+        var newElement = $('<select>');
+        $.each(this.attributes, function (i, attrib) {
+            $(newElement).attr(attrib.name, attrib.value);
+        });
+        $(this).replaceWith(newElement);
+    });
+
+    //modification du select en premier lieu au cas ou
+    ajaxListDepartement($('#beneficiaire_regionTravail').val(), $('#beneficiaire_dptTravail'));
+
+    //quand on change la region
+    //on regenere une nouvelle liste de departement
+    $('#beneficiaire_regionTravail').on('change', function () {
+        ajaxListDepartement($(this).val(), $('#beneficiaire_dptTravail'));
+    })
+})();
+
+/**
+ * ajax qui génère la liste des départements
+ * @param region
+ * @param element
+ */
+function ajaxListDepartement(region, element) {
+    $.ajax({
+        url: Routing.generate('application_get_dpt_by_region_ville', {'region': region}), // le nom du fichier indiqué dans le formulaire
+        cache: true,
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+            element.empty();
+            console.log('ça charge');
+        },
+        success: function (data) {
+            $.each(JSON.parse(data), function (i, item) {
+                if ($(element).attr('value') == item.code) {
+                    element.append("<option value=\"" + item.code + "\" selected = \"selected\">" + item.codeShow + ' ' + item.dpt + "</option>");
+                } else {
+                    element.append("<option value=\"" + item.code + "\">" + item.codeShow + ' ' + item.dpt + "</option>");
+                }
+            });
+            console.log('fini');
+        }
+    });
+}

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class VilleController extends Controller
 {
     /**
+     * retourne une liste de ville par rapport au cp
      * Ajax form for Ville entity
      *
      */
@@ -41,7 +42,13 @@ class VilleController extends Controller
             throw new \Exception('erreur');
         }
     }
-    
+
+    /**
+     * retourne une liste de ville par rapport au departement
+     *
+     * @param Request $request
+     * @return $this
+     */
     public function getVilleAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -58,6 +65,14 @@ class VilleController extends Controller
 
     }
 
+
+    /**
+     * retourne une liste de ville par rapport a son nom
+     * utilisé par l'autocompletion
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function ajaxGetVilleAction(Request $request)
     {
         $tabVille = [];
@@ -75,6 +90,39 @@ class VilleController extends Controller
 
     }
 
-
+    /**
+     * retourne une liste de departement par rapport a la region
+     *
+     * @param $region
+     * @return JsonResponse
+     */
+    public function getDptByRegionAction($region){
+        $em = $this->getDoctrine()->getManager();
+        $villes = $em->getRepository("ApplicationPlateformeBundle:Ville")->findBy(array(
+            'region' => $region
+        ));
+        $tab = array();
+        $tab[] = array(
+            'dpt' => '',
+            'code' =>'',
+            'codeShow' => ''
+        );
+        foreach ($villes as $ville){
+            if (preg_match('/^97/', $ville->getCp()) || preg_match('/^98/', $ville->getCp())){
+                $code = substr($ville->getCp(), 0, 3);
+            }else{
+                $code = substr($ville->getCp(), 0, 2);
+            }
+            if (!array_key_exists($code, $tab)){
+                $tab[$code] = array(
+                    'dpt' => $ville->getDpt(),
+                    'code' => $code,
+                    'codeShow' => '('.$code.')',
+                );
+            }
+        }
+        $resultats = new JsonResponse(json_encode($tab));
+        return $resultats;
+    }
 
 }

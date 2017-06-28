@@ -47,6 +47,10 @@ class DisponibilitesController extends Controller
 
         if ($formDispo->isSubmitted() && $formDispo->isValid()) {
 
+            $stack = $this->get('request_stack');
+            $masterRequest = $stack->getMasterRequest();
+            $currentRoute = $masterRequest->get('_route');
+
             $googleCalendar = $this->get('fungio.google_calendar');
             $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
             $googleCalendar->setRedirectUri($redirectUri);

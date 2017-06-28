@@ -5,47 +5,18 @@ application_plateforme_get_ville_ajax:
     options:
         expose: true
 
-application_plateforme_agenda_evenement:
-    path:     /agenda/evenements
-    defaults: 
-        _controller: ApplicationPlateformeBundle:Agenda:evenement
-        
-application_plateforme_agenda:
-    path:     /agenda
-    defaults: 
-        _controller: ApplicationPlateformeBundle:Agenda:agendas
+application_ajax_search_home:
+    path:     /ajaxSearch
+    defaults: { _controller: "ApplicationPlateformeBundle:Home:ajaxSearchBeneficiaire" }
+    options:
+        expose: true
 
-autocompletion_agenda:
-    path:     /autocompletion
-    defaults: 
-        _controller: ApplicationPlateformeBundle:Agenda:autocompletions
-        
-delete_evenement:
-    path:     /deleteevenement
-    defaults: 
-        _controller: ApplicationPlateformeBundle:Agenda:deleteevenement
-    options:
-        expose: true
-        
-disponibilite_consultant:
-    path:     /disponibilite
-    defaults: 
-        _controller: ApplicationPlateformeBundle:Agenda:disponibilite
-    options:
-        expose: true
-        
 application_plateforme_detail_statut:
     path:     /detail_statut/{idStatut}
-    defaults: 
+    defaults:
         _controller: ApplicationPlateformeBundle:Home:detailStatut
-
     options:
         expose: true
-        
-page_erreur_agenda:
-    path:     /erreur
-    defaults: 
-        _controller: ApplicationPlateformeBundle:Agenda:agendaerror
 
 application_plateforme_received_mer:
     path:     /received_mer
@@ -93,6 +64,11 @@ application_plateforme_accompagnement:
 application_plateforme_historique:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/historique.yml"
     prefix:   /historique
+    
+#nouvelle
+application_plateforme_nouvelle:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/nouvelle.yml"
+    prefix:   /nouvelle
 
 #news
 application_plateforme_news:

@@ -75,6 +75,15 @@ class ProjetType extends AbstractType
                 ),
             ))
 
+            ->add('refFinanceur', TextType::class, array(
+                'label' => 'Réf. financeur',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'projet',
+                    'maxlength' => 24,
+                ),
+            ))
+
             ->add('formationInitiale', TextType::class, array(
                 'label' => 'Formation Initiale :',
                 'required' => false,
@@ -100,7 +109,7 @@ class ProjetType extends AbstractType
                     'Niveau VI' => 'niveau vi',
                     'Niveau V bis (préqualification)' => 'niveau vi bis',
                     'Niveau V (CAP, BEP, CFPA)' => 'niveau v',
-                    'Niveau IV (BP, BT)' => 'niveau iv',
+                    'Niveau IV (BAC, BP, BT)' => 'niveau iv',
 					'Niveau III (BTS, DUT)' => 'niveau iii',
                     'Niveau II (licence ou maîtrise)' => 'niveau ii',
                     'Niveau I (sup. à la maîtrise)' => 'niveau i',

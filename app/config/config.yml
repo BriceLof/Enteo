@@ -81,6 +81,7 @@ fos_user:
 # Swiftmailer Configuration
 swiftmailer:
     #delivery_address: ['b.lof@iciformation.fr', 'n.ranaivoson@iciformation.fr']
+
     transport: "%mailer_transport%"
     auth_mode: "%mailer_auth_mode%"
     host:      "%mailer_host%"

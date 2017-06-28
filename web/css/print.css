@@ -2,12 +2,22 @@
     #afficheBeneficiaire{
         display: none;
     }
+    #flashbag{
+        display: none;
+    }
+    #loading{
+        display: none;
+    }
     #imprimer{
         display: block;
     }
     table{
         border-collapse: collapse;
         width: 750px;
+    }
+    #id_beneficiaire{
+        font-size: 12px;
+        float: right;
     }
     #impr_renseignement td{
         border: 1px solid;
@@ -35,7 +45,7 @@
         font-weight: bold;
     }
     #commentaire{
-        height: 300px;
+        height: 275px;
     }
     #entheo{
         color: #b0b0b0 !important;
@@ -51,7 +61,7 @@
         border: 1px solid;
         margin-bottom: 7px;
     }
-    #impr_historique table, #impr_news table, #impr_suivi_administratif table{
+    #impr_historique table, #impr_statut table, #impr_suivi_administratif table{
         margin-bottom: 30px;
     }
 }

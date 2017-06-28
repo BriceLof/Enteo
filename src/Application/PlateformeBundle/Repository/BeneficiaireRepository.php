@@ -38,15 +38,44 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($query); 
     }
-    
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false)
+
+    /**
+     * retourne les bénéficiaires correspondant aux conditions qui sont mis en parametre
+     *
+     * @param Beneficiaire $beneficiaire
+     * @param $debut
+     * @param $fin
+     * @param null $idUtilisateur
+     * @param bool $bool
+     * @param $tri
+     * @param $ville
+     * @return \Doctrine\ORM\NativeQuery
+     */
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
-        //$rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', $beneficiaire, array( 'id' => 'vid' ));
+        if(!is_null($ville)) {
+            $rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', 'ville', array(
+                'id' => 'v_id',
+                'ville' => 'ville_nom'
+            ));
+        }
 
-        $query = 'SELECT b.* FROM beneficiaire b WHERE 1';
+        $query = 'SELECT b.* FROM beneficiaire b';
         $params = array();
+
+        if(!is_null($ville)) {
+            $query .= ' INNER JOIN ville v ON b.ville_mer_id = v.id';
+            $params['villeMerId'] = $ville;
+        }
+
+        $query .= ' WHERE 1';
+
+        if(!is_null($ville)) {
+            $query .= ' AND v.ville LIKE :villeNom';
+            $params['villeNom'] = '%'.$ville.'%';
+        }
 
         if(!is_null($beneficiaire->getNomConso())) {
             $query .= ' AND b.nom_conso LIKE :nomConso';
@@ -56,11 +85,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if(!is_null($beneficiaire->getPrenomConso())) {
             $query .= ' AND b.prenom_conso LIKE :prenomConso';
             $params['prenomConso'] = "%".$beneficiaire->getPrenomConso()."%";
-        }
-
-        if(!is_null($beneficiaire->getVilleMer())) {
-            $query .= ' AND b.ville_mer_id = :villeMerId';
-            $params['villeMerId'] = $beneficiaire->getVilleMer()->getId();
         }
 
         if(!is_null($beneficiaire->getEmailConso())){
@@ -88,9 +112,22 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['dateFin'] = $fin;
         }
 
-        //$query .= " INNER JOIN ville v ON v.id = b.id WHERE v.cp LIKE '75%'";
+        if(!is_null($beneficiaire->getRefFinanceur())){
+            $query .= ' AND b.ref_financeur LIKE :refFinanceur';
+            $params['refFinanceur'] = '%'.$beneficiaire->getRefFinanceur().'%';
+        }
 
-        $query .= ' ORDER BY b.id DESC';
+        if ($tri === 0) {
+            $query .= ' ORDER BY b.id DESC';
+        }elseif ($tri === 1){
+            $query .= ' ORDER BY b.nom_conso ASC';
+        }elseif ($tri === 2){
+            $query .= ' ORDER BY b.nom_conso DESC';
+        }elseif ($tri === 3){
+            $query .= ' ORDER BY b.date_heure_mer ASC';
+        }elseif ($tri === 4){
+            $query .= ' ORDER BY b.date_heure_mer DESC';
+        }
 
         if ($bool == true){
             $query .= ' LIMIT 10';

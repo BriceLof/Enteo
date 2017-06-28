@@ -197,22 +197,31 @@ class BeneficiaireType extends AbstractType
                 'required' => false,
                 'choices' => array(
                     '...' => '',
-                    'Auvergne-Rhône-Alpes' => 'Auvergne-Rhône-Alpes',
-                    'Bourgogne-Franche-Comté' => 'Bourgogne-Franche-Comté',
-                    'Bretagne' => 'Bretagne',
-                    'Centre-Val de Loire' => 'Centre-Val de Loire',
-                    'Corse' => 'Corse',
-                    'Grand Est' => 'Grand Est',
-                    'Hauts-de-France' => 'Hauts-de-France',
-					'Île-de-France' => 'Île-de-France',
-                    'Normandie' => 'Normandie',
-                    'Nouvelle-Aquitaine' => 'Nouvelle-Aquitaine',
-                    'Occitanie' => 'Occitanie',
-                    'Pays de la Loire' => 'Pays de la Loire',
-					'Provence-Alpes-Côte d\'Azur' => 'Provence-Alpes-Côte d\'Azur',
+                    'AUVERGNE-RHÔNE-ALPES' => 'Auvergne-Rhône-Alpes',
+                    'BOURGOGNE-FRANCHE-COMPTÉ' => 'Bourgogne-Franche-Comté',
+                    'BRETAGNE' => 'Bretagne',
+                    'CENTRE-VAL DE LOIRE' => 'Centre-Val de Loire',
+                    'CORSE' => 'Corse',
+                    'GRAND EST' => 'Grand Est',
+                    'HAUTS-DE-FRANCE' => 'Hauts-de-France',
+					'ÎLE-DE-FRANCE' => 'Île-de-France',
+                    'NORMANDIE' => 'Normandie',
+                    'NOUVELLE-AQUITAINE' => 'Nouvelle-Aquitaine',
+                    'OCCITANIE' => 'Occitanie',
+                    'PAYS DE LA LOIRE' => 'Pays de la Loire',
+					'PROVENCE-ALPES-CÔTE D\'AZUR' => 'Provence-Alpes-Côte d\'Azur',
+                    'RÉGION DOM TOM' => 'Région Dom-Tom'
                 ),
                 'attr' => array(
                     'placeholder' => '',
+                    'class' => 'fiche'
+                )
+            ))
+
+            ->add('dptTravail', TextType::class, array(
+                'label' => 'Département du travail',
+                'required' => false,
+                'attr' => array(
                     'class' => 'fiche'
                 )
             ))

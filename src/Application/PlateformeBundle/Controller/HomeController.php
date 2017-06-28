@@ -5,9 +5,11 @@ namespace Application\PlateformeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
+use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\BeneficiaireType;
+use Application\PlateformeBundle\Form\NouvelleType;
 use Application\PlateformeBundle\Entity\SuiviAdministratif;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,11 +19,12 @@ class HomeController extends Controller
 {
     public function indexAction(Request $request, $page)
     {
+        
         $em = $this->getDoctrine()->getManager();
         // Récupération liste béneficiaires
         $repository_beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire');
 
-        //verifie si la requete est une requete AJAX
+        //Mis à jour du statut : verifie si la requete est une requete AJAX
         if ($request->isXmlHttpRequest()) {
 
             $news = new News;
@@ -71,6 +74,27 @@ class HomeController extends Controller
                 $response->headers->set('Content-Type', 'application/json');
                 return $response;
             }
+            
+            // Ajout d'une news 
+            $nouvelle = new Nouvelle;
+            $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
+            
+            if ($request->isMethod('POST') && $form_nouvelle->handleRequest($request)->isValid()) {
+                $nouvelle = $form_nouvelle->getData();
+                $beneficiaire_id = $request->request->get('beneficiaire_id');
+                $nouvelle->setUtilisateur($this->getUser());
+                //recuperation du bénéficiaire
+                $beneficiaire = $repository_beneficiaire->findOneById($beneficiaire_id);
+                $nouvelle->setBeneficiaire($beneficiaire);
+                $em->persist($nouvelle);
+                $em->flush();
+                
+                $template = $this->forward('ApplicationPlateformeBundle:Home:infoBeneficiaire', (array('beneficiaire' => $beneficiaire)))->getContent();
+                $json = json_encode($template);
+                $response = new Response($json, 200);
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            }
 
         }else {
 
@@ -106,7 +130,7 @@ class HomeController extends Controller
                 throw $this->createNotFoundException("La page " . $page . " n'existe pas.");
             }
 
-            // Formulaire d'ajout d'une news à un bénéficiaire
+            // Formulaire de mise à jour du statut d'un bénéficiaire
             $news = new News;
             $form = $this->get("form.factory")->create(NewsType::class, $news);
             //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
@@ -150,12 +174,16 @@ class HomeController extends Controller
                 return $this->redirect($url);
             }
             
+            $nouvelle = new Nouvelle;
+            $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
+
             return $this->render('ApplicationPlateformeBundle:Home:index.html.twig', array(
                 'liste_beneficiaire' => $beneficiaires,
                 'nbPages' => $nbPages,
                 'page' => $page,
                 'form_news' => $form->createView(),
-                'nombreBeneficiaire' => $nombreBeneficiaire
+                'form_nouvelle' => $form_nouvelle->createView(),
+                'nombreBeneficiaire' => $nombreBeneficiaire,
             ));
         }
     }
@@ -177,6 +205,22 @@ class HomeController extends Controller
 
     public function infoBeneficiaireAction(Beneficiaire $beneficiaire){
         return $this->render('ApplicationPlateformeBundle:Home:infoBeneficiaire.html.twig', (array('beneficiaire' => $beneficiaire)));
+    }
+
+    /**
+     * recherche ajax du bénéficiaire dans la home qui fait appel a l'action search dans BeneficiaireController.php
+     * et renvoie un reponse json pour l'ajax
+     *
+     * @param  Request $request
+     *
+     * @return Response (json)
+     */
+    public function ajaxSearchBeneficiaireAction(Request $request){
+        $template = $this->forward('ApplicationPlateformeBundle:Beneficiaire:search', (array('request' => $request)))->getContent();
+        $json = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }
 

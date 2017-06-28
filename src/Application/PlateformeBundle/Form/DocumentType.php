@@ -18,7 +18,7 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('file',FileType::class, array(
-                'label' => 'Fichier',
+                'label' => false,
                 'required' => true,
             ))
 

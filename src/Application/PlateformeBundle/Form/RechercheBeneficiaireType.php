@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Form;
 use Application\PlateformeBundle\Entity\Ville;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -53,37 +54,31 @@ class RechercheBeneficiaireType extends AbstractType
                     'class' => ''
                 )
             ))
-            ->add('villeMer', VilleType::class, array(
-                'label' => 'Ville de MenR',
-                'required' => false,
-            ))
-           
-            ->add('dateDebut', DateType::class, array(
-                'label' => 'Date de Debut',
-                'mapped' => false,
-                'widget' => 'single_text',
-                'input' => 'datetime',
-                'required' => false,
-                'format' => 'dd/MM/yyyy',
+
+            ->add('ville', TextType::class, array(
+                "mapped" => false,
+                "required" => false,
                 'attr' => array(
-                    'placeholder' => 'Date début',
-                    'class' => 'accompagnementDate',
-                    'autocomplete' => 'off',
+                    'placeholder' => 'Veuillez saisir la ville',
+                    'autocomplete' => 'off'
                 )
             ))
-            ->add('dateFin', DateType::class, array(
-                'label' => 'Date de fin',
-                'mapped' => false,
+
+            ->add('refFinanceur', TextType::class, array(
+                'label' => 'Réf. Financeur',
                 'required' => false,
-                'widget' => 'single_text',
-                'input' => 'datetime',
-                'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'Date fin',
-                    'class' => 'accompagnementDate',
-                    'autocomplete' => 'off',
-                )
             ))
+
+            ->add('tri', HiddenType::class, array(
+                'mapped' => false,
+                'data' => 0
+            ))
+
+            ->add('page', HiddenType::class, array(
+                'mapped' => false,
+                'data' => 0
+            ))
+
             ->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
 
             ;

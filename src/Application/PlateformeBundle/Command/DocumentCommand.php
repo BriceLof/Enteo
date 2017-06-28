@@ -35,7 +35,7 @@ class DocumentCommand extends ContainerAwareCommand
             $output->writeln($beneficiaire->getNomConso());
             $documents = $beneficiaire->getDocuments();
             foreach ($documents as $document){
-                $this->getContainer()->get('application_plateforme.document')->supprimerDocument($beneficiaire, $document);
+                $this->getContainer()->get('application_plateforme.document')->removeDocument($beneficiaire, $document);
                 $output->writeln('ok');
                 $compteur++;
             }

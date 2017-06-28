@@ -1,0 +1,16 @@
+<div class="col-md-3">
+    <div id="" class="tableOnglet row">
+        <table>
+            <caption class="caption_calendar"><a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent"><span class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a></caption>
+        </table>
+        <div class="collapse in" id="collapseEvent">
+            <h2>
+                Beneficiaire :<br>
+                <span class="calendar_consultant"><a title="Voir la fiche du bénéficiaire" alt="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': beneficiaire.id}) }}">{{ beneficiaire.civiliteConso~' '~beneficiaire.prenomConso|capitalize ~' '~beneficiaire.nomConso|capitalize }}</a></span>
+            </h2>
+            <form action="{{ path(link, { 'id' : id }) }}" method="POST" id="form_admin_event">
+                {% include "ApplicationPlateformeBundle:Calendar:champsForm.html.twig" with {'type': 'notAll'}  %}
+            </form>
+        </div>
+    </div>
+</div>

@@ -9,10 +9,11 @@ function getClient() {
     });
 }
 
+/**
+ * fonction qui permet d'afficher le message flash et de le faire disparaitre au bout de 5 secondes
+ *
+ */
 (function () {
-    document.addEventListener('click',function () {
-        $('#error_slot_busy').css("display","none");
-    })
     function afficheMessageFlash() {
         var flash = document.getElementById("flashbag");
         if (flash != undefined) {
@@ -22,17 +23,33 @@ function getClient() {
     setTimeout(afficheMessageFlash,5000);
 })();
 
+/**
+ * fonction qui permet de changer la taille de l'iframe google calendar en fonction de la taille de l'ecran
+ * function qui permet de supprimer le message d'erreur quand le créneau est indisponible dans le formulaire calendar
+ */
 (function () {
     div = $('#iframe');
     var iframe = document.querySelector('#iframe iframe');
     if(iframe != undefined){
         iframe.width = div.width();
     }
+    document.addEventListener('click',function () {
+        $('#error_slot_busy').css("display","none");
+    });
 })();
 
+/**
+ * cette partie est seulement pour les admin
+ *
+ */
 if(document.getElementById('admin_calendar_consultant_consultant')) {
+
+    /**
+     * cette fonction permet de charger les l'agenda d'un consultant quand elle est séléctionné
+     * dans la page admin add event
+     *
+     */
     (function () {
-        console.log($('#numero_consultant').val());
         if ($('#numero_consultant').val() != undefined){
             $('#admin_calendar_consultant_consultant option[value="'+$('#numero_consultant').val()+'"]').prop('selected','selected');
             $('#admin_calendar_consultant option[value="'+$('#numero_consultant').val()+'"]').prop('selected','selected');
@@ -83,8 +100,11 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     })();
 }
 
-
-//autocompletion beneficiaire et bureau
+/**
+ * cette fonction permet de charger le nom des bénéficiaires en fonction du consultant dans all-add-event
+ * elle permet aussi de charger les bureaux en fonction de ville rentré dans la formulaire
+ * autocompletion ville
+ */
 (function () {
     $('#admin_calendar_nom').autocomplete({
         source : function(requete, reponse) {
@@ -127,9 +147,18 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                 $('#admin_calendar_beneficiaire').val(null);
                 $('#admin_calendar_prenom').val("");
             }
-        },
+        }
     });
 
+    /**
+     * les champs bureau dans le formulaire
+     *
+     */
+    if( $('#admin_calendar_autreBureau').is(':checked')) {
+        $('#admin_calendar_nomBureau').prop('disabled', false);
+        $('#admin_calendar_adresseBureau').prop('disabled', false);
+        $('#admin_calendar_ville').prop('disabled', false);
+    }
     $('#admin_calendar_autreBureau').on('change',function () {
         if( $('#admin_calendar_autreBureau').is(':checked')){
             $('#admin_calendar_nomBureau').prop('disabled', false).val("");
@@ -144,6 +173,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
             $('#admin_calendar_bureau').val("");
         }
     });
+
     $('#admin_calendar_ville').autocomplete({
         source : function(requete, reponse) {
             if( $('#admin_calendar_autreBureau').is(':checked')) {
@@ -220,6 +250,10 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     })
 })();
 
+/**
+ * fonction qui modifie l'affichage en fonction du radio choisi dans le fomulaire d'ajout d'un evenement
+ *
+ */
 (function () {
     var rad = document.getElementsByName('admin_calendar[typerdv]');
     var champBureau = document.getElementById('champ_bureau');
@@ -233,7 +267,6 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
             if(this !== prev) {
                 prev = this;
             }
-            console.log(this.value)
             if(this.value == 'distantiel'){
                 champBureau.style.display = 'none';
             }else{
@@ -266,6 +299,10 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 
 })();
 
+/**
+ * jquery validator
+ *
+ */
 (function () {
     jQuery.validator.addMethod("noBeneficiaire",
         function (value, element) {
@@ -360,6 +397,10 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 })();
 
 //date et heure de rdv
+/**
+ * il faut que le date du rdv soit superieur a la date du jour
+ *
+ */
 (function () {
     //mise à jour de la date
     dateCourant = new Date();
@@ -519,6 +560,9 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 
 
 //bureau
+/**
+ * cette fonction permet de rechercher et afficher les villes dans la partie agendaBureau
+ */
 (function () {
     $('#form_villeBureau').autocomplete({
         source : function(requete, reponse) {
@@ -596,6 +640,11 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 
 })();
 
+/**
+ * cette fonction intervient à la construction de l'iframe dans agendaBureau
+ *
+ * @param el
+ */
 function addRemove(el) {
     iframe = $('#iframe');
     calendar = "src=" + $(el).attr('data-id') + "&amp;color=" + $(el).attr('data-color') + "&amp;";

@@ -13,12 +13,8 @@
 .calendar{
     margin-left: 1%;
 }
-.calendar .row{
-    margin-right: 0px;
-}
 .calendar .tableOnglet{
     background-color: #e4e4e4;
-    margin-left: 0px;
     margin-top: 52px;
 }
 .calendar input, .calendar select{
@@ -136,6 +132,11 @@
 .disponibilite{
     margin-top: 10px;
     margin-bottom: 30px;
+}
+#voir_disponibilite{
+    float: right;
+    margin-top: -35px;
+    margin-right: 15px;
 }
 #application_plateformebundle_disponibilites_date select{
     padding: 2px;

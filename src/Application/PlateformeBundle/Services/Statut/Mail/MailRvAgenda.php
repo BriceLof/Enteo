@@ -4,7 +4,8 @@ namespace Application\PlateformeBundle\Services\Statut\Mail;
 class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 {
     // Envoi un mail au beneficiaire après l'ajout/modification/suppression d'un rdv dans l'agenda par le consultant
-    public function alerteRdvAgenda($beneficiaire, $rdv)
+    // alerteRdvAgenda(), le 3e param sert à savoir si c'est un mail après une modification de rdv 
+    public function alerteRdvAgenda($beneficiaire, $rdv, $old_rdv = null )
     {   
 		$consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
@@ -22,18 +23,22 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 
         if($typeRdv == "presenciel" || $typeRdv == "presentiel")
         {
-            if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2")
+            if($rdv->getSummary() == "RV1")
                 $ref = "1-a";
             else
                 $ref = "1-d";
             
+            if(!is_null($old_rdv)) $ref = "1-e";
+                
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
         }
         else{
-            if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2")
+            if($rdv->getSummary() == "RV1")
                 $ref = "1-b";
             else
                 $ref = "1-c";
+            
+            if(!is_null($old_rdv)) $ref = "1-f";
             
             $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom());
         }
@@ -47,10 +52,35 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
         }			
 	
-		
-        if($typeRdv == "presenciel" || $typeRdv == "presentiel"){           
-            $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Suite à notre conversation téléphonique ce jour, je vous confirme votre rendez-vous le <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
+        $rv = $rdv->getSummary();
+        switch($rv)
+        {
+            case 'RV2': 
+                $sentenceByRv =  "pour un rendez-vous de pré-positionnement";
+            break;
+            case 'RV Livret1': 
+                $sentenceByRv =  "pour travailler sur votre Livret 1";
+            break;
+            case 'RV Livret2': 
+                $sentenceByRv =  "pour travailler sur votre Livret 2";
+            break;
+            case 'RV Preparation jury': 
+                $sentenceByRv =  "pour préparer votre passage devant le Jury VAE";
+            break;
+        
+            default:
+                $sentenceByRv =  "pour ".$rv;
+        }
+        
+        $message="";
+        if($typeRdv == "presenciel" || $typeRdv == "presentiel"){ 
+            $message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
+            if(!is_null($old_rdv))
+                $message .= "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été reporté au ";
+            else
+                $message .= "Je vous confirme votre rendez-vous le ";
+            
+            $message .= "<b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> ".$sentenceByRv.". 
 				<table style='margin-top:-50px;'>
 					<tr>
 						<td><u>Votre consultant : </u></td>
@@ -71,12 +101,15 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 						</td>
 					</tr>
 				</table>";
-	    if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){ 		
+	    	if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){ 		
                 $message .= "<br><br>Merci de vous munir <u>impérativement</u> de :<br>";
             }
-        }else{ 
-            $message = ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>"
-                . "Suite à notre échange, je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
+        }else{
+        	$message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
+            if(!is_null($old_rdv))
+                $message .= "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été modifié.<br><br>";
+                 
+            $message .= "Je vous confirme votre rendez-vous téléphonique avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())." ".$sentenceByRv.".<br><br><b>".
                 ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précise</u></b>
                     au numéro suivant : <b>".$consultant->getTel1()."</b>";
             if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){   
@@ -101,15 +134,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $message.=  "
            <br><br><div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au moins 24 heures avant votre rendez-vous.</b></div>
 			<br><br>
-
-            Au plaisir de vous accompagner dans votre projet.<br><br>
-            Bien Cordialement. <br><br>
-            
-            --<br>
-            Audrey AZOULAY<br>
-            ENTHEOR<br>
-            <a href='mailto:audrey.azoulay@entheor.com'>audrey.azoulay@entheor.com</a><br>
-            06.89.33.87.83";
+            Bien Cordialement. <br>";
 
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         
@@ -122,5 +147,43 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
     
-    
+    public function alerteRdvAgendaSupprime($beneficiaire, $old_rdv)
+    {
+    	$consultant = $beneficiaire->getConsultant();	
+    	$message = "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été annulé. <br><br>
+    				Merci de rappeler votre Consultant VAE pour fixer un nouveau rendez-vous.
+    				
+					<table style='margin-top:-50px;'>
+						<tr>
+							<td><u>Votre consultant : </u></td>
+							<td style='display:block;margin-top:64px;margin-left:27px;'>
+								<b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
+								Cabinet ENTHEOR <br>
+								Tél: ".$consultant->getTel1()."<br>
+								Email : ".$consultant->getEmail()."
+							</td>
+						</tr>
+					</table>";
+		
+		$subject = "Rdv Supprimé";			
+		$from = "audrey.azoulay@entheor.com";
+        $to =  $beneficiaire->getEmailConso();
+        $cc = array($consultant->getEmail());
+        $bcc = array(
+            "support@iciformation.fr" => "Support",
+            "f.azoulay@entheor.com" => "Franck Azoulay", 
+            "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+            "christine.clement@entheor.com" => "Christine Clement",
+            "audrey.azoulay@entheor.com" => "Audrey Azoulay");
+            
+        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+            
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => "7"
+        ));
+		
+		return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+	} 
 }

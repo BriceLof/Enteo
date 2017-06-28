@@ -33,6 +33,11 @@ class Document
     public $path;
 
     /**
+     * @ORM\Column(name="type_doc", type="string", length=255, nullable=true)
+     */
+    public $type;
+
+    /**
      * @Assert\File(mimeTypes={
      *          "image/jpeg",
      *          "image/png",
@@ -252,5 +257,29 @@ class Document
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Document
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

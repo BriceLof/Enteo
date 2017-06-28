@@ -46,61 +46,7 @@ class PdfController extends Controller
             'reste' => $reste,
         ));
 
-        $this->get('knp_snappy.pdf')->getInternalGenerator()->setTimeout(300);
-
-        $file = "Devis_Accompagnement_VAE_".str_replace(" ","_",str_replace(".","",$beneficiaire->getCiviliteConso())."_".$beneficiaire->getNomConso())."_".(new \DateTime('now'))->format('d')."_".(new \DateTime('now'))->format('m')."_".(new \DateTime('now'))->format('Y').'.pdf';
-        $filename =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId()."/".$file;
-        $filepath =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId();
-
-        if (file_exists($filename)){
-            unlink($filename);
-        }
-
-        $this->get('knp_snappy.pdf')->generateFromHtml($html,$filename);
-
-        $documents = $beneficiaire->getDocuments();
-
-        if (!($documents->isEmpty())){
-            foreach ($documents as $documentFile){
-                if($documentFile->getPath() == $file){
-                    $document = $documentFile;
-                    $document->setBeneficiaire($beneficiaire);
-                    $document->setPath($file);
-                    $document->setDescription($file);
-                    break;
-                }else{
-                    $document = new Document();
-                    $document->setBeneficiaire($beneficiaire);
-                    $document->setPath($file);
-                    $document->setDescription($file);
-                }
-            }
-        }else{
-            $document = new Document();
-            $document->setBeneficiaire($beneficiaire);
-            $document->setPath($file);
-            $document->setDescription($file);
-        }
-
-        $zip = new \ZipArchive();
-        $zip_path=$filepath.'/download.zip';
-
-        if($zip->open($zip_path) === TRUE){
-        }else {
-            if ($zip->open($zip_path, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
-                die ("An error occurred creating your ZIP file.");
-            }
-        }
-
-        $zip->addFile($filename, $file);
-
-        unset($filename);
-        unset($this->file);
-
-        $em->persist($document);
-        $em->flush();
-
-
+        $this->get('application_plateforme.document')->saveDocument($beneficiaire, "devis", $html);
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
@@ -175,6 +121,8 @@ class PdfController extends Controller
 			'accompagnement' => $accompagnement,
 			'cout_total_financement' => $cout_total_financement
         ));
+
+        $this->get('application_plateforme.document')->saveDocument($beneficiaire, "financement", $html);
         
         return new Response(
            /* $this->get('knp_snappy.pdf')->getOutputFromHtml($html),

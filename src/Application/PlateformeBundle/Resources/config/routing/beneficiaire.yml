@@ -14,12 +14,6 @@ application_list_beneficiaire:
     options:
         expose:  true
 
-application_ajaxSearch_beneficiaire:
-    path:     /ajax2Search
-    defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:search2" }
-    options:
-        expose:  true
-
 application_edit_consultant_beneficiaire:
     path:     /add-consultant/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:editConsultant" }

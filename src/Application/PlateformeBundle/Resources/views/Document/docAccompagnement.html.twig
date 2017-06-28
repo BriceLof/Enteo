@@ -1,0 +1,50 @@
+<div style="margin-bottom: 10px">
+{% for document in beneficiaire.documents|reverse %}
+    {% if document.type == 'devis' or document.type == 'financement' %}
+        <div>
+            <span style="margin-right: 27px"><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank" style="color:#333;cursor: pointer">{{ document.description }}</a></span>
+            <span style="font-size: 11px;cursor: pointer" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+        </div>
+        <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Supprimer un document</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <span>Voulez-vous vraiment supprimer ce Document?</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                            <a style="width: 95px;float: right" class="deleteBtn" href="{{ path('application_delete_document', { 'id': document.id }) }}">
+                                <button class="btn btn-danger">Supprimer</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+</div>
+<div>
+    <div style="margin-bottom: 3px">
+        <span>
+            <a style="padding: 0 5px" class="btn btn-info" target="_blank"
+               href="{{ path('application_new_demande_financement_pdf', {'id':beneficiaire.id}) }}">Générer Demande CPF
+            </a>
+        </span>
+    </div>
+    <div style="margin-bottom: 10px">
+        <span>
+            <a id="proposition_pdf" style="padding: 0 5px" class="btn btn-info"
+               href="{{ path('application_new_devis_pdf', { 'id' : beneficiaire.id }) }}" target="_blank">Générer Devis</a>
+        </span>
+    </div>
+</div>

@@ -134,6 +134,10 @@
                                             <td>{{ form_widget(edit_form.regionTravail) }}</td>
                                         </tr>
                                         <tr>
+                                            <td>{{ form_label(edit_form.dptTravail) }}</td>
+                                            <td>{{ form_widget(edit_form.dptTravail) }}</td>
+                                        </tr>
+                                        <tr>
                                             <td>&nbsp;</td>
                                         </tr>
                                         <tr>
@@ -352,13 +356,18 @@
                             <caption class="titreSection"><a href="#collapseAccompagnement" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseAccompagnement"><span class="glyphicon glyphicon-minus"></span><span>Accompagnement</span></a></caption>
                         </table>
                         <div class="collapse in" id="collapseAccompagnement">
-                            <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
-                                <table>
-                                    <tbody>
-                                        {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
-                                    </tbody>
-                                </table>
-                            </form>
+                            <div id="form_accompagnement">
+                                <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
+                                    <table>
+                                        <tbody>
+                                            {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div id="doc_accompagnement">
+                                {% include "ApplicationPlateformeBundle:Document:docAccompagnement.html.twig" %}
+                            </div>
                         </div>
                         {% if beneficiaire.accompagnement is not null %}
                             <div id="bloc_add_financment">
@@ -387,82 +396,86 @@
                             <div>
                                 <table class="table-condensed">
                                     <tbody>
-                                    {% for document in beneficiaire.documents %}
-                                        {% if 'pdf' in document.path %}
-                                            {{ afficherDocument(beneficiaire, document.path) }}
-                                            <tr>
-                                                <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
-                                                <td></td>
-                                                <td class="btn" width="100%">
-                                                        <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
-														<span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
-                                                
-												</td>
-                                            </tr>
+                                    {% for document in beneficiaire.documents|reverse %}
+                                        {% if document.type == 'devis' or document.type == 'financement' %}
                                         {% else %}
-                                            <tr>
-                                                <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank"><span style="color: blue">{{ document.description }}</span></a></td>
-                                                <td></td>
-                                                <td class="btn" width="100%">
-                                                    <span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
-													<span style="color: black;margin-left: 10px;margin-right: 10px" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
-                                                
-												</td>
-                                            </tr>
+                                            {% if 'pdf' in document.path %}
+                                                {{ afficherDocument(beneficiaire, document.path) }}
+                                                <tr>
+                                                    <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>
+                                                    <td></td>
+                                                    <td class="btn" width="100%">
+                                                            <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+                                                            <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                                <tr>
+                                                    <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>
+                                                    <td></td>
+                                                    <td class="btn" width="100%">
+                                                        <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
+                                                        <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+
+                                            <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel">Supprimer un document</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div>
+                                                                <span>Voulez-vous vraiment supprimer ce Document?</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div>
+                                                                <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                                                                <a style="width: 95px;float: right" class="deleteBtn" href="{{ path('application_delete_document', { 'id': document.id }) }}">
+                                                                    <button class="btn btn-danger">Supprimer</button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div  class="modal fade" id="myModalDocumentModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <form method="POST" action="{{ path('application_update_document', { 'id': document.id }) }}">
+                                                            <div class="modal-header" >
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                <h4 class="modal-title" id="myModalLabel">Modifier un document</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Nom du fichier : <input type="text" value="{{ document.description }}" name="document_nom_modifier" />
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                                    <button type="submit" class="btn btn-warning">Modifier</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         {% endif %}
-                                        <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title" id="myModalLabel">Supprimer un document</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div>
-                                                            <span>Voulez-vous vraiment supprimer ce Document?</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div>
-                                                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
-                                                            <a style="width: 95px;float: right" class="deleteBtn" href="{{ path('application_delete_document', { 'id': document.id }) }}">
-                                                                <button class="btn btn-danger">Supprimer</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-										<div  class="modal fade" id="myModalDocumentModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-													<form method="POST" action="{{ path('application_update_document', { 'id': document.id }) }}">
-														<div class="modal-header" >
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																<span aria-hidden="true">&times;</span>
-															</button>
-															<h4 class="modal-title" id="myModalLabel">Modifier un document</h4>
-														</div>
-														<div class="modal-body">
-															Nom du fichier : <input type="text" value="{{ document.description }}" name="document_nom_modifier" />
-														</div>
-														<div class="modal-footer">
-															<div>
-																<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-																<button type="submit" class="btn btn-warning">Modifier</button>											
-															</div>
-														</div>
-													</form>
-                                                </div>
-                                            </div>
-                                        </div>
                                     {% endfor %}
                                 </table>
                             </div>
                             <div id="AjoutDocument" class="collapse in">
-                                <a href="#" id="add_document" class="btn btn-primary maj">Ajouter un Document</a>
+                                <a href="#" id="add_document" class=""><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right: 5px;"></span>Ajouter un Document</a>
                                 <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
                                     {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                                 </form>
@@ -519,26 +532,26 @@
                             {% else %}
                                 <input type="hidden" value="7" class="statutIDCurrentSuiviAd"/>
                             {% endif %}
-                            
-                            
 					</div>
     {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="news col-md-12">
-                <h4 class="titreSection">NEWS</h4>
-                <div id="tabNews">
-                    <ul>
-                        <li><a href="#tabs-1">Toutes les News</a></li>
-                        <li><a href="#tabs-2">Ajouter une News</a></li>
-                    </ul>
-                    <div id="tabs-1">
-                        {{ render(controller("ApplicationPlateformeBundle:News:showAll",{'beneficiaire': beneficiaire})) }}
-                    </div>
-                    <div id="tabs-2" class="col-md-3">
-                        {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                    <div id="news" class="tableOnglet">
+                        <table>
+                            <caption class="titreSection"><a id="newsCollapse" href="#news" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="news"><span class="glyphicon glyphicon-minus"></span><span>News</span></a></caption>
+                        </table>
+                        <div class="collapse in" id="news_collapse">
+                            <div id="tabNews">
+                                <ul id="tablist">
+                                    <li><a href="#tabs-1">Toutes les News</a></li>
+                                    <li><a href="#tabs-2">Ajouter une News</a></li>
+                                </ul>
+                                <div id="tabs-1">
+                                    {{ render(controller("ApplicationPlateformeBundle:Nouvelle:showAll",{'beneficiaire': beneficiaire})) }}
+                                </div>
+                                <div id="tabs-2">
+                                    {{ render(controller("ApplicationPlateformeBundle:Nouvelle:new",{'id': beneficiaire.id })) }}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,50 @@
+<div id="afficheListNouvelle">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    {% for nouvelle in beneficiaire.nouvelle|reverse %}
+        <div class="panel panel-default {{ (loop.index0 > 2) ? 'hiddenNews' : '' }}" style="{{ (loop.index0 > 2) ? 'display:none' : '' }}" >
+            <div class="panel-heading" role="tab" id="heading_nouvelle_{{ loop.index }}">
+                <h4 class="panel-title" style="font-size:12px">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse_nouvelle_{{ loop.index }}" aria-expanded="false" aria-controls="collapse_nouvelle_{{ loop.index }}">
+                        {{ nouvelle.utilisateur.prenom |slice(0,1)| capitalize ~'. '~nouvelle.utilisateur.nom | capitalize ~', le '~nouvelle.date | date("d/m/Y à H:i")~' : '~ nouvelle.titre | capitalize }} 
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse_nouvelle_{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading_nouvelle_{{ loop.index }}">
+                <div class="panel-body">
+                    
+                    <div class="nouvelle_remove_modify">
+                    	{{ nouvelle.message | nl2br }}<br><br>
+                    	<div class='row'>
+                    		<a class='col-xs-1' href="#" style="width:initial" title="Modifier"><span data-toggle="modal" data-target="#myModalNewsModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span></a>
+	                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+	                            <a class='col-xs-1' href="{{ path('application_delete_nouvelle', { 'id': nouvelle.id }) }}" style="width:initial" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>
+	                        {% endif %} 
+                       	</div>
+                        <div class="modal fade" id="myModalNewsModify{{ loop.index }}" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Modifier News</h4>
+                                    </div>
+                                    <form method="POST" id="nouvelleForm"
+                                          action="{{ path('application_edit_nouvelle', { 'id' : nouvelle.id }) }}">
+                                        {{ render(controller("ApplicationPlateformeBundle:Nouvelle:update",{'id': nouvelle.id})) }}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% if beneficiaire.nouvelle | length > 3 %}
+    	<button class="voirPlusNouvelle" style="margin-top: 6px;">Voir +/-</button>
+    {% endif %}
+    </div>
+</div>

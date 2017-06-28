@@ -11,7 +11,7 @@
         <table>
             <tr id="image_logo">
                 <td rowspan="2" style="width: 200px"><img src="{{ asset('images/logo_entheor.jpg') }}" alt="ENTHEOR"></td>
-                <td id="titre" colspan="4">Fiche de renseignements VAE</td>
+                <td id="titre" colspan="4"><span>Fiche de renseignements VAE</span><span id="id_beneficiaire">ID: {{ beneficiaire.id }}</span></td>
             </tr>
             <tr>
                 <td colspan="2">Ville MenR : {{ beneficiaire.villeMer.nom }}</td>
@@ -49,6 +49,10 @@
             <tr>
                 <td>Date de naissance</td>
                 <td colspan="4">{{ beneficiaire.dateNaissance|date("d/m/Y") }}</td>
+            </tr>
+            <tr>
+                <td>Département Travail</td>
+                <td colspan="4">{{ beneficiaire.ville.dpt ~' ('~ beneficiaire.ville.region~')' }}</td>
             </tr>
             <tr>
                 <td>Poste occupé</td>
@@ -168,6 +172,10 @@
         {% endfor %}
             </tr>
             <tr>
+                <td>Réf. Financeur</td>
+                <td colspan="4">{{ beneficiaire.refFinanceur }}</td>
+            </tr>
+            <tr>
                 <td id="commentaire">COMMENTAIRE</td>
                 <td colspan="4"></td>
             </tr>
@@ -182,7 +190,7 @@
     <div id="impr_historique">
         <table>
             <caption>Historique Bénéficiaire</caption>
-            {% for historique in beneficiaire.historique|slice(0, 10) %}
+            {% for historique in beneficiaire.historique|reverse|slice(0, 10) %}
                 {% if historique.eventId != '0' %}
                     <tr>
                         <td>{{historique.dateDebut|date('d/m/Y')}}</td>
@@ -221,7 +229,7 @@
         <div id="impr_suivi_administratif">
             <table>
                 <caption>Suivi Administratif</caption>
-                {% for suivi in beneficiaire.suiviAdministratif|slice(0, 10) %}
+                {% for suivi in beneficiaire.suiviAdministratif|reverse|slice(0, 10) %}
                     <tr>
                         <td>{{ suivi.date|date('d/m/Y') }}</td>
                         {% if suivi.statut is not null %}
@@ -236,15 +244,32 @@
             </table>
         </div>
     {% endif %}
-    <div id="impr_news">
+    <div id="impr_statut">
         <table>
-            <caption>News</caption>
-            {% for news in beneficiaire.news|slice(0,10) %}
+            <caption>Historique Statut</caption>
+            {% for news in beneficiaire.news|reverse|slice(0,10) %}
                 <tr>
                     <td>{{ news.dateHeure|date('d/m/Y à h:m') }}</td>
                     <td>{{ news.statut.nom }}</td>
                     <td>{{ news.detailStatut.detail }}</td>
-                    <td>{{ news.message }}</td>
+                    <td>{# news.message #}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+    <div id="impr_news">
+        <table>
+            <caption>News</caption>
+            {% for nouvelle in beneficiaire.nouvelle|reverse|slice(0,10) %}
+                <tr>
+                    <td>{{ nouvelle.date | date("d/m/Y")}} </td>
+                    <td style="padding-left: 5px">{{ nouvelle.utilisateur.prenom|slice(0,1)|capitalize ~'. '~nouvelle.utilisateur.nom|capitalize }} : {{ nouvelle.titre | capitalize }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">{{ nouvelle.message|capitalize }}</td>
                 </tr>
             {% endfor %}
         </table>

@@ -31,6 +31,9 @@ class FeedbackController extends Controller
             $em->persist($feedback);
             $em->flush();
             
+            //envoi mail aux admin
+            $this->get('application_plateforme.mail')->mailFeedback($feedback);
+            
             $this->get('session')->getFlashBag()->add('info','Votre message a été envoyé. Nous le traitons sans délai. L\'Equipe ENTHEOR');
             return $this->redirectToRoute('application_plateforme_homepage');
         }
