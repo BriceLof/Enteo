@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
+   #app.maintenance_mode :
+   #  class: Application\PlateformeBundle\Listener\MaintenanceListener
+    # tags:
+     #     - { name: kerner.event_listener, event: kernel.request, method: onKernelRequest }
    app.file_uploader:
        class: Application\PlateformeBundle\Services\FileUploader
        
