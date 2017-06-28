@@ -211,6 +211,7 @@ class CalendarController extends Controller
             //si le consultant n'est pas celui du bénéficiaire ou il n'a pas encore de consultant, on fait comment???
             ////////////A FAIRE/////////////
             $consultant = $historique->getConsultant();
+
             $em = $this->getDoctrine()->getManager();
 
             if($form['typerdv']->getData() == 'distantiel'){

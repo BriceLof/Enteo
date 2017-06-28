@@ -14,30 +14,34 @@ $(function(){
     $(".villeAjaxBeneficiaire option:first-child").val("");
     $(".villeAjaxBeneficiaire option:first-child").text("");
     $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
-	
-	/* Si lors de la validation du formulaire, erreur de validation d'un champs coté php, la page sera racharger en montrant le champs erroner. 
-	Cependant si les champs code postal et ville qui n'étaient pas vide lors de la validation, lors du reload de la page le champs ville charger en ajax sera vide mais on pourra valider malgré tout le form
-	ce qui provoquera une erreur par la suite dans la fiche detail du benef.
-	*/
-    if($(".codePostalInputForAjaxBeneficiaire").val().length == 5 ){
-    	cp = $(".codePostalInputForAjaxBeneficiaire").val()
-    	$.ajax({
+
+    /* Si lors de la validation du formulaire, erreur de validation d'un champs coté php, la page sera racharger en montrant le champs erroner.
+     Cependant si les champs code postal et ville qui n'étaient pas vide lors de la validation, lors du reload de la page le champs ville charger en ajax sera vide mais on pourra valider malgré tout le form
+     ce qui provoquera une erreur par la suite dans la fiche detail du benef.
+     */
+    if ($(".codePostalInputForAjaxBeneficiaire").val().length == 5) {
+        cp = $(".codePostalInputForAjaxBeneficiaire").val()
+        $.ajax({
             type: 'get',
-            url: Routing.generate("application_plateforme_get_ville_ajax", { departement: cp }),
-            beforeSend: function(){
+            url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
+            beforeSend: function () {
                 console.log('ça charge');
                 $(".villeAjaxBeneficiaire option").remove();
                 $(".block_info_chargement").show();
             }
         })
-        .done(function(data) {
-            $(".block_info_chargement").hide();
-            $(".villeAjaxBeneficiaire").removeAttr("disabled");
-            for(var i = 0; i < data.villes.length; i++)
-            {
-                $(".villeAjaxBeneficiaire").append("<option value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
-            }
-        });
+            .done(function (data) {
+                $(".block_info_chargement").hide();
+                $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                for (var i = 0; i < data.villes.length; i++) {
+                    console.log($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == String(data.villes[i].id));
+                    if ($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == data.villes[i].id) {
+                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
+                    } else {
+                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                    }
+                }
+            });
     }
     
     $(".codePostalInputForAjaxBeneficiaire").keyup(function(){
@@ -68,37 +72,6 @@ $(function(){
             $(".villeAjaxBeneficiaire").removeAttr("disabled");
         }
     });
-
-    // Pour la modification d'un beneficiaire, on doit cette fois ci récupérer le code postal de sa ville
-    if($("#beneficiaire_codePostalHiddenBeneficiaire").length == 1)
-    {
-        cp      = $("#beneficiaire_codePostalHiddenBeneficiaire").val();
-        idVille = $("#beneficiaire_idVilleHiddenBeneficiaire").val();
-        if(cp.length == 5)
-        {
-            console.log("je lance l'ajax");
-            $.ajax({
-                type: 'get',
-                url: Routing.generate("application_plateforme_get_ville_ajax", { departement: cp }),
-                beforeSend: function(){
-                    console.log('ça charge');
-                    $(".block_info_chargement").show();
-                }
-            })
-                .done(function(data) {
-                    $(".block_info_chargement").hide();
-                    $(".villeAjaxBeneficiaire option").remove();
-                    $(".villeAjaxBeneficiaire").removeAttr("disabled");
-                    for(var i = 0; i < data.villes.length; i++)
-                    {
-                        if(idVille == data.villes[i].id)
-                            $(".villeAjaxBeneficiaire").append("<option selected data-cp="+data.villes[i].cp+" value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
-                        else
-                            $(".villeAjaxBeneficiaire").append("<option data-cp="+data.villes[i].cp+" value="+data.villes[i].id+">"+data.villes[i].nom+"</option>")
-                    }
-                });
-        }
-    }
     
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
