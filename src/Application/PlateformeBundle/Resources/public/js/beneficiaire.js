@@ -7,7 +7,7 @@ $(window).load(function () {
  *
  */
 $(function () {
-	
+
     $('.dateTimePicker').datetimepicker({
         locale: 'fr',
         format: 'YYYY-MM-DD HH:mm:ss'
@@ -40,7 +40,12 @@ $(function () {
                 $(".block_info_chargement").hide();
                 $(".villeAjaxBeneficiaire").removeAttr("disabled");
                 for (var i = 0; i < data.villes.length; i++) {
-                    $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                    console.log($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == String(data.villes[i].id));
+                    if ($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == data.villes[i].id) {
+                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
+                    } else {
+                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                    }
                 }
             });
     }
@@ -49,12 +54,10 @@ $(function () {
         $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
         cp = $(this).val();
         if (cp.length == 5) {
-            console.log("je lance l'ajax");
             $.ajax({
                 type: 'get',
                 url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
                 beforeSend: function () {
-                    console.log('ça charge');
                     $(".villeAjaxBeneficiaire option").remove();
                     $(".block_info_chargement").show();
                 }
@@ -72,49 +75,21 @@ $(function () {
         }
     });
 
-    // Pour la modification d'un beneficiaire, on doit cette fois ci récupérer le code postal de sa ville
-    if ($("#beneficiaire_codePostalHiddenBeneficiaire").length == 1) {
-        cp = $("#beneficiaire_codePostalHiddenBeneficiaire").val();
-        idVille = $("#beneficiaire_idVilleHiddenBeneficiaire").val();
-        if (cp.length == 5) {
-            console.log("je lance l'ajax");
-            $.ajax({
-                type: 'get',
-                url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
-                beforeSend: function () {
-                    console.log('ça charge');
-                    $(".block_info_chargement").show();
-                }
-            })
-                .done(function (data) {
-                    $(".block_info_chargement").hide();
-                    $(".villeAjaxBeneficiaire option").remove();
-                    $(".villeAjaxBeneficiaire").removeAttr("disabled");
-                    for (var i = 0; i < data.villes.length; i++) {
-                        if (idVille == data.villes[i].id)
-                            $(".villeAjaxBeneficiaire").append("<option selected data-cp=" + data.villes[i].cp + " value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
-                        else
-                            $(".villeAjaxBeneficiaire").append("<option data-cp=" + data.villes[i].cp + " value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
-                    }
-                });
-        }
-    }
-
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
     $(".origineMerQui").change(function () {
         $origineMerQui = $(this).children("option:selected").val()
-        if($origineMerQui != ''){
+        if ($origineMerQui != '') {
             $(".origineMerComment").css('visibility', 'initial')
             $(".origineMerComment").attr('required', 'required')
         }
-        else{
+        else {
             $(".origineMerComment").css('visibility', 'hidden')
             $(".origineMerComment").removeAttr('required')
         }
     });
-    
+
     $(".origineMerComment").change(function () {
         $origineMerComment = $(this).children("option:selected").val()
         if ($origineMerComment == 'payant') {
@@ -125,13 +100,13 @@ $(function () {
             $(".origineMerDetailComment").removeAttr('required')
         }
     });
-    
+
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------------------------------  Page Bénéficiaire  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
-    
+
     $(".voirPlusNouvelle").click(function () {
-    	$("#afficheListNouvelle .hiddenNews").toggle('slow')
+        $("#afficheListNouvelle .hiddenNews").toggle('slow')
     });
 
 });
@@ -364,7 +339,7 @@ $(function () {
 
     //quand on change la region
     //on regenere une nouvelle liste de departement
-    $('#beneficiaire_regionTravail').on('change',function () {
+    $('#beneficiaire_regionTravail').on('change', function () {
         ajaxListDepartement($(this).val(), $('#beneficiaire_dptTravail'));
     })
 })();
@@ -374,7 +349,7 @@ $(function () {
  * @param region
  * @param element
  */
-function ajaxListDepartement(region, element){
+function ajaxListDepartement(region, element) {
     $.ajax({
         url: Routing.generate('application_get_dpt_by_region_ville', {'region': region}), // le nom du fichier indiqué dans le formulaire
         cache: true,
@@ -387,9 +362,9 @@ function ajaxListDepartement(region, element){
         success: function (data) {
             $.each(JSON.parse(data), function (i, item) {
                 if ($(element).attr('value') == item.code) {
-                    element.append("<option value=\"" + item.code + "\" selected = \"selected\">"+item.codeShow+ ' ' + item.dpt + "</option>");
+                    element.append("<option value=\"" + item.code + "\" selected = \"selected\">" + item.codeShow + ' ' + item.dpt + "</option>");
                 } else {
-                    element.append("<option value=\"" + item.code + "\">"+item.codeShow+ ' ' + item.dpt + "</option>");
+                    element.append("<option value=\"" + item.code + "\">" + item.codeShow + ' ' + item.dpt + "</option>");
                 }
             });
             console.log('fini');
