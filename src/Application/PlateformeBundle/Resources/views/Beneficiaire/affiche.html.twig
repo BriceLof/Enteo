@@ -255,18 +255,34 @@
                             {% if(beneficiaire.news | length > 0) %}
                                 {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                             {% endif %}
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td>Statut</td>
-                                        <td><a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Détail Statut</td>
-                                        <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                     
+                            
+                            <div class="row" style="margin-left: -6px;">
+                                <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut du bénéficiare : </p>
+                                <p class="col-xs-4">
+                                    <b>Statut :</b> <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a>
+                                </p>
+                                <p class="col-xs-6">
+                                    <b>Détail Statut :</b> {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
+                                </p>
+                                
+                                <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut de recevabilité : </p>
+                                <p class="col-xs-4">
+                                    <b>Statut :</b> <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_statut_recevabilite" class="link_formulaire_add_news maj">{{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].statut.nom : 'Maj Statut' }}</a>
+                                </p>
+                                <p class="col-xs-6">
+                                    <b>Détail Statut :</b> {{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].detailStatut.detail : '' }}
+                                </p>
+                                
+                                <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut administratif : </p>
+                                <p class="col-xs-4">
+                                    <b>Statut :</b> {{ beneficiaire.suiviAdministratif | length > 0 ? beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].statut.nom : '' }}
+                                </p>
+                                <p class="col-xs-6">
+                                    <b>Détail Statut :</b> {{ beneficiaire.suiviAdministratif | length > 0 ? beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].detailStatut.detail : '' }}
+                                </p>
+                            </div>
+                            
                             <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -277,6 +293,23 @@
                                         <div class="modal-body">        
                                             <form method="POST" id="newsForm" action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}" >
                                                 {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                                                <input type="hidden" id="statutIDCurrentBlockStatut" value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
+                                            
+                            <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_statut_recevabilite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header my_header_modal">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Maj Statut Recevabilité</h4>  
+                                        </div>
+                                        <div class="modal-body">        
+                                            <form method="POST" id="newsForm" action="{{ path('application_add_news', { 'id' : beneficiaire.id }) }}" >
+                                                {{ render(controller("ApplicationPlateformeBundle:News:addStatut",{'id': beneficiaire.id })) }}
                                                 <input type="hidden" id="statutIDCurrentBlockStatut" value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}" />
                                             </form>
                                         </div>

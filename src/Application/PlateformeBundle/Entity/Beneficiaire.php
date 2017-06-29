@@ -56,6 +56,11 @@ class Beneficiaire
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
      */
     private $news;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\StatutRecevabilite", mappedBy="beneficiaire")
+     */
+    private $statutRecevabilite;
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users", inversedBy="beneficiaire", cascade={"persist"})
@@ -1578,5 +1583,39 @@ class Beneficiaire
     public function getDptTravail()
     {
         return $this->dptTravail;
+    }
+
+    /**
+     * Add statutRecevabilite
+     *
+     * @param \Application\PlateformeBundle\Entity\StatutRecevabilite $statutRecevabilite
+     *
+     * @return Beneficiaire
+     */
+    public function addStatutRecevabilite(\Application\PlateformeBundle\Entity\StatutRecevabilite $statutRecevabilite)
+    {
+        $this->statutRecevabilite[] = $statutRecevabilite;
+
+        return $this;
+    }
+
+    /**
+     * Remove statutRecevabilite
+     *
+     * @param \Application\PlateformeBundle\Entity\StatutRecevabilite $statutRecevabilite
+     */
+    public function removeStatutRecevabilite(\Application\PlateformeBundle\Entity\StatutRecevabilite $statutRecevabilite)
+    {
+        $this->statutRecevabilite->removeElement($statutRecevabilite);
+    }
+
+    /**
+     * Get statutRecevabilite
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStatutRecevabilite()
+    {
+        return $this->statutRecevabilite;
     }
 }
