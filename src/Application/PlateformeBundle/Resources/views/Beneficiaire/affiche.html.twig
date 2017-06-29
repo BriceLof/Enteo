@@ -255,7 +255,17 @@
                             {% if(beneficiaire.news | length > 0) %}
                                 {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                             {% endif %}
-                     
+                            
+                            {# Boucle sur le tableau à l'envers, pour obtenir le dernier suivi administratif qui est egal à 'financement' ou 'dossier-en-...' #}
+                            {# La variable 'break' set à quitter la boucle lorsque j'ai ce que je souhaite #}
+                            {% set break, indexSuiviAd = 0, null %}
+                            {% for suiviAd in beneficiaire.suiviAdministratif | reverse if break == 0 %}
+                                {% if suiviAd.statut is not null %}    
+                                    {% if suiviAd.statut.slug == 'financement' or suiviAd.statut.slug == 'dossier-en-cours' %}
+                                        {% set break, indexSuiviAd  = 1, loop.index0 %}
+                                    {% endif %} 
+                                {% endif %}
+                            {% endfor %}
                             
                             <div class="row" style="margin-left: -6px;">
                                 <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut du bénéficiare : </p>
@@ -276,10 +286,10 @@
                                 
                                 <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut administratif : </p>
                                 <p class="col-xs-4">
-                                    <b>Statut :</b> {{ beneficiaire.suiviAdministratif | length > 0 ? beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].statut.nom : '' }}
+                                    <b>Statut :</b> {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
                                 </p>
                                 <p class="col-xs-6">
-                                    <b>Détail Statut :</b> {{ beneficiaire.suiviAdministratif | length > 0 ? beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].detailStatut.detail : '' }}
+                                    <b>Détail Statut :</b> {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }} {% endif %}
                                 </p>
                             </div>
                             
