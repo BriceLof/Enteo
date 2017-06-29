@@ -187,7 +187,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $replyTo = "christine.clement@entheor.com";
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
-        $to =  "resp.administratif@entheor.com";
+        $to =  "virginie.hiairrassary@entheor.com";
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
@@ -275,7 +275,12 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $from = "audrey.azoulay@entheor.com";
                 $to =  $rdv->getBeneficiaire()->getEmailConso();
                 $cc = "";
-                $bcc = "support@iciformation.fr";
+                $bcc = array(
+                    "support@iciformation.fr" => "Support",
+                    "f.azoulay@entheor.com" => "Franck Azoulay", 
+                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+                    "christine.clement@entheor.com" => "Christine Clement",
+                    "audrey.azoulay@entheor.com" => "Audrey Azoulay");
                 
                 if($typeRdv == "presenciel" || $typeRdv == "presentiel")
                     $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
@@ -320,7 +325,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso())." ".ucfirst($rdv->getBeneficiaire()->getNomConso()).", <br><br>"
                         . "Nous vous rappelons que vous avez un rendez-vous téléphonique demain avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
                         ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises</u></b>
-                            au numéro suivant : <b>06 91 85 84 28</b><br><br>
+                            au numéro suivant : <b>".$consultant->getTel1()."</b><br><br>
                             Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
                 }
 
@@ -443,13 +448,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			// nombre de jour entre les 2 dates 
 			$nbJour = $interval->format('%R%a');
 			// Si il y a 3 semaines entre les deux dates (21 jours)
-			//var_dump($nbJour);	
+			var_dump($nbJour);	
 			if($nbJour == "-21"){
 				// Il y a t-il un suivi administratif ajouté après le financement attente accord, uniquement si ce n'est pas le cas, on envoi le mail 
 				$suiviBeneficiaire = $repoSuiviAdm->findByBeneficiaireAndDate($beneficiaire, $dateSuivi);
 				if(count($suiviBeneficiaire) == 0 ){
 					$envoiMail[] = "yes";
-					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - [".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."]</p>";
+					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - OPCA : ".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."</p>";
 				}
 			}
 		}
@@ -458,9 +463,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 		if(in_array("yes", $envoiMail)){		
 			$ref = "4";
 			$subject = "Financement - Attente accord ";
-	        $from = "audrey.azoulay@entheor.com";
+	        $from = "christine.molier@entheor.com";
 	        $to = $listeGestionnaires;
+			$to = array("b.lof@iciformation.fr", "f.azoulay@entheor.com");
 	        $cc = $listeAdministrateurs;
+			$cc = "";
 	        $bcc = "support@iciformation.fr";
 			
 			$template = "@Apb/Alert/Mail/mailDefault.html.twig";

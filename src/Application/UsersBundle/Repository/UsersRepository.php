@@ -23,7 +23,7 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('actif', $actif);
         }
         
-        $qb->orderBy('u.id', "DESC");
+        $qb->orderBy('u.nom', "ASC");
             
         return $qb
           ->getQuery()

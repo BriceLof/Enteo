@@ -429,7 +429,7 @@
                             <div>
                                 <table class="table-condensed">
                                     <tbody>
-                                    {% for document in beneficiaire.documents %}
+                                    {% for document in beneficiaire.documents|reverse %}
                                         {% if document.type == 'devis' or document.type == 'financement' %}
                                         {% else %}
                                             {% if 'pdf' in document.path %}

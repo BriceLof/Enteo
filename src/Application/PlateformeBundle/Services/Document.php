@@ -68,14 +68,6 @@ class Document
         $this->knp->getInternalGenerator()->setTimeout(300);
 
         $file = "".ucfirst($type)."_VAE_".str_replace(" ","_",str_replace(".","",$beneficiaire->getCiviliteConso())."_".$beneficiaire->getNomConso())."_".(new \DateTime('now'))->format('d')."_".(new \DateTime('now'))->format('m')."_".(new \DateTime('now'))->format('Y');
-        $filename =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId()."/".$file;
-        $filepath =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId();
-
-        if (file_exists($filename)){
-            unlink($filename);
-        }
-
-        $this->knp->generateFromHtml($html,$filename);
 
         $documents = $beneficiaire->getDocuments();
 
@@ -83,7 +75,7 @@ class Document
             $i = 0;
             $fileTmp = $file;
             foreach ($documents as $documentFile){
-                for ( $j = 1; $j < count($documents); $j++){
+                for ( $j = 0; $j < count($documents); $j++){
                     if($documentFile->getPath() == $fileTmp.'.pdf') {
                         $i++;
                         $fileTmp = $file.'_('.$i.')';
@@ -101,6 +93,15 @@ class Document
         $document->setPath($file);
         $document->setDescription($file);
         $document->setType($type);
+
+        $filename =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId()."/".$file;
+        $filepath =  __DIR__."/../../../../web/uploads/beneficiaire/documents/".$beneficiaire->getId();
+
+        if (file_exists($filename)){
+            unlink($filename);
+        }
+
+        $this->knp->generateFromHtml($html,$filename);
 
         $zip = new \ZipArchive();
         $zip_path=$filepath.'/download.zip';

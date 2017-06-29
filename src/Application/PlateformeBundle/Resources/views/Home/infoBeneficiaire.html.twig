@@ -75,7 +75,7 @@
     {% endif %}
 
     <tr>
-        <th colspan=2>Nombre total appel</th>
+    	{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %} <th colspan=2>Nombre total appel</th>{% else %}<th colspan=2></th>{% endif %}        
         <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
         <th>Statut</th>
         <th>Détail statut</th>
