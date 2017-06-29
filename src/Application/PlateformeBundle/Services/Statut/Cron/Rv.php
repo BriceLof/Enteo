@@ -454,7 +454,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 				$suiviBeneficiaire = $repoSuiviAdm->findByBeneficiaireAndDate($beneficiaire, $dateSuivi);
 				if(count($suiviBeneficiaire) == 0 ){
 					$envoiMail[] = "yes";
-					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - [".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."]</p>";
+					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - OPCA : ".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."</p>";
 				}
 			}
 		}
@@ -463,7 +463,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 		if(in_array("yes", $envoiMail)){		
 			$ref = "4";
 			$subject = "Financement - Attente accord ";
-	        $from = "audrey.azoulay@entheor.com";
+	        $from = "christine.molier@entheor.com";
 	        $to = $listeGestionnaires;
 			$to = array("b.lof@iciformation.fr", "f.azoulay@entheor.com");
 	        $cc = $listeAdministrateurs;
