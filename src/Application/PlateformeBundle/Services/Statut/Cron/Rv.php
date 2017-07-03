@@ -434,11 +434,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
 		
-		$message = "Bonjour Virgine,<br><br>
-							Cela fait 3 semaines que ce[s] dossier[s] [est] [sont] en statut : 'Financement - Attente accord'<br> 
-							Il faut secouer les Financeurs [du] [des] dossier[s] suivant[s] :<br>";
-		
-		$envoiMail = array("no");					
+		$envoiMail = array("no");
+
+        $i = 0;
+        $mess ="";
+
 		foreach($suivis as $suivi)
 		{
 			$beneficiaire = $suivi->getBeneficiaire();	
@@ -448,16 +448,28 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			// nombre de jour entre les 2 dates 
 			$nbJour = $interval->format('%R%a');
 			// Si il y a 3 semaines entre les deux dates (21 jours)
-			var_dump($nbJour);	
+
 			if($nbJour == "-21"){
 				// Il y a t-il un suivi administratif ajouté après le financement attente accord, uniquement si ce n'est pas le cas, on envoi le mail 
 				$suiviBeneficiaire = $repoSuiviAdm->findByBeneficiaireAndDate($beneficiaire, $dateSuivi);
 				if(count($suiviBeneficiaire) == 0 ){
+				    $i++;
 					$envoiMail[] = "yes";
-					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - OPCA : ".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."</p>";
+					$mess .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - ".strtoupper($beneficiaire->getTypeFinanceur())." : ".strtoupper($beneficiaire->getOrganisme())."</p>";
 				}
 			}
 		}
+
+		if ($i == 1){
+            $message = "Bonjour Virgine,<br><br>
+                                Cela fait 3 semaines que ce dossier est en statut : 'Financement - Attente accord'<br> 
+                                Il faut secouer les Financeurs du dossier suivant :<br>";
+        }else{
+            $message = "Bonjour Virgine,<br><br>
+                                Cela fait 3 semaines que ces dossiers sont en statut : 'Financement - Attente accord'<br> 
+                                Il faut secouer les Financeurs des dossiers suivants :<br>";
+        }
+        $message .= $mess;
 		
 		// On peut envoyer le mail 
 		if(in_array("yes", $envoiMail)){		
