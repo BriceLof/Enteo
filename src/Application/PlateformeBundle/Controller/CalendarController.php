@@ -475,20 +475,21 @@ class CalendarController extends Controller
         }
         else {
             $historique->setEventarchive('on');
-
-            $calendarId = $historique->getConsultant()->getCalendrierid();
-            $eventId = $historique->getEventId();
-
-            if ($historique->getBureau() != null) {
-                if ($historique->getEventIdBureau() != null) {
-                    $calendarBureauId = $historique->getBureau()->getCalendrierid();
-                    $eventBureauId = $historique->getEventIdBureau();
-                    $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
-                }
-            }
-
-            $googleCalendar->deleteEvent($calendarId, $eventId);
         }
+
+        $calendarId = $historique->getConsultant()->getCalendrierid();
+        $eventId = $historique->getEventId();
+
+        if ($historique->getBureau() != null) {
+            if ($historique->getEventIdBureau() != null) {
+                $calendarBureauId = $historique->getBureau()->getCalendrierid();
+                $eventBureauId = $historique->getEventIdBureau();
+                $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
+            }
+        }
+
+        $googleCalendar->deleteEvent($calendarId, $eventId);
+
 
         $em->persist($historique);
         $em->flush();
