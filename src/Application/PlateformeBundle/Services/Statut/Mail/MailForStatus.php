@@ -9,7 +9,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
     public function alerteForStatus($detailStatut, $beneficiaire)
     {   
         $cc = array(
-                "support@iciformation.fr" => "Support",
+                "support.informatique@entheor.com" => "Support",
                 "b.lof@iciformation.fr" => "Brice");
         
         if($detailStatut->getDetail() == "Email suite No Contact"){

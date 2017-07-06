@@ -15,7 +15,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $to =  $beneficiaire->getEmailConso();
         $cc = array($consultant->getEmail());
         $bcc = array(
-            "support@iciformation.fr" => "Support",
+            "support.informatique@entheor.com" => "Support",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
             "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
             "christine.clement@entheor.com" => "Christine Clement",
@@ -146,44 +146,58 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 
         return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
-    
-    public function alerteRdvAgendaSupprime($beneficiaire, $old_rdv)
+
+    /**
+     * l'email qui sera envoyé lors de la suppression d'un rendez vous
+     *
+     * @param $beneficiaire
+     * @param $old_rdv (date de début du RDV)
+     * @param $type (type de RDV)
+     * @return null
+     */
+    public function alerteRdvAgendaSupprime($beneficiaire, $old_rdv, $type)
     {
-    	$consultant = $beneficiaire->getConsultant();	
-    	$message = "Votre rendez-vous initialement prévu le ".$old_rdv->format('d/m/Y à H:i')." a été annulé. <br><br>
-    				Merci de rappeler votre Consultant VAE pour fixer un nouveau rendez-vous.
-    				
-					<table style='margin-top:-50px;'>
-						<tr>
-							<td><u>Votre consultant : </u></td>
-							<td style='display:block;margin-top:64px;margin-left:27px;'>
-								<b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
-								Cabinet ENTHEOR <br>
-								Tél: ".$consultant->getTel1()."<br>
-								Email : ".$consultant->getEmail()."
-							</td>
-						</tr>
-					</table>";
-		
-		$subject = "Rdv Supprimé";			
-		$from = "audrey.azoulay@entheor.com";
+    	$consultant = $beneficiaire->getConsultant();
+		$subject = "Annulation de votre rendez-vous VAE du ".$old_rdv->format('d/m/Y');
+
+        //false si le type RDV n'est ni RV1 ni RV2
+        $bool = false;
+
+        //expediteur RV1 RV2
+        if ($type == 'RV1' || $type == 'RV2'){
+            $from = "audrey.azoulay@entheor.com";
+            $cc = array($consultant->getEmail());
+            $bool = true;
+            $reference = '7a' ;
+        }else{
+            $from = $consultant->getEmail();
+            $cc = null;
+            $reference = '7b';
+            if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
+                $reference = '7c';
+            }
+        }
+
         $to =  $beneficiaire->getEmailConso();
-        $cc = array($consultant->getEmail());
-        $bcc = array(
-            "support@iciformation.fr" => "Support",
-            "f.azoulay@entheor.com" => "Franck Azoulay", 
-            "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-            "christine.clement@entheor.com" => "Christine Clement",
-            "audrey.azoulay@entheor.com" => "Audrey Azoulay");
+		
+		$adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
+        $listeAdministrateurs = array();
+        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+		array_push($listeAdministrateurs, "audrey.azoulay@entheor.com", "support.informatique@entheor.com");
+        $bcc = $listeAdministrateurs;
             
-        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+        $template = "@Apb/Alert/Mail/supprimerRdv.html.twig";
             
         $body = $this->templating->render($template, array(
+            'bool' => $bool,
             'sujet' => $subject ,
-            'message' => $message,
-            'reference' => "7"
+            'consultant' => $consultant,
+            'reference' => $reference,
+            'old_rdv' => $old_rdv
         ));
-		
-		return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+
+		return null;
 	} 
 }

@@ -464,6 +464,8 @@ class CalendarController extends Controller
         $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->find($id);
 		$old_rdv = $historique->getDateDebut();
 
+        $type = $historique->getSummary();
+
         if (!$historique) {
             throw $this->createNotFoundException('Unable to find Document.');
         }
@@ -494,7 +496,7 @@ class CalendarController extends Controller
         $em->persist($historique);
         $em->flush();
 
-        $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgendaSupprime($beneficiaire, $old_rdv);
+        $this->get("application_plateforme.statut.mail.mail_rv_agenda")->alerteRdvAgendaSupprime($beneficiaire, $old_rdv, $type);
         $this->get('session')->getFlashBag()->add('info', 'historique supprimé avec succès');
 
 

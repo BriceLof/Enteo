@@ -55,7 +55,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 					//$to = array("b.lof@iciformation.fr", "f.azoulay@iciformation.fr");
 					$cc = "";
 					$bcc = array(
-						"support@iciformation.fr" => "Support",
+						"support.informatique@entheor.com" => "Support",
 						"f.azoulay@entheor.com" => "Franck Azoulay", 
 						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
 						"christine.clement@entheor.com" => "Christine Clement",
@@ -151,7 +151,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $subject = "Rappel J+3 : Post RV1 ";
                     $to = $emailConsultant;
                     $cc = array(
-                            "support@iciformation.fr" => "Support",
+                            "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
                 }
                 elseif($dateMoreThreeDay == $dateCurrent->format('Y-m-d'))
@@ -160,7 +160,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $subject = "Rappel J+7 [URGENT] : Post RV1 ";
                     $to = $emailConsultant;
                     $cc = array(
-                            "support@iciformation.fr" => "Support",
+                            "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
                 }
                 
@@ -278,7 +278,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $to = $rdv->getBeneficiaire()->getEmailConso();
                     $cc = "";
                     $bcc = array(
-                        "support@iciformation.fr" => "Support",
+                        "support.informatique@entheor.com" => "Support",
                         "f.azoulay@entheor.com" => "Franck Azoulay",
                         "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
                         "christine.clement@entheor.com" => "Christine Clement",
@@ -380,7 +380,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 				//$to = "b.lof@iciformation.fr";
                 $cc = "";
                 $bcc = array(
-                    "support@iciformation.fr" => "Support",
+                    "support.informatique@entheor.com" => "Support",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
                     "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
                     "christine.clement@entheor.com" => "Christine Clement",
@@ -484,7 +484,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			$to = array("b.lof@iciformation.fr", "f.azoulay@entheor.com");
 	        $cc = $listeAdministrateurs;
 			$cc = "";
-	        $bcc = "support@iciformation.fr";
+	        $bcc = "support.informatique@entheor.com";
 			
 			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
 	
