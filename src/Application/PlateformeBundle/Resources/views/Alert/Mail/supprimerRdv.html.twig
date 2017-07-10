@@ -1,0 +1,27 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}<p>Réf : {{ reference }}</p>{% endblock %}
+
+{% block contentMail %}
+    <p>
+        Votre rendez-vous initialement prévu le {{ old_rdv|date('d/m/Y à H:i') }} avec {{ consultant.civilite|capitalize~' '~consultant.nom|upper }} a été annulé. <br>
+    </p>
+
+    {% if bool == false %}
+        <p>Pour toute information, contactez votre Consultant VAE : </p><br>
+        <table style='margin-top:-50px;'>
+            <tr>
+                <td><u>Votre consultant : </u></td>
+                <td style='display:block;margin-top:64px;margin-left:27px;'>
+                    <b>{{ consultant.civilite|capitalize~' '~consultant.prenom|capitalize~' '~consultant.nom|upper }}</b><br>
+                    Cabinet ENTHEOR <br>
+                    Tél: {{ consultant.tel1 }}<br>
+                    Email : {{ consultant.email }}
+                </td>
+            </tr>
+        </table><br>
+
+        {% if reference == '7c' %}
+            <p><u>Attention :</u> conformément à nos Conditions Générales de Ventes, cette annulation intervenant à moins de 24h du RdV prévu, celui-ci sera décompté dans votre temps d'accompagnement.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
