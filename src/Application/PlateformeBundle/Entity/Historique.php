@@ -128,6 +128,10 @@ class Historique
     protected $user;
 
     /**
+     * les valeurs possibles sont 1 et 2
+     * 1 pour annulé
+     * 2 pour modifié
+     *
      * @var integer
      *
      * @ORM\Column(name="canceled", type="integer")

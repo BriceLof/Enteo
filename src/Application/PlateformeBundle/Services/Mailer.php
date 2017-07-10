@@ -80,7 +80,7 @@ class Mailer
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         $to = $listeAdministrateurs;
 		$bcc = array(
-				"support@iciformation.fr" => "Support",
+				"support.informatique@entheor.com" => "Support",
 			);
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b><a href='https://appli.entheor.com/web/user/".$feedback->getUser()->getId()."/show'>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</a></b> : <br>

@@ -55,7 +55,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 					//$to = array("b.lof@iciformation.fr", "f.azoulay@iciformation.fr");
 					$cc = "";
 					$bcc = array(
-						"support@iciformation.fr" => "Support",
+						"support.informatique@entheor.com" => "Support",
 						"f.azoulay@entheor.com" => "Franck Azoulay", 
 						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
 						"christine.clement@entheor.com" => "Christine Clement",
@@ -151,7 +151,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $subject = "Rappel J+3 : Post RV1 ";
                     $to = $emailConsultant;
                     $cc = array(
-                            "support@iciformation.fr" => "Support",
+                            "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
                 }
                 elseif($dateMoreThreeDay == $dateCurrent->format('Y-m-d'))
@@ -160,7 +160,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $subject = "Rappel J+7 [URGENT] : Post RV1 ";
                     $to = $emailConsultant;
                     $cc = array(
-                            "support@iciformation.fr" => "Support",
+                            "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
                 }
                 
@@ -266,104 +266,105 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             // Envoi d'un mail à chaque bénéficiaire
             foreach($histoRepo as $rdv)
             {
-                $consultant = $rdv->getConsultant();
-                $tabConsultant[] = $rdv->getConsultant()->getId();
-                $dateRdv = $rdv->getDateDebut();
-                $typeRdv = $rdv->getTypeRdv();
+                if ($rdv->getCanceled() === 1 or $rdv->getCanceled() === 2) {
+                }else {
+                    $from = "audrey.azoulay@entheor.com";
+                    $consultant = $rdv->getConsultant();
+                    $tabConsultant[] = $rdv->getConsultant()->getId();
+                    $dateRdv = $rdv->getDateDebut();
+                    $typeRdv = $rdv->getTypeRdv();
 
-                $ref = "1-b";
-                $from = "audrey.azoulay@entheor.com";
-                $to =  $rdv->getBeneficiaire()->getEmailConso();
-                $cc = "";
-                $bcc = array(
-                    "support@iciformation.fr" => "Support",
-                    "f.azoulay@entheor.com" => "Franck Azoulay", 
-                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-                    "christine.clement@entheor.com" => "Christine Clement",
-                    "audrey.azoulay@entheor.com" => "Audrey Azoulay");
-                
-                if($typeRdv == "presenciel" || $typeRdv == "presentiel")
-                    $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
-                else
-                    $subject = "[Rappel] Vous avez un rendez-vous téléphonique pour votre VAE demain à ".$dateRdv->format('H')."h".$dateRdv->format('i');
+                    $ref = "1-b";
+                    $to = $rdv->getBeneficiaire()->getEmailConso();
+                    $cc = "";
+                    $bcc = array(
+                        "support.informatique@entheor.com" => "Support",
+                        "f.azoulay@entheor.com" => "Franck Azoulay",
+                        "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
+                        "christine.clement@entheor.com" => "Christine Clement",
+                        "audrey.azoulay@entheor.com" => "Audrey Azoulay");
 
-                $acces = "";
-                $commentaire = "";
-                if(!is_null($rdv->getBureau()))
-                {
-                    if(!is_null($rdv->getBureau()->getAcces())) 		$acces = "Accès : ".$rdv->getBureau()->getAcces();
-                    if(!is_null($rdv->getBureau()->getCommentaire())) 	$commentaire = "Commentaires : ".$rdv->getBureau()->getCommentaire();
+                    if ($typeRdv == "presenciel" || $typeRdv == "presentiel")
+                        $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à " . $dateRdv->format('H') . "h" . $dateRdv->format('i');
+                    else
+                        $subject = "[Rappel] Vous avez un rendez-vous téléphonique pour votre VAE demain à " . $dateRdv->format('H') . "h" . $dateRdv->format('i');
+
+                    $acces = "";
+                    $commentaire = "";
+                    if (!is_null($rdv->getBureau())) {
+                        if (!is_null($rdv->getBureau()->getAcces())) $acces = "Accès : " . $rdv->getBureau()->getAcces();
+                        if (!is_null($rdv->getBureau()->getCommentaire())) $commentaire = "Commentaires : " . $rdv->getBureau()->getCommentaire();
+                    }
+
+                    if ($typeRdv == "presenciel" || $typeRdv == "presentiel") {
+                        $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso()) . " " . ucfirst($rdv->getBeneficiaire()->getNomConso()) . ", <br><br>"
+                            . "Nous vous rappelons que vous avez rendez-vous demain <b>" . $Jour[$dateRdv->format('l')] . " " . $dateRdv->format('j') . " " . $Mois[$dateRdv->format('F')] . " à " . $dateRdv->format('H') . "h" . $dateRdv->format('i') . "</b> : 
+                                            <table style='margin-top:-50px;'>
+                                                    <tr>
+                                                            <td><u>Votre consultant : </u></td>
+                                                            <td style='display:block;margin-top:64px;margin-left:27px;'>
+                                                                    <b>" . ucfirst($consultant->getCivilite()) . " " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()) . "</b><br>
+                                                                    Cabinet ENTHEOR <br>
+                                                                    Tél: " . $consultant->getTel1() . "<br>
+                                                                    Email : " . $consultant->getEmail() . "
+                                                            </td>
+                                                    </tr>
+                                                    <tr>
+                                                            <td><u>Lieu du rendez-vous : </u></td>
+                                                            <td style='display:block;margin-top:63px;margin-left:26px;'>
+                                                                    " . $rdv->getBureau()->getNombureau() . "<br>
+                                                                    " . $rdv->getBureau()->getAdresse() . "<br>" .
+                            $rdv->getBureau()->getVille()->getCp() . " " . $rdv->getBureau()->getVille()->getNom() . "<br>" .
+                            $acces . "<br>" .
+                            $commentaire . "    
+                                                            </td>
+                                                    </tr>
+                                            </table>
+                                            <br><br>
+                            Merci de vous munir <u>impérativement</u> de :<br>";
+                    } else {
+                        $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso()) . " " . ucfirst($rdv->getBeneficiaire()->getNomConso()) . ", <br><br>"
+                            . "Nous vous rappelons que vous avez un rendez-vous téléphonique demain avec " . ucfirst($consultant->getCivilite()) . " " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()) . "<br><br><b>" .
+                            ucfirst($consultant->getCivilite()) . " " . strtoupper($consultant->getNom()) . " <u>attendra votre appel</u> le " . $Jour[$dateRdv->format('l')] . " " . $dateRdv->format('j') . " " . $Mois[$dateRdv->format('F')] . " à <u>" . $dateRdv->format('H') . "h" . $dateRdv->format('i') . " précises</u></b>
+                                au numéro suivant : <b>" . $consultant->getTel1() . "</b><br><br>
+                                Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
+                    }
+
+                    $message .= "
+                            <div style='margin-left:20px;'>
+                                    - <a href='https://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
+                                    - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
+
+                    if ($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
+                        $message .= "
+                                    - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
+                                    - <b>Votre dernier bulletin de paie</b> ";
+
+                    $message .= "
+                                    </div>
+                                    <br><br>
+    
+                       <div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au 06.89.33.87.83</b></div>
+                                    <br><br>
+    
+                        Au plaisir de vous accompagner dans votre projet.<br><br>
+                        Bien Cordialement. <br><br>
+    
+                        --<br>
+                        Audrey AZOULAY<br>
+                        ENTHEOR<br>
+                        <a href='mailto:audrey.azoulay@entheor.com'>audrey.azoulay@entheor.com</a><br>
+                        06.89.33.87.83";
+
+                    $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+
+                    $body = $this->templating->render($template, array(
+                        'sujet' => $subject,
+                        'message' => $message,
+                        'reference' => $ref
+                    ));
+                    $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
                 }
-
-                if($typeRdv == "presenciel" || $typeRdv == "presentiel"){
-                    $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso())." ".ucfirst($rdv->getBeneficiaire()->getNomConso()).", <br><br>"
-                        . "Nous vous rappelons que vous avez rendez-vous demain <b>".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."</b> : 
-                                        <table style='margin-top:-50px;'>
-                                                <tr>
-                                                        <td><u>Votre consultant : </u></td>
-                                                        <td style='display:block;margin-top:64px;margin-left:27px;'>
-                                                                <b>".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."</b><br>
-                                                                Cabinet ENTHEOR <br>
-                                                                Tél: ".$consultant->getTel1()."<br>
-                                                                Email : ".$consultant->getEmail()."
-                                                        </td>
-                                                </tr>
-                                                <tr>
-                                                        <td><u>Lieu du rendez-vous : </u></td>
-                                                        <td style='display:block;margin-top:63px;margin-left:26px;'>
-                                                                ".$rdv->getBureau()->getNombureau()."<br>
-                                                                ".$rdv->getBureau()->getAdresse()."<br>".
-                                                                $rdv->getBureau()->getVille()->getCp()." ".$rdv->getBureau()->getVille()->getNom()."<br>".
-                                                                $acces."<br>".
-                                                                $commentaire."    
-                                                        </td>
-                                                </tr>
-                                        </table>
-                                        <br><br>
-                        Merci de vous munir <u>impérativement</u> de :<br>";
-                }else{
-                    $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso())." ".ucfirst($rdv->getBeneficiaire()->getNomConso()).", <br><br>"
-                        . "Nous vous rappelons que vous avez un rendez-vous téléphonique demain avec ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom())."<br><br><b>".
-                        ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précises</u></b>
-                            au numéro suivant : <b>".$consultant->getTel1()."</b><br><br>
-                            Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
-                }
-
-                $message.=  "
-                        <div style='margin-left:20px;'>
-                                - <a href='https://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
-                                - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
-
-                if($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
-                        $message.=  "
-                                - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
-                                - <b>Votre dernier bulletin de paie</b> ";	
-                        
-                $message.=  "
-                                </div>
-                                <br><br>
-
-                   <div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au 06.89.33.87.83</b></div>
-                                <br><br>
-
-                    Au plaisir de vous accompagner dans votre projet.<br><br>
-                    Bien Cordialement. <br><br>
-
-                    --<br>
-                    Audrey AZOULAY<br>
-                    ENTHEOR<br>
-                    <a href='mailto:audrey.azoulay@entheor.com'>audrey.azoulay@entheor.com</a><br>
-                    06.89.33.87.83";
-
-                $template = "@Apb/Alert/Mail/mailDefault.html.twig";
-
-                $body = $this->templating->render($template, array(
-                    'sujet' => $subject ,
-                    'message' => $message,
-                    'reference' => $ref
-                ));
-
-                $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);  
             }
             
             // Envoi un email recap au consultant avec la liste de ses beneficiaire a voir demain
@@ -379,7 +380,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 				//$to = "b.lof@iciformation.fr";
                 $cc = "";
                 $bcc = array(
-                    "support@iciformation.fr" => "Support",
+                    "support.informatique@entheor.com" => "Support",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
                     "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
                     "christine.clement@entheor.com" => "Christine Clement",
@@ -394,10 +395,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                         Veuillez trouver ci-dessous la liste de vos rendez-vous prévus pour demain ".$Jour[$dateRvOneMore->format('l')]." ".$dateRvOneMore->format('j')." ".$Mois[$dateRvOneMore->format('F')]." : 
                         <ul>";
                 // Chaque rdv du consultant
-                foreach($rdvConsultant as $rdv)
-                {
-                    $beneficiaire = $rdv->getBeneficiaire();
-                    $message .= "<li>".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso())." ".ucfirst($beneficiaire->getPrenomConso()).", ".$rdv->getDateDebut()->format('H')."h".$rdv->getDateDebut()->format('i').", ".ucfirst($rdv->getSummary()).", ".$beneficiaire->getTelConso()."</li>"; 
+                foreach($rdvConsultant as $rdv) {
+                    if ($rdv->getCanceled() === 1 || $rdv->getCanceled() === 2) {
+                    }
+                    else{
+                        $beneficiaire = $rdv->getBeneficiaire();
+                        $message .= "<li>" . ucfirst($beneficiaire->getCiviliteConso()) . " " . ucfirst($beneficiaire->getNomConso()) . " " . ucfirst($beneficiaire->getPrenomConso()) . ", " . $rdv->getDateDebut()->format('H') . "h" . $rdv->getDateDebut()->format('i') . ", " . ucfirst($rdv->getSummary()) . ", " . $beneficiaire->getTelConso() . "</li>";
+                    }
                 }
                 
                 $message .= "</ul>";
@@ -434,11 +438,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
 		
-		$message = "Bonjour Virgine,<br><br>
-							Cela fait 3 semaines que ce[s] dossier[s] [est] [sont] en statut : 'Financement - Attente accord'<br> 
-							Il faut secouer les Financeurs [du] [des] dossier[s] suivant[s] :<br>";
-		
-		$envoiMail = array("no");					
+		$envoiMail = array("no");
+
+        $i = 0;
+        $mess ="";
+
 		foreach($suivis as $suivi)
 		{
 			$beneficiaire = $suivi->getBeneficiaire();	
@@ -448,16 +452,28 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			// nombre de jour entre les 2 dates 
 			$nbJour = $interval->format('%R%a');
 			// Si il y a 3 semaines entre les deux dates (21 jours)
-			var_dump($nbJour);	
+
 			if($nbJour == "-21"){
 				// Il y a t-il un suivi administratif ajouté après le financement attente accord, uniquement si ce n'est pas le cas, on envoi le mail 
 				$suiviBeneficiaire = $repoSuiviAdm->findByBeneficiaireAndDate($beneficiaire, $dateSuivi);
 				if(count($suiviBeneficiaire) == 0 ){
+				    $i++;
 					$envoiMail[] = "yes";
-					$message .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - OPCA : ".$beneficiaire->getTypeFinanceur().", ".$beneficiaire->getOrganisme()."</p>";
+					$mess .= "<p style='margin-left:10px;'>&bull; ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())." - ".strtoupper($beneficiaire->getTypeFinanceur())." : ".strtoupper($beneficiaire->getOrganisme())."</p>";
 				}
 			}
 		}
+
+		if ($i == 1){
+            $message = "Bonjour Virgine,<br><br>
+                                Cela fait 3 semaines que ce dossier est en statut : 'Financement - Attente accord'<br> 
+                                Il faut secouer les Financeurs du dossier suivant :<br>";
+        }else{
+            $message = "Bonjour Virgine,<br><br>
+                                Cela fait 3 semaines que ces dossiers sont en statut : 'Financement - Attente accord'<br> 
+                                Il faut secouer les Financeurs des dossiers suivants :<br>";
+        }
+        $message .= $mess;
 		
 		// On peut envoyer le mail 
 		if(in_array("yes", $envoiMail)){		
@@ -468,7 +484,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			$to = array("b.lof@iciformation.fr", "f.azoulay@entheor.com");
 	        $cc = $listeAdministrateurs;
 			$cc = "";
-	        $bcc = "support@iciformation.fr";
+	        $bcc = "support.informatique@entheor.com";
 			
 			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
 	
