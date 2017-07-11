@@ -149,6 +149,8 @@ class Calendar
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
+        $antidated = ((new \DateTime('now'))->getTimestamp() > $dateDebut->getTimeStamp());
+
         if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
             $ville = $this->em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                 'nom' => $form["ville"]->getData(),
@@ -163,10 +165,11 @@ class Calendar
             $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary().', '.$historique->getBureau()->getVille()->getNom();
         }else{
             //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-            if($historique->getBureau() != null) {
+            if($historique->getBureau() != null && $antidated == false) {
                 $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary().', '.$historique->getBureau()->getVille()->getNom();
                 if ($historique->getBureau()->getCalendrierid() != ""){
                     if ($historique->getEventIdBureau() != "" or $historique->getEventIdBureau() != null){
+                        if ($antidated)
                         $eventBureauUpdated = $this->calendar->addEvent($historique->getBureau()->getCalendrierid(), $historique->getEventIdBureau(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
                     }else{
                         $eventBureau = $this->calendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
@@ -181,10 +184,12 @@ class Calendar
         }
 
         //utiliser event pour jouer avec l'evenement
-        if ($edit == true){
-            $eventUpdated = $this->calendar->updateEvent($consultant->getCalendrierid(), $historique->getEventId(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-        }else{
-            $event = $this->calendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
+        if ($antidated == false){
+            if ($edit == true){
+                $eventUpdated = $this->calendar->updateEvent($consultant->getCalendrierid(), $historique->getEventId(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
+            }else{
+                $event = $this->calendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
+            }
         }
 
         if ($edit == true){
@@ -211,7 +216,9 @@ class Calendar
             }
         }else{
             $historique->setConsultant($beneficiaire->getConsultant());
-            $historique->setEventId($event['id']);
+            if ($antidated == false){
+                $historique->setEventId($event['id']);
+            }
             $historique->setDateFin($dateFin);
             $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
             $historique->setDateDebut($date);

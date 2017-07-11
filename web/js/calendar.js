@@ -384,7 +384,20 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                     },
                     success: function (data) {
                         if(JSON.parse(data) == true){
-                            form.submit();
+                            dateCourant = new Date();
+                            jourCourant = dateCourant.getDate(); // jour
+                            moisCourant = dateCourant.getMonth()+1; // mois +1 (parce que le mois.val commence par 1)
+                            anneeCourant = dateCourant.getFullYear(); // année
+
+                            if($('#admin_calendar_dateDebut_year').val() <= anneeCourant && $('#admin_calendar_dateDebut_month').val() <= moisCourant && $('#admin_calendar_dateDebut_day').val() < jourCourant){
+                                $('#confirm-submit').modal('toggle');
+                                $('#admin_calendar_submit').prop('disabled',false);
+                                $('#submit_form_agenda').click(function(){
+                                    form.submit();
+                                });
+                            }else{
+                                form.submit();
+                            }
                         }else{
                             $('#error_slot_busy').css("display","block");
                             $('#admin_calendar_submit').prop('disabled',false)
@@ -400,6 +413,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
 /**
  * il faut que le date du rdv soit superieur a la date du jour
  *
+ * il faut que l'heure de fin soit heureDebut + 1h
  */
 (function () {
     //mise à jour de la date
@@ -408,6 +422,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     moisCourant = dateCourant.getMonth()+1; // mois +1 (parce que le mois.val commence par 1)
     anneeCourant = dateCourant.getFullYear(); // année
     //mise a jour de la date on change
+    /*
     $('#admin_calendar_dateDebut select').on('change', function () {
         if($('#admin_calendar_dateDebut_year').val() == anneeCourant){
             //si le jour est inferieure a la date du jour, on augment le mois
@@ -422,16 +437,19 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
             }
         }
     });
+    */
     //mise à jour de l'heure et la minute
     $('#admin_calendar_heureDebut_hour').on('change', function () {
         var value = $(this).val();
         value++;
         $('#admin_calendar_heureFin_hour option[value="'+value+'"]').prop('selected', true);
         $('#admin_calendar_heureFin_hour option').each(function () {
-            if($(this).val() < value -1 ){
+            if($(this).val() <= 21 && $(this).val() >= value - 1){
+                $(this).prop('disabled',false);
+            }else{
                 $(this).attr('disabled', 'disabled');
             }
-        })
+        });
     });
     $('#admin_calendar_heureDebut_hour option').each(function () {
         if($(this).val()>20 || $(this).val()< 7){

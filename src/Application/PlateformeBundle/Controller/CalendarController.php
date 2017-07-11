@@ -210,63 +210,61 @@ class CalendarController extends Controller
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
-        if ((new \DateTime('now'))->getTimestamp() < $dateDebut->getTimeStamp()){
-            $bool = true;
-            $googleCalendar = $this->get('fungio.google_calendar');
-            //url de redirection
-            $redirectUri = "https://appli.entheor.com/web/app_dev.php/calendar/getClient";
-            $googleCalendar->setRedirectUri($redirectUri);
-            //recuperation du client
-            if ($request->query->has('code') && $request->get('code')) {
-                $client = $googleCalendar->getClient($request->get('code'));
-            } else {
-                $client = $googleCalendar->getClient();
-            }
-            if (is_string($client)) {
-                return new RedirectResponse($client);
-            }
-            $calendarId = $consultant->getCalendrierid();
-            //recupération des évenements du consultant
-            $events = $googleCalendar->getEventsForDate($calendarId, $historique->getDateDebut());
-            foreach ($events->getItems() as $item){
-                if ($item->getId() == $historique->getEventId() ){
+        $bool = true;
+        $googleCalendar = $this->get('fungio.google_calendar');
+        //url de redirection
+        $redirectUri = "https://appli.entheor.com/web/app_dev.php/calendar/getClient";
+        $googleCalendar->setRedirectUri($redirectUri);
+        //recuperation du client
+        if ($request->query->has('code') && $request->get('code')) {
+            $client = $googleCalendar->getClient($request->get('code'));
+        } else {
+            $client = $googleCalendar->getClient();
+        }
+        if (is_string($client)) {
+            return new RedirectResponse($client);
+        }
+        $calendarId = $consultant->getCalendrierid();
+        //recupération des évenements du consultant
+        $events = $googleCalendar->getEventsForDate($calendarId, $historique->getDateDebut());
+        foreach ($events->getItems() as $item){
+            if ($item->getId() == $historique->getEventId() ){
 
-                }else {
-                    if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() >= $dateDebut->getTimestamp() && (new \DateTime($item->getStart()->getDatetime()))->getTimestamp() < $dateFin->getTimestamp()) {
-                        $bool = false;
-                        return new JsonResponse(json_encode($bool));
-                    }
-                    if ((new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() > $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() <= $dateFin->getTimestamp()) {
-                        $bool = false;
-                        return new JsonResponse(json_encode($bool));
-                    }
-                    if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() <= $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() >= $dateFin->getTimestamp()) {
-                        $bool = false;
-                        return new JsonResponse(json_encode($bool));
-                    }
+            }else {
+                if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() >= $dateDebut->getTimestamp() && (new \DateTime($item->getStart()->getDatetime()))->getTimestamp() < $dateFin->getTimestamp()) {
+                    $bool = false;
+                    return new JsonResponse(json_encode($bool));
+                }
+                if ((new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() > $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() <= $dateFin->getTimestamp()) {
+                    $bool = false;
+                    return new JsonResponse(json_encode($bool));
+                }
+                if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() <= $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() >= $dateFin->getTimestamp()) {
+                    $bool = false;
+                    return new JsonResponse(json_encode($bool));
                 }
             }
+        }
 
-            //recupération des evenements du bureau si elle existe
-            if($historique->getBureau() != null){
-                if ($historique->getBureau()->getCalendrierid() != ""){
-                    $calendarIdBureau = $historique->getBureau()->getCalendrierid();
-                    $eventsBureau = $googleCalendar->getEventsForDate($calendarIdBureau, $historique->getDateDebut());
-                    foreach ($eventsBureau->getItems() as $item){
-                        if ($item->getId() == $historique->getEventIdBureau() ){
-                        }else {
-                            if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() >= $dateDebut->getTimestamp() && (new \DateTime($item->getStart()->getDatetime()))->getTimestamp() < $dateFin->getTimestamp()) {
-                                $bool = false;
-                                return new JsonResponse(json_encode($bool));
-                            }
-                            if ((new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() > $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() <= $dateFin->getTimestamp()) {
-                                $bool = false;
-                                return new JsonResponse(json_encode($bool));
-                            }
-                            if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() <= $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() >= $dateFin->getTimestamp()) {
-                                $bool = false;
-                                return new JsonResponse(json_encode($bool));
-                            }
+        //recupération des evenements du bureau si elle existe
+        if($historique->getBureau() != null){
+            if ($historique->getBureau()->getCalendrierid() != ""){
+                $calendarIdBureau = $historique->getBureau()->getCalendrierid();
+                $eventsBureau = $googleCalendar->getEventsForDate($calendarIdBureau, $historique->getDateDebut());
+                foreach ($eventsBureau->getItems() as $item){
+                    if ($item->getId() == $historique->getEventIdBureau() ){
+                    }else {
+                        if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() >= $dateDebut->getTimestamp() && (new \DateTime($item->getStart()->getDatetime()))->getTimestamp() < $dateFin->getTimestamp()) {
+                            $bool = false;
+                            return new JsonResponse(json_encode($bool));
+                        }
+                        if ((new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() > $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() <= $dateFin->getTimestamp()) {
+                            $bool = false;
+                            return new JsonResponse(json_encode($bool));
+                        }
+                        if ((new \DateTime($item->getStart()->getDatetime()))->getTimestamp() <= $dateDebut->getTimestamp() && (new \DateTime($item->getEnd()->getDatetime()))->getTimestamp() >= $dateFin->getTimestamp()) {
+                            $bool = false;
+                            return new JsonResponse(json_encode($bool));
                         }
                     }
                 }
