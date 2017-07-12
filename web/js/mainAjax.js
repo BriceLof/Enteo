@@ -338,11 +338,13 @@ $("document").ready(function (initDynamicContent) {
                 },
                 "beneficiaire[telConso]": {
                     "required": true,
-                    "tel": /^0[1-8]([\s]?[0-9]{2}){4}$/
+                    "digits": true
+                    // "tel": /^0[1-8]([\s]?[0-9]{2}){4}$/
                 },
                 "beneficiaire[tel2]": {
                     "required": false,
-                    "tel": /^0[1-8]([\s]?[0-9]{2}){4}$/
+                    "digits": true
+                    // "tel": /^0[1-8]([\s]?[0-9]{2}){4}$/
                 },
                 "beneficiaire[emailConso]": {
                     "required": true,
@@ -495,6 +497,7 @@ function plusMoins(element) {
  * pour avoir le format, il faut que la classe ou le numero est present soit "telephoneConso"
  *
  */
+/*
 (function() {
     var tels = document.getElementsByClassName('telephoneConso');
     for (var i = 0; i < tels.length; i++) {
@@ -545,6 +548,7 @@ function plusMoins(element) {
         }
     }
 })();
+*/
 
 /**
  * la fonction qui demande a l'utilisateur d'enregistrer au cas ou le bloc perd le focus sur la fiche bénéficiaire
