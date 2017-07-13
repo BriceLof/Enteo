@@ -17,6 +17,10 @@
     margin-bottom: 8px;
 }
 
+#collapseHistorique .table>tbody+tbody {
+    border: none;
+}
+
 #banner{
     width:100%;
 }
