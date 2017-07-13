@@ -27,12 +27,14 @@ class DisponibilitesType extends AbstractType
             ))
             ->add('dateDebuts', TimeType::class, array(
                 'label' => 'Heure Début',
+                'minutes' => array(0,15,30,45),
                 'attr'=>array(
                     'class'=>''
                 )
             ))
             ->add('dateFins', TimeType::class, array(
                 'label' => 'Heure Fin',
+                'minutes' => array(0,15,30,45),
                 'attr' => array(
                     'class' => ''
                 )
