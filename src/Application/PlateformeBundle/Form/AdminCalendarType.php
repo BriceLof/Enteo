@@ -162,11 +162,13 @@ class AdminCalendarType extends AbstractType
             ->add('heureDebut', TimeType::class, array(
                 'attr'=>array('class'=>''),
                 'label' => 'Heure Debut',
+                'minutes' => array(0,15,30,45)
             ))
 
             ->add('heureFin', TimeType::class, array(
                 'attr'=>array('class'=>''),
-                'label' => 'Heure Fin'
+                'label' => 'Heure Fin',
+                'minutes' => array(0,15,30,45)
             ))
 
             ->add('description', TextType::class, array(
