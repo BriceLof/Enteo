@@ -43,5 +43,6 @@
             </div>
             {% include "ApplicationPlateformeBundle:Calendar:form.html.twig" with { 'link' : 'application_edit_evenement', 'id': historique.id, 'historique': historique } %}
         </div>
+        {% include "ApplicationPlateformeBundle:Calendar:confirmAdd.html.twig" %}
     </div>
 {% endblock%}

@@ -10,6 +10,14 @@
           <option name="port" value="1337" />
         </fileTransfer>
       </webServer>
+      <webServer id="7b3efd6d-f8e0-4c4b-a8bb-6b3777e47166" name="Entheo planet" url="http://entheor.entheor.planet-service.net">
+        <fileTransfer host="entheor.entheor.planet-service.net" port="22" rootFolder="/opt/web/clients/e/entheor/entheor.com/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

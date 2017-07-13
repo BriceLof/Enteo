@@ -80,7 +80,7 @@ class Historique
     /**
      * @var string
      *
-     * @ORM\Column(name="evenetId", type="text")
+     * @ORM\Column(name="evenetId", type="text", nullable=true)
      */
     private $eventId;
 

@@ -109,7 +109,7 @@ class BeneficiaireType extends AbstractType
             ->add('telConso', TextType::class, array(
                 'label' => 'Tél ',
                 'attr' => array(
-                    'maxlength' => 14,
+                    'maxlength' => 15,
                     'placeholder' => '',
                     'class' => 'telephoneConso fiche'
                 )
@@ -119,7 +119,7 @@ class BeneficiaireType extends AbstractType
                 'label' => 'Tél 2 ',
                 'required' => false,
                 'attr' => array(
-                    'maxlength' => 14,
+                    'maxlength' => 15,
                     'placeholder' => '',
                     'class' => 'telephoneConso fiche'
                 )
