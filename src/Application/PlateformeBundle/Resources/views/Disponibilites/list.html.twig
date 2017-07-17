@@ -14,7 +14,7 @@
         <th>Actions</th>
     </tr>
     {% for disponibilite in tab %}
-        {% if "now"|date('Ymd') < disponibilite.dateDebuts|date('Ymd') %}
+        {% if "now"|date('Ymd') <= disponibilite.dateDebuts|date('Ymd') %}
             <tr>
                 <td>{{ disponibilite.dateDebuts|date("d/m/Y") }}</td>
                 {% if disponibilite.ville is not null %}
