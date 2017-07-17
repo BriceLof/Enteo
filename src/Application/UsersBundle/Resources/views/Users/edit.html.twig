@@ -95,17 +95,32 @@
                     {{ form_widget(form.distanciel) }}
                 </div>
 
-                <div class="col-md-12 block_form_calendar_id" style="display:none">
-                    {{ form_label(form.calendrierid) }}
-                    {{ form_errors(form.calendrierid) }}
-                    {{ form_widget(form.calendrierid) }}
-                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="col-md-12 block_form_calendar_id" style="display:none">
+                        {{ form_label(form.calendrierid) }}
+                        {{ form_errors(form.calendrierid) }}
+                        {{ form_widget(form.calendrierid) }}
+                    </div>
 
-                <div class="col-md-12 block_form_calendar_uri" style="display:none">
-                    {{ form_label(form.calendrieruri) }}
-                    {{ form_errors(form.calendrieruri) }}
-                    {{ form_widget(form.calendrieruri) }}
-                </div>
+                    <div class="col-md-12 block_form_calendar_uri" style="display:none">
+                        {{ form_label(form.calendrieruri) }}
+                        {{ form_errors(form.calendrieruri) }}
+                        {{ form_widget(form.calendrieruri) }}
+                    </div>
+                {% else %}
+                    <div class="col-md-12 block_form_calendar_id" style="display:none">
+                        {{ form_label(form.calendrierid) }}
+                        {{ form_errors(form.calendrierid) }}
+                        {{ form_widget(form.calendrierid, {'attr': {'disabled': 'disabled', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                    </div>
+
+                    <div class="col-md-12 block_form_calendar_uri" style="display:none">
+                        {{ form_label(form.calendrieruri) }}
+                        {{ form_errors(form.calendrieruri) }}
+                        {{ form_widget(form.calendrieruri, {'attr': {'disabled': 'disabled', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                    </div>
+                {% endif %}
+
                 <div class="col-md-6 block_form_departement" style="display:none">
                     {{ form_label(form.departement) }}
                     {{ form_errors(form.departement) }}
