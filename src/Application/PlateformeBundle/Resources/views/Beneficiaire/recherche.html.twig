@@ -8,8 +8,8 @@
             
             {% set style = "display:none" %}
          	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %} {% set style = "display:block" %} {% endif %}
-            <span style="{{ style }}"class="col-md-2">{{ form_widget(form.consultant) }}</span>
-            <span class="col-md-1">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
+            <span style="{{ style }}" class="col-md-2">{{ form_widget(form.consultant) }}</span>
+            <span class="col-md-1" style="{{ style }}">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
 
             <span class="col-md-1">{{ form_widget(form.ville, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
 

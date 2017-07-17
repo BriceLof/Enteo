@@ -1,43 +1,44 @@
 <div>
     <span class="tarif"><b>Tarif Accompagnement</b> <span style="font-size: 10px">(net de taxe)</span></span>
     <span class="tarifMontant"><b>{{ montantTotal ~" " }}</b><span>&euro;</span></span>
-</div><br>
+</div>
+
+{% if beneficiaire.accompagnement is not null %}
+    <div class="form-group" id="accompagnement_heure">
+        <label>Accompagnement en Heures :</label>
+        <div class="inputAccompagnement">
+            {{ form_widget(edit_form_a.heure, { 'attr': {'value': beneficiaire.accompagnement.heure }} ) }}
+            <span>Heures</span>
+        </div>
+    </div>
+{% else %}
+    <div class="form-group">
+        <label>Accompagnement en Heures :</label>
+        <div class="inputAccompagnement">{{ form_widget(edit_form_a.heure) }} Heures</div>
+    </div>
+{% endif %}
+<div>
+    <span>Date prévue accompagnement :
+        {{ form_widget(edit_form_a.proposition_heure, { 'attr': {'value': heure }} ) }}
+        {{ form_widget(edit_form_a.proposition_dateDebut, { 'attr': {'value': dateDebut }} ) }}
+        {{ form_widget(edit_form_a.proposition_dateFin, { 'attr': {'value': dateFin }} ) }}
+    </span>
+</div>
+<div>
+    <span style="display: -webkit-box;"><span>Du :&nbsp;</span>{{ form_widget(edit_form_a.dateDebut) }} <span>&nbsp;Au :&nbsp;</span>{{ form_widget(edit_form_a.dateFin) }}</span>
+</div>
+<br>
+
 <div>
     <div class="widget_financeur">
         {{ form_widget(edit_form_a.financeur) }}
     </div>
 </div>
-
-{% if beneficiaire.accompagnement is not null %}
-    <tr>
-        <td>Accompagnement en Heures :</td>
-        <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure, { 'attr': {'value': beneficiaire.accompagnement.heure }} ) }}
-            Heures
-        </td>
-    </tr>
-{% else %}
-    <tr>
-        <td>Accompagnement en Heures :</td>
-        <td class="inputAccompagnement">{{ form_widget(edit_form_a.heure) }} Heures</td>
-    </tr>
-{% endif %}
-<tr>
-    <td></td>
-</tr>
-<tr>
-    <td colspan="3">Date prévue accompagnement :
-        {{ form_widget(edit_form_a.proposition_heure, { 'attr': {'value': heure }} ) }}
-        {{ form_widget(edit_form_a.proposition_dateDebut, { 'attr': {'value': dateDebut }} ) }}
-        {{ form_widget(edit_form_a.proposition_dateFin, { 'attr': {'value': dateFin }} ) }}
-    </td>
-</tr>
-<tr>
-    <td colspan="2" style="display: -webkit-box;"><span>Du :&nbsp;</span>{{ form_widget(edit_form_a.dateDebut) }} <span>&nbsp;Au :&nbsp;</span>{{ form_widget(edit_form_a.dateFin) }}</td>
-</tr>
-<tr>
-    <td style="position: absolute;right: 6%;height: inherit" colspan="2" class="valider">{{ form_widget(edit_form_a.submit) }}</td>
-</tr>
-<tr class="form-rest">
-    <td>{{ form_rest(edit_form_a) }}</td>
-    <td>{{ form_errors(edit_form_a) }}</td>
-</tr>
+<br>
+<div id="submitAccompagnement">
+    {{ form_widget(edit_form_a.submit) }}
+</div>
+<div class="form-rest">
+    <div>{{ form_rest(edit_form_a) }}</div>
+    <div>{{ form_errors(edit_form_a) }}</div>
+</div>

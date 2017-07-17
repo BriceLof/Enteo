@@ -401,11 +401,11 @@
                         <div class="collapse in" id="collapseAccompagnement">
                             <div id="form_accompagnement">
                                 <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
-                                    <table>
-                                        <tbody>
+                                    <div>
+                                        <div>
                                             {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
-                                        </tbody>
-                                    </table>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div id="doc_accompagnement">
