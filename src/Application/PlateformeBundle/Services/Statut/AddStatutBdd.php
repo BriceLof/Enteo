@@ -21,7 +21,7 @@ class AddStatutBdd
             "RV2 à faire" => array(""),
             "RV2 réalisé" => array("RV2 Positif", "RV2 Négatif", "Indécis", "RV2 à reporter", "No show RV2"),
             "Dossier en cours" => array("En attente de traitement Enthéor"),
-            "Financement" => array("Attente accord", "OK accord financeur", "OK financement partiel", "Refus financement"),
+            "Financement" => array("Attente accord", "OK financement partiel", "OK accord financeur", "Refus financement"),
             "Recevabilité" => array("Non démarré", "Livret 1 en cours", "Accord recevabilité", "Refus recevabilité"),
             "Facturation" => array("Facture acompte", "Facture solde", "Facture totale", "Avoir"),
             "Reporté" => array("Pas le moment", "Pas de Consultants"),
