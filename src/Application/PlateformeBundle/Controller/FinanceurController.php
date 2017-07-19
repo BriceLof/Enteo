@@ -132,11 +132,11 @@ class FinanceurController extends Controller
     public function listeOpcaOpacifAction(Request $request, $nom){
         if ($request->isXmlHttpRequest()) {
             if($nom == 'OPCA'){
-                $results = array('','AGEFOS-PME','OPCALIA','ACTALIANS','AFDAS','ANFA','CONSTRUCTYS','FAFIEC','FAFIH','FAF.TT','FAFSEA','FORCO','INTERGROS','OPCA 3+','OPCABAIA','OPCA CGM','OPCA CGM','OPCA DEFI','OPCA Transports','OPCAIM ADEFIM','OPCALIM','UNIFAF','UNIFORMATION');
+                $results = array('','AGEFOS-PME','OPCALIA','ACTALIANS','AFDAS','AGEFICE','ANFA','ANFH','CONSTRUCTYS','FAFIEC','FAFIH','FAF.TT','FAFSEA','FORCO','FIF PL','INTERGROS','OPCA 3+','OPCA BAIA','OPCA CGM','OPCA CGM','OPCA DEFI','OPCA de Construction','OPCA Transports','OPCAIM ADEFIM','OPCA PL','OPCAIM','OPCALIM','OPCALIA','UNIFAF','UNIFORMATION');
                 $resultats = new JsonResponse(json_encode($results));
                 return $resultats;
             }else{
-                $results = array('','FONGECIF','AFDAS','AGECIF CAMA','FAFSEA','FAF TT','UNAGECIF','UNIFAF','UNIFORMATION');
+                $results = array('','FONGECIF','AFDAS','AGECIF CAMA','FAFSEA','FAF TT','UNAGECIF','UNIFAF','UNIFORMATION','ANFH','OPCALIM');
                 $resultats = new JsonResponse(json_encode($results));
                 return $resultats;
             }
