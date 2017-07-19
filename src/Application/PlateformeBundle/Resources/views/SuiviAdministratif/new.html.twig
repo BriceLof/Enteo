@@ -1,5 +1,5 @@
 <form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
-    <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Ajout d'un suivi administratif : </p>
+    <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Mofidier le Statut Administratif : </p>
     <div class="row">
         <span class="col-xs-2">{{ form_label(form.statut) }}</span>
         <span class="col-xs-3" colspan="3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
@@ -8,7 +8,7 @@
         <span class="col-xs-4" colspan="3">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
     </div>
     
-    <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Info suivi : </p>
+    <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Ajouter une information de suivi : </p>
     <div class="row">
         <span class="col-xs-6" colspan="3">{{ form_widget(form.info) }}</span>
     </div>
