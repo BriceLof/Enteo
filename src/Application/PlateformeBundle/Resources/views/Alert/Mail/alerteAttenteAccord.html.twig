@@ -1,14 +1,16 @@
 {% extends "::mail/layout.html.twig" %}
-{% block ref %}4{% endblock %}
+{% block ref %}{{ reference }}{% endblock %}
 {% block contentMail %}
-    Bonjour, <br>
-    <p>
-        <b>
-            <a href="https://appli.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}" target="_blank">
-                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}
-            </a>
-        </b>
-        est passé au statut "Financement/Attente Accord" le {{ lastSuiviAdministratif.date|date("d/m/Y") }}
-        <br>
-    </p>
+    Bonjour Virgine,<br><br>
+    {% if beneficiaires|length > 1 %}
+        Cela fait 3 semaines que ces dossiers sont en statut : 'Financement - Attente accord'<br>
+        Il faut secouer les Financeurs des dossiers suivants :
+    {% else %}
+        Cela fait 3 semaines que ce dossier est en statut : 'Financement - Attente accord'<br>
+        Il faut secouer les Financeurs du dossier suivant :
+    {% endif %}
+    <br>
+    {% for beneficiaire in beneficiaires %}
+        <p style='margin-left:10px;'>&bull; {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' - '~beneficiaire.typeFinanceur|upper~' : '~beneficiaire.organisme|upper }}</p>
+    {% endfor %}
 {% endblock %}
