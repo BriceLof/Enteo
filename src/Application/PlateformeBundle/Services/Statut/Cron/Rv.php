@@ -58,8 +58,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 						"support.informatique@entheor.com" => "Support",
 						"f.azoulay@entheor.com" => "Franck Azoulay", 
 						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-						"christine.clement@entheor.com" => "Christine Clement",
-						"virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary");
+						"christine.clement@entheor.com" => "Christine Clement");
 					//$bcc = "";
 							
 					$message = $cher." ".$consultant->getPrenom().", <br><br> 
@@ -190,7 +189,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to =  "virginie.hiairrassary@entheor.com";
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
-            "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
@@ -215,7 +213,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
             "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
-            "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
@@ -237,7 +234,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
-            "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
