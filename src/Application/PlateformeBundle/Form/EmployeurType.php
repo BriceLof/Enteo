@@ -38,7 +38,7 @@ class EmployeurType extends AbstractType
                 'choices' => array(
                     '...' => '',
                     'OPCA' => 'OPCA',
-                    'OPACIF' => 'OPACIF',
+                    'FONGECIF' => 'FONGECIF',
                     'Entreprise' => 'Entreprise',
                     'Bénéficiaire' => 'Beneficiaire',
                     'Pôle Emploi' => 'Pole Emploi',
