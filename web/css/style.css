@@ -757,4 +757,12 @@ textarea {
 #evenementcalandar{
     margin-bottom: 0;
 }
+#contact_financeur{
+    margin-top: -10px;
+}
+#contact_financeur .form-group{
+    width: 40%;
+    min-width: 100px;
+    display: inline-block;
+}
 

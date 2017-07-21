@@ -53,6 +53,19 @@ class SuiviAdministratifController extends Controller
                     $em->persist($historique);
                 }
             }
+
+            if(!is_null($beneficiaire->getAccompagnement())){
+                $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
+                if($financeur != null){
+                    $financeur->setNom($form['typeFinanceur']->getData());
+                    $financeur->setOrganisme($form['organisme']->getData());
+                    $em->persist($financeur);
+                }
+            }
+            $beneficiaire->setTypeFinanceur($form['typeFinanceur']->getData());
+            $beneficiaire->setOrganisme($form['organisme']->getData());
+            $em->persist($beneficiaire);
+
             $em->persist($suiviAdministratif);
             $em->flush();
 

@@ -65,13 +65,14 @@ class ProjetType extends AbstractType
                 ),
                 'attr' => array(
                     'class' => 'projet type_employeur',
+                    'onchange' => 'changeOrganisme(this)',
                 )
             ))
 
             ->add('organisme', TextType::class, array(
                 'required' => false,
                 'attr' => array(
-                    'class' => 'projet',
+                    'class' => 'projet organisme',
                 ),
             ))
 

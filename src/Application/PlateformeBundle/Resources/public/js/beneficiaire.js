@@ -163,60 +163,6 @@ $(function () {
         });
     }
 
-    $('.type_employeur').on('change', function () {
-        tdElement = $('#tdElement');
-        element = tdElement.find('#projet_organisme');
-        if ($(this).val() == 'OPCA') {
-            tdElement.css('display', 'table-row');
-            $name = 'OPCA';
-            listeOpcaOpacifEmployeur($name, element);
-        } else {
-            if ($(this).val() == 'OPACIF') {
-                tdElement.css('display', 'table-row');
-                $name = 'OPACIF';
-                listeOpcaOpacifEmployeur($name, element);
-            } else {
-                tdElement.css('display', 'none');
-                element.empty();
-            }
-        }
-    });
-
-    //Ajax pour recuperer la liste des opca ou opacif
-    function listeOpcaOpacifEmployeur($name, element) {
-        $.ajax({
-            url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
-            cache: true,
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function () {
-                element.empty();
-                console.log('ça charge');
-            },
-            success: function (data) {
-                $.each(JSON.parse(data), function (i, item) {
-                    if ($(element).attr('value') == item) {
-                        element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
-                    } else {
-                        element.append("<option value=\"" + item + "\">" + item + "</option>");
-                    }
-                });
-                console.log('fini');
-            }
-        });
-    }
-
-
-    $(function () {
-        $('#projet_organisme').each(function () {
-            var newElement = $('<select>');
-            $.each(this.attributes, function (i, attrib) {
-                $(newElement).attr(attrib.name, attrib.value);
-            });
-            $(this).replaceWith(newElement);
-        });
-    });
-
     $(function () {
         $a = 1;
         $('.contact_employeur').children().children().children().each(function () {
@@ -225,26 +171,6 @@ $(function () {
                 $a++;
             }
         })
-    });
-
-
-    $(function () {
-        $('select#projet_organisme').each(function () {
-            tdElement = $('#tdElement');
-            element = $(this);
-            console.log($(this).val());
-            if ($('#projet_typeFinanceur').val() == 'OPCA') {
-                tdElement.css('display', 'table-row');
-                $name = 'OPCA';
-                listeOpcaOpacifEmployeur($name, element);
-            } else {
-                if ($('#projet_typeFinanceur').val() == 'OPACIF') {
-                    tdElement.css('display', 'table-row');
-                    $name = 'OPACIF';
-                    listeOpcaOpacifEmployeur($name, element);
-                }
-            }
-        });
     });
 })();
 
@@ -319,6 +245,28 @@ $(function () {
 });
 
 /**
+ * la fonction qui change le input en select sur les champs organismes
+ */
+$(function () {
+    $('.organisme').each(function () {
+        var newElement = $('<select>');
+        $.each(this.attributes, function (i, attrib) {
+            $(newElement).attr(attrib.name, attrib.value);
+        });
+        $(this).replaceWith(newElement);
+    });
+});
+
+/**
+ * le on load des liste opca et opacif
+ */
+$(function () {
+    changeOrganisme($('#projet_typeFinanceur'));
+    $('#suivi_administratif_typeFinanceur option[value="'+ $('#suivi_administratif_typeFinanceur').attr('value') +'"]').prop('selected', true);
+    changeOrganisme($('#suivi_administratif_typeFinanceur'));
+});
+
+/**
  * affichage dynamique du département du travail quand on change la région dans la fiche bénéficiaire
  */
 (function () {
@@ -365,6 +313,64 @@ function ajaxListDepartement(region, element) {
                     element.append("<option value=\"" + item.code + "\" selected = \"selected\">" + item.codeShow + ' ' + item.dpt + "</option>");
                 } else {
                     element.append("<option value=\"" + item.code + "\">" + item.codeShow + ' ' + item.dpt + "</option>");
+                }
+            });
+            console.log('fini');
+        }
+    });
+}
+
+/**
+ * la fonction qui permet d'afficher l'organisme quand on choisi OPCA ou OPACIF sur le
+ * @param typeFinanceur
+ */
+function changeOrganisme(typeFinanceur) {
+    parent = $(typeFinanceur).parent().parent().parent();
+    tdElement = $(parent).find('#tdElement');
+    element = parent.find('#organisme');
+    if ($(typeFinanceur).val() == 'OPCA') {
+        if ($(tdElement).prop("tagName") == 'TR'){
+            tdElement.css('display', 'table-row');
+        }else{
+            tdElement.css('display', 'inline-block');
+        }
+        $name = 'OPCA';
+        listeOpcaOpacifEmployeur($name, element);
+    } else {
+        if ($(typeFinanceur).val() == 'OPACIF') {
+            if ($(tdElement).prop("tagName") == 'TR'){
+                tdElement.css('display', 'table-row');
+            }else{
+                tdElement.css('display', 'inline-block');
+            }
+            $name = 'OPACIF';
+            listeOpcaOpacifEmployeur($name, element);
+        } else {
+            tdElement.css('display', 'none');
+            element.empty();
+        }
+    }
+}
+
+/**
+ * Ajax pour recuperer la liste des opca ou opacif
+ */
+function listeOpcaOpacifEmployeur($name, element) {
+    $.ajax({
+        url: Routing.generate('application_opca_opacif_financeur', {'nom': $name}), // le nom du fichier indiqué dans le formulaire
+        cache: true,
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+            element.empty();
+            console.log('ça charge');
+        },
+        success: function (data) {
+            $.each(JSON.parse(data), function (i, item) {
+                if ($(element).attr('value') == item) {
+                    element.append("<option value=\"" + item + "\" selected = \"selected\">" + item + "</option>");
+                } else {
+                    element.append("<option value=\"" + item + "\">" + item + "</option>");
                 }
             });
             console.log('fini');
