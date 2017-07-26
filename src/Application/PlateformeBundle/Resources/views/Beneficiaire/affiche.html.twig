@@ -257,7 +257,7 @@
                 <div class="sectionBeneficiaire">
                     <div id="statut" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse" onclick="plusMoins(this);" role="button" aria-expanded="false" aria-controls="collapseStatut"><span class="glyphicon glyphicon-minus"></span><span>Statut</span></a></caption>
+                            <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse" onclick="plusMoins(this);" role="button" aria-expanded="false" aria-controls="collapseStatut"><span class="glyphicon glyphicon-minus"></span><span>Statut bénéficiaire</span></a></caption>
                         </table>
                         <div class="collapse in" id="collapseStatut">
                             {% if(beneficiaire.news | length > 0) %}
@@ -276,28 +276,30 @@
                             {% endfor %}
                             
                             <div class="row" style="margin-left: -6px;">
-                                <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut du bénéficiare : </p>
+                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut commercial : </p>
                                 <p class="col-xs-4">
-                                    <b>Statut :</b> <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a>
+                                    <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a>
                                 </p>
-                                <p class="col-xs-6">
-                                    <b>Détail Statut :</b> {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
-                                </p>
-                                
-                                <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut de recevabilité : </p>
                                 <p class="col-xs-4">
-                                    <b>Statut :</b> <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_statut_recevabilite" class="link_formulaire_add_news maj">{{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].statut.nom : 'Maj Statut' }}</a>
+                                    {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
                                 </p>
-                                <p class="col-xs-6">
-                                    <b>Détail Statut :</b> {{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].detailStatut.detail : '' }}
-                                </p>
-                                
-                                <p class="col-xs-12" style="font-weight: bold;color: #50a60d;font-size: 13px;">Statut administratif : </p>
+                            </div>
+                            <div class="row" style="margin-left: -6px;">    
+                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut de recevabilité : </p>
                                 <p class="col-xs-4">
-                                    <b>Statut :</b> {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
+                                    <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_statut_recevabilite" class="link_formulaire_add_news maj">{{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].statut.nom : 'Maj Statut' }}</a>
                                 </p>
-                                <p class="col-xs-6">
-                                    <b>Détail Statut :</b> {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }} {% endif %}
+                                <p class="col-xs-4">
+                                    {{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].detailStatut.detail : '' }}
+                                </p>
+                             </div>
+                             <div class="row" style="margin-left: -6px;">   
+                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut administratif : </p>
+                                <p class="col-xs-4">
+                                    {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
+                                </p>
+                                <p class="col-xs-4">
+                                    {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }} {% endif %}
                                 </p>
                             </div>
                             
