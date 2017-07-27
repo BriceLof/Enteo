@@ -111,13 +111,13 @@
                     <div class="col-md-12 block_form_calendar_id" style="display:none">
                         {{ form_label(form.calendrierid) }}
                         {{ form_errors(form.calendrierid) }}
-                        {{ form_widget(form.calendrierid, {'attr': {'disabled': 'disabled', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                        {{ form_widget(form.calendrierid, {'attr': {'readonly': 'readonly', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
                     </div>
 
                     <div class="col-md-12 block_form_calendar_uri" style="display:none">
                         {{ form_label(form.calendrieruri) }}
                         {{ form_errors(form.calendrieruri) }}
-                        {{ form_widget(form.calendrieruri, {'attr': {'disabled': 'disabled', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                        {{ form_widget(form.calendrieruri, {'attr': {'readonly': 'readonly', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
                     </div>
                 {% endif %}
 
