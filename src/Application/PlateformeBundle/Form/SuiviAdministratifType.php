@@ -48,6 +48,31 @@ class SuiviAdministratifType extends AbstractType
                 ), 
                 'required' => false
             ))
+            ->add('typeFinanceur', ChoiceType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Type Financeur',
+                'choices' => array(
+                    '...' => '',
+                    'OPCA' => 'OPCA',
+                    'FONGECIF' => 'FONGECIF',
+                    'Entreprise' => 'Entreprise',
+                    'Bénéficiaire' => 'Beneficiaire',
+                    'Pôle Emploi' => 'Pole Emploi',
+                ),
+                'attr' => array(
+                    'class' => 'suivi type_employeur',
+                    'onchange' => 'changeOrganisme(this)',
+                )
+            ))
+
+            ->add('organisme', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi organisme',
+                ),
+            ))
             ->add('submit', SubmitType::class, array('label' => 'Ajouter')
             )
         ;

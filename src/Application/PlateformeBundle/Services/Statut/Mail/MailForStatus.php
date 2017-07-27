@@ -30,26 +30,29 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         return $this->sendMessage($this->from, $to,null, $cc, $subject, $body);
     }
 
-    public function alerteAttenteAccord(Beneficiaire $beneficiaire, SuiviAdministratif $lastSuiviAdministratif){
+    public function alerteAttenteAccord($beneficiaires){
+
+        $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
+        $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
+        $listeAdministrateurs = array();
+        $listeGestionnaires = array();
+        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
+
+        $ref = 4;
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
-        $subject = "Financement / Attente Accord de ". $beneficiaire->getCiviliteConso() ." ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." ";
+        $subject = "Financement - Attente accord ";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
-        $to =  "resp.administratif@entheor.com";
-        $cci = array(
-            "f.azoulay@entheor.com" => "Franck AZOULAY",
-            "virginie.hiairrassary@entheor.com" => "Virginie HIAIRRASSARY",
-            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
-            "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
-            "christine.clement@entheor.com" => "Christine Clement"
-        );
+        $to = $listeGestionnaires;
+        $cc = $listeAdministrateurs;
+        $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(
-            'beneficiaire' => $beneficiaire,
-            'lastSuiviAdministratif' => $lastSuiviAdministratif,
+            'beneficiaires' => $beneficiaires,
+            'reference' => $ref
         ));
 
-        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
-//        $this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
     
 }

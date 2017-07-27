@@ -1,4 +1,15 @@
 <tr>
+    <td>Date prévue d'Accompagnement</td>
+    <td style="padding-left: 13px">
+        {% if beneficiaire.accompagnement.dateDebut is not null %}
+            Du {{ dateCourtFr(beneficiaire.accompagnement.dateDebut) }} <br>
+        {% endif %}
+        {% if beneficiaire.accompagnement.dateFin is not null %}
+            Au {{ dateCourtFr(beneficiaire.accompagnement.dateFin) }}
+        {% endif %}
+    </td>
+</tr>
+<tr>
     <td>{{ form_label(projet_form.statut) }}</td>
     <td class="projet">{{ form_widget(projet_form.statut) }}</td>
 </tr>
@@ -20,7 +31,7 @@
 </tr>
 <tr style="display: none" id="tdElement">
     <td>{{ form_label(projet_form.organisme) }}</td>
-    <td class="projet">{{ form_widget(projet_form.organisme) }}</td>
+    <td class="projet">{{ form_widget(projet_form.organisme, {'id': 'organisme'})  }}</td>
 </tr>
 <tr id="tdElement">
     <td>{{ form_label(projet_form.refFinanceur) }}</td>

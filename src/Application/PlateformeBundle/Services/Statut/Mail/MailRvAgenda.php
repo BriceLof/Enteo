@@ -10,8 +10,12 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 		$consultant = $beneficiaire->getConsultant();
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
-		
-        $from = "audrey.azoulay@entheor.com";
+
+        if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2") {
+            $from = "audrey.azoulay@entheor.com";
+        }else{
+            $from = $consultant->getEmail();
+        }
         $to =  $beneficiaire->getEmailConso();
         $cc = array($consultant->getEmail());
         $bcc = array(

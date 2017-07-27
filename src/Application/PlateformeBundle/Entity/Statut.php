@@ -37,6 +37,18 @@ class Statut
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\DetailStatut", mappedBy="statut", cascade={"persist"})
+     */
+    protected $detailStatut;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->beneficiaire = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -94,5 +106,40 @@ class Statut
     public function getSlug()
     {
         return $this->slug;
+    }
+
+
+    /**
+     * Add detailStatut
+     *
+     * @param \Application\PlateformeBundle\Entity\DetailStatut $detailStatut
+     *
+     * @return Statut
+     */
+    public function addDetailStatut(\Application\PlateformeBundle\Entity\DetailStatut $detailStatut)
+    {
+        $this->detailStatut[] = $detailStatut;
+
+        return $this;
+    }
+
+    /**
+     * Remove detailStatut
+     *
+     * @param \Application\PlateformeBundle\Entity\DetailStatut $detailStatut
+     */
+    public function removeDetailStatut(\Application\PlateformeBundle\Entity\DetailStatut $detailStatut)
+    {
+        $this->detailStatut->removeElement($detailStatut);
+    }
+
+    /**
+     * Get detailStatut
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDetailStatut()
+    {
+        return $this->detailStatut;
     }
 }

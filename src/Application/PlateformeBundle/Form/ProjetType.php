@@ -58,20 +58,21 @@ class ProjetType extends AbstractType
                 'choices' => array(
                     '...' => '',
                     'OPCA' => 'OPCA',
-                    'OPACIF' => 'OPACIF',
+                    'FONGECIF' => 'FONGECIF',
                     'Entreprise' => 'Entreprise',
                     'Bénéficiaire' => 'Beneficiaire',
                     'Pôle Emploi' => 'Pole Emploi',
                 ),
                 'attr' => array(
                     'class' => 'projet type_employeur',
+                    'onchange' => 'changeOrganisme(this)',
                 )
             ))
 
             ->add('organisme', TextType::class, array(
                 'required' => false,
                 'attr' => array(
-                    'class' => 'projet',
+                    'class' => 'projet organisme',
                 ),
             ))
 

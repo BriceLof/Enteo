@@ -11,6 +11,7 @@ class AddStatutBdd
     
     public function addStatutAndDetail()
     {
+
         /* insertion statut et detail statut */
         $statuts = array(
             "MenR" => array("En attente Contact Tél"),
@@ -19,8 +20,8 @@ class AddStatutBdd
             "RV1 réalisé" => array("RV1 Positif", "RV1 Négatif", "Indécis", "RV1 à reporter", "No show RV1", "RV2 à faire"),
             "RV2 à faire" => array(""),
             "RV2 réalisé" => array("RV2 Positif", "RV2 Négatif", "Indécis", "RV2 à reporter", "No show RV2"),
-            "Dossier en cours" => array(""),
-            "Financement" => array("Attente accord", "OK accord financeur", "OK financement partiel", "Refus financement"),
+            "Dossier en cours" => array("En attente de traitement Enthéor"),
+            "Financement" => array("Attente accord", "OK financement partiel", "OK accord financeur", "Refus financement"),
             "Recevabilité" => array("Non démarré", "Livret 1 en cours", "Accord recevabilité", "Refus recevabilité"),
             "Facturation" => array("Facture acompte", "Facture solde", "Facture totale", "Avoir"),
             "Reporté" => array("Pas le moment", "Pas de Consultants"),

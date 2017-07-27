@@ -74,6 +74,20 @@ class Employeur
     private $pays;
 
     /**
+     * @var
+     *
+     * @ORM\Column(name="typeFinanceur", type="string", length=255,nullable=true)
+     */
+    private $typeFinanceur;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="organisme", type="string", length=255, nullable=true)
+     */
+    private $organisme;
+
+    /**
      * Get id
      *
      * @return integer
@@ -313,5 +327,53 @@ class Employeur
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Set typeFinanceur
+     *
+     * @param string $typeFinanceur
+     *
+     * @return Employeur
+     */
+    public function setTypeFinanceur($typeFinanceur)
+    {
+        $this->typeFinanceur = $typeFinanceur;
+
+        return $this;
+    }
+
+    /**
+     * Get typeFinanceur
+     *
+     * @return string
+     */
+    public function getTypeFinanceur()
+    {
+        return $this->typeFinanceur;
+    }
+
+    /**
+     * Set organisme
+     *
+     * @param string $organisme
+     *
+     * @return Employeur
+     */
+    public function setOrganisme($organisme)
+    {
+        $this->organisme = $organisme;
+
+        return $this;
+    }
+
+    /**
+     * Get organisme
+     *
+     * @return string
+     */
+    public function getOrganisme()
+    {
+        return $this->organisme;
     }
 }

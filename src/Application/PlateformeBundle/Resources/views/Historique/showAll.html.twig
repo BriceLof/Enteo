@@ -1,192 +1,32 @@
+{% from 'ApplicationPlateformeBundle:Historique:table.html.twig' import table %}
 {% if historiques is not empty %}
     <div class="msg-erreur"></div>
     <table class="table table-striped" id="evenementcalandar">
-        <tr>
-            <th style="border:none;">Date</th>
-            <th style="border:none;">Heure debut</th>
-            <th style="border:none;">Heure fin</th>
-            <th style="border:none;">Bureau</th>
-            <th style="border:none;">Rdv</th>
-            {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
-                <th style="border:none;">Actions</th>
-            {% endif %}
-        </tr>
-        {% for historique in historiques %}
-            {% if historique.eventId != '0' %}
-                <tr class="{{ historique.eventId }}">
-                    <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
-                        {{ historique.dateDebut|date('d/m/Y') }} <span style="font-size:11px;margin-left:-1px"
-                                                                       class="glyphicon glyphicon-calendar"></span>
-                    </td>
-                    <td style="border:none;">
-                        <span>{{ historique.heureDebut|date('H:i') }}</span>
-                    </td>
-                    <td style="border:none;">
-                        <span>{{ historique.heureFin|date('H:i') }}</span>
-                    </td>
-                    <td style="border:none;">
-                        {% if historique.bureau is not null %}
-                            <span>
-                                   {{ historique.bureau.nombureau }}
-                                </span>
-                        {% else %}
-                            <span>-</span>
-                        {% endif %}
-                    </td>
-                    <td style="border:none;">
-                        <span> {{ historique.summary }} </span>
-                    </td>
-                    <td align="center" style="border:none;">
-                        {% if historique.canceled == 1 %}
-                            <span style="color: red">Annulé</span>
-                        {% elseif historique.canceled == 2 %}
-                            <span style="color: red;">Modifié</span>
-                        {% else %}
-                            {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
-                                {% if date() < date(historique.dateDebut) %}
-                                    <div class="modif-event-maj">
-                                        {% if date(historique.dateDebut) < date('+1 days') and date(historique.dateDebut) > date() %}
-                                            <span title="modifier l'historique"
-                                                  style="cursor:pointer;color: black; float: right" data-toggle="modal"
-                                                  data-target="#myModalHistoriqueEdit{{ loop.index }}"
-                                                  class="glyphicon glyphicon-pencil cursor_pointer"></span>
-                                        {% else %}
-                                            <a style="width: 16px;"
-                                               href="{{ path('application_edit_evenement', { 'id': historique.id }) }} "
-                                               target="_blank">
-                                                <span class="glyphicon glyphicon-pencil cursor_pointer"
-                                                      title="Modifier le rendez-vous" style="color: black;"></span>
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                    <div class="modif-event-sup">
-                                        <span title="Supprimer l'historique"
-                                              style="cursor:pointer;color: black; float: right" data-toggle="modal"
-                                              data-target="#myModalHistoriqueDelete{{ loop.index }}"
-                                              class="glyphicon glyphicon-remove"></span>
-                                    </div>
-
-                                    {% if date(historique.dateDebut) < date('+1 days') and date(historique.dateDebut) > date() %}
-                                        <div class="modal fade" id="myModalHistoriqueDelete{{ loop.index }}" tabindex="-1"
-                                             role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content" style="text-align: left">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title" id="myModalLabel">Supprimer un rendez-vous</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div>
-                                                            <span>Confirmer la suppression du rendez-vous !</span><br><br>
-                                                            <span><b><span style="color: red;">ATTENTION</span> : Cette annulation de RdV intervient à moins de 24h de la date prévue pour le RdV. Ce rendez-vous sera décompté du temps d'accompagnement</b></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div>
-                                                            <button type="button" class="btn btn-default deleteBtn"
-                                                                    data-dismiss="modal">Annuler
-                                                            </button>
-                                                            <a style="width: 53px;float: right"
-                                                               href="{{ path('application_delete_evenement', { 'id': historique.id }) }}">
-                                                                <button class="btn btn-danger">OK</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal fade" id="myModalHistoriqueEdit{{ loop.index }}" tabindex="-1"
-                                             role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content" style="text-align: left">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title" id="myModalLabel">Modifier le rendez-vous</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div>
-                                                            <span>Confirmer la modification du rendez-vous !</span><br><br>
-                                                            <span><b><span style="color: red;">ATTENTION</span> : Cette modification de RdV intervient à moins de 24h de la date prévue pour le RdV. Ce rendez-vous sera décompté du temps d'accompagnement</b></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div>
-                                                            <button type="button" class="btn btn-default deleteBtn"
-                                                                    data-dismiss="modal">Annuler
-                                                            </button>
-                                                            <a style="width: 53px;float: right"
-                                                               href="{{ path('application_edit_evenement', { 'id': historique.id }) }}" target="_blank">
-                                                                <button class="btn btn-danger">OK</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <div class="modal fade" id="myModalHistoriqueDelete{{ loop.index }}" tabindex="-1"
-                                             role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content" style="text-align: left">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                        <h4 class="modal-title" id="myModalLabel">Supprimer un rendez-vous</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div>
-                                                            <span>Confirmer la suppression du rendez-vous !</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div>
-                                                            <button type="button" class="btn btn-default deleteBtn"
-                                                                    data-dismiss="modal">Annuler
-                                                            </button>
-                                                            <a style="width: 95px;float: right"
-                                                               href="{{ path('application_delete_evenement', { 'id': historique.id }) }}" target="_blank">
-                                                                <button class="btn btn-danger">Supprimer</button>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                {% else %}
-                                    <span>-</span>
-                                {% endif %}
-                            {% endif %}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td style="margin-top: 0px;margin-left: 0px; display: inline-block;width: 100%; border:none;">
-                        {{ historique.dateDebut|date('d/m/Y') }}
-                    </td>
-                    <td style="border:none;">
-                        <span>{{ historique.heureDebut|date('H:i') }}</span>
-                    </td>
-                    <td colspan=3>
-                        <span>{{ historique.description }}</span>
-                    </td>
-                    {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
-                        <td align="center"><span>-</span></td>
-                    {% endif %}
-                </tr>
-            {% endif %}
-        {% endfor %}
+        <thead>
+            <tr>
+                <th style="border:none;">Date</th>
+                <th style="border:none;">Heure debut</th>
+                <th style="border:none;">Heure fin</th>
+                <th style="border:none;">Bureau</th>
+                <th style="border:none;">Rdv</th>
+                {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
+                    <th style="border:none;">Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        {#creer le corps du tablea#}
+        <tbody>
+            {{ table(historiques, 0, 5) }}
+        </tbody>
+        <tbody class="collapse" id="collapseTableHistorique">
+            {{ table(historiques, 5, historiques|length) }}
+        </tbody>
     </table>
+    {% if historiques|length > 5 %}
+        <a style="color: #0088CC; float: right; margin-right: 3%" href="#collapseTableHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseTableHistorique">
+            Voir +/-
+        </a>
+    {% endif %}
 {% else %}
     <span style="margin-left: 6px;">Aucun historique</span>
 {% endif %}

@@ -38,7 +38,8 @@ class MailRvCommand extends ContainerAwareCommand{
                     $slugLastNewsStatus = $lastNews->getStatut()->getSlug();
                     $slugNextToNewsStatus = $nextToNews->getStatut()->getSlug();
                     //si le statut est : RV1 réalisé ou RV2 réalisé
-                    if ($slugLastNewsStatus == "rv1-realise" || $slugLastNewsStatus == "rv2-realise") {
+//                    if ($slugLastNewsStatus == "rv1-realise" || $slugLastNewsStatus == "rv2-realise") {
+                    if ($lastNews->getDetailStatut()->getDetail() == "RV1 Positif" || $lastNews->getDetailStatut()->getDetail() == "RV2 Positif" ){
                         //si l'avant dernier statut est : RV1 à faire ou RV2 à faire
                         if ($slugNextToNewsStatus == "rv1-a-faire" || $slugNextToNewsStatus == "rv2-a-faire") {
                             $dateLastNews = $lastNews->getDateHeure();

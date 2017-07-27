@@ -32,6 +32,30 @@ class EmployeurType extends AbstractType
                 )
             ))
 
+            ->add('typeFinanceur', ChoiceType::class, array(
+                'required' => false,
+                'label' => 'Type Financeur',
+                'choices' => array(
+                    '...' => '',
+                    'OPCA' => 'OPCA',
+                    'FONGECIF' => 'FONGECIF',
+                    'Entreprise' => 'Entreprise',
+                    'Bénéficiaire' => 'Beneficiaire',
+                    'Pôle Emploi' => 'Pole Emploi',
+                ),
+                'attr' => array(
+                    'class' => 'projet type_employeur',
+                    'onchange' => 'changeOrganisme(this)',
+                )
+            ))
+
+            ->add('organisme', TextType::class, array(
+                'required' => false,
+                'attr' => array(
+                    'class' => 'projet organisme',
+                ),
+            ))
+
             ->add('siret', TextType::class, array(
                 'label' => 'Siret ',
                 'required' => false,

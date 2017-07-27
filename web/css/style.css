@@ -17,6 +17,10 @@
     margin-bottom: 8px;
 }
 
+#collapseHistorique .table>tbody+tbody {
+    border: none;
+}
+
 #banner{
     width:100%;
 }
@@ -61,15 +65,20 @@
     display: none;
 }
 
-.valider{
-}
-
 .valider button{
     background-color: #454545;
     color: white;
     float: right;
     margin-right: 10px;
     margin-bottom: 10px;
+}
+#submitAccompagnement{
+    text-align: right;
+}
+
+#submitAccompagnement button{
+    background-color: #454545;
+    color: white;
 }
 
 #add_document{
@@ -199,9 +208,6 @@
     border-collapse: collapse;
     empty-cells: hide;
     color:#333;
-}
-
-.tableOnglet tr label{
 }
 
 #afficheBeneficiaire{
@@ -453,8 +459,19 @@
     border: 1px solid ;
 }
 
+.inputAccompagnement{
+    text-align: right;
+    float: right;
+}
 .inputAccompagnement > input{
-    display: inherit;
+    width: 50%;
+    display: inline-block;
+    text-align: right;
+}
+#accompagnement_heure label, #accompagnement_heure div{
+    display: inline-block;
+}
+#accompagnement_heure div{
     width: 50%;
 }
 
@@ -736,5 +753,16 @@ textarea {
 #doc_accompagnement{
     margin-left: 2%;
     margin-top: 15px;
+}
+#evenementcalandar{
+    margin-bottom: 0;
+}
+#contact_financeur{
+    margin-top: -10px;
+}
+#contact_financeur .form-group{
+    width: 40%;
+    min-width: 100px;
+    display: inline-block;
 }
 

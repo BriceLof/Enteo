@@ -22,20 +22,28 @@ class AlerteAttenteAccordCommand extends ContainerAwareCommand
         $now = new \DateTime('now');
         $now->format('Y-m-d');
         $today = date_format($now,'d-m-Y');
+        $i = 0;
 
         foreach ($beneficiaires as $beneficiaire){
             $suiviAdministratif = $beneficiaire->getSuiviAdministratif();
-            $lastSuiviAdministratif = $suiviAdministratif[count($suiviAdministratif) - 1];
-            if ($lastSuiviAdministratif != null) {
-                if ($lastSuiviAdministratif->getDetailStatut()->getId() == 21){
+//            $output->writeln($beneficiaire->getId());
+//            $output->writeln(!empty($suiviAdministratif->getDetail));exit;
+            if (count($suiviAdministratif) != 0) {
+                $lastSuiviAdministratif = $suiviAdministratif[count($suiviAdministratif) - 1];
+                if ($lastSuiviAdministratif->getDetailStatut() != null && $lastSuiviAdministratif->getDetailStatut()->getDetail() == "Attente accord") {
                     $dateLastSuivi = $lastSuiviAdministratif->getDate();
                     $dateLastSuivi->modify('+21 day');
                     $date = date_format($dateLastSuivi, 'd-m-Y');
-                    if ($date == $today){
-                        $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->alerteAttenteAccord($beneficiaire, $lastSuiviAdministratif);
+                    if ($date == $today) {
+                        $i++;
+                        $tabBeneficiaire[] = $beneficiaire;
                     }
                 }
             }
+        }
+        $output->writeln($i);
+        if ($i > 0){
+            $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->alerteAttenteAccord($tabBeneficiaire);
         }
     }
 }

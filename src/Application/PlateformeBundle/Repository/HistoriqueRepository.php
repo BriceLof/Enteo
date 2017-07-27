@@ -74,7 +74,6 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
                     ->andwhere('h.eventarchive <> :arch')
                     ->setParameter('arch',$ar)
                     ->orderBy('h.dateDebut','DESC')
-                    ->setMaxResults(5)
                     ->getQuery()
                     ->getResult();
         }

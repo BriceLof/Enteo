@@ -52,7 +52,7 @@
                 </div>
                 <div class="tableOnglet row" id="liste_dispo_admin">
                     {% if consult is not null %}
-                        {{ render(controller("ApplicationPlateformeBundle:Disponibilites:showAll",{'id': consult.id })) }}
+                        {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': consult.disponibilite } %}
                     {% endif %}
                 </div>
             </div>
@@ -96,7 +96,9 @@
                                 <div class="row" id="agenda_consultant">
                                     {{ app.user.calendrieruri|raw }}
                                 </div>
-                                {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': app.user.disponibilite } %}
+                                <div class="tableOnglet row">
+                                    {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': app.user.disponibilite } %}
+                                </div>
                             </div>
                             <div class="col-md-3">
                                 <div id="admin_formulaire_calendar" class="tableOnglet row">

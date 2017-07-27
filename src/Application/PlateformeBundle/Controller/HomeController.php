@@ -60,7 +60,7 @@ class HomeController extends Controller
                     $suiviAdministraif->setDetailStatut($detailStatutRepo);
                     $em->persist($suiviAdministraif);
                 }
-            
+
                 $em->persist($news);
                 $em->flush();
 
