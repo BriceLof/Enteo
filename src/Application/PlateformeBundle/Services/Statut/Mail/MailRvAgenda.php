@@ -16,7 +16,12 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         }else{
             $from = $consultant->getEmail();
         }
-        $to =  $beneficiaire->getEmailConso();
+        if($dateRdv <= new \DateTime('now')){
+            $to =  $beneficiaire->getEmailConso();
+        }else{
+            $to = '@support.informatique@entheor.com';
+        }
+
         $cc = array($consultant->getEmail());
         $bcc = array(
             "support.informatique@entheor.com" => "Support",
