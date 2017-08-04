@@ -136,7 +136,7 @@ class FinanceurController extends Controller
                 $resultats = new JsonResponse(json_encode($results));
                 return $resultats;
             }else{
-                $results = array('','FONGECIF','AFDAS','AGECIF CAMA','FAFSEA','FAF TT','UNAGECIF','UNIFAF','UNIFORMATION');
+                $results = array('','FONGECIF','AFDAS','AGECIF CAMA','FAFSEA','FAF TT','UNAGECIF','UNIFAF','UNIFORMATION','ANFH','OPCALIM');
                 $resultats = new JsonResponse(json_encode($results));
                 return $resultats;
             }

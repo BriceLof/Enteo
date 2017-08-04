@@ -450,8 +450,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			// Si il y a 3 semaines entre les deux dates (21 jours)
 			var_dump($nbJour);
 			if($nbJour == "-21"){
+				//var_dump($nbJour);
+				//var_dump($beneficiaire->getId());
 				// Il y a t-il un suivi administratif ajouté après le financement attente accord, uniquement si ce n'est pas le cas, on envoi le mail 
 				$suiviBeneficiaire = $repoSuiviAdm->findByBeneficiaireAndDate($beneficiaire, $dateSuivi);
+				//var_dump(count($suiviBeneficiaire));
 				if(count($suiviBeneficiaire) == 0 ){
 				    $i++;
 					$envoiMail[] = "yes";

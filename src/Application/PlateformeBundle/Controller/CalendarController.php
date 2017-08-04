@@ -480,6 +480,7 @@ class CalendarController extends Controller
         $calendarId = $historique->getConsultant()->getCalendrierid();
         $eventId = $historique->getEventId();
 
+
         if ($historique->getBureau() != null) {
             if ($historique->getEventIdBureau() != null) {
                 $calendarBureauId = $historique->getBureau()->getCalendrierid();

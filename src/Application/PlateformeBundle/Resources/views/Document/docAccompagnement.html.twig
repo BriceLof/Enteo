@@ -1,6 +1,7 @@
 <div style="margin-bottom: 10px">
 {% for document in beneficiaire.documents|reverse %}
     {% if document.type == 'devis' or document.type == 'financement' %}
+        {{ afficherDocument(beneficiaire, document.path) }}
         <div>
             <span style="margin-right: 27px"><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank" style="color:#333;cursor: pointer">{{ document.description }}</a></span>
             <span style="font-size: 11px;cursor: pointer" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
