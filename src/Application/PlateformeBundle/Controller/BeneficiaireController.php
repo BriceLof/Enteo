@@ -282,18 +282,20 @@ class BeneficiaireController extends Controller
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
         $form->add('submit', SubmitType::class, array('label' => 'Affiner'));
         $form->handleRequest($request);
-
+		
+		
         if ($form->isValid()){
-
+        	
+			$detailStatutId =  $form->get("detailStatut")->getData()->getId();
             $tri = (int)$form['tri']->getData();
             $page = (int)$form['page']->getData();
             $ville = $form['ville']->getData();
-
+			
             $codePostal = null;
             $dateDebut = null;
             $dateFin = null;
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville, $detailStatutId);
             $results = $query->getResult();
 
             $start = 50*$page;
