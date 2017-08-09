@@ -44,7 +44,7 @@ class EmployeurType extends AbstractType
                     'Pôle Emploi' => 'Pole Emploi',
                 ),
                 'attr' => array(
-                    'class' => 'projet type_employeur',
+                    'class' => 'type_employeur',
                     'onchange' => 'changeOrganisme(this)',
                 )
             ))
@@ -52,7 +52,7 @@ class EmployeurType extends AbstractType
             ->add('organisme', TextType::class, array(
                 'required' => false,
                 'attr' => array(
-                    'class' => 'projet organisme',
+                    'class' => 'organisme',
                 ),
             ))
 

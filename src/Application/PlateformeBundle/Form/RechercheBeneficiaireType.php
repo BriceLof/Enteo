@@ -54,7 +54,31 @@ class RechercheBeneficiaireType extends AbstractType
                     'class' => ''
                 )
             ))
-
+			
+			->add('statut', EntityType::class, array(
+				"mapped" => false,
+				'required' => false,
+                'placeholder' => 'Statut',
+                'class' => 'ApplicationPlateformeBundle:Statut',
+                'choice_label' => 'nom', 
+                'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('s')
+                                ->where('s.slug = :slug1')
+                                ->orWhere('s.slug = :slug2')
+                                ->orWhere('s.slug = :slug3')
+                                ->orWhere('s.slug = :slug4')
+                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'facturation','slug4' => 'reglement'))
+                            ;
+                },
+            ))
+			->add('detailStatut', EntityType::class, array(
+                "mapped" => false,
+                'required' => false,
+                'placeholder' => 'Détail Statut',
+                'class' => 'ApplicationPlateformeBundle:DetailStatut',
+                'choice_label' => 'detail', 
+            ))
+			
             ->add('ville', TextType::class, array(
                 "mapped" => false,
                 "required" => false,

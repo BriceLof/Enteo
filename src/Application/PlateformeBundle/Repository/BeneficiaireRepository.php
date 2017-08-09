@@ -51,7 +51,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param $ville
      * @return \Doctrine\ORM\NativeQuery
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $detailStatut = null)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
@@ -64,7 +64,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query = 'SELECT b.* FROM beneficiaire b';
         $params = array();
-
+		
+		if(!is_null($detailStatut)) {
+            $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
+        }
+		
         if(!is_null($ville)) {
             $query .= ' INNER JOIN ville v ON b.ville_mer_id = v.id';
             $params['villeMerId'] = $ville;
@@ -75,6 +79,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if(!is_null($ville)) {
             $query .= ' AND v.ville LIKE :villeNom';
             $params['villeNom'] = '%'.$ville.'%';
+        }
+		
+		if(!is_null($detailStatut)) {
+            $query .= ' AND sa.detail_statut_id = :detailStatut';
+            $params['detailStatut'] = $detailStatut;
         }
 
         if(!is_null($beneficiaire->getNomConso())) {

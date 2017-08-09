@@ -142,3 +142,7 @@
     padding: 2px;
     width: 70px;
 }
+
+.ui-menu .ui-menu-item div:hover{
+    color:#333;
+}

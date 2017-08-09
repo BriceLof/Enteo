@@ -160,11 +160,11 @@
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.employeur.raisonSociale) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.raisonSociale) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.raisonSociale, {'attr':{'class': 'fiche' }}) }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{ form_label(edit_form.employeur.typeFinanceur) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.typeFinanceur) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.typeFinanceur, {'attr':{'class': 'fiche' }}) }}</td>
                                         </tr>
                                         <tr style="display: none" id="tdElement">
                                             <td>{{ form_label(edit_form.employeur.organisme) }}</td>

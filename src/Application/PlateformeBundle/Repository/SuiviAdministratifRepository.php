@@ -37,4 +37,20 @@ class SuiviAdministratifRepository extends \Doctrine\ORM\EntityRepository
         $results = $query->getResult();
         return $results;
 	}
+	
+	public function findByBeneficiaire($beneficiaire)
+	{
+		$queryBuilder = $this->createQueryBuilder('s')
+				->where('s.beneficiaire = :beneficiaire')
+                ->setParameter('beneficiaire', $beneficiaire)
+				->andWhere('s.statut != :statut')
+				->setParameter('statut', "NULL")
+				->orderBy('s.id', 'DESC')
+				->setMaxResults(1)
+                ;
+        
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+	}
 }

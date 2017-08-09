@@ -1,3 +1,11 @@
+{# if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+	{{ dump(suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom) }}
+{% endif %}
+
+{% if statutBeneficiaire[beneficiaire.id] is defined %}
+	{{ dump(statutBeneficiaire) }}
+{% endif #}
+
 {# Pour définir la variable j'ai pris la taille du tableau - 1 pour récupérer le dernier index #}
 {# Bouton Maj pas afficher pour les consultants, j'ai rajouter une condition sur l'admin car il est a le role consultant egalement #}
 {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}
@@ -96,8 +104,27 @@
             {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
             {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : '' }}
         </td>
-        <td><b>{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}</b></td>
-        <td>{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}</td>
+        <td>
+        	<b>
+			{% if statutBeneficiaire[beneficiaire.id] is defined %}
+				{% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+					{{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+				{% endif %}
+			{% else %}
+				{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+			{% endif %}
+        	</b>
+    	</td>
+        <td>
+        	{% if statutBeneficiaire[beneficiaire.id] is defined %}
+				{% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+					{{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+				{% endif %}
+			{% else %}
+				{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
+			{% endif %}
+
+    	</td>
         <td colspan=5>
             {% if(beneficiaire.nouvelle | length > 0) %}
                 {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}

@@ -264,14 +264,14 @@ $(function () {
     changeOrganisme($('#projet_typeFinanceur'));
     $('#suivi_administratif_typeFinanceur option[value="'+ $('#suivi_administratif_typeFinanceur').attr('value') +'"]').prop('selected', true);
     changeOrganisme($('#suivi_administratif_typeFinanceur'));
+    changeOrganisme($('#beneficiaire_employeur_typeFinanceur'));
 });
 
 /**
  * affichage dynamique du département du travail quand on change la région dans la fiche bénéficiaire
  */
 (function () {
-
-    //modification du champ departement du travail en select car c'est un input a la base
+	//modification du champ departement du travail en select car c'est un input a la base
     //le select n'est pas pris en compte par symfony
     //peut etre qu'il y a un moyen mais pour l'instant je sais pas
     $('#beneficiaire_dptTravail').each(function () {

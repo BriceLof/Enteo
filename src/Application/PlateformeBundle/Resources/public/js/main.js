@@ -128,6 +128,27 @@ function voirNouvelle(el){
 }
 
 $(function(){
+	//-----------------------------------------------------------------------------------------------------------------------//
+    //----------------------------------------  Home  -----------------------------------------------------------------------//
+    //-----------------------------------------------------------------------------------------------------------------------//
+    
+    $("#ajaxForm .statutSuiviAd").change(function(){
+        var statutId = $(this).children("option:selected").val();
+        $("#ajaxForm .detailStatutSuiviAd").attr("disabled", "disabled") 
+        ajaxFormNews(statutId)
+    }); 
+    
+    $("#linkMoreFilter").click(function(){
+    	if($(".moreFilterSearch").is(':hidden')){ 
+    		$(".moreFilterSearch").show() 
+    		$("#linkMoreFilter").text("- de Filtres") 
+    	}	
+        else{
+        	$(".moreFilterSearch").hide()
+        	$("#linkMoreFilter").text("+ de Filtres") 
+        } 	
+        return false;
+    }); 
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Fiche bénéficiaire  -----------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
@@ -211,6 +232,8 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
             $("#suiviAdministratifEditForm .detailStatutSuiviAd").removeAttr("disabled")
             $("#suiviAdministratifNewForm .detailStatutSuiviAd").html("");
             $("#suiviAdministratifEditForm .detailStatutSuiviAd").html("");
+            $("#ajaxForm .detailStatutSuiviAd").removeAttr("disabled")
+            $("#ajaxForm .detailStatutSuiviAd").html("");
         }
         
         $(".block_info_chargement").hide();
@@ -236,15 +259,21 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
 						if(i == 0 ){
 							$("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
 							$("#suiviAdministratifEditForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
+							
 						}
 					}
+					
                     $("#suiviAdministratifNewForm .detailStatutSuiviAd").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")
+                   
                     
                     // En modification : selectionne par défaut le detail statut qui était présent à la base
-                    if(data.details[i].id == detailStatutSuiviAd )
+                    if(data.details[i].id == detailStatutSuiviAd ){
                         $("#suiviAdministratifEditForm .detailStatutSuiviAd").append("<option selected value="+data.details[i].id+">"+data.details[i].detail+"</option>")
-                    else
+                   	}
+                    else{
                         $("#suiviAdministratifEditForm .detailStatutSuiviAd").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
+                        $("#ajaxForm .detailStatutSuiviAd").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
+                    }
                 } 
             }
             // Home    
@@ -252,10 +281,13 @@ function ajaxFormNews(statut, news, detailStatutSuiviAd)
 				// si statut est egal à RV1 à faire ou RV2, ne pas mettre le choisissez car la valeur du champ selectionner sera vide en detail statut 
 				if(statut == 3 || statut == 5 || statut == 7){}
 				else{ 
-					if(i == 0 ) $(formDuBeneficiaire + " .detailStatut").append("<option value=''>Choisissez</option>")
+					if(i == 0 ){
+						if(typeof formDuBeneficiaire !== 'undefined') $(formDuBeneficiaire + " .detailStatut").append("<option value=''>Choisissez</option>")
+						$("#ajaxForm .detailStatutSuiviAd").append("<option value=''>Choisissez</option>")
+					} 
 				}					
-                
-                $(formDuBeneficiaire + " .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
+                if(typeof formDuBeneficiaire !== 'undefined') $(formDuBeneficiaire + " .detailStatut").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>") 
+                $("#ajaxForm .detailStatutSuiviAd").append("<option value="+data.details[i].id+">"+data.details[i].detail+"</option>")
             }     
         }
     });
