@@ -89,7 +89,7 @@ class WebserviceController extends Controller
         $historique->setSummary("");
         $historique->setTypeRdv("");
         $historique->setBeneficiaire($beneficiaire);
-        $historique->setDescription(date('d/m/y')." | ".$beneficiaire->getVille()->getNom()." | ".$beneficiaire->getOrigineMer());
+        $historique->setDescription($beneficiaire->getOrigineMer());
         $historique->setEventId("0");
         $em->persist($historique);
         /**

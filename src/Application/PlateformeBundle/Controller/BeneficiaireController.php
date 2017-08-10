@@ -286,7 +286,7 @@ class BeneficiaireController extends Controller
 		
         if ($form->isValid()){
         	
-			$detailStatutId =  $form->get("detailStatut")->getData()->getId();
+			$detailStatut =  $form->get("detailStatut")->getData();
             $tri = (int)$form['tri']->getData();
             $page = (int)$form['page']->getData();
             $ville = $form['ville']->getData();
@@ -295,7 +295,7 @@ class BeneficiaireController extends Controller
             $dateDebut = null;
             $dateFin = null;
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville, $detailStatutId);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville, $detailStatut);
             $results = $query->getResult();
 
             $start = 50*$page;
@@ -409,7 +409,7 @@ class BeneficiaireController extends Controller
             $historique->setSummary("");
             $historique->setTypeRdv("");
             $historique->setBeneficiaire($beneficiaire);
-            $historique->setDescription(date('d/m/y')." | ".$beneficiaire->getVille()->getNom()." | ".$beneficiaire->getOrigineMer());
+            $historique->setDescription(date('d/m/Y')." | ".$beneficiaire->getVille()->getNom()." | ".$beneficiaire->getOrigineMer());
             $historique->setEventId("0");
             $em->persist($historique);
             

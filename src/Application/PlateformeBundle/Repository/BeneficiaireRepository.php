@@ -67,6 +67,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 		
 		if(!is_null($detailStatut)) {
             $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
+			$params['beneficiaire_id'] = $detailStatut->getId();
         }
 		
         if(!is_null($ville)) {
@@ -83,7 +84,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 		
 		if(!is_null($detailStatut)) {
             $query .= ' AND sa.detail_statut_id = :detailStatut';
-            $params['detailStatut'] = $detailStatut;
+            $params['detailStatut'] = $detailStatut->getId();
         }
 
         if(!is_null($beneficiaire->getNomConso())) {
