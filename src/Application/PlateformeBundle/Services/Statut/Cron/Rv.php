@@ -57,8 +57,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 					$bcc = array(
 						"support.informatique@entheor.com" => "Support",
 						"f.azoulay@entheor.com" => "Franck Azoulay", 
-						"ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-						"christine.clement@entheor.com" => "Christine Clement");
+						);
 					//$bcc = "";
 							
 					$message = $cher." ".$consultant->getPrenom().", <br><br> 
@@ -212,9 +211,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
-            "n.ranaivoson@iciformation.fr" => "Ndremifidy Ranaivoson",
-            "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
-            "christine.clement@entheor.com" => "Christine Clement"
         );
         $body = $this->templating->render($template, array(
             'consultant' => $consultant,
@@ -234,8 +230,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
-            "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
-            "christine.clement@entheor.com" => "Christine Clement"
         );
         $body = $this->templating->render($template, array(
             'consultant' => $consultant,
@@ -276,8 +270,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $bcc = array(
                         "support.informatique@entheor.com" => "Support",
                         "f.azoulay@entheor.com" => "Franck Azoulay",
-                        "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-                        "christine.clement@entheor.com" => "Christine Clement",
                         "audrey.azoulay@entheor.com" => "Audrey Azoulay");
 
                     if ($typeRdv == "presenciel" || $typeRdv == "presentiel")
@@ -378,8 +370,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $bcc = array(
                     "support.informatique@entheor.com" => "Support",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
-                    "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-                    "christine.clement@entheor.com" => "Christine Clement",
                     "audrey.azoulay@entheor.com" => "Audrey Azoulay");
 				//$bcc = "";
                 $dateRv = new \DateTime("NOW");

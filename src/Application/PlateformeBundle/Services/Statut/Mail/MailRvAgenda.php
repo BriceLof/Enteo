@@ -28,8 +28,6 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $bcc = array(
             "support.informatique@entheor.com" => "Support",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
-            "ph.rouzaud@iciformation.fr" => "Philippe Rouzaud",
-            "christine.clement@entheor.com" => "Christine Clement",
             "audrey.azoulay@entheor.com" => "Audrey Azoulay");
 
         if($typeRdv == "presenciel" || $typeRdv == "presentiel")
@@ -193,7 +191,10 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 		
 		$adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $listeAdministrateurs = array();
-        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+        foreach($adminitrateurs as $admin){
+        	if($admin->getEmail() != "ph.rouzaud@iciformation.fr" && $admin->getEmail() != "christine.clement@entheor.com")
+    	 		$listeAdministrateurs[] = $admin->getEmail(); 
+		}
 		array_push($listeAdministrateurs, "audrey.azoulay@entheor.com", "support.informatique@entheor.com");
         $bcc = $listeAdministrateurs;
             
