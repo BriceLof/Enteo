@@ -1,0 +1,8 @@
+.image_document, .image_pdf{
+    width: 80%;
+    margin: 20px auto 50px auto;
+    border: 1px solid;
+}
+.image_pdf object{
+    width: 100%;
+}

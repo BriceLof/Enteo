@@ -1,32 +1,37 @@
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+#document
+application_plateforme_document:
+    resource: "@ApplicationUsersBundle/Resources/config/routing/document.yml"
+    prefix:   /document
     
 user_type:
-    path: /user/type/{typeUser}
+    path: /type/{typeUser}
     defaults: 
         _controller: ApplicationUsersBundle:Users:index 
         typeUser: consultant
 
 user_ajax_get_user:
-    path: /user/get_user/{id}
+    path: /get_user/{id}
     defaults: { _controller: "ApplicationUsersBundle:Users:ajaxGetUser" }
     options:
         expose: true
             
 user_show:
-    path: /user/{id}/show
+    path: /{id}/show
     defaults: {_controller: ApplicationUsersBundle:Users:show }
     requirements:
         id: \d+
     
 user_edit:
-    path: /user/{id}/edit
+    path: /{id}/edit
     defaults: {_controller: ApplicationUsersBundle:Users:edit }
     requirements:
         id: \d+
         
 user_turn_off:
-    path: /user/{id}/turn_off
+    path: /{id}/turn_off
     defaults: {_controller: ApplicationUsersBundle:Users:turnOff }
     requirements:
         id: \d+

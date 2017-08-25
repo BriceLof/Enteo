@@ -4,6 +4,7 @@ namespace Application\UsersBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Application\UsersBundle\Repository\UsersRepository")
@@ -17,7 +18,6 @@ class Users extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
 
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="consultant")
@@ -33,6 +33,33 @@ class Users extends BaseUser
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Disponibilites", mappedBy="consultant")
      */
     private $disponibilite;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserDocument", mappedBy="user", cascade={"persist","remove"})
+     * @Assert\Valid
+     */
+    protected $userDocuments;
+
+    /**
+     * @ORM\OneToOne(targetEntity="StatutConsultant", cascade={"persist"})
+     */
+    private $statut;
+
+    /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
+     * @Assert\File(mimeTypes={
+     *          "image/jpeg",
+     *          "image/png",
+     *          "image/jpg",
+     *          "image/gif"
+     *     },
+     *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
+     *     uploadErrorMessage = "Erreur dans l'upload du fichier"
+     * )
+     */
+    protected $image;
     
     /**
     * @ORM\Column(name="civilite", type="string", length=255, nullable=true)
@@ -100,6 +127,7 @@ class Users extends BaseUser
         parent::__construct();
         
         $this->dateCreation = new \DateTime();
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -505,5 +533,87 @@ class Users extends BaseUser
     public function getDisponibilite()
     {
         return $this->disponibilite;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Users
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set statut
+     *
+     * @param \Application\UsersBundle\Entity\StatutConsultant $statut
+     *
+     * @return Users
+     */
+    public function setStatut(\Application\UsersBundle\Entity\StatutConsultant $statut = null)
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * Get statut
+     *
+     * @return \Application\UsersBundle\Entity\StatutConsultant
+     */
+    public function getStatut()
+    {
+        return $this->statut;
+    }
+
+    /**
+     * Add userDocument
+     *
+     * @param \Application\UsersBundle\Entity\UserDocument $userDocument
+     *
+     * @return Users
+     */
+    public function addUserDocument(\Application\UsersBundle\Entity\UserDocument $userDocument)
+    {
+        $this->userDocuments[] = $userDocument;
+
+        return $this;
+    }
+
+    /**
+     * Remove userDocument
+     *
+     * @param \Application\UsersBundle\Entity\UserDocument $userDocument
+     */
+    public function removeUserDocument(\Application\UsersBundle\Entity\UserDocument $userDocument)
+    {
+        $this->userDocuments->removeElement($userDocument);
+    }
+
+    /**
+     * Get userDocuments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserDocuments()
+    {
+        return $this->userDocuments;
     }
 }

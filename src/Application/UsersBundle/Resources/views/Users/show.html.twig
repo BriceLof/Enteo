@@ -25,10 +25,51 @@
         {% for info in app.session.flashbag.get('info') %}
             <div class="alert alert-success" role="alert">{{ info }}</div>
         {% endfor %}
+
+        {% if user.image is null and user.civilite == 'm.' %}
+            {% set background = "images/avatar_homme.png" %}
+        {% elseif user.image is null and user.civilite == 'mme'%}
+            {% set background = "images/avatar_femme.jpg" %}
+        {% else %}
+            {% set background = 'uploads/profile/'~user.id~'/'~user.image %}
+        {% endif %}
+
         <div class="page-header">
             <h1>Gestion - Utilisateurs<br><small>Détails</small></h1>
         </div>
         
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Mon Profil</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="image_profile" style="background-image: url({{ asset(background)}})">
+                            {#<span class="glyphicon glyphicon-camera" data-toggle="modal" data-target="#photoFormModal"></span>#}
+                        </div>
+                        {% include "ApplicationUsersBundle:Users:statutConsultantForm.html.twig" %}
+                        {#{% include "ApplicationUsersBundle:Users:ProfilePictureForm.html.twig" %}#}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Mes Coordonnées</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        <p><b>Civilité :</b>{{ user.civilite |capitalize }}</p>
+                        <p><b>Nom : <span class="text-danger">{{ user.nom |capitalize }}</span></b></p>
+                        <p><b>Prénom : <span class="text-danger">{{ user.prenom |capitalize }}</span></b></p>
+                        <p><b>Tél 1 :</b> {{ user.tel1 }}</p>
+                        <p><b>Tél 2 :</b> {{ user.tel2 }}</p>
+                        <p><b>Email 1 : <span class="text-danger">{{ user.email }}</span></b></p>
+                        <p><b>Email 2 :</b> {{ user.email2 }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-default">
@@ -50,16 +91,21 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Nom et Contact</b></h3>
+                        <h3 class="panel-title"><b>Documents</b></h3>
                     </div>
                     <div class="panel-body">
-                        <p><b>Civilité :</b>{{ user.civilite |capitalize }}</p>
-                        <p><b>Nom : <span class="text-danger">{{ user.nom |capitalize }}</span></b></p>
-                        <p><b>Prénom : <span class="text-danger">{{ user.prenom |capitalize }}</span></b></p>
-                        <p><b>Tél 1 :</b> {{ user.tel1 }}</p>
-                        <p><b>Tél 2 :</b> {{ user.tel2 }}</p>
-                        <p><b>Email 1 : <span class="text-danger">{{ user.email }}</span></b></p>
-                        <p><b>Email 2 :</b> {{ user.email2 }}</p>
+                        <div>
+                            <ul>
+                                {% for userDocument in user.userDocuments %}
+                                    <li><a href="{{ path('application_users_show_document', { 'id' : userDocument.id }) }}" target="_blank">{{ userDocument.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div>
+                            <form id="newDocumentsUserForm" action="{{ path('application_users_new_document', { 'id' : user.id }) }}" method="POST" enctype="multipart/form-data">
+                                {{ render(controller("ApplicationUsersBundle:Document:new",{'id': user.id})) }}
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
