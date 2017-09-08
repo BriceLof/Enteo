@@ -40,69 +40,70 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             {
 				$rdvConsultant = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDateAndConsultant($today->format('Y-m-d'), $arrayConsultant[$i]);
                 if(count($rdvConsultant) > 0){
-					
-					$consultant = $rdvConsultant[0]->getConsultant();
-					
-					if($consultant->getCivilite() == "mme")
-						$cher = "Chère";
-					else
-						$cher = "Cher";
-					
-					$subject = "Comment se  sont passés vos rendez-vous du ".$Jour[$today->format('l')]." ".$today->format('j')." ".$Mois[$today->format('F')]." ?";
-					$from = "christine.clement@entheor.com";
-					$ref = "2";
-					$to = $consultant->getEmail();
-					//$to = array("b.lof@iciformation.fr", "f.azoulay@iciformation.fr");
-					$cc = "";
-					$bcc = array(
-						"support.informatique@entheor.com" => "Support",
-						"f.azoulay@entheor.com" => "Franck Azoulay", 
-						);
-					//$bcc = "";
-							
-					$message = $cher." ".$consultant->getPrenom().", <br><br> 
-						Vous avez reçu le <b>".$Jour[$today->format('l')]." ".$today->format('j')." ".$Mois[$today->format('F')]."</b> en RV de Positionnement :<br><br>";
-					
-					$canBeSend = false;	
-					
-                    foreach($rdvConsultant as $rdv)
-                    {
-						if($rdv->getMailPostRv() == 0 && $rdv->getEventId() != '0')
-						{
-							$beneficiaire = $rdv->getBeneficiaire();
-							$message .= "&bull; ".$beneficiaire->getCiviliteConso()." ".ucfirst($beneficiaire->getPrenomConso())." ".ucfirst($beneficiaire->getNomConso())."<br>";
-							$canBeSend = true;
-							
-							// Pour que ce mail ne se relance pas lors du passage de la prochaine cron, je met un champs à jour pour dire que le mail a déjà été envoyé pour ce rdv
-							$rdv->setMailPostRv(true);
-							$this->em->persist($rdv);
-							$this->em->flush();
-						}
-						
-						
-					}
-					
-					if($canBeSend){
-						$message .=	"<br><b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='https://appli.entheor.com/web/'>ENTHEO</a> :</b><br>"
-							. "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
-							   - Compléter les informations clés du bénéficiaire : Coordonnées, Statut, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
-							   
-							<u>Ces informations sont requises</u> pour monter le dossier de financement et vous permettre de démarrer au plus vite la prestation d'accompagnement.<br><br>
-							
-							Bien Cordialement,<br><br> 
-							
-							Christine Clément<br>
-							<a href='mailto:christine.clement@entheor.com'>christine.clement@entheor.com</a><br>
-							06 81 84 85 24";
-							
-						$template = "@Apb/Alert/Mail/mailDefault.html.twig";
-						$body = $this->templating->render($template, array(
-							'sujet' => $subject ,
-							'message' => $message,
-							'reference' => $ref
-						));
-						$this->sendMessage($from, $to,null , $cc, $bcc, $subject, $body);
-					}
+
+                    if ($rdvConsultant[0]->getSummary() == 'RV1' || $rdvConsultant[0]->getSummary() == 'RV2') {
+
+                        $consultant = $rdvConsultant[0]->getConsultant();
+
+                        if ($consultant->getCivilite() == "mme")
+                            $cher = "Chère";
+                        else
+                            $cher = "Cher";
+
+                        $subject = "Comment se  sont passés vos rendez-vous du " . $Jour[$today->format('l')] . " " . $today->format('j') . " " . $Mois[$today->format('F')] . " ?";
+                        $from = "christine.clement@entheor.com";
+                        $ref = "2";
+                        $to = $consultant->getEmail();
+                        //$to = array("b.lof@iciformation.fr", "f.azoulay@iciformation.fr");
+                        $cc = "";
+                        $bcc = array(
+                            "support.informatique@entheor.com" => "Support",
+                            "f.azoulay@entheor.com" => "Franck Azoulay",
+                        );
+                        //$bcc = "";
+
+                        $message = $cher . " " . $consultant->getPrenom() . ", <br><br> 
+                            Vous avez reçu le <b>" . $Jour[$today->format('l')] . " " . $today->format('j') . " " . $Mois[$today->format('F')] . "</b> en RV de Positionnement :<br><br>";
+
+                        $canBeSend = false;
+
+                        foreach ($rdvConsultant as $rdv) {
+                            if ($rdv->getMailPostRv() == 0 && $rdv->getEventId() != '0') {
+                                $beneficiaire = $rdv->getBeneficiaire();
+                                $message .= "&bull; " . $beneficiaire->getCiviliteConso() . " " . ucfirst($beneficiaire->getPrenomConso()) . " " . ucfirst($beneficiaire->getNomConso()) . "<br>";
+                                $canBeSend = true;
+
+                                // Pour que ce mail ne se relance pas lors du passage de la prochaine cron, je met un champs à jour pour dire que le mail a déjà été envoyé pour ce rdv
+                                $rdv->setMailPostRv(true);
+                                $this->em->persist($rdv);
+                                $this->em->flush();
+                            }
+
+
+                        }
+
+                        if ($canBeSend) {
+                            $message .= "<br><b>Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='https://appli.entheor.com/web/'>ENTHEO</a> :</b><br>"
+                                . "- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)<br>
+                                   - Compléter les informations clés du bénéficiaire : Coordonnées, Statut, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA... <br><br>
+                                   
+                                <u>Ces informations sont requises</u> pour monter le dossier de financement et vous permettre de démarrer au plus vite la prestation d'accompagnement.<br><br>
+                                
+                                Bien Cordialement,<br><br> 
+                                
+                                Christine Clément<br>
+                                <a href='mailto:christine.clement@entheor.com'>christine.clement@entheor.com</a><br>
+                                06 81 84 85 24";
+
+                            $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+                            $body = $this->templating->render($template, array(
+                                'sujet' => $subject,
+                                'message' => $message,
+                                'reference' => $ref
+                            ));
+                            $this->sendMessage($from, $to, null, $cc, $bcc, $subject, $body);
+                        }
+                    }
 				}
 			}	
 		}
