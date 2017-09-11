@@ -42,7 +42,7 @@ class StatutRecevabilite
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateHeure", type="datetimetz")
+     * @ORM\Column(name="dateHeure", type="datetime")
      */
     private $dateHeure;
     

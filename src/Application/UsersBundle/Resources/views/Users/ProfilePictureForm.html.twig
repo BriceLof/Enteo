@@ -1,0 +1,28 @@
+<div class="modal fade" id="photoFormModal" tabindex="-1" role="dialog" aria-labelledby="photoFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            {#<form action="{{ path('my_account') }}" method="POST" id="form_photo_de_profile">#}
+                {{ form_start(form) }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Modifier la Photo de profil</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="image_profile_form" class="image_profile" style="background-image: url({{ asset(background)}})"></div>
+                    <div id="input_image_profile">
+                        {{ form_widget(form.image) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <div id="submit_profile_picture">
+                        {{ form_row(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                        {{ form_rest(form) }}
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{% extends "ApplicationUsersBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/document.css') }}" type="text/css">
+{% endblock %}
+
+{% block body %}
+    {% for document in userDocument.documents|reverse %}
+        {#{% if 'pdf' in document.path %}#}
+            {#<iframe src="test.pdf" width="600" height="800" align="middle"></iframe>#}
+            <div class="image_pdf">
+                <object data="{{ asset('uploads/'~userDocument.user.id~'/'~userDocument.name~'/'~document.path) }}" type="application/pdf" height="600px">
+                    lien alternatif : <a href="{{ asset('uploads/'~userDocument.user.id~'/'~userDocument.name~'/'~document.path) }}"></a>
+                </object>
+            </div>
+        {#{% else %}#}
+            {#{% set lenght = document.path|length %}#}
+            {#<div class="image_document">#}
+                {#<img src="{{ asset('uploads/'~userDocument.user.id~'/'~userDocument.name~'/'~document.path) }}" alt="{{ userDocument.name }}" width="100%">#}
+            {#</div>#}
+        {#{% endif %}#}
+    {% endfor %}
+{% endblock %}
