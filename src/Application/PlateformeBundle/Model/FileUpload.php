@@ -41,7 +41,9 @@ abstract class FileUpload
      *          "image/jpg",
      *          "image/gif",
      *          "application/pdf",
-     *          "application/x-pdf"
+     *          "application/x-pdf",
+     *          "application/msword",
+     *          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
      *     },
      *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
      *     uploadErrorMessage = "Erreur dans l'upload du fichier"

@@ -452,7 +452,7 @@
                                     {% for document in beneficiaire.documents|reverse %}
                                         {% if document.type == 'devis' or document.type == 'financement' %}
                                         {% else %}
-                                            {% if 'pdf' in document.path %}
+                                            {% if 'pdf' in document.path or 'docx' in document.path or 'doc' in document.path %}
                                                 {{ afficherDocument(beneficiaire, document.path) }}
                                                 <tr>
                                                     <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>

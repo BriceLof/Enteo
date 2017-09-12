@@ -4,7 +4,7 @@ application_users_users:
 
 application_users:
     resource: "@ApplicationUsersBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /user
 
 application_plateforme:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing.yml"

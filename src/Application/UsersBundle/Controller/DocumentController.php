@@ -37,7 +37,6 @@ class DocumentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
 
-
             foreach ($user->getUserDocuments() as $userDocument){
                 $userDocument->setUser($consultant);
                 foreach ($document_form['userDocuments']['b']['documents']['f']['files']->getData() as $file) {
