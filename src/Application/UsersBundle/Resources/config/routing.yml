@@ -4,7 +4,7 @@ fos_user:
 #document
 application_plateforme_document:
     resource: "@ApplicationUsersBundle/Resources/config/routing/document.yml"
-    prefix:   /document
+    prefix:   /user/document
     
 user_type:
     path: /type/{typeUser}
