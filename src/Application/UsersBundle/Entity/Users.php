@@ -4,6 +4,7 @@ namespace Application\UsersBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Application\UsersBundle\Repository\UsersRepository")
@@ -95,6 +96,19 @@ class Users extends BaseUser
     */
     private $adresse;
     
+	/**
+    * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+	* @Assert\File(mimeTypes={
+	*          "image/jpeg",
+	*          "image/png",
+	*          "image/jpg",
+	*          "image/gif"
+	*     },
+	*     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
+	*     uploadErrorMessage = "Erreur dans l'upload du fichier")
+    */
+    private $avatar;
+	
     public function __construct()
     {
         parent::__construct();
@@ -505,5 +519,29 @@ class Users extends BaseUser
     public function getDisponibilite()
     {
         return $this->disponibilite;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     *
+     * @return Users
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
     }
 }

@@ -104,4 +104,23 @@ label{
     color:white;
 }
 
-/*---------------------------- Page Utilisateur -----------------------------*/
+/*---------------------------- END Page Utilisateur -----------------------------*/
+
+/*---------------------------- Page Mon compte -----------------------------*/
+#avatar{
+    width:100px;
+    height:120px;
+    margin-left: 16px;
+    overflow:hidden;
+}
+
+#label_icon_cup, #icon_cup{
+    display:inline-block;
+    vertical-align:top;
+}
+#icon_cup{
+    margin-top: -10px;
+    margin-left: 6px;
+}
+
+/*---------------------------- END Page Mon compte -----------------------------*/

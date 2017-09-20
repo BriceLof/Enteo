@@ -80,10 +80,10 @@ class DisponibilitesController extends Controller
             $disponibilite->setDateFins($dateFin->setDate($date->format('Y'),$date->format('m'), $date->format('d')));
 
             if (isset($ville)){
-                $eventSummary = $ville->getNom().' de '.$disponibilite->getDateDebuts()->format('H').'-'.$disponibilite->getDateFins()->format('H').'h';
+                $eventSummary = $ville->getNom().' de '.$disponibilite->getDateDebuts()->format('H').'h'.$disponibilite->getDateDebuts()->format('i').'-'.$disponibilite->getDateFins()->format('H').'h'.$disponibilite->getDateFins()->format('i');
             }
             else{
-                $eventSummary = 'De '.$disponibilite->getDateDebuts()->format('H').'-'.$disponibilite->getDateFins()->format('H').'h';
+                $eventSummary = 'De '.$disponibilite->getDateDebuts()->format('H').'h'.$disponibilite->getDateDebuts()->format('i').'-'.$disponibilite->getDateFins()->format('H').'h'.$disponibilite->getDateFins()->format('i');
             }
 
             $eventDescription = '<a href="http://dev.application.entheor.com/web/user/'.$consultant->getId().'/show">(voir le profil du consultant)<a/>';

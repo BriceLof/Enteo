@@ -167,7 +167,7 @@ class UsersController extends Controller
         // supression du salt dans le password avant de le mettre dans le champs du form 
         $user->setPassword(substr($user->getPassword(), 0,-45));
         //$user->setRoles(array("ROLE_CONSULTANT"));
-        //var_dump($user->getRoles());
+        
         $editForm = $this->get("form.factory")->create(UsersType::class, $user);
         $editForm->get('departement')->setData(substr($user->getVille()->getCp(),0,2));
         $editForm->get('codePostalHidden')->setData($user->getVille()->getCp());
@@ -177,6 +177,20 @@ class UsersController extends Controller
         $editForm->get('typeUserHidden')->setData($typeUser->typeUser($this->getUser()));
         
         if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
+        	$avatarFile = $user->getAvatar();
+		 	//$fileUploader = $this->container->get('app.file_uploader');
+			//$fileUploader->upload($avatarFile, "uploads/avatars");
+			
+			// Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$avatarFile->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $avatarFile->move(
+                $this->getParameter('avatars_directory'),
+                $fileName
+            );
+			$user->setAvatar($fileName);
+			
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
