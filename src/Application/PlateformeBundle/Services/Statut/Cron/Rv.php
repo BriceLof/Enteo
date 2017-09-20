@@ -181,7 +181,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         }  
     }
 
-    public function mailRvRealise(Beneficiaire $beneficiaire, News $lastNews){
+    public function mailRvRealise(Beneficiaire $beneficiaire, Historique $lastRv){
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
@@ -192,11 +192,9 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
             "christine.clement@entheor.com" => "Christine Clement"
         );
-        $date = $lastNews->getDateHeure()->format('l')." ".$lastNews->getDateHeure()->format('j')." ".$lastNews->getDateHeure()->format('F')." ".$lastNews->getDateHeure()->format('Y');
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
-            'lastNews' => $lastNews,
-            'date' => $date,
+            'lastRv' => $lastRv,
         ));
         $this->sendMessage($from,$to,null,null,$cci,$subject,$body);
 

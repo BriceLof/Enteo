@@ -10,124 +10,70 @@ namespace Application\PlateformeBundle\Repository;
  */
 class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
 {
-        // Renvoie l'historique d'un beneficiaire à une datetime donnée
-	public function dateocuppee($datedebut, $datefin, $beneficiaireid){
-		return $this
-			->createQueryBuilder('h')
-			->where('h.beneficiaire = :benef')
-			->setParameter('benef',$beneficiaireid)
-                        ->andWhere('h.dateFin BETWEEN :deb AND :fin AND h.eventarchive != :onOff')
-			->setParameter('deb', $datedebut)
-                        ->setParameter('fin', $datefin)
-                        ->setParameter('onOff', 'on')
-                        ->orWhere('h.dateDebut BETWEEN :deb AND :fin AND h.eventarchive != :onOff')
-                        ->setParameter('deb', $datedebut)
-                        ->setParameter('fin', $datefin)
-                        ->andwhere('h.beneficiaire = :benef')
-			->setParameter('benef',$beneficiaireid)
+    // Historique inferieur à la date du jour
+    public function historiquepast($datedujour, $beneficiaireid)
+    {
+        $ar = 'on';
+        return
+            $this
+                ->createQueryBuilder('h')
+                ->where('h.beneficiaire = :benef')
+                ->setParameter('benef', $beneficiaireid)
+                ->andwhere('h.eventarchive <> :arch')
+                ->setParameter('arch', $ar)
+                ->orderBy('h.dateDebut', 'DESC')
+                ->getQuery()
+                ->getResult();
+    }
 
-			->getQuery()
-			->getResult();
-        }
-        
-        // Renvoie l'historique d'un beneficiaire données
-        public function beneficiaireOne($beneficiaireid){
-            $datedujour = new \DateTime('now');
-            $ar = 'on';
-            return $this
-                    ->createQueryBuilder('h')
-                    ->where('h.beneficiaire = :benef')
-                    ->setParameter('benef',$beneficiaireid)
-                    ->andWhere('h.dateDebut >= :datedeb')
-                    ->setParameter('datedeb', $datedujour)
-                    ->andwhere('h.eventarchive <> :arch')
-                    ->setParameter('arch',$ar)
-                    ->getQuery()
-                    ->getResult();
-        }
-        // Maj d'une historique
-        public function historiquemaj($d_d, $d_f, $h_d, $h_f, $evId){
-            // Mise à jour en BD
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $q = $qb->update('ApplicationPlateformeBundle:Historique', 'h')
-                    ->set('h.heuredebut', '?1')
-                    ->set('h.heurefin', '?2')
-                    ->set('h.dateDebut', '?3')
-                    ->set('h.dateFin', '?4')
-                    ->where('h.eventId = ?5')
-                    ->setParameter(1, $h_d)
-                    ->setParameter(2, $h_f)
-                    ->setParameter(3, $d_d)
-                    ->setParameter(4, $d_f)
-                    ->setParameter(5, $evId)
-                    ->getQuery();
-            $p = $q->execute();
-        }
-        // Historique inferieur à la date du jour
-        public function historiquepast($datedujour, $beneficiaireid){
-            $ar = 'on';
-            return 
-                $this
-                    ->createQueryBuilder('h')
-                    ->where('h.beneficiaire = :benef')
-                    ->setParameter('benef',$beneficiaireid)
-                    ->andwhere('h.eventarchive <> :arch')
-                    ->setParameter('arch',$ar)
-                    ->orderBy('h.dateDebut','DESC')
-                    ->getQuery()
-                    ->getResult();
-        }
-        // Historique par rapport à evenementId
-        public function historiqueEvent($eventId){
-            return 
-                $this->getEntityManager()
-                    ->createQuery('SELECT h FROM ApplicationPlateformeBundle:Historique h where h.eventId = :eventid')
-                    ->setParameter('eventid', $eventId)
-                    ->getResult();
-        }
-        // Archivage evenement
-        public function historiqueArchive($eventid, $value){
-            $qb = $this->getEntityManager()->createQueryBuilder();
-            $q = $qb->update('ApplicationPlateformeBundle:Historique', 'h')
-                    ->set('h.eventarchive', '?1')
-                    ->where('h.eventId = ?2')
-                    ->setParameter(1, $value)
-                    ->setParameter(2, $eventid)
-                    ->getQuery();
-            $p = $q->execute();
-        }
-        
-        public function findEventByDate($date)
-        {
-            $queryBuilder = $this->createQueryBuilder("h")
-                    ->where("h.dateDebut LIKE :date")
-                    ->setParameter("date", $date.'%')
-					->andWhere("h.eventarchive != :archive")
-					->setParameter("archive", 'on')
-					;
+    public function findEventByDate($date)
+    {
+        $queryBuilder = $this->createQueryBuilder("h")
+            ->where("h.dateDebut LIKE :date")
+            ->setParameter("date", $date . '%')
+            ->andWhere("h.eventarchive != :archive")
+            ->setParameter("archive", 'on');
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 
-            $query = $queryBuilder->getQuery();
-            $results = $query->getResult();
-            return $results;
-        }
-        
-        public function findEventByDateAndConsultant($date, $consultant)
-        {
-            $queryBuilder = $this->createQueryBuilder("h")
-                    ->where("h.dateDebut LIKE :date")
-                    ->andWhere("h.consultant = :consultant")
-					->andWhere("h.eventarchive != :archive")
-                    ->setParameters(array(
-                       "date" =>  $date.'%',
-                       "consultant" => $consultant,
-                       "archive" => 'on' 
-                    ))
-					->orderBy("h.heuredebut", "ASC");
+    public function findEventByDateAndConsultant($date, $consultant)
+    {
+        $queryBuilder = $this->createQueryBuilder("h")
+            ->where("h.dateDebut LIKE :date")
+            ->andWhere("h.consultant = :consultant")
+            ->andWhere("h.eventarchive != :archive")
+            ->setParameters(array(
+                "date" => $date . '%',
+                "consultant" => $consultant,
+                "archive" => 'on'
+            ))
+            ->orderBy("h.heuredebut", "ASC");
 
-            $query = $queryBuilder->getQuery();
-            $results = $query->getResult();
-            return $results;
-        }
-        
-       
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
+
+    public function getLastRv1orRv2($beneficiaire){
+        $queryBuilder = $this->createQueryBuilder("h")
+            ->where("h.beneficiaire = :beneficiaire")
+            ->andWhere("h.summary = :rv1 OR h.summary = :rv2")
+            ->andWhere("h.dateDebut <= :date")
+            ->setParameters(array(
+                "beneficiaire" => $beneficiaire,
+                "rv1" => "RV1",
+                "rv2" => "RV2",
+                "date" => new \DateTime('now')
+            ))
+            ->orderBy("h.dateDebut", "DESC")
+            ->setMaxResults(1)
+        ;
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
+
 }

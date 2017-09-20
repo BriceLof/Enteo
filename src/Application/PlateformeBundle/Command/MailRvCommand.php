@@ -48,7 +48,8 @@ class MailRvCommand extends ContainerAwareCommand{
                             if ($dateLastNews >= $now->modify('-1 day')) {
                                 $now->modify('+1 day');
                                 if ($dateLastNews < $now) {
-                                    $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastNews);
+                                    $lastRdv = $em->getRepository('ApplicationPlateformeBundle:Historique')->getLastRv1orRv2($beneficiaire);
+                                    $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastRdv[0]);
                                 }
                             } else {
                                 $now->modify('+1 day');
