@@ -2,14 +2,19 @@
 
 namespace Application\UsersBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Document;
+use Application\PlateformeBundle\Form\DocumentType;
+use Application\UsersBundle\Entity\Image;
 use Application\UsersBundle\Entity\Users;
+use Application\UsersBundle\Form\ImageType;
+use Application\UsersBundle\Form\PhotoDeProfileType;
+use Application\UsersBundle\Form\PhotoProfileType;
+use Application\UsersBundle\Form\StatutConsultantType;
 use Application\UsersBundle\Form\UsersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 class UsersController extends Controller
@@ -60,14 +65,30 @@ class UsersController extends Controller
         ));
     }
     
-    public function showAction(Users $user)
+    public function showAction(Request $request,Users $user)
     {
+
+        $em = $em = $this->getDoctrine()->getManager();
         // mon service qui récupère le type d'utilisateur
         $typeUser = $this->container->get('application_users.getTypeUser');
+        $statut = $user->getStatut();
+        $formStatut = $this->createForm(StatutConsultantType::class, $statut, array(
+            'application_users_statut' => $this->get('application.users.statut')
+        ));
+        $formStatut->add('submit', SubmitType::class, array('label' => 'Valider'));
+
+        $formStatut->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $statut = $formStatut->getData();
+            $user->setStatut($statut);
+            $em->persist($user);
+            $em->flush();
+        }
 
         return $this->render('ApplicationUsersBundle:Users:show.html.twig', array(
             'user' => $user,
-            'typeUser' => $typeUser->typeUser($user)
+            'typeUser' => $typeUser->typeUser($user),
+            'formStatut' => $formStatut->createView()
         ));
     }
 
@@ -153,12 +174,27 @@ class UsersController extends Controller
     public function myAccountAction(Request $request)
     {
         $myself = $this->getUser();
+        $form = $this->createForm(ImageType::class, $myself);
+        $form->add('submit', SubmitType::class, array('label' => 'Valider'));
         $typeUser = $this->container->get('application_users.getTypeUser');
+        $lastPicture = $myself->getImage();
+        $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $file = $myself->getImage();
+
+            if(!is_null($file)){
+                $fileName = $this->get('app.file_uploader')->uploadAvatar($file, 'uploads/profile/'.$myself->getId(), $lastPicture);
+                $myself->setImage($fileName);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($myself);
+            $em->flush();
+        }
         return $this->render('ApplicationUsersBundle:Users:account.html.twig', array(
+            'form' => $form->createView(),
             'user' => $myself, 
             'typeUser' => $typeUser->typeUser($myself)
         ));
-        
     }
     
     public function myAccountEditAction(Request $request)

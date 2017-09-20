@@ -1,0 +1,35 @@
+{% if user.statut is not null %}
+<div id="statut_consultant_consultant">
+    <p><b>Statut :<span class="text-danger"> {{ afficherStatut(user.statut.statut) }}</span></b></p>
+    <div>
+        <b>Détail :</b>
+        <ul class="text-danger">
+            {% for detail in user.statut.detail %}
+                <li>{{ afficherDetail(detail) }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <b>Date Formation Enthéor :</b>
+        <ul class="text-danger">
+            {% for date in user.statut.dates %}
+                <li>{{ date|date("m/d/Y") }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% else %}
+    <div id="statut_consultant_consultant">
+        <p><b>Statut :<span class="text-danger"></span></b></p>
+        <div>
+            <b>Détail :</b>
+            <ul class="text-danger">
+            </ul>
+        </div>
+        <div>
+            <b>Date Formation Enthéor :</b>
+            <ul class="text-danger">
+            </ul>
+        </div>
+    </div>
+{% endif %}

@@ -22,7 +22,7 @@ class DocumentExtension extends \Twig_Extension
     }
 
     public function supprimerTwigDocument(Beneficiaire $beneficiaire,$document){
-        return $this->document->supprimerDocument($beneficiaire, $document);
+        return $this->document->removeDocument($beneficiaire, $document);
     }
 
     public function dateFr($date){

@@ -1,0 +1,13 @@
+<div id="statut_consultant">
+    <div>
+        {{ form_start(formStatut, {'attr': {'class': 'form-horizontal'}}) }}
+        <div id="form_statut_detail">
+            {{ form_row(formStatut.statut) }}
+            {{ form_row(formStatut.detail) }}
+        </div>
+        <div id="form_dates">
+            {{ form_row(formStatut.dates) }}
+        </div>
+    </div>
+    {{ form_end(formStatut) }}
+</div>

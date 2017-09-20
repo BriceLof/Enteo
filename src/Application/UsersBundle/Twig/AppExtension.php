@@ -10,7 +10,7 @@ use Application\UsersBundle\Entity\Users;
  * @author brice_000
  */
 class AppExtension extends \Twig_Extension{
-    
+
     public function getFilters()
     {
         return array(
@@ -18,14 +18,14 @@ class AppExtension extends \Twig_Extension{
             new \Twig_SimpleFilter('nbDossierRealises', array($this, 'nombreDossierRealisesFilter')),
         );
     }
-    
+
     protected $doctrine;
     // Retrieve doctrine from the constructor
     public function __construct(RegistryInterface $doctrine)
     {
         $this->doctrine = $doctrine;
     }
-    
+
     public function nombreDossierEnCoursFilter(Users $user)
     {
         $em = $this->doctrine->getManager();

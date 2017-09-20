@@ -132,7 +132,7 @@ class FinanceurController extends Controller
     public function listeOpcaOpacifAction(Request $request, $nom){
         if ($request->isXmlHttpRequest()) {
             if($nom == 'OPCA'){
-                $results = array('','AGEFOS-PME','AGEFICE','OPCALIA','ACTALIANS','AFDAS','ANFA','ANFH','CONSTRUCTYS','FAFIEC','FAFIH','FAF.TT','FAFSEA','FORCO','FIF PL','INTERGROS','OPCA 3+','OPCA BAIA','OPCA CGM','OPCA DEFI','OPCA PL','OPCA de la contruction','OPCA Transports','OPCAIM ADEFIM','OPCALIM','UNIFAF','UNIFORMATION','AGECIF CAMA','UNAGECIF');
+                $results = array('','ACTALIANS','AFDAS','AGECIF CAMA','AGEFICE','AGEFOS-PME','ANFA','ANFH','CONSTRUCTYS','FAFIEC','FAFIH','FAFSEA','FAF.TT','FIF PL','FORCO','INTERGROS','OPCAIM ADEFIM','OPCALIA','OPCALIM','OPCA BAIA','OPCA CGM','OPCA DEFI','OPCA de la contruction','OPCA PL','OPCA Transports','OPCA 3+','UNAGECIF','UNIFAF','UNIFORMATION');
                 $resultats = new JsonResponse(json_encode($results));
                 return $resultats;
             }else{
