@@ -115,8 +115,8 @@ application_plateforme:
 knp_snappy:
     pdf:
         enabled: true
-        binary: "C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"
-#        binary:  %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
+        #binary: "C:\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"
+        binary:  %kernel.root_dir%/../vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64
         options: []
     image:
         enabled: true
