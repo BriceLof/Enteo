@@ -76,4 +76,20 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
+    // Renvoie l'historique d'un beneficiaire données
+    public function beneficiaireOne($beneficiaireid){
+        $datedujour = new \DateTime('now');
+        $ar = 'on';
+        return $this
+            ->createQueryBuilder('h')
+            ->where('h.beneficiaire = :benef')
+            ->setParameter('benef',$beneficiaireid)
+            ->andWhere('h.dateDebut >= :datedeb')
+            ->setParameter('datedeb', $datedujour)
+            ->andwhere('h.eventarchive <> :arch')
+            ->setParameter('arch',$ar)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
