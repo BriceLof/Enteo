@@ -111,11 +111,7 @@ class UsersType extends AbstractType
                 ->add('codePostalHidden', HiddenType::class, array("mapped" => false))
                 ->add('typeUserHidden', HiddenType::class, array("mapped" => false))
                 ->add('idVilleHidden', HiddenType::class, array("mapped" => false))
-				->add('avatar', FileType::class, array(
-					"label" => "Avatar", 
-					"required" => false, 
-					"data_class"=> null
-				));
+				;
 				
                /* if(isset($options['data']))
                 {
