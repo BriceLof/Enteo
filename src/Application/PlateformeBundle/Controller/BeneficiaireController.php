@@ -132,10 +132,11 @@ class BeneficiaireController extends Controller
             // =================================================================================================== //
             if(!empty($beneficiaire->getConsultant())){
                 // On recupere les historiques de ce beneficiaire
-                $historique = $em->getRepository('ApplicationPlateformeBundle:Historique')->beneficiaireOne($beneficiaire);
+                $historique = $beneficiaire->getHistorique();
                 if(sizeof($historique)>0){
                     foreach($historique as $objet){
-                        $em->getRepository("ApplicationPlateformeBundle:Historique")->historiqueArchive($objet->getEventId(), 'on');
+                        $objet->setEventarchive("on");
+                        $em->persist($objet);
                     }
                 }
             }
