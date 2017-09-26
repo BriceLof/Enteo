@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c51f3803-1a1c-4f50-bd33-c9f9002c439b" name="Entheo_PROD" url="http://home347813754.1and1-data.host">
+        <fileTransfer host="home347813754.1and1-data.host" port="22" rootFolder="/cms_application" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="b168b1ce-764a-44da-8233-a7be4c6a8f80" name="Sodie Entheo Prod" url="http://home347813754.1and1-data.host">
+        <fileTransfer host="home347813754.1and1-data.host" port="22" rootFolder="/sodie/cms_application" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="8338d8f0-0fca-43db-a3ce-4756652acfe6" name="IF PROD" url="http://iciformations.fr">
+        <fileTransfer host="iciformations.fr" port="22" rootFolder="/opt/web/clients/i/iciformat/iciformations.fr/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="f5bc652f-bc8b-47ce-bf7c-27cea24536f1" name="IF DEV" url="http://dev.iciformation.fr">
+        <fileTransfer host="dev.iciformation.fr" port="22" rootFolder="/opt/web/clients/i/iciformat/iciformations.fr/public_html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
