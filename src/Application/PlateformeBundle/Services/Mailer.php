@@ -102,5 +102,17 @@ class Mailer
         ));
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
+
+    public function sendNewNotification($to, $subject, $message)
+    {
+        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => 'Notification'
+        ));
+        $bcc = array("support.informatique@entheor.com" => "Support");
+        $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
+    }
 }
 ?>

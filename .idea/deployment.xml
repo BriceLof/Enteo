@@ -23,10 +23,10 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="Sodie Entheo Prod">
+      <paths name="Sodie_Entheo_Prod">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/sodie/cms_application" />
+            <mapping local="$PROJECT_DIR$" web="/cms_application" />
           </mappings>
         </serverdata>
       </paths>

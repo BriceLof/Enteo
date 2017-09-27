@@ -6,6 +6,7 @@ use Application\PlateformeBundle\Entity\Beneficiaire;
 use Doctrine\ORM\EntityManager;
 use Knp\Bundle\SnappyBundle\Snappy\LoggableGenerator;
 
+
 class Document
 {
     protected $em;
