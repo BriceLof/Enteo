@@ -5,7 +5,17 @@ services:
 
     application_plateforme.mail:
         class: Application\PlateformeBundle\Services\Mailer
-        arguments: ["@mailer","@templating", "@doctrine.orm.entity_manager", "@application_plateforme.date"]
+        arguments: ["@mailer", "@templating", "@doctrine.orm.entity_manager", "@application_plateforme.date"]
+
+
+
+    application_doctrine_listener_update:
+           class: Application\PlateformeBundle\DoctrineListener\UpdateListener
+           arguments: ["@service_container"]
+           tags:
+             - { name: doctrine.event_listener, event: postUpdate }
+             - { name: twig.extension }
+
 
     daterange.validator:
         class: Application\PlateformeBundle\Validator\Constraints\DateRangeValidator

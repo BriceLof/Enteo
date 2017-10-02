@@ -9,33 +9,37 @@
 namespace Application\PlateformeBundle\DoctrineListener;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Application\PlateformeBundle\Services\Mailer;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 
-class UpdateListener
+class UpdateListener extends \Twig_Extension
 {
     private $mailer;
-    private $user;
+    private $container;
 
-    public function __construct(Mailer $mailer, TokenStorageInterface $tokenStorage)
+    public function __construct(ContainerInterface $container)
     {
-        $this->mailer = $mailer;
-        $this->user = $tokenStorage;
+        $this->container = $container;
     }
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        $currentUser = $this->user->getToken()->getUser();
+        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+        $this->mailer = $this->container->get('application_plateforme.mail');
         $entity = $args->getObject();
+
+        $subject = "Notification : mise à jour de votre bénéficiaire";
         // Si l'utilisateur courant n'est pas le consultant du beneficiaire, on envoi un mail de notification
-        if($entity instanceof Beneficiaire && ($currentUser != $entity->getConsultant()))
+        if($entity instanceof Beneficiaire  && ($currentUser != $entity->getConsultant()))
         {
             $consultant = $entity->getConsultant();
-            $subject = "Notification : Votre bénéficiaire a été mis à jour";
-            $message = "Votre bénéficiaire a été mis à jour par X.";
+            $beneficiaire = $entity;
+            $message = "
+                Bonjour ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom()).",<br><br>
+                
+                La fiche de votre bénéficiaire <b></b><a href='//appli.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())."</a></b> a été mis à jour.  
+            ";
             $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
-
         }
 
     }
