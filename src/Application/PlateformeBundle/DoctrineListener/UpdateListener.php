@@ -34,13 +34,15 @@ class UpdateListener extends \Twig_Extension
         if($entity instanceof Beneficiaire  && ($currentUser != $entity->getConsultant()))
         {
             $consultant = $entity->getConsultant();
-            $beneficiaire = $entity;
-            $message = "
-                Bonjour ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom()).",<br><br>
+            if(!is_null($consultant)) {
+                $beneficiaire = $entity;
+                $message = "
+                Bonjour " . ucfirst($consultant->getCivilite()) . " " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()) . ",<br><br>
                 
-                La fiche de votre bénéficiaire <b></b><a href='//appli.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())."</a></b> a été mis à jour.  
-            ";
-            $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
+                La fiche de votre bénéficiaire <b></b><a href='//appli.entheor.com/web/beneficiaire/show/" . $beneficiaire->getId() . "'>" . ucfirst($beneficiaire->getCiviliteConso()) . " " . ucfirst($beneficiaire->getPrenomConso()) . " " . strtoupper($beneficiaire->getNomConso()) . "</a></b> a été mis à jour.  
+                ";
+                $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
+            }
         }
 
         if($entity instanceof Accompagnement)
