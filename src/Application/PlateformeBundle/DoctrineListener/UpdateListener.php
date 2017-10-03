@@ -11,6 +11,7 @@ namespace Application\PlateformeBundle\DoctrineListener;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\Accompagnement;
 
 class UpdateListener extends \Twig_Extension
 {
@@ -40,6 +41,11 @@ class UpdateListener extends \Twig_Extension
                 La fiche de votre bénéficiaire <b></b><a href='//appli.entheor.com/web/beneficiaire/show/".$beneficiaire->getId()."'>".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso())."</a></b> a été mis à jour.  
             ";
             $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
+        }
+
+        if($entity instanceof Accompagnement)
+        {
+
         }
 
     }
