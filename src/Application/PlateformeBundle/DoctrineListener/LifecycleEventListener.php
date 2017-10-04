@@ -29,8 +29,8 @@ class LifecycleEventListener extends \Twig_Extension
         $this->container = $container;
         // Liste des entités touchant la page bénéficiaire dont on veut avoir les notifications
         $this->listEntity = array(
-            "Accompagnement"        => "Accompagnement",
-            "Financeur"             => "Accompagnement",
+            "Accompagnement"        => "Projet bénéficiaire",
+            "Financeur"             => "Projet bénéficiaire",
             "Nouvelle"              => "News",
             "Document"              => "Espace Documentaire",
             "Historique"            => "Historique bénéficiaire",
@@ -83,15 +83,18 @@ class LifecycleEventListener extends \Twig_Extension
         else{
             $beneficiaire = $entity->getBeneficiaire();
         }
-        $consultant = $beneficiaire->getConsultant();
-        if (!is_null($consultant) && ($this->currentUser != $consultant)) {
-            $subject = "Notification : mise à jour de votre bénéficiaire";
-            $message = "
-                    Bonjour " . ucfirst($consultant->getCivilite()) . " " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()) . ",<br><br>                
-                    La fiche de votre bénéficiaire <b></b><a href='//appli.entheor.com/web/beneficiaire/show/" . $beneficiaire->getId() . "'>" . ucfirst($beneficiaire->getCiviliteConso()) . " " . ucfirst($beneficiaire->getPrenomConso()) . " " . strtoupper($beneficiaire->getNomConso()) . "</a></b> a été mis à jour.<br>  
-                    Voir dans la partie '".$section."'.  
-                    ";
-            $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
+
+        if(!is_null($beneficiaire) && !is_null($beneficiaire->getConsultant())) {
+            $consultant = $beneficiaire->getConsultant();
+            if ($this->currentUser != $consultant) {
+                $subject = "Notification : mise à jour de votre bénéficiaire";
+                $message = "
+                Bonjour " . ucfirst($consultant->getCivilite()) . " " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()) . ",<br><br>                
+                La fiche de votre bénéficiaire <b></b><a href='https://appli.entheor.com/web/beneficiaire/show/" . $beneficiaire->getId() . "'>" . ucfirst($beneficiaire->getCiviliteConso()) . " " . ucfirst($beneficiaire->getPrenomConso()) . " " . strtoupper($beneficiaire->getNomConso()) . "</a></b> a été mise à jour.<br><br>  
+                De nouvelles informations sont affichées dans la partie '" . $section . "'.  
+                ";
+                $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
+            }
         }
     }
 
