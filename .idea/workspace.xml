@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d4b815a-16a7-418b-a90b-8a4de79ed9ec" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/UsersBundle/Repository/DocumentRepository.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/UsersBundle/Repository/MissionRepository.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/UsersBundle/Repository/StatutConsultantRepository.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/UsersBundle/Repository/UserDocumentRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -422,10 +417,18 @@
       <workItem from="1507017830263" duration="19897000" />
       <workItem from="1507102649958" duration="18611000" />
     </task>
+    <task id="LOCAL-00001" summary="- repository">
+      <created>1507127519973</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1507127519973</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153957000" />
+    <option name="totallyTimeSpent" value="153975000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -467,7 +470,8 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="- repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="- repository" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
