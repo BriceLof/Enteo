@@ -37,10 +37,10 @@
         "whiteoctober/breadcrumbs-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "^1.2.2",
         "google/apiclient":"^2.0",
-        "knplabs/knp-snappy-bundle": "~1.4",
         "h4cc/wkhtmltopdf-amd64": "^0.12.3",
         "fungio/google-calendar-bundle":"dev-master",
-        "doctrine/doctrine-migrations-bundle":"^1.0"
+        "doctrine/doctrine-migrations-bundle":"^1.0",
+        "knplabs/knp-snappy-bundle": "~1.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

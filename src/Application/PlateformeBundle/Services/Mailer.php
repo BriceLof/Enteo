@@ -5,8 +5,8 @@ namespace Application\PlateformeBundle\Services;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Symfony\Component\Templating\EngineInterface;
 use Doctrine\ORM\EntityManager;
-use Application\PlateformeBundle\Services\Date;
 use Application\PlateformeBundle\Entity\Feedback;
+use Application\PlateformeBundle\Services\Date;
 
 class Mailer
 {
@@ -18,11 +18,11 @@ class Mailer
     protected $reply = "";
     protected $name = "Equipe Entheo";
     
-    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, EntityManager $em, Date $date)
+    public function __construct(\Swift_Mailer $mailer , EngineInterface $templating, EntityManager $em, Date $date)
     {
-        $this->em = $em;
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->em = $em;
         $this->date = $date;
     }
 
@@ -95,7 +95,7 @@ class Mailer
             $message .= "<li><b>Url : </b>".$feedback->getUrl()."</li><li><b>Détail : </b>".$feedback->getDetail()."</li>
                     <li><img src='https://appli.entheor.com/web/uploads/feedback/img/".$feedback->getImage()."'></li>";
         }
-        
+
 		$message .= "</ul>";
 		
         $body = $this->templating->render($template, array(
@@ -103,6 +103,18 @@ class Mailer
             'message' => $message,
             'reference' => '400'
         ));
+        $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
+    }
+
+    public function sendNewNotification($to, $subject, $message)
+    {
+        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => 'Notification'
+        ));
+        $bcc = array("support.informatique@entheor.com" => "Support");
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 }

@@ -1,53 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData">
+  <component name="PublishConfigData" serverName="Entheo_PROD">
     <serverData>
-      <paths name="BDC">
+      <paths name="Entheo_PROD">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/cms_application" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="IF DEV">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="Entheor">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="IF_DEV">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="IF_PROD">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="ITF/PO DEV">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
+<<<<<<< HEAD
       <paths name="OPL">
+=======
+      <paths name="IF PROD">
+>>>>>>> origin/master
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="VAE">
+      <paths name="Sodie_Entheo_Prod">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$" web="/cms_application" />
           </mappings>
         </serverdata>
       </paths>

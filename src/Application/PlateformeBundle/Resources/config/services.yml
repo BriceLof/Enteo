@@ -5,7 +5,18 @@ services:
 
     application_plateforme.mail:
         class: Application\PlateformeBundle\Services\Mailer
-        arguments: ["@mailer","@templating", "@doctrine.orm.entity_manager", "@application_plateforme.date"]
+        arguments: ["@mailer", "@templating", "@doctrine.orm.entity_manager", "@application_plateforme.date"]
+
+
+    ## DEBUT : Notification lors de la création/mise à jour d'entités lié à la fiche bénéficiaire
+    application_doctrine_listener_update:
+               class: Application\PlateformeBundle\DoctrineListener\LifecycleEventListener
+               arguments: ["@service_container"]
+               tags:
+                 - { name: doctrine.event_listener, event: postUpdate }
+                 - { name: doctrine.event_listener, event: postPersist }
+                 - { name: twig.extension }
+    ## FIN : Notification lors de la création/mise à jour d'entités lié à la fiche bénéficiaire
 
     daterange.validator:
         class: Application\PlateformeBundle\Validator\Constraints\DateRangeValidator

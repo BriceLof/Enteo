@@ -25,7 +25,9 @@ services:
    application_users.getTypeUser:
        class: Application\UsersBundle\Services\getTypeUser
        #arguments: ["@doctrine.orm.entity_manager"]
-       
+
+   
+
    #application_users.type.user:
     #   class: Application\UsersBundle\Form\UsersType
     #   arguments: ["@doctrine.orm.entity_manager"]

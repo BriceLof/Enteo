@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d4b815a-16a7-418b-a90b-8a4de79ed9ec" name="Default" comment="">
+    <list default="true" id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/DoctrineListener/UpdateListener.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.phar" afterPath="$PROJECT_DIR$/composer.phar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Enteo.iml" afterPath="$PROJECT_DIR$/.idea/Enteo.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/webServers.xml" afterPath="$PROJECT_DIR$/.idea/webServers.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/services.yml" afterPath="$PROJECT_DIR$/app/config/services.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/symfony_requirements" afterPath="$PROJECT_DIR$/bin/symfony_requirements" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Document.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Document.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php" afterPath="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/var/SymfonyRequirements.php" afterPath="$PROJECT_DIR$/var/SymfonyRequirements.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/app.php" afterPath="$PROJECT_DIR$/web/app.php" />
     </list>
+    <ignored path="Enteo.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,88 +31,52 @@
   <component name="ComposerSettings" synchronizationState="DONT_SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DatabaseView">
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Enteo" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="newMission.html.twig" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/pdf/newMission.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MissionController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Controller/MissionController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-              <folding>
-                <element signature="e#54#98#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/config/config.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-59">
-              <caret line="122" column="10" lean-forward="false" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MissionMailer.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Services/Mailer/MissionMailer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="9" column="30" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="30" />
-              <folding>
-                <element signature="e#68#121#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="services.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/config/services.yml">
+        <entry file="file://$PROJECT_DIR$/app/config/services.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="20" column="46" lean-forward="false" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
+            <state relative-caret-position="430">
+              <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Document.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Document.php">
+      <file leaf-file-name="UpdateListener.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/DoctrineListener/UpdateListener.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1189">
-              <caret line="103" column="54" lean-forward="false" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="54" />
-              <folding />
+            <state relative-caret-position="682">
+              <caret line="38" column="9" lean-forward="false" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+              <folding>
+                <element signature="e#150#207#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PdfController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/PdfController.php">
+      <file leaf-file-name="Mailer.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="57" column="15" lean-forward="false" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pdfMission.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/pdfMission.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="620">
+              <caret line="113" column="68" lean-forward="false" selection-start-line="113" selection-start-column="68" selection-end-line="113" selection-end-column="68" />
+              <folding>
+                <marker date="1506526617603" expanded="true" signature="3259:3427" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -104,192 +85,181 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sea</find>
-      <find>search</find>
-      <find>40px</find>
-      <find>bloc</find>
-      <find>bloctemoignage</find>
-      <find>article</find>
-      <find>executesubmitm</find>
-      <find>last</find>
-      <find>executeSubmitFormMer</find>
-      <find>var_dump</find>
-      <find>90</find>
-      <find>testbilan</find>
-      <find>executesubmitmer</find>
-      <find>’</find>
-      <find>$mer_hashcode</find>
-      <find>executesubmitformmer</find>
-      <find>test-gratuit</find>
-      <find>titre</find>
-      <find>58</find>
-      <find>espace</find>
-      <find>63</find>
-      <find>test bilan</find>
-      <find>sub</find>
-      <find>pendingtestbilan</find>
-      <find>formulairetes</find>
-      <find>pending</find>
-      <find>civilite</find>
-      <find>display</find>
-      <find>header</find>
-      <find>apb</find>
+      <find>webser</find>
+      <find>archive</find>
+      <find>rendez</find>
+      <find>event</find>
+      <find>historiqueArchive</find>
+      <find>admin</find>
+      <find>user</find>
+      <find>application_plateforme.mail</find>
+      <find>mailer</find>
+      <find>PATH_SYSTEM</find>
+      <find>confir</find>
     </findStrings>
   </component>
+  <component name="FrameworkCommandLineHistory">
+    <commandsHistory>
+      <command text="ls" />
+      <command text="./symfony project:permissions" />
+      <command text="ls" />
+      <command text="composer.phar install" />
+    </commandsHistory>
+  </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="REBASE" />
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <push-targets>
+      <push-target-info target-remote="origin" target-branch="master" repo="$PROJECT_DIR$" source="ranaivoson" />
+    </push-targets>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/Fidy/ndremifidy.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/file_repo_maker/temoignage/builder_block_tem_region.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/file_repo_maker/temoignage/builder_block_tem_ents.php" />
-        <option value="&lt;5741f8b9-b301-4636-befa-48d8b0c05820&gt;/www/module/generated_elements/template/temoignage/generique/city_with_testimony.html" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/file_repo_maker/lyon/builder_block_tem.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/file_repo_maker/paris/builder_block_tem.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/file_repo_maker/marseille/builder_block_tem.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/repoManager.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/ConfigCbc_PROD.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/repository/core/config/bilandecompetences/cbc/file_repo_maker/temoignage/builder_tem_geoloc.php" />
-        <option value="&lt;5741f8b9-b301-4636-befa-48d8b0c05820&gt;/www/_DEV/module/bdc/template/search.php" />
-        <option value="&lt;5741f8b9-b301-4636-befa-48d8b0c05820&gt;/www/_DEV/module/bdc/BdcModule.php" />
-        <option value="&lt;5741f8b9-b301-4636-befa-48d8b0c05820&gt;/www/module/bdc/BdcModule.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/mailing/02_10_17_VAE/index.html" />
-        <option value="&lt;7d4f3c5d-eac5-4af9-b45a-3e0f2ddcfcb5&gt;/module/cms/template/_blocTemoignages.php" />
-        <option value="&lt;7d4f3c5d-eac5-4af9-b45a-3e0f2ddcfcb5&gt;/module/cms/CmsComposant.php" />
-        <option value="&lt;7d4f3c5d-eac5-4af9-b45a-3e0f2ddcfcb5&gt;/core/model/ViewTemoignageForCbcPeer.php" />
-        <option value="&lt;7d4f3c5d-eac5-4af9-b45a-3e0f2ddcfcb5&gt;/core/model/ViewTemoignageForOplPeer.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/core/model/ViewTemoignageForOplPeer.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/core/model/ViewTemoignageForCbcPeer.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/mailing/2017_10_02_VAE/index.html" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/static/template/formulaireTestBilan.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/static/StaticModule.php" />
-        <option value="&lt;7d4f3c5d-eac5-4af9-b45a-3e0f2ddcfcb5&gt;/core/model/AuthIpPeer.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mer/MerModule.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/core/model/AuthIpPeer.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mer/template/pendingMerMultiple.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/static/css/bilanTest.css" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/static/template/pendingTestBilan.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/.htaccess" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/js/testBilan.js" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/js/mobile.js" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/js/formulaireTestBilan.js" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/css/testBilan.css" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/template/pendingTestBilan.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/core/meta/Mobile_link.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/MobileModule.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/template/formulaireTestBilan.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/mobile/template/testBilan.php" />
-        <option value="&lt;8f04b9fe-c69c-4f4d-bc71-3261d799945b&gt;/module/static/template/testBilan.php" />
-        <option value="$PROJECT_DIR$/bin/console" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/_DEV/module/temoignage/template/testimonyDetail.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/.htaccess" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/module/temoignage/template/testimonyDetail.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/module/temoignage/TemoignageModule.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/_DEV/module/temoignage/TemoignageModule.php" />
+        <option value="&lt;016539df-9299-42cc-b0b2-5523ec8c8bfc&gt;/www/no_page.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/core/template/type_template/default/home.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/css/fc.css" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/template/searchCbc.php" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/css/default_new_home.min.css" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/css/default_new_home.css" />
+        <option value="&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/fc/FcModule.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Document.php" />
         <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/PdfController.php" />
-        <option value="$PROJECT_DIR$/src/Application/UsersBundle/Resources/config/services.yml" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php" />
-        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Statut/Mail/MailForStatus.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig" />
+        <option value="&lt;b168b1ce-764a-44da-8233-a7be4c6a8f80&gt;/app/config/parameters.yml" />
+        <option value="&lt;b168b1ce-764a-44da-8233-a7be4c6a8f80&gt;/app/config/parameters_dev.yml" />
+        <option value="&lt;b168b1ce-764a-44da-8233-a7be4c6a8f80&gt;/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
+        <option value="&lt;c51f3803-1a1c-4f50-bd33-c9f9002c439b&gt;/src/Application/PlateformeBundle/Controller/BeneficiaireController.php" />
+        <option value="&lt;c51f3803-1a1c-4f50-bd33-c9f9002c439b&gt;/src/Application/PlateformeBundle/Repository/HistoriqueRepository.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/.htaccess" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/meta/Connection.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/config/config_path.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/robots.txt" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/plugin/Mailer/core/model/ObjetMail.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/admin/.htaccess" />
+        <option value="$PROJECT_DIR$/web/app.php" />
+        <option value="$PROJECT_DIR$/app/AppKernel.php" />
+        <option value="$PROJECT_DIR$/vendor/knplabs/knp-snappy-bundle/Snappy/LoggableGenerator.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Document.php" />
         <option value="$PROJECT_DIR$/app/config/config.yml" />
-        <option value="$PROJECT_DIR$/src/Application/UsersBundle/Services/Mailer/MissionMailer.php" />
-        <option value="$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/pdf.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/pdf/newMission.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/mail/newMission.html.twig" />
-        <option value="$PROJECT_DIR$/src/Application/UsersBundle/Controller/MissionController.php" />
+        <option value="$PROJECT_DIR$/composer.json" />
+        <option value="&lt;8338d8f0-0fca-43db-a3ce-4756652acfe6&gt;/core/model/AuthIpPeer.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/services.yml" />
+        <option value="$PROJECT_DIR$/app/config/services.yml" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/admin/index.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/plugin/Entheo/core/Entheo_data.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/plugin/Entheo/Entheo.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/plugin/Entheo/core/Entheo_sso.php" />
+        <option value="&lt;f5bc652f-bc8b-47ce-bf7c-27cea24536f1&gt;/core/helper/MerHelper.php" />
+        <option value="&lt;8338d8f0-0fca-43db-a3ce-4756652acfe6&gt;/core/plugin/Entheo/core/Entheo_data.php" />
+        <option value="&lt;8338d8f0-0fca-43db-a3ce-4756652acfe6&gt;/core/plugin/Entheo/core/Entheo_sso.php" />
+        <option value="&lt;8338d8f0-0fca-43db-a3ce-4756652acfe6&gt;/module/mer/MerModule.php" />
+        <option value="&lt;8338d8f0-0fca-43db-a3ce-4756652acfe6&gt;/core/plugin/Entheo/Entheo.php" />
+        <option value="&lt;b168b1ce-764a-44da-8233-a7be4c6a8f80&gt;/app/Resources/views/layout/layout.html.twig" />
+        <option value="&lt;b168b1ce-764a-44da-8233-a7be4c6a8f80&gt;/web/.htaccess" />
+        <option value="&lt;6b445212-1da7-4b1b-a272-cf974ae1f2b3&gt;/web/.htaccess" />
+        <option value="&lt;6b445212-1da7-4b1b-a272-cf974ae1f2b3&gt;/web/css/style.css" />
+        <option value="&lt;6b445212-1da7-4b1b-a272-cf974ae1f2b3&gt;/app/Resources/views/layout/layout.html.twig" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/DoctrineListener/UpdateListener.php" />
+        <option value="$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsFlowSettings">
-    <service-enabled>false</service-enabled>
-    <exe-path />
-    <annotation-enable>false</annotation-enable>
-    <other-services-enabled>false</other-services-enabled>
-    <auto-save>true</auto-save>
-  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="PhpServers">
-    <servers />
-  </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true">
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP">
     <include_path>
-      <path value="C:\wamp64\bin\php\php7.0.10" />
-      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
-      <path value="$PROJECT_DIR$/vendor/psr/cache" />
-      <path value="$PROJECT_DIR$/vendor/psr/log" />
-      <path value="$PROJECT_DIR$/vendor/h4cc/wkhtmltopdf-amd64" />
-      <path value="$PROJECT_DIR$/vendor/stof/doctrine-extensions-bundle" />
-      <path value="$PROJECT_DIR$/vendor/twig/twig" />
-      <path value="$PROJECT_DIR$/vendor/behat/transliterator" />
-      <path value="$PROJECT_DIR$/vendor/gedmo/doctrine-extensions" />
-      <path value="$PROJECT_DIR$/vendor/fungio/google-calendar-bundle" />
-      <path value="$PROJECT_DIR$/vendor/google/apiclient-services" />
-      <path value="$PROJECT_DIR$/vendor/google/auth" />
-      <path value="$PROJECT_DIR$/vendor/google/apiclient" />
-      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-apcu" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/symfony/assetic-bundle" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/gedmo/doctrine-extensions" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php56" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-util" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/symfony/symfony" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/common" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/collections" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
-      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
-      <path value="$PROJECT_DIR$/vendor/incenteev/composer-parameter-handler" />
-      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/phpunit-bridge" />
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php70" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
-      <path value="$PROJECT_DIR$/vendor/whiteoctober/breadcrumbs-bundle" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-cache-bundle" />
+      <path value="$PROJECT_DIR$/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/vendor/leafo/scssphp" />
+      <path value="$PROJECT_DIR$/vendor/sensiolabs/security-checker" />
+      <path value="$PROJECT_DIR$/vendor/symfony/symfony" />
+      <path value="$PROJECT_DIR$/vendor/h4cc/wkhtmltopdf-amd64" />
+      <path value="$PROJECT_DIR$/vendor/stof/doctrine-extensions-bundle" />
+      <path value="$PROJECT_DIR$/vendor/fungio/google-calendar-bundle" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/jsonp-callback-validator" />
       <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-cache-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/whiteoctober/breadcrumbs-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/kriswallsmith/assetic" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-code" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-eventmanager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
       <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
-      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bundle" />
-      <path value="$PROJECT_DIR$/vendor/symfony/swiftmailer-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/vendor/behat/transliterator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle" />
+      <path value="$PROJECT_DIR$/vendor/ocramius/proxy-manager" />
+      <path value="$PROJECT_DIR$/vendor/incenteev/composer-parameter-handler" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle" />
       <path value="$PROJECT_DIR$/vendor/sensio/distribution-bundle" />
-      <path value="$PROJECT_DIR$/vendor/sensiolabs/security-checker" />
-      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/user-bundle" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
-      <path value="$PROJECT_DIR$/vendor/jdorn/sql-formatter" />
-      <path value="$PROJECT_DIR$/vendor/kriswallsmith/assetic" />
-      <path value="$PROJECT_DIR$/vendor/symfony/assetic-bundle" />
-      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/jsrouting-bundle" />
-      <path value="$PROJECT_DIR$/vendor/leafo/scssphp" />
-      <path value="$PROJECT_DIR$/vendor/ocramius/proxy-manager" />
-      <path value="$PROJECT_DIR$/vendor/patchwork/jsqueeze" />
-      <path value="$PROJECT_DIR$/vendor/willdurand/jsonp-callback-validator" />
-      <path value="$PROJECT_DIR$/vendor/zendframework/zend-code" />
-      <path value="$PROJECT_DIR$/vendor/zendframework/zend-eventmanager" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
-      <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
-      <path value="$PROJECT_DIR$/vendor/symfony/phpunit-bridge" />
       <path value="$PROJECT_DIR$/vendor/sensio/generator-bundle" />
-      <path value="$PROJECT_DIR$/vendor/knplabs/knp-snappy-bundle" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/jdorn/sql-formatter" />
+      <path value="$PROJECT_DIR$/vendor/patchwork/jsqueeze" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-snappy" />
+      <path value="$PROJECT_DIR$/vendor/knplabs/knp-snappy-bundle" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="156" />
-    <option name="y" value="56" />
-    <option name="width" value="1938" />
-    <option name="height" value="1076" />
+    <option name="x" value="1790" />
+    <option name="y" value="-19" />
+    <option name="width" value="3852" />
+    <option name="height" value="1092" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -306,6 +276,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -316,17 +287,6 @@
             <path>
               <item name="Enteo" type="b2602c69:ProjectViewProjectNode" />
               <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="Enteo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="Enteo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -340,45 +300,46 @@
               <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="UsersBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PlateformeBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="Enteo" type="b2602c69:ProjectViewProjectNode" />
               <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="UsersBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PlateformeBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="DoctrineListener" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="Enteo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="PlateformeBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Services" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="Enteo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Enteo" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Application" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="UsersBundle" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Services" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Mailer" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../logs" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../bin/php/php7.0.10" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files (x86)\nodejs\node.exe" />
+    <property name="prop_add_unversioned_files" value="true" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\wamp64\www\Enteo\src\Application\UsersBundle\Resources\views\Mission\pdf" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\Enteo\vendor\knplabs\knp-snappy-bundle\Snappy" />
+      <recent name="C:\wamp64\www\Enteo\app\config" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -393,6 +354,64 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="C:\Program Files (x86)\Git\bin\bash.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="project" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <working-directory />
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui />
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+  </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
@@ -401,325 +420,789 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="4d4b815a-16a7-418b-a90b-8a4de79ed9ec" name="Default" comment="" />
-      <created>1506417134499</created>
+      <changelist id="32ce5e5f-9568-4515-bae0-24074af886b2" name="Default" comment="" />
+      <created>1481821136875</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1506417134499</updated>
-      <workItem from="1506417135758" duration="146000" />
-      <workItem from="1506417283315" duration="321000" />
-      <workItem from="1506417623683" duration="17209000" />
-      <workItem from="1506497151586" duration="51825000" />
-      <workItem from="1506671247724" duration="18332000" />
-      <workItem from="1506696285628" duration="4051000" />
-      <workItem from="1506930713148" duration="23473000" />
-      <workItem from="1507015992394" duration="19000" />
-      <workItem from="1507017830263" duration="19897000" />
-      <workItem from="1507102649958" duration="18611000" />
+      <updated>1481821136875</updated>
+      <workItem from="1481821140345" duration="92000" />
+      <workItem from="1481821234930" duration="30410000" />
+      <workItem from="1482145800920" duration="21057000" />
+      <workItem from="1482224914831" duration="33116000" />
+      <workItem from="1482318484475" duration="5828000" />
+      <workItem from="1482327115188" duration="3644000" />
+      <workItem from="1482334854706" duration="1010000" />
+      <workItem from="1482337070449" duration="43260000" />
+      <workItem from="1482499155157" duration="46310000" />
+      <workItem from="1482835727301" duration="23236000" />
+      <workItem from="1482914504099" duration="5711000" />
+      <workItem from="1483437905734" duration="3905000" />
+      <workItem from="1483441858546" duration="6545000" />
+      <workItem from="1483456343780" duration="3382000" />
+      <workItem from="1483460108344" duration="33524000" />
+      <workItem from="1483617621946" duration="605000" />
+      <workItem from="1483693011781" duration="560000" />
+      <workItem from="1483697229868" duration="437000" />
+      <workItem from="1483717917157" duration="962000" />
+      <workItem from="1483719714206" duration="174000" />
+      <workItem from="1483720051747" duration="220000" />
+      <workItem from="1483720407445" duration="407000" />
+      <workItem from="1483721053545" duration="180000" />
+      <workItem from="1483952007636" duration="461000" />
+      <workItem from="1483953168822" duration="78923000" />
+      <workItem from="1484212133054" duration="5965000" />
+      <workItem from="1484219811834" duration="350000" />
+      <workItem from="1484222290215" duration="30597000" />
+      <workItem from="1484321030821" duration="6373000" />
+      <workItem from="1484562405824" duration="3379000" />
+      <workItem from="1484568475502" duration="43912000" />
+      <workItem from="1484902862824" duration="1599000" />
+      <workItem from="1484904503031" duration="11283000" />
+      <workItem from="1484921894183" duration="35340000" />
+      <workItem from="1485247943083" duration="30100000" />
+      <workItem from="1485334608452" duration="10862000" />
+      <workItem from="1485358782883" duration="199000" />
+      <workItem from="1485420480455" duration="19792000" />
+      <workItem from="1485507548476" duration="6754000" />
+      <workItem from="1485515157781" duration="7862000" />
+      <workItem from="1485766233639" duration="23234000" />
+      <workItem from="1485793140135" duration="19251000" />
+      <workItem from="1485871584427" duration="12016000" />
+      <workItem from="1485939629881" duration="27329000" />
+      <workItem from="1486025117064" duration="53785000" />
+      <workItem from="1486370545510" duration="7238000" />
+      <workItem from="1486378271168" duration="127799000" />
+      <workItem from="1486975801695" duration="25930000" />
+      <workItem from="1487062253354" duration="8160000" />
+      <workItem from="1487172032143" duration="4407000" />
+      <workItem from="1487176506445" duration="453000" />
+      <workItem from="1488879500190" duration="41792000" />
+      <workItem from="1490691196740" duration="102643000" />
+      <workItem from="1491494856317" duration="95769000" />
+      <workItem from="1492001700245" duration="30897000" />
+      <workItem from="1492157001590" duration="629000" />
+      <workItem from="1492588289941" duration="64497000" />
+      <workItem from="1493019974093" duration="45800000" />
+      <workItem from="1493197055473" duration="50819000" />
+      <workItem from="1493714175775" duration="48670000" />
+      <workItem from="1493886616106" duration="25767000" />
+      <workItem from="1494316221574" duration="1482000" />
+      <workItem from="1494317740350" duration="2030000" />
+      <workItem from="1494579468285" duration="18973000" />
+      <workItem from="1495183695592" duration="62140000" />
+      <workItem from="1495547703412" duration="3217000" />
+      <workItem from="1495551003824" duration="43930000" />
+      <workItem from="1496046043676" duration="152742000" />
+      <workItem from="1496751541157" duration="11721000" />
+      <workItem from="1496765334064" duration="90982000" />
+      <workItem from="1497348268572" duration="82880000" />
+      <workItem from="1497858986751" duration="9214000" />
+      <workItem from="1506087826195" duration="855000" />
+      <workItem from="1506088777196" duration="501000" />
+      <workItem from="1506089297672" duration="1101000" />
+      <workItem from="1506090748244" duration="10555000" />
+      <workItem from="1506349236957" duration="8768000" />
+      <workItem from="1506416029899" duration="9058000" />
+      <workItem from="1506429612045" duration="404000" />
+      <workItem from="1506430037027" duration="25469000" />
     </task>
-    <task id="LOCAL-00001" summary="- repository">
-      <created>1507127519973</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00058" summary="- merge avec le code de mamadou">
+      <created>1486382523357</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
       <option name="project" value="LOCAL" />
-      <updated>1507127519973</updated>
+      <updated>1486382523357</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00059" summary="- rectification du probleme dans les numéros de téléphone sur la page bénéficiaire">
+      <created>1486387698038</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1486387698038</updated>
+    </task>
+    <task id="LOCAL-00060" summary="- rectification de la date dans de naissance dans la page bénéficiaire">
+      <created>1486389283829</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1486389283829</updated>
+    </task>
+    <task id="LOCAL-00061" summary="- erreur js">
+      <created>1486390925725</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1486390925725</updated>
+    </task>
+    <task id="LOCAL-00062" summary="- getEntityManager deprecated, maintenant c'est getManager">
+      <created>1486392236210</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1486392236211</updated>
+    </task>
+    <task id="LOCAL-00063" summary="- getEntityManager deprecated, maintenant c'est getManager">
+      <created>1486392299815</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1486392299815</updated>
+    </task>
+    <task id="LOCAL-00064" summary="- la demande d'enregistrement prend en charge maintenant les textarea et les selects&#10;//TO DO la date">
+      <created>1486394251277</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1486394251277</updated>
+    </task>
+    <task id="LOCAL-00065" summary="- rectification du bug sur les dates">
+      <created>1486398046049</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1486398046049</updated>
+    </task>
+    <task id="LOCAL-00066" summary="- financeur">
+      <created>1486658822470</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1486658822470</updated>
+    </task>
+    <task id="LOCAL-00067" summary="- financeur -&gt; controle des champs">
+      <created>1486727774067</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1486727774067</updated>
+    </task>
+    <task id="LOCAL-00068" summary="- financeur -&gt; probleme js consultant">
+      <created>1486736542724</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1486736542725</updated>
+    </task>
+    <task id="LOCAL-00069" summary="- financeur -&gt; css">
+      <created>1486738424920</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1486738424920</updated>
+    </task>
+    <task id="LOCAL-00070" summary="- pôle emploi">
+      <created>1486738736481</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1486738736482</updated>
+    </task>
+    <task id="LOCAL-00071" summary="- modal qui demande l'enregistrement dans la fiche bénéficiaire">
+      <created>1486998200698</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1486998200699</updated>
+    </task>
+    <task id="LOCAL-00072" summary="- ville resolus (plus de galère! merci man)">
+      <created>1487176292219</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1487176292220</updated>
+    </task>
+    <task id="LOCAL-00073" summary="- MailCommand.php pour les crons">
+      <created>1488884851584</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1488884851584</updated>
+    </task>
+    <task id="LOCAL-00074" summary="- MailCommand.php pour les crons">
+      <created>1488884943458</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1488884943458</updated>
+    </task>
+    <task id="LOCAL-00075" summary="- MailCommand.php pour les crons suite">
+      <created>1488892777405</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1488892777405</updated>
+    </task>
+    <task id="LOCAL-00076" summary="- calendar fidy v2">
+      <created>1490785878361</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1490785878361</updated>
+    </task>
+    <task id="LOCAL-00077" summary="- calendar fidy v2 (probleme avec le modal supprimer evenement)">
+      <created>1490792349254</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1490792349255</updated>
+    </task>
+    <task id="LOCAL-00078" summary="- calendar fidy v2 (probleme avec le modal supprimer evenement)">
+      <created>1490794064294</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1490794064294</updated>
+    </task>
+    <task id="LOCAL-00079" summary="- calendar fidy v3 (fonctionnel)">
+      <created>1490968533004</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1490968533004</updated>
+    </task>
+    <task id="LOCAL-00080" summary="- calendar bureau">
+      <created>1491819724246</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1491819724248</updated>
+    </task>
+    <task id="LOCAL-00081" summary="- calendar bureau">
+      <created>1491820282785</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1491820282785</updated>
+    </task>
+    <task id="LOCAL-00082" summary="- imprimer">
+      <created>1491918490185</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1491918490185</updated>
+    </task>
+    <task id="LOCAL-00083" summary="- imprimer 1e page fait">
+      <created>1491925899393</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1491925899394</updated>
+    </task>
+    <task id="LOCAL-00084" summary="- imprimer 2e page">
+      <created>1491992782029</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1491992782029</updated>
+    </task>
+    <task id="LOCAL-00085" summary="-supprimer disponibilité&#10;">
+      <created>1493127509372</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1493127509372</updated>
+    </task>
+    <task id="LOCAL-00086" summary="- affichage sous liste opca-opacif pour les consultants&#10;- ajout de ref financeur dans projet bénéficiaire&#10;">
+      <created>1495186038167</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1495186038168</updated>
+    </task>
+    <task id="LOCAL-00087" summary="- remontée du bloc news&#10;">
+      <created>1495450783357</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1495450783358</updated>
+    </task>
+    <task id="LOCAL-00088" summary="- remontée du bloc news&#10;">
+      <created>1496046471299</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1496046471300</updated>
+    </task>
+    <task id="LOCAL-00089" summary="- ajax recherche home&#10;">
+      <created>1496059983235</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1496059983235</updated>
+    </task>
+    <task id="LOCAL-00090" summary="- ajout de commentaire dans le code &#10;- ajout de ref financeur dans le formulaire de recherche&#10;">
+      <created>1496135067085</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1496135067085</updated>
+    </task>
+    <task id="LOCAL-00091" summary="- ajout de departement du travail dans la fiche bénéficiaire">
+      <created>1496138786125</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1496138786125</updated>
+    </task>
+    <task id="LOCAL-00092" summary="- agenda bureau invisible aux consultants">
+      <created>1496140312933</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1496140312933</updated>
+    </task>
+    <task id="LOCAL-00093" summary="- departement dependant de la région en toute lettre">
+      <created>1496160328076</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1496160328076</updated>
+    </task>
+    <task id="LOCAL-00094" summary="- departement dependant de la région en toute lettre&#10;- ajout de région dom tom">
+      <created>1496161569358</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1496161569358</updated>
+    </task>
+    <task id="LOCAL-00095" summary="- departement dependant de la région en toute lettre&#10;- ajout de région dom tom">
+      <created>1496217098474</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1496217098474</updated>
+    </task>
+    <task id="LOCAL-00096" summary="- tri">
+      <created>1496238960184</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1496238960184</updated>
+    </task>
+    <task id="LOCAL-00097" summary="- dpt du travail avec code postal">
+      <created>1496244445714</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1496244445714</updated>
+    </task>
+    <task id="LOCAL-00098" summary="- dpt du travail avec code postal">
+      <created>1496245792829</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1496245792829</updated>
+    </task>
+    <task id="LOCAL-00099" summary="- pagination">
+      <created>1496411106934</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1496411106934</updated>
+    </task>
+    <task id="LOCAL-00100" summary="- pagination">
+      <created>1497260757108</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1497260757108</updated>
+    </task>
+    <task id="LOCAL-00101" summary="- print">
+      <created>1497285450977</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1497285450977</updated>
+    </task>
+    <task id="LOCAL-00102" summary="- modifier supprimer rdv moins de 24h">
+      <created>1497368555348</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1497368555348</updated>
+    </task>
+    <task id="LOCAL-00103" summary="- rectification sur les modals de la home">
+      <created>1497432664756</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1497432664756</updated>
+    </task>
+    <task id="LOCAL-00104" summary="- changement de la recherche dans home&#10;- modification du tri">
+      <created>1497447991408</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1497447991408</updated>
+    </task>
+    <task id="LOCAL-00105" summary="- autocompletion dans ville de recherche">
+      <created>1497450838921</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1497450838921</updated>
+    </task>
+    <task id="LOCAL-00106" summary="- autocompletion dans ville de recherche">
+      <created>1497451360656</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1497451360656</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="153975000" />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
+    <option name="totallyTimeSpent" value="1911233000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1058" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19763695" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16487648" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32906976" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18604651" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906976" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23023255" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35053763" sideWeight="0.25" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33675215" sideWeight="0.47049925" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42580646" sideWeight="0.75" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1609808" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22068231" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19667171" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24946696" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991454" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43589744" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- repository" />
-    <option name="LAST_COMMIT_MESSAGE" value="- repository" />
+    <MESSAGE value="- MailCommand.php pour les crons suite" />
+    <MESSAGE value="- calendar fidy v2" />
+    <MESSAGE value="- calendar fidy v2 (probleme avec le modal supprimer evenement)" />
+    <MESSAGE value="- calendar fidy v3 (fonctionnel)" />
+    <MESSAGE value="- calendar bureau" />
+    <MESSAGE value="- imprimer" />
+    <MESSAGE value="- imprimer 1e page fait" />
+    <MESSAGE value="- imprimer 2e page" />
+    <MESSAGE value="-supprimer disponibilité&#10;" />
+    <MESSAGE value="- affichage sous liste opca-opacif pour les consultants&#10;- ajout de ref financeur dans projet bénéficiaire&#10;" />
+    <MESSAGE value="- remontée du bloc news&#10;" />
+    <MESSAGE value="- ajax recherche home&#10;" />
+    <MESSAGE value="- ajout de commentaire dans le code &#10;- ajout de ref financeur dans le formulaire de recherche&#10;" />
+    <MESSAGE value="- ajout de departement du travail dans la fiche bénéficiaire" />
+    <MESSAGE value="- agenda bureau invisible aux consultants" />
+    <MESSAGE value="- departement dependant de la région en toute lettre" />
+    <MESSAGE value="- departement dependant de la région en toute lettre&#10;- ajout de région dom tom" />
+    <MESSAGE value="- tri" />
+    <MESSAGE value="- dpt du travail avec code postal" />
+    <MESSAGE value="- pagination" />
+    <MESSAGE value="- print" />
+    <MESSAGE value="- modifier supprimer rdv moins de 24h" />
+    <MESSAGE value="- rectification sur les modals de la home" />
+    <MESSAGE value="- changement de la recherche dans home&#10;- modification du tri" />
+    <MESSAGE value="- autocompletion dans ville de recherche" />
+    <option name="LAST_COMMIT_MESSAGE" value="- autocompletion dans ville de recherche" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;8e59517a-af64-430e-8c01-1fd20693d5ef&gt;/www/wp-content/themes/vae_brice/searchVae.php</url>
+          <line>110</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/CalendarController.php</url>
+          <line>28</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;c1459fd5-7b9d-4ad9-9dc8-3d133699e903&gt;/cms_application/src/Application/PlateformeBundle/Controller/CalendarController.php</url>
+          <line>59</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/mer/MerModule.php</url>
+          <line>471</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/repository/core/config/bilandecompetences/cbc/ConvertElement.php</url>
+          <line>333</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;139563f3-ca5f-464c-800d-cddce952eefe&gt;/repository/core/config/bilandecompetences/cbc/ConfigCbc_PROD.php</url>
+          <line>112</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/mobile/MobileModule.php</url>
+          <line>805</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>remoteDeploymentFS://&lt;068e60ab-e845-4413-89db-dbd0a7ffe9cb&gt;/module/client/ClientModule.php</url>
+          <line>9114</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="16" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/form.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="108" lean-forward="false" selection-start-line="11" selection-start-column="108" selection-end-line="11" selection-end-column="108" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/champsForm.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="46" column="101" lean-forward="false" selection-start-line="46" selection-start-column="101" selection-end-line="46" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Bureau.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="56" column="24" lean-forward="false" selection-start-line="56" selection-start-column="24" selection-end-line="56" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Disponibilites/new.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="85" lean-forward="false" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/addEvent.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="41" column="12" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Disponibilites/list.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/css/calendar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="136" column="17" lean-forward="false" selection-start-line="136" selection-start-column="17" selection-end-line="136" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/editEvent.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="41" column="143" lean-forward="false" selection-start-line="41" selection-start-column="143" selection-end-line="41" selection-end-column="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="409" column="16" lean-forward="false" selection-start-line="409" selection-start-column="16" selection-end-line="409" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/js/mainAjax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="476" column="29" lean-forward="false" selection-start-line="476" selection-start-column="29" selection-end-line="476" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Calendar/adminAddEvent.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="98" column="139" lean-forward="false" selection-start-line="98" selection-start-column="139" selection-end-line="98" selection-end-column="139" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Disponibilites/showAll.html.twig" />
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/projet.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/showAll.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+        <state relative-caret-position="238">
+          <caret line="52" column="19" lean-forward="false" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Historique/table.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/RechercheBeneficiaireType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="59" column="40" lean-forward="true" selection-start-line="59" selection-start-column="40" selection-end-line="59" selection-end-column="40" />
+        <state relative-caret-position="646">
+          <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/mission.css">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Form/ProjetType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="13" column="18" lean-forward="false" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
+        <state relative-caret-position="119">
+          <caret line="13" column="22" lean-forward="false" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/index.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Bureau/edit.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-820">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="34">
+          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/routing.yml">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/routing/accompagnement.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/PdfController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2380">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Accompagnement/edit.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="36" column="4" lean-forward="false" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/layout/layout.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="59" column="121" lean-forward="false" selection-start-line="59" selection-start-column="34" selection-end-line="59" selection-end-column="121" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/HistoriqueController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-410">
-          <caret line="104" column="21" lean-forward="false" selection-start-line="104" selection-start-column="21" selection-end-line="104" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Users/account.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="73" column="77" lean-forward="false" selection-start-line="73" selection-start-column="74" selection-end-line="73" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Beneficiaire/affiche.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="28" column="107" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="107" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/BeneficiaireController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="194" column="11" lean-forward="true" selection-start-line="192" selection-start-column="21" selection-end-line="194" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/list.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="55" column="68" lean-forward="false" selection-start-line="55" selection-start-column="68" selection-end-line="55" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Entity/UserDocument.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="38" column="100" lean-forward="false" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Entity/MissionDocument.php" />
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Entity/Document.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-604">
-          <caret line="9" column="3" lean-forward="false" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Form/MissionDocumentType.php" />
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Form/EspaceDocumentaireType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Form/ProfileType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-369">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Controller/DocumentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Entity/Users.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="56" column="6" lean-forward="false" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Form/DocumentType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1517">
-          <caret line="37" column="36" lean-forward="false" selection-start-line="37" selection-start-column="36" selection-end-line="37" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Form/UserDocumentType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="22" column="36" lean-forward="false" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Form/ImageType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="22" column="14" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="22" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Users/ProfilePictureForm.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="24" column="32" lean-forward="false" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Controller/UsersController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="183" column="0" lean-forward="false" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/config/routing/mission.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="19" column="20" lean-forward="false" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/addDocument.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="20" column="10" lean-forward="false" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/uploads/contrat/48/profile.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Entity/Mission.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="150" column="7" lean-forward="false" selection-start-line="150" selection-start-column="7" selection-end-line="150" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/FileUploader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="29" column="9" lean-forward="false" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/console">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/symfony_requirements">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/app.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
+          <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/app_dev.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Statut/Cron/Rv.php">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/News.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11562">
-          <caret line="181" column="5" lean-forward="true" selection-start-line="181" selection-start-column="5" selection-end-line="181" selection-end-column="5" />
-          <folding>
-            <marker date="1506417276321" expanded="false" signature="18401:18418" ph="..." />
-            <marker date="1506417276321" expanded="true" signature="18419:18705" ph="..." />
-            <marker date="1506417276321" expanded="false" signature="19255:19303" ph="..." />
-            <marker date="1506417276321" expanded="true" signature="25042:25059" ph="..." />
-            <marker date="1506417276321" expanded="true" signature="25061:25067" ph="•" />
-          </folding>
+        <state relative-caret-position="-459">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Pdf/demandeFinancement.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Accompagnement.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-41">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="77" />
-          <folding />
+        <state relative-caret-position="-714">
+          <caret line="14" column="3" lean-forward="false" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/layout/layout-pdf.html.twig">
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/ContactEmployeur.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-459">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/DetailStatut.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Disponibilites.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Document.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="18" column="34" lean-forward="false" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -727,148 +1210,169 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/views/Pdf/ficheBeneficiaire.html.twig">
+    <entry file="file://$PROJECT_DIR$/app/AppKernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3403">
-          <caret line="34" column="111" lean-forward="false" selection-start-line="34" selection-start-column="57" selection-end-line="34" selection-end-column="111" />
+        <state relative-caret-position="425">
+          <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Document/pdf/new.html.twig">
+    <entry file="file://$PROJECT_DIR$/vendor/knplabs/knp-snappy-bundle/Snappy/Generator/LoggableGenerator.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+        <state relative-caret-position="34">
+          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Services/Mail/MisionMailer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="44" column="4" lean-forward="true" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Statut/Mail/MailForStatus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="44" column="68" lean-forward="true" selection-start-line="44" selection-start-column="68" selection-end-line="44" selection-end-column="68" />
-          <folding>
-            <element signature="e#68#121#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1189">
-          <caret line="48" column="35" lean-forward="true" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
-          <folding>
-            <marker date="1507124661159" expanded="true" signature="3361:3529" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/mail/newMission.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="9" lean-forward="true" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/views/Mission/pdf/newMission.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/css/pdfMission.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Controller/PdfController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="57" column="15" lean-forward="false" selection-start-line="57" selection-start-column="15" selection-end-line="57" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/knplabs/knp-snappy-bundle/Snappy/LoggableGenerator.php" />
     <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Document.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1189">
-          <caret line="103" column="54" lean-forward="false" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Services/Mailer/MissionMailer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="30" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="30" />
+        <state relative-caret-position="323">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#68#121#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Resources/config/services.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="20" column="46" lean-forward="false" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Application/UsersBundle/Controller/MissionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="433">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding>
-            <element signature="e#54#98#0#PHP" expanded="true" />
+            <element signature="e#57#110#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/config.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-59">
-          <caret line="122" column="10" lean-forward="false" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
+        <state relative-caret-position="210">
+          <caret line="118" column="50" lean-forward="false" selection-start-line="118" selection-start-column="50" selection-end-line="118" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="66" column="25" lean-forward="false" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Employeur.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="27" column="7" lean-forward="true" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Feedback.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-357">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Financeur.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Historique.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="374" column="17" lean-forward="true" selection-start-line="374" selection-start-column="17" selection-end-line="374" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Nouvelle.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-204">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/StatutRecevabilite.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-153">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/SuiviAdministratif.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Disponibilite/Cron/Dispo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="19" column="71" lean-forward="false" selection-start-line="19" selection-start-column="67" selection-end-line="19" selection-end-column="71" />
+          <folding>
+            <marker date="1506088984435" expanded="true" signature="3026:3043" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="3048:3054" ph="•" />
+            <marker date="1506088984435" expanded="true" signature="3238:3271" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="4260:4271" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="4381:4392" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="4479:4490" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="5101:5118" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="5123:5129" ph="•" />
+            <marker date="1506088984435" expanded="false" signature="6945:6962" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="6963:7624" ph="..." />
+            <marker date="1506088984435" expanded="false" signature="7125:7396" ph="..." />
+            <marker date="1506088984435" expanded="true" signature="7397:7445" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Entity/Beneficiaire.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-833">
+          <caret line="2" column="10" lean-forward="false" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Resources/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="59" lean-forward="false" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/services.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/DoctrineListener/UpdateListener.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="38" column="9" lean-forward="false" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+          <folding>
+            <element signature="e#150#207#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Application/PlateformeBundle/Services/Mailer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="620">
+          <caret line="113" column="68" lean-forward="false" selection-start-line="113" selection-start-column="68" selection-end-line="113" selection-end-column="68" />
+          <folding>
+            <marker date="1506526617603" expanded="true" signature="3259:3427" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

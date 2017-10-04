@@ -68,7 +68,10 @@ class Accompagnement
      */
     private $dateFin;
 
-
+    /**
+     * @ORM\OneToOne(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", inversedBy="accompagnement")
+     */
+    //private $beneficiaire;
 
     /**
      * Get id
@@ -246,4 +249,6 @@ class Accompagnement
     public function getFirstFinanceur(){
         return $this->financeur[0];
     }
+
+
 }
