@@ -16,14 +16,18 @@ class FileUploader
         return $fileName;
     }
 
-    public function uploadAvatar(UploadedFile $file, $targetDir, $lastPicture){
+    public function uploadAvatar(UploadedFile $file, $targetDir, $lastPicture, $filename = null){
 
         $dir = __DIR__.'/../../../../web/'.$targetDir;
 
         if (file_exists($dir.'/'.$lastPicture))
             unlink($dir.'/'.$lastPicture);
 
-        $fileName = 'profile'.'.'.$file->guessExtension();
+        if (is_null($filename)) {
+            $fileName = 'profile' . '.' . $file->guessExtension();
+        }else{
+            $fileName = $filename;
+        }
         $file->move($dir, $fileName);
 
         return $fileName;

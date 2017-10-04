@@ -26,7 +26,7 @@ class Mailer
         $this->date = $date;
     }
 
-    protected function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body){
+    protected function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
         $mail = \Swift_Message::newInstance();
 
         if(!empty($replyTo))
@@ -37,6 +37,9 @@ class Mailer
             $mail->setBcc($bcc);
         if(!empty($subject))
             $mail->setSubject($subject);
+        if (!empty($attach)){
+            $mail->attach($attachement);
+        }
         $mail
             ->setFrom($from)
             ->setTo($to)

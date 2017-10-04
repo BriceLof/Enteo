@@ -1,0 +1,24 @@
+<div class="modal-content">
+    <form action="{{ path('application_mission_add_document' , { 'id' : mission.id }) }}" method="POST" id="form_mission_document" enctype="multipart/form-data">
+    {#{{ form_start(form) }}#}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Accepter accompagnement</h4>
+    </div>
+    <div class="modal-body">
+        <div id="input_mission_file">
+            {{ form_widget(form.document) }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <div id="submit_profile_picture">
+            {{ form_row(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+            {{ form_rest(form) }}
+        </div>
+    </div>
+    {#{{ form_end(form) }}#}
+    </form>
+</div>

@@ -37,6 +37,6 @@ class DocumentType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'application_users_document';
+        return 'application_document';
     }
 }

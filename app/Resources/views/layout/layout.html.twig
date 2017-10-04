@@ -67,6 +67,9 @@
                                 </li>
                                 <!--<li><a href="#contact">Scripts</a></li>-->
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
+
+                                <li><a href="{{ path('application_mission_index', { 'id': app.user.id }) }}" target="_blank">Mes missions</a></li>
+
                             {% elseif is_granted('ROLE_CONSULTANT') %}
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
                             {% endif %}

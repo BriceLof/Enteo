@@ -18,8 +18,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DocumentController extends Controller
 {
     /**
-     * Creates a new Document entity.
+     * cette fonction permet d'ajouter des documents dans la mon compte
      *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request, $id)
     {
@@ -126,67 +129,5 @@ class DocumentController extends Controller
         ));
     }
 
-    /**
-     * Deletes a Document entity.
-     *
-     */
-    public function deleteAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
-        $beneficiaire = $document->getBeneficiaire();
 
-        if (!$document) {
-            throw $this->createNotFoundException('Unable to find Document.');
-        }
-
-        $this->get('application_plateforme.document')->removeDocument($beneficiaire, $document, true);
-
-        $this->get('session')->getFlashBag()->add('info', 'document supprimé avec succès');
-
-        return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
-            'id' => $beneficiaire->getId(),
-        )));
-    }
-
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
-        $beneficiaire = $document->getBeneficiaire();
-
-        if (!$document) {
-            throw $this->createNotFoundException('Unable to find Document.');
-        }
-
-        $document->setDescription($request->get("document_nom_modifier"));
-        $em->persist($document);
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->add('info', 'Document modifié avec succès');
-
-        return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
-            'id' => $beneficiaire->getId(),
-        )));
-    }
-
-    public function upAction(Request $request, $id)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $em = $this->getDoctrine()->getManager();
-            $document = $em->getRepository('ApplicationPlateformeBundle:Document')->find($id);
-            $beneficiaire = $document->getBeneficiaire();
-
-            if (!$document) {
-                throw $this->createNotFoundException('Unable to find Document.');
-            }
-
-            $this->get('application_plateforme.document')->supprimerDocument($beneficiaire, $document);
-
-            $message = "success";
-            return new JsonResponse($message);
-        } else {
-            throw new \Exception('erreur');
-        }
-    }
 }

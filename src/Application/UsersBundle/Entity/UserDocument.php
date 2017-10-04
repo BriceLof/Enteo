@@ -40,6 +40,7 @@ class UserDocument
      * @Assert\Valid
      */
     protected $documents;
+
     /**
      * Constructor
      */

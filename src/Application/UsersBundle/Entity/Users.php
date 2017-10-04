@@ -42,6 +42,11 @@ class Users extends BaseUser
     protected $userDocuments;
 
     /**
+    * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="consultant", cascade={"persist","remove"})
+    */
+    protected $mission;
+
+    /**
      * @ORM\OneToOne(targetEntity="StatutConsultant", cascade={"persist"})
      */
     private $statut;
@@ -129,6 +134,7 @@ class Users extends BaseUser
         
         $this->dateCreation = new \DateTime();
         $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -615,5 +621,53 @@ class Users extends BaseUser
     public function getUserDocuments()
     {
         return $this->userDocuments;
+    }
+
+    /**
+     * Set userDocuments
+     *
+     * @param string $userDocuments
+     *
+     * @return Users
+     */
+    public function setUserDocuments($userDocuments)
+    {
+        $this->userDocuments = $userDocuments;
+
+        return $this;
+    }
+
+    /**
+     * Add mission
+     *
+     * @param \Application\UsersBundle\Entity\Mission $mission
+     *
+     * @return Users
+     */
+    public function addMission(\Application\UsersBundle\Entity\Mission $mission)
+    {
+        $this->mission[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \Application\UsersBundle\Entity\Mission $mission
+     */
+    public function removeMission(\Application\UsersBundle\Entity\Mission $mission)
+    {
+        $this->mission->removeElement($mission);
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMission()
+    {
+        return $this->mission;
     }
 }
