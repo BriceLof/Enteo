@@ -25,6 +25,7 @@ class MissionController extends Controller
      */
     public function newAction($idBeneficiaire , $idConsultant)
     {
+
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($idBeneficiaire);
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($idConsultant);
@@ -36,11 +37,9 @@ class MissionController extends Controller
         $mission->setState('new');
 
         $em->persist($mission);
-        $em->flush();
 
         //envoyer l'email pour le consultant
-        $html = $this->renderView('ApplicationUsersBundleBundle:Mission/pdf:newMission.html.twig', array(
-        ));
+        $html = $this->renderView('ApplicationUsersBundle:Mission:newMission.html.twig');
 
         $data = $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
             'enable-javascript' => true,
@@ -53,6 +52,7 @@ class MissionController extends Controller
         $attachement = new \Swift_Attachment($data, 'contrat_'.$beneficiaire->getNomConso().'_'.$beneficiaire->getPrenomConso(), 'application/pdf');
 
         $this->get('application_users.mailer.mail_for_mission')->newMission($beneficiaire,$consultant,$attachement);
+
     }
 
     public function acceptedAction($id){

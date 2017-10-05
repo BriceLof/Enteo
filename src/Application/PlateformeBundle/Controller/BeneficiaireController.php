@@ -143,10 +143,11 @@ class BeneficiaireController extends Controller
             $beneficiaire = $editConsultantForm->getData();
             $consultant = $beneficiaire->getConsultant();
 
-            $this->forward('ApplicationUsersBundle:Mission:new', array(
-                'idBeneficiaire'  => $beneficiaire->getId(),
-                'idConsultant' => $consultant->getId(),
-            ));
+//            c'est la fonction qui permet appelle la mission
+//            $this->forward('ApplicationUsersBundle:Mission:new', array(
+//                'idBeneficiaire'  => $beneficiaire->getId(),
+//                'idConsultant' => $consultant->getId(),
+//            ));
 
             //enregistrement de l'ajout ou modification de consultant dans le
             $historique = new Historique();
@@ -160,7 +161,8 @@ class BeneficiaireController extends Controller
             $historique->setEventId("0");
             $historique->setUser($this->getUser());
 
-            $beneficiaire->setConsultant(null);
+//            $beneficiaire->setConsultant(null);
+
             $em->persist($beneficiaire);
             $em->persist($historique);
             $em->flush();

@@ -37,7 +37,7 @@ class Mailer
             $mail->setBcc($bcc);
         if(!empty($subject))
             $mail->setSubject($subject);
-        if (!empty($attach)){
+        if (!empty($attachement)){
             $mail->attach($attachement);
         }
         $mail

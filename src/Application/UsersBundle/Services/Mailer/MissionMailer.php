@@ -1,5 +1,5 @@
 <?php
-namespace Application\PlateformeBundle\Services\Statut\Mail;
+namespace Application\UsersBundle\Services\Mailer;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Services\Mailer;
@@ -12,7 +12,7 @@ class MissionMailer extends Mailer
         $ref = 'a';
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
-        $subject = "Financement - Attente accord ";
+        $subject = "New Bénéficiaire";
         $template = '@Aub/Mission/mail/newMission.html.twig';
         $to = $consultant->getEmail();
         $cc = null;
