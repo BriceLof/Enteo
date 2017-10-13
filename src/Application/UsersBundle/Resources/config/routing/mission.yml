@@ -1,5 +1,5 @@
 application_mission_admin_index:
-    path:     /
+    path:     /admin
     defaults: { _controller: "ApplicationUsersBundle:Mission:adminIndex" }
     options:
         expose:  true

@@ -11,7 +11,6 @@ class MissionMailer extends Mailer
 
         $ref = 'a';
         $from = "christine.clement@entheor.com";
-        $replyTo = "christine.clement@entheor.com";
         $subject = "New Bénéficiaire";
         $template = '@Aub/Mission/mail/newMission.html.twig';
         $to = $consultant->getEmail();

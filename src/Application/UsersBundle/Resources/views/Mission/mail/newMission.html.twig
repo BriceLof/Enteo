@@ -1,1 +1,23 @@
-blablabla
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    Bonjour {{ beneficiaire.consultant.prenom|capitalize }}, <br>
+    <p>
+        Un nouveau <a href="{{ absolute_url(path('application_show_beneficiaire', { 'id' : beneficiaire.id })) }}">bénéficiaire</a> vous est attribué. <br>
+        Pour accepter l'accompagnement, veuillez vous rendre à la rubrique "<a href="{{ absolute_url(path('application_mission_index', { 'id' : beneficiaire.consultant.id })) }}">Mes missions</a>" et nous envoyer le contrat de mission ci-joint signé.
+        <br>
+        <br>
+        <span>Merci,</span>
+        <br>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </p>
+{% endblock %}

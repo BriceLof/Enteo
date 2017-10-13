@@ -29,8 +29,13 @@ class MissionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($idBeneficiaire);
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($idConsultant);
-        $mission = new Mission();
 
+
+        if (!is_null($beneficiaire->getMission())){
+            $mission = $beneficiaire->getMission();
+        }else{
+            $mission = new Mission();
+        }
 
         $mission->setBeneficiaire($beneficiaire);
         $mission->setConsultant($consultant);
@@ -39,7 +44,10 @@ class MissionController extends Controller
         $em->persist($mission);
 
         //envoyer l'email pour le consultant
-        $html = $this->renderView('ApplicationUsersBundle:Mission:newMission.html.twig');
+        $html = $this->renderView('ApplicationUsersBundle:Mission:newMission.html.twig', array(
+            'beneficiaire' => $beneficiaire,
+            'consultant' => $consultant
+        ));
 
         $data = $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
             'enable-javascript' => true,

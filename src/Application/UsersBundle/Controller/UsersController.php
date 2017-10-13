@@ -213,19 +213,19 @@ class UsersController extends Controller
         $editForm->get('typeUserHidden')->setData($typeUser->typeUser($this->getUser()));
         
         if ($request->isMethod('POST') && $editForm->handleRequest($request)->isValid()) {
-        	$avatarFile = $user->getAvatar();
-		 	//$fileUploader = $this->container->get('app.file_uploader');
-			//$fileUploader->upload($avatarFile, "uploads/avatars");
-			
-			// Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$avatarFile->guessExtension();
-
-            // Move the file to the directory where brochures are stored
-            $avatarFile->move(
-                $this->getParameter('avatars_directory'),
-                $fileName
-            );
-			$user->setAvatar($fileName);
+//        	$avatarFile = $user->getAvatar();
+//		 	//$fileUploader = $this->container->get('app.file_uploader');
+//			//$fileUploader->upload($avatarFile, "uploads/avatars");
+//
+//			// Generate a unique name for the file before saving it
+//            $fileName = md5(uniqid()).'.'.$avatarFile->guessExtension();
+//
+//            // Move the file to the directory where brochures are stored
+//            $avatarFile->move(
+//                $this->getParameter('avatars_directory'),
+//                $fileName
+//            );
+//			$user->setAvatar($fileName);
 			
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
