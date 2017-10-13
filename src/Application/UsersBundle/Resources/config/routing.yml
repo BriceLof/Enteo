@@ -2,9 +2,14 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 #document
-application_plateforme_document:
+application_user_document:
     resource: "@ApplicationUsersBundle/Resources/config/routing/document.yml"
     prefix:   /user/document
+
+#mission
+application_user_mission:
+    resource: "@ApplicationUsersBundle/Resources/config/routing/mission.yml"
+    prefix:   /user/mission
     
 user_type:
     path: /type/{typeUser}

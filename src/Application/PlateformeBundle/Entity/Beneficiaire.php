@@ -79,6 +79,11 @@ class Beneficiaire
     protected $accompagnement;
 
     /**
+     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", cascade={"persist"})
+     */
+    protected $mission;
+
+    /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
      * @Assert\Valid
      */
@@ -286,7 +291,7 @@ class Beneficiaire
     private $nbAppelTel;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 	
@@ -939,8 +944,6 @@ class Beneficiaire
         return $this->email2;
     }
 
-
-
     /**
      * Set origineMer
      *
@@ -1090,8 +1093,9 @@ class Beneficiaire
     public function setConsultant(\Application\UsersBundle\Entity\Users $consultant = null)
     {
         $this->consultant = $consultant;
-
-        $consultant->addBeneficiaire($this);
+        if (!is_null($consultant)){
+            $consultant->addBeneficiaire($this);
+        }
 
         return $this;
     }
@@ -1617,5 +1621,29 @@ class Beneficiaire
     public function getStatutRecevabilite()
     {
         return $this->statutRecevabilite;
+    }
+
+    /**
+     * Set mission
+     *
+     * @param \Application\UsersBundle\Entity\Mission $mission
+     *
+     * @return Beneficiaire
+     */
+    public function setMission(\Application\UsersBundle\Entity\Mission $mission = null)
+    {
+        $this->mission = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Get mission
+     *
+     * @return \Application\UsersBundle\Entity\Mission
+     */
+    public function getMission()
+    {
+        return $this->mission;
     }
 }

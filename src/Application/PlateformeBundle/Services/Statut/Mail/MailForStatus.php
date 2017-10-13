@@ -41,8 +41,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $ref = 4;
         $from = "christine.clement@entheor.com";
-        $replyTo = "christine.clement@entheor.com";
-        $subject = "Financement - Attente accord ";
+        $subject = "Un nouveau bénéficiaire vous est attribué";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
         $to = $listeGestionnaires;
         $cc = $listeAdministrateurs;

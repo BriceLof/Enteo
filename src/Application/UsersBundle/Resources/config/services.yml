@@ -17,3 +17,7 @@ services:
             - "@application.users.statut"
         tags:
             - { name: twig.extension }
+
+    application_users.mailer.mail_for_mission:
+            class: Application\UsersBundle\Services\Mailer\MissionMailer
+            parent: application_plateforme.mail

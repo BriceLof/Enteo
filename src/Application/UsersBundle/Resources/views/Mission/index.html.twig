@@ -1,0 +1,49 @@
+{% extends "ApplicationUsersBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/mission.css') }}" type="text/css">
+{% endblock %}
+
+{% block title %}Mes missions{% endblock%}
+
+{% block body %}
+    <div class="container">
+        <div class="page-header">
+            <h1>Mes missions</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Missions - En cours</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'confirmed'}  %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Missions - New</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'new'}  %}
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Missions - En attente</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'accepted'}  %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

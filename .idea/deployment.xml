@@ -16,7 +16,11 @@
           </mappings>
         </serverdata>
       </paths>
+<<<<<<< HEAD
+      <paths name="OPL">
+=======
       <paths name="IF PROD">
+>>>>>>> origin/master
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

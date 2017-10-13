@@ -1,0 +1,135 @@
+<div>
+    <table class="table table-bordered table-striped">
+        <tbody>
+        {% for mission in missions %}
+            {% if mission.state == state %}
+                <tr>
+                    <td>{{ mission.beneficiaire.nomConso|capitalize~" "~mission.beneficiaire.prenomConso|capitalize }}</td>
+                    <td>{{ mission.beneficiaire.ville.nom~" ("~mission.beneficiaire.ville.cp~")" }}</td>
+                    {% if mission.state == 'new' %}
+                        <td>
+                            <span class="glyphicon glyphicon-ok" data-toggle="modal" data-target="#missionAccept{{ loop.index }}"></span>
+                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#missionDecline{{ loop.index }}"></span>
+                        </td>
+                    {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
+                        <td>
+                            <span class="glyphicon glyphicon-ok" data-toggle="modal" data-target="#missionConfirm{{ loop.index }}"></span>
+                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#missionRevoke{{ loop.index }}"></span>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% for mission in missions %}
+        {% if mission.state == 'new' %}
+            {#accepter#}
+            <div class="modal fade" id="missionAccept{{ loop.index }}" tabindex="-1"
+                 role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    {{ render(controller("ApplicationUsersBundle:Mission:addDocument",{'id': mission.id })) }}
+                </div>
+            </div>
+
+            {#decliner#}
+            <div class="modal fade" id="missionDecline{{ loop.index }}" tabindex="-1"
+                 role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Decliner accompagnement</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <span>Confirmer le refus de l'accompagnement !</span><br><br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">Annuler
+                                </button>
+                                <a style="width: 70px;float: right"
+                                   href="{{ path('application_mission_state', { 'state': 'accept', 'id': mission.id }) }}">
+                                    <button class="btn btn-danger">Decliner</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
+            {#confirmer#}
+            <div class="modal fade" id="missionConfirm{{ loop.index }}" tabindex="-1"
+                 role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmer accompagnement</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <span>Êtes-vous sûr ?</span><br><br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">Annuler
+                                </button>
+                                <a style="width: 80px;float: right"
+                                   href="{{ path('application_mission_state', { 'state': 'confirm', 'id': mission.id }) }}">
+                                    <button class="btn btn-danger">confirmer</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {#revoquer#}
+            <div class="modal fade" id="missionRevoke{{ loop.index }}" tabindex="-1"
+                 role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Decliner accompagnement</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <span>Confirmer le refus de l'accompagnement !</span><br><br>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">Annuler
+                                </button>
+                                <a style="width: 53px;float: right"
+                                   href="{{ path('application_mission_state', { 'state': 'revoke', 'id': mission.id }) }}">
+                                    <button class="btn btn-danger">Oui</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+</div>
