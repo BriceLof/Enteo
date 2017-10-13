@@ -42,6 +42,7 @@ class Users extends BaseUser
     protected $userDocuments;
 
     /**
+     * @ORM\Column(nullable=true)
     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="consultant", cascade={"persist","remove"})
     */
     protected $mission;
