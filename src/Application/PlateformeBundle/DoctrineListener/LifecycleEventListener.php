@@ -33,7 +33,6 @@ class LifecycleEventListener extends \Twig_Extension
             "Financeur"             => "Projet bénéficiaire",
             "Nouvelle"              => "News",
             "Document"              => "Espace Documentaire",
-            "Historique"            => "Historique bénéficiaire",
             "News"                  => "Statut bénéficiaire",
             "StatutRecevabilite"    => "Statut bénéficiaire",
         );
