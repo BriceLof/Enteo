@@ -65,3 +65,7 @@ services:
     application_plateforme.statut.mail.mail_for_statut:
         class: Application\PlateformeBundle\Services\Statut\Mail\MailForStatus
         parent: application_plateforme.mail
+
+    application_plateforme.statut.cron.cron_beneficiaire:
+        class: Application\PlateformeBundle\Services\Statut\Cron\CronBeneficiaire
+        arguments: ["@service_container"]

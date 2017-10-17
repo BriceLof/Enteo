@@ -16,7 +16,8 @@ class AlerteController extends Controller
     public function indexAction()
     {
         //$service = $this->get('application_plateforme.disponibilite.cron.dispo')->recapDispo();
-		$service = $this->get('application_plateforme.statut.cron.rv')->rappelFinancement();
+		$service = $this->get('application_plateforme.statut.cron.cron_beneficiaire')->beneficiairePreviousWeekNoContact();
+		//return $service;
         //var_dump($service);
        // var_dump($service->getDateHeure());
        // var_dump(new \DateTime);

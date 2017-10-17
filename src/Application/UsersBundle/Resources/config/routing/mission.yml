@@ -5,8 +5,8 @@ application_mission_admin_index:
         expose:  true
 
 application_mission_add_document:
-    path:     /addDocument/{id}
-    defaults: { _controller: "ApplicationUsersBundle:Mission:addDocument" }
+    path:     /addDocument/{id}/{admin}
+    defaults: { _controller: "ApplicationUsersBundle:Mission:addDocument", admin: "" }
     options:
         expose:  true
 
@@ -19,5 +19,11 @@ application_mission_state:
 application_mission_index:
     path:     /show/{id}
     defaults: { _controller: "ApplicationUsersBundle:Mission:index" }
+    options:
+        expose:  true
+
+application_mission_contrat:
+    path:     /getContrat/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Mission:downloadContratMission" }
     options:
         expose:  true
