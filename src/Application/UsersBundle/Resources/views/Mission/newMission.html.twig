@@ -1,0 +1,51 @@
+{% extends "::layout/layout-pdf.html.twig" %}
+
+{% block title %}Contrat de {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ absolute_url(asset('css/pdfMission.css')) }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div style="height: 1020px">
+            <div class="row">
+                <div class="col-md-12" style="text-align: center">
+                    <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <hr style="color: black; border-bottom: 1px solid black">
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <div style="border-bottom: 1px solid black; border-top: 1px solid black; margin: 80px;">
+                        <p style="font-size: 22px; font-weight: bold; text-align: center;font-family: Calibri; padding: 10px">
+                            CONTRAT DE MISSION</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p>
+                    {{ consultant.civilite|capitalize~' '~consultant.prenom|capitalize~' '~consultant.nom|upper }},
+                </p>
+                <p>
+                    Veuillez signer ce contrat pour accepter l'accompagnement de {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}
+                </p>
+                <p style="text-align: right">
+                    signature<br><br><br>
+                    {{ consultant.prenom|capitalize~' '~consultant.nom|upper }}
+                </p>
+            </div>
+            <div style="position: fixed; bottom: 0;">
+                <p style="margin-left: auto; margin-right: auto; font-size: 14px; margin-top: 10px; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;">
+                    21, rue Louis Dansard - 69007 Lyon <br>
+                    Siret : 527 732 069 000 36 - Déclaration d'activité : 82 69 11023 69
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
