@@ -127,12 +127,13 @@ class Mailer
             'message' => $message,
             'reference' => '10-a'
         ));
-        $to = array(
-            'f.azoulay@entheor.com' => 'Franck Azoulay',
-            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
-            "ph.rouzauf@entheor.com" => "Philippe Rouzaud",
-            "christine.clementmolier@entheor.com" => "Christine Molier"
-        );
+//        $to = array(
+//            'f.azoulay@entheor.com' => 'Franck Azoulay',
+//            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
+//            "ph.rouzauf@entheor.com" => "Philippe Rouzaud",
+//            "christine.clementmolier@entheor.com" => "Christine Molier"
+//        );
+        $to = "b.lof@iciformation.fr";
         $bcc = array("support.informatique@entheor.com" => "Support");
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body, $attachement);
     }

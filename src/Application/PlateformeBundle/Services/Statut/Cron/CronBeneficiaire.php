@@ -39,8 +39,9 @@ class CronBeneficiaire
         $dateDebutFr = $Jour[$dateDebut->format('l')]." ".$dateDebut->format('j')." ".$Mois[$dateDebut->format('F')];
         $dateFinFr = $Jour[$dateFin->format('l')]." ".$dateFin->format('j')." ".$Mois[$dateFin->format('F')];
 
+        $beneficiairesAddLastWeek = $beneficiareRepo->getBeneficiaireWithDate($dateDebutSql, $dateFinSql);
         // Beneficiaire autres que ceux de la liste d'exclusion
-        $beneficiaires = $beneficiareRepo->getBeneficiaireWithIdsWithDate($idBeneficiaireExclu, $dateDebutSql, $dateFinSql);
+        $beneficiaires = $beneficiareRepo->getBeneficiaireWithIdsAndDate($idBeneficiaireExclu, $dateDebutSql, $dateFinSql);
 
         $path = $this->container->getParameter('export_csv_directory');
         $handle = fopen($path.'/export_benef_pevious_week_no_contact.csv', 'w+');
@@ -55,7 +56,7 @@ class CronBeneficiaire
 
         $statutRepo = $this->em->getRepository("ApplicationPlateformeBundle:News");
         $nouvelleRepo = $this->em->getRepository("ApplicationPlateformeBundle:Nouvelle");
-        $totalBeneficiaire = count($beneficiaires);
+        $totalBeneficiaireNoContact = count($beneficiaires);
         $totalBeneficiaireEnAttente = 0;
         $totalBeneficiaireTentative = 0;
         foreach($beneficiaires as $beneficiaire){
@@ -93,7 +94,7 @@ class CronBeneficiaire
 
         $message = "
                 Bonjour, <br><br>                
-                Veuillez trouver ci-joint la liste des ".$totalBeneficiaire." bénéficiaires qui n'ont pu être joint la semaine du ".$dateDebutFr." au ".$dateFinFr.", dont ".$totalBeneficiaireEnAttente."
+                Veuillez trouver ci-joint la liste des ".$totalBeneficiaireNoContact." bénéficiaires (sur un total de ".count($beneficiairesAddLastWeek).") qui n'ont pu être joints la semaine du ".$dateDebutFr." au ".$dateFinFr.", dont ".$totalBeneficiaireEnAttente."
                 en statut 'En attente Contact Tél' et ".$totalBeneficiaireTentative." en statut 'Tentative 1'.
                 ";
         $this->mailer->listeBeneficiairesPreviousWeekNoContact($message, \Swift_Attachment::fromPath($path.'/export_benef_pevious_week_no_contact.csv') );

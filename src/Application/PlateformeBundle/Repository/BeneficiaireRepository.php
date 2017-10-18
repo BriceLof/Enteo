@@ -55,13 +55,29 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
-    public function getBeneficiaireWithIdsWithDate($ids, $dateDebut, $dateFin)
+    public function getBeneficiaireWithIdsAndDate($ids, $dateDebut, $dateFin)
     {
         $queryBuilder = $this->createQueryBuilder("b")
             ->where('b.id NOT IN (:ids)')
             ->andWhere('b.dateConfMer BETWEEN :dateDebut AND :dateFin')
             ->setParameters(array(
                 "ids" => $ids,
+                "dateDebut" => $dateDebut,
+                "dateFin" => $dateFin
+            ))
+            ->orderBy('b.id' , 'ASC')
+        ;
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
+
+    public function getBeneficiaireWithDate($dateDebut, $dateFin)
+    {
+        $queryBuilder = $this->createQueryBuilder("b")
+            ->where('b.dateConfMer BETWEEN :dateDebut AND :dateFin')
+            ->setParameters(array(
                 "dateDebut" => $dateDebut,
                 "dateFin" => $dateFin
             ))
