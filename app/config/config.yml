@@ -84,7 +84,7 @@ fos_user:
     
 # Swiftmailer Configuration
 swiftmailer:
-    delivery_address: ['support.informatique@entheor.com', 'f.azoulay@entheor.com']
+    delivery_address: ['support.informatique@entheor.com']
 
     transport: "%mailer_transport%"
     auth_mode: "%mailer_auth_mode%"
