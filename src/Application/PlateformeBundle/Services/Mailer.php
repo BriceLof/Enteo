@@ -117,5 +117,24 @@ class Mailer
         $bcc = array("support.informatique@entheor.com" => "Support", "f.azoulay@entheor.com" => "Franck Azoulay");
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
+
+    public function listeBeneficiairesPreviousWeekNoContact($message, $attachement)
+    {
+        $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+        $subject = "Liste des bénéficiaires S-1 non contactés";
+        $body = $this->templating->render($template, array(
+            'sujet' => $subject ,
+            'message' => $message,
+            'reference' => '10-a'
+        ));
+        $to = array(
+            'f.azoulay@entheor.com' => 'Franck Azoulay',
+            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
+            "ph.rouzauf@entheor.com" => "Philippe Rouzaud",
+            "christine.clementmolier@entheor.com" => "Christine Molier"
+        );
+        $bcc = array("support.informatique@entheor.com" => "Support");
+        $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body, $attachement);
+    }
 }
 ?>

@@ -9,6 +9,12 @@
         {% endif %}
     </td>
 </tr>
+{% if beneficiaire.accompagnement.heure is not null %}
+    <tr>
+        <td> Accompagnement en Heures :</td>
+        <td class="projet"> {{ beneficiaire.accompagnement.heure }} h </td>
+    </tr>
+{% endif %}
 <tr>
     <td>{{ form_label(projet_form.statut) }}</td>
     <td class="projet">{{ form_widget(projet_form.statut) }}</td>

@@ -34,20 +34,20 @@ class UsersRepository extends \Doctrine\ORM\EntityRepository
     /**
      * récupère les consultants
      *
-     * @param Users $users
+     * @param String $role
      * @return \Doctrine\ORM\NativeQuery
      */
-    public function search(Users $users)
+    public function search($role = "ROLE_CONSULTANT")
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
-        $rsm->addRootEntityFromClassMetadata('Application\UsersBundle\Entity\Users','b');
+        $rsm->addRootEntityFromClassMetadata('Application\UsersBundle\Entity\Users','u');
 
         $query = 'SELECT u.* FROM users u WHERE 1';
         $params = array();
 
 
-        $query .= ' AND u.roles = :roles';
-        $params['roles'] = "ROLE_CONSULTANT";
+        $query .= ' AND u.roles LIKE :roles';
+        $params['roles'] = "%".$role."%";
 
         $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
         $request->setParameters($params);

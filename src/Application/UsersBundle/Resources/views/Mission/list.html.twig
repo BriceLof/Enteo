@@ -10,11 +10,17 @@
                         <td>
                             <span class="glyphicon glyphicon-ok" data-toggle="modal" data-target="#missionAccept{{ loop.index }}"></span>
                             <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#missionDecline{{ loop.index }}"></span>
+                            <a title="Télécharger le contrat" href="{{ path("application_mission_contrat", { 'id': mission.id}) }}"><span class="glyphicon glyphicon-download-alt"></span></a>
                         </td>
                     {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
                         <td>
                             <span class="glyphicon glyphicon-ok" data-toggle="modal" data-target="#missionConfirm{{ loop.index }}"></span>
                             <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#missionRevoke{{ loop.index }}"></span>
+                            <a title="Afficher le document" href="{{ asset('uploads/contrat/'~mission.consultant.id~'/'~mission.document) }}" target="_blank"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                        </td>
+                    {% elseif (mission.state == 'confirmed') %}
+                        <td>
+                            <a title="Afficher le document" href="{{ asset('uploads/contrat/'~mission.consultant.id~'/'~mission.document) }}" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
                         </td>
                     {% endif %}
                 </tr>
@@ -29,7 +35,7 @@
             <div class="modal fade" id="missionAccept{{ loop.index }}" tabindex="-1"
                  role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
-                    {{ render(controller("ApplicationUsersBundle:Mission:addDocument",{'id': mission.id })) }}
+                    {{ render(controller("ApplicationUsersBundle:Mission:addDocument",{'id': mission.id, 'admin': admin })) }}
                 </div>
             </div>
 
@@ -56,7 +62,7 @@
                                         data-dismiss="modal">Annuler
                                 </button>
                                 <a style="width: 70px;float: right"
-                                   href="{{ path('application_mission_state', { 'state': 'accept', 'id': mission.id }) }}">
+                                   href="{{ path('application_mission_state', { 'state': 'accept', 'id': mission.id, 'admin':admin }) }}">
                                     <button class="btn btn-danger">Decliner</button>
                                 </a>
                             </div>
@@ -89,7 +95,7 @@
                                         data-dismiss="modal">Annuler
                                 </button>
                                 <a style="width: 80px;float: right"
-                                   href="{{ path('application_mission_state', { 'state': 'confirm', 'id': mission.id }) }}">
+                                   href="{{ path('application_mission_state', { 'state': 'confirm', 'id': mission.id, 'admin': admin }) }}">
                                     <button class="btn btn-danger">confirmer</button>
                                 </a>
                             </div>

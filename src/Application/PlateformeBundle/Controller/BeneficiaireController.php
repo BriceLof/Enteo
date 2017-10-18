@@ -219,6 +219,7 @@ class BeneficiaireController extends Controller
             ).'#projetEditForm');
         }
 
+        //$heureAccompagnement = $beneficiaire->getAccompagnement()->getHeure();
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:projet.html.twig', array(
             'projet_form' => $projetForm->createView(),
             'beneficiaire'      => $beneficiaire,

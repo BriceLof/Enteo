@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -29,8 +30,12 @@ class MissionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($idBeneficiaire);
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($idConsultant);
-        $mission = new Mission();
 
+        if (!is_null($beneficiaire->getMission())){
+            $mission = $beneficiaire->getMission();
+        }else{
+            $mission = new Mission();
+        }
 
         $mission->setBeneficiaire($beneficiaire);
         $mission->setConsultant($consultant);
@@ -39,7 +44,10 @@ class MissionController extends Controller
         $em->persist($mission);
 
         //envoyer l'email pour le consultant
-        $html = $this->renderView('ApplicationUsersBundle:Mission:newMission.html.twig');
+        $html = $this->renderView('ApplicationUsersBundle:Mission:newMission.html.twig', array(
+            'beneficiaire' => $beneficiaire,
+            'consultant' => $consultant
+        ));
 
         $data = $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
             'enable-javascript' => true,
@@ -107,7 +115,7 @@ class MissionController extends Controller
         //envoi email consultant
     }
 
-    public function stateAction($state, $id){
+    public function stateAction($state, $id, $admin = 0){
 
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
@@ -144,9 +152,13 @@ class MissionController extends Controller
                 break;
         }
 
-        return $this->redirect($this->generateUrl('application_mission_index', array(
-            'id' => $consultant->getId(),
-        )));
+        if ($admin = 1){
+            return $this->redirect($this->generateUrl('application_mission_admin_index'));
+        }else{
+            return $this->redirect($this->generateUrl('application_mission_index', array(
+                'id' => $consultant->getId(),
+            )));
+        }
     }
 
     public function indexAction($id){
@@ -160,7 +172,8 @@ class MissionController extends Controller
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
 
         return $this->render('ApplicationUsersBundle:Mission:index.html.twig', array(
-            'missions' => $consultant->getMission()
+            'missions' => $consultant->getMission(),
+            'admin' => 0
         ));
     }
 
@@ -175,11 +188,13 @@ class MissionController extends Controller
         $missions = $em->getRepository('ApplicationUsersBundle:Mission')->findAll();
 
         return $this->render('ApplicationUsersBundle:Mission:index.html.twig', array(
-            'missions' => $missions
+            'missions' => $missions,
+            'admin' => 1
         ));
     }
 
-    public function addDocumentAction(Request $request, $id){
+    public function addDocumentAction(Request $request, $id, $admin= 0){
+
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
@@ -198,7 +213,7 @@ class MissionController extends Controller
         if ($request->isMethod('POST')) {
             $file = $mission->getDocument();
             if(!is_null($file)){
-                $name = "contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso();
+                $name = strtolower("contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso().".pdf");
                 $fileName = $this->get('app.file_uploader')->uploadAvatar($file, 'uploads/contrat/'.$mission->getConsultant()->getId(), $name, $name);
                 $mission->setDocument($fileName);
             }
@@ -208,13 +223,42 @@ class MissionController extends Controller
 
             return $this->forward('ApplicationUsersBundle:Mission:state', array(
                 'state' => 'accept',
-                'id' => $mission->getId()
+                'id' => $mission->getId(),
+                'admin' => $admin
             ));
         }
 
         return $this->render('ApplicationUsersBundle:Mission:addDocument.html.twig', array(
             'form' => $form->createView(),
-            'mission' => $mission
+            'mission' => $mission,
+            'admin' => $admin
         ));
+    }
+
+    public function downloadContratMissionAction($id){
+        $em = $this->getDoctrine()->getManager();
+        $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
+        $beneficiaire = $mission->getBeneficiaire();
+        $consultant = $mission->getConsultant();
+
+        $html = $this->renderView('ApplicationUsersBundle:Mission:newMission.html.twig', array(
+            'beneficiaire' => $beneficiaire,
+            'consultant' => $consultant
+        ));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array(
+                'enable-javascript' => true,
+                'encoding' => 'utf-8',
+                'lowquality' => false,
+                'javascript-delay' => 5000,
+                'images' => true,
+            )),
+            200,
+            array(
+                'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachement; filename="contrat_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+            )
+        );
     }
 }

@@ -67,13 +67,33 @@
         {% if beneficiaire.consultant is not null %}
             <td>
                 <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
-
             </td>
         {% else %}
-            <td>
-                <b>Pas encore de consultant</b>
-
-            </td>
+            {% if beneficiaire.mission is not null %}
+                {% if beneficiaire.mission.state == 'new' %}
+                    {% set color = '#f0c41a' %}
+                    {% set title = 'envoyé' %}
+                {% elseif beneficiaire.mission.state == 'accepted'  %}
+                    {% set color = '#ff723d' %}
+                    {% set title = 'accepté' %}
+                {% elseif beneficiaire.mission.state == 'confirmed' %}
+                    {% set color = '#05ff10' %}
+                    {% set title = 'confirmé' %}
+                {% endif %}
+                    <td>
+                        <span title="{{ title }}" id="nomPrenomConsultant">
+                            <span><b>{{ beneficiaire.mission.consultant.prenom|capitalize~" "~beneficiaire.mission.consultant.nom|capitalize~" " }}</b></span>
+                            {#{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}#}
+                            {#<span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span>#}
+                            {#{% endif %}#}
+                            <span class="glyphicon glyphicon-stop" style="color : {{ color }}"></span>
+                        </span>
+                    </td>
+            {% else %}
+                <td>
+                    <b>Pas encore de consultant</b>
+                </td>
+            {% endif %}
         {% endif %}
     </tr>
 

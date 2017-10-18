@@ -39,6 +39,39 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return new Paginator($query); 
     }
 
+    public function getBeneficiaireWithDetailStatut($detailStatut = null)
+    {
+        $queryBuilder = $this->createQueryBuilder("b")
+            ->leftJoin('b.news', 'n')
+            ->addSelect('n')
+            ->leftJoin('n.detailStatut', 'ds')
+            ->addSelect('ds')
+            ->where('ds.detail NOT IN (:detailStatut)')
+            ->setParameter('detailStatut', $detailStatut)
+            ;
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
+
+    public function getBeneficiaireWithIdsWithDate($ids, $dateDebut, $dateFin)
+    {
+        $queryBuilder = $this->createQueryBuilder("b")
+            ->where('b.id NOT IN (:ids)')
+            ->andWhere('b.dateConfMer BETWEEN :dateDebut AND :dateFin')
+            ->setParameters(array(
+                "ids" => $ids,
+                "dateDebut" => $dateDebut,
+                "dateFin" => $dateFin
+            ))
+            ->orderBy('b.id' , 'ASC')
+        ;
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
     /**
      * retourne les bénéficiaires correspondant aux conditions qui sont mis en parametre
      *
