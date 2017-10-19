@@ -32,10 +32,10 @@ class CronBeneficiaire
             $idBeneficiaireExclu[] = $beneficiaire->getId();
         }
 
-        $dateDebut = (new \DateTime())->modify('-9 days');
-        $dateFin = (new \DateTime())->modify('-3 days');
-        $dateDebutSql = (new \DateTime())->modify('-9 days')->format("Y-m-d");
-        $dateFinSql = (new \DateTime())->modify('-3 days')->format("Y-m-d");
+        $dateDebut = (new \DateTime())->modify('-7 days');
+        $dateFin = (new \DateTime())->modify('-1 days');
+        $dateDebutSql = (new \DateTime())->modify('-7 days')->format("Y-m-d");
+        $dateFinSql = (new \DateTime())->modify('-1 days')->format("Y-m-d");
         $dateDebutFr = $Jour[$dateDebut->format('l')]." ".$dateDebut->format('j')." ".$Mois[$dateDebut->format('F')];
         $dateFinFr = $Jour[$dateFin->format('l')]." ".$dateFin->format('j')." ".$Mois[$dateFin->format('F')];
 
