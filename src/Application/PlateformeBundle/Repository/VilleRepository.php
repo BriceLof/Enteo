@@ -30,6 +30,7 @@ class VilleRepository extends \Doctrine\ORM\EntityRepository
         $queryBuilder = $this->createQueryBuilder("v")
             ->where("v.nom LIKE :nomVille")
             ->setParameter("nomVille", '%'.$nomVille.'%')
+            ->orderBy("v.nom", 'ASC')
             ->setMaxResults(10);
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
