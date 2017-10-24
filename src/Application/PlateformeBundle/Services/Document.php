@@ -68,7 +68,12 @@ class Document
 
         $this->knp->getInternalGenerator()->setTimeout(300);
 
-        $file = "".ucfirst($type)."_VAE_".str_replace(" ","_",str_replace(".","",$beneficiaire->getCiviliteConso())."_".$beneficiaire->getNomConso())."_".(new \DateTime('now'))->format('d')."_".(new \DateTime('now'))->format('m')."_".(new \DateTime('now'))->format('Y');
+        // Suppression accent dans le nom du beneficiaire pour pas creer le bug du nom de fichier qui ne fonctionne pas avec un accent
+        $nomBeneficiaire = $beneficiaire->getNomConso();
+        $nomBeneficiaire = strtr($nomBeneficiaire, 'ÁÀÂÄÃÅÇÉÈÊËÍÏÎÌÑÓÒÔÖÕÚÙÛÜÝ', 'AAAAAACEEEEEIIIINOOOOOUUUUY');
+        $nomBeneficiaire = strtr($nomBeneficiaire, 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ', 'aaaaaaceeeeiiiinooooouuuuyy');
+
+        $file = "".ucfirst($type)."_VAE_".str_replace(" ","_",str_replace(".","",$beneficiaire->getCiviliteConso())."_".$nomBeneficiaire)."_".(new \DateTime('now'))->format('d')."_".(new \DateTime('now'))->format('m')."_".(new \DateTime('now'))->format('Y');
 
         $documents = $beneficiaire->getDocuments();
 
