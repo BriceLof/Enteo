@@ -1,0 +1,5 @@
+application_csv_getListBeneficiaire:
+    path:     /getListBeneficiaire
+    defaults: { _controller: "ApplicationPlateformeBundle:Csv:getListBeneficiaire" }
+    options:
+        expose: true
