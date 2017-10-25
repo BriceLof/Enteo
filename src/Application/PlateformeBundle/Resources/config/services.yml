@@ -69,3 +69,6 @@ services:
     application_plateforme.statut.cron.cron_beneficiaire:
         class: Application\PlateformeBundle\Services\Statut\Cron\CronBeneficiaire
         arguments: ["@service_container"]
+
+    application_plateforme.csv:
+        class: Application\PlateformeBundle\Services\Csv

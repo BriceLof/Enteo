@@ -33,6 +33,10 @@ application_plateforme_beneficiaire:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/beneficiaire.yml"
     prefix:   /beneficiaire
 
+#csv
+application_plateforme_csv:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/csv.yml"
+    prefix:   /csv
 
 #calendar
 application_plateforme_calendar:

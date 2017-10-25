@@ -364,4 +364,10 @@ function tri(el) {
             }
         }
     });
+
+    $("#excel").click(function () {
+        document.search_beneficiaire.action = Routing.generate('application_csv_getListBeneficiaire');
+        document.search_beneficiaire.submit();
+        document.search_beneficiaire.action = Routing.generate('application_search_beneficiaire', { 'page' : 1 });
+    })
 })();

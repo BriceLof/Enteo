@@ -270,13 +270,12 @@ class BeneficiaireController extends Controller
     }
 
     /**
-     * Search form for Beneficiaire entity
+     * earch form for Beneficiaire entity
      * le formulaire de recherche dans la page home et la reponse est utilisé en Ajax par l'action AjaxSearchBeneficiaire
      * dans HomeController.php
      *
-     * @param $request
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @param Request $request
+     * @return Response
      */
     public function searchAction(Request $request)
     {
@@ -292,7 +291,6 @@ class BeneficiaireController extends Controller
         $form = $this->createForm(RechercheBeneficiaireType::class, $beneficiaire);
         $form->add('submit', SubmitType::class, array('label' => 'Affiner'));
         $form->handleRequest($request);
-		
 		
         if ($form->isValid()){
         	

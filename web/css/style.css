@@ -750,6 +750,12 @@ textarea {
 #tri #label_select_tri_date{
     margin-left: 10px;
 }
+#excel{
+    cursor: pointer;
+    border: 1px solid green;
+    padding: 0 5px;
+    margin-left: 5%;
+}
 #doc_accompagnement{
     margin-left: 2%;
     margin-top: 15px;
