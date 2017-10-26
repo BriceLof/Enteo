@@ -20,24 +20,23 @@ class SuiviAdministratifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-             ->add('statut', EntityType::class, array(
+            ->add('statut', EntityType::class, array(
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:Statut',
-                'choice_label' => 'nom', 
+                'choice_label' => 'nom',
                 'query_builder' => function (EntityRepository $er) {
-                            return $er->createQueryBuilder('s')
-                                ->where('s.slug = :slug1')
-                                ->orWhere('s.slug = :slug2')
-                                ->orWhere('s.slug = :slug3')
-                                ->orWhere('s.slug = :slug4')
-                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'facturation','slug4' => 'reglement'))
-                            ;
+                    return $er->createQueryBuilder('s')
+                        ->where('s.slug = :slug1')
+                        ->orWhere('s.slug = :slug2')
+                        ->orWhere('s.slug = :slug3')
+                        ->orWhere('s.slug = :slug4')
+                        ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'facturation', 'slug4' => 'reglement'));
                 },
             ))
             ->add('detailStatut', EntityType::class, array(
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
-                'choice_label' => 'detail', 
+                'choice_label' => 'detail',
                 'placeholder' => '',
             ))
             ->add('info', TextType::class, array(
@@ -45,7 +44,7 @@ class SuiviAdministratifType extends AbstractType
                 'attr' => array(
                     'placeholder' => '',
                     'class' => 'suivi'
-                ), 
+                ),
                 'required' => false
             ))
             ->add('typeFinanceur', ChoiceType::class, array(
@@ -65,7 +64,6 @@ class SuiviAdministratifType extends AbstractType
                     'onchange' => 'changeOrganisme(this)',
                 )
             ))
-
             ->add('organisme', TextType::class, array(
                 'mapped' => false,
                 'required' => false,
@@ -74,8 +72,7 @@ class SuiviAdministratifType extends AbstractType
                 ),
             ))
             ->add('submit', SubmitType::class, array('label' => 'Ajouter')
-            )
-        ;
+            );
     }
 
     /**

@@ -1654,3 +1654,13 @@ if(document.getElementById('beneficiaire_contactEmployeur')) {
         }
     });
 })();
+
+if(document.getElementById('suiviAdministratif')) {
+    $(document).ready(function () {
+        statut = $('#suivi_administratif_statut').attr('data-value');
+        $('#suivi_administratif_statut option[value="'+ statut +'"]').prop('selected', true);
+
+        detailStatut = $('#suivi_administratif_detailStatut').attr('data-value');
+        $('#suivi_administratif_detailStatut option[value="'+ detailStatut +'"]').prop('selected', true);
+    });
+}

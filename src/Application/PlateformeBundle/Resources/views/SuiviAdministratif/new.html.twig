@@ -1,11 +1,19 @@
 <form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
     <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Mofidier le Statut Administratif : </p>
     <div class="row">
+
         <span class="col-xs-2">{{ form_label(form.statut) }}</span>
-        <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
-        
+        {% if(beneficiaire.suiviAdministratif | length > 0) %}
+            <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd', 'data-value' : beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].statut.id }}) }}</span>
+        {% else %}
+            <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
+        {% endif %}
         <span class="col-xs-3">{{ form_label(form.detailStatut) }}</span><div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
-        <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
+        {% if(beneficiaire.suiviAdministratif | length > 0) %}
+            <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled', 'data-value' : beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].detailStatut.id }}) }}</span>
+        {% else %}
+            <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
+        {% endif %}
     </div>
     
     <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px">Information de suivi : </p>
