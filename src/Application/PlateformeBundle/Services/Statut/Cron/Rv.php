@@ -307,25 +307,27 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                                                             </td>
                                                     </tr>
                                             </table>
-                                            <br><br>
-                            Merci de vous munir <u>impérativement</u> de :<br>";
+                                            <br><br>";
+                        if ($rdv->getSummary() == 'RV1' || $rdv->getSummary() == 'RV2') $message .= "Merci de vous munir <u>impérativement</u> de :<br>";
                     } else {
                         $message = ucfirst($rdv->getBeneficiaire()->getCiviliteConso()) . " " . ucfirst($rdv->getBeneficiaire()->getNomConso()) . ", <br><br>"
                             . "Nous vous rappelons que vous avez un rendez-vous téléphonique demain avec " . ucfirst($consultant->getCivilite()) . " " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()) . "<br><br><b>" .
                             ucfirst($consultant->getCivilite()) . " " . strtoupper($consultant->getNom()) . " <u>attendra votre appel</u> le " . $Jour[$dateRdv->format('l')] . " " . $dateRdv->format('j') . " " . $Mois[$dateRdv->format('F')] . " à <u>" . $dateRdv->format('H') . "h" . $dateRdv->format('i') . " précises</u></b>
-                                au numéro suivant : <b>" . $consultant->getTel1() . "</b><br><br>
-                                Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
+                                au numéro suivant : <b>" . $consultant->getTel1() . "</b><br><br>";
+                        if ($rdv->getSummary() == 'RV1' || $rdv->getSummary() == 'RV2')  $message .= "Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
                     }
 
-                    $message .= "
+                    if ($rdv->getSummary() == 'RV1' || $rdv->getSummary() == 'RV2') {
+                        $message .= "
                             <div style='margin-left:20px;'>
                                     - <a href='https://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
                                     - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
 
-                    if ($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
-                        $message .= "
+                        if ($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
+                            $message .= "
                                     - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
                                     - <b>Votre dernier bulletin de paie</b> ";
+                    }
 
                     $message .= "
                                     </div>
