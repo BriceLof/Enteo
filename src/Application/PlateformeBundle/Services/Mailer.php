@@ -128,6 +128,7 @@ class Mailer
             'reference' => '10-a'
         ));
         $to = array(
+            //'b.lof@iciformation.fr' => "Brice",
             'f.azoulay@entheor.com' => 'Franck Azoulay',
             "audrey.azoulay@entheor.com" => "Audrey Azoulay",
             "ph.rouzauf@entheor.com" => "Philippe Rouzaud",

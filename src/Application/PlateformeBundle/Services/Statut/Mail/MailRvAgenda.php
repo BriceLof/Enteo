@@ -111,7 +111,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 					</tr>
 				</table>";
 	    	if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){ 		
-                $message .= "<br><br>Merci de vous munir <u>impérativement</u> de :<br>";
+                $message .= "<br><br>Merci de vous munir <u>impérativement</u> des copies de :<br>";
             }
         }else{
         	$message .= ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getNomConso()).", <br><br>";
@@ -122,7 +122,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
                 ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." <u>attendra votre appel</u> le ".$Jour[$dateRdv->format('l')]." ".$dateRdv->format('j')." ".$Mois[$dateRdv->format('F')]." à <u>".$dateRdv->format('H')."h".$dateRdv->format('i')." précise</u></b>
                     au numéro suivant : <b>".$consultant->getTel1()."</b>";
             if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2"){   
-                $message .= "<br><br>Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> de :<br>";
+                $message .= "<br><br>Pour ce rendez-vous téléphonique, merci de vous munir <u>impérativement</u> des copies de :<br>";
             }
         }
 		
