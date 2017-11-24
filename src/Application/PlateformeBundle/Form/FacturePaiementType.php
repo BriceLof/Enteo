@@ -20,13 +20,14 @@ class FacturePaiementType extends AbstractType
         $builder
             ->add('statut', ChoiceType::class, array(
                 'label' => 'Statut',
+                'placeholder' => 'Selectionner',
                 'choices'  => array(
                     'Sent' => 'sent',
                     'Paid' => 'paid',
                     'Paid partiel' => 'partiel',
                     'Error' => 'error',
                 ),
-                'required' => false,
+                'required' => true,
                 'attr' => array(
                     'class' => 'statutPaiementFacture'
                 )
