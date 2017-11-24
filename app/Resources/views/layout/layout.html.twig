@@ -48,6 +48,10 @@
                                         <li><a href="{{ path('application_add_beneficiaire') }}">Ajout Bénéficiaires</a></li>                                        
                                         <li role="separator" class="divider"></li>
                                         <li><a href="{{ path('application_index_bureau') }}">Bureaux</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('application_mission_admin_index') }}" target="_blank">Missions</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{{ path('application_list_facture_home') }}">Factures</a></li>
                                         {# if is_granted('ROLE_ADMIN') %}
                                             <li role="separator" class="divider"></li>
                                             <li><a href="{{ path('application_feedback_list') }}">Feed Back</a></li>
@@ -68,10 +72,9 @@
                                 <!--<li><a href="#contact">Scripts</a></li>-->
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
 
-                                <li><a href="{{ path('application_mission_index', { 'id': app.user.id }) }}" target="_blank">Mes missions</a></li>
-
                             {% elseif is_granted('ROLE_CONSULTANT') %}
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
+                                <li><a href="{{ path('application_mission_index', { 'id': app.user.id }) }}" target="_blank">Mes missions</a></li>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
                                 <li><a href="{{ path('application_show_bureau') }}" target="_blank">Agenda Bureau</a></li>

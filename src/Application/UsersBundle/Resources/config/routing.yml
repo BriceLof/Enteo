@@ -9,7 +9,7 @@ application_user_document:
 #mission
 application_user_mission:
     resource: "@ApplicationUsersBundle/Resources/config/routing/mission.yml"
-    prefix:   /user/mission
+    prefix:   /mission
     
 user_type:
     path: /type/{typeUser}

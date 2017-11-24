@@ -107,6 +107,7 @@ class UserDocument
         return $this->user;
     }
 
+
     /**
      * Add document
      *

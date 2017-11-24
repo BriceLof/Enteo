@@ -1664,3 +1664,27 @@ if(document.getElementById('suiviAdministratif')) {
         $('#suivi_administratif_detailStatut option[value="'+ detailStatut +'"]').prop('selected', true);
     });
 }
+
+/**
+ * evenement quand on change de statut financement dans le pod suivi administratif
+ */
+(function () {
+    $("#suivi_administratif_detailStatut").on('change',function () {
+        afficheModal()
+    });
+    $("#suivi_administratif_statut").on('change',function () {
+        afficheModal()
+    })
+
+    /**
+     * function qui permet d'afficher le modal selon le statut dans suivi administratif
+     */
+    function afficheModal() {
+        if (($('#suivi_administratif_detailStatut').val() == 21 || $("#suivi_administratif_detailStatut").val() == 22) && $('#suivi_administratif_statut').val() == 8) {
+            $("#ModalTarif").modal('show');
+        }else{
+            $('#tarif_financement').slideUp("slow");
+            $("#suivi_administratif_mission").val('false');
+        }
+    };
+})();

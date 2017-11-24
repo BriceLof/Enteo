@@ -23,25 +23,24 @@ class SuiviAdministratifController extends Controller
      */
     public function newAction(Request $request, $id)
     {
-       
+
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
-         
+
         $suiviAdministratif = new SuiviAdministratif();
         $form = $this->createForm(SuiviAdministratifType::class, $suiviAdministratif);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             //if($form['quoi']->getData()== 'Facture solde'){
 
-                //il faudrait ajour le consultant plus tard
-                //$this->get('application_plateforme.mail')->sendFactureSoldeMessage($beneficiaire);
+            //il faudrait ajour le consultant plus tard
+            //$this->get('application_plateforme.mail')->sendFactureSoldeMessage($beneficiaire);
             //}
             $suiviAdministratif = $form->getData();
             $suiviAdministratif->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
-            if(!is_null($suiviAdministratif->getStatut())){
-                if($suiviAdministratif->getStatut()->getSlug() == "recevabilite")
-                {
+            if (!is_null($suiviAdministratif->getStatut())) {
+                if ($suiviAdministratif->getStatut()->getSlug() == "recevabilite") {
                     $historique = new Historique();
                     $historique->setHeuredebut(new \DateTime('now'));
                     $historique->setHeurefin(new \DateTime('now'));
@@ -54,9 +53,9 @@ class SuiviAdministratifController extends Controller
                 }
             }
 
-            if(!is_null($beneficiaire->getAccompagnement())){
+            if (!is_null($beneficiaire->getAccompagnement())) {
                 $financeur = $beneficiaire->getAccompagnement()->getFirstFinanceur();
-                if($financeur != null){
+                if ($financeur != null) {
                     $financeur->setNom($form['typeFinanceur']->getData());
                     $financeur->setOrganisme($form['organisme']->getData());
                     $em->persist($financeur);
@@ -66,6 +65,16 @@ class SuiviAdministratifController extends Controller
             $beneficiaire->setOrganisme($form['organisme']->getData());
             $em->persist($beneficiaire);
 
+            //  c'est la fonction qui permet appelle la mission
+            if(!is_null($suiviAdministratif->getDetailStatut())){
+                if (($suiviAdministratif->getDetailStatut()->getId() == 21 || $suiviAdministratif->getDetailStatut()->getId() == 22) && $form['mission']->getData() == 'true') {
+                    $this->forward('ApplicationUsersBundle:Mission:new', array(
+                        'idBeneficiaire' => $beneficiaire->getId(),
+                        'idConsultant' => $beneficiaire->getConsultant()->getId(),
+                        'montant' => $form['tarif']->getData()
+                    ));
+                }
+            }
             $em->persist($suiviAdministratif);
             $em->flush();
 
@@ -90,8 +99,17 @@ class SuiviAdministratifController extends Controller
      */
     public function showAllAction(Beneficiaire $beneficiaire)
     {
+        $suiviAdministratifs = $beneficiaire->getSuiviAdministratif();
+
+        $tabFactureClosed = array();
+        foreach ($suiviAdministratifs as $suiviAdministratif){
+            if(stristr($suiviAdministratif->getInfo(),'Facture fermée N°') !== false){
+                $tabFactureClosed[] = $suiviAdministratif->getInfo();
+            }
+        }
         return $this->render('ApplicationPlateformeBundle:SuiviAdministratif:showAll.html.twig', array(
             'beneficiaire' => $beneficiaire,
+            'tabFactureClosed' => $tabFactureClosed
         ));
     }
 
@@ -150,9 +168,9 @@ class SuiviAdministratifController extends Controller
         }
 
         return $this->render('ApplicationPlateformeBundle:SuiviAdministratif:edit.html.twig', array(
-            'suiviAdministratif'      => $suiviAdministratif,
+            'suiviAdministratif' => $suiviAdministratif,
             'beneficiaire' => $beneficiaire,
-            'edit_form'   => $editForm->createView(),
+            'edit_form' => $editForm->createView(),
         ));
     }
 

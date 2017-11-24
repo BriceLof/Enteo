@@ -24,7 +24,7 @@ class MissionController extends Controller
      * @param $idBeneficiaire
      * @param $idConsultant
      */
-    public function newAction($idBeneficiaire , $idConsultant)
+    public function newAction($idBeneficiaire , $idConsultant, $montant)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -40,6 +40,7 @@ class MissionController extends Controller
         $mission->setBeneficiaire($beneficiaire);
         $mission->setConsultant($consultant);
         $mission->setState('new');
+        $mission->setTarif($montant);
 
         $em->persist($mission);
 
@@ -72,6 +73,7 @@ class MissionController extends Controller
         $em->flush();
 
 //        envoi mail pour administrateur
+        $this->get('application_users.mailer.mail_for_mission')->acceptedMission($mission);
     }
 
     public function rejectedAction($id){
@@ -102,6 +104,7 @@ class MissionController extends Controller
         $em->flush();
 
 //        envoi mail consultant
+        $this->get('application_users.mailer.mail_for_mission')->confirmedMission($mission, $beneficiaire->getConsultant());
     }
 
     public function revokedAction($id){
@@ -121,7 +124,7 @@ class MissionController extends Controller
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getid() == $id ) {
+        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION')) {
             $consultant = $mission->getConsultant();
         }elseif ($this->getUser()->getid() == $mission->getConsultant()->getId()) {
             $consultant = $this->getUser();
@@ -152,7 +155,8 @@ class MissionController extends Controller
                 break;
         }
 
-        if ($admin = 1){
+        $typeUser = $this->get('application_users.getTypeUser')->typeUser($this->getUser());
+        if ($typeUser == 'Administrateur'){
             return $this->redirect($this->generateUrl('application_mission_admin_index'));
         }else{
             return $this->redirect($this->generateUrl('application_mission_index', array(

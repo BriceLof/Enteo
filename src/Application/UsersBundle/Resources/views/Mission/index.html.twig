@@ -5,19 +5,19 @@
     <link rel="stylesheet" href="{{ asset('css/mission.css') }}" type="text/css">
 {% endblock %}
 
-{% block title %}Mes missions{% endblock%}
+{% block title %}Missions{% endblock%}
 
 {% block body %}
     <div class="container">
         <div class="page-header">
-            <h1>Mes missions</h1>
+            <h1>Missions</h1>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Missions - En cours</b></h3>
+                        <h3 class="panel-title"><b>En cours</b></h3>
                     </div>
                     <div class="panel-body">
                         {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'confirmed'}  %}
@@ -27,7 +27,7 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Missions - New</b></h3>
+                        <h3 class="panel-title"><b>En attente d'acceptation Consultant</b></h3>
                     </div>
                     <div class="panel-body">
                         {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'new'}  %}
@@ -36,7 +36,7 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Missions - En attente</b></h3>
+                        <h3 class="panel-title"><b>En attente de traitement Enthéor</b></h3>
                     </div>
                     <div class="panel-body">
                         {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'accepted'}  %}

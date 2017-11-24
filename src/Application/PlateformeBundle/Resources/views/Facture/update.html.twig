@@ -1,0 +1,76 @@
+<!-- Modal -->
+<div class="modal fade" id="myModalFactureUpdate{{ loopIndex }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ path('application_update_facture', { 'numero' : facture.numero }) }}" method="POST"  >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modification facture</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="block_form_facture">
+                        <header>
+                            <div class="row">
+                                <p class="col-md-3"><b>Financeur * : </b></p>
+                                <p class="col-md-12">{{ form_widget(form.nom_financeur, {'attr' : {"value": nomFinanceur } }) }}</p>
+                                <p class="col-md-6">{{ form_widget(form.rue_financeur, {'attr' : {"value": rueFinanceur } }) }}</p>
+                                <p class="col-md-6">{{ form_widget(form.code_postal_financeur, {'attr' : {"value": cpVilleFinanceur } }) }}</p>
+                            </div>
+                            <p id="objet" class="row">
+                                <br>
+                                <b class="col-md-12">Objet : Accompagnement VAE {{ beneficiaire.civiliteConso | capitalize ~ ' '~ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</b><br><br>
+                                <span class="col-md-2">N° Ref :</span>  <span class="col-md-3">{{ form_widget(form.numero_ref, {'attr' : {"value": facture.numeroRef } }) }}</span> <span class="col-md-3">Code Adhérent :</span> <span class="col-md-3">{{ form_widget(form.code_adherent, {'attr' : {"value": facture.codeAdherent } }) }}</span>
+                            </p>
+                        </header>
+
+                        <section>
+                            <div class="row">
+                                <br>
+                                <p><b><span class="blue_text col-md-5">Accompagnement VAE {{ beneficiaire.accompagnement.heure }}h *</span></b> <span class="col-md-4">{{ form_widget(form.montant) }}</span></p><br>
+                                <p><b><span class="col-md-3">Détails  </span></b> <span class="col-md-5">{{ form_widget(form.detail_accompagnement) }}</span></p>
+                            </div>
+
+                            <div class="row">
+                                <br>
+                                <p><span class="col-md-3">{{ form_label(form.info_paiement) }}</span> <span class="col-md-6">{{ form_widget(form.info_paiement, {'attr' : {"value": facture.infoPaiement } }) }}</span></p>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    {{ form_widget(form.save, {'attr' : {'class' : 'btn btn-warning'}, 'label' : 'Modifier'} ) }}
+                </div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalFactureUpdateClose{{ loopIndex }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ path('application_update_facture', { 'numero' : facture.numero }) }}" method="POST"  >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Fermeture facture</h4>
+                </div>
+                <div class="modal-body">
+                    <h4><b style="color:red">IMPORTANT</b></h4>
+                    <p style="font-size:14px;">Vous êtes sur le point de fermer cette facture. Aucune modification ne pourra être faite après cela.<br><br>
+                        Etes-vous sûr de vouloir continuer ?</p>
+                    <input type="hidden" name="facture_closed" value="yes" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    {{ form_widget(formFactureFermer.save) }}
+                </div>
+                {{ form_rest(formFactureFermer) }}
+            </form>
+        </div>
+    </div>
+</div>

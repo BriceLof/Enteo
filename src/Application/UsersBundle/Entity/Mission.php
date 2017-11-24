@@ -49,6 +49,14 @@ class Mission
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="montant", type="float",nullable=true)
+     */
+    private $tarif;
+
     /**
      * Constructor
      */
@@ -153,6 +161,8 @@ class Mission
     {
         $this->consultant = $consultant;
 
+        $consultant->addMission($this);
+
         return $this;
     }
 
@@ -188,5 +198,29 @@ class Mission
     public function getDocument()
     {
         return $this->document;
+    }
+
+    /**
+     * Set tarif
+     *
+     * @param float $tarif
+     *
+     * @return Mission
+     */
+    public function setTarif($tarif)
+    {
+        $this->tarif = $tarif;
+
+        return $this;
+    }
+
+    /**
+     * Get tarif
+     *
+     * @return float
+     */
+    public function getTarif()
+    {
+        return $this->tarif;
     }
 }

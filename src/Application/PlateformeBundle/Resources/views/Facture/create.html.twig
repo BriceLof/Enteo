@@ -1,0 +1,54 @@
+ <!-- Modal -->
+<div class="modal fade" id="facturation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ path('application_create_facture', { 'id' : beneficiaire.id }) }}" method="POST"  >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Génération facture</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="block_form_facture">
+                        <header>
+                            <div class="row">
+                                    <p class="col-md-3"><b>Financeur * : </b></p>
+                                    <p class="col-md-12">{{ form_widget(form.nom_financeur) }}</p>
+                                    <p class="col-md-6">{{ form_widget(form.rue_financeur) }}</p>
+                                    <p class="col-md-6">{{ form_widget(form.code_postal_financeur) }}</p>
+                            </div>
+                            <p id="objet" class="row">
+                                <br>
+                                <b class="col-md-12">Objet : Accompagnement VAE {{ beneficiaire.civiliteConso | capitalize ~ ' '~ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</b><br><br>
+                                <span class="col-md-2">N° Ref :</span>  <span class="col-md-3">{{ form_widget(form.numero_ref) }}</span> <span class="col-md-3">Code Adhérent :</span> <span class="col-md-3">{{ form_widget(form.code_adherent) }}</span>
+                            </p>
+                        </header>
+
+                        <section>
+                            <div class="row">
+                                <br>
+                                <p><b><span class="blue_text col-md-4">Accompagnement VAE {{ beneficiaire.accompagnement.heure }}h *</span></b> <span class="col-md-4">{{ form_widget(form.montant) }}</span></p>
+                            </div>
+
+                            <div class="row">
+                                <br>
+                                <p><span class="col-md-3">{{ form_label(form.info_paiement) }}</span> <span class="col-md-6">{{ form_widget(form.info_paiement) }}</span></p>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    {{ form_widget(form.save) }}
+                </div>
+
+                <!-- partie du formulaire que je ne veux pas avoir -->
+                <div style="display:none">
+                    {{ form_label(form.detail_accompagnement) }}
+                    {{ form_widget(form.detail_accompagnement) }}
+                </div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+</div>

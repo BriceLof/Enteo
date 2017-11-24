@@ -109,6 +109,18 @@ $(function () {
         $("#afficheListNouvelle .hiddenNews").toggle('slow')
     });
 
+    $( ".blockGenerationFacturePaiement" ).mouseenter(function() {
+        if($(".blockGenerationFacturePaiement button").prop("disabled") == true){
+            $(".disabledFacturationGeneration").show()
+        }
+        else{
+            $(".disabledFacturationGeneration").hide()
+        }
+    });
+    $( ".blockGenerationFacturePaiement" ).mouseleave(function() {
+        $(".disabledFacturationGeneration").hide()
+    });
+
 });
 
 /**

@@ -1,21 +1,36 @@
-<form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+<form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm"
+      action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}">
     <p style="font-weight: bold;color: #50a60d;font-size: 13px;">Mofidier le Statut Administratif : </p>
-    <div class="row">
 
+    <div class="row">
         <span class="col-xs-2">{{ form_label(form.statut) }}</span>
         {% if(beneficiaire.suiviAdministratif | length > 0) %}
-            <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd', 'data-value' : beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].statut.id }}) }}</span>
+            {% if beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].statut is not null %}
+                <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd', 'data-value' : beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].statut.id }}) }}</span>
+            {% else %}
+                <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
+            {% endif %}
         {% else %}
             <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
         {% endif %}
-        <span class="col-xs-3">{{ form_label(form.detailStatut) }}</span><div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
-        {% if(beneficiaire.suiviAdministratif | length > 0) %}
+        <span class="col-xs-3">{{ form_label(form.detailStatut) }}</span>
+        <div style="display:none" class="block_info_chargement"><img class="img_loading"
+                                                                     src="{{ asset('images/ajax-loader.gif') }}"/> <span
+                    class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+        {% if beneficiaire.suiviAdministratif | length > 0 and beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].detailStatut is not null %}
             <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled', 'data-value' : beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1].detailStatut.id }}) }}</span>
         {% else %}
             <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
         {% endif %}
     </div>
-    
+    <div class="row" id="tarif_financement">
+        <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px;margin-left: 15px">Nouvelle Mission : </p>
+        <div>
+            <span class="col-xs-2">{{ form_label(form.tarif) }} (€)</span>
+            <span class="col-xs-3">{{ form_widget(form.tarif) }}</span>
+        </div>
+    </div>
+
     <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px">Information de suivi : </p>
     <div class="row">
         <span class="col-xs-6">{{ form_widget(form.info) }}</span>
@@ -37,8 +52,31 @@
     <div>
         <span class="valider">{{ form_widget(form.submit) }}</span>
     </div>
-    <div  class="form-rest">
+    <div class="form-rest">
         <span>{{ form_rest(form) }}</span>
         <span>{{ form_errors(form) }}</span>
     </div>
 </form>
+
+{#modal#}
+<div>
+    <div id="ModalTarif" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Assigner une nouvelle mission ?</h4>
+                </div>
+                <div class="modal-body">
+                    <span class="col-xs-2">Tarif (€)</span>
+                    <span class="col-xs-3"><input type="number" id="input_tarif_modal" step=".01"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+                    <button type="button" class="btn btn-primary" onclick="nouvelleMission();">Oui</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

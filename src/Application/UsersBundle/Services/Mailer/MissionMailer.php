@@ -26,7 +26,6 @@ class MissionMailer extends Mailer
     }
 
     public function acceptedMission(Mission $mission){
-
         $ref = 'b';
         $from = "christine.clement@entheor.com";
         $subject = "Accepted mission";
@@ -40,7 +39,25 @@ class MissionMailer extends Mailer
         $cc = null;
         $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(
-            'mission' => $mission
+            'mission' => $mission,
+            'reference' => $ref
+        ));
+
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+    }
+
+    public function confirmedMission(Beneficiaire $beneficiaire, Users $consultant){
+
+        $ref = 'a';
+        $from = "christine.clement@entheor.com";
+        $subject = "New Bénéficiaire";
+        $template = '@Aub/Mission/mail/confirmedMission.html.twig';
+        $to = $consultant->getEmail();
+        $cc = null;
+        $bcc = "support.informatique@entheor.com";
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
+            'reference' => $ref
         ));
 
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);

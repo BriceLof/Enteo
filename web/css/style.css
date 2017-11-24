@@ -771,4 +771,10 @@ textarea {
     min-width: 100px;
     display: inline-block;
 }
-
+#tarif_financement{
+    margin-top: 8px;
+    display: none;
+}
+#ModalTarif .modal-body{
+    margin-bottom: 40px;
+}

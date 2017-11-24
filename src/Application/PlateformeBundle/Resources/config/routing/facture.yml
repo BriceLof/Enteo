@@ -1,0 +1,38 @@
+# pagination url à à la page 1 : /facture/
+application_list_facture_home:
+    path: /{page}
+    defaults:
+          _controller: ApplicationPlateformeBundle:Facture:list
+          page:        1
+          requirements:
+          page: \d*
+
+# pagination url à partir de la page 2 : /facture/p/2
+application_list_facture:
+    path: /p/{page}
+    defaults:
+          _controller: ApplicationPlateformeBundle:Facture:list
+          page:
+          requirements:
+          page: \d*
+
+application_create_facture:
+    path:     /create/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Facture:create" }
+
+application_update_facture:
+    path:     /update/{numero}
+    defaults: { _controller: "ApplicationPlateformeBundle:Facture:update" }
+
+application_paiement_facture:
+    path:     /paiement/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Facture:paiement" }
+
+application_show_facture:
+    path:     /show/{numero}
+    defaults: { _controller: "ApplicationPlateformeBundle:Facture:show" }
+
+application_delete_facture:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Facture:delete" }
+

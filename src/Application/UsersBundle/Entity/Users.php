@@ -35,16 +35,13 @@ class Users extends BaseUser
     private $disponibilite;
 
     /**
-     * @ORM\Column(nullable=true)
-     * @ORM\OneToMany(targetEntity="UserDocument", mappedBy="user", cascade={"persist","remove"})
-     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\UserDocument", mappedBy="user", cascade={"persist","remove"})
      */
     protected $userDocuments;
 
     /**
-     * @ORM\Column(nullable=true)
-    * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="consultant", cascade={"persist","remove"})
-    */
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="consultant", cascade={"persist","remove"})
+     */
     protected $mission;
 
     /**
@@ -134,8 +131,8 @@ class Users extends BaseUser
         parent::__construct();
         
         $this->dateCreation = new \DateTime();
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->missions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userDocuments = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -622,20 +619,6 @@ class Users extends BaseUser
     public function getUserDocuments()
     {
         return $this->userDocuments;
-    }
-
-    /**
-     * Set userDocuments
-     *
-     * @param string $userDocuments
-     *
-     * @return Users
-     */
-    public function setUserDocuments($userDocuments)
-    {
-        $this->userDocuments = $userDocuments;
-
-        return $this;
     }
 
     /**

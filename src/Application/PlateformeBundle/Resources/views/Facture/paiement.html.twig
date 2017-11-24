@@ -1,0 +1,32 @@
+<!-- Modal -->
+<div class="modal fade" id="modalPaiement{{ facture.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ path('application_paiement_facture', { 'id' : facture.id }) }}" method="POST"  >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Mise à jour du statut de paiement </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p class="col-md-2">Statut  </p> <p class="col-md-4" style="margin-top:-5px">{{ form_widget(form.statut) }}</p>
+                        <div class="montantPayerFacture" style="display: none"><p class="col-md-3">Montant payé * : </p> <p class="col-md-3" style="margin-top:-5px">{{ form_widget(form.montant_payer) }}</p></div>
+                    </div>
+                    <div class="row modePaiementFacture" style="display: none" >
+                        <p class="col-md-4">Mode de paiement *  </p> <p class="col-md-4" style="margin-top:-5px">{{ form_widget(form.mode_paiement) }}</p>
+                    </div>
+                    <div class="row datePaiementFacture" style="display: none">
+                        <p class="col-md-4">Date de paiement *  </p> <p class="col-md-4" style="margin-top:-5px">{{ form_widget(form.date_paiement) }}</p>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    {{ form_widget(form.save) }}
+                </div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+</div>
