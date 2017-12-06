@@ -1,0 +1,19 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+
+        {{ mission.consultant.prenom|capitalize~" "~mission.consultant.nom|upper }} n'est plus en charge de l'accompagnement de
+        {{ beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}.
+        <br>
+        <br>
+        {{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|upper }} est désormais en charge de cet accompagnement.
+        <br>
+        <br>
+        <b>Merci de lui adresser une proposition de mission.</b>
+    </p>
+{% endblock %}

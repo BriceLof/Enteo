@@ -1,0 +1,24 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+
+        {{ mission.beneficiaire.prenomConso|capitalize~" "~mission.beneficiaire.nomConso|upper }} a renoncé définitivement
+        à sa VAE.
+        <br>
+        <br>
+        <b>Merci de vérifier si une feuille de présence peut être signée et transmise.</b>
+
+        <br>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </p>
+{% endblock %}

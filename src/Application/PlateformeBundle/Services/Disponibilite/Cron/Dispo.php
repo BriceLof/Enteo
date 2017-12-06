@@ -33,7 +33,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             $cc = $listeAdministrateurs;
             //$cc = "";
             $bcc = array(
-				"support.informatique@entheor.com" => "Support",
+				"support@iciformation.fr" => "Support",
 			);
             
             $arrayConsultant = array();
@@ -149,7 +149,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
 						</div>";
 						
 			$cc = "f.azoulay@entheor.com";
-	        $bcc = array("support.informatique@entheor.com" => "Support");
+	        $bcc = array("support@iciformation.fr" => "Support");
 			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
 	        $body = $this->templating->render($template, array(
 	            'sujet' => $subject ,
@@ -164,4 +164,4 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
         
 	}
 }
-?>
+?>                  

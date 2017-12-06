@@ -74,3 +74,24 @@
 #statut_consultant #form_dates{
     vertical-align: text-top;
 }
+
+.glyphicon{
+    margin: 0 5px;
+    cursor: pointer;
+}
+.glyphicon-ok{
+    color: green;
+}
+.glyphicon-remove{
+    color: red;
+}
+.panel-body .table td{
+    border: none;
+}
+#tabs_mission{
+    border: none;
+}
+
+div.error{
+    color: red;
+}

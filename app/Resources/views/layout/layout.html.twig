@@ -7,7 +7,10 @@
         <title>{% if app.environment == 'dev' %} {{ 'DEV ' }} {% endif %} ENTHEO - {% block title %}Accueil{% endblock %}</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        {% stylesheets filter="cssrewrite, ?scssphp" '@ApplicationPlateformeBundle/Resources/public/css/main.css' %}
+        {% stylesheets filter="cssrewrite, ?scssphp"
+        '@ApplicationPlateformeBundle/Resources/public/css/main.css'
+        '@ApplicationUsersBundle/Resources/public/css/facturation.css'
+        %}
             <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
         {% endstylesheets %}
         {% block stylesheets %}
@@ -74,7 +77,6 @@
 
                             {% elseif is_granted('ROLE_CONSULTANT') %}
                                 <li><a href="{{ path('application_admin_add_evenement') }}" target="_blank">Agenda</a></li>
-                                <li><a href="{{ path('application_mission_index', { 'id': app.user.id }) }}" target="_blank">Mes missions</a></li>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
                                 <li><a href="{{ path('application_show_bureau') }}" target="_blank">Agenda Bureau</a></li>
@@ -130,12 +132,15 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/additional-methods.min.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% javascripts filter="?jsqueeze"
-           '@ApplicationPlateformeBundle/Resources/public/js/main.js'
-           '@ApplicationUsersBundle/Resources/public/js/form.js' %}
+    '@ApplicationPlateformeBundle/Resources/public/js/main.js'
+    '@ApplicationUsersBundle/Resources/public/js/form.js'
+    '@ApplicationUsersBundle/Resources/public/js/facturation.js'
+%}
     <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 {% block javascripts %}

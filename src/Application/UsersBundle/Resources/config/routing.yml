@@ -2,14 +2,19 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 #document
-application_user_document:
-    resource: "@ApplicationUsersBundle/Resources/config/routing/document.yml"
-    prefix:   /user/document
+application_user_contrat:
+    resource: "@ApplicationUsersBundle/Resources/config/routing/contrat.yml"
+    prefix:   /user/contrat
 
 #mission
 application_user_mission:
     resource: "@ApplicationUsersBundle/Resources/config/routing/mission.yml"
     prefix:   /mission
+
+#facturation
+application_user_facturation:
+    resource: "@ApplicationUsersBundle/Resources/config/routing/facturation.yml"
+    prefix:   /faturation
     
 user_type:
     path: /type/{typeUser}

@@ -39,12 +39,9 @@
             <div class="row">
                 {{ beneficiaire.consultant.calendrieruri|raw }}
             </div>
-            <div class="tableOnglet row">
             {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': beneficiaire.consultant.disponibilite } %}
-            </div>
         </div>
         {% include "ApplicationPlateformeBundle:Calendar:form.html.twig" with { 'link' : 'application_add_evenement', 'id': beneficiaire.id } %}
     </div>
-    {% include "ApplicationPlateformeBundle:Calendar:confirmAdd.html.twig" %}
 </div>
 {% endblock%}

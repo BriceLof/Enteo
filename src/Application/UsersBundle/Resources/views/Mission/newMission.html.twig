@@ -1,50 +1,360 @@
 {% extends "::layout/layout-pdf.html.twig" %}
 
-{% block title %}Contrat de {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}{% endblock %}
+{% block title %}proposition {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ absolute_url(asset('css/pdfMission.css')) }}">
+    <style>
+        .page{
+            height: 1020px;position: relative;padding: 0 50px;font-size: 13px;
+        }
+        .center{
+            text-align: center;
+        }
+        .liste li{
+            margin-bottom: 10px;
+        }
+        .logo_entheor{
+            width: 200px;
+        }
+        .line-heigth{
+            line-height: 2;
+        }
+        .titre{
+            background-color: rgba(128, 128, 128, 0.22);
+        }
+        .top50{margin-top: 50px}
+        .top30{margin-top: 30px}
+        .top20{margin-top: 20px}
+        .top200{margin-top: 200px}
+        .top10{margin-top: 10px}
+        .font12{
+            font-size: 12px;
+        }
+        .right{
+            text-align: right;
+        }
+        .footer{
+            position: absolute;bottom: 0;text-align: center;width: 100%; margin-left: -50px;
+        }
+        .footer p{
+            text-align: center;font-size: 12px; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+        }
+        .signature{
+            display: inline-block;
+            width: 30%;
+            border-top: 1px solid black;
+        }
+        #signature_right{
+            float: right;
+        }
+        #signature_left{
+            float: left;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div style="height: 1020px">
-            <div class="row">
-                <div class="col-md-12" style="text-align: center">
-                    <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+    <div style="background-color: #6c6159 ; width: 100%">
+        <div class="container" style="background-color: white">
+            <div class="page">
+                <div class="row">
+                    <div style="text-align: center">
+                        <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <div class="top50">
+                            <p style="font-size: 20px; font-weight: bold; text-align: center;font-family: Calibri; padding: 10px">
+                                AVENANT A LA CONVENTION DE PRESTATION DE SERVICE
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 80px">
+                    <h5><b><u>ENTRE LES SOUSSIGNES :</u></b></h5>
+                    <p class="top50">
+                        ENTHEOR dont le siège est sis : 21 rue Louis Dansard, 69007 Lyon immatriculée sous le numéro SIREN 527 732 069 000 28<br>
+                        et le numéro d'activité : 82 69 110 2369 <br>
+                        et représentée par <b>Madame Christine CLEMENT MOLIER </b>agissant en qualité de gérant de ladite société, ayant tous les pouvoirs à l'effet des présentes.
+                    </p>
+                    <p class="top50 right line-heigth">
+                        Ci-après dénommée « <b>le Client</b> »,<br>
+                        d'une part,
+                    </p>
+                    <p class="top30">
+                        ET
+                    </p>
+
+                    <p class="top50">
+                        {% if facturation.type == 'entreprise' %}
+                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}, Président de la SASU {{ facturation.raisonSociale }}, domiciliée au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}</b>, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
+                        {% endif %}
+                    </p>
+                    <p class="top50 right line-heigth">
+                        Ci-après dénommée « <b>le Prestataire</b> »,<br>
+                        d'autre part,
+                    </p>
+                    <p class="top50 right">
+                        Ensemble désigné « <b>les Parties</b> »,<br>
+
+                    </p>
+                </div>
+
+                <div class="footer center">
+                    <p>
+                        21, rue Louis Dansard - 69007 Lyon - 06 81 85 84 28<br>
+                        Siret : 527 732 069 000 36 - Déclaration d'activité : 8259 110 2369
+                    </p>
                 </div>
             </div>
-            <div class="row">
-                <div>
-                    <hr style="color: black; border-bottom: 1px solid black">
+
+            <div class="page">
+                <div class="row">
+                    <div style="text-align: center">
+                        <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 80px">
+                    <h5><b><u>IL EST CONVENU ET ERRETE CE QUI SUIT :</u></b></h5>
+                    <p class="top50 titre">
+                        DECLARATION PREALABLE
+                    </p>
+                    <p class="top30">
+                        Les parties ont conclu le <b>{{ consultant.contrat.date|date('d/m/Y') }}</b> un accord cadre de Convention de Service. Le prestataire, entrepreneur individuel ou sous forme de société déclare sur l'honneur au Client qu'il est à jour de la totalité de ses obligations sociales et fiscales et s'engage en outre à en assumer la totale responsabilité et à dégager le Client de toutes conséquences financières ou juridiques qui pourraient résulter du non-respect des dites obligations
+                    </p>
+                    <p class="top30">
+                        Il s'engage à informer le Client au cas où ses autres activités risqueraient d'être en conflit d'intérêt ou incompatibles avec les activités du Client et les Bénéficiaires.
+                    </p>
+                </div>
+                <div class="row top50">
+                    <p class="top50 titre">
+                        ARTICLES I - OBJET
+                    </p>
+                    <p class="top30">
+                        Le présent Avenant définit les conditions de réalisation de la mission d'accompagnement à la VAE (Validation des Acquis de l'Experience), ci-après la Mission.
+                    </p>
+                    <p class="top30">
+                        Conformément à l'accord cadre de Convention de Service, le Client propose par cet Avenant une Mission au Prestataire qui peut l'accepter ou le refuser.
+                    </p>
+                    <p class="top30">
+                        Le prestataire dispose de 72h pour signaler son accord. <br>
+                        En l'absence, le Client pourra proposer cette Mission à un autre Prestataire
+                    </p>
+                </div>
+
+                <div class="footer center">
+                    <p>
+                        21, rue Louis Dansard - 69007 Lyon - 06 81 85 84 28<br>
+                        Siret : 527 732 069 000 36 - Déclaration d'activité : 8259 110 2369
+                    </p>
                 </div>
             </div>
-            <div class="row">
-                <div>
-                    <div style="border-bottom: 1px solid black; border-top: 1px solid black; margin: 80px;">
-                        <p style="font-size: 22px; font-weight: bold; text-align: center;font-family: Calibri; padding: 10px">
-                            CONTRAT DE MISSION</span>
+
+            <div class="page">
+                <div class="row">
+                    <div style="text-align: center">
+                        <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <p class="top50 titre">
+                        ARTICLE II - DEROULEMENT DE LA MISSION
+                    </p>
+                    <ul class="top30 liste">
+                        <li>Bénéficiaire de l'Accompagnement : {{ beneficiaire.civiliteConso|capitalize~" "~beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}</li>
+                        <li>Diplôme visé : {{ beneficiaire.diplomeVise }}</li>
+                        <li>La Mission devra se dérouler entre le : {{ beneficiaire.accompagnement.dateDebut|date("d/m/Y") }} et le {{ beneficiaire.accompagnement.dateFin|date("d/m/Y") }}</li>
+                        <li>La durée prévue de l'accompagnement est de : {{ beneficiaire.accompagnement.heure }} heures</li>
+                        <li>Lieu de réalisation : en les bureaux mis à disposition par ENTHEOR ou en les bureaux du Prestataire</li>
+                        <li>Le Prestataire a réalisé l'entretien de positionnement pour ce Bénéficiaire: OUI ou NON ( à faire )</li>
+                    </ul>
+                    <p class="top50">
+                        La mission d'accompagnement à réaliser par le Prestataire comprend l'aide à la rédaction du Livret 2 et la Préparation au passage devant le Jury, et si nécessaire l'aide à la rédation du Livret 1.
+                    </p>
+                    <p class="top20">
+                        Le Client a mis à la disposition du Prestataire un outil de suivi des Bénéficiaires (https://appli.entheor.com/web/login) pour lequel il dispose d'un accès personnel.
+                    </p>
+                    <p class="top20">
+                        Le Prestataire complètera la fiche du Bénéficiaire des information liées à l'Accompagnement. Il enregistrera notamment chaque rendez-vous de travail avec le Bénéficiaire.
+                    </p>
+                    <p class="top20">
+                        Au terme de la Mission, le Prestataire devra impérativement transmettre au Client une fauille de présence, relatant les séances de travail avec le Bénéficiaire. Cette fauille de présence doit impérativement être signée du Bénéficiaire comme du Prestataire. L'original de la feuille de présence est à adresser par voie postale au siège du Client.
+                    </p>
+                </div>
+
+                <div class="footer center">
+                    <p>
+                        21, rue Louis Dansard - 69007 Lyon - 06 81 85 84 28<br>
+                        Siret : 527 732 069 000 36 - Déclaration d'activité : 8259 110 2369
+                    </p>
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="row">
+                    <div style="text-align: center">
+                        <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <p class="top50 titre">
+                        ARTICLE III - REMUNERATION
+                    </p>
+                    <p class="top20">
+                        Conformément à la Convention de Service conclue entre le Client et le Prestataire, et sous réserve :
+                    </p>
+                    <ul class="top20">
+                        <li>que la Mission d'accompagnement à la VAEsoit terminée dans les délais impartis, en ce inclus la préparation au passage devant le jury ;</li>
+                        <li>que la feuille de présence orginale aie été réceptionnée par le Client ;</li>
+                        <li>que la fiche du Bénéficiaire soit complète,</li>
+                        <li>que de Livret 2 aie été téléchargé dans l'espace documentaire du Bénéficiaire ;</li>
+                        <li>que le Prestataire aie adressé au Client sa facture</li>
+                    </ul>
+                    <p class="top20">
+                        Le Prestataire percevra en rémunération de sa Mission d'accompagnement à la VAE des honoraires définis forfaitement, soit :
+                    </p>
+                    <p class="top20">
+                        - <b>{{ mission.tarif }} Euros</b> net de taxe,
+                    </p>
+                    <p class="top50">
+                        Le règlement se fera à l'issue de la Mission sur présentation de facture au nom du Prestataire.
+                    </p>
+                    <p class="top20">
+                        Les factures seront payables par chèque ou virement à 30 jours fin de mois
+                    </p>
+                </div>
+
+                <div class="row top20">
+                    <p class="top50 titre">
+                        ARTICLE IV - DUREE ET DENONCIATION DE LA CONVENTION
+                    </p>
+                    <p class="top30">
+                        Le présent Avenant est conclu à compter de la signature des présentes. Il étend ses effets jusqu'à la conclusion de la Mission et n'engage pas les Parties au-delà de celle-ci.
+                    </p>
+                    <p class="top20">
+                        En cas d'impossibilité à mener à bien la Mission, le Prestataire pourra dénoncer à tout moment celle-ci par lettre avec accusé de réception. Ce faisant, il renoncera au bénéfice de la rémunération.
+                    </p>
+                    <p class="top20">
+                        Le Client pourra déssaisir le Prestataire de la Mission au cas où le Prestataire n'observerait pas l'une des dispositions décrites dans la Convention de Service ou dans le présent Avenant. Dans une telle éventualité, le Prestataire percevra 50% du montant des honoraires dus pour la prestation si tant est que la moitié au moins des heures prévues pour la Mission aient été réalisées et que le Prestataire puisse l'attester par une feuille de présence signée du Bénéficiaire.
+                    </p>
+                </div>
+
+                <div class="footer center">
+                    <p>
+                        21, rue Louis Dansard - 69007 Lyon - 06 81 85 84 28<br>
+                        Siret : 527 732 069 000 36 - Déclaration d'activité : 8259 110 2369
+                    </p>
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="row">
+                    <div style="text-align: center">
+                        <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <p class="top50 titre">
+                        ARTICLE V - INTUITUE PERSONAE
+                    </p>
+                    <p class="top30">
+                        Le présent Avenant est conclu en tenant compte des aptitudes et des compétences propres au Prestataire qui prend l'engagement d'executer personnellement la Mission.
+                    </p>
+                    <p class="top20">
+                        En conséquence, le Prestataire ne pourra en aucune façon confier tout ou partie de l'exécution de la Mission à un tiers sans obtenir pour ce faire l'accord préalable exprès du Client.
+                    </p>
+                </div>
+
+                <div class="row">
+                    <p class="top50 titre">
+                        ARTICLE VI - INDEPENDANCE DES PARTIES
+                    </p>
+                    <p class="top30">
+                        Le Prestataire, en sa qualité de prestataire de services indépendant, jouit de la plus grande indépendance dans l'organisation de son activité commerciale et de sa structure juridique.
+                    </p>
+                    <p class="top20">
+                        Le Préstataire déclarant intervenir en qualité de prestataire de services indépendant, il ne saurait en aucun cas être considéré comme salarié de son Client. Le Prestataire n'est pas placé sous l'autorité hiérarchique du Client. C'est notamment lui qui décide d'accepter les Missions qui lui sont proposées.
+                    </p>
+                    <p class="top20">
+                        Le Prestataire déclare de plus souhaiter poursuivre ses activiés établies antérieurement à la présente Convention et à continuer de rechercher d'autres clients aux fins de maintenir et de développer ses compétences et ses affaires commerciales.
+                    </p>
+                </div>
+
+                <div class="row">
+                    <p class="top50 titre">
+                        ARTICLE VII - RESILIATION - DIFFERENDS - LITIGES
+                    </p>
+                    <p class="top30">
+                        Toute modification juridique affectant le Prestataire devra être communiquée au Client.
+                    </p>
+                    <p class="top20">
+                        En présence de tout differend survenant entre le Prestataire et le Client, concernant l'interprétation du présent Avenant, ou son exécution, ceux-ci conviennent de négocier de bonne foi en vue de parvenir à une transaction.
+                    </p>
+                    <p class="top20">
+                        Tous les litiges auxquels la présente Convention et ses contrats d'application pourraient donner lieu et qui n'auraient pas pu être réglés à l'amiable, seront de la compétence exclusive du Tribunal de Commerce du siège du Client, nonobstant appel en garantie ou pluralité de défendeurs.
+                    </p>
+                </div>
+
+                <div class="footer center">
+                    <p>
+                        21, rue Louis Dansard - 69007 Lyon - 06 81 85 84 28<br>
+                        Siret : 527 732 069 000 36 - Déclaration d'activité : 8259 110 2369
+                    </p>
+                </div>
+            </div>
+
+            <div class="page">
+                <div class="row">
+                    <div style="text-align: center">
+                        <img src="https://appli.entheor.com/web/images/logo_entheor.jpg" class="logo_entheor"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <p class="top50">
+                        La présente Convention débutera à la date de la signature.
+                    </p>
+                    <p class="top50">
+                        Fait à Lyon
+                    </p>
+                    <p class="top50">
+                        le {{ "now"|date("d/m/Y") }}
+                    </p>
+                    <p class="top30">
+                        En 2 exemplaires originaux
+                    </p>
+                </div>
+                <div class="row top50">
+                    <p class="top20 font12">
+                        Signatures précédées de la mention manuscrite <i>« Lu et approuvé, bon pour accord »</i>
+                    </p>
+                </div>
+                <div class="top200 row">
+                    <div class="top50">
+                        <p id="signature_left" class="signature">
+                            <br>
+                            Pour ENTHEOR <br>
+                            Mme Christine CLEMENT MOLIER
+                        </p>
+                        <p id="signature_right" class="signature">
+                            <br>
+                            Pour le Prestataire
                         </p>
                     </div>
                 </div>
-            </div>
-            <div>
-                <p>
-                    {{ consultant.civilite|capitalize~' '~consultant.prenom|capitalize~' '~consultant.nom|upper }},
-                </p>
-                <p>
-                    Veuillez signer ce contrat pour accepter l'accompagnement de {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}
-                </p>
-                <p style="text-align: right">
-                    signature<br><br><br>
-                    {{ consultant.prenom|capitalize~' '~consultant.nom|upper }}
-                </p>
-            </div>
-            <div style="position: fixed; bottom: 0;">
-                <p style="margin-left: auto; margin-right: auto; font-size: 14px; margin-top: 10px; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;">
-                    21, rue Louis Dansard - 69007 Lyon <br>
-                    Siret : 527 732 069 000 36 - Déclaration d'activité : 82 69 11023 69
-                </p>
+                <div class="footer center">
+                    <p>
+                        21, rue Louis Dansard - 69007 Lyon - 06 81 85 84 28<br>
+                        Siret : 527 732 069 000 36 - Déclaration d'activité : 8259 110 2369
+                    </p>
+                </div>
             </div>
         </div>
     </div>

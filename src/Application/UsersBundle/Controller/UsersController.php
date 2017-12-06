@@ -2,8 +2,6 @@
 
 namespace Application\UsersBundle\Controller;
 
-use Application\PlateformeBundle\Entity\Document;
-use Application\PlateformeBundle\Form\DocumentType;
 use Application\UsersBundle\Entity\Image;
 use Application\UsersBundle\Entity\Users;
 use Application\UsersBundle\Form\ImageType;

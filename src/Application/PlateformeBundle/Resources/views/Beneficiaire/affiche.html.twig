@@ -162,14 +162,16 @@
                                             <td>{{ form_label(edit_form.employeur.raisonSociale) }}</td>
                                             <td>{{ form_widget(edit_form.employeur.raisonSociale, {'attr':{'class': 'fiche' }}) }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.typeFinanceur) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.typeFinanceur, {'attr':{'class': 'fiche' }}) }}</td>
-                                        </tr>
-                                        <tr style="display: none" id="tdElement">
-                                            <td>{{ form_label(edit_form.employeur.organisme) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.organisme, { 'id': 'organisme' }) }}</td>
-                                        </tr>
+                                        <div class="hide">
+                                            <div>
+                                                <span>{{ form_label(edit_form.employeur.typeFinanceur) }}</span>
+                                                <span>{{ form_widget(edit_form.employeur.typeFinanceur, {'attr':{'class': 'fiche' }}) }}</span>
+                                            </div>
+                                            <div style="display: none" id="tdElement">
+                                                <span>{{ form_label(edit_form.employeur.organisme) }}</span>
+                                                <span>{{ form_widget(edit_form.employeur.organisme, { 'id': 'organisme' }) }}</span>
+                                            </div>
+                                        </div>
                                         <tr>
                                             <td>{{ form_label(edit_form.employeur.siret) }}</td>
                                             <td>{{ form_widget(edit_form.employeur.siret) }}</td>

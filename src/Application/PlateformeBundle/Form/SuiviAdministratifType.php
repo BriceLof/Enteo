@@ -43,7 +43,11 @@ class SuiviAdministratifType extends AbstractType
             ))
             ->add('tarif', NumberType::class, array(
                 'mapped' => false,
-                'required' => false
+                'required' => false,
+                'attr' => array(
+                    'aria-describedby' => 'basic-addon2',
+                    'readonly' => true
+                )
             ))
             ->add('mission', HiddenType::class, array(
                 'mapped' => false,

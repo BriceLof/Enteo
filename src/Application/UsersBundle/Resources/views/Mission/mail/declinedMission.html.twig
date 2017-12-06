@@ -1,0 +1,18 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+        le consultant {{ mission.consultant.prenom|capitalize~" "~mission.consultant.nom|upper }}
+        a refusé la proposition d'accompagnement du bénéficiaire
+        {{ mission.beneficiaire.prenomConso|capitalize~" "~mission.beneficiaire.nomConso|upper }} au motif :
+        <br>
+        {{ message }}
+        <br><br>
+        Merci de proposer cette mission à un autre consultant.
+    </p>
+{% endblock %}
+

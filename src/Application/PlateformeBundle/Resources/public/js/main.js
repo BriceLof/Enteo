@@ -369,9 +369,6 @@ function tri(el) {
     })
 })();
 
-function nouvelleMission() {
-    $('#suivi_administratif_tarif').val($("#input_tarif_modal").val());
-    $("#ModalTarif").modal('hide');
-    $('#tarif_financement').slideDown("slow");
-    $("#suivi_administratif_mission").val('true');
-}
+$( function() {
+    $( "#tabs_mission" ).tabs();
+} );

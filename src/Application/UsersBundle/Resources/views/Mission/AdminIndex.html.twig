@@ -1,0 +1,62 @@
+{% extends "ApplicationUsersBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/mission.css') }}" type="text/css">
+{% endblock %}
+
+{% block title %}Missions{% endblock%}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header container">
+                <h1>Missions</h1>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                {#consultant#}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>En attente d'acceptation Consultant</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'new'}  %}
+                    </div>
+                </div>
+                {#en cours#}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>En cours</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'confirmed'}  %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {#entheor#}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>En attente de traitement Enthéor</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'accepted'}  %}
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Missions Archivées</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ render(controller("ApplicationUsersBundle:MissionArchive:showAll")) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -32,6 +32,7 @@ class Mission
 
     /**
      * @ORM\OneToOne(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire")
+     * @ORM\JoinColumn(name="beneficiaire_id", nullable=false)
      */
     protected $beneficiaire;
 
@@ -46,9 +47,26 @@ class Mission
     protected $document;
 
     /**
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @ORM\Column(name="date_creation", type="date", nullable=true)
      */
-    private $date;
+    private $dateCreation;
+
+    /**
+     * @ORM\Column(name="date_accepter", type="date", nullable=true)
+     */
+    private $dateAcceptation;
+
+    /**
+     * @ORM\Column(name="date_confirmation", type="date", nullable=true)
+     */
+    private $dateConfirmation;
+
+    /**
+     * @ORM\Column(name="date_terminer", type="date", nullable=true)
+     */
+    private $dateTerminer;
+
+
 
     /**
      * @var float
@@ -62,8 +80,7 @@ class Mission
      */
     public function __construct()
     {
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->date = new \DateTime('now');
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -101,27 +118,171 @@ class Mission
     }
 
     /**
-     * Set date
+     * Set document
      *
-     * @param \DateTime $date
+     * @param string $document
      *
      * @return Mission
      */
-    public function setDate($date)
+    public function setDocument($document)
     {
-        $this->date = $date;
+        $this->document = $document;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get document
+     *
+     * @return string
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Mission
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDateCreation()
     {
-        return $this->date;
+        return $this->dateCreation;
+    }
+
+    /**
+     * Set dateAcceptation
+     *
+     * @param \DateTime $dateAcceptation
+     *
+     * @return Mission
+     */
+    public function setDateAcceptation($dateAcceptation)
+    {
+        $this->dateAcceptation = $dateAcceptation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateAcceptation
+     *
+     * @return \DateTime
+     */
+    public function getDateAcceptation()
+    {
+        return $this->dateAcceptation;
+    }
+
+    /**
+     * Set dateConfirmation
+     *
+     * @param \DateTime $dateConfirmation
+     *
+     * @return Mission
+     */
+    public function setDateConfirmation($dateConfirmation)
+    {
+        $this->dateConfirmation = $dateConfirmation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateConfirmation
+     *
+     * @return \DateTime
+     */
+    public function getDateConfirmation()
+    {
+        return $this->dateConfirmation;
+    }
+
+    /**
+     * Set dateTerminer
+     *
+     * @param \DateTime $dateTerminer
+     *
+     * @return Mission
+     */
+    public function setDateTerminer($dateTerminer)
+    {
+        $this->dateTerminer = $dateTerminer;
+
+        return $this;
+    }
+
+    /**
+     * Get dateTerminer
+     *
+     * @return \DateTime
+     */
+    public function getDateTerminer()
+    {
+        return $this->dateTerminer;
+    }
+
+    /**
+     * Set tarif
+     *
+     * @param float $tarif
+     *
+     * @return Mission
+     */
+    public function setTarif($tarif)
+    {
+        $this->tarif = $tarif;
+
+        return $this;
+    }
+
+    /**
+     * Get tarif
+     *
+     * @return float
+     */
+    public function getTarif()
+    {
+        return $this->tarif;
+    }
+
+    /**
+     * Set consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Mission
+     */
+    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant = null)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return \Application\UsersBundle\Entity\Users
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 
     /**
@@ -148,79 +309,5 @@ class Mission
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
-    }
-
-    /**
-     * Set consultant
-     *
-     * @param \Application\UsersBundle\Entity\Users $consultant
-     *
-     * @return Mission
-     */
-    public function setConsultant(\Application\UsersBundle\Entity\Users $consultant = null)
-    {
-        $this->consultant = $consultant;
-
-        $consultant->addMission($this);
-
-        return $this;
-    }
-
-    /**
-     * Get consultant
-     *
-     * @return \Application\UsersBundle\Entity\Users
-     */
-    public function getConsultant()
-    {
-        return $this->consultant;
-    }
-
-    /**
-     * Set document
-     *
-     * @param string $document
-     *
-     * @return Mission
-     */
-    public function setDocument($document)
-    {
-        $this->document = $document;
-
-        return $this;
-    }
-
-    /**
-     * Get document
-     *
-     * @return string
-     */
-    public function getDocument()
-    {
-        return $this->document;
-    }
-
-    /**
-     * Set tarif
-     *
-     * @param float $tarif
-     *
-     * @return Mission
-     */
-    public function setTarif($tarif)
-    {
-        $this->tarif = $tarif;
-
-        return $this;
-    }
-
-    /**
-     * Get tarif
-     *
-     * @return float
-     */
-    public function getTarif()
-    {
-        return $this->tarif;
     }
 }
