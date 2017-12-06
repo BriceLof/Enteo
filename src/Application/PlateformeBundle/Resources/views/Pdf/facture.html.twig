@@ -84,7 +84,7 @@
         </header>
 
         <section>
-            <p id="num_facture"><u><b>Facture n° {{ facture.numero }}</b></u></p>
+            <p id="num_facture"><u><b>{% if facture.montant < 0 %} Avoir {% else %} Facture {% endif %} n° {{ facture.numero }}</b></u></p>
             <p><b><span class="blue_text">Accompagnement VAE {{ facture.beneficiaire.accompagnement.heure }}h</span></b> <span class="montant">{{ facture.montant }} €</span></p>
             {% if facture.detailAccompagnement is not null %}
                 <p>{{ facture.detailAccompagnement }}</p>

@@ -48,7 +48,7 @@
                                 <td><a href="{{ path("application_show_facture", {'numero' : facture.numero }) }}" title="Afficher facture" target="_blank">{{ facture.numero }}</a></td>
                                 <td>{{ facture.date | date("d/m/Y") }}</td>
                                 <td>{{ facture.montant }} €</td>
-                                <td><a href="#" title="Modifier le statut de paiement" data-toggle="modal" data-target="#modalPaiement{{ facture.id }}">{{ facture.statut | capitalize }}</a></td>
+                                <td><a href="#" title="Modifier le statut de paiement" data-toggle="modal" data-target="#modalPaiement{{ facture.id }}" class="lienModalPaiement">{{ facture.statut | capitalize }}</a></td>
                                 {{ render(controller("ApplicationPlateformeBundle:Facture:paiement", {'id': facture.id} )) }}
                                 <!--<td><a href="{{ path("application_show_facture", {'numero' : facture.numero }) }}" title="Afficher facture" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a></td>-->
                             </tr>

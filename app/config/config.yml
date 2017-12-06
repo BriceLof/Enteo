@@ -47,8 +47,8 @@ twig:
     globals:
         # Informations générales
         adresse : '21 rue Dansard 69007 LYON'
-        telephone : '06 81 85 84 28'
-        email : 'christine.molier@entheor.com'
+        telephone : '04 37 28 59 28'
+        email : 'contact@entheor.com'
         siret : '527 732 069 000 36'
         num_declaration_activite : '82691102369'
         # Fin Informations générales

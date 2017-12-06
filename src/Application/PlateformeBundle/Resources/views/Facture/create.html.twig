@@ -19,14 +19,15 @@
                             <p id="objet" class="row">
                                 <br>
                                 <b class="col-md-12">Objet : Accompagnement VAE {{ beneficiaire.civiliteConso | capitalize ~ ' '~ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</b><br><br>
-                                <span class="col-md-2">N° Ref :</span>  <span class="col-md-3">{{ form_widget(form.numero_ref) }}</span> <span class="col-md-3">Code Adhérent :</span> <span class="col-md-3">{{ form_widget(form.code_adherent) }}</span>
+                                <span class="col-md-2">N° Ref :</span>  <span class="col-md-3">{{ form_widget(form.numero_ref, {'attr' : {"value": beneficiaire.refFinanceur } }) }}</span> <span class="col-md-3">Code Adhérent :</span> <span class="col-md-3">{{ form_widget(form.code_adherent) }}</span>
                             </p>
                         </header>
 
                         <section>
                             <div class="row">
                                 <br>
-                                <p><b><span class="blue_text col-md-4">Accompagnement VAE {{ beneficiaire.accompagnement.heure }}h *</span></b> <span class="col-md-4">{{ form_widget(form.montant) }}</span></p>
+                                <p><b><span class="blue_text col-md-4">Accompagnement VAE {{ beneficiaire.accompagnement.heure }}h *</span></b> <span class="col-md-4">{{ form_widget(form.montant) }}</span></p><br>
+                                <p><b><span class="col-md-3">Détails  </span></b> <span class="col-md-5">{{ form_widget(form.detail_accompagnement) }}</span></p>
                             </div>
 
                             <div class="row">
