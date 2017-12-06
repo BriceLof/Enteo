@@ -1,25 +1,23 @@
 <div class="modal-content">
-    <form action="{{ path('application_mission_revoke' , { 'id' : mission.id }) }}" method="POST" id="form_mission_decline" enctype="multipart/form-data">
-        {#{{ form_start(form) }}#}
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="exampleModalLabel">Refuser l'accompagnement</h4>
+    {{ form_start(form_email, {'attr': {'id': 'form_mission_decline'}}) }}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="exampleModalLabel">Refuser l'accompagnement</h4>
+    </div>
+    <div class="modal-body">
+        <div id="input_message">
+            <label for="">Pour quelle raison ne souhaitez-vous pas cette mission ?</label>
+            {{ form_widget(form_email.message) }}
         </div>
-        <div class="modal-body">
-            <div id="input_message">
-                <label for="">Pour quelle raison ne souhaitez-vous pas cette mission ?</label>
-                {{ form_widget(form_email.message) }}
-            </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <div id="submit_profile_picture">
+            {{ form_row(form_email.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+            {{ form_rest(form_email) }}
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <div id="submit_profile_picture">
-                {{ form_row(form_email.submit, {'attr': {'class': 'btn btn-danger'}}) }}
-                {{ form_rest(form_email) }}
-            </div>
-        </div>
-        {#{{ form_end(form) }}#}
-    </form>
+    </div>
+    {{ form_end(form_email) }}
 </div>
