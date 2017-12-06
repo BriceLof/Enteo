@@ -67,7 +67,7 @@ class AccompagnementType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'class' => 'accompagnementDate accompagnement',
-                    'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
+                    'style' => 'width: 40%; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )
             ))
@@ -83,7 +83,7 @@ class AccompagnementType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'class' => 'accompagnementDate accompagnement',
-                    'style' => 'width: 60%; margin-top:-5px; background-color: rgba(228, 228, 228, 0.45)',
+                    'style' => 'width: 40%; background-color: rgba(228, 228, 228, 0.45)',
                     'autocomplete' => 'off',
                 )
             ))
