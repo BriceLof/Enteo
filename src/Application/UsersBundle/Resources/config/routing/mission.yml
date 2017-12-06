@@ -5,20 +5,26 @@ application_mission_admin_index:
         expose:  true
 
 application_mission_add_document:
-    path:     /addDocument/{id}/{admin}
-    defaults: { _controller: "ApplicationUsersBundle:Mission:addDocument", admin: "" }
+    path:     /addDocument/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Mission:addDocument" }
+    options:
+        expose:  true
+
+application_mission_decline:
+    path:     /declineMission/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Mission:decline" }
+    options:
+        expose:  true
+
+application_mission_revoke:
+    path:     /revokeMission/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Mission:revoked" }
     options:
         expose:  true
 
 application_mission_state:
     path:     /state/{state}/{id}
     defaults: { _controller: "ApplicationUsersBundle:Mission:state" }
-    options:
-        expose:  true
-
-application_mission_index:
-    path:     /show/{id}
-    defaults: { _controller: "ApplicationUsersBundle:Mission:index" }
     options:
         expose:  true
 

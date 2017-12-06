@@ -13,6 +13,10 @@
     height: 218px;
 }
 
+.hide{
+    display: none;
+}
+
 .navbar-static-top{
     margin-bottom: 8px;
 }
@@ -771,4 +775,34 @@ textarea {
     min-width: 100px;
     display: inline-block;
 }
-
+#afficheBeneficiaire .input-group-addon{
+    font-size: 11px;
+    cursor: context-menu;
+    color: black;
+}
+#suiviAdministratifNewForm #add_mission_tarif .link-mission{
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #337ab7;
+}
+#afficheBeneficiaire #input_tarif_modal,
+#suiviAdministratifNewForm #add_mission_tarif#suivi_administratif_tarif{
+    text-align: right;
+}
+#suiviAdministratifNewForm #add_mission_tarif #link_mission_delete{
+    margin-left: 5px;
+}
+#link_client_modify_delete{
+    margin-top: 5px;
+}
+#suiviAdministratifNewForm #add_mission_tarif #tarif_mission{
+    margin-top: 10px;
+}
+#tarif_financement{
+    margin-top: 8px;
+    display: none;
+}
+#ModalTarif .modal-body{
+    margin-bottom: 40px;
+}

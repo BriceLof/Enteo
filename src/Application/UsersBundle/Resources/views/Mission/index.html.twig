@@ -1,49 +1,28 @@
-{% extends "ApplicationUsersBundle::layout.html.twig" %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/mission.css') }}" type="text/css">
-{% endblock %}
-
-{% block title %}Mes missions{% endblock%}
-
-{% block body %}
-    <div class="container">
-        <div class="page-header">
-            <h1>Mes missions</h1>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><b>Missions - En cours</b></h3>
-                    </div>
-                    <div class="panel-body">
-                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'confirmed'}  %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><b>Missions - New</b></h3>
-                    </div>
-                    <div class="panel-body">
-                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'new'}  %}
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><b>Missions - En attente</b></h3>
-                    </div>
-                    <div class="panel-body">
-                        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'accepted'}  %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
+{% set new = [] %}
+{% set accepted = [] %}
+{% set confirmed = [] %}
+{% for mission in missions %}
+    {% if mission.state == 'new' %}
+        {% set new = new|merge([mission]) %}
+    {% elseif mission.state == 'accepted' %}
+        {% set accepted = accepted|merge([mission]) %}
+    {% elseif mission.state == 'confirmed' %}
+        {% set confirmed = confirmed|merge([mission]) %}
+    {% endif %}
+{% endfor %}
+<div id="tabs_mission">
+    <ul>
+        <li><a href="#tabs-1">Nouvelle <span class="badge">{{ new|length }}</span></a></li>
+        <li><a href="#tabs-2">En attente de confirmation <span class="badge">{{ accepted|length }}</span></a></li>
+        <li><a href="#tabs-3">En cours <span class="badge">{{ confirmed|length }}</span></a></li>
+    </ul>
+    <div id="tabs-1">
+        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'new'}  %}
     </div>
-{% endblock %}
+    <div id="tabs-2">
+        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'accepted'}  %}
+    </div>
+    <div id="tabs-3">
+        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'confirmed'}  %}
+    </div>
+</div>

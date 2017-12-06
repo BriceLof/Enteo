@@ -5,5 +5,11 @@
 {% endblock %}
 
 {% block contentMail %}
-
+    <p>
+        La proposition de mission pour l'accompagnement de
+        {{ mission.beneficiaire.prenomConso|capitalize~" "~mission.beneficiaire.nomConso|upper }} a été acceptée par
+        {{ mission.consultant.prenom|capitalize~" "~mission.consultant.nom|upper }}.
+        <br>
+        Veuillez vous rendre à la rubrique « Missions » dans ENTHEO pour valider le contrat signé.
+    </p>
 {% endblock %}

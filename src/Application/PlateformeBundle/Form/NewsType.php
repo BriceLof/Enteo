@@ -25,16 +25,16 @@ class NewsType extends AbstractType
             ->add('statut', EntityType::class, array(
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:Statut',
-                'choice_label' => 'nom', 
+                'choice_label' => 'nom',
                 'query_builder' => function (EntityRepository $er) {
-                            return $er->createQueryBuilder('s')
-                                ->where('s.slug != :slug1')
-                                ->andWhere('s.slug != :slug2')
-                                ->andWhere('s.slug != :slug3')
-                                ->andWhere('s.slug != :slug4')
-								->andWhere('s.slug != :slug5')
-                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation','slug5' => 'reglement'))
-                            ;
+                    return $er->createQueryBuilder('s')
+                        ->where('s.slug != :slug1')
+                        ->andWhere('s.slug != :slug2')
+                        ->andWhere('s.slug != :slug3')
+                        ->andWhere('s.slug != :slug4')
+                        ->andWhere('s.slug != :slug5')
+                        ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation','slug5' => 'reglement'))
+                        ;
                 },
                 'attr' => array(
                     'class' => 'news'
@@ -43,18 +43,18 @@ class NewsType extends AbstractType
             ->add('detailStatut', EntityType::class, array(
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
-                'choice_label' => 'detail', 
+                'choice_label' => 'detail',
                 'attr' => array(
                     'class' => 'news'
                 )
             ))
-           
+
             ->add('Enregistrer', SubmitType::class, array(
                 'attr' => array('class' => 'btn  btn-primary'),
-            ))    
-            ;
+            ))
+        ;
     }
-    
+
     /**
      * {@inheritdoc}
      */

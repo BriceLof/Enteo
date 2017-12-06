@@ -138,7 +138,9 @@
         <td>
         	{% if statutBeneficiaire[beneficiaire.id] is defined %}
 				{% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
-					{{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+                    {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
+                        {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+                    {% endif %}
 				{% endif %}
 			{% else %}
 				{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}

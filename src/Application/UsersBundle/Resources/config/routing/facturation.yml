@@ -1,0 +1,11 @@
+application_users_new_facturation:
+    path:     /new/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Facturation:new" }
+    options:
+        expose:  true
+
+application_users_edit_facturation:
+    path:     /edit/{id}
+    defaults: { _controller: "ApplicationUsersBundle:Facturation:edit" }
+    options:
+        expose:  true

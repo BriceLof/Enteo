@@ -45,18 +45,18 @@ class Beneficiaire
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Historique", mappedBy="beneficiaire")
      */
     private $historique;
-    
-     /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $villeMer;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
      */
     private $news;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\StatutRecevabilite", mappedBy="beneficiaire")
      */
@@ -79,9 +79,14 @@ class Beneficiaire
     protected $accompagnement;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="beneficiaire")
      */
     protected $mission;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})
+     */
+    protected $missionArchives;
 
     /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
@@ -294,20 +299,20 @@ class Beneficiaire
      * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
-	
-	/**
-	* @ORM\Column(name="region_travail", type="string", length=255, nullable=true)
-	*/
+
+    /**
+     * @ORM\Column(name="region_travail", type="string", length=255, nullable=true)
+     */
     private $regionTravail;
 
     /**
      * @ORM\Column(name="dpt_travail", type="string", length=255, nullable=true)
      */
     private $dptTravail;
-	
-	/**
-	* @ORM\Column(name="diplome_obtenu", type="string", length=255, nullable=true)
-	*/
+
+    /**
+     * @ORM\Column(name="diplome_obtenu", type="string", length=255, nullable=true)
+     */
     private $diplomeObtenu;
 
     /**
@@ -316,13 +321,13 @@ class Beneficiaire
      * @ORM\Column(name="ref_financeur", type="string", length=255, nullable=true)
      */
     private $refFinanceur;
-    
-     /**
+
+    /**
      * @ORM\OneToMany(targetEntity="Nouvelle", mappedBy="beneficiaire", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $nouvelle;
-	
+
     /**
      * Constructor
      */
@@ -1171,7 +1176,7 @@ class Beneficiaire
     {
         return $this->documents;
     }
-    
+
     /**
      * Set formationInitiale
      *
@@ -1209,7 +1214,7 @@ class Beneficiaire
         return $this;
     }
 
-    
+
     /**
      * Get numSecuCle
      *
@@ -1558,12 +1563,12 @@ class Beneficiaire
     {
         return $this->nouvelle;
     }
-    
+
     public function getLastNouvelle()
     {
-      return $this->getNouvelle()[count($this->getNouvelle())-1];     
+        return $this->getNouvelle()[count($this->getNouvelle())-1];
     }
-    
+
 
     /**
      * Set dptTravail
@@ -1645,5 +1650,39 @@ class Beneficiaire
     public function getMission()
     {
         return $this->mission;
+    }
+
+    /**
+     * Add missionArchive
+     *
+     * @param \Application\UsersBundle\Entity\MissionArchive $missionArchive
+     *
+     * @return Beneficiaire
+     */
+    public function addMissionArchive(\Application\UsersBundle\Entity\MissionArchive $missionArchive)
+    {
+        $this->missionArchives[] = $missionArchive;
+
+        return $this;
+    }
+
+    /**
+     * Remove missionArchive
+     *
+     * @param \Application\UsersBundle\Entity\MissionArchive $missionArchive
+     */
+    public function removeMissionArchive(\Application\UsersBundle\Entity\MissionArchive $missionArchive)
+    {
+        $this->missionArchives->removeElement($missionArchive);
+    }
+
+    /**
+     * Get missionArchives
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMissionArchives()
+    {
+        return $this->missionArchives;
     }
 }

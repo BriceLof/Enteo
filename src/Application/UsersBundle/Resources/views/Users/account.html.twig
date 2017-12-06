@@ -3,7 +3,7 @@
 {% block title %}Mon compte{% endblock%}
 
 {% block body %}
-    <section class="col-md-9 col-md-offset-2">
+    <section class="col-md-9 col-md-offset-2" id="account">
         {% for info in app.session.flashbag.get('info') %}
             <div class="alert alert-success" role="alert">{{ info }}</div>
         {% endfor %}
@@ -19,34 +19,6 @@
         <div class="page-header">
             <h1>Mon compte<br><small>Détails</small></h1>
         </div>
-
-        {#<div class="row">#}
-            {#<div class="col-md-6">#}
-                {#<div class="panel panel-default">#}
-                    {#<div class="panel-heading">#}
-                        {#<h3 class="panel-title"><b>Mon profil</b></h3>#}
-                    {#</div>#}
-                    {#<div class="panel-body">#}
-                	 	{#<div class="row">#}
-                	 		{#{% if user.civilite == "mme" %} {% set sex = "female" %} {% else %} {% set sex = "male" %} {% endif %}#}
-                	 		{#<div class="col-xs-4">#}
-                	 			{#<div id="avatar" class="col-xs-12" style="background:url({{ asset('images/avatar_'~sex~'.png') }})  no-repeat center center;background-size: cover;"></div>                	 			#}
-                	 		{#</div>#}
-                	 		{##}
-                	 		{#<div id="" class="col-xs-8" style="margin-top: 12px;"> #}
-                	 			{#<p id="label_icon_cup"><b>Statut consultant : </b> </p>#}
-                	 			{#<img id="icon_cup" src="{{ asset('images/bronze_cup.jpg') }}" width="26px" alt="Débutant" title="Débutant"/>#}
-                	 			{#<img id="icon_cup" src="{{ asset('images/silver_cup.jpg') }}" width="26px" alt="Confirmé" title="Confirmé"/>#}
-                	 			{#<img id="icon_cup" src="{{ asset('images/gold_cup.jpg') }}" width="26px" alt="Expert" title="Expert"/>#}
-                	 			{#<p><b>Date de création :</b> {{ user.dateCreation | date("d/m/Y")}}</p>#}
-            	 		 		{#<p><b>Ville de rattachement : <span class="text-danger">{% if user.ville %} {{ user.ville.nom|capitalize }} {% endif %}</span></b></p>#}
-                	 		{#</div>#}
-            	 		 	{##}
-                	 	{#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
 
         <div class="row">
             <div class="col-md-6">
@@ -99,6 +71,21 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Contact de facturation</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if user.facturation is not null %}
+                            {% include "ApplicationUsersBundle:Facturation:show.html.twig" %}
+                            {{ render(controller("ApplicationUsersBundle:Facturation:edit", { 'id': user.facturation.id } )) }}
+                        {% else %}
+                            {{ render(controller("ApplicationUsersBundle:Facturation:new", { 'id': user.id } )) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -112,11 +99,25 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><b>Mes Missions</b></h3>
+                    </div>
+                    <div class="panel-body">
+                        {{ render(controller("ApplicationUsersBundle:Mission:index", { 'id': user.id } )) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
             {% if typeUser == "Consultant" %}
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                          <h3 class="panel-title"><b>Agenda</b></h3>
+                            <h3 class="panel-title"><b>Agenda</b></h3>
                         </div>
                         <div class="panel-body">
                             <p><b>Calendrier ID :</b> {{ user.calendrierid }}</p>

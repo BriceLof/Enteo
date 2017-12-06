@@ -1,7 +1,0 @@
-{% extends "::layout/layout-newMission.html.twig" %}
-
-{% block content %}
-    <div>
-        <img src="{{ absolute_url(asset('uploads/'~userDocument.user.id~'/'~userDocument.name~'/'~document.path)) }}" alt="{{ userDocument.name }}" width="100%">
-    </div>
-{% endblock %}

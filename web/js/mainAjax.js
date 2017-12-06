@@ -1664,3 +1664,61 @@ if(document.getElementById('suiviAdministratif')) {
         $('#suivi_administratif_detailStatut option[value="'+ detailStatut +'"]').prop('selected', true);
     });
 }
+
+/**
+ * evenement quand on change de statut financement dans le pod suivi administratif
+ */
+(function () {
+    $("#suivi_administratif_detailStatut").on('change',function () {
+        afficheLien()
+    });
+    $("#suivi_administratif_statut").on('change',function () {
+        afficheLien()
+    })
+    $('#link_add_mission').on('click', function () {
+        afficherModal()
+    })
+    $('#link_mission_modify').on('click', function () {
+        afficherModal()
+    })
+    $('#link_mission_delete').on('click', function () {
+        $("#tarif_mission").hide('slow')
+        $("#add_mission_tarif").show('slow');
+        $("#suivi_administratif_mission").val('false');
+    })
+
+    /**
+     * affichage d'un modal de tarif ou d'un modal d'erreur si le consultant n'est pas autorisé a
+     * effectuer une mission
+     */
+    function afficherModal() {
+        if ($("#add_mission_tarif").attr('data-autorisation') == 'false'){
+            $("#ModalTarifDenied").modal('show');
+        }else{
+            $("#ModalTarif").modal('show');
+        }
+    }
+
+    /**
+     * function qui permet d'afficher le modal tarif
+     */
+    function afficheLien() {
+        if (($('#suivi_administratif_detailStatut').val() == 21 || $("#suivi_administratif_detailStatut").val() == 22) && $('#suivi_administratif_statut').val() == 8) {
+            $("#add_mission_tarif").show('slow');
+        }else{
+            if ($("#add_mission_tarif").attr("data-afficher") == 'false'){
+                $('#add_mission_tarif').hide("slow");
+                $("#suivi_administratif_mission").val('false');
+            }
+        }
+    };
+})();
+
+function nouvelleMission() {
+    $('#suivi_administratif_tarif').val($("#input_tarif_modal").val());
+    // $("#ModalTarif").modal('hide');
+    $("#link_add_mission").hide("slow");
+    $('#tarif_mission').show("slow");
+    $("#suivi_administratif_mission").val('true');
+    $("#suiviAdministratifNewForm").submit();
+}

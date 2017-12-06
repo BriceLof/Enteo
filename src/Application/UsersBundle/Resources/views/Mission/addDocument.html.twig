@@ -1,13 +1,16 @@
 <div class="modal-content">
-    <form action="{{ path('application_mission_add_document' , { 'id' : mission.id , 'admin': admin}) }}" method="POST" id="form_mission_document" enctype="multipart/form-data">
+    <form action="{{ path('application_mission_add_document' , { 'id' : mission.id }) }}" method="POST" id="form_mission_document" enctype="multipart/form-data">
     {#{{ form_start(form) }}#}
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="exampleModalLabel">Accepter accompagnement</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Accepter l'accompagnement</h4>
     </div>
     <div class="modal-body">
+        <div>
+            <p>Veuillez imprimer puis dater et signer la mission, avant de la télécharger</p>
+        </div>
         <div id="input_mission_file">
             {{ form_widget(form.document) }}
         </div>

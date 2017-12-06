@@ -32,6 +32,7 @@ class Mission
 
     /**
      * @ORM\OneToOne(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire")
+     * @ORM\JoinColumn(name="beneficiaire_id", nullable=false)
      */
     protected $beneficiaire;
 
@@ -46,16 +47,40 @@ class Mission
     protected $document;
 
     /**
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @ORM\Column(name="date_creation", type="date", nullable=true)
      */
-    private $date;
+    private $dateCreation;
+
+    /**
+     * @ORM\Column(name="date_accepter", type="date", nullable=true)
+     */
+    private $dateAcceptation;
+
+    /**
+     * @ORM\Column(name="date_confirmation", type="date", nullable=true)
+     */
+    private $dateConfirmation;
+
+    /**
+     * @ORM\Column(name="date_terminer", type="date", nullable=true)
+     */
+    private $dateTerminer;
+
+
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="montant", type="float",nullable=true)
+     */
+    private $tarif;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->date = new \DateTime('now');
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -93,53 +118,147 @@ class Mission
     }
 
     /**
-     * Set date
+     * Set document
      *
-     * @param \DateTime $date
+     * @param string $document
      *
      * @return Mission
      */
-    public function setDate($date)
+    public function setDocument($document)
     {
-        $this->date = $date;
+        $this->document = $document;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get document
+     *
+     * @return string
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Mission
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
      *
      * @return \DateTime
      */
-    public function getDate()
+    public function getDateCreation()
     {
-        return $this->date;
+        return $this->dateCreation;
     }
 
     /**
-     * Set beneficiaire
+     * Set dateAcceptation
      *
-     * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
+     * @param \DateTime $dateAcceptation
      *
      * @return Mission
      */
-    public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire = null)
+    public function setDateAcceptation($dateAcceptation)
     {
-        $this->beneficiaire = $beneficiaire;
-
-        $beneficiaire->setMission($this);
+        $this->dateAcceptation = $dateAcceptation;
 
         return $this;
     }
 
     /**
-     * Get beneficiaire
+     * Get dateAcceptation
      *
-     * @return \Application\PlateformeBundle\Entity\Beneficiaire
+     * @return \DateTime
      */
-    public function getBeneficiaire()
+    public function getDateAcceptation()
     {
-        return $this->beneficiaire;
+        return $this->dateAcceptation;
+    }
+
+    /**
+     * Set dateConfirmation
+     *
+     * @param \DateTime $dateConfirmation
+     *
+     * @return Mission
+     */
+    public function setDateConfirmation($dateConfirmation)
+    {
+        $this->dateConfirmation = $dateConfirmation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateConfirmation
+     *
+     * @return \DateTime
+     */
+    public function getDateConfirmation()
+    {
+        return $this->dateConfirmation;
+    }
+
+    /**
+     * Set dateTerminer
+     *
+     * @param \DateTime $dateTerminer
+     *
+     * @return Mission
+     */
+    public function setDateTerminer($dateTerminer)
+    {
+        $this->dateTerminer = $dateTerminer;
+
+        return $this;
+    }
+
+    /**
+     * Get dateTerminer
+     *
+     * @return \DateTime
+     */
+    public function getDateTerminer()
+    {
+        return $this->dateTerminer;
+    }
+
+    /**
+     * Set tarif
+     *
+     * @param float $tarif
+     *
+     * @return Mission
+     */
+    public function setTarif($tarif)
+    {
+        $this->tarif = $tarif;
+
+        return $this;
+    }
+
+    /**
+     * Get tarif
+     *
+     * @return float
+     */
+    public function getTarif()
+    {
+        return $this->tarif;
     }
 
     /**
@@ -167,26 +286,28 @@ class Mission
     }
 
     /**
-     * Set document
+     * Set beneficiaire
      *
-     * @param string $document
+     * @param \Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire
      *
      * @return Mission
      */
-    public function setDocument($document)
+    public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire = null)
     {
-        $this->document = $document;
+        $this->beneficiaire = $beneficiaire;
+
+        $beneficiaire->setMission($this);
 
         return $this;
     }
 
     /**
-     * Get document
+     * Get beneficiaire
      *
-     * @return string
+     * @return \Application\PlateformeBundle\Entity\Beneficiaire
      */
-    public function getDocument()
+    public function getBeneficiaire()
     {
-        return $this->document;
+        return $this->beneficiaire;
     }
 }

@@ -1,0 +1,17 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+        L'étude du dossier de {{ mission.beneficiaire.prenomConso|capitalize~" "~mission.beneficiaire.nomConso|upper }}
+        ne nous permet pas actuellement de vous confirmer cet accompagnement.
+        <br>
+        Pour plus d'informations, n'hésitez pas à nous contacter directement.
+        <br>
+        <br>
+        Bien Cordialement,
+    </p>
+{% endblock %}

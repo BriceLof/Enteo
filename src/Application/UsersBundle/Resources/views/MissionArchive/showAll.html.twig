@@ -1,0 +1,31 @@
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Consultant</th>
+            <th>Bénéficiaire</th>
+            <th>Motif</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for missionArchive in missionArchives|reverse %}
+            <tr>
+                <td>
+                    <a href="{{ path('user_show', {'id': missionArchive.consultant.id}) }}">
+                        {{ missionArchive.consultant.prenom|capitalize~" "~missionArchive.consultant.nom|upper }}
+                    </a>
+                </td>
+                <td>
+                    <a title="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': missionArchive.beneficiaire.id}) }}">
+                        {{ missionArchive.beneficiaire.nomConso|capitalize~" "~missionArchive.beneficiaire.prenomConso|capitalize }}
+                    </a>
+                </td>
+                <td>{{ missionArchive.information }}</td>
+                <td>{{ missionArchive.date|date('d/m/Y') }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>

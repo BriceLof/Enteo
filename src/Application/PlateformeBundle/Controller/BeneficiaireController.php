@@ -98,7 +98,6 @@ class BeneficiaireController extends Controller
             $em->flush();
         }
 
-
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
             'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
@@ -143,12 +142,6 @@ class BeneficiaireController extends Controller
             $beneficiaire = $editConsultantForm->getData();
             $consultant = $beneficiaire->getConsultant();
 
-//            c'est la fonction qui permet appelle la mission
-//            $this->forward('ApplicationUsersBundle:Mission:new', array(
-//                'idBeneficiaire'  => $beneficiaire->getId(),
-//                'idConsultant' => $consultant->getId(),
-//            ));
-
             //enregistrement de l'ajout ou modification de consultant dans le
             $historique = new Historique();
             $historique->setHeuredebut(new \DateTime('now'));
@@ -161,7 +154,17 @@ class BeneficiaireController extends Controller
             $historique->setEventId("0");
             $historique->setUser($this->getUser());
 
-//            $beneficiaire->setConsultant(null);
+            if (!is_null($beneficiaire->getMission())) {
+                $message = "Changement de consultant";
+                $mission = $beneficiaire->getMission();
+                $this->forward('ApplicationUsersBundle:MissionArchive:new', array(
+                    'mission' => $mission,
+                    'message' => $message,
+                    'state' => 'modified',
+                    'beneficiaire' => $beneficiaire,
+                ));
+                $beneficiaire->setMission(null);
+            }
 
             $em->persist($beneficiaire);
             $em->persist($historique);

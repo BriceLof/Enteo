@@ -28,6 +28,11 @@ application_plateforme_feedback:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/feedback.yml"
     prefix:   /feedback
 
+#facture
+application_plateforme_facture:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/facture.yml"
+    prefix:   /facture
+
 #beneficiaire
 application_plateforme_beneficiaire:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/beneficiaire.yml"

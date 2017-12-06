@@ -1,0 +1,32 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+    {% if consultant.civilite == 'm.' %}
+        Cher {{ consultant.prenom|capitalize }}
+    {% else %}
+        Chère {{ consultant.prenom|capitalize }}
+    {% endif %}
+        <br><br>
+        Je suis heureuse de vous confier officiellement l'accompagnement de
+        {{ beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}.
+        <br><br>
+        Je vous remercie de prendre contact avec votre bénéficiaire sous 48h pour fixer le premier rendez-vous d'accompagnement.
+        <br>
+        Pour mémoire, cet accompagnement doit être achevé avant le {{ beneficiaire.accompagnement.dateFin|date('d/m/Y') }}.
+        <br>
+        Je reste bien entendu à votre disposition pour toute assistance qui vous serait utile.
+
+        <br>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </p>
+{% endblock %}

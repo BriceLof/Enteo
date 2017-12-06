@@ -5,13 +5,25 @@
 {% endblock %}
 
 {% block contentMail %}
-    Bonjour {{ beneficiaire.consultant.prenom|capitalize }}, <br>
+    Bonjour {{ beneficiaire.consultant.civilite|capitalize~" "~beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|upper }}, <br>
+    <br>
     <p>
-        Un nouveau <a href="{{ absolute_url(path('application_show_beneficiaire', { 'id' : beneficiaire.id })) }}">bénéficiaire</a> vous est attribué. <br>
-        Pour accepter l'accompagnement, veuillez vous rendre à la rubrique "<a href="{{ absolute_url(path('application_mission_index', { 'id' : beneficiaire.consultant.id })) }}">Mes missions</a>" et nous envoyer le contrat de mission ci-joint signé.
-        <br>
-        <br>
-        <span>Merci,</span>
+        Nous venons de recevoir l'accord pour le financement de la VAE de
+        <a href="{{ absolute_url(path('application_show_beneficiaire', { 'id' : beneficiaire.id })) }}">
+            {{ beneficiaire.civiliteConso|capitalize~" "~beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}
+        </a>. <br><br>
+
+        Vous trouverez en PJ une proposition de Mission pour son accompagnement.<br><br>
+
+        Cette proposition est valable 72h. <br>
+        Si vous l'acceptez, veuillez imprimer le document après l'avoir daté et signé. <br>
+        Ensuite, vous le téléchargez dans la rubrique « Mon compte » sur ENTHEO<br><br>
+
+        ENTHEOR procèdera alors à une vérification des piècees administratives. <br>
+        Ne démarrez pas l'accompagnement avant votre dossier soit validé. <br>
+        Nous vous informerons par un nouveau message que vous pouvez démarrer l'accompagnement. <br><br>
+
+        Bien Cordialement
         <br>
         <br>
         <span>Christine Clément</span>

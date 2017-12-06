@@ -1,3 +1,7 @@
+application_plateforme_facture:
+    resource: "@ApplicationPlateformeBundle/Controller/FactureController.php"
+    type:     annotation
+
 application_users_users:
     resource: "@ApplicationUsersBundle/Controller/UsersController.php"
     type:     annotation

@@ -35,22 +35,24 @@ class Users extends BaseUser
     private $disponibilite;
 
     /**
-     * @ORM\Column(nullable=true)
-     * @ORM\OneToMany(targetEntity="UserDocument", mappedBy="user", cascade={"persist","remove"})
-     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="consultant", cascade={"persist","remove"})
      */
-    protected $userDocuments;
+    protected $mission;
 
     /**
-     * @ORM\Column(nullable=true)
-    * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="consultant", cascade={"persist","remove"})
-    */
-    protected $mission;
+     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Contrat", mappedBy="consultant" )
+     */
+    protected $contrat;
 
     /**
      * @ORM\OneToOne(targetEntity="StatutConsultant", cascade={"persist"})
      */
     private $statut;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Facturation", cascade={"persist", "remove"})
+     */
+    private $facturation;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -134,8 +136,8 @@ class Users extends BaseUser
         parent::__construct();
         
         $this->dateCreation = new \DateTime();
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mission = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->missions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userDocuments = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -591,54 +593,6 @@ class Users extends BaseUser
     }
 
     /**
-     * Add userDocument
-     *
-     * @param \Application\UsersBundle\Entity\UserDocument $userDocument
-     *
-     * @return Users
-     */
-    public function addUserDocument(\Application\UsersBundle\Entity\UserDocument $userDocument)
-    {
-        $this->userDocuments[] = $userDocument;
-
-        return $this;
-    }
-
-    /**
-     * Remove userDocument
-     *
-     * @param \Application\UsersBundle\Entity\UserDocument $userDocument
-     */
-    public function removeUserDocument(\Application\UsersBundle\Entity\UserDocument $userDocument)
-    {
-        $this->userDocuments->removeElement($userDocument);
-    }
-
-    /**
-     * Get userDocuments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUserDocuments()
-    {
-        return $this->userDocuments;
-    }
-
-    /**
-     * Set userDocuments
-     *
-     * @param string $userDocuments
-     *
-     * @return Users
-     */
-    public function setUserDocuments($userDocuments)
-    {
-        $this->userDocuments = $userDocuments;
-
-        return $this;
-    }
-
-    /**
      * Add mission
      *
      * @param \Application\UsersBundle\Entity\Mission $mission
@@ -670,5 +624,53 @@ class Users extends BaseUser
     public function getMission()
     {
         return $this->mission;
+    }
+
+    /**
+     * Set facturation
+     *
+     * @param \Application\UsersBundle\Entity\Facturation $facturation
+     *
+     * @return Users
+     */
+    public function setFacturation(\Application\UsersBundle\Entity\Facturation $facturation = null)
+    {
+        $this->facturation = $facturation;
+
+        return $this;
+    }
+
+    /**
+     * Get facturation
+     *
+     * @return \Application\UsersBundle\Entity\Facturation
+     */
+    public function getFacturation()
+    {
+        return $this->facturation;
+    }
+
+    /**
+     * Set contrat
+     *
+     * @param \Application\UsersBundle\Entity\Contrat $contrat
+     *
+     * @return Users
+     */
+    public function setContrat(\Application\UsersBundle\Entity\Contrat $contrat = null)
+    {
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    /**
+     * Get contrat
+     *
+     * @return \Application\UsersBundle\Entity\Contrat
+     */
+    public function getContrat()
+    {
+        return $this->contrat;
     }
 }

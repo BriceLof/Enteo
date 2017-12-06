@@ -71,6 +71,19 @@ class NewsController extends Controller
                 $suiviAdministraif->setDetailStatut($detailStatutRepo);
                 $em->persist($suiviAdministraif);
             }
+
+            if ($news->getStatut()->getId() == 12){
+                if (!is_null($beneficiaire->getMission())) {
+                    $message = "Abandon du bénéficiaire";
+                    $mission = $beneficiaire->getMission();
+                    $this->forward('ApplicationUsersBundle:MissionArchive:new', array(
+                        'mission' => $mission,
+                        'message' => $message,
+                        'state' => 'abandonned'
+                    ));
+                    $beneficiaire->setMission(null);
+                }
+            }
             
             $em->persist($news);
             $em->flush();

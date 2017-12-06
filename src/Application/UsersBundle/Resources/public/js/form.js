@@ -131,3 +131,30 @@ $(function(){
     });*/
 });
 
+$(function () {
+    jQuery.extend(jQuery.validator.messages, {
+        required: "Ceci ne peut être vide",
+        accept: "Fichier accecpé : PDF",
+        minlength: jQuery.validator.format("votre message doit être supérieur à 10 caractères"),
+    });
+    $('#form_mission_document').validate({
+        rules: {
+            "form[document]":{
+                "required": true,
+                "accept": "application/pdf",
+            }
+        },
+        errorElement: 'div'
+    });
+
+    $('#form_mission_decline').validate({
+        rules: {
+            "mailing[message]": {
+                "required" : true,
+                "minlength": 10,
+            }
+        },
+        errorElement: 'div'
+    })
+});
+

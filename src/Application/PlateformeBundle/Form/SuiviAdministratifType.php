@@ -3,6 +3,8 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +40,18 @@ class SuiviAdministratifType extends AbstractType
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail',
                 'placeholder' => '',
+            ))
+            ->add('tarif', NumberType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'aria-describedby' => 'basic-addon2',
+                    'readonly' => true
+                )
+            ))
+            ->add('mission', HiddenType::class, array(
+                'mapped' => false,
+                'data' => 'false'
             ))
             ->add('info', TextType::class, array(
                 'label' => 'News',

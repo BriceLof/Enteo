@@ -44,6 +44,24 @@ twig:
     paths:
         '%kernel.root_dir%/../src/Application/PlateformeBundle/Resources/views': Apb
         '%kernel.root_dir%/../src/Application/UsersBundle/Resources/views': Aub
+    globals:
+        # Informations générales
+        adresse : '21 rue Dansard 69007 LYON'
+        telephone : '06 81 85 84 28'
+        email : 'christine.molier@entheor.com'
+        siret : '527 732 069 000 36'
+        num_declaration_activite : '82691102369'
+        # Fin Informations générales
+
+        # RIB
+        banque : 'LCL - Genas Azieu'
+        code_banque : '30002'
+        code_guichet : '01793'
+        num_compte : '0000070026Y'
+        cle_rib : '34'
+        iban : 'FR36 3000 2017 9300 0007 0026 Y34'
+        bic : 'CRLYFRPP'
+        # Fin RIB
 
 
 # Doctrine Configuration

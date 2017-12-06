@@ -94,18 +94,15 @@
                         <h3 class="panel-title"><b>Documents</b></h3>
                     </div>
                     <div class="panel-body">
-                        <div>
-                            <ul>
-                                {% for userDocument in user.userDocuments %}
-                                    <li><a href="{{ path('application_users_show_document', { 'id' : userDocument.id }) }}" target="_blank">{{ userDocument.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                        <div>
-                            <form id="newDocumentsUserForm" action="{{ path('application_users_new_document', { 'id' : user.id }) }}" method="POST" enctype="multipart/form-data">
-                                {{ render(controller("ApplicationUsersBundle:Document:new",{'id': user.id})) }}
-                            </form>
-                        </div>
+                        {% if user.contrat is not null %}
+                            <p><a title="Afficher le document"
+                                  href="{{ asset('uploads/consultant/'~user.id~'/'~user.contrat.file) }}"
+                                  target="_blank"><span>Contrat Cadre</span></a></p>
+                        {% else %}
+                            <div>
+                                {{ render(controller("ApplicationUsersBundle:Contrat:new", {'id': user.id } )) }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
