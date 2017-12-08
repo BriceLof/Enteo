@@ -65,14 +65,14 @@ class MailRvCommand extends ContainerAwareCommand
 //              boucler sur toutes les historiques
                 foreach ($historiques as $historique) {
 
-                    $rv = substr($historique->getSummary(), 0, 2);
-
+                    //$rv = substr($historique->getSummary(), 0, 2);
+                    $rv = $historique->getSummary();
                     //si l'historique n'est pas archivé ou annulé ou modifié
                     if ($historique->getEventarchive() == 'off' && $historique->getCanceled() == 0) {
                         //si la date de cet historique date de mois de 24h au moment du lancement de la cron journalier
                         if ($historique->getDateDebut() > (new \DateTime('now'))->modify('-1 day') && $historique->getDateDebut() < (new \DateTime('now'))) {
 
-                            if ($rv == "RV" && $beneficiaire->getUpdatedAt() < (new \DateTime('now'))->modify('-1 day')) {
+                            if (($rv == "RV1" || $rv == "RV2" )&& $beneficiaire->getUpdatedAt() < (new \DateTime('now'))->modify('-1 day')) {
                                 if (!in_array($beneficiaire, $tab2)){
                                     $tab2[] = $beneficiaire;
                                 }
@@ -81,7 +81,7 @@ class MailRvCommand extends ContainerAwareCommand
 
                         //si la date de cet historique date de mois de 48h au moment du lancement de la cron journalier
                         if ($historique->getDateDebut() > (new \DateTime('now'))->modify('-2 day') && $historique->getDateDebut() < (new \DateTime('now'))->modify('-1 day')) {
-                            if ($rv == "RV" && $beneficiaire->getUpdatedAt() < (new \DateTime('now'))->modify('-2 day')) {
+                            if (($rv == "RV1" || $rv == "RV2" ) && $beneficiaire->getUpdatedAt() < (new \DateTime('now'))->modify('-2 day')) {
                                 if (!in_array($beneficiaire, $tab3)) {
                                     $tab3[] = $beneficiaire;
                                 }

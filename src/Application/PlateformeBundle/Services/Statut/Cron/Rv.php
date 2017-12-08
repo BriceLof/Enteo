@@ -333,7 +333,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                                     </div>
                                     <br><br>
     
-                       <div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au 06.89.33.87.83</b></div>
+                       <div style='padding:15px;border:1px solid;text-align:center;'><b>En cas d'empêchement : nous prévenir au ".$consultant->getTel1()."</b></div>
                                     <br><br>
     
                         Au plaisir de vous accompagner dans votre projet.<br><br>
