@@ -371,7 +371,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $bcc = array(
                     "support.informatique@entheor.com" => "Support",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
-                    "audrey.azoulay@entheor.com" => "Audrey Azoulay");
+                    "audrey.azoulay@entheor.com" => "Audrey Azoulay",
+                    "christine.clementmolier@entheor.com" => "Christine Molier");
 				//$bcc = "";
                 $dateRv = new \DateTime("NOW");
                 $dateRvOneMore = $dateRv->add(new \DateInterval('P1D'));
