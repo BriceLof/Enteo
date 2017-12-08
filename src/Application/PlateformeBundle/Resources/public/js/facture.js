@@ -1,7 +1,7 @@
 $(function () {
 
-    $( ".datePicker" ).datepicker({
-        changeMonth: true,
+    //$( ".datePicker" ).datepicker({
+        /*changeMonth: true,
         changeYear: true,
         closeText: 'Fermer',
         prevText: 'Précédent',
@@ -13,14 +13,17 @@ $(function () {
         dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
         dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
         weekHeader: 'Sem.',
-        dateFormat: 'dd/mm/yy',
-    });
+        dateFormat: 'dd/mm/yy',*/
+    //});
 
+    $(".lienModalPaiement").click(function(){
+        nomLien = $(this).attr("data-target")
+        statePaiement = $(nomLien).find('.statutPaiementFacture').val()
+        if(statePaiement == "paid" || statePaiement == "partiel"){
+            paiementFieldShowHidde(statePaiement)
+        }
+    })
 
-    if($(".statutPaiementFacture").val() == "paid" || $(".statutPaiementFacture").val() == "partiel"){
-        statePaiement = $(".statutPaiementFacture").val()
-        paiementFieldShowHidde(statePaiement)
-    }
     $(".statutPaiementFacture").change(function () {
         statePaiement = $(this).children("option:selected").val()
         paiementFieldShowHidde(statePaiement)

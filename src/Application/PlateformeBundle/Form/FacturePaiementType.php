@@ -35,11 +35,12 @@ class FacturePaiementType extends AbstractType
             ->add('date_paiement', DateType::class, array(
                 'label' => 'Date de paiement ',
                 'widget' => 'single_text',
+                'html5' => true,
                 'required' => false,
-                'format' => 'dd/MM/yyyy',
+                //'format' => 'dd/MM/yyyy',
                 'attr' => array(
-                    'placeholder' => 'Selectionner',
-                    'class' => 'datePicker datePaiementFactureField'
+                    'placeholder' => 'JJ/MM/AAAA',
+                    'class' => ' datePaiementFactureField'
                 )
             ))
             ->add('mode_paiement', ChoiceType::class, array(

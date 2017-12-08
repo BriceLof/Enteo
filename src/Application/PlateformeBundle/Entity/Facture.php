@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Facture
@@ -36,7 +37,7 @@ class Facture
 
     /**
      * @var \DateTime
-     *
+     * @Assert\Date()
      * @ORM\Column(name="date_fin_accompagnement", type="date")
      */
     private $dateFinAccompagnement;
@@ -56,9 +57,7 @@ class Facture
     private $numero;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="date")
      */
     private $date;
 

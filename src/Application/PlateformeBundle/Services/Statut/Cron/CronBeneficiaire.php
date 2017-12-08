@@ -36,6 +36,7 @@ class CronBeneficiaire
         $dateFin = (new \DateTime())->modify('-1 days');
         $dateDebutSql = (new \DateTime())->modify('-7 days')->format("Y-m-d");
         $dateFinSql = (new \DateTime())->modify('-1 days')->format("Y-m-d");
+
         $dateDebutFr = $Jour[$dateDebut->format('l')]." ".$dateDebut->format('j')." ".$Mois[$dateDebut->format('F')];
         $dateFinFr = $Jour[$dateFin->format('l')]." ".$dateFin->format('j')." ".$Mois[$dateFin->format('F')];
 
