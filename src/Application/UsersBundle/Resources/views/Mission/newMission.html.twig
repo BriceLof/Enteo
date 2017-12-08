@@ -90,7 +90,9 @@
 
                     <p class="top50">
                         {% if facturation.type == 'entreprise' %}
-                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}, Président de la SASU {{ facturation.raisonSociale }}, domiciliée au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}</b>, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
+                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}, {{ facturation.representantLegalFonction }} de la SASU {{ facturation.raisonSociale }}, domiciliée au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}</b>, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
+                        {% else %}
+                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}</b>, ayant tous pouvoirs à l'effet des présentes.
                         {% endif %}
                     </p>
                     <p class="top50 right line-heigth">
@@ -171,7 +173,7 @@
                         <li>La Mission devra se dérouler entre le : {{ beneficiaire.accompagnement.dateDebut|date("d/m/Y") }} et le {{ beneficiaire.accompagnement.dateFin|date("d/m/Y") }}</li>
                         <li>La durée prévue de l'accompagnement est de : {{ beneficiaire.accompagnement.heure }} heures</li>
                         <li>Lieu de réalisation : en les bureaux mis à disposition par ENTHEOR ou en les bureaux du Prestataire</li>
-                        <li>Le Prestataire a réalisé l'entretien de positionnement pour ce Bénéficiaire: OUI ou NON ( à faire )</li>
+                        <li>Le Prestataire a réalisé l'entretien de positionnement pour ce Bénéficiaire: OUI</li>
                     </ul>
                     <p class="top50">
                         La mission d'accompagnement à réaliser par le Prestataire comprend l'aide à la rédaction du Livret 2 et la Préparation au passage devant le Jury, et si nécessaire l'aide à la rédation du Livret 1.

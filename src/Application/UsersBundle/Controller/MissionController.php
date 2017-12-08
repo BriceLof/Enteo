@@ -66,7 +66,7 @@ class MissionController extends Controller
             'images' => true,
         ));
 
-        $name = strtolower("contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso().".pdf");
+        $name = $this->get('application_plateforme.text')->slugify(strtolower("contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso().".pdf"));
         $fileName = 'uploads/consultant/'.$mission->getConsultant()->getId().'/'.$name;
         if (file_exists($fileName)){
             unlink($fileName);
