@@ -7,41 +7,44 @@
 {% endblock %}
 
 {% block body %}
-<div id="flashbag" class="container">
-    <div class="row">
-        <div class="col-md-12">
-            {% for message in app.session.flashbag.get('info') %}
-                {% if message != 'not message' %}
-                    <div class="alert alert-success" role="alert">{{ message }}</div>
-                {% endif %}
-            {% endfor %}
+    <div id="flashbag" class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for message in app.session.flashbag.get('info') %}
+                    {% if message != 'not message' %}
+                        <div class="alert alert-success" role="alert">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
-<div class="container-fluid calendar">
-    <div class="row">
-        <div class="col-md-12" id="dispo">
-            <div class="row">
-                <div class="col-sm-11 collapse" id="collapseDisponibilite">
-                    {{ render(controller("ApplicationPlateformeBundle:Disponibilites:new",{'id': beneficiaire.consultant.id})) }}
+    <div class="container-fluid calendar">
+        <div class="row">
+            <div class="col-md-12" id="dispo">
+                <div class="row">
+                    <div class="col-sm-11 collapse" id="collapseDisponibilite">
+                        {{ render(controller("ApplicationPlateformeBundle:Disponibilites:new",{'id': beneficiaire.consultant.id})) }}
+                    </div>
+                    <div class="col-sm-1" style="float: right">
+                        <a href="#collapseDisponibilite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDisponibilite" class="btn btn-primary disponibilite">Vos disponiblités</a>
+                    </div>
                 </div>
-                <div class="col-sm-1" style="float: right">
-                    <a href="#collapseDisponibilite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDisponibilite" class="btn btn-primary disponibilite">Vos disponiblités</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9" id="iframe">
+                <div class="row">
+                    <h2>Agenda de <span class="calendar_consultant">{{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</span></h2>
+                </div>
+                <div class="row">
+                    {{ beneficiaire.consultant.calendrieruri|raw }}
+                </div>
+                <div class="tableOnglet row">
+                    {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': beneficiaire.consultant.disponibilite } %}
                 </div>
             </div>
+            {% include "ApplicationPlateformeBundle:Calendar:form.html.twig" with { 'link' : 'application_add_evenement', 'id': beneficiaire.id } %}
         </div>
+        {% include "ApplicationPlateformeBundle:Calendar:confirmAdd.html.twig" %}
     </div>
-    <div class="row">
-        <div class="col-md-9" id="iframe">
-            <div class="row">
-                <h2>Agenda de <span class="calendar_consultant">{{ beneficiaire.consultant.civilite~' '~beneficiaire.consultant.prenom ~' '~beneficiaire.consultant.nom }}</span></h2>
-            </div>
-            <div class="row">
-                {{ beneficiaire.consultant.calendrieruri|raw }}
-            </div>
-            {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': beneficiaire.consultant.disponibilite } %}
-        </div>
-        {% include "ApplicationPlateformeBundle:Calendar:form.html.twig" with { 'link' : 'application_add_evenement', 'id': beneficiaire.id } %}
-    </div>
-</div>
 {% endblock%}

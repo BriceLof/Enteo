@@ -27,102 +27,102 @@
     </div>
     <div class="container-fluid calendar">
     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
-        <div class="row">
-            {{ form(form_consultant) }}
-        </div>
-        <div id="admin_calendar" class="row">
-            <div class="col-md-9" id="iframe">
-                <div class="row">
-                    <h2 id="nom_consultant">
-                        {% if beneficiaire is not null %}
-                            Agenda de <span
-                                class="calendar_consultant">{{ beneficiaire.consultant.nom|capitalize~' '~beneficiaire.consultant.prenom|capitalize }}</span>
-                        {% elseif consult is not null %}
-                            Agenda de <span
-                                class="calendar_consultant">{{ consult.nom|capitalize~' '~consult.prenom|capitalize }}</span>
-                        {% endif %}
-                    </h2>
-                </div>
-                <div class="row" id="agenda_consultant">
+    <div class="row">
+        {{ form(form_consultant) }}
+    </div>
+    <div id="admin_calendar" class="row">
+        <div class="col-md-9" id="iframe">
+            <div class="row">
+                <h2 id="nom_consultant">
                     {% if beneficiaire is not null %}
-                        {{ beneficiaire.consultant.calendrieruri|raw }}
+                        Agenda de <span
+                            class="calendar_consultant">{{ beneficiaire.consultant.nom|capitalize~' '~beneficiaire.consultant.prenom|capitalize }}</span>
                     {% elseif consult is not null %}
-                        {{ consult.calendrieruri|raw }}
+                        Agenda de <span
+                            class="calendar_consultant">{{ consult.nom|capitalize~' '~consult.prenom|capitalize }}</span>
                     {% endif %}
-                </div>
-                <div class="tableOnglet row" id="liste_dispo_admin">
-                    {% if consult is not null %}
-                        {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': consult.disponibilite } %}
-                    {% endif %}
-                </div>
+                </h2>
             </div>
-            <div class="col-md-3">
-                <div id="admin_formulaire_calendar" class="tableOnglet row">
-                    <table>
-                        <caption class="caption_calendar">
-                            <a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent">
-                                <span class="glyphicon glyphicon-minus" style="float: left"></span>
-                                <span>Ajouter un Rendez-Vous</span>
-                            </a>
-                        </caption>
-                    </table>
-                    <div class="collapse in" id="collapseEvent">
-    {% else %}
-                        <div class="row">
-                            <div class="col-md-12" id="dispo">
-                                <div class="row">
-                                    <div class="col-sm-11 collapse" id="collapseDisponibilite">
-                                        {{ render(controller("ApplicationPlateformeBundle:Disponibilites:new",{'id': app.user.id})) }}
-                                    </div>
-                                    <div class="col-sm-1" style="float: right">
-                                        <a href="#collapseDisponibilite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDisponibilite" class="btn btn-primary disponibilite">
-                                            Vos disponiblités
-                                        </a>
-                                    </div>
+            <div class="row" id="agenda_consultant">
+                {% if beneficiaire is not null %}
+                    {{ beneficiaire.consultant.calendrieruri|raw }}
+                {% elseif consult is not null %}
+                    {{ consult.calendrieruri|raw }}
+                {% endif %}
+            </div>
+            <div class="tableOnglet row" id="liste_dispo_admin">
+                {% if consult is not null %}
+                    {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': consult.disponibilite } %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div id="admin_formulaire_calendar" class="tableOnglet row">
+                <table>
+                    <caption class="caption_calendar">
+                        <a href="#collapseEvent" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEvent">
+                            <span class="glyphicon glyphicon-minus" style="float: left"></span>
+                            <span>Ajouter un Rendez-Vous</span>
+                        </a>
+                    </caption>
+                </table>
+                <div class="collapse in" id="collapseEvent">
+                    {% else %}
+                    <div class="row">
+                        <div class="col-md-12" id="dispo">
+                            <div class="row">
+                                <div class="col-sm-11 collapse" id="collapseDisponibilite">
+                                    {{ render(controller("ApplicationPlateformeBundle:Disponibilites:new",{'id': app.user.id})) }}
+                                </div>
+                                <div class="col-sm-1" style="float: right">
+                                    <a href="#collapseDisponibilite" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseDisponibilite" class="btn btn-primary disponibilite">
+                                        Vos disponiblités
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="display: none">
-                            <input id="admin_calendar_consultant_consultant" type="text" value="{{ app.user.id }}">
-                        </div>
-                        <div id="consultant_calendar" class="row">
-                            <div class="col-md-9" id="iframe">
-                                <div class="row">
-                                    <h2 id="nom_consultant">
-                                        Agenda de <span
-                                                class="calendar_consultant">{{ app.user.nom|capitalize~' '~app.user.prenom|capitalize }}</span>
-                                    </h2>
-                                </div>
-                                <div class="row" id="agenda_consultant">
-                                    {{ app.user.calendrieruri|raw }}
-                                </div>
-                                <div class="tableOnglet row">
-                                    {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': app.user.disponibilite } %}
-                                </div>
+                    </div>
+                    <div class="row" style="display: none">
+                        <input id="admin_calendar_consultant_consultant" type="text" value="{{ app.user.id }}">
+                    </div>
+                    <div id="consultant_calendar" class="row">
+                        <div class="col-md-9" id="iframe">
+                            <div class="row">
+                                <h2 id="nom_consultant">
+                                    Agenda de <span
+                                            class="calendar_consultant">{{ app.user.nom|capitalize~' '~app.user.prenom|capitalize }}</span>
+                                </h2>
                             </div>
-                            <div class="col-md-3">
-                                <div id="admin_formulaire_calendar" class="tableOnglet row">
-                                    <table>
-                                        <caption class="caption_calendar"><a href="#collapseEvent"
-                                                                             onclick="plusMoins(this);"
-                                                                             data-toggle="collapse" role="button"
-                                                                             aria-expanded="false"
-                                                                             aria-controls="collapseEvent"><span
-                                                        class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a>
-                                        </caption>
-                                    </table>
-                                    <div class="collapse in" id="collapseEvent">
-    {% endif %}
-                                        <form action="{{ path('application_admin_add_evenement') }}" method="POST" id="form_admin_event">
-                                            {% include "ApplicationPlateformeBundle:Calendar:champsForm.html.twig" with {'type': 'all'}  %}
-                                        </form>
-                                    </div>
-                                    {% include "ApplicationPlateformeBundle:Calendar:confirmAdd.html.twig" %}
+                            <div class="row" id="agenda_consultant">
+                                {{ app.user.calendrieruri|raw }}
+                            </div>
+                            <div class="tableOnglet row">
+                                {% include "ApplicationPlateformeBundle:Disponibilites:list.html.twig" with { 'tab': app.user.disponibilite } %}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="admin_formulaire_calendar" class="tableOnglet row">
+                                <table>
+                                    <caption class="caption_calendar"><a href="#collapseEvent"
+                                                                         onclick="plusMoins(this);"
+                                                                         data-toggle="collapse" role="button"
+                                                                         aria-expanded="false"
+                                                                         aria-controls="collapseEvent"><span
+                                                    class="glyphicon glyphicon-minus" style="float: left"></span><span>Ajouter un Rendez-Vous</span></a>
+                                    </caption>
+                                </table>
+                                <div class="collapse in" id="collapseEvent">
+                                    {% endif %}
+                                    <form action="{{ path('application_admin_add_evenement') }}" method="POST" id="form_admin_event">
+                                        {% include "ApplicationPlateformeBundle:Calendar:champsForm.html.twig" with {'type': 'all'}  %}
+                                    </form>
                                 </div>
+                                {% include "ApplicationPlateformeBundle:Calendar:confirmAdd.html.twig" %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}
