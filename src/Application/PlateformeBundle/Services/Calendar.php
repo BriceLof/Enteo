@@ -1,26 +1,27 @@
 <?php
-
 namespace Application\PlateformeBundle\Services;
-
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\Bureau;
 use Application\PlateformeBundle\Entity\Historique;
+use Application\PlateformeBundle\Services\Statut\Mail\MailRvAgenda;
 use Application\UsersBundle\Entity\Users;
 use Doctrine\ORM\EntityManager;
 use Fungio\GoogleCalendarBundle\Service\GoogleCalendar;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
 class Calendar
 {
     protected $em;
     protected $calendar;
-
-    public function __construct(EntityManager $em, GoogleCalendar $googleCalendar)
+    protected $mailRv;
+    protected $router;
+    public function __construct(EntityManager $em, GoogleCalendar $googleCalendar, MailRvAgenda $mailRv, RouterInterface $router)
     {
         $this->em = $em;
         $this->calendar = $googleCalendar;
+        $this->mailRv = $mailRv;
+        $this->router = $router;
     }
-
-
     /**
      * retourne un tableau de nom des couleurs de google calendar
      *
@@ -71,10 +72,8 @@ class Calendar
             '%236B3304' => 'Nice Brown',
             '%23333333' => 'Black',
         );
-
         return $color[$codeColor];
     }
-
     public function getColor(){
         $color = array(
             '%23B1365F',
@@ -121,27 +120,22 @@ class Calendar
             '%236B3304',
             '%23333333',
         );
-
         return $color;
     }
-
-    public function createEvent($form, Historique $historique, Beneficiaire $beneficiaire, Users $consultant){
+    public function createEvent($form, Historique $historique, Beneficiaire $beneficiaire, Users $consultant, $edit = false, $old_rdv = null){
         $location = "";
-
         if($form['typerdv']->getData() == 'distantiel'){
             $historique->setBureau(null);
-            $eventSummary = $beneficiaire->getNomConso().', '.$historique->getSummary();
+            $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary();
         }
-
-        if($historique->getAutreSummary() != null){
+        if($historique->getSummary() == "Autre" && $historique->getAutreSummary() != ""){
             $historique->setSummary($historique->getAutreSummary());
         }
-
         $eventSummaryBureau = $consultant->getNom().' '.$consultant->getPrenom().', '.$beneficiaire->getNomConso().' '.$beneficiaire->getPrenomConso().', '.$historique->getSummary();
         $eventDescription = $historique->getDescription().' (<a href="https://appli.entheor.com/web/beneficiaire/show/'.$beneficiaire->getId().'">voir fiche bénéficiaire</a>)';
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
-
+        $antidated = ((new \DateTime('now'))->getTimestamp() > $dateDebut->getTimeStamp());
         if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
             $ville = $this->em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                 'nom' => $form["ville"]->getData(),
@@ -153,14 +147,15 @@ class Calendar
             $bureau->setNombureau($form['nomBureau']->getData());
             $this->em->persist($bureau);
             $historique->setBureau($bureau);
-            $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
+            $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary().', '.$historique->getBureau()->getVille()->getNom();
         }else{
             //ajouter l'evenement dans le calendrier du bureau seulement si c'est en presentiel
-            if($historique->getBureau() != null) {
-                $eventSummary = $historique->getBureau()->getVille()->getNom().', '.$beneficiaire->getNomConso().', '.$historique->getSummary();
+            if($historique->getBureau() != null && $antidated == false) {
+                $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary().', '.$historique->getBureau()->getVille()->getNom();
                 if ($historique->getBureau()->getCalendrierid() != ""){
                     if ($historique->getEventIdBureau() != "" or $historique->getEventIdBureau() != null){
-                        $eventBureauUpdated = $this->calendar->addEvent($historique->getBureau()->getCalendrierid(), $historique->getEventIdBureau(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
+                        if ($antidated)
+                            $eventBureauUpdated = $this->calendar->addEvent($historique->getBureau()->getCalendrierid(), $historique->getEventIdBureau(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
                     }else{
                         $eventBureau = $this->calendar->addEvent($historique->getBureau()->getCalendrierid(), $dateDebut, $dateFin, $eventSummaryBureau, $eventDescription);
                         $historique->setEventIdBureau($eventBureau['id']);
@@ -168,18 +163,44 @@ class Calendar
                 }
             }
         }
-
         if ($historique->getBureau() != null ){
             $location = $historique->getBureau()->getAdresse().', '.$historique->getBureau()->getVille()->getCp();
         }
-
         //utiliser event pour jouer avec l'evenement
-        $event = $this->calendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
-
-        $historique->setConsultant($beneficiaire->getConsultant());
-        $historique->setEventId($event['id']);
-        $historique->setDateFin($dateFin);
-        $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
-        $historique->setDateDebut($date);
+        if ($antidated == false){
+            if ($edit == true){
+                $eventUpdated = $this->calendar->updateEvent($consultant->getCalendrierid(), $historique->getEventId(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
+            }else{
+                $event = $this->calendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
+            }
+        }
+        if ($edit == true){
+            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
+            $historique->setDateDebut($date);
+            $this->mailRv->alerteRdvAgenda($beneficiaire, $historique, $old_rdv);
+            if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
+                $newHistorique = clone $historique;
+                $this->em->refresh($historique);
+                $historique->setCanceled(2);
+                $this->em->persist($newHistorique);
+                $this->em->flush();
+                return new RedirectResponse($this->router->generate('application_show_beneficiaire', array(
+                    'beneficiaire' => $beneficiaire,
+                    'id' => $beneficiaire->getId(),
+                )));
+            }else{
+                $this->em->persist($historique);
+                $this->em->flush();
+            }
+        }else{
+            $historique->setConsultant($beneficiaire->getConsultant());
+            if ($antidated == false){
+                $historique->setEventId($event['id']);
+            }
+            $historique->setDateFin($dateFin);
+            $date = $historique->getDateDebut()->setTime($historique->getHeureDebut()->format('H'),$historique->getHeureDebut()->format('i'));
+            $historique->setDateDebut($date);
+        }
+        return null;
     }
 }

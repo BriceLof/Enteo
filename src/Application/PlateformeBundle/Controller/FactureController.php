@@ -60,6 +60,7 @@ class FactureController extends Controller
         $form = $this->get('form.factory')->create(FactureType::class, $facture);
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
             $facture = $form->getData();
+            $facture->setMontant(str_replace(',', '.', $facture->getMontant()));
             $facture->setBeneficiaire($beneficiaire);
 
             $nomFinanceur = $form->get('nom_financeur')->getData();
@@ -129,7 +130,7 @@ class FactureController extends Controller
                 // check lequel des formulaires a été submit
                 if($request->request->has($formUpdate->getName())){
                     $facture = $formUpdate->getData();
-
+                    $facture->setMontant(str_replace(',', '.', $facture->getMontant()));
                     $nomFinanceur = $formUpdate->get('nom_financeur')->getData();
                     $rueFinanceur = $formUpdate->get('rue_financeur')->getData();
                     $cpVilleFinanceur = $formUpdate->get('code_postal_financeur')->getData();
