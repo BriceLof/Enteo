@@ -61,10 +61,12 @@ class Csv
 
 
                 if (!is_null($beneficiaire->getAccompagnement())){
-                    $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getNom();
-                    $montant1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getMontant();
-                    $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getNom();
-                    $montant2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getMontant();
+                    if (!empty($beneficiaire->getAccompagnement()->getFinanceur())){
+                        $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getNom();
+                        $montant1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getMontant();
+                        $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getNom();
+                        $montant2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getMontant();
+                    }
 
                     if ( !is_null($beneficiaire->getAccompagnement()->getDateDebut())) {
                         $dateDebut = $beneficiaire->getAccompagnement()->getDateDebut()->format('d/m/Y');
