@@ -72,3 +72,4 @@ services:
 
     application_plateforme.csv:
         class: Application\PlateformeBundle\Services\Csv
+        arguments: ["@doctrine.orm.entity_manager"]

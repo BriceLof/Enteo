@@ -2,6 +2,8 @@
 
 namespace Application\PlateformeBundle\Repository;
 
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
 /**
  * HistoriqueRepository
  *
@@ -74,6 +76,41 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
         return $results;
+    }
+
+    public function getLastRv1($beneficiaire, $summary = null, $limit= null, $order = null){
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Historique','h');
+
+        $query = 'SELECT h.* FROM historique h';
+        $params = array();
+
+        $query .= ' WHERE 1';
+
+        $query .= ' AND h.beneficiaire_id = :beneficiaire_id';
+        $params['beneficiaire_id'] = $beneficiaire->getId();
+
+        if(!is_null($summary)) {
+            $query .= ' AND h.summary = :summary';
+            $params['summary'] = $summary;
+        }
+
+
+
+        if (!is_null($order)){
+            $query .= ' ORDER BY h.date_debut DESC';
+        }
+
+        if (!is_null($limit)){
+            $query .= ' LIMIT :limit';
+            $params['limit'] = $limit;
+        }
+
+
+        $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
+        $request->setParameters($params);
+
+        return $request;
     }
 
     // Renvoie l'historique d'un beneficiaire données
