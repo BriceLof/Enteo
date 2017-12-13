@@ -47,6 +47,11 @@ class Beneficiaire
     private $historique;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Facture", mappedBy="beneficiaire")
+     */
+    private $factures;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Ville", inversedBy="beneficiaire")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -1684,5 +1689,39 @@ class Beneficiaire
     public function getMissionArchives()
     {
         return $this->missionArchives;
+    }
+
+    /**
+     * Add facture
+     *
+     * @param \Application\PlateformeBundle\Entity\Facture $facture
+     *
+     * @return Beneficiaire
+     */
+    public function addFacture(\Application\PlateformeBundle\Entity\Facture $facture)
+    {
+        $this->factures[] = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Remove facture
+     *
+     * @param \Application\PlateformeBundle\Entity\Facture $facture
+     */
+    public function removeFacture(\Application\PlateformeBundle\Entity\Facture $facture)
+    {
+        $this->factures->removeElement($facture);
+    }
+
+    /**
+     * Get factures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFactures()
+    {
+        return $this->factures;
     }
 }
