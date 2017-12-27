@@ -18,9 +18,20 @@ $(function () {
 
     $(".lienModalPaiement").click(function(){
         nomLien = $(this).attr("data-target")
+
         statePaiement = $(nomLien).find('.statutPaiementFacture').val()
         if(statePaiement == "paid" || statePaiement == "partiel"){
             paiementFieldShowHidde(statePaiement)
+        }
+
+        modePaiement = $(nomLien).find('.modePaiementFactureField').val()
+        if(modePaiement == 'cheque'){
+            $(".banqueFacture").css('display', 'block')
+            $(".banqueFactureField").attr('required', 'required')
+        }
+        else{
+            $(".banqueFactureField").removeAttr('required')
+            $(".banqueFacture").css('display', 'none')
         }
     })
 
@@ -28,12 +39,23 @@ $(function () {
         statePaiement = $(this).children("option:selected").val()
         paiementFieldShowHidde(statePaiement)
     });
+    $(".modePaiementFactureField").change(function () {
+        modePaiement = $(this).children("option:selected").val()
+        if(modePaiement == 'cheque'){
+            $(".banqueFacture").css('display', 'block')
+            $(".banqueFactureField").attr('required', 'required')
+        }
+        else{
+            $(".banqueFactureField").removeAttr('required')
+            $(".banqueFacture").css('display', 'none')
+        }
+    });
 
 });
 
-function paiementFieldShowHidde(statePaiement)
+function paiementFieldShowHidde(valeur)
 {
-    if (statePaiement == 'paid' || statePaiement == 'partiel' ) {
+    if (valeur == 'paid' || valeur == 'partiel' ) {
         $(".montantPayerFacture").css('display', 'block')
         $(".montantPayerFactureField").attr('required', 'required')
         $(".modePaiementFacture").css('display', 'block')
@@ -49,4 +71,14 @@ function paiementFieldShowHidde(statePaiement)
         $(".datePaiementFacture").css('display', 'none')
         $(".datePaiementFactureField").removeAttr('required')
     }
+    /////////////////////////////////////////////////////////////////////////////////////
+    if (valeur == 'partiel' || valeur == 'perte et profit' || valeur == 'error' ) {
+        $(".commentaireFactureField").attr('required', 'required')
+        $(".label_commentaire_facture").text("Commentaire *")
+    }
+    else{
+        $(".commentaireFactureField").removeAttr('required')
+        $(".label_commentaire_facture").text("Commentaire")
+    }
+
 }

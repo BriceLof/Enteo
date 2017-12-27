@@ -85,11 +85,24 @@ class FactureController extends Controller
             $historique->setEventId("0");
             $historique->setUser($this->getUser());
             $em->persist($historique);
+            
+            $suiviAdministratifTypePaiement = new SuiviAdministratif();
+            $typePaiement = $form->get('type_paiement')->getData();
+            if($typePaiement == 'partiel'){
+                $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByDetail("Facture acompte");
+            }
+            elseif($typePaiement == 'totale'){
+                $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByDetail("Facture totale");
+            }
+            $suiviAdministratifTypePaiement->setBeneficiaire($beneficiaire);
+            $suiviAdministratifTypePaiement->setStatut($detailStatutRepo->getStatut());
+            $suiviAdministratifTypePaiement->setDetailStatut($detailStatutRepo);
+            $em->persist($suiviAdministratifTypePaiement);
 
-            $suiviAdministratif = new SuiviAdministratif();
-            $suiviAdministratif->setBeneficiaire($beneficiaire);
-            $suiviAdministratif->setInfo("Facture ouverte N° ".$lastNumFactu);
-            $em->persist($suiviAdministratif);
+            $suiviAdministratifFactureOpen = new SuiviAdministratif();
+            $suiviAdministratifFactureOpen->setBeneficiaire($beneficiaire);
+            $suiviAdministratifFactureOpen->setInfo("Facture ouverte N° ".$lastNumFactu);
+            $em->persist($suiviAdministratifFactureOpen);
 
             $em->flush();
 

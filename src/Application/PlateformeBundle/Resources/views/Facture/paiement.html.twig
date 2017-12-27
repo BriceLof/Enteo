@@ -15,12 +15,18 @@
                     <div class="row modePaiementFacture" style="display: none" >
                         <p class="col-md-4">Mode de paiement *  </p> <p class="col-md-4" style="margin-top:-5px">{{ form_widget(form.mode_paiement) }}</p>
                     </div>
+                    <div class="row banqueFacture" style="display: none" >
+                        <p class="col-md-4">Banque *  </p> <p class="col-md-4" style="margin-top:-5px">{{ form_widget(form.banque) }}</p>
+                    </div>
                     <div class="row datePaiementFacture" style="display: none">
                         <p class="col-md-4">Date de paiement *  </p> <p class="col-md-4" style="margin-top:-5px">{{ form_widget(form.date_paiement) }}</p>
                     </div>
-
+                    <div class="row commentaireFacture" style="">
+                        <p class="col-md-4 label_commentaire_facture">Commentaire </p> <p class="col-md-8" style="margin-top:-5px">{{ form_widget(form.commentaire) }}</p>
+                    </div>
 
                 </div>
+                <input type="hidden" name="montantFacture" class="montantFactureHidden" value="{{ facture.montant }}" >
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                     {{ form_widget(form.save) }}

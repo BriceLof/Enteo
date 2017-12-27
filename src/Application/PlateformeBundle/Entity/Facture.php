@@ -129,6 +129,27 @@ class Facture
      */
     private $ouvert;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type_paiement", type="string", length=255)
+     */
+    private $typePaiement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="commentaire", type="string", length=255, nullable=true)
+     */
+    private $commentaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="banque", type="string", length=255, nullable=true)
+     */
+    private $banque;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -531,5 +552,77 @@ class Facture
     public function getMontantPayer()
     {
         return $this->montantPayer;
+    }
+
+    /**
+     * Set typePaiement
+     *
+     * @param string $typePaiement
+     *
+     * @return Facture
+     */
+    public function setTypePaiement($typePaiement)
+    {
+        $this->typePaiement = $typePaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get typePaiement
+     *
+     * @return string
+     */
+    public function getTypePaiement()
+    {
+        return $this->typePaiement;
+    }
+
+    /**
+     * Set commentaire
+     *
+     * @param string $commentaire
+     *
+     * @return Facture
+     */
+    public function setCommentaire($commentaire)
+    {
+        $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commentaire
+     *
+     * @return string
+     */
+    public function getCommentaire()
+    {
+        return $this->commentaire;
+    }
+
+    /**
+     * Set banque
+     *
+     * @param string $banque
+     *
+     * @return Facture
+     */
+    public function setBanque($banque)
+    {
+        $this->banque = $banque;
+
+        return $this;
+    }
+
+    /**
+     * Get banque
+     *
+     * @return string
+     */
+    public function getBanque()
+    {
+        return $this->banque;
     }
 }

@@ -25,6 +25,7 @@ class FacturePaiementType extends AbstractType
                     'Sent' => 'sent',
                     'Paid' => 'paid',
                     'Paid partiel' => 'partiel',
+                    'Perte et profit' => 'perte et profit',
                     'Error' => 'error',
                 ),
                 'required' => true,
@@ -53,10 +54,20 @@ class FacturePaiementType extends AbstractType
                 'required' => false,
                 'attr' => array('class' => 'modePaiementFactureField'),
             ))
+            ->add('banque', TextType::class, array(
+                'label' => 'Banque *',
+                'required' => false,
+                'attr' => array('class' => 'banqueFactureField'),
+            ))
             ->add('montant_payer', TextType::class, array(
                 'label' => 'Montant payé',
                 'required' => false,
                 'attr' => array('class' => 'montantPayerFactureField'),
+            ))
+            ->add('commentaire', TextType::class, array(
+                'label' => 'Commentaire',
+                'required' => false,
+                'attr' => array('class' => 'commentaireFactureField'),
             ))
             ->add('save', SubmitType::class, array(
                 'label' => "Valider",

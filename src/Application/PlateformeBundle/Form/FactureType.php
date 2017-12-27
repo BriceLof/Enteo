@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +33,13 @@ class FactureType extends AbstractType
                 'attr' =>array('placeholder' => 'Code postal et ville du financeur'),
                 'mapped' => false
             ))
-
+            ->add('type_paiement', ChoiceType::class, array(
+                'placeholder' => 'Type de paiement',
+                'choices'  => array(
+                    'Facture partiel' => 'partiel',
+                    'Facture total' => 'total'
+                )
+            ))
             ->add('montant', TextType::class, array(
                 'required' => true,
                 'attr' =>array('placeholder' => 'Montant en €')

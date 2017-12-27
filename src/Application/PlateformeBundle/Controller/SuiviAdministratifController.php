@@ -121,6 +121,9 @@ class SuiviAdministratifController extends Controller
             )));
         }
 
+        $factureRepo = $em->getRepository('ApplicationPlateformeBundle:Facture');
+        $factures = $factureRepo->findByBeneficiaire($beneficiaire);
+        
         return $this->render('ApplicationPlateformeBundle:SuiviAdministratif:new.html.twig', array(
             'suiviAdministratif' => $suiviAdministratif,
             'beneficiaire' => $beneficiaire,
@@ -128,7 +131,8 @@ class SuiviAdministratifController extends Controller
             'tab' => $tab,
             'autorisation' => $autorisation,
             'afficher' => $bool,
-            'stateMission' => $stateMission
+            'stateMission' => $stateMission,
+            'factures' => $factures
         ));
     }
 

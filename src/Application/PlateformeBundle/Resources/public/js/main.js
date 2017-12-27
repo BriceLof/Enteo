@@ -172,6 +172,10 @@ $(function () {
         });
     }
 
+    $(".modal").draggable({
+        handle: ".modal-header"
+    });
+
     //--------- Partie ajout d'une news dans block Suivi Administratif 
     $("#suivi_administratif_info").keyup(function () {
         inputVal = $(this).val();

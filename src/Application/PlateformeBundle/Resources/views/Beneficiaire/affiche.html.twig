@@ -553,24 +553,6 @@
                                     </table>
                                 </form>
 
-                                {% set onOff = "" %}
-
-                                {% if (beneficiaire.accompagnement.heure is null or beneficiaire.accompagnement.heure == '0' or beneficiaire.accompagnement.heure == '')
-                                    or beneficiaire.accompagnement.dateDebut is null or beneficiaire.accompagnement.dateFin is null or beneficiaire.typeFinanceur is null or beneficiaire.consultant is null
-                                %}
-                                    {% set onOff = "disabled" %}
-                                {% endif %}
-                                <div class="blockGenerationFacturePaiement">
-                                    <button {{ onOff }} type="button" class="btn btn-primary" data-toggle="modal" data-target="#facturation" title="Générer facture" style="display: block;width: 110px;margin: auto;">
-                                        Facturation
-                                    </button><br>
-                                    <p class="disabledFacturationGeneration" style="display:none;background-color: white; padding: 14px; width: 343px;margin:auto;margin-bottom:15px">
-                                        <span style="color:red; font-weight:bold">IMPORTANT</span><br>
-                                        Pour générer une facture, renseigner les champs suivants : <br> - <b>Consultant</b><br>- <b>Type financeur</b><br>- <b>Accompagnement en heures</b><br>- <b>Date prévu accompagnement</b>
-                                    </p>
-                                </div>
-
-                                {{ render(controller("ApplicationPlateformeBundle:Facture:create", {'id': beneficiaire.id} )) }}
 
                             </div>
                           
