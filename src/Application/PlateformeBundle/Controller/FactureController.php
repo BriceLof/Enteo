@@ -43,6 +43,12 @@ class FactureController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
         $accompagnement = $beneficiaire->getAccompagnement();
+        $montantTotalAccompagnement = 0;
+        if($accompagnement != null){
+            foreach ($accompagnement->getFinanceur() as $financeur){
+                $montantTotalAccompagnement += $financeur->getMontant();
+            }
+        }
 
         $lastFacture = $em->getRepository('ApplicationPlateformeBundle:Facture')->findOneBy(
             array(),
@@ -114,7 +120,8 @@ class FactureController extends Controller
         }
         return $this->render('ApplicationPlateformeBundle:Facture:create.html.twig', array(
             'form' => $form->createView(),
-            'beneficiaire' => $beneficiaire
+            'beneficiaire' => $beneficiaire,
+            'montantTotalAccompagnement' => $montantTotalAccompagnement
         ));
     }
 
@@ -123,7 +130,13 @@ class FactureController extends Controller
         $em = $this->getDoctrine()->getManager();
         $facture = $em->getRepository('ApplicationPlateformeBundle:Facture')->findOneByNumero($numero);
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($facture->getBeneficiaire()->getId());
-
+        $accompagnement = $beneficiaire->getAccompagnement();
+        $montantTotalAccompagnement = 0;
+        if($accompagnement != null){
+            foreach ($accompagnement->getFinanceur() as $financeur){
+                $montantTotalAccompagnement += $financeur->getMontant();
+            }
+        }
         $loopIndex = $request->get('loopIndex');
 
         $financeur = $facture->getFinanceur();
@@ -181,7 +194,8 @@ class FactureController extends Controller
             'loopIndex' => $loopIndex,
             'nomFinanceur' => $nomFinanceur,
             'rueFinanceur' =>$rueFinanceur,
-            'cpVilleFinanceur' =>$cpVilleFinanceur
+            'cpVilleFinanceur' =>$cpVilleFinanceur,
+            'montantTotalAccompagnement' => $montantTotalAccompagnement
         ));
     }
 

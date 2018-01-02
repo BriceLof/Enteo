@@ -150,6 +150,13 @@ class Facture
      */
     private $banque;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="heure_accompagnement_facture", type="string", length=255, nullable=true)
+     */
+    private $heureAccompagnementFacture;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -624,5 +631,29 @@ class Facture
     public function getBanque()
     {
         return $this->banque;
+    }
+
+    /**
+     * Set heureAccompagnementFacture
+     *
+     * @param string $heureAccompagnementFacture
+     *
+     * @return Facture
+     */
+    public function setHeureAccompagnementFacture($heureAccompagnementFacture)
+    {
+        $this->heureAccompagnementFacture = $heureAccompagnementFacture;
+
+        return $this;
+    }
+
+    /**
+     * Get heureAccompagnementFacture
+     *
+     * @return string
+     */
+    public function getHeureAccompagnementFacture()
+    {
+        return $this->heureAccompagnementFacture;
     }
 }

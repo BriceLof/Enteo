@@ -1,4 +1,4 @@
- <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="facturation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -11,10 +11,10 @@
                     <div id="block_form_facture">
                         <header>
                             <div class="row">
-                                    <p class="col-md-3"><b>Financeur * : </b></p>
-                                    <p class="col-md-12">{{ form_widget(form.nom_financeur) }}</p>
-                                    <p class="col-md-6">{{ form_widget(form.rue_financeur) }}</p>
-                                    <p class="col-md-6">{{ form_widget(form.code_postal_financeur) }}</p>
+                                <p class="col-md-3"><b>Financeur * : </b></p>
+                                <p class="col-md-12">{{ form_widget(form.nom_financeur) }}</p>
+                                <p class="col-md-6">{{ form_widget(form.rue_financeur) }}</p>
+                                <p class="col-md-6">{{ form_widget(form.code_postal_financeur) }}</p>
                             </div>
                             <p id="objet" class="row">
                                 <br>
@@ -25,10 +25,34 @@
 
                         <section>
                             <div class="row">
-                                <br>
-                                <p><b><span class="blue_text col-md-4">Type de paiement *</span></b> <span class="col-md-4">{{ form_widget(form.type_paiement) }}</span></p><br>
-                                <p><b><span class="blue_text col-md-4">Accompagnement VAE {{ beneficiaire.accompagnement.heure }}h *</span></b> <span class="col-md-4">{{ form_widget(form.montant) }}</span></p><br>
-                                <p><b><span class="col-md-3">Détails  </span></b> <span class="col-md-5">{{ form_widget(form.detail_accompagnement) }}</span></p>
+                                <p>
+                                    <span class="blue_text col-md-4"><b>Type de paiement *</b></span> <span class="col-md-4">{{ form_widget(form.type_paiement) }}</span>
+                                </p>
+                            </div>
+
+                            <div class="row" style="margin-top:5px;margin-bottom: 5px;">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <span class="col-md-7"><b>Accompagnement VAE *</b></span>
+                                        <div class="col-md-5">
+                                            <div class="row">
+                                                <span class="col-md-8" >{{ form_widget(form.heure_accompagnement_facture, {'attr' : {"value": beneficiaire.accompagnement.heure } }) }}</span>
+                                                <span class="col-md-1" ><b style="display:block;margin-left:-28px;margin-top:3px;">h</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="row">
+                                        <span class="col-md-8" >{{ form_widget(form.montant, {'attr' : {"value": montantTotalAccompagnement } }) }}</span>
+                                        <span class="col-md-1" ><b style="display:block;margin-left:-28px;margin-top:3px;">€</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p>
+                                    <span class="col-md-3"><b>Détails</b>  </span> <span class="col-md-5">{{ form_widget(form.detail_accompagnement) }}</span>
+                                </p>
                             </div>
 
                             <div class="row">
