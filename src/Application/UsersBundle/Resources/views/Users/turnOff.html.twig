@@ -1,17 +1,21 @@
 <!-- Modal -->
-
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Désactivation utilisateur </h4>
-      </div>
-      <div class="modal-body">
-          <p>Etes-vous sûr de vouloir désactiver cet utilisateur ?</p>
-      </div>
-      <div class="modal-footer">
+{% if user.enabled == true %}
+    {% set titreModal, activer_desactiver = "Désactivation", "désactiver" %}
+{% else %}
+    {% set titreModal, activer_desactiver = "Activation", "activer" %}
+{% endif %}
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="myModalLabel">{{ titreModal }} utilisateur </h4>
+    </div>
+    <div class="modal-body">
+      <p>Etes-vous sûr de vouloir {{ activer_desactiver }} cet utilisateur ?</p>
+    </div>
+    <div class="modal-footer">
         {{ form(form) }}
-      </div>
     </div>
   </div>
+</div>
 
