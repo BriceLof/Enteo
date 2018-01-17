@@ -5,7 +5,7 @@
             <form action="{{ path('application_paiement_facture', { 'id' : facture.id }) }}" method="POST"  >
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Détail Règlement de la facture N°{{ facture.numero }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">Détail Règlement de la facture N° {{ facture.numero }}</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">

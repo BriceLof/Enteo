@@ -106,7 +106,7 @@ class SuiviAdministratifController extends Controller
                 $this->get('session')->getFlashBag()->add('info', 'Mission bien envoyé');
             }
 
-            if ($suiviAdministratif->getDetailStatut() == null || $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut() ){
+            if (is_null($suiviAdministratif->getInfo()) && ($suiviAdministratif->getDetailStatut() == null || $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut())){
                 $em->detach($suiviAdministratif);
             }else{
                 $em->persist($suiviAdministratif);

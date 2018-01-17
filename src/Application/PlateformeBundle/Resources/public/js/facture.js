@@ -20,9 +20,7 @@ $(function () {
         nomLien = $(this).attr("data-target")
 
         statePaiement = $(nomLien).find('.statutPaiementFacture').val()
-        if(statePaiement == "paid" || statePaiement == "partiel"){
-            paiementFieldShowHidde(statePaiement)
-        }
+        paiementFieldShowHidde(statePaiement)
 
         modePaiement = $(nomLien).find('.modePaiementFactureField').val()
         if(modePaiement == 'cheque'){
@@ -55,6 +53,7 @@ $(function () {
 
 function paiementFieldShowHidde(valeur)
 {
+    console.log(valeur)
     if (valeur == 'paid' || valeur == 'partiel' ) {
         $(".montantPayerFacture").css('display', 'block')
         $(".montantPayerFactureField").attr('required', 'required')

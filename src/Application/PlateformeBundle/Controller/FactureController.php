@@ -23,7 +23,7 @@ class FactureController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $nbPerPage = 100;
+        $nbPerPage = 20;
         $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->getAllFacture($page, $nbPerPage);
         $nbPages = ceil(count($factures) / $nbPerPage);
 
