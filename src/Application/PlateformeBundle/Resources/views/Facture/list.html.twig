@@ -19,9 +19,10 @@
                     <table class="table  table-striped">
                         <thead >
                         <tr>
+                            <th scope="col"></th>
                             <th scope="col">Bénéficiaire</th>
-                            <th scope="col">Accompagnement</th>
-
+                            <th scope="col">Début accompagnement</th>
+                            <th scope="col">Fin accompagnement</th>
                             <th scope="col">Financeur</th>
                             <!--<th scope="col">Ville</th>-->
                             <th scope="col">Consultant</th>
@@ -36,8 +37,10 @@
                         <tbody>
                         {% for facture in factures %}
                             <tr>
+                                <td>{{ facture.id }}</td>
                                 <td><a href="{{ path("application_show_beneficiaire", {'id' : facture.beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ facture.beneficiaire.civiliteConso | capitalize ~ ' '~ facture.beneficiaire.nomConso | capitalize ~ ' '~ facture.beneficiaire.prenomConso | capitalize }}</a></td>
-                                <td>du {{ facture.dateDebutAccompagnement | date("d/m/Y") }} au {{ facture.dateFinAccompagnement | date("d/m/Y") }}</td>
+                                <td>{{ facture.dateDebutAccompagnement | date("d/m/Y") }}</td>
+                                <td>{{ facture.dateFinAccompagnement | date("d/m/Y") }}</td>
                                 {% set financeur = facture.Financeur | split('|') %}
                                 <td>{{ financeur[0]~', '~financeur[2] }}</td>
                                 <!--<td>{{ facture.beneficiaire.ville.nom | capitalize }}</td>-->
