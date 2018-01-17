@@ -137,36 +137,54 @@ class UsersController extends Controller
     {
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
-       
+
         if ($form->isSubmitted() && $form->isValid()) {
             //var_dump($user->getId());exit;
-            $em = $this->getDoctrine()->getManager(); 
+            $em = $this->getDoctrine()->getManager();
             //$em->remove($user);
-            $user->setEnabled(0);
-            $em->flush($user);
-            $request->getSession()->getFlashBag()->add('info', 'Utilisateur désactivé avec succès');
+            if($user->isEnabled() == true){
+                $user->setEnabled(0);
+                $em->flush($user);
+                $request->getSession()->getFlashBag()->add('info', 'Utilisateur désactivé avec succès');
+            }
+            else{
+                $user->setEnabled(1);
+                $em->flush($user);
+                $request->getSession()->getFlashBag()->add('info', 'Utilisateur activé avec succès');
+            }
+
             return $this->redirectToRoute('user_type');
         }
-        
+
         return $this->render('ApplicationUsersBundle:Users:turnOff.html.twig', array(
-            'form' => $form->createView(), 
-        ));  
+            'form' => $form->createView(),
+            'user' => $user
+        ));
     }
 
     private function createDeleteForm(Users $user)
     {
+        if($user->isEnabled() == true){
+            $btn = "Désactiver";
+            $bootstrapClass = "btn-danger";
+        }
+        else{
+            $btn = "Activer";
+            $bootstrapClass = "btn-success";
+        }
+
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('user_turn_off', array('id' => $user->getId())))
             ->add("annuler", \Symfony\Component\Form\Extension\Core\Type\ButtonType::class, array(
                 'label' => "Annuler",
                 'attr' => array('class' => 'btn btn-default', "data-dismiss" => "modal")
-            ))    
+            ))
             ->add("delete", \Symfony\Component\Form\Extension\Core\Type\SubmitType::class, array(
-                'label' => "Désactiver",
-                'attr' => array('class' => 'btn btn-danger')
+                'label' => $btn,
+                'attr' => array('class' => 'btn '.$bootstrapClass)
             ))
             ->getForm()
-        ;
+            ;
     }
     
     public function myAccountAction(Request $request)

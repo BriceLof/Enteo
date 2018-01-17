@@ -98,7 +98,7 @@ class DisponibilitesController extends Controller
             $em->persist($disponibilite);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', 'Disponibilité ajouté avec succès');
+            $this->get('session')->getFlashBag()->add('info', 'Disponibilité ajoutée avec succès');
 
             return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
                     'consult' => $disponibilite->getConsultant(),
