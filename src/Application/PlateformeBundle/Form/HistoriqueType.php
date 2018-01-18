@@ -36,8 +36,7 @@ class HistoriqueType extends AbstractType
                 ))
             ->add('autreSummary', TextType::class, array(
                 'attr'=>array('class'=>'allchampH', 'placeholder'=>'Titre de rendez-vous')
-            )
-            )
+            ))
             ->add('description',     TextType::class, array(
                 'attr'=>array('class'=>'allchampH'),
                 'label' => 'Observation',

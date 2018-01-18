@@ -41,7 +41,7 @@
                 {{ form_row(form.nomBureau, { 'attr': { 'value': historique.bureau.nombureau }}) }}
             </div>
             <div style="display: none">
-                {{ form_row(form.beneficiaire) }}
+                {{ form_widget(form.beneficiaire, { 'attr': { 'value': historique.beneficiaire.id }}) }}
             </div>
             <div class="champ_agenda">
                 {{ form_row(form.adresseBureau, { 'attr': { 'value': historique.bureau.adresse }}) }}
@@ -61,7 +61,7 @@
                 {{ form_row(form.nomBureau) }}
             </div>
             <div style="display: none">
-                {{ form_row(form.beneficiaire) }}
+                {{ form_widget(form.beneficiaire, { 'attr': { 'value': beneficiaire.id }}) }}
             </div>
             <div class="champ_agenda">
                 {{ form_row(form.adresseBureau) }}
