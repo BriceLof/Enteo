@@ -83,11 +83,6 @@ class Beneficiaire
      */
     protected $accompagnement;
 
-//    /**
-//     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="beneficiaire")
-//     */
-//    protected $mission;
-
     /**
      * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})
      */
@@ -1631,30 +1626,6 @@ class Beneficiaire
     public function getStatutRecevabilite()
     {
         return $this->statutRecevabilite;
-    }
-
-    /**
-     * Set mission
-     *
-     * @param \Application\UsersBundle\Entity\Mission $mission
-     *
-     * @return Beneficiaire
-     */
-    public function setMission(\Application\UsersBundle\Entity\Mission $mission = null)
-    {
-        $this->mission = $mission;
-
-        return $this;
-    }
-
-    /**
-     * Get mission
-     *
-     * @return \Application\UsersBundle\Entity\Mission
-     */
-    public function getMission()
-    {
-        return $this->mission;
     }
 
     /**

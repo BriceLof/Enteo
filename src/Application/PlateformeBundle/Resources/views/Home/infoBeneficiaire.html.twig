@@ -65,35 +65,29 @@
         <td>{{ beneficiaire.diplomeVise|capitalize }}</td>
         <td>{{ beneficiaire.heureRappel|capitalize }}</td>
         {% if beneficiaire.consultant is not null %}
-            <td>
-                <b>{{ beneficiaire.consultant.nom~' '~beneficiaire.consultant.prenom }}</b>
-            </td>
-        {% else %}
-            {% if beneficiaire.mission is not null %}
-                {% if beneficiaire.mission.state == 'new' %}
-                    {% set color = '#f0c41a' %}
-                    {% set title = 'envoyé' %}
-                {% elseif beneficiaire.mission.state == 'accepted'  %}
-                    {% set color = '#ff723d' %}
-                    {% set title = 'accepté' %}
-                {% elseif beneficiaire.mission.state == 'confirmed' %}
-                    {% set color = '#05ff10' %}
-                    {% set title = 'confirmé' %}
-                {% endif %}
-                    <td>
-                        <span title="{{ title }}" id="nomPrenomConsultant">
-                            <span><b>{{ beneficiaire.mission.consultant.prenom|capitalize~" "~beneficiaire.mission.consultant.nom|capitalize~" " }}</b></span>
-                            {#{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}#}
-                            {#<span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span>#}
-                            {#{% endif %}#}
-                            <span class="glyphicon glyphicon-stop" style="color : {{ color }}"></span>
-                        </span>
-                    </td>
-            {% else %}
+            {% if beneficiaire.consultant.mission is not null %}
+                {#{% if beneficiaire.consultant.mission.state == 'new' %}#}
+                {#{% set color = '#f0c41a' %}#}
+                {#{% set title = 'envoyé' %}#}
+                {#{% elseif beneficiaire.consultant.mission.state == 'accepted'  %}#}
+                {#{% set color = '#ff723d' %}#}
+                {#{% set title = 'accepté' %}#}
+                {#{% elseif beneficiaire.consultant.mission.state == 'confirmed' %}#}
+                {#{% set color = '#05ff10' %}#}
+                {#{% set title = 'confirmé' %}#}
+                {#{% endif %}#}
                 <td>
-                    <b>Pas encore de consultant</b>
+                    {#<span title="{{ title }}" id="nomPrenomConsultant">#}
+                    <span title="" id="nomPrenomConsultant">
+                            <span><b>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</b></span>
+                        {#<span class="glyphicon glyphicon-stop" style="color : {{ color }}"></span>#}
+                        </span>
                 </td>
             {% endif %}
+        {% else %}
+            <td>
+                <b>Pas encore de consultant</b>
+            </td>
         {% endif %}
     </tr>
 
@@ -103,7 +97,7 @@
     {% endif %}
 
     <tr>
-    	{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %} <th colspan=2>Nombre total appel</th>{% else %}<th colspan=2></th>{% endif %}        
+        {% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %} <th colspan=2>Nombre total appel</th>{% else %}<th colspan=2></th>{% endif %}
         <th colspan=2>{% if is_granted('ROLE_ADMIN') or not is_granted('ROLE_CONSULTANT') %}Dernier appel{% else %}Dernier message{% endif %}</th>
         <th>Statut</th>
         <th>Détail statut</th>
@@ -125,28 +119,28 @@
             {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : '' }}
         </td>
         <td>
-        	<b>
-			{% if statutBeneficiaire[beneficiaire.id] is defined %}
-				{% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
-					{{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
-				{% endif %}
-			{% else %}
-				{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
-			{% endif %}
-        	</b>
-    	</td>
+            <b>
+                {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                    {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                        {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                    {% endif %}
+                {% else %}
+                    {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                {% endif %}
+            </b>
+        </td>
         <td>
-        	{% if statutBeneficiaire[beneficiaire.id] is defined %}
-				{% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+            {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
                     {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
                         {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
                     {% endif %}
-				{% endif %}
-			{% else %}
-				{{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
-			{% endif %}
+                {% endif %}
+            {% else %}
+                {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
+            {% endif %}
 
-    	</td>
+        </td>
         <td colspan=5>
             {% if(beneficiaire.nouvelle | length > 0) %}
                 {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}
