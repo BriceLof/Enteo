@@ -61,7 +61,11 @@
                 {{ form_row(form.nomBureau) }}
             </div>
             <div style="display: none">
-                {{ form_widget(form.beneficiaire, { 'attr': { 'value': beneficiaire.id }}) }}
+                {% if beneficiaire is not null %}
+                    {{ form_widget(form.beneficiaire, { 'attr': { 'value': beneficiaire.id }}) }}
+                {% else %}
+                    {{ form_widget(form.beneficiaire) }}
+                {% endif %}
             </div>
             <div class="champ_agenda">
                 {{ form_row(form.adresseBureau) }}
