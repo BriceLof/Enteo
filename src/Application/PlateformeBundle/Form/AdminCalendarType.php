@@ -54,10 +54,8 @@ class AdminCalendarType extends AbstractType
             ))
             ->add('eventIdBureau', HiddenType::class, array(
             ))
-            ->add('beneficiaire', EntityType::class, array(
-                'class' => 'ApplicationPlateformeBundle:Beneficiaire',
-                'label' => 'beneficiaire',
-                'choice_label' => 'nomConso',
+            ->add('beneficiaire', TextType::class, array(
+                'mapped' => false,
             ))
             ->add('ville', TextType::class, array(
                 "mapped" => false,

@@ -1634,30 +1634,6 @@ class Beneficiaire
     }
 
     /**
-     * Set mission
-     *
-     * @param \Application\UsersBundle\Entity\Mission $mission
-     *
-     * @return Beneficiaire
-     */
-    public function setMission(\Application\UsersBundle\Entity\Mission $mission = null)
-    {
-        $this->mission = $mission;
-
-        return $this;
-    }
-
-    /**
-     * Get mission
-     *
-     * @return \Application\UsersBundle\Entity\Mission
-     */
-    public function getMission()
-    {
-        return $this->mission;
-    }
-
-    /**
      * Add missionArchive
      *
      * @param \Application\UsersBundle\Entity\MissionArchive $missionArchive

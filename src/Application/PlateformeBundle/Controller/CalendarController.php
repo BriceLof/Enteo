@@ -95,7 +95,7 @@ class CalendarController extends Controller
         $form = $this->createForm(AdminCalendarType::class, $historique);
         $form->add('submit', SubmitType::class, array('label' => 'Ajouter'));
 
-        //si le formulaire est validé et qu'il ne présente pas d'erreur
+//        si le formulaire est validé et qu'il ne présente pas d'erreur
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $historique = $form->getData();
             $em = $this->getDoctrine()->getManager();
@@ -162,8 +162,6 @@ class CalendarController extends Controller
             $beneficiaire = $historique->getBeneficiaire();
 
             //recuperation du consultant renseigné dans le formulaire
-            //si le consultant n'est pas celui du bénéficiaire ou il n'a pas encore de consultant, on fait comment???
-            ////////////A FAIRE/////////////
             $consultant = $historique->getConsultant();
 
             $em = $this->getDoctrine()->getManager();
@@ -206,7 +204,10 @@ class CalendarController extends Controller
 
         $historique = $form->getData();
 
-        $consultant = $historique->getBeneficiaire()->getConsultant();
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($form['beneficiaire']->getData());
+
+        $consultant = $beneficiaire->getConsultant();
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
 
