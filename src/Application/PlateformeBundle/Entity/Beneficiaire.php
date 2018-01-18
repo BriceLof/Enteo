@@ -83,10 +83,10 @@ class Beneficiaire
      */
     protected $accompagnement;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="beneficiaire")
-     */
-    protected $mission;
+//    /**
+//     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="beneficiaire")
+//     */
+//    protected $mission;
 
     /**
      * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})

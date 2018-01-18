@@ -295,9 +295,7 @@ class Mission
     public function setBeneficiaire(\Application\PlateformeBundle\Entity\Beneficiaire $beneficiaire = null)
     {
         $this->beneficiaire = $beneficiaire;
-
-        $beneficiaire->setMission($this);
-
+        
         return $this;
     }
 

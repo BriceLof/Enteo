@@ -32,10 +32,12 @@ class MissionController extends Controller
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($idConsultant);
         $facturation = $consultant->getFacturation();
 
+        $mission = $em->getRepository('ApplicationUsersBundle:Mission')->findOneBy(array(
+            "beneficiaire" => $beneficiaire
+        ));
+
         //si le bénéficiaire a déjà une mission il faut archivé cette mission
-        if (!is_null($beneficiaire->getMission())){
-            $mission = $beneficiaire->getMission();
-        }else{
+        if (is_null($mission)){
             $mission = new Mission();
         }
 
@@ -102,6 +104,7 @@ class MissionController extends Controller
 
 //        envoi mail pour administrateur
         $this->get('application_users.mailer.mail_for_mission')->acceptedMission($mission);
+        $this->get('application_users.mailer.mail_for_mission')->acceptedMissionB($mission);
     }
 
     /**

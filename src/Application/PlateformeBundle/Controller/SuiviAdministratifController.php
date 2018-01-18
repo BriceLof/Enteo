@@ -57,9 +57,11 @@ class SuiviAdministratifController extends Controller
             }
         }
 
+        $mission = $em->getRepository('ApplicationUsersBundle:Mission')->findOneBy(array(
+            "beneficiaire" => $beneficiaire
+        ));
         $stateMission = "pas de contrat envoyé";
-        if (!is_null($beneficiaire->getMission())){
-            $mission = $beneficiaire->getMission();
+        if (!is_null($mission)){
             if ($mission->getState() == 'new') $stateMission = "en attente acceptation Consultant";
             elseif ($mission->getState() == 'accepted') $stateMission = "en attente acceptation Enthéor";
             elseif ($mission->getState() == 'confirmed') $stateMission = "en cours";
@@ -103,11 +105,15 @@ class SuiviAdministratifController extends Controller
                     'idConsultant' => $beneficiaire->getConsultant()->getId(),
                     'montant' => $form['tarif']->getData()
                 ));
-                $this->get('session')->getFlashBag()->add('info', 'Mission bien envoyé');
+                $this->get('session')->getFlashBag()->add('info', 'Mission bien envoyée');
             }
 
-            if (is_null($suiviAdministratif->getInfo()) && ($suiviAdministratif->getDetailStatut() == null || $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut())){
-                $em->detach($suiviAdministratif);
+            if ($suiviAdministratif->getDetailStatut() == null || $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut() ){
+                if (!is_null($suiviAdministratif->getInfo())){
+                    $suiviAdministratif->setStatut(null);
+                }else{
+                    $em->detach($suiviAdministratif);
+                }
             }else{
                 $em->persist($suiviAdministratif);
                 $this->get('session')->getFlashBag()->add('info', 'Suivi Administratif bien enregistré');
@@ -132,7 +138,8 @@ class SuiviAdministratifController extends Controller
             'autorisation' => $autorisation,
             'afficher' => $bool,
             'stateMission' => $stateMission,
-            'factures' => $factures
+            'factures' => $factures,
+            'mission' => $mission
         ));
     }
 

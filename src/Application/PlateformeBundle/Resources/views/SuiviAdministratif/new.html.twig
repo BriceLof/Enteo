@@ -52,19 +52,19 @@
         {% endif %}
     </div>
 
-    {% set display = (beneficiaire.mission is null) ? 'block' : 'none' %}
+    {% set display = (mission is null) ? 'block' : 'none' %}
     {% set displayMission = ( afficher == 'true' ) ? 'block' : 'none' %}
     <div style="display: {{ displayMission }}" class="row" data-afficher="{{ afficher }}" data-autorisation="{{ autorisation }}" id="add_mission_tarif">
         <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px;margin-left: 15px">Mission : <span id="state_mission"><b style="color: black">({{ stateMission }})</b></span></p>
-        <div style="display: {{ (beneficiaire.mission is null) ? 'block' : 'none' }}" class="col-md-12">
+        <div style="display: {{ (mission is null) ? 'block' : 'none' }}" class="col-md-12">
             <span id="link_add_mission" class="link-mission">Envoyer contrat</span>
         </div>
-        <div style="display: {{ (beneficiaire.mission is null) ? 'none' : 'block' }}" id="tarif_mission" class="row col-md-12">
+        <div style="display: {{ (mission is null) ? 'none' : 'block' }}" id="tarif_mission" class="row col-md-12">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-2">{{ form_label(form.tarif) }}</div>
                     <div class="col-xs-3 input-group">
-                        {% set montant = (beneficiaire.mission is null) ? null : beneficiaire.mission.tarif %}
+                        {% set montant = (mission is null) ? null : mission.tarif %}
                         {{ form_widget(form.tarif, {'attr': {'value': montant }}) }}
                         <span class="input-group-addon" id="basic-addon2">€</span>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="row">
                     <div class="col-md-12" id="link_client_modify_delete">
                         <span class="link-mission" id="link_mission_modify">Modifier</span>
-                        {% if beneficiaire.mission is null %}
+                        {% if mission is null %}
                             <span class="link-mission" id="link_mission_delete">Supprimer</span>
                         {% endif %}
                     </div>
