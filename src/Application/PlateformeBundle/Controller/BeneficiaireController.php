@@ -154,16 +154,17 @@ class BeneficiaireController extends Controller
             $historique->setEventId("0");
             $historique->setUser($this->getUser());
 
-            if (!is_null($beneficiaire->getMission())) {
+            $mission = $em->getRepository('ApplicationUsersBundle:Mission')->findOneBy(array(
+                "beneficiaire" => $beneficiaire
+            ));
+            if (!is_null($mission)) {
                 $message = "Changement de consultant";
-                $mission = $beneficiaire->getMission();
                 $this->forward('ApplicationUsersBundle:MissionArchive:new', array(
                     'mission' => $mission,
                     'message' => $message,
                     'state' => 'modified',
                     'beneficiaire' => $beneficiaire,
                 ));
-                $beneficiaire->setMission(null);
             }
 
             $em->persist($beneficiaire);
