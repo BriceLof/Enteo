@@ -29,6 +29,11 @@ class Facture
     private $beneficiaire;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\HistoriquePaiementFacture", mappedBy="facture")
+     */
+    private $historiquesPaiement;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_debut_accompagnement", type="date")
@@ -655,5 +660,39 @@ class Facture
     public function getHeureAccompagnementFacture()
     {
         return $this->heureAccompagnementFacture;
+    }
+
+    /**
+     * Add historiquesPaiement
+     *
+     * @param \Application\PlateformeBundle\Entity\HistoriquePaiementFacture $historiquesPaiement
+     *
+     * @return Facture
+     */
+    public function addHistoriquesPaiement(\Application\PlateformeBundle\Entity\HistoriquePaiementFacture $historiquesPaiement)
+    {
+        $this->historiquesPaiement[] = $historiquesPaiement;
+
+        return $this;
+    }
+
+    /**
+     * Remove historiquesPaiement
+     *
+     * @param \Application\PlateformeBundle\Entity\HistoriquePaiementFacture $historiquesPaiement
+     */
+    public function removeHistoriquesPaiement(\Application\PlateformeBundle\Entity\HistoriquePaiementFacture $historiquesPaiement)
+    {
+        $this->historiquesPaiement->removeElement($historiquesPaiement);
+    }
+
+    /**
+     * Get historiquesPaiement
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getHistoriquesPaiement()
+    {
+        return $this->historiquesPaiement;
     }
 }
