@@ -78,8 +78,6 @@
                 <b>Objet : Accompagnement VAE {{ facture.beneficiaire.civiliteConso | capitalize ~ ' '~ facture.beneficiaire.nomConso | capitalize ~ ' '~ facture.beneficiaire.prenomConso | capitalize }}</b><br>
                 {% if facture.numeroRef is not null  %} N° Ref : {{ facture.numeroRef }} {% endif %}
                 {% if facture.codeAdherent is not null %} {% if facture.numeroRef is not null  %} - {% endif %} Code Adhérent : {{ facture.codeAdherent }} {% endif %}
-                <br>
-                du {{ facture.dateDebutAccompagnement | date("d/m/Y") }} au {{ facture.dateFinAccompagnement | date("d/m/Y") }}
             </p>
         </header>
 
@@ -90,7 +88,9 @@
                 {% set heureAccompagnement = facture.beneficiaire.accompagnement.heure %}
             {% endif %}
             <p id="num_facture"><u><b>{% if facture.montant < 0 %} Avoir {% else %} Facture {% endif %} n° {{ facture.numero }}</b></u></p>
-            <p><b><span class="blue_text">Accompagnement VAE {{ heureAccompagnement }}h</span></b> <span class="montant">{{ facture.montant }} €</span></p>
+            <p><b><span class="blue_text">Accompagnement VAE {{ heureAccompagnement }}h</span></b> <span class="montant">{{ facture.montant }} €</span>
+                du {{ facture.dateDebutAccompagnement | date("d/m/Y") }} au {{ facture.dateFinAccompagnement | date("d/m/Y") }}
+            </p>
             {% if facture.detailAccompagnement is not null %}
                 <p>{{ facture.detailAccompagnement }}</p>
             {% endif %}

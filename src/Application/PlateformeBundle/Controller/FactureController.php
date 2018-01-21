@@ -78,11 +78,13 @@ class FactureController extends Controller
             $cpVilleFinanceur = $form->get('code_postal_financeur')->getData();
             $facture->setFinanceur($nomFinanceur.' | '.$rueFinanceur.' | '.$cpVilleFinanceur);
 
-            $facture->setDateDebutAccompagnement($accompagnement->getDateDebut());
-            $facture->setDateFinAccompagnement($accompagnement->getDateFin());
             $facture->setNumero($lastNumFactu);
             $facture->setStatut('sent');
             $em->persist($facture);
+
+            $accompagnement->setDateDebut($facture->getDateDebutAccompagnement());
+            $accompagnement->setDateFin($facture->getDateFinAccompagnement());
+            $em->persist($accompagnement);
 
             $historique = new Historique();
             $historique->setHeuredebut(new \DateTime('now'));
@@ -166,6 +168,10 @@ class FactureController extends Controller
                     $cpVilleFinanceur = $formUpdate->get('code_postal_financeur')->getData();
                     $facture->setFinanceur($nomFinanceur.' | '.$rueFinanceur.' | '.$cpVilleFinanceur);
                     $em->persist($facture);
+
+                    $accompagnement->setDateDebut($facture->getDateDebutAccompagnement());
+                    $accompagnement->setDateFin($facture->getDateFinAccompagnement());
+                    $em->persist($accompagnement);
                 }
                 elseif($request->request->has($formFermeture->getName())){
                     $facture->setOuvert(false);

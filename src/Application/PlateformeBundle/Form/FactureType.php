@@ -57,6 +57,16 @@ class FactureType extends AbstractType
             ->add('heure_accompagnement_facture', TextType::class, array(
                 'required' => true,
                 'attr' =>array('placeholder' => 'Nombre d\'heure')))
+            ->add('date_debut_accompagnement', DateType::class, array(
+                'widget' => 'single_text',
+                'html5' => true,
+                'required' => true,
+            ))
+            ->add('date_fin_accompagnement', DateType::class, array(
+                'widget' => 'single_text',
+                'html5' => true,
+                'required' => true,
+            ))
             ->add('info_paiement', TextType::class, array(
                 'label' => 'Info paiement',
                 'required' => false,

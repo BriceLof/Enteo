@@ -54,7 +54,10 @@
                                     <span class="col-md-3"><b>Détails</b>  </span> <span class="col-md-5">{{ form_widget(form.detail_accompagnement) }}</span>
                                 </p>
                             </div>
-
+                            <div class="row">
+                                <p class="col-md-12"><b>Date accompagnement *</b></p>
+                                <p class="col-md-1" style="margin-top: 3px;margin-right: -25px;">du</p><span class="col-md-4">{{ form_widget(form.date_debut_accompagnement, {'attr' : {"value": beneficiaire.accompagnement.dateDebut | date('Y-m-d') } }) }}</span><p class="col-md-1" style="margin-top: 3px;margin-right: -25px;">au</p><span class="col-md-4">{{ form_widget(form.date_fin_accompagnement, {'attr' : {"value": beneficiaire.accompagnement.dateFin | date('Y-m-d') } }) }}</span>
+                            </div>
                             <div class="row">
                                 <br>
                                 <p><span class="col-md-3">{{ form_label(form.info_paiement) }}</span> <span class="col-md-6">{{ form_widget(form.info_paiement) }}</span></p><br>
