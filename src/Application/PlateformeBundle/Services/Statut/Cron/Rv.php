@@ -190,7 +190,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
-            "christine.clement@entheor.com" => "Christine Clement"
+            "christine.clementmolier@entheor.com" => "Christine Clement"
         );
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,

@@ -110,7 +110,10 @@ class SuiviAdministratifController extends Controller
 
             if ($suiviAdministratif->getDetailStatut() == null || $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut() ){
                 if (!is_null($suiviAdministratif->getInfo())){
-                    $suiviAdministratif->setStatut(null);
+                    $suiviAdministratifT = new SuiviAdministratif();
+                    $suiviAdministratifT->setBeneficiaire($beneficiaire);
+                    $suiviAdministratifT->setInfo($suiviAdministratif->getInfo());
+                    $em->persist($suiviAdministratifT);
                 }else{
                     $em->detach($suiviAdministratif);
                 }
