@@ -63,15 +63,16 @@ class HomeController extends Controller
 
                 $beneficiaire = $news->getBeneficiaire();
                 if ($news->getStatut()->getId() == 12){
-                    if (!is_null($beneficiaire->getMission())) {
+                    $mission = $em->getRepository('ApplicationUsersBundle:Mission')->findOneBy(array(
+                        "beneficiaire" => $beneficiaire
+                    ));
+                    if (!is_null($mission)) {
                         $message = "Abandon bénéficiaire";
-                        $mission = $beneficiaire->getMission();
                         $this->forward('ApplicationUsersBundle:MissionArchive:new', array(
                             'mission' => $mission,
                             'message' => $message,
                             'state' => 'modified'
                         ));
-                        $beneficiaire->setMission(null);
                     }
                 }
 

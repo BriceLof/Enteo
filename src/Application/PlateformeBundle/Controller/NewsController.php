@@ -73,15 +73,16 @@ class NewsController extends Controller
             }
 
             if ($news->getStatut()->getId() == 12){
-                if (!is_null($beneficiaire->getMission())) {
+                $mission = $em->getRepository('ApplicationUsersBundle:Mission')->findOneBy(array(
+                    "beneficiaire" => $beneficiaire
+                ));
+                if (!is_null($mission)) {
                     $message = "Abandon du bénéficiaire";
-                    $mission = $beneficiaire->getMission();
                     $this->forward('ApplicationUsersBundle:MissionArchive:new', array(
                         'mission' => $mission,
                         'message' => $message,
                         'state' => 'abandonned'
                     ));
-                    $beneficiaire->setMission(null);
                 }
             }
             
