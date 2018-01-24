@@ -402,7 +402,9 @@ class CalendarController extends Controller
             $consultant = $historique->getConsultant();
 
             if ($eventBureauId != null){
-                $googleCalendar->deleteEvent($calendarBureauId,$eventBureauId);
+                if($googleCalendar->getEvent($calendarBureauId, $eventBureauId)->getStatus() != "cancelled") {
+                    $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
+                }
                 $historique->setEventIdBureau(null);
             }
 
@@ -486,11 +488,15 @@ class CalendarController extends Controller
             if ($historique->getEventIdBureau() != null) {
                 $calendarBureauId = $historique->getBureau()->getCalendrierid();
                 $eventBureauId = $historique->getEventIdBureau();
-                $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
+                if($googleCalendar->getEvent($calendarBureauId, $eventBureauId)->getStatus() != "cancelled") {
+                    $googleCalendar->deleteEvent($calendarBureauId, $eventBureauId);
+                }
             }
         }
 
-        $googleCalendar->deleteEvent($calendarId, $eventId);
+        if($googleCalendar->getEvent($calendarId, $eventId)->getStatus() != "cancelled") {
+            $googleCalendar->deleteEvent($calendarId, $eventId);
+        }
 
 
         $em->persist($historique);
