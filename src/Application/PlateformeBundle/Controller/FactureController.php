@@ -97,7 +97,7 @@ class FactureController extends Controller
             if($typePaiement == 'partiel'){
                 $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByDetail("Facture acompte");
             }
-            elseif($typePaiement == 'totale'){
+            elseif($typePaiement == 'total'){
                 $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByDetail("Facture totale");
             }
             $suiviAdministratifTypePaiement->setBeneficiaire($beneficiaire);
