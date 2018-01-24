@@ -63,6 +63,9 @@ twig:
         bic : 'CRLYFRPP'
         # Fin RIB
 
+        # numero de tel christine
+        tel_christine : '06 81 85 84 28'
+
 
 # Doctrine Configuration
 doctrine:

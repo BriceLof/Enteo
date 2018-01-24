@@ -1721,4 +1721,20 @@ function nouvelleMission() {
     $('#tarif_mission').show("slow");
     $("#suivi_administratif_mission").val('true');
     $("#suiviAdministratifNewForm").submit();
+    freezeScreen()
+}
+
+/**
+ * cette fonction permet de freezer l'ecran
+ * 
+ */
+function freezeScreen() {
+    $("#freeze").css({
+        "position" : "fixed",
+        "z-index" : "9999",
+        "width" : "100%",
+        "height" : "100%",
+        // "background-color" : "#00000030",
+        "overflow": "hidden"
+    });
 }

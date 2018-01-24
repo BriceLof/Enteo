@@ -216,4 +216,31 @@ class MissionMailer extends Mailer
     }
 
 
+    public function changeConsultant(Users $consultant, Beneficiaire $beneficiaire){
+        $ref = 'm-3r-change consultant';
+        $from = "christine.clementmolier@entheor.com";
+        $subject = "Suspension de la mission d'accompagnement de ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
+        $template = '@Aub/Mission/mail/changeConsultant.html.twig';
+        $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
+        $gestionnaires = $query->getResult();
+        foreach ($gestionnaires as $gestionnaire){
+            $emails [] = $gestionnaire->getEmail();
+        }
+        $to = $consultant->getEmail();
+        $cc = null;
+        $bcc = array_merge(array(
+            "f.azoulay@entheor.com" => "Franck AZOULAY",
+            "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
+            "christine.clementmolier@entheor.com" => "Christine Clement",
+            "support.information@entheor.com" => "support info",
+        ), $emails);
+        $body = $this->templating->render($template, array(
+            'consultant' => $consultant,
+            'beneficiaire' => $beneficiaire,
+            'reference' => $ref,
+        ));
+
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+    }
+
 }

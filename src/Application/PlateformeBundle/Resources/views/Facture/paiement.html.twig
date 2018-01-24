@@ -27,12 +27,24 @@
 
                 </div>
                 <input type="hidden" name="montantFacture" class="montantFactureHidden" value="{{ facture.montant }}" >
+
+                {% if facture.historiquesPaiement | length > 0 %}
+                    <aside style="background-color: #ececec;padding: 4px 10px 10px 10px;width: 80%;margin: auto;border-radius: 2px;margin-bottom: 19px;">
+                        <h5 style="text-align:center;color:#428bca;margin-bottom: 16px;">Historique des réglements</h5>
+                        {% for historique in facture.historiquesPaiement | reverse %}
+                            <p style="font-size:13px;line-height: 8px;"> - <b>{{ historique.dateHeure | date ('d/m/Y') }}</b> à {{ historique.dateHeure | date ('H:i')}} / <b>{{ historique.statut | capitalize }}</b> / <b>{{ historique.montant }}</b> €</p>
+                        {% endfor %}
+                    </aside>
+                {% endif %}
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                     {{ form_widget(form.save) }}
                 </div>
                 {{ form_rest(form) }}
             </form>
+
+
         </div>
     </div>
 </div>

@@ -165,7 +165,6 @@ class BeneficiaireController extends Controller
                     'state' => 'modified',
                     'beneficiaire' => $beneficiaire,
                 ));
-                $beneficiaire->setMission(null);
             }
 
             $em->persist($beneficiaire);

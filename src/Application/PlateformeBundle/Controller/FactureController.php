@@ -6,6 +6,7 @@ use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\SuiviAdministratif;
 use Application\PlateformeBundle\Entity\Facture;
+use Application\PlateformeBundle\Entity\HistoriquePaiementFacture;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Form\FactureType;
@@ -23,7 +24,10 @@ class FactureController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $nbPerPage = 100;
+        if($this->container->get("kernel")->getEnvironment() == 'dev')
+            $nbPerPage = 20;
+        else
+            $nbPerPage = 100;
         $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->getAllFacture($page, $nbPerPage);
         $nbPages = ceil(count($factures) / $nbPerPage);
 
@@ -34,7 +38,7 @@ class FactureController extends Controller
         return $this->render('ApplicationPlateformeBundle:Facture:list.html.twig', array(
             'factures' => $factures,
             'nbPages' => $nbPages,
-            'page' => $page
+            'page' => $page,
         ));
     }
 
@@ -74,11 +78,13 @@ class FactureController extends Controller
             $cpVilleFinanceur = $form->get('code_postal_financeur')->getData();
             $facture->setFinanceur($nomFinanceur.' | '.$rueFinanceur.' | '.$cpVilleFinanceur);
 
-            $facture->setDateDebutAccompagnement($accompagnement->getDateDebut());
-            $facture->setDateFinAccompagnement($accompagnement->getDateFin());
             $facture->setNumero($lastNumFactu);
             $facture->setStatut('sent');
             $em->persist($facture);
+
+            $accompagnement->setDateDebut($facture->getDateDebutAccompagnement());
+            $accompagnement->setDateFin($facture->getDateFinAccompagnement());
+            $em->persist($accompagnement);
 
             $historique = new Historique();
             $historique->setHeuredebut(new \DateTime('now'));
@@ -162,6 +168,10 @@ class FactureController extends Controller
                     $cpVilleFinanceur = $formUpdate->get('code_postal_financeur')->getData();
                     $facture->setFinanceur($nomFinanceur.' | '.$rueFinanceur.' | '.$cpVilleFinanceur);
                     $em->persist($facture);
+
+                    $accompagnement->setDateDebut($facture->getDateDebutAccompagnement());
+                    $accompagnement->setDateFin($facture->getDateFinAccompagnement());
+                    $em->persist($accompagnement);
                 }
                 elseif($request->request->has($formFermeture->getName())){
                     $facture->setOuvert(false);
@@ -246,6 +256,15 @@ class FactureController extends Controller
 
             $facture = $form->getData();
             $em->persist($facture);
+
+            $historique = new HistoriquePaiementFacture();
+            $historique->setFacture($facture);
+            $historique->setStatut($facture->getStatut());
+            $historique->setMontant($facture->getMontantPayer());
+            $historique->setModePaiement($facture->getModePaiement());
+            $historique->setCommentaire($facture->getCommentaire());
+            $em->persist($historique);
+
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', 'Facture mise à jour');

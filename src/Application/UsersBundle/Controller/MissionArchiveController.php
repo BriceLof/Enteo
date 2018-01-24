@@ -60,6 +60,7 @@ class MissionArchiveController extends Controller
             $this->get('application_users.mailer.mail_for_mission')->revokedMission($mission,$message);
         }elseif ($state == 'modified'){
             $this->get('application_users.mailer.mail_for_mission')->modifiedMission($mission,$beneficiaire);
+            $this->get('application_users.mailer.mail_for_mission')->changeConsultant($mission->getConsultant(), $mission->getBeneficiaire());
         }elseif ($state == 'abandonned'){
             $this->get('application_users.mailer.mail_for_mission')->abandonnedMission($mission);
 
