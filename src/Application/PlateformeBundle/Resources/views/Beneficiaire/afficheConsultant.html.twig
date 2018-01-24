@@ -16,30 +16,30 @@
             </div>
         </div>
     {% else %}
-        {% if beneficiaire.mission is not null %}
-            {% if beneficiaire.mission.state == 'new' %}
-                {% set color = '#f0c41a' %}
-                {% set title = 'envoyé' %}
-            {% elseif beneficiaire.mission.state == 'accepted'  %}
-                {% set color = '#ff723d' %}
-                {% set title = 'accepté' %}
-            {% elseif beneficiaire.mission.state == 'confirmed' %}
-                {% set color = '#05ff10' %}
-                {% set title = 'confirmé' %}
-            {% endif %}
-            <div>
-                <div>
-                    <span id="labelConsultant">Consulant :</span>
-                    <span title="{{ title }}" id="nomPrenomConsultant">
-                        <span>{{ beneficiaire.mission.consultant.prenom|capitalize~" "~beneficiaire.mission.consultant.nom|capitalize~" " }}</span>
+        {#{% if beneficiaire.mission is not null %}#}
+            {#{% if beneficiaire.mission.state == 'new' %}#}
+                {#{% set color = '#f0c41a' %}#}
+                {#{% set title = 'envoyé' %}#}
+            {#{% elseif beneficiaire.mission.state == 'accepted'  %}#}
+                {#{% set color = '#ff723d' %}#}
+                {#{% set title = 'accepté' %}#}
+            {#{% elseif beneficiaire.mission.state == 'confirmed' %}#}
+                {#{% set color = '#05ff10' %}#}
+                {#{% set title = 'confirmé' %}#}
+            {#{% endif %}#}
+            {#<div>#}
+                {#<div>#}
+                    {#<span id="labelConsultant">Consulant :</span>#}
+                    {#<span title="{{ title }}" id="nomPrenomConsultant">#}
+                        {#<span>{{ beneficiaire.mission.consultant.prenom|capitalize~" "~beneficiaire.mission.consultant.nom|capitalize~" " }}</span>#}
                         {#{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}#}
                         {#<span class="modifierConsultant" data-toggle="modal" data-target="#myModal">Ajouter un consultant</span>#}
                         {#{% endif %}#}
-                        <span class="glyphicon glyphicon-stop" style="color : {{ color }}"></span>
-                    </span>
-                </div>
-            </div>
-        {% else %}
+                        {#<span class="glyphicon glyphicon-stop" style="color : {{ color }}"></span>#}
+                    {#</span>#}
+                {#</div>#}
+            {#</div>#}
+        {#{% else %}#}
             <div>
                 <div>
                     <span id="labelConsultant">Consulant :</span>
@@ -50,6 +50,6 @@
                                             </span>
                 </div>
             </div>
-        {% endif %}
+        {#{% endif %}#}
     {% endif %}
 </div>
