@@ -32,7 +32,10 @@
                     <aside style="background-color: #ececec;padding: 4px 10px 10px 10px;width: 80%;margin: auto;border-radius: 2px;margin-bottom: 19px;">
                         <h5 style="text-align:center;color:#428bca;margin-bottom: 16px;">Historique des réglements</h5>
                         {% for historique in facture.historiquesPaiement | reverse %}
-                            <p style="font-size:13px;line-height: 8px;"> - <b>{{ historique.dateHeure | date ('d/m/Y') }}</b> à {{ historique.dateHeure | date ('H:i')}} / <b>{{ historique.statut | capitalize }}</b> / <b>{{ historique.montant }}</b> €</p>
+                            <p style="font-size:13px;line-height: 8px;"> - <b>{{ historique.dateHeure | date ('d/m/Y') }}</b> à {{ historique.dateHeure | date ('H:i')}} / <b>{{ historique.statut | capitalize }}</b> / <b>{{ historique.modePaiement | capitalize }}</b> / <b>{{ historique.montant }}</b> €</p> <br>
+                            <span class="commentaire" style="display: block;margin-top: -29px;margin-left: 5px;font-size: 11px;color: #891c1c;margin-bottom: 10px;font-style: italic;">
+                                {{ historique.commentaire }}
+                            </span>
                         {% endfor %}
                     </aside>
                 {% endif %}

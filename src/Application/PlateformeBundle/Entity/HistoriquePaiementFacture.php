@@ -37,21 +37,21 @@ class HistoriquePaiementFacture
     /**
      * @var string
      *
-     * @ORM\Column(name="statut", type="string", length=255)
+     * @ORM\Column(name="statut", type="string", length=255, nullable=true)
      */
     private $statut;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="montant", type="float")
+     * @ORM\Column(name="montant", type="float", nullable=true )
      */
     private $montant;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mode_paiement", type="string", length=255)
+     * @ORM\Column(name="mode_paiement", type="string", length=255, nullable=true)
      */
     private $modePaiement;
 
