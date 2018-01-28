@@ -56,12 +56,14 @@
                             {{ render(controller("ApplicationPlateformeBundle:Facture:update", {'numero': suiviAdministratif.info | slice(19), 'loopIndex' : loop.index } )) }}
                         {% endif %}
 
-
-                        <div class="elementSuivi glyphiconSuivi">
-                            <span title="Supprimer le suivi administratif" style="color: black;" data-toggle="modal"
-                                  data-target="#myModalSuiviAdministratifDelete{{ loop.index }}"
-                                  class="glyphicon glyphicon-remove"></span>
-                        </div>
+                        {% if 'Facture' not in suiviAdministratif.info %}
+                            <div class="elementSuivi glyphiconSuivi">
+                                <span title="Supprimer le suivi administratif" style="color: black;" data-toggle="modal"
+                                      data-target="#myModalSuiviAdministratifDelete{{ loop.index }}"
+                                      class="glyphicon glyphicon-remove"></span>
+                            </div>
+                        {% endif %}
+                        
                         <div class="modal fade" id="myModalSuiviAdministratifDelete{{ loop.index }}" tabindex="-1"
                              role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
