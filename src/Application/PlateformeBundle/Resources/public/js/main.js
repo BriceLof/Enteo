@@ -184,6 +184,18 @@ $(function () {
         }
     });
 
+    //--------- Partie facture
+    $(".statut_paiement_facture").mouseover(function() {
+        $(this).css("cursor", "pointer");
+        var id = $(this).attr('id')
+        var block_to_display = id.replace("statut", "block_historique");
+        $(".block_historique_paiement_facture").hide()
+        $("#"+block_to_display).show()
+    })
+    .mouseout(function() {
+        $(".block_historique_paiement_facture").hide()
+    });
+    
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Utilisateur  -------------------------------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
