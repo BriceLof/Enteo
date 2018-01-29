@@ -39,11 +39,11 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
 
-        $ref = 4;
+        $ref = "4a";
         $from = "christine.clement@entheor.com";
         $subject = "Attente Accord (".(new \DateTime('now'))->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
-        $to = $listeGestionnaires;
+        $to = "virginie.hiairrassary@entheor.com";
         $cc = $listeAdministrateurs;
         $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(
@@ -63,11 +63,11 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
 
-        $ref = 4;
+        $ref = "4b";
         $from = "christine.clement@entheor.com";
         $subject = "Attente Traitement (".(new \DateTime('now'))->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
-        $to = $listeGestionnaires;
+        $to = "virginie.hiairrassary@entheor.com";
         $cc = $listeAdministrateurs;
         $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(

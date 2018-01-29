@@ -3,15 +3,14 @@
 {% block contentMail %}
     Bonjour Virgine,<br><br>
     {% if suivis|length > 1 %}
-        Cela fait 3 semaines que ces dossiers sont en statut : 'Financement - Attente accord'<br>
+        Cela fait 15 jours que ces dossiers sont en statut : 'Financement - Attente accord'<br>
         Il faut secouer les Financeurs des dossiers suivants :
     {% else %}
-        Cela fait 3 semaines que ce dossier est en statut : 'Financement - Attente accord'<br>
+        Cela fait 15 jours que ce dossier est en statut : 'Financement - Attente accord'<br>
         Il faut secouer les Financeurs du dossier suivant :
     {% endif %}
     <br>
     {% for suivi in suivis %}
-        {{ suivi.date|date('d-m-Y') }}
-        <p style='margin-left:10px;'>&bull; {{ suivi.beneficiaire.civiliteConso|capitalize~' '~suivi.beneficiaire.prenomConso|capitalize~' '~suivi.beneficiaire.nomConso|capitalize~' - '~suivi.beneficiaire.typeFinanceur|upper~' : '~suivi.beneficiaire.organisme|upper }}</p>
+        <p style='margin-left:10px;'>&bull; {{ suivi.beneficiaire.civiliteConso|capitalize~' '~suivi.beneficiaire.prenomConso|capitalize~' '~suivi.beneficiaire.nomConso|capitalize~' - '~suivi.beneficiaire.typeFinanceur|upper~' : '~suivi.beneficiaire.organisme|upper~' - '~suivi.date|date('d/m/Y') }}  </p>
     {% endfor %}
 {% endblock %}
