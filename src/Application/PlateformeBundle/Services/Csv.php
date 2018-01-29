@@ -175,7 +175,7 @@ class Csv
         rewind($handle);
         $csv = stream_get_contents($handle);
         fclose($handle);
-        return new Response($csv);
+        return $csv;
     }
 
     public function getCvsForMailNews($news){
@@ -216,7 +216,7 @@ class Csv
                     utf8_decode($nomBeneficiaire),
                     $beneficiaire->getTelConso(),
                     $beneficiaire->getDateConfMer()->format('d-m-Y'),
-                    $beneficiaire->getVilleMer()->getNom()." (".$beneficiaire->getVilleMer()->getCp().")",
+                    $beneficiaire->getVilleMer()->getNom()." (".$beneficiaire->getVilleMer()->getCp(),
                     $consultant,
                     $new->getDetailStatut()->getDetail(),
                     $nouvelle
@@ -227,6 +227,6 @@ class Csv
         rewind($handle);
         $csv = stream_get_contents($handle);
         fclose($handle);
-        return new Response($csv);
+        return $csv;
     }
 }
