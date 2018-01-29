@@ -122,8 +122,15 @@ class Csv
         return $response;
     }
 
-    public function getCvsForMailSuivi($suivis){
+    public function getCvsForMailSuivi($suivis, $statut){
         $handle = fopen('php://temp', 'r+');
+        fputcsv($handle, array(
+            'date = '.(new \DateTime('now'))->modify('-15 day')->format('d-m-Y')
+        ));
+        fputcsv($handle, array(
+            'statut = '.$statut
+        ));
+        fputcsv($handle, array());
         fputcsv($handle, array(
             'id',
             'Nom',
