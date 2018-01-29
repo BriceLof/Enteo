@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Services;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections;
@@ -119,5 +120,61 @@ class Csv
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
         return $response;
+    }
+
+    public function getCvsForMailSuivi($suivis){
+        $handle = fopen('php://temp', 'r+');
+        fputcsv($handle, array(
+            'id',
+            'Nom',
+            'Prenom',
+            'consultant',
+            'financeur 1',
+            'financeur 2',
+            'date',
+        ), ';');
+
+        foreach ($suivis as $suivi) {
+
+            $beneficiaire = $suivi->getBeneficiaire();
+
+            $financeur1 = null;
+            $financeur2 = null;
+            $date = null;
+            $consultant = null;
+
+
+            if (!is_null($beneficiaire->getAccompagnement())){
+                if (!is_null($beneficiaire->getAccompagnement()->getFinanceur()[0])){
+                    $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getNom();
+                }
+                if (!is_null($beneficiaire->getAccompagnement()->getFinanceur()[1])) {
+                    $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getNom();
+                }
+            }
+
+            if (!is_null($beneficiaire->getConsultant())){
+                $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]).". ".strtoupper($beneficiaire->getConsultant()->getNom());
+            }
+
+
+            fputcsv(
+                $handle,
+                array(
+                    $beneficiaire->getId(),
+                    utf8_decode($beneficiaire->getNomConso()),
+                    utf8_decode($beneficiaire->getPrenomConso()),
+                    $consultant,
+                    $financeur1,
+                    $financeur2,
+                    $suivi->getDate()->format('d-m-Y'),
+                ),
+                ';'
+            );
+        }
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
+        return new Response($csv);
     }
 }

@@ -30,7 +30,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         return $this->sendMessage($this->from, $to,null, $cc, $subject, $body);
     }
 
-    public function alerteAttenteAccord($beneficiaires){
+    public function alerteAttenteAccord($suivis, $attachment){
 
         $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
@@ -41,17 +41,41 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $ref = 4;
         $from = "christine.clement@entheor.com";
-        $subject = "Un nouveau bénéficiaire vous est attribué";
+        $subject = "Attente Accord (".(new \DateTime('now'))->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
         $to = $listeGestionnaires;
         $cc = $listeAdministrateurs;
         $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(
-            'beneficiaires' => $beneficiaires,
+            'suivis' => $suivis,
             'reference' => $ref
         ));
 
-        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
+    }
+
+    public function alerteAttenteTraitement($suivis, $attachment){
+
+        $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
+        $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
+        $listeAdministrateurs = array();
+        $listeGestionnaires = array();
+        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
+        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
+
+        $ref = 4;
+        $from = "christine.clement@entheor.com";
+        $subject = "Attente Traitement (".(new \DateTime('now'))->format('d/m/Y').")";
+        $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
+        $to = $listeGestionnaires;
+        $cc = $listeAdministrateurs;
+        $bcc = "support.informatique@entheor.com";
+        $body = $this->templating->render($template, array(
+            'suivis' => $suivis,
+            'reference' => $ref
+        ));
+
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
     }
     
 }

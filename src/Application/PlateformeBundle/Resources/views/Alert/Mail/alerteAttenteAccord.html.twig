@@ -2,7 +2,7 @@
 {% block ref %}{{ reference }}{% endblock %}
 {% block contentMail %}
     Bonjour Virgine,<br><br>
-    {% if beneficiaires|length > 1 %}
+    {% if suivis|length > 1 %}
         Cela fait 3 semaines que ces dossiers sont en statut : 'Financement - Attente accord'<br>
         Il faut secouer les Financeurs des dossiers suivants :
     {% else %}
@@ -10,7 +10,8 @@
         Il faut secouer les Financeurs du dossier suivant :
     {% endif %}
     <br>
-    {% for beneficiaire in beneficiaires %}
-        <p style='margin-left:10px;'>&bull; {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' - '~beneficiaire.typeFinanceur|upper~' : '~beneficiaire.organisme|upper }}</p>
+    {% for suivi in suivis %}
+        {{ suivi.date|date('d-m-Y') }}
+        <p style='margin-left:10px;'>&bull; {{ suivi.beneficiaire.civiliteConso|capitalize~' '~suivi.beneficiaire.prenomConso|capitalize~' '~suivi.beneficiaire.nomConso|capitalize~' - '~suivi.beneficiaire.typeFinanceur|upper~' : '~suivi.beneficiaire.organisme|upper }}</p>
     {% endfor %}
 {% endblock %}
