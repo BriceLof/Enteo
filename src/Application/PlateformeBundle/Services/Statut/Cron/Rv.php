@@ -223,9 +223,9 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $ref = "rv-reporter";
         $from = "christine.clementmolier@entheor.com";
         $replyTo = "christine.clementmolier@entheor.com";
-        $subject = "rdv a reporter";
+        $subject = "Suivi des Rendez-Vous à reporter et no show de S-1 (".(new \DateTime('now'))->modify('-7 day')->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/mailRvAReporter.html.twig';
-        $to =  "virginie.hiairrassary@entheor.com";
+        $to =  "audrey.azoulay@entheor.com";
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
@@ -241,8 +241,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
         $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-2 day"));
-        $from = "christine.clement@entheor.com";
-        $replyTo = "christine.clement@entheor.com";
+        $from = "christine.clementmolier@entheor.com";
+        $replyTo = "christine.clementmolier@entheor.com";
         $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche du ".$dateAvantHier;
         $template = '@Apb/Alert/Mail/secondMailRvFicheNonMaj.html.twig';
         $to = $consultant->getEmail();

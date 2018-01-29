@@ -196,6 +196,7 @@ class Csv
             $beneficiaire = $new->getBeneficiaire();
 
             $consultant = null;
+            $nouvelle = null;
 
             if (!is_null($beneficiaire->getConsultant())){
                 $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]).". ".strtoupper($beneficiaire->getConsultant()->getNom());
@@ -203,6 +204,10 @@ class Csv
 
             $nomBeneficiaire = ucfirst($beneficiaire->getCiviliteConso()).' '.ucfirst($beneficiaire->getPrenomConso()).' '.strtoupper($beneficiaire->getNomConso());
 
+            if (!is_null($beneficiaire->getNouvelle()[count($beneficiaire->getNouvelle()) - 1])){
+                $lastNouvelle = $beneficiaire->getNouvelle()[count($beneficiaire->getNouvelle()) - 1];
+                $nouvelle = $lastNouvelle->getTitre()." : ".$lastNouvelle->getMessage();
+            }
 
             fputcsv(
                 $handle,
@@ -211,7 +216,10 @@ class Csv
                     utf8_decode($nomBeneficiaire),
                     $beneficiaire->getTelConso(),
                     $beneficiaire->getDateConfMer()->format('d-m-Y'),
+                    $beneficiaire->getVilleMer()->getNom()." (".$beneficiaire->getVilleMer()->getCp().")",
                     $consultant,
+                    $new->getDetailStatut()->getDetail(),
+                    $nouvelle
                 ),
                 ';'
             );
