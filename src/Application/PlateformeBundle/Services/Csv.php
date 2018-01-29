@@ -177,4 +177,48 @@ class Csv
         fclose($handle);
         return new Response($csv);
     }
+
+    public function getCvsForMailNews($news){
+        $handle = fopen('php://temp', 'r+');
+        fputcsv($handle, array(
+            'id',
+            'beneficiaire',
+            'telephone',
+            'date_conf_mer',
+            'ville_mer',
+            'consultant',
+            'state',
+            'derniere news',
+        ), ';');
+
+        foreach ($news as $new) {
+
+            $beneficiaire = $new->getBeneficiaire();
+
+            $consultant = null;
+
+            if (!is_null($beneficiaire->getConsultant())){
+                $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]).". ".strtoupper($beneficiaire->getConsultant()->getNom());
+            }
+
+            $nomBeneficiaire = ucfirst($beneficiaire->getCiviliteConso()).' '.ucfirst($beneficiaire->getPrenomConso()).' '.strtoupper($beneficiaire->getNomConso());
+
+
+            fputcsv(
+                $handle,
+                array(
+                    $beneficiaire->getId(),
+                    utf8_decode($nomBeneficiaire),
+                    $beneficiaire->getTelConso(),
+                    $beneficiaire->getDateConfMer()->format('d-m-Y'),
+                    $consultant,
+                ),
+                ';'
+            );
+        }
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
+        return new Response($csv);
+    }
 }

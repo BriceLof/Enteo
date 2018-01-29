@@ -28,6 +28,7 @@ class MailRvCommand extends ContainerAwareCommand
         foreach ($consultants as $consultant) {
             $tab2 = array();
             $tab3 = array();
+            $tab4 = array();
 
             $beneficiaires = $consultant->getBeneficiaire();
             foreach ($beneficiaires as $beneficiaire) {

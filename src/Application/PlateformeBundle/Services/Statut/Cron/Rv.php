@@ -219,6 +219,26 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         //$this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
+    public function mailRvAReporter($news, $attachement){
+        $ref = "rv-reporter";
+        $from = "christine.clementmolier@entheor.com";
+        $replyTo = "christine.clementmolier@entheor.com";
+        $subject = "rdv a reporter";
+        $template = '@Apb/Alert/Mail/mailRvAReporter.html.twig';
+        $to =  "virginie.hiairrassary@entheor.com";
+        $cci = array(
+            "f.azoulay@entheor.com" => "Franck AZOULAY",
+            "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
+            "christine.clementmolier@entheor.com" => "Christine Clement"
+        );
+        $body = $this->templating->render($template, array(
+            'news' => $news,
+            'reference' => $ref,
+        ));
+        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body,$attachement);
+
+    }
+
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
         $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-2 day"));
         $from = "christine.clement@entheor.com";

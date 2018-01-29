@@ -41,7 +41,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $ref = "4a";
         $from = "christine.clement@entheor.com";
-        $subject = "Liste des dossiers en Financement - Attente Accord depuis plus de 15 jours (".(new \DateTime('now'))->format('d/m/Y').")";
+        $subject = "Liste des ".count($suivis)." dossiers en Financement - Attente Accord depuis plus de 15 jours (".((new \DateTime('now'))->modify('-15 day'))->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
         $to = "virginie.hiairrassary@entheor.com";
         $cc = $listeAdministrateurs;
@@ -65,7 +65,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $ref = "4b";
         $from = "christine.clement@entheor.com";
-        $subject = "Liste des dossiers en Attente Traitement depuis plus de 15 jours (".(new \DateTime('now'))->format('d/m/Y').")";
+        $subject = "Liste des ".count($suivis)." dossiers en Attente Traitement depuis plus de 15 jours (".((new \DateTime('now'))->modify('-15 day'))->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
         $to = "virginie.hiairrassary@entheor.com";
         $cc = $listeAdministrateurs;
