@@ -331,6 +331,7 @@ class FactureController extends Controller
                 $beneficiaire = $recherche['beneficiaire'];
             }
             else{
+                $beneficiaire = null;
                 $beneficiaireGet = $request->get('beneficiaire_ajax');
                 if($beneficiaireGet != '' && !is_null($beneficiaireGet)){
                     $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
