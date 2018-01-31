@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Repository;
 
+use Application\PlateformeBundle\Entity\Beneficiaire;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * FactureRepository
@@ -28,7 +29,7 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
     public function search($statut = null,
            $dateDebutAccompagnementStart = null, $dateDebutAccompagnementEnd = null,
            $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
-           $consultant = null)
+           $consultant = null, Beneficiaire $beneficiaire = null)
     {
 
         $queryBuilder = $this->createQueryBuilder("f");
@@ -38,6 +39,11 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             // Il me faut une liste de beneficiaire
             $queryBuilder->leftJoin('f.beneficiaire', 'b')
                 ->addSelect('b');
+        }
+
+        if(!is_null($beneficiaire)){
+            $queryBuilder->andWhere("f.beneficiaire = :beneficiaire");
+            $arrayParameters['beneficiaire'] = $beneficiaire;
         }
 
         if(!is_null($statut)){

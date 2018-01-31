@@ -197,4 +197,16 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         return $request;
     }
+
+    public function searchBeneficiaireByNom($string){
+        $queryBuilder = $this->createQueryBuilder("b")
+                ->where("b.nomConso LIKE :nom")
+                ->setParameter("nom", '%'.$string.'%')
+                ->orderBy("b.id", "DESC");
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+
+        return $results;
+    }
 }

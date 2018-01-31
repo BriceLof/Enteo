@@ -1,21 +1,5 @@
 $(function () {
 
-    //$( ".datePicker" ).datepicker({
-        /*changeMonth: true,
-        changeYear: true,
-        closeText: 'Fermer',
-        prevText: 'Précédent',
-        nextText: 'Suivant',
-        currentText: 'Aujourd\'hui',
-        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-        dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-        weekHeader: 'Sem.',
-        dateFormat: 'dd/mm/yy',*/
-    //});
-    
     $(".tablesorter").tablesorter({
         dateFormat : "ddmmyyyy"
     });
@@ -50,6 +34,32 @@ $(function () {
         else{
             $(".banqueFactureField").removeAttr('required')
             $(".banqueFacture").css('display', 'none')
+        }
+    });
+
+    $(".beneficiaireSearchFactureField  ").keyup(function () {
+        nom = $(this).val();
+        if (nom.length >= 3) {
+            $.ajax({
+                type: 'get',
+                url: Routing.generate("application_search_facture_ajax_beneficiaire", {string: nom}),
+                beforeSend: function () {
+                    $(".block_info_chargement").show();
+                }
+            })
+                .done(function (data) {
+                    $(".block_info_chargement").hide();
+                    tab = JSON.parse(data)
+                    console.log(tab)
+                    console.log(tab.length)
+                    $("#select_beneficiaire_ajax option").remove()
+                    for (var i = 0; i < tab.length; i++) {
+                        console.log(tab[i])
+                        $("#select_beneficiaire_ajax").append("<option value=" + tab[i].id + ">" + tab[i].nom +" "+ tab[i].prenom +"</option>")
+                    }
+                });
+        } else {
+            $("#select_beneficiaire_ajax option").remove()
         }
     });
 

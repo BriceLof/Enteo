@@ -15,6 +15,7 @@ use Application\PlateformeBundle\Form\FacturePaiementType;
 use Application\PlateformeBundle\Form\FactureFiltreType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class FactureController extends Controller
 {
@@ -325,9 +326,21 @@ class FactureController extends Controller
             if($consultant != '' && !is_null($consultant))
                 $recherche['consultant'] = $consultant;
 
+            if(isset($recherche['beneficiaire']))
+            {
+                $beneficiaire = $recherche['beneficiaire'];
+            }
+            else{
+                $beneficiaireGet = $request->get('beneficiaire_ajax');
+                if($beneficiaireGet != '' && !is_null($beneficiaireGet)){
+                    $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
+                    $recherche['beneficiaire'] = $beneficiaire;
+                }
+            }
+
             $session->set('facture_search', $recherche);
 
-            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $consultant);
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $consultant, $beneficiaire);
             
 
             return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(
@@ -340,5 +353,24 @@ class FactureController extends Controller
         return $this->render('ApplicationPlateformeBundle:Facture:filtreForm.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    public function searchAjaxAction($string)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nom = $string;
+        $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->searchBeneficiaireByNom($nom);
+
+        $arrayBeneciaires = array();
+        foreach($beneficiaires as $beneficiaire){
+            $arrayBeneciaires[] = array(
+                'id' => $beneficiaire->getId(),
+                'nom' => $beneficiaire->getNomConso(),
+                'prenom' => $beneficiaire->getPrenomConso(),
+            );
+        }
+
+        return new JsonResponse(json_encode($arrayBeneciaires));
+
     }
 }

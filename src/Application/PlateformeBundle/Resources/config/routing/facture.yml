@@ -1,3 +1,9 @@
+application_search_facture_ajax_beneficiaire:
+    path:     /search-ajax-beneficiaire/{string}
+    defaults: { _controller: "ApplicationPlateformeBundle:Facture:searchAjax" }
+    options:
+        expose:  true
+
 application_search_facture:
     path:     /search
     defaults: { _controller: "ApplicationPlateformeBundle:Facture:search" }

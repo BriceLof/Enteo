@@ -20,6 +20,12 @@ class FactureFiltreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('beneficiaire', TextType::class, array(
+                'required' => false,
+                'mapped' => false,
+                'attr' => array('class' => 'beneficiaireSearchFactureField',
+                    'placeholder' => 'Entrer nom bénéficiaire'),
+            ))
             ->add('consultant', EntityType::class, array(
                 'placeholder' => 'Sélectionner',
                 'required' => false,

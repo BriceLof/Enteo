@@ -26,10 +26,26 @@
 
     <div class="row">
         <div class="col-md-2">{{ form_label(form.statut) }}</div>
-        <div class="col-md-4">{{ form_widget(form.statut) }}</div>
+        <div class="col-md-2">{{ form_widget(form.statut, {'value' : statut}) }}</div>
+
         <div class="col-md-2">{{ form_label(form.consultant) }}</div>
-        <div class="col-md-4">{{ form_widget(form.consultant) }}</div>
+        <div class="col-md-2">{{ form_widget(form.consultant) }}</div>
     </div><br>
+
+    <div class="row">
+        <div class="col-md-2">{{ form_label(form.beneficiaire) }}</div>
+        <div class="col-md-10" >
+            <div class="row" style="position: relative">
+                <div class="col-md-2">{{ form_widget(form.beneficiaire) }}</div>
+                <div class="col-md-4">
+                    <select id="select_beneficiaire_ajax" name="beneficiaire_ajax" class="form-control" style="position: absolute" >
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div><br>
+
    
     <div class="row">
         <div class="col-md-2">{{ form_label(form.date_debut_accompagnement_start, 'Début accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
@@ -42,8 +58,10 @@
         <div class="col-md-4">Au {{ form_widget(form.date_fin_accompagnement_end, {'attr' : {"value": dateFinAccompagnementEnd  } }) }}</div>
     </div>
 
-
-
+    <div class="row">
+        <div class="col-md-1">{{ form_widget(form.filtrer) }}</div>
+        <div class="col-md-1"><button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location.href='{{ path('application_list_facture_home') }}'">Reset</button></div>
+    </div>
 
 
 
