@@ -15,7 +15,11 @@ $(function () {
         weekHeader: 'Sem.',
         dateFormat: 'dd/mm/yy',*/
     //});
-    $(".tablesorter").tablesorter();
+    
+    $(".tablesorter").tablesorter({
+        dateFormat : "ddmmyyyy"
+    });
+
     $(".lienModalPaiement").click(function(){
         nomLien = $(this).attr("data-target")
 
