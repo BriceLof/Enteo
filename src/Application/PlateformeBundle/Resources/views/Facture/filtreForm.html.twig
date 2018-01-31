@@ -1,0 +1,52 @@
+{% set statut, consultant, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd = '', '', '', '', '', '' %}
+
+{% if app.session.get('facture_search').statut is defined %}
+    {% set statut = app.session.get('facture_search').statut %}
+{% endif %}
+
+{% if app.session.get('facture_search').consultant is defined %}
+    {% set consultant = app.session.get('facture_search').consultant.id %}
+{% endif %}
+
+{% if app.session.get('facture_search').date_debut_accompagnement_start is defined %}
+    {% set dateDebutAccompagnementStart = app.session.get('facture_search').date_debut_accompagnement_start | date('Y-m-d') %}
+{% endif %}
+{% if app.session.get('facture_search').date_debut_accompagnement_end is defined %}
+    {% set dateDebutAccompagnementEnd = app.session.get('facture_search').date_debut_accompagnement_end | date('Y-m-d') %}
+{% endif %}
+{% if app.session.get('facture_search').date_fin_accompagnement_start is defined %}
+    {% set dateFinAccompagnementStart = app.session.get('facture_search').date_fin_accompagnement_start | date('Y-m-d') %}
+{% endif %}
+{% if app.session.get('facture_search').date_fin_accompagnement_end is defined %}
+    {% set dateFinAccompagnementEnd = app.session.get('facture_search').date_fin_accompagnement_end | date('Y-m-d') %}
+{% endif %}
+
+
+<form action="{{ path('application_search_facture') }}" method="POST"  >
+
+    <div class="row">
+        <div class="col-md-2">{{ form_label(form.statut) }}</div>
+        <div class="col-md-4">{{ form_widget(form.statut) }}</div>
+        <div class="col-md-2">{{ form_label(form.consultant) }}</div>
+        <div class="col-md-4">{{ form_widget(form.consultant) }}</div>
+    </div><br>
+   
+    <div class="row">
+        <div class="col-md-2">{{ form_label(form.date_debut_accompagnement_start, 'Début accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
+        <div class="col-md-4">Du{{ form_widget(form.date_debut_accompagnement_start, {'attr' : {"value": dateDebutAccompagnementStart  } }) }}</div>
+        <div class="col-md-4">Au {{ form_widget(form.date_debut_accompagnement_end, {'attr' : {"value": dateDebutAccompagnementEnd  } }) }}</div>
+    </div><br>
+    <div class="row">
+        <div class="col-md-2">{{ form_label(form.date_fin_accompagnement_start, 'Fin accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
+        <div class="col-md-4">Du {{ form_widget(form.date_fin_accompagnement_start, {'attr' : {"value": dateFinAccompagnementStart  } }) }}</div>
+        <div class="col-md-4">Au {{ form_widget(form.date_fin_accompagnement_end, {'attr' : {"value": dateFinAccompagnementEnd  } }) }}</div>
+    </div>
+
+
+
+
+
+
+
+    {{ form_rest(form) }}
+</form>

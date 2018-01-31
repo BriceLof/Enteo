@@ -24,4 +24,51 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($query);
     }
+
+    public function search($statut = null,
+           $dateDebutAccompagnementStart = null, $dateDebutAccompagnementEnd = null,
+           $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
+           $consultant = null)
+    {
+
+        $queryBuilder = $this->createQueryBuilder("f");
+        $arrayParameters = array();
+
+        if(!is_null($consultant)){
+            // Il me faut une liste de beneficiaire
+            $queryBuilder->leftJoin('f.beneficiaire', 'b')
+                ->addSelect('b');
+        }
+
+        if(!is_null($statut)){
+            $queryBuilder->andWhere("f.statut = :statut");
+            $arrayParameters['statut'] = $statut;
+        }
+
+        // Date a gérer en égalité ou en interval
+        if(!is_null($dateDebutAccompagnementStart) && !is_null($dateDebutAccompagnementEnd)){
+            $queryBuilder->andWhere("f.dateDebutAccompagnement >= :dateDebutAccompagnementStart AND f.dateDebutAccompagnement <= :dateDebutAccompagnementEnd");
+            $arrayParameters['dateDebutAccompagnementStart'] = $dateDebutAccompagnementStart->format('Y-m-d');
+            $arrayParameters['dateDebutAccompagnementEnd'] = $dateDebutAccompagnementEnd->format('Y-m-d');
+        }
+        if(!is_null($dateFinAccompagnementStart) && !is_null($dateFinAccompagnementEnd)){
+            $queryBuilder->andWhere("f.dateFinAccompagnement >= :dateFinAccompagnementStart AND f.dateFinAccompagnement <= :dateFinAccompagnementEnd");
+            $arrayParameters['dateFinAccompagnementStart'] = $dateFinAccompagnementStart->format('Y-m-d');
+            $arrayParameters['dateFinAccompagnementEnd'] = $dateFinAccompagnementEnd->format('Y-m-d');
+        }
+
+        if(!is_null($consultant)){
+            $queryBuilder->andWhere("b.consultant = :consultant");
+            $arrayParameters['consultant'] = $consultant;
+        }
+
+        $queryBuilder->setParameters($arrayParameters);
+
+        $queryBuilder->orderBy("f.id", "DESC");
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+
+    }
 }

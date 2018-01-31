@@ -12,13 +12,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Form\FactureType;
 use Application\PlateformeBundle\Form\FactureFermetureType;
 use Application\PlateformeBundle\Form\FacturePaiementType;
+use Application\PlateformeBundle\Form\FactureFiltreType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FactureController extends Controller
 {
 
-    public function listAction($page)
+    public function listAction(Request $request, $page)
     {
+        $session = $request->getSession();
+        if($session->has('facture_search'))
+            $session->remove('facture_search');
+
         if ($page < 1) {
             throw $this->createNotFoundException("La page ".$page." n'existe pas.");
         }
@@ -276,6 +282,63 @@ class FactureController extends Controller
         return $this->render('ApplicationPlateformeBundle:Facture:paiement.html.twig', array(
             'form' => $form->createView(),
             'facture' => $facture
+        ));
+    }
+
+    public function searchAction(Request $request)
+    {
+        $session = $request->getSession();
+
+        if(!$session->has('facture_search'))
+            $session->set('facture_search', array());
+
+        $recherche = $session->get('facture_search');
+
+        $facture = new Facture();
+
+        $form = $this->createForm(FactureFiltreType::class, $facture);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $statut = $form->get('statut')->getData();
+            if($statut != '' && !is_null($statut))
+                $recherche['statut'] = $statut;
+
+            $dateDebutAccompagnementStart = $form->get('date_debut_accompagnement_start')->getData();
+            if($dateDebutAccompagnementStart != '' && !is_null($dateDebutAccompagnementStart))
+                $recherche['date_debut_accompagnement_start'] = $dateDebutAccompagnementStart;
+
+            $dateDebutAccompagnementEnd = $form->get('date_debut_accompagnement_end')->getData();
+            if($dateDebutAccompagnementEnd != '' && !is_null($dateDebutAccompagnementEnd))
+                $recherche['date_debut_accompagnement_end'] = $dateDebutAccompagnementEnd;
+
+            $dateFinAccompagnementStart = $form->get('date_fin_accompagnement_start')->getData();
+            if($dateFinAccompagnementStart != '' && !is_null($dateFinAccompagnementStart))
+                $recherche['date_fin_accompagnement_start'] = $dateFinAccompagnementStart;
+
+            $dateFinAccompagnementEnd = $form->get('date_fin_accompagnement_end')->getData();
+            if($dateFinAccompagnementEnd != '' && !is_null($dateFinAccompagnementEnd))
+                $recherche['date_fin_accompagnement_end'] = $dateFinAccompagnementEnd;
+
+            $consultant = $form->get('consultant')->getData();
+            if($consultant != '' && !is_null($consultant))
+                $recherche['consultant'] = $consultant;
+
+            $session->set('facture_search', $recherche);
+
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $consultant);
+            
+
+            return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(
+                'factures' => $factures,
+                'form' => $form->createView()
+            ));
+            //return $this->redirectToRoute('task_success');
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Facture:filtreForm.html.twig', array(
+            'form' => $form->createView()
         ));
     }
 }
