@@ -305,43 +305,59 @@ class FactureController extends Controller
             $statut = $form->get('statut')->getData();
             if($statut != '' && !is_null($statut))
                 $recherche['statut'] = $statut;
+            elseif(is_null($statut))
+                unset($recherche['statut']);
 
             $dateDebutAccompagnementStart = $form->get('date_debut_accompagnement_start')->getData();
             if($dateDebutAccompagnementStart != '' && !is_null($dateDebutAccompagnementStart))
                 $recherche['date_debut_accompagnement_start'] = $dateDebutAccompagnementStart;
+            elseif(is_null($dateDebutAccompagnementStart))
+                unset($recherche['date_debut_accompagnement_start']);
 
             $dateDebutAccompagnementEnd = $form->get('date_debut_accompagnement_end')->getData();
             if($dateDebutAccompagnementEnd != '' && !is_null($dateDebutAccompagnementEnd))
                 $recherche['date_debut_accompagnement_end'] = $dateDebutAccompagnementEnd;
+            elseif(is_null($dateDebutAccompagnementEnd))
+                unset($recherche['date_debut_accompagnement_end']);
 
             $dateFinAccompagnementStart = $form->get('date_fin_accompagnement_start')->getData();
             if($dateFinAccompagnementStart != '' && !is_null($dateFinAccompagnementStart))
                 $recherche['date_fin_accompagnement_start'] = $dateFinAccompagnementStart;
+            elseif(is_null($dateFinAccompagnementStart))
+                unset($recherche['date_fin_accompagnement_start']);
 
             $dateFinAccompagnementEnd = $form->get('date_fin_accompagnement_end')->getData();
             if($dateFinAccompagnementEnd != '' && !is_null($dateFinAccompagnementEnd))
                 $recherche['date_fin_accompagnement_end'] = $dateFinAccompagnementEnd;
+            elseif(is_null($dateFinAccompagnementEnd))
+                unset($recherche['date_fin_accompagnement_end']);
+
+            $dateFacture = $form->get('date')->getData();
+            if($dateFacture != '' && !is_null($dateFacture))
+                $recherche['date_facture'] = $dateFacture;
+            elseif(is_null($dateFacture))
+                unset($recherche['date_facture']);
 
             $consultant = $form->get('consultant')->getData();
             if($consultant != '' && !is_null($consultant))
                 $recherche['consultant'] = $consultant;
+            elseif(is_null($consultant))
+                unset($recherche['consultant']);
 
-            if(isset($recherche['beneficiaire']))
-            {
-                $beneficiaire = $recherche['beneficiaire'];
+
+            $beneficiaire = null;
+            $beneficiaireGet = $request->get('beneficiaire_ajax');
+            if($beneficiaireGet != '' && !is_null($beneficiaireGet)){
+                $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
+                $recherche['beneficiaire'] = $beneficiaire;
             }
-            else{
-                $beneficiaire = null;
-                $beneficiaireGet = $request->get('beneficiaire_ajax');
-                if($beneficiaireGet != '' && !is_null($beneficiaireGet)){
-                    $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
-                    $recherche['beneficiaire'] = $beneficiaire;
-                }
-            }
+            elseif(is_null($beneficiaireGet))
+                unset($recherche['beneficiaire']);
+
 
             $session->set('facture_search', $recherche);
 
-            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $consultant, $beneficiaire);
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFacture, $consultant, $beneficiaire);
             
 
             return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(

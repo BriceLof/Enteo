@@ -29,6 +29,7 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
     public function search($statut = null,
            $dateDebutAccompagnementStart = null, $dateDebutAccompagnementEnd = null,
            $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
+           $dateFacture = null,
            $consultant = null, Beneficiaire $beneficiaire = null)
     {
 
@@ -61,6 +62,11 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             $queryBuilder->andWhere("f.dateFinAccompagnement >= :dateFinAccompagnementStart AND f.dateFinAccompagnement <= :dateFinAccompagnementEnd");
             $arrayParameters['dateFinAccompagnementStart'] = $dateFinAccompagnementStart->format('Y-m-d');
             $arrayParameters['dateFinAccompagnementEnd'] = $dateFinAccompagnementEnd->format('Y-m-d');
+        }
+
+        if(!is_null($dateFacture)){
+            $queryBuilder->andWhere("f.date = :dateFacture");
+            $arrayParameters['dateFacture'] = $dateFacture->format('Y-m-d');
         }
 
         if(!is_null($consultant)){

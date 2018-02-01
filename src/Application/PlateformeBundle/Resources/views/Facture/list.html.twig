@@ -13,9 +13,12 @@
                 <div class="page-header">
                     <div class="row">
                         <h1 class="col-md-10">Gestion - Factures<br><small></small></h1>
+                        <button id="btn_filtre_facture" class="btn btn-warning" style="margin-top:24px">Afficher les filtres</button>
                     </div>
+
                 </div>
-                <div id="filtre_facture" style="margin-bottom: 60px;">
+
+                <div id="filtre_facture" style="margin-bottom: 25px;display:none;background-color:#f9f9f9;padding:18px;border-radius: 3px; " >
                     {{ render(controller('ApplicationPlateformeBundle:Facture:search' )) }}
                 </div>
                 <div class="table-responsive">

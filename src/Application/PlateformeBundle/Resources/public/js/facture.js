@@ -63,6 +63,17 @@ $(function () {
         }
     });
 
+    $("#btn_filtre_facture").click(function(){
+        if($("#filtre_facture").hasClass("open")){
+            $("#filtre_facture").removeClass("open")
+            $("#filtre_facture").hide().addClass("closed")
+            $(this).html("Afficher les filtres")
+        }else{
+            $("#filtre_facture").removeClass("closed")
+            $("#filtre_facture").show().addClass("open")
+            $(this).html("Cacher les filtres")
+        }
+    })
 });
 
 function paiementFieldShowHidde(valeur)

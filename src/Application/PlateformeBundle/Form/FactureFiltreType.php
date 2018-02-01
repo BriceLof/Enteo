@@ -107,7 +107,17 @@ class FactureFiltreType extends AbstractType
                     'class' => ' '
                 )
             ))
-
+            ->add('date', DateType::class, array(
+                'label' => 'Date facture',
+                'widget' => 'single_text',
+                'html5' => true,
+                'required' => false,
+                //'format' => 'dd/MM/yyyy',
+                'attr' => array(
+                    'placeholder' => 'JJ/MM/AAAA',
+                    'class' => ' '
+                )
+            ))
             ->add('filtrer', SubmitType::class, array(
                 'label' => "Filtrer",
                 'attr' => array('class' => 'btn  btn-primary'),
