@@ -1,0 +1,29 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+        {% if consultant.civilite == 'm.' %}
+            Cher {{ consultant.prenom|capitalize }}
+        {% else %}
+            Chère {{ consultant.prenom|capitalize }}
+        {% endif %}
+        <br><br>
+        Vous venez d'accepter la mission d'accompagnement VAE de
+        {{ beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}, ce dont je vous remercie.
+        <br><br>
+        Vous pourrez démarrer l'accompagnement lorsque nous aurons validé le contrat de mission que vous venez de nous adresser.
+        <br>
+        Nous vous adresserons un courriel à ce sujet sous 72h.
+        <br>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clementmolier@entheor.com">christine.clementmolier@entheor.com</a>
+        <br>
+        <span>{{ tel_christine }}</span>
+    </p>
+{% endblock %}

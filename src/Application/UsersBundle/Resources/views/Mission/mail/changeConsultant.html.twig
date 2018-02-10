@@ -1,0 +1,31 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+        {% if consultant.civilite == 'm.' %}
+            Cher {{ consultant.prenom|capitalize }}
+        {% else %}
+            Chère {{ consultant.prenom|capitalize }}
+        {% endif %},
+        <br><br>
+        Les circonstances ne vous permettent plus d'accompagner {{ beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}.
+        <br>
+        Nous allons donc ré-attribuer ce dossier à un autre Consultant
+        <br><br>
+        Je vous propose de me contacter pour évoquer les modalités de suspension de cette mission.
+        <br>
+        <br>
+        Bien Cordialement,
+        <br>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clementmolier@entheor.com">christine.clementmolier@entheor.com</a>
+        <br>
+        <span>{{ tel_christine }}</span>
+    </p>
+{% endblock %}
