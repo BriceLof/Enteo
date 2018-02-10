@@ -223,7 +223,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $ref = "rv-reporter";
         $from = "christine.clementmolier@entheor.com";
         $replyTo = "christine.clementmolier@entheor.com";
-        $subject = "Suivi des Rendez-Vous à reporter et no show de S-1 (".(new \DateTime('now'))->modify('-7 day')->format('d/m/Y').")";
+        $subject = "Suivi des Rendez-Vous à reporter et no show de S-1 ( du ".(new \DateTime('now'))->modify('-7 day')->format('d/m/Y')." au ". (new \DateTime('now'))->format('d/m/Y') ." )";
         $template = '@Apb/Alert/Mail/mailRvAReporter.html.twig';
         $to =  "audrey.azoulay@entheor.com";
         $cci = array(
