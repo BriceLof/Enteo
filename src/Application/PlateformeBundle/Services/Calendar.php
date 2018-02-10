@@ -126,7 +126,7 @@ class Calendar
         $location = "";
         if($form['typerdv']->getData() == 'distantiel'){
             $historique->setBureau(null);
-            $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary();
+            $eventSummary = mb_strtoupper($beneficiaire->getPrenomConso()[0], "UTF-8").'. '.$beneficiaire->getNomConso().', '.$historique->getSummary();
         }
         if($historique->getSummary() == "Autre" && $historique->getAutreSummary() != ""){
             $historique->setSummary($historique->getAutreSummary());
@@ -171,6 +171,7 @@ class Calendar
             if ($edit == true){
                 $eventUpdated = $this->calendar->updateEvent($consultant->getCalendrierid(), $historique->getEventId(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
             }else{
+                var_dump($eventSummary);die;
                 $event = $this->calendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
             }
         }
