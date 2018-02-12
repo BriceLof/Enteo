@@ -46,7 +46,7 @@ twig:
         '%kernel.root_dir%/../src/Application/UsersBundle/Resources/views': Aub
     globals:
         # Informations générales
-        adresse : '21 rue Dansard 69007 LYON'
+        adresse : '21 rue Louis Dansard - 69007 - LYON'
         telephone : '04 37 28 59 28'
         email : 'contact@entheor.com'
         siret : '527 732 069 000 44'
