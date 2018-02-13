@@ -1,4 +1,4 @@
-{% set statut, consultant, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFacture = '', '', '', '', '', '', '' %}
+{% set statut, consultant, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture = '','','', '', '', '', '', '', '' %}
 
 {% if app.session.get('facture_search').statut is defined %}
     {% set statut = app.session.get('facture_search').statut %}
@@ -20,23 +20,48 @@
 {% if app.session.get('facture_search').date_fin_accompagnement_end is defined %}
     {% set dateFinAccompagnementEnd = app.session.get('facture_search').date_fin_accompagnement_end | date('Y-m-d') %}
 {% endif %}
-{% if app.session.get('facture_search').date_facture is defined %}
-    {% set dateFacture = app.session.get('facture_search').date_facture | date('Y-m-d') %}
+{% if app.session.get('facture_search').date_facture_start is defined %}
+    {% set dateFactureStart = app.session.get('facture_search').date_facture_start | date('Y-m-d') %}
+{% endif %}
+{% if app.session.get('facture_search').date_facture_end is defined %}
+    {% set dateFactureEnd = app.session.get('facture_search').date_facture_end | date('Y-m-d') %}
+{% endif %}
+{% if app.session.get('facture_search').numero_facture is defined %}
+    {% set numFacture = app.session.get('facture_search').numero_facture %}
 {% endif %}
 
 <form action="{{ path('application_search_facture') }}" method="POST"  >
-
+    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location.href='{{ path('application_list_facture_home') }}'" style="float:right">Reset</button>
+    {{ form_widget(form.filtrer, {'attr' : {'style': 'float:right;margin-right:12px;'}} ) }}
     <div class="row">
         <div class="col-md-1">{{ form_label(form.statut) }}</div>
         <div class="col-md-2">{{ form_widget(form.statut, {'value' : statut}) }}</div>
 
         <div class="col-md-1">{{ form_label(form.consultant) }}</div>
         <div class="col-md-2">{{ form_widget(form.consultant) }}</div>
+
+        <div class="col-md-1">{{ form_label(form.numero_facture) }}</div>
+        <div class="col-md-1" style="margin-right: -16px;">{{ form_widget(form.numero_facture, {'value' : (numFacture != '') ? numFacture | split('-')[0] : '' }) }}</div><span style="position: absolute;margin-top:5px;">-</span>
+        <div class="col-md-1" style="margin-left: -5px;">
+            <!-- Select basic -->
+            {#{{ form_widget(form.annee_numero_facture, {'is_selected' : (numFactu | split('-') | length == 2) ? '-'~numFactu | split('-')[1] : ''}) }}#}
+
+            <!-- Spliter un select choice -->
+            <select id="{{ form.annee_numero_facture.vars.id }}" name="{{ form.annee_numero_facture.vars.full_name }}" class="form-control">
+                <option value="" >Année</option>
+                {% for choice in form.annee_numero_facture.vars.choices %}
+                    <!-- operation ternaire pour mettre une valeur par default -->
+                    <option value="{{ choice.value }}" {{ ((numFacture != '' and numFacture | split('-') | length == 2) and choice.value == '-'~numFacture | split('-')[1])  ? 'selected' : '' }}>{{ choice.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
     </div><br>
 
     <div class="row">
-        <div class="col-md-1">{{ form_label(form.date) }}</div>
-        <div class="col-md-2">{{ form_widget(form.date, {'attr' : {"value": dateFacture  } }) }}</div>
+        <div class="col-md-1" style="margin-top: 10px;">{{ form_label(form.date_facture_start, 'Date facture',  {'label_attr' : {'class' : ''}}) }}</div>
+        <div class="col-md-2" style="margin-top: -15px;">Du{{ form_widget(form.date_facture_start, {'attr' : {"value": dateFactureStart  } }) }}</div>
+        <div class="col-md-2" style="margin-top: -15px;">Au {{ form_widget(form.date_facture_end, {'attr' : {"value": dateFactureEnd  } }) }}</div>
+
         <div class="col-md-1">{{ form_label(form.beneficiaire) }}</div>
         <div class="col-md-6" >
             <div class="row" style="position: relative">
@@ -49,27 +74,23 @@
         </div>
     </div><br>
 
-   
     <div class="row">
-        <div class="col-md-2">{{ form_label(form.date_debut_accompagnement_start, 'Début accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
-        <div class="col-md-2">Du{{ form_widget(form.date_debut_accompagnement_start, {'attr' : {"value": dateDebutAccompagnementStart  } }) }}</div>
-        <div class="col-md-2">Au {{ form_widget(form.date_debut_accompagnement_end, {'attr' : {"value": dateDebutAccompagnementEnd  } }) }}</div>
+        <div class="col-md-2" style="margin-top: 10px;">{{ form_label(form.date_debut_accompagnement_start, 'Début accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
+        <div class="col-md-2" style="margin-top: -15px;">Du{{ form_widget(form.date_debut_accompagnement_start, {'attr' : {"value": dateDebutAccompagnementStart  } }) }}</div>
+        <div class="col-md-2" style="margin-top: -15px;">Au {{ form_widget(form.date_debut_accompagnement_end, {'attr' : {"value": dateDebutAccompagnementEnd  } }) }}</div>
 
-        <div class="col-md-2">{{ form_label(form.date_fin_accompagnement_start, 'Fin accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
-        <div class="col-md-2">Du {{ form_widget(form.date_fin_accompagnement_start, {'attr' : {"value": dateFinAccompagnementStart  } }) }}</div>
-        <div class="col-md-2">Au {{ form_widget(form.date_fin_accompagnement_end, {'attr' : {"value": dateFinAccompagnementEnd  } }) }}</div>
+        <div class="col-md-2" style="margin-top: 10px;">{{ form_label(form.date_fin_accompagnement_start, 'Fin accompagnement',  {'label_attr' : {'class' : ''}}) }}</div>
+        <div class="col-md-2" style="margin-top: -15px;">Du {{ form_widget(form.date_fin_accompagnement_start, {'attr' : {"value": dateFinAccompagnementStart  } }) }}</div>
+        <div class="col-md-2" style="margin-top: -15px;">Au {{ form_widget(form.date_fin_accompagnement_end, {'attr' : {"value": dateFinAccompagnementEnd  } }) }}</div>
     </div><br>
-    <div class="row">
 
+    <div class="row">
+        <div class="col-md-1">{{ form_label(form.financeur) }}</div>
+        <div class="col-md-2">{{ form_widget(form.financeur) }}</div>
     </div>
 
-
-        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location.href='{{ path('application_list_facture_home') }}'">Reset</button>
-        {{ form_widget(form.filtrer) }}
-
-
-
-
+    <!-- Lors d'un affiche de champ manuellement, comme fait pour le select de l'annee du numero de facture. Permet de ne pas afficher une seconde fois le champ avec le form_rest -->
+    {% do form.annee_numero_facture.setRendered() %}
 
     {{ form_rest(form) }}
 </form>

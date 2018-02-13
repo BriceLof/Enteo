@@ -29,8 +29,10 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
     public function search($statut = null,
            $dateDebutAccompagnementStart = null, $dateDebutAccompagnementEnd = null,
            $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
-           $dateFacture = null,
-           $consultant = null, Beneficiaire $beneficiaire = null)
+           $dateFactureStart = null, $dateFactureEnd = null,
+           $consultant = null, Beneficiaire $beneficiaire = null,
+           $numeroFacture = null, $financeur = null
+    )
     {
 
         $queryBuilder = $this->createQueryBuilder("f");
@@ -64,9 +66,10 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             $arrayParameters['dateFinAccompagnementEnd'] = $dateFinAccompagnementEnd->format('Y-m-d');
         }
 
-        if(!is_null($dateFacture)){
-            $queryBuilder->andWhere("f.date = :dateFacture");
-            $arrayParameters['dateFacture'] = $dateFacture->format('Y-m-d');
+        if(!is_null($dateFactureStart) && !is_null($dateFactureEnd)){
+            $queryBuilder->andWhere("f.date >= :dateFactureStart AND f.date <= :dateFactureEnd");
+            $arrayParameters['dateFactureStart'] = $dateFactureStart->format('Y-m-d');
+            $arrayParameters['dateFactureEnd'] = $dateFactureEnd->format('Y-m-d');
         }
 
         if(!is_null($consultant)){
@@ -74,6 +77,15 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             $arrayParameters['consultant'] = $consultant;
         }
 
+        if(!is_null($numeroFacture)){
+            $queryBuilder->andWhere("f.numero LIKE :numFactu");
+            $arrayParameters['numFactu'] = '%'.$numeroFacture.'%';
+        }
+
+        if(!is_null($financeur)){
+            $queryBuilder->andWhere("f.financeur LIKE :financeur");
+            $arrayParameters['financeur'] = '%'.$financeur.'%';
+        }
         $queryBuilder->setParameters($arrayParameters);
 
         $queryBuilder->orderBy("f.id", "DESC");

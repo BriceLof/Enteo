@@ -332,17 +332,41 @@ class FactureController extends Controller
             elseif(is_null($dateFinAccompagnementEnd))
                 unset($recherche['date_fin_accompagnement_end']);
 
-            $dateFacture = $form->get('date')->getData();
-            if($dateFacture != '' && !is_null($dateFacture))
-                $recherche['date_facture'] = $dateFacture;
-            elseif(is_null($dateFacture))
-                unset($recherche['date_facture']);
+            $dateFactureStart = $form->get('date_facture_start')->getData();
+            if($dateFactureStart != '' && !is_null($dateFactureStart))
+                $recherche['date_facture_start'] = $dateFactureStart;
+            elseif(is_null($dateFactureStart))
+                unset($recherche['date_facture_start']);
+
+            $dateFactureEnd = $form->get('date_facture_end')->getData();
+            if($dateFactureEnd != '' && !is_null($dateFactureEnd))
+                $recherche['date_facture_end'] = $dateFactureEnd;
+            elseif(is_null($dateFactureEnd))
+                unset($recherche['date_facture_end']);
 
             $consultant = $form->get('consultant')->getData();
             if($consultant != '' && !is_null($consultant))
                 $recherche['consultant'] = $consultant;
             elseif(is_null($consultant))
                 unset($recherche['consultant']);
+
+            $financeur = $form->get('financeur')->getData();
+            if($financeur != '' && !is_null($financeur))
+                $recherche['financeur'] = $financeur;
+            elseif(is_null($financeur))
+                unset($recherche['financeur']);
+
+            $numFactu = '';
+            $numeroFacture = $form->get('numero_facture')->getData();
+            $anneeNumeroFacture = $form->get('annee_numero_facture')->getData();
+            if(($numeroFacture != '' && !is_null($numeroFacture)) || ($anneeNumeroFacture != '' && !is_null($anneeNumeroFacture))){
+                $recherche['numero_facture'] = $numeroFacture.$anneeNumeroFacture;
+                $numFactu = $numeroFacture.$anneeNumeroFacture;
+            }
+            elseif(is_null($numeroFacture) && is_null($anneeNumeroFacture)){
+                unset($recherche['numero_facture']);
+            }
+
 
 
             $beneficiaire = null;
@@ -354,10 +378,9 @@ class FactureController extends Controller
             elseif(is_null($beneficiaireGet))
                 unset($recherche['beneficiaire']);
 
-
             $session->set('facture_search', $recherche);
 
-            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFacture, $consultant, $beneficiaire);
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur);
             
 
             return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(

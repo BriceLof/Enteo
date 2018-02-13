@@ -107,21 +107,65 @@ class FactureFiltreType extends AbstractType
                     'class' => ' '
                 )
             ))
-            ->add('date', DateType::class, array(
+            ->add('date_facture_start', DateType::class, array(
                 'label' => 'Date facture',
                 'widget' => 'single_text',
                 'html5' => true,
                 'required' => false,
+                'mapped' => false,
                 //'format' => 'dd/MM/yyyy',
                 'attr' => array(
                     'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
+                    'class' => 'dateFactureField dateFactureStartField'
                 )
+            ))
+            ->add('date_facture_end', DateType::class, array(
+                'label' => 'Date facture',
+                'widget' => 'single_text',
+                'html5' => true,
+                'required' => false,
+                'mapped' => false,
+                //'format' => 'dd/MM/yyyy',
+                'attr' => array(
+                    'placeholder' => 'JJ/MM/AAAA',
+                    'class' => 'dateFactureField dateFactureEndField'
+                )
+            ))
+            ->add('numero_facture', TextType::class, array(
+                'label' => 'N° facture',
+                'required' => false,
+                'mapped' => false,
+                'attr' => array(
+                    'placeholder' => 'XXX'
+                ),
+            ))
+            ->add('annee_numero_facture', ChoiceType::class, array(
+                'label' => 'N° facture',
+                'placeholder' => 'Année',
+                'choices'  => array(
+                    '2017' => '-2017',
+                    '2018' => '-2018',
+                    '2019' => '-2019',
+                ),
+                //'preferred_choices' => array('-'.date('Y')),
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => ''
+                )
+            ))
+            ->add('financeur', TextType::class, array(
+                'label' => 'Financeur',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => 'Entrer le nom d\'un financeur'
+                ),
             ))
             ->add('filtrer', SubmitType::class, array(
                 'label' => "Filtrer",
                 'attr' => array('class' => 'btn  btn-primary'),
             ));
+
 
     }
 

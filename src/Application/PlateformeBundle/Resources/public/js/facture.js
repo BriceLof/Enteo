@@ -1,9 +1,9 @@
 $(function () {
-
     $(".tablesorter").tablesorter({
         dateFormat : "ddmmyyyy"
     });
 
+    // --------------------------- FIN Page facture : Formulaire de paiement
     $(".lienModalPaiement").click(function(){
         nomLien = $(this).attr("data-target")
 
@@ -36,8 +36,10 @@ $(function () {
             $(".banqueFacture").css('display', 'none')
         }
     });
+    // --------------------------- FIN Page facture : Formulaire de paiement
 
-    $(".beneficiaireSearchFactureField  ").keyup(function () {
+    // --------------------------- Page facture : filtre de recherche
+    $(".beneficiaireSearchFactureField").keyup(function () {
         nom = $(this).val();
         if (nom.length >= 3) {
             $.ajax({
@@ -74,6 +76,27 @@ $(function () {
             $(this).html("Cacher les filtres")
         }
     })
+
+    // Gestion des dates debut et fin, pour que les 2 champs soient obligatoires, si l'un est rempli
+    $(".dateFactureField").change(function () {
+        date = $(this).val();
+        console.log(date)
+        if(date.length == 0) {
+            $(".dateFactureField").removeAttr('required min max ')
+            console.log("vide")
+        }
+        else{
+            $(".dateFactureField").attr('required', 'required')
+            if($(this).hasClass("dateFactureStartField")){
+                $(".dateFactureEndField").attr('min', date)
+            }else{
+                $(".dateFactureStartField").attr('max', date)
+            }
+            console.log("pas vide")
+        }
+    });
+
+    // --------------------------- FIN Page facture : filtre de recherche
 });
 
 function paiementFieldShowHidde(valeur)
