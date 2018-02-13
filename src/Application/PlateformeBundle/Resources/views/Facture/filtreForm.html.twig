@@ -1,4 +1,4 @@
-{% set statut, consultant, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture = '','','', '', '', '', '', '', '' %}
+{% set statut, consultant, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur = '', '','','', '', '', '', '', '', '' %}
 
 {% if app.session.get('facture_search').statut is defined %}
     {% set statut = app.session.get('facture_search').statut %}
@@ -28,6 +28,9 @@
 {% endif %}
 {% if app.session.get('facture_search').numero_facture is defined %}
     {% set numFacture = app.session.get('facture_search').numero_facture %}
+{% endif %}
+{% if app.session.get('facture_search').financeur is defined %}
+    {% set financeur = app.session.get('facture_search').financeur %}
 {% endif %}
 
 <form action="{{ path('application_search_facture') }}" method="POST"  >
@@ -86,7 +89,7 @@
 
     <div class="row">
         <div class="col-md-1">{{ form_label(form.financeur) }}</div>
-        <div class="col-md-2">{{ form_widget(form.financeur) }}</div>
+        <div class="col-md-2">{{ form_widget(form.financeur, {'value' : financeur}) }}</div>
     </div>
 
     <!-- Lors d'un affiche de champ manuellement, comme fait pour le select de l'annee du numero de facture. Permet de ne pas afficher une seconde fois le champ avec le form_rest -->
