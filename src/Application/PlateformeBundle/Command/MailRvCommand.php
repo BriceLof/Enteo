@@ -32,9 +32,9 @@ class MailRvCommand extends ContainerAwareCommand
             $beneficiaires = $consultant->getBeneficiaire();
             foreach ($beneficiaires as $beneficiaire) {
                 $news = $beneficiaire->getNews();
+                $lastNews = $news[count($news) - 1];
                 //CRON chaque jour à 21h00 et si statut bénéficiaire passe de R1 ou R2 à faire à R1 ou R2 positif +++ => Envoyer email
                 if (!is_null($news[count($news) - 2])) {
-                    $lastNews = $news[count($news) - 1];
                     $nextToNews = $news[count($news) - 2];
                     $slugNextToNewsStatus = $nextToNews->getStatut()->getId();
 
@@ -63,8 +63,8 @@ class MailRvCommand extends ContainerAwareCommand
                     //si l'historique n'est pas archivé ou annulé ou modifié
                     if ($historique->getEventarchive() == 'off' && $historique->getCanceled() == 0) {
                         //si la date de cet historique date de mois de 24h au moment du lancement de la cron journalier
-                        if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->modify('-1 day')->format('d-m-Y') ) {
-                            if (($rv == "RV1" || $rv == "RV2" ) && $beneficiaire->getUpdatedAt()->setTime(0,0,0) < (new \DateTime('now'))->modify('-1 day')->setTime(0,0,0)) {
+                        if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->format('d-m-Y') ) {
+                            if (($rv == "RV1" || $rv == "RV2" ) && ($lastNews->getStatut()->getId() == 3 || $lastNews->getStatut()->getId() == 5 )) {
 
                                 if (!in_array($beneficiaire, $tab2)){
                                     $tab2[] = $beneficiaire;
@@ -73,8 +73,8 @@ class MailRvCommand extends ContainerAwareCommand
                         }
 
                         //si la date de cet historique date de mois de 48h au moment du lancement de la cron journalier
-                        if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->modify('-2 day')->format('d-m-Y')) {
-                            if (($rv == "RV1" || $rv == "RV2" ) && $beneficiaire->getUpdatedAt()->setTime(0,0,0) < (new \DateTime('now'))->modify('-2 day')->setTime(0,0,0)) {
+                        if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->modify('-1 day')->format('d-m-Y')) {
+                            if (($rv == "RV1" || $rv == "RV2" ) && ($lastNews->getStatut()->getId() == 3 || $lastNews->getStatut()->getId() == 5 )) {
                                 if (!in_array($beneficiaire, $tab3)) {
                                     $tab3[] = $beneficiaire;
                                 }

@@ -4,7 +4,7 @@
 {% block contentMail %}
     {{ consultant.prenom|capitalize }}, <br><br>
     <div>
-        Vous avez reçu hier en rendez-vous de positionnement :<br>
+        Vous avez reçu aujourd'hui en rendez-vous de positionnement :<br>
         <ul>
             {% for beneficiaire in beneficiaires %}
                 <li><b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b></li>

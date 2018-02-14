@@ -171,7 +171,6 @@ class Calendar
             if ($edit == true){
                 $eventUpdated = $this->calendar->updateEvent($consultant->getCalendrierid(), $historique->getEventId(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
             }else{
-                var_dump($eventSummary);die;
                 $event = $this->calendar->addEvent($consultant->getCalendrierid(), $dateDebut, $dateFin, $eventSummary, $eventDescription,"",$location);
             }
         }

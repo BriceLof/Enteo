@@ -201,7 +201,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function firstMailRvFicheNonMaj(Users $consultant , $beneficiaires){
-        $dateHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
+        $dateHier = $this->date->dateFr(new \DateTime('now'));
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
         $subject = "[URGENT] Mise à Jour de vos Rendez-vous du ".$dateHier;
@@ -240,7 +240,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
-        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-2 day"));
+        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
         $from = "christine.clementmolier@entheor.com";
         $replyTo = "christine.clementmolier@entheor.com";
         $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche du ".$dateAvantHier;
