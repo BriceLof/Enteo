@@ -43,10 +43,10 @@ class MailRvAReporterCommand extends ContainerAwareCommand
 
             if (!empty($tab)){
                 usort($tab, function($a, $b) {
-                    if ($a->getDate() == $b->getDate()) {
+                    if ($a->getDateHeure() == $b->getDateHeure()) {
                         return 0;
                     }
-                    return $a->getDate() > $b->getDate() ? -1 : 1;
+                    return $a->getDateHeure() > $b->getDateHeure() ? -1 : 1;
                 });
                 $attachement = new \Swift_Attachment(
                     $this->getContainer()->get('application_plateforme.csv')->getCvsForMailNews($tab),
