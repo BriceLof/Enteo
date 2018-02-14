@@ -235,8 +235,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'news' => $news,
             'reference' => $ref,
         ));
-//        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body,$attachement);
-        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachement);
+        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body,$attachement);
+//        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachement);
 
     }
 
