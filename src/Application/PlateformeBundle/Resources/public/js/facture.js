@@ -1,21 +1,9 @@
 $(function () {
+    $(".tablesorter").tablesorter({
+        dateFormat : "ddmmyyyy"
+    });
 
-    //$( ".datePicker" ).datepicker({
-        /*changeMonth: true,
-        changeYear: true,
-        closeText: 'Fermer',
-        prevText: 'Précédent',
-        nextText: 'Suivant',
-        currentText: 'Aujourd\'hui',
-        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-        dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-        dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-        weekHeader: 'Sem.',
-        dateFormat: 'dd/mm/yy',*/
-    //});
-
+    // --------------------------- FIN Page facture : Formulaire de paiement
     $(".lienModalPaiement").click(function(){
         nomLien = $(this).attr("data-target")
 
@@ -48,7 +36,67 @@ $(function () {
             $(".banqueFacture").css('display', 'none')
         }
     });
+    // --------------------------- FIN Page facture : Formulaire de paiement
 
+    // --------------------------- Page facture : filtre de recherche
+    $(".beneficiaireSearchFactureField").keyup(function () {
+        nom = $(this).val();
+        if (nom.length >= 3) {
+            $.ajax({
+                type: 'get',
+                url: Routing.generate("application_search_facture_ajax_beneficiaire", {string: nom}),
+                beforeSend: function () {
+                    $(".block_info_chargement").show();
+                }
+            })
+                .done(function (data) {
+                    $(".block_info_chargement").hide();
+                    tab = JSON.parse(data)
+                    console.log(tab)
+                    console.log(tab.length)
+                    $("#select_beneficiaire_ajax option").remove()
+                    for (var i = 0; i < tab.length; i++) {
+                        console.log(tab[i])
+                        $("#select_beneficiaire_ajax").append("<option value=" + tab[i].id + ">" + tab[i].nom +" "+ tab[i].prenom +"</option>")
+                    }
+                });
+        } else {
+            $("#select_beneficiaire_ajax option").remove()
+        }
+    });
+
+    $("#btn_filtre_facture").click(function(){
+        if($("#filtre_facture").hasClass("open")){
+            $("#filtre_facture").removeClass("open")
+            $("#filtre_facture").hide().addClass("closed")
+            $(this).html("Afficher les filtres")
+        }else{
+            $("#filtre_facture").removeClass("closed")
+            $("#filtre_facture").show().addClass("open")
+            $(this).html("Cacher les filtres")
+        }
+    })
+
+    // Gestion des dates debut et fin, pour que les 2 champs soient obligatoires, si l'un est rempli
+    $(".dateFactureField").change(function () {
+        date = $(this).val();
+        console.log(date)
+        if(date.length == 0) {
+            $(".dateFactureField").removeAttr('required min max ')
+            console.log("vide")
+        }
+        else{
+            $(".dateFactureField").attr('required', 'required')
+            if($(this).hasClass("dateFactureStartField")){
+                $(".dateFactureEndField").attr('min', date)
+            }else{
+                $(".dateFactureStartField").attr('max', date)
+            }
+            console.log("pas vide")
+        }
+    });
+
+    // --------------------------- FIN Page facture : filtre de recherche
 });
 
 function paiementFieldShowHidde(valeur)

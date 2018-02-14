@@ -13,20 +13,26 @@
                 <div class="page-header">
                     <div class="row">
                         <h1 class="col-md-10">Gestion - Factures<br><small></small></h1>
+                        <!--<button id="btn_filtre_facture" class="btn btn-warning" style="margin-top:24px">Afficher les filtres</button>-->
                     </div>
+
+                </div>
+
+                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:18px;border-radius: 3px; " >
+                    {{ render(controller('ApplicationPlateformeBundle:Facture:search' )) }}
                 </div>
                 <div class="table-responsive">
-                    <table class="table  table-striped">
+                    <table class="table table-striped tablesorter">
                         <thead >
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col">#</th>
                             <th scope="col">Bénéficiaire</th>
                             <th scope="col">Début accompagnement</th>
                             <th scope="col">Fin accompagnement</th>
                             <th scope="col">Financeur</th>
                             <!--<th scope="col">Ville</th>-->
                             <th scope="col">Consultant</th>
-                            <th scope="col">N° facture</th>
+                            <th scope="col">N°</th>
                             <th scope="col">Date</th>
                             <th scope="col">Montant</th>
                             <th scope="col">Statut création</th>
@@ -38,13 +44,13 @@
                         {% for facture in factures %}
                             <tr>
                                 <td>{{ facture.id }}</td>
-                                <td><a href="{{ path("application_show_beneficiaire", {'id' : facture.beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ facture.beneficiaire.civiliteConso | capitalize ~ ' '~ facture.beneficiaire.nomConso | capitalize ~ ' '~ facture.beneficiaire.prenomConso | capitalize }}</a></td>
+                                <td><a href="{{ path("application_show_beneficiaire", {'id' : facture.beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ facture.beneficiaire.nomConso | capitalize ~ ' '~ facture.beneficiaire.prenomConso | capitalize }}</a></td>
                                 <td>{{ facture.dateDebutAccompagnement | date("d/m/Y") }}</td>
                                 <td>{{ facture.dateFinAccompagnement | date("d/m/Y") }}</td>
                                 {% set financeur = facture.Financeur | split('|') %}
                                 <td>{{ financeur[0]~', '~financeur[2] }}</td>
                                 <!--<td>{{ facture.beneficiaire.ville.nom | capitalize }}</td>-->
-                                <td>{{ facture.beneficiaire.consultant.civilite | capitalize ~ ' '~ facture.beneficiaire.consultant.nom | capitalize ~ ' '~ facture.beneficiaire.consultant.prenom | capitalize }}</td>
+                                <td>{{ facture.beneficiaire.consultant.nom | capitalize ~ ' '~ facture.beneficiaire.consultant.prenom | capitalize }}</td>
                                 <td><a href="{{ path("application_show_facture", {'numero' : facture.numero }) }}" title="Afficher facture" target="_blank">{{ facture.numero }}</a></td>
                                 <td>{{ facture.date | date("d/m/Y") }}</td>
                                 <td>{{ facture.montant }} €</td>
@@ -76,4 +82,5 @@
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.29.5/js/jquery.tablesorter.min.js"></script>
 {% endblock %}

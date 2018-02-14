@@ -126,7 +126,7 @@ class Calendar
         $location = "";
         if($form['typerdv']->getData() == 'distantiel'){
             $historique->setBureau(null);
-            $eventSummary = ucfirst($beneficiaire->getPrenomConso()[0]).'. '.$beneficiaire->getNomConso().', '.$historique->getSummary();
+            $eventSummary = mb_strtoupper($beneficiaire->getPrenomConso()[0], "UTF-8").'. '.$beneficiaire->getNomConso().', '.$historique->getSummary();
         }
         if($historique->getSummary() == "Autre" && $historique->getAutreSummary() != ""){
             $historique->setSummary($historique->getAutreSummary());

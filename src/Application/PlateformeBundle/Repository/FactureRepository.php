@@ -2,6 +2,7 @@
 
 namespace Application\PlateformeBundle\Repository;
 
+use Application\PlateformeBundle\Entity\Beneficiaire;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * FactureRepository
@@ -23,5 +24,75 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
         // (n'oubliez pas le use correspondant en début de fichier)
         return new Paginator($query);
+    }
+
+    public function search($statut = null,
+           $dateDebutAccompagnementStart = null, $dateDebutAccompagnementEnd = null,
+           $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
+           $dateFactureStart = null, $dateFactureEnd = null,
+           $consultant = null, Beneficiaire $beneficiaire = null,
+           $numeroFacture = null, $financeur = null
+    )
+    {
+
+        $queryBuilder = $this->createQueryBuilder("f");
+        $arrayParameters = array();
+
+        if(!is_null($consultant)){
+            // Il me faut une liste de beneficiaire
+            $queryBuilder->leftJoin('f.beneficiaire', 'b')
+                ->addSelect('b');
+        }
+
+        if(!is_null($beneficiaire)){
+            $queryBuilder->andWhere("f.beneficiaire = :beneficiaire");
+            $arrayParameters['beneficiaire'] = $beneficiaire;
+        }
+
+        if(!is_null($statut)){
+            $queryBuilder->andWhere("f.statut = :statut");
+            $arrayParameters['statut'] = $statut;
+        }
+
+        // Date a gérer en égalité ou en interval
+        if(!is_null($dateDebutAccompagnementStart) && !is_null($dateDebutAccompagnementEnd)){
+            $queryBuilder->andWhere("f.dateDebutAccompagnement >= :dateDebutAccompagnementStart AND f.dateDebutAccompagnement <= :dateDebutAccompagnementEnd");
+            $arrayParameters['dateDebutAccompagnementStart'] = $dateDebutAccompagnementStart->format('Y-m-d');
+            $arrayParameters['dateDebutAccompagnementEnd'] = $dateDebutAccompagnementEnd->format('Y-m-d');
+        }
+        if(!is_null($dateFinAccompagnementStart) && !is_null($dateFinAccompagnementEnd)){
+            $queryBuilder->andWhere("f.dateFinAccompagnement >= :dateFinAccompagnementStart AND f.dateFinAccompagnement <= :dateFinAccompagnementEnd");
+            $arrayParameters['dateFinAccompagnementStart'] = $dateFinAccompagnementStart->format('Y-m-d');
+            $arrayParameters['dateFinAccompagnementEnd'] = $dateFinAccompagnementEnd->format('Y-m-d');
+        }
+
+        if(!is_null($dateFactureStart) && !is_null($dateFactureEnd)){
+            $queryBuilder->andWhere("f.date >= :dateFactureStart AND f.date <= :dateFactureEnd");
+            $arrayParameters['dateFactureStart'] = $dateFactureStart->format('Y-m-d');
+            $arrayParameters['dateFactureEnd'] = $dateFactureEnd->format('Y-m-d');
+        }
+
+        if(!is_null($consultant)){
+            $queryBuilder->andWhere("b.consultant = :consultant");
+            $arrayParameters['consultant'] = $consultant;
+        }
+
+        if(!is_null($numeroFacture)){
+            $queryBuilder->andWhere("f.numero LIKE :numFactu");
+            $arrayParameters['numFactu'] = '%'.$numeroFacture.'%';
+        }
+
+        if(!is_null($financeur)){
+            $queryBuilder->andWhere("f.financeur LIKE :financeur");
+            $arrayParameters['financeur'] = '%'.$financeur.'%';
+        }
+        $queryBuilder->setParameters($arrayParameters);
+
+        $queryBuilder->orderBy("f.id", "DESC");
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+
     }
 }

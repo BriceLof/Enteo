@@ -1,0 +1,12 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}{{ reference }}{% endblock %}
+{% block contentMail %}
+    Bonjour Virgine,
+    <br>
+    <br>
+    Veuillez trouver ci-joint la liste des {{ news|length }} bénéficiaires dont le rendez-vous à été reporté la semaine passée.
+    <br>
+    {% for new in news %}
+        <p style='margin-left:10px;'>&bull; {{ new.beneficiaire.civiliteConso|capitalize~' '~new.beneficiaire.prenomConso|capitalize~' '~new.beneficiaire.nomConso|capitalize~' - '~new.detailStatut.detail }}  </p>
+    {% endfor %}
+{% endblock %}
