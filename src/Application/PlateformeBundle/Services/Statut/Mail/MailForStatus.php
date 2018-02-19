@@ -51,8 +51,8 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
             'reference' => $ref
         ));
 
-        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
-//        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
+        //$this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
+        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
 
     }
 
@@ -77,8 +77,8 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
             'reference' => $ref
         ));
 
-        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
-//        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
+        //$this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
+        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
     }
     
 }
