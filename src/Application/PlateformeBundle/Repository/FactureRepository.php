@@ -27,15 +27,20 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function search($statut = null,
+           $dateDebutAccompagnement = null, $dateFinAccompagnement = null,
            $dateDebutAccompagnementStart = null, $dateDebutAccompagnementEnd = null,
            $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
            $dateFactureStart = null, $dateFactureEnd = null,
            $consultant = null, Beneficiaire $beneficiaire = null,
-           $numeroFacture = null, $financeur = null
+           $numeroFacture = null, $financeur = null, $ville = null
     )
     {
 
-        $queryBuilder = $this->createQueryBuilder("f");
+        $queryBuilder = $this->createQueryBuilder("f")
+            ->innerJoin('f.beneficiaire', 'b')
+            ->addSelect('b')
+            ->innerJoin('b.ville', 'v')
+            ->addSelect('v');
         $arrayParameters = array();
 
         if(!is_null($consultant)){
@@ -55,6 +60,13 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         }
 
         // Date a gérer en égalité ou en interval
+
+        if(!is_null($dateDebutAccompagnement) && !is_null($dateFinAccompagnement)){
+            $queryBuilder->andWhere("f.dateDebutAccompagnement >= :dateDebutAccompagnement AND f.dateFinAccompagnement <= :dateFinAccompagnement");
+            $arrayParameters['dateDebutAccompagnement'] = $dateDebutAccompagnement->format('Y-m-d');
+            $arrayParameters['dateFinAccompagnement'] = $dateFinAccompagnement->format('Y-m-d');
+        }
+
         if(!is_null($dateDebutAccompagnementStart) && !is_null($dateDebutAccompagnementEnd)){
             $queryBuilder->andWhere("f.dateDebutAccompagnement >= :dateDebutAccompagnementStart AND f.dateDebutAccompagnement <= :dateDebutAccompagnementEnd");
             $arrayParameters['dateDebutAccompagnementStart'] = $dateDebutAccompagnementStart->format('Y-m-d');
@@ -85,6 +97,11 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         if(!is_null($financeur)){
             $queryBuilder->andWhere("f.financeur LIKE :financeur");
             $arrayParameters['financeur'] = '%'.$financeur.'%';
+        }
+
+        if(!is_null($ville)){
+            $queryBuilder->andWhere("v.nom LIKE :ville");
+            $arrayParameters['ville'] = '%'.$ville.'%';
         }
         $queryBuilder->setParameters($arrayParameters);
 

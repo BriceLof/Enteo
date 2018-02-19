@@ -161,6 +161,38 @@ class FactureFiltreType extends AbstractType
                     'placeholder' => 'Entrer le nom d\'un financeur'
                 ),
             ))
+            ->add('ville', TextType::class, array(
+                'label' => 'Ville',
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => 'Entrer une ville'
+                ),
+            ))
+            ->add('date_debut_accompagnement', DateType::class, array(
+                'label' => 'Date accompagnement ',
+                'widget' => 'single_text',
+                'html5' => true,
+                'mapped' => false,
+                'required' => false,
+                //'format' => 'dd/MM/yyyy',
+                'attr' => array(
+                    'placeholder' => 'JJ/MM/AAAA',
+                    'class' => ' '
+                )
+            ))
+            ->add('date_fin_accompagnement', DateType::class, array(
+                'label' => 'Date accompagnement ',
+                'widget' => 'single_text',
+                'html5' => true,
+                'mapped' => false,
+                'required' => false,
+                //'format' => 'dd/MM/yyyy',
+                'attr' => array(
+                    'placeholder' => 'JJ/MM/AAAA',
+                    'class' => ' '
+                )
+            ))
             ->add('filtrer', SubmitType::class, array(
                 'label' => "Filtrer",
                 'attr' => array('class' => 'btn  btn-primary'),
