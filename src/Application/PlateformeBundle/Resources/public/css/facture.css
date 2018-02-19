@@ -32,3 +32,18 @@
     padding: 10px 10px;
     margin-top: 50px;
 }
+
+
+/* Filtre facture */
+#filtre_facture .form-control{
+    width:86%;
+    height: 25px;
+    font-size: 11px;
+}
+#filtre_facture .control-label{
+    font-size: 12px;
+}
+
+#filtre_facture .row{
+    margin-bottom:-14px;
+}

@@ -308,6 +308,18 @@ class FactureController extends Controller
             elseif(is_null($statut))
                 unset($recherche['statut']);
 
+            $dateDebutAccompagnement = $form->get('date_debut_accompagnement')->getData();
+            if($dateDebutAccompagnement != '' && !is_null($dateDebutAccompagnement))
+                $recherche['date_debut_accompagnement'] = $dateDebutAccompagnement;
+            elseif(is_null($dateDebutAccompagnement))
+                unset($recherche['date_debut_accompagnement']);
+
+            $dateFinAccompagnement = $form->get('date_fin_accompagnement')->getData();
+            if($dateFinAccompagnement != '' && !is_null($dateFinAccompagnement))
+                $recherche['date_fin_accompagnement'] = $dateFinAccompagnement;
+            elseif(is_null($dateFinAccompagnement))
+                unset($recherche['date_fin_accompagnement']);
+
             $dateDebutAccompagnementStart = $form->get('date_debut_accompagnement_start')->getData();
             if($dateDebutAccompagnementStart != '' && !is_null($dateDebutAccompagnementStart))
                 $recherche['date_debut_accompagnement_start'] = $dateDebutAccompagnementStart;
@@ -356,6 +368,12 @@ class FactureController extends Controller
             elseif(is_null($financeur))
                 unset($recherche['financeur']);
 
+            $ville = $form->get('ville')->getData();
+            if($ville != '' && !is_null($ville))
+                $recherche['ville'] = $ville;
+            elseif(is_null($ville))
+                unset($recherche['ville']);
+
             $numFactu = '';
             $numeroFacture = $form->get('numero_facture')->getData();
             $anneeNumeroFacture = $form->get('annee_numero_facture')->getData();
@@ -366,8 +384,6 @@ class FactureController extends Controller
             elseif(is_null($numeroFacture) && is_null($anneeNumeroFacture)){
                 unset($recherche['numero_facture']);
             }
-
-
 
             $beneficiaire = null;
             $beneficiaireGet = $request->get('beneficiaire_ajax');
@@ -380,7 +396,7 @@ class FactureController extends Controller
 
             $session->set('facture_search', $recherche);
 
-            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur);
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $ville);
             
 
             return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(

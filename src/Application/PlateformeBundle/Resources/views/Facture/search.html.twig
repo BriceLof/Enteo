@@ -1,4 +1,12 @@
 {% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@ApplicationPlateformeBundle/Resources/public/css/facture.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block title %}Factures{% endblock%}
 {% block body %}
     {#{{  dump(app.session.get('facture_search')) }}#}
@@ -17,7 +25,7 @@
                         {#<button id="btn_filtre_facture" class="btn btn-warning" style="margin-top:24px">Cacher les filtres</button>#}
                     </div>
                 </div>
-                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:18px;border-radius: 3px;" class="open">
+                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:12px;border-radius: 3px;" class="open">
                     {{ render(controller('ApplicationPlateformeBundle:Facture:search' )) }}
                 </div>
                 <div class="table-responsive">
@@ -26,6 +34,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Bénéficiaire</th>
+                            <th scope="col">Ville</th>
                             <th scope="col">Début accompagnement</th>
                             <th scope="col">Fin accompagnement</th>
                             <th scope="col">Financeur</th>
@@ -45,6 +54,7 @@
                                     <tr>
                                         <td>{{ facture.id }}</td>
                                         <td><a href="{{ path("application_show_beneficiaire", {'id' : facture.beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ facture.beneficiaire.nomConso | capitalize ~ ' '~ facture.beneficiaire.prenomConso | capitalize }}</a></td>
+                                        <td>{{ facture.beneficiaire.ville.nom | capitalize }}</td>
                                         <td>{{ facture.dateDebutAccompagnement | date("d/m/Y") }}</td>
                                         <td>{{ facture.dateFinAccompagnement | date("d/m/Y") }}</td>
                                         {% set financeur = facture.Financeur | split('|') %}
