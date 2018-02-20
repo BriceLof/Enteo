@@ -345,7 +345,7 @@ function tri(el) {
                 $('#section_home_page_' + page).html(template);
                 $('#section_home_page_' + page).parent().append(html);
                 $('#recherche_beneficiaire_page').val(parseInt($('#recherche_beneficiaire_page').val()) + 1);
-                if ($('#indication_page_' + page).attr('data-page') < $('#indication_page_' + page).attr('data-total')) {
+                if (parseInt($('#indication_page_' + page).attr('data-page')) < parseInt($('#indication_page_' + page).attr('data-total'))) {
                     $('#section_home_page_1').attr('data-page', '1');
                 }
             }
@@ -376,6 +376,8 @@ function tri(el) {
                 pagination(parseInt($('#recherche_beneficiaire_page').val()) + 1, $("#ajaxForm"));
             }
         }
+        console.log($(window).height() + $(window).scrollTop())
+        console.log($(document).height())
     });
 
     $("#excel").click(function () {
