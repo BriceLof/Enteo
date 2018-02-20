@@ -43,7 +43,7 @@
     {% set ville = app.session.get('facture_search').ville %}
 {% endif %}
 
-<form action="{{ path('application_search_facture') }}" method="POST"  >
+<form action="{{ path('application_search_facture') }}" method="POST" name="formulaire_filtre_facture">
     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location.href='{{ path('application_list_facture_home') }}'" style="float:right">Reset</button>
     {{ form_widget(form.filtrer, {'attr' : {'style': 'float:right;margin-right:12px;'}} ) }}
     <div class="row" style="margin-bottom:-22px">

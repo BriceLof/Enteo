@@ -26,9 +26,11 @@
 
                 </div>
 
-                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:12px;border-radius: 3px; " >
+                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:12px;border-radius: 3px;position:relative " >
+                    <img src="{{ asset('images/icon_excel.png') }}" title="Export .csv" alt="Export .csv" id="export_csv_facture" width="20px" style="cursor:pointer;position: absolute;right:1px;bottom:-26px;"/>
                     {{ render(controller('ApplicationPlateformeBundle:Facture:search' )) }}
                 </div>
+
                 <div class="table-responsive">
                     <table class="table table-striped tablesorter">
                         <thead >

@@ -25,7 +25,8 @@
                         {#<button id="btn_filtre_facture" class="btn btn-warning" style="margin-top:24px">Cacher les filtres</button>#}
                     </div>
                 </div>
-                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:12px;border-radius: 3px;" class="open">
+                <div id="filtre_facture" style="margin-bottom: 25px;background-color:#f9f9f9;padding:12px;border-radius: 3px;position:relative" class="open">
+                    <img src="{{ asset('images/icon_excel.png') }}" title="Export .csv" alt="Export .csv" id="export_csv_facture" width="20px" style="cursor:pointer;position: absolute;right:1px;bottom:-26px;"/>
                     {{ render(controller('ApplicationPlateformeBundle:Facture:search' )) }}
                 </div>
                 <div class="table-responsive">

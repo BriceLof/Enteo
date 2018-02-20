@@ -3,3 +3,9 @@ application_csv_getListBeneficiaire:
     defaults: { _controller: "ApplicationPlateformeBundle:Csv:getListBeneficiaire" }
     options:
         expose: true
+
+application_csv_getListFacture:
+    path:     /getListFacture
+    defaults: { _controller: "ApplicationPlateformeBundle:Csv:getListFacture" }
+    options:
+        expose: true

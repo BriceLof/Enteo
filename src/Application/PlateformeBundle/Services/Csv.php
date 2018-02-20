@@ -236,4 +236,55 @@ class Csv
         fclose($handle);
         return $csv;
     }
+
+    public function getCvForFacture($factures)
+    {
+        $response = new StreamedResponse();
+        $response->setCallback(function() use ($factures) {
+            $handle = fopen('php://output', 'w+');
+            fputcsv($handle, array(
+                'Beneficiaire',
+                'Ville',
+                'Debut accompagnement',
+                'Fin accompagnement',
+                'Financeur',
+                'Consultant',
+                'Numero',
+                'Date',
+                'Montant',
+                'Statut creation',
+                'Statut facture',
+            ), ';');
+
+            foreach ($factures as $facture)
+            {
+                if($facture->getOuvert() == 1) $statutCreation = "Ouvert";
+                else $statutCreation = "Fermer";
+
+                fputcsv(
+                    $handle,
+                    array(
+                        utf8_decode($facture->getBeneficiaire()->getNomConso()." ".$facture->getBeneficiaire()->getPrenomConso()),
+                        $facture->getBeneficiaire()->getVille()->getNom(),
+                        $facture->getDateDebutAccompagnement()->format('d-m-Y'),
+                        $facture->getDateFinAccompagnement()->format('d-m-Y'),
+                        utf8_decode($facture->getFinanceur()),
+                        utf8_decode($facture->getBeneficiaire()->getConsultant()->getNom()." ".$facture->getBeneficiaire()->getConsultant()->getPrenom()),
+                        $facture->getNumero(),
+                        $facture->getDate()->format('d-m-Y'),
+                        $facture->getMontant(),
+                        $statutCreation,
+                        ucfirst($facture->getStatut()),
+                    ),
+                    ';'
+                );
+            }
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="facture_export.csv"');
+        return $response;
+    }
 }

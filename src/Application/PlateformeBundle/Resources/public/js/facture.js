@@ -96,6 +96,11 @@ $(function () {
         }
     });
 
+    $("#export_csv_facture").click(function () {
+        document.formulaire_filtre_facture.action = Routing.generate('application_csv_getListFacture');
+        document.formulaire_filtre_facture.submit();
+        //document.search_beneficiaire.action = Routing.generate('application_search_beneficiaire', {'page': 1});
+    })
     // --------------------------- FIN Page facture : filtre de recherche
 });
 
