@@ -31,6 +31,8 @@
                     {{ render(controller('ApplicationPlateformeBundle:Facture:search' )) }}
                 </div>
 
+                <b style="margin-bottom: 7px;display: block;color: #b0413e;font-size: 13px;margin-top: -10px;">Résultat : {{ factures | length }} facture{{ (factures|length >0) ? 's' : ''}}</b>
+
                 <div class="table-responsive">
                     <table class="table table-striped tablesorter">
                         <thead >

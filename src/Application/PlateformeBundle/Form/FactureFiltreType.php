@@ -170,7 +170,7 @@ class FactureFiltreType extends AbstractType
                 ),
             ))
             ->add('date_debut_accompagnement', DateType::class, array(
-                'label' => 'Date accompagnement ',
+                'label' => 'Début et fin accompagnement',
                 'widget' => 'single_text',
                 'html5' => true,
                 'mapped' => false,
@@ -182,7 +182,7 @@ class FactureFiltreType extends AbstractType
                 )
             ))
             ->add('date_fin_accompagnement', DateType::class, array(
-                'label' => 'Date accompagnement ',
+                'label' => 'Début et fin accompagnement',
                 'widget' => 'single_text',
                 'html5' => true,
                 'mapped' => false,
