@@ -31,54 +31,52 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function alerteAttenteAccord($suivis, $attachment){
-
-        $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
-        $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
-        $listeAdministrateurs = array();
-        $listeGestionnaires = array();
-        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
-        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
-
         $ref = "4a";
-        $from = "christine.clement@entheor.com";
+        $from = "christine.clementmolier@entheor.com";
         $subject = "Liste des ".count($suivis)." dossiers en Financement - Attente Accord depuis plus de 15 jours ( antérieur à ".(new \DateTime('now'))->modify('-15 day')->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
-        $to = "virginie.hiairrassary@entheor.com";
-        $cc = $listeAdministrateurs;
+        $to = array(
+            "contact@entheor.com" => "Contact"
+        );
+        $cc = array(
+            "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary",
+            "christine.clementmolier@entheor.com" => "Christine Clement Molier",
+            "f.azoulay@entheor.com" => "Franck Azoulay",
+            "ph.rouzaud@entheor.com" => "Philippe Rouzaud"
+        );
         $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(
             'suivis' => $suivis,
             'reference' => $ref
         ));
 
-        //$this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
-        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
+//        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
 
     }
 
     public function alerteAttenteTraitement($suivis, $attachment){
-
-        $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
-        $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
-        $listeAdministrateurs = array();
-        $listeGestionnaires = array();
-        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
-        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
-
         $ref = "4b";
         $from = "christine.clement@entheor.com";
         $subject = "Liste des ".count($suivis)." dossiers en Attente Traitement depuis plus de 15 jours ( antérieur à ".(new \DateTime('now'))->modify('-15 day')->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
-        $to = "virginie.hiairrassary@entheor.com";
-        $cc = $listeAdministrateurs;
+        $to = array(
+            "contact@entheor.com" => "Contact"
+        );
+        $cc = array(
+            "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary",
+            "christine.clementmolier@entheor.com" => "Christine Clement Molier",
+            "f.azoulay@entheor.com" => "Franck Azoulay",
+            "ph.rouzaud@entheor.com" => "Philippe Rouzaud"
+        );
         $bcc = "support.informatique@entheor.com";
         $body = $this->templating->render($template, array(
             'suivis' => $suivis,
             'reference' => $ref
         ));
 
-        //$this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
-        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
+//        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachment);
     }
     
 }

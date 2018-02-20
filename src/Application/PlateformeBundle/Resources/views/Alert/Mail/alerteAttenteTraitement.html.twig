@@ -9,6 +9,10 @@
     {% endif %}
     <br>
     {% for suivi in suivis %}
-        <p style='margin-left:10px;'>&bull; {{ suivi.beneficiaire.civiliteConso|capitalize~' '~suivi.beneficiaire.prenomConso|capitalize~' '~suivi.beneficiaire.nomConso|capitalize~' depuis le '~suivi.date|date('d/m/Y') }}  </p>
+        <p style='margin-left:10px;'>&bull;
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  suivi.beneficiaire.id }}">
+                {{ suivi.beneficiaire.civiliteConso|capitalize~' '~suivi.beneficiaire.prenomConso|capitalize~' '~suivi.beneficiaire.nomConso|capitalize}}
+            </a>
+            depuis le {{ suivi.date|date('d/m/Y') }}  </p>
     {% endfor %}
 {% endblock %}
