@@ -244,7 +244,7 @@ class Csv
             $handle = fopen('php://output', 'w+');
             fputcsv($handle, array(
                 'Beneficiaire',
-                'Ville',
+                'Ville mer',
                 'Debut accompagnement',
                 'Fin accompagnement',
                 'Financeur',
@@ -265,7 +265,7 @@ class Csv
                     $handle,
                     array(
                         utf8_decode($facture->getBeneficiaire()->getNomConso()." ".$facture->getBeneficiaire()->getPrenomConso()),
-                        $facture->getBeneficiaire()->getVille()->getNom(),
+                        $facture->getBeneficiaire()->getVilleMer()->getNom(),
                         $facture->getDateDebutAccompagnement()->format('d-m-Y'),
                         $facture->getDateFinAccompagnement()->format('d-m-Y'),
                         utf8_decode($facture->getFinanceur()),
