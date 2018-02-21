@@ -43,12 +43,6 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('v');
         $arrayParameters = array();
 
-        if(!is_null($consultant)){
-            // Il me faut une liste de beneficiaire
-            $queryBuilder->leftJoin('f.beneficiaire', 'b')
-                ->addSelect('b');
-        }
-
         if(!is_null($beneficiaire)){
             $queryBuilder->andWhere("f.beneficiaire = :beneficiaire");
             $arrayParameters['beneficiaire'] = $beneficiaire;
