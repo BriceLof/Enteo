@@ -111,7 +111,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="tel_2", type="string", nullable=true)
-     * @Assert\Regex("#^0[1-678][0-9]{8}$#",
+     * @Assert\Regex("#^0[1-6789][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
      */
@@ -253,7 +253,7 @@ class Beneficiaire
 
     /**
      * @ORM\Column(name="tel_conso", type="string", length=255)
-     * @Assert\Regex("#^0[1-678][0-9]{8}$#",
+     * @Assert\Regex("#^0[1-6789][0-9]{8}$#",
      *     message = "Ce numéro n'est pas valide"
      * )
      */
