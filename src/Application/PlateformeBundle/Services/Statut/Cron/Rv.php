@@ -210,13 +210,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
+            "support.informatique@entheor.com" =>"support informatique"
         );
         $body = $this->templating->render($template, array(
             'consultant' => $consultant,
             'beneficiaires' => $beneficiaires,
         ));
         $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
-        //$this->sendMessage($from,"f.azoulay@entheor.com", $replyTo, null,null,$subject,$body);
+//        $this->sendMessage($from,"support.informatique@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
     public function mailRvAReporter($news, $attachement){
@@ -250,13 +251,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
+            "support.informatique@entheor.com" =>"support informatique"
         );
         $body = $this->templating->render($template, array(
             'consultant' => $consultant,
             'beneficiaires' => $beneficiaires,
         ));
         $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
-        //$this->sendMessage($from,"f.azoulay@entheor.com", $replyTo,null,null,$subject,$body);
+//        $this->sendMessage($from,"support.informatique@entheor.com", $replyTo,null,null,$subject,$body);
     }
     
     // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 
