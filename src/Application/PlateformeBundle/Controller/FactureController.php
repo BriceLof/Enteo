@@ -368,11 +368,11 @@ class FactureController extends Controller
             elseif(is_null($financeur))
                 unset($recherche['financeur']);
 
-            $ville = $form->get('ville')->getData();
-            if($ville != '' && !is_null($ville))
-                $recherche['ville'] = $ville;
-            elseif(is_null($ville))
-                unset($recherche['ville']);
+            $villeMer = $form->get('ville_mer')->getData();
+            if($villeMer != '' && !is_null($villeMer))
+                $recherche['ville_mer'] = $villeMer;
+            elseif(is_null($villeMer))
+                unset($recherche['ville_mer']);
 
             $numFactu = '';
             $numeroFacture = $form->get('numero_facture')->getData();
@@ -396,7 +396,7 @@ class FactureController extends Controller
 
             $session->set('facture_search', $recherche);
 
-            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $ville);
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer);
             
 
             return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(

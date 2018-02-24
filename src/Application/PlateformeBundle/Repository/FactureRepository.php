@@ -32,22 +32,16 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
            $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
            $dateFactureStart = null, $dateFactureEnd = null,
            $consultant = null, Beneficiaire $beneficiaire = null,
-           $numeroFacture = null, $financeur = null, $ville = null
+           $numeroFacture = null, $financeur = null, $villeMer = null
     )
     {
 
         $queryBuilder = $this->createQueryBuilder("f")
             ->innerJoin('f.beneficiaire', 'b')
             ->addSelect('b')
-            ->innerJoin('b.ville', 'v')
+            ->innerJoin('b.villeMer', 'v')
             ->addSelect('v');
         $arrayParameters = array();
-
-        if(!is_null($consultant)){
-            // Il me faut une liste de beneficiaire
-            $queryBuilder->leftJoin('f.beneficiaire', 'b')
-                ->addSelect('b');
-        }
 
         if(!is_null($beneficiaire)){
             $queryBuilder->andWhere("f.beneficiaire = :beneficiaire");
@@ -99,9 +93,9 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             $arrayParameters['financeur'] = '%'.$financeur.'%';
         }
 
-        if(!is_null($ville)){
-            $queryBuilder->andWhere("v.nom LIKE :ville");
-            $arrayParameters['ville'] = '%'.$ville.'%';
+        if(!is_null($villeMer)){
+            $queryBuilder->andWhere("v.nom LIKE :villeMer");
+            $arrayParameters['villeMer'] = '%'.$villeMer.'%';
         }
         $queryBuilder->setParameters($arrayParameters);
 

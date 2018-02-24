@@ -23,6 +23,8 @@ class MailRvCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        ini_set('memory_limit',-1);
+
         $em = $this->getContainer()->get('doctrine')->getManager();
         $consultants = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
         foreach ($consultants as $consultant) {

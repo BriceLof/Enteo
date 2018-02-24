@@ -161,8 +161,8 @@ class FactureFiltreType extends AbstractType
                     'placeholder' => 'Entrer le nom d\'un financeur'
                 ),
             ))
-            ->add('ville', TextType::class, array(
-                'label' => 'Ville',
+            ->add('ville_mer', TextType::class, array(
+                'label' => 'Ville mer',
                 'mapped' => false,
                 'required' => false,
                 'attr' => array(

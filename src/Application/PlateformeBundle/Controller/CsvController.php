@@ -65,7 +65,7 @@ class CsvController extends Controller
         $dateFactureEnd = $form->get('date_facture_end')->getData();
         $consultant = $form->get('consultant')->getData();
         $financeur = $form->get('financeur')->getData();
-        $ville = $form->get('ville')->getData();
+        $villeMer = $form->get('ville_mer')->getData();
 
         $numeroFacture = $form->get('numero_facture')->getData();
         $anneeNumeroFacture = $form->get('annee_numero_facture')->getData();
@@ -74,7 +74,7 @@ class CsvController extends Controller
         $beneficiaireGet = $request->get('beneficiaire_ajax');
         $beneficiaire = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $ville);
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer);
         $factures = $query;
 
 //        ici la création du fichier csv

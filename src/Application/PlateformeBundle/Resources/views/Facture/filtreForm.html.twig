@@ -1,4 +1,4 @@
-{% set statut, consultant, dateDebutAccompagnement, dateFinAccompagnement, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur, ville = '', '', '', '', '','','', '', '', '', '', '', '' %}
+{% set statut, consultant, dateDebutAccompagnement, dateFinAccompagnement, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur, villeMer = '', '', '', '', '','','', '', '', '', '', '', '' %}
 
 {% if app.session.get('facture_search').statut is defined %}
     {% set statut = app.session.get('facture_search').statut %}
@@ -39,8 +39,8 @@
 {% if app.session.get('facture_search').financeur is defined %}
     {% set financeur = app.session.get('facture_search').financeur %}
 {% endif %}
-{% if app.session.get('facture_search').ville is defined %}
-    {% set ville = app.session.get('facture_search').ville %}
+{% if app.session.get('facture_search').ville_mer is defined %}
+    {% set villeMer = app.session.get('facture_search').ville_mer %}
 {% endif %}
 
 <form action="{{ path('application_search_facture') }}" method="POST" name="formulaire_filtre_facture">
@@ -111,8 +111,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-1">{{ form_label(form.ville) }}</div>
-        <div class="col-md-2">{{ form_widget(form.ville, {'value' : ville}) }}</div>
+        <div class="col-md-1">{{ form_label(form.ville_mer) }}</div>
+        <div class="col-md-2">{{ form_widget(form.ville_mer, {'value' : villeMer}) }}</div>
         <div class="col-md-1">{{ form_label(form.financeur) }}</div>
         <div class="col-md-2">{{ form_widget(form.financeur, {'value' : financeur}) }}</div>
     </div>
