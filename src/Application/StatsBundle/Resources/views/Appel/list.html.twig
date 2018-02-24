@@ -1,0 +1,34 @@
+<div id="choice_week">
+    <div class="row">
+        <div class="col-xs-2">
+            <a href="{{ before }}">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="col-xs-8 btn-group">
+            <div>
+                <button type="button" class="btn btn-info">
+                    {{ getWeek(numero, annee) }}
+                </button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    {% for semaine in semaines %}
+                        <li>
+                            <a href="{{ path('appel_edit', { 'numero' : semaine.numero , 'annee' : semaine.annee }) }}">
+                                {{ getWeek(semaine.numero, semaine.annee) }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-2">
+            <a href="{{ after }}" {{ (haveAfter == false ) ? 'class="disabled"': '' }}>
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+</div>

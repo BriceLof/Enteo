@@ -388,3 +388,13 @@ function tri(el) {
 $( function() {
     $( "#tabs_mission" ).tabs();
 } );
+
+(function(){
+    function afficheMessageFlash() {
+        var flash = document.getElementById("flashbag");
+        if (flash != undefined) {
+            flash.style.display = 'none';
+        }
+    }
+    setTimeout(afficheMessageFlash,5000);
+})();

@@ -1,0 +1,4 @@
+#feedback
+application_stats_appel:
+    resource: "@ApplicationStatsBundle/Resources/config/routing/appel.yml"
+    prefix:   /appel
