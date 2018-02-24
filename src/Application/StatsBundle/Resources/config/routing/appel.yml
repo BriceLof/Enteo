@@ -1,0 +1,11 @@
+appel_edit:
+    path:     /{numero}/{annee}
+    defaults:
+        _controller: ApplicationStatsBundle:Appel:index
+    options:
+        expose: true
+
+appel_homepage:
+    path:    /
+    defaults:
+        _controller: ApplicationStatsBundle:Appel:index

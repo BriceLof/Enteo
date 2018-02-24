@@ -32,6 +32,25 @@ class DocumentExtension extends \Twig_Extension
         echo $datefr;
     }
 
+    public function jourEnLettre($int){
+        $tab = array(
+            1 => 'Lundi',
+            2 => 'Mardi',
+            3 => 'Mercredi',
+            4 => 'Jeudi',
+            5 => 'Vendredi',
+        );
+        return $tab[$int];
+    }
+
+    public function getWeek($semaine, $annee){
+        $firstDay = (new \DateTime())->setISODate($annee, $semaine);
+        $lastDay = (new \DateTime())->setISODate($annee, $semaine)->modify('+4 day');
+
+        $string = 'du '. $firstDay->format('d/m'). ' au '. $lastDay->format('d/m'). ' '. $annee;
+        return $string;
+    }
+
     public function dateCourtFr($date){
         $Mois = array("","Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
         $datefr = date_format($date, "d")." ".$Mois[date_format($date,"n")]." ".date_format($date, "Y");
@@ -44,6 +63,8 @@ class DocumentExtension extends \Twig_Extension
             new \Twig_SimpleFunction('supprimerDocument', array($this, 'supprimerTwigDocument')),
             new \Twig_SimpleFunction('dateFr', array($this, 'dateFr')),
             new \Twig_SimpleFunction('dateCourtFr', array($this, 'dateCourtFr')),
+            new \Twig_SimpleFunction('jourEnLettre', array($this, 'jourEnLettre')),
+            new \Twig_SimpleFunction('getWeek', array($this, 'getWeek')),
         );
     }
 
