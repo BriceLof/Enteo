@@ -2,7 +2,7 @@
 <div class="modal fade" id="modalPaiement{{ facture.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{ path('application_paiement_facture', { 'id' : facture.id }) }}" method="POST"  >
+            <form action="{{ path('application_paiement_facture', { 'id' : facture.id }) }}" method="POST" id="formulaire_paiement_facture_{{ facture.id }}">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Détail Règlement de la facture N° {{ facture.numero }}</h4>
@@ -28,6 +28,7 @@
                 </div>
                 <input type="hidden" name="montantFacture" class="montantFactureHidden" value="{{ facture.montant }}" >
 
+                {% set montantDejaRegler = 0 %}
                 {% if facture.historiquesPaiement | length > 0 %}
                     <aside style="background-color: #ececec;padding: 4px 10px 10px 10px;width: 80%;margin: auto;border-radius: 2px;margin-bottom: 19px;">
                         <h5 style="text-align:center;color:#428bca;margin-bottom: 16px;">Historique des réglements</h5>
@@ -36,13 +37,17 @@
                             <span class="commentaire" style="display: block;margin-top: -29px;margin-left: 5px;font-size: 11px;color: #891c1c;margin-bottom: 10px;font-style: italic;">
                                 {{ historique.commentaire }}
                             </span>
+                            {% set montantDejaRegler = montantDejaRegler + historique.montant %}
                         {% endfor %}
                     </aside>
                 {% endif %}
+                <input type="hidden" name="montantFactureDejaRegler" class="montantFactureDejaReglerHidden" value="{{ montantDejaRegler }}" >
+
+                <p class="error" style="display:none;text-align:center;color: red;font-size: 13px;">Le montant total réglé est différent de celui de la facture.</p>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    {{ form_widget(form.save) }}
+                    {{ form_widget(form.save, { 'attr' : {'data-form-submit' : "modalPaiement"~facture.id, 'class' : 'submit-form-paiement btn-primary btn'  } }) }}
                 </div>
                 {{ form_rest(form) }}
             </form>

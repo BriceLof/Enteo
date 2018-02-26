@@ -376,8 +376,8 @@ function tri(el) {
                 pagination(parseInt($('#recherche_beneficiaire_page').val()) + 1, $("#ajaxForm"));
             }
         }
-        console.log($(window).height() + $(window).scrollTop())
-        console.log($(document).height())
+        //console.log($(window).height() + $(window).scrollTop())
+        //console.log($(document).height())
     });
 
     $("#excel").click(function () {

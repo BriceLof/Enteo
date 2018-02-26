@@ -21,10 +21,23 @@ $(function () {
         }
     })
 
+    // Vérification que le montant du paiement total soit bien égale à la valeur de la facture
+    $(".submit-form-paiement").click(function(){
+        submit = $(this)
+        controleMontant(submit)
+    })
+
     $(".statutPaiementFacture").change(function () {
         statePaiement = $(this).children("option:selected").val()
+
+        $(".submit-form-paiement").click(function(){
+            submit = $(this)
+            controleMontant(submit)
+        })
+
         paiementFieldShowHidde(statePaiement)
     });
+
     $(".modePaiementFactureField").change(function () {
         modePaiement = $(this).children("option:selected").val()
         if(modePaiement == 'cheque'){
@@ -36,6 +49,13 @@ $(function () {
             $(".banqueFacture").css('display', 'none')
         }
     });
+
+
+
+
+
+
+
     // --------------------------- FIN Page facture : Formulaire de paiement
 
     // --------------------------- Page facture : filtre de recherche
@@ -56,7 +76,7 @@ $(function () {
                     console.log(tab.length)
                     $("#select_beneficiaire_ajax option").remove()
                     for (var i = 0; i < tab.length; i++) {
-                        console.log(tab[i])
+                        c//onsole.log(tab[i])
                         $("#select_beneficiaire_ajax").append("<option value=" + tab[i].id + ">" + tab[i].nom +" "+ tab[i].prenom +"</option>")
                     }
                 });
@@ -83,7 +103,7 @@ $(function () {
         console.log(date)
         if(date.length == 0) {
             $(".dateFactureField").removeAttr('required min max ')
-            console.log("vide")
+            //console.log("vide")
         }
         else{
             $(".dateFactureField").attr('required', 'required')
@@ -92,7 +112,7 @@ $(function () {
             }else{
                 $(".dateFactureStartField").attr('max', date)
             }
-            console.log("pas vide")
+            //console.log("pas vide")
         }
     });
 
@@ -106,7 +126,7 @@ $(function () {
 
 function paiementFieldShowHidde(valeur)
 {
-    console.log(valeur)
+    //console.log(valeur)
     if (valeur == 'paid' || valeur == 'partiel' ) {
         $(".montantPayerFacture").css('display', 'block')
         $(".montantPayerFactureField").attr('required', 'required')
@@ -132,5 +152,25 @@ function paiementFieldShowHidde(valeur)
         $(".commentaireFactureField").removeAttr('required')
         $(".label_commentaire_facture").text("Commentaire")
     }
+}
 
+function controleMontant(submit){
+    modal = $(submit).data("form-submit")
+    statePaiement = $("#" + modal + " .statutPaiementFacture").val()
+    console.log(statePaiement)
+    if(statePaiement == 'paid') {
+        montantSubmit = $("#" + modal + " .montantPayerFactureField").val()
+        if(montantSubmit.indexOf(",") != -1)
+            montantSubmit = montantSubmit.replace(',', '.')
+
+        montantDejaRegler = $("#" + modal + " .montantFactureDejaReglerHidden").val()
+        montantAReglerTotal = $("#" + modal + " .montantFactureHidden").val()
+        console.log(Number(montantSubmit) + Number(montantDejaRegler))
+        if ((Number(montantSubmit) + Number(montantDejaRegler)) != Number(montantAReglerTotal) ) {
+            $("#" + modal + " .error").show()
+            return false
+        }else{
+            $("#" + modal + " .error").hide()
+        }
+    }
 }
