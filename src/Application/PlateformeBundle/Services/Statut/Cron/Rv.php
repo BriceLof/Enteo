@@ -343,13 +343,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     if ($rdv->getSummary() == 'RV1' || $rdv->getSummary() == 'RV2') {
                         $message .= "
                             <div style='margin-left:20px;'>
-                                    - <a href='https://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>
-                                    - <b>Votre attestation du compte DIF/CPF</b> (à demander à votre employeur)<br>";
+                                    - <a href='https://www.entheor.com/files/maquette_cv.docx' alt='CV par compétences vide'><b>CV détaillé</b> (par compétences)</a><br>";
 
                         if ($rdv->getBeneficiaire()->getCsp() != "demandeur d'emploi" && $rdv->getBeneficiaire()->getCsp() != "chef d'entreprise/PL")
                             $message .= "
                                     - <b>Le nom de l'OPCA</b> ( organisme financeur) à demander à votre employeur <br>
-                                    - <b>Votre dernier bulletin de paie</b> ";
+                                    - <b>Votre dernier bulletin de paie</b><br>
+                                    - <b>Votre attestation d'heures DIF</b> (qui vous a été remise par votre employeur en Déc. 2014 ou Janv. 2015 ou qui figure sur vos bulletins de paie de ces mois)<br> ";
                     }
 
                     $message .= "
