@@ -112,7 +112,7 @@
                             <td class="text-left" rowspan="2">Total Semaine</td>
                             <td colspan="6"></td>
                             <td>{{ totalAppelAm + totalAppelPm }}</td>
-                            <td>{{ totalSansReponseAm + totalSansReponseAm }}</td>
+                            <td>{{ totalSansReponseAm + totalSansReponsePm }}</td>
                             <td>{{ totalNbContactAm + totalNbContactPm }}</td>
                             <td>{{ totalNbRdvAm + totalNbRdvPm }}</td>
                             <td></td>
@@ -121,14 +121,14 @@
                             <td colspan="6"></td>
                             <td>100%</td>
                             {% if (totalAppelAm + totalAppelPm) != 0 %}
-                                <td>{{ ((totalSansReponseAm + totalSansReponseAm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
+                                <td>{{ ((totalSansReponseAm + totalSansReponsePm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
                                 <td>{{ ((totalNbContactAm + totalNbContactPm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
                                 <td>{{ ((totalNbRdvAm + totalNbRdvPm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
                                 <td></td>
                             {% else %}
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>0%</td>
+                                <td>0%</td>
+                                <td>0%</td>
                                 <td></td>
                             {% endif %}
                         </tr>

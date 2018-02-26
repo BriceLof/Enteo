@@ -96,7 +96,7 @@ class Semaine{
     {
         $this->appels[] = $appel;
 
-        $appel->setSemaine = $this;
+        $appel->setSemaine($this);
 
         return $this;
     }
