@@ -37,6 +37,7 @@ class AppelController extends Controller
             $mercredi = new Appel();
             $jeudi = new Appel();
             $vendredi = new Appel();
+            $samedi = new Appel();
 
             $semaine = new Semaine();
             $semaine->addAppel($lundi);
@@ -44,6 +45,7 @@ class AppelController extends Controller
             $semaine->addAppel($mercredi);
             $semaine->addAppel($jeudi);
             $semaine->addAppel($vendredi);
+            $semaine->addAppel($samedi);
 
             $edit = false;
         }
@@ -90,7 +92,7 @@ class AppelController extends Controller
             $percentNbRdvPm = $totalNbRdvPm * 100 / $totalAppelPm;
         }
 
-        $lastDay = (new \DateTime())->setISODate($numAnnee, $numSemaine)->modify('+4 day');
+        $lastDay = (new \DateTime())->setISODate($numAnnee, $numSemaine)->modify('+6 day');
 
         if ($edit == true) {
             $form = $this->createForm(AppelSemaineType::class, $semaine, array(

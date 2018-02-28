@@ -39,13 +39,15 @@ class DocumentExtension extends \Twig_Extension
             3 => 'Mercredi',
             4 => 'Jeudi',
             5 => 'Vendredi',
+            6 => 'Samedi',
+            7 => 'dimanche'
         );
         return $tab[$int];
     }
 
     public function getWeek($semaine, $annee){
         $firstDay = (new \DateTime())->setISODate($annee, $semaine);
-        $lastDay = (new \DateTime())->setISODate($annee, $semaine)->modify('+4 day');
+        $lastDay = (new \DateTime())->setISODate($annee, $semaine)->modify('+6 day');
 
         $string = 'du '. $firstDay->format('d/m'). ' au '. $lastDay->format('d/m'). ' '. $annee;
         return $string;
