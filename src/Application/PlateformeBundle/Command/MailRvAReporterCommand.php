@@ -53,7 +53,7 @@ class MailRvAReporterCommand extends ContainerAwareCommand
                     'dossiers_rv_a_reporter_'.(new \DateTime('now'))->format('d_m_y').'.csv',
                     'application/csv'
                 );
-                $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvAReporter($tab,  $attachement);
+                $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvAReporter($tab,  $attachement, $consultant);
             }
         }
     }
