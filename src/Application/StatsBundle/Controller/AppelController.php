@@ -28,9 +28,7 @@ class AppelController extends Controller
             'annee' => $numAnnee
         ));
 
-        if (!is_null($semaine)){
-            $edit = true;
-        }else{
+        if (is_null($semaine)){
 
             $lundi = new Appel();
             $mardi = new Appel();
@@ -46,8 +44,6 @@ class AppelController extends Controller
             $semaine->addAppel($jeudi);
             $semaine->addAppel($vendredi);
             $semaine->addAppel($samedi);
-
-            $edit = false;
         }
         $firstDay = (new \DateTime())->setISODate($numAnnee, $numSemaine);
 
@@ -85,29 +81,26 @@ class AppelController extends Controller
 
         if ($totalAppelAm != 0){
             $percentSansReponseAm = $totalSansReponseAm * 100 / $totalAppelAm;
-            $percentSansReponsePm = $totalSansReponsePm * 100 / $totalAppelPm;
             $percentNbContactAm = $totalNbContactAm * 100 / $totalAppelAm;
-            $percentNbContactPm = $totalNbContactPm * 100 / $totalAppelPm;
             $percentNbRdvAm = $totalNbRdvAm * 100 / $totalAppelAm;
+        }
+
+        if ($totalAppelPm != 0){
+            $percentSansReponsePm = $totalSansReponsePm * 100 / $totalAppelPm;
+            $percentNbContactPm = $totalNbContactPm * 100 / $totalAppelPm;
             $percentNbRdvPm = $totalNbRdvPm * 100 / $totalAppelPm;
         }
 
         $lastDay = (new \DateTime())->setISODate($numAnnee, $numSemaine)->modify('+6 day');
 
-        if ($edit == true) {
-            $form = $this->createForm(AppelSemaineType::class, $semaine, array(
-                'action' => $this->generateUrl('appel_edit', array(
-                    'numero' => $numSemaine,
-                    'annee' => $numAnnee
-                )),
-                'method' => 'post'
-            ));
-        }else {
-            $form = $this->createForm(AppelSemaineType::class, $semaine, array(
-                'action' => $this->generateUrl('appel_homepage'),
-                'method' => 'post'
-            ));
-        }
+        $form = $this->createForm(AppelSemaineType::class, $semaine, array(
+            'action' => $this->generateUrl('appel_edit', array(
+                'numero' => $numSemaine,
+                'annee' => $numAnnee
+            )),
+            'method' => 'post'
+        ));
+
         $form->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
 
 
