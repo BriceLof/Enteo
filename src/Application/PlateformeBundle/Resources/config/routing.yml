@@ -43,10 +43,6 @@ application_plateforme_csv:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/csv.yml"
     prefix:   /csv
 
-#ressource partage
-application_plateforme_ressource:
-    resource: "@ApplicationPlateformeBundle/Resources/config/routing/ressource.yml"
-    prefix:   /ressource
 
 #calendar
 application_plateforme_calendar:
