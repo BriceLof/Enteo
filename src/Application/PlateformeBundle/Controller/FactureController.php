@@ -263,7 +263,6 @@ class FactureController extends Controller
 
             $facture = $form->getData();
             $em->persist($facture);
-var_dump($facture->getMontantPayer());
             $historique = new HistoriquePaiementFacture();
             $historique->setFacture($facture);
             $historique->setStatut($facture->getStatut());
