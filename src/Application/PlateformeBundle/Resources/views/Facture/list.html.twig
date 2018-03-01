@@ -75,12 +75,15 @@
                                 {% endif %}
                                 <td>{{ etat }}</td>
                                 <td><a href="#" title="Modifier le statut de paiement" data-toggle="modal" data-target="#modalPaiement{{ facture.id }}" class="lienModalPaiement">{{ facture.statut | capitalize }}</a></td>
-                                {{ render(controller("ApplicationPlateformeBundle:Facture:paiement", {'id': facture.id} )) }}
                                 <!--<td><a href="{{ path("application_show_facture", {'numero' : facture.numero }) }}" title="Afficher facture" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a></td>-->
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
+                    {#Je sors la modal du <table> car sinon les element du form seront en dehors de la balise form#}
+                    {% for facture in factures %}
+                         {{ render(controller("ApplicationPlateformeBundle:Facture:paiement", {'id': facture.id} )) }}
+                    {% endfor %}
                 </div>
             </div>
         </div>

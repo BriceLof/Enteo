@@ -2,7 +2,7 @@ $(function () {
     $(".tablesorter").tablesorter({
         dateFormat : "ddmmyyyy"
     });
-
+    
     // --------------------------- FIN Page facture : Formulaire de paiement
     $(".lienModalPaiement").click(function(){
         nomLien = $(this).attr("data-target")
@@ -22,19 +22,21 @@ $(function () {
     })
 
     // Vérification que le montant du paiement total soit bien égale à la valeur de la facture
-    $(".submit-form-paiement").click(function(){
-        submit = $(this)
-        controleMontant(submit)
+    $(".formulaire_paiement_facture").submit(function(event){
+        form = $(this)
+        form.find(".error").hide()
+        val = controleMontant(form)
+        // si montant total n'est pas valide, on ne submit pas le form
+        if(val == false){
+            event.preventDefault();
+        }else{
+            // Bloquer les multiples submit de form durant le submitting
+            $("button[type='submit']", this).attr('disabled', 'disabled');
+        }
     })
 
     $(".statutPaiementFacture").change(function () {
         statePaiement = $(this).children("option:selected").val()
-
-        $(".submit-form-paiement").click(function(){
-            submit = $(this)
-            controleMontant(submit)
-        })
-
         paiementFieldShowHidde(statePaiement)
     });
 
@@ -49,6 +51,7 @@ $(function () {
             $(".banqueFacture").css('display', 'none')
         }
     });
+
 
 
 
@@ -122,6 +125,15 @@ $(function () {
         //document.search_beneficiaire.action = Routing.generate('application_search_beneficiaire', {'page': 1});
     })
     // --------------------------- FIN Page facture : filtre de recherche
+
+
+
+    // Durant le submit d'un formulaire, desactive le bouton de submit pour eviter des multiples submit
+    // $('form').submit(function()
+    // {
+    //     $("button[type='submit']", this).attr('disabled', 'disabled');
+    //     return true;
+    // });
 });
 
 function paiementFieldShowHidde(valeur)
@@ -154,23 +166,31 @@ function paiementFieldShowHidde(valeur)
     }
 }
 
-function controleMontant(submit){
-    modal = $(submit).data("form-submit")
-    statePaiement = $("#" + modal + " .statutPaiementFacture").val()
-    console.log(statePaiement)
-    if(statePaiement == 'paid') {
-        montantSubmit = $("#" + modal + " .montantPayerFactureField").val()
-        if(montantSubmit.indexOf(",") != -1)
-            montantSubmit = montantSubmit.replace(',', '.')
+function controleMontant(form){
+    statePaiement = form.find(".statutPaiementFacture").val()
+    montantSubmit = form.find(".montantPayerFactureField").val()
+    if(montantSubmit.indexOf(",") != -1)
+         montantSubmit = montantSubmit.replace(',', '.')
 
-        montantDejaRegler = $("#" + modal + " .montantFactureDejaReglerHidden").val()
-        montantAReglerTotal = $("#" + modal + " .montantFactureHidden").val()
-        console.log(Number(montantSubmit) + Number(montantDejaRegler))
-        if ((Number(montantSubmit) + Number(montantDejaRegler)) != Number(montantAReglerTotal) ) {
-            $("#" + modal + " .error").show()
-            return false
+    montantDejaRegler = form.find(".montantFactureDejaReglerHidden").val()
+    montantAReglerTotal = form.find(".montantFactureHidden").val()
+    valid = true
+    if(statePaiement == 'paid') {
+        if ((Number(montantSubmit) + Number(montantDejaRegler)) != Number(montantAReglerTotal)) {
+            form.find(".error").html("Le montant total réglé est différent du montant de la facture").show()
+            valid = false;
         }else{
-            $("#" + modal + " .error").hide()
+            form.find(".error").hide()
         }
     }
+    else if(statePaiement == 'partiel'){
+        if ((Number(montantSubmit) + Number(montantDejaRegler)) > Number(montantAReglerTotal) ) {
+            form.find(".error").html("Le montant total réglé est supérieur au montant de la facture").show()
+            valid = false;
+        }else{
+            form.find(".error").hide()
+        }
+    }
+    return valid
 }
+
