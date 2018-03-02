@@ -1,4 +1,4 @@
-{% set statut, consultant, dateDebutAccompagnement, dateFinAccompagnement, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur, villeMer = '', '', '', '', '','','', '', '', '', '', '', '' %}
+{% set statut, consultant, beneficiaire, dateDebutAccompagnement, dateFinAccompagnement, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur, villeMer = '', '', '', '', '', '','','', '', '', '', '', '', '' %}
 
 {% if app.session.get('facture_search').statut is defined %}
     {% set statut = app.session.get('facture_search').statut %}
@@ -9,29 +9,29 @@
 {% endif %}
 
 {% if app.session.get('facture_search').date_debut_accompagnement is defined %}
-    {% set dateDebutAccompagnement = app.session.get('facture_search').date_debut_accompagnement | date('Y-m-d') %}
+    {% set dateDebutAccompagnement = app.session.get('facture_search').date_debut_accompagnement  %}
 {% endif %}
 {% if app.session.get('facture_search').date_fin_accompagnement is defined %}
-    {% set dateFinAccompagnement = app.session.get('facture_search').date_fin_accompagnement | date('Y-m-d') %}
+    {% set dateFinAccompagnement = app.session.get('facture_search').date_fin_accompagnement %}
 {% endif %}
 
 {% if app.session.get('facture_search').date_debut_accompagnement_start is defined %}
-    {% set dateDebutAccompagnementStart = app.session.get('facture_search').date_debut_accompagnement_start | date('Y-m-d') %}
+    {% set dateDebutAccompagnementStart = app.session.get('facture_search').date_debut_accompagnement_start  %}
 {% endif %}
 {% if app.session.get('facture_search').date_debut_accompagnement_end is defined %}
-    {% set dateDebutAccompagnementEnd = app.session.get('facture_search').date_debut_accompagnement_end | date('Y-m-d') %}
+    {% set dateDebutAccompagnementEnd = app.session.get('facture_search').date_debut_accompagnement_end  %}
 {% endif %}
 {% if app.session.get('facture_search').date_fin_accompagnement_start is defined %}
-    {% set dateFinAccompagnementStart = app.session.get('facture_search').date_fin_accompagnement_start | date('Y-m-d') %}
+    {% set dateFinAccompagnementStart = app.session.get('facture_search').date_fin_accompagnement_start  %}
 {% endif %}
 {% if app.session.get('facture_search').date_fin_accompagnement_end is defined %}
-    {% set dateFinAccompagnementEnd = app.session.get('facture_search').date_fin_accompagnement_end | date('Y-m-d') %}
+    {% set dateFinAccompagnementEnd = app.session.get('facture_search').date_fin_accompagnement_end  %}
 {% endif %}
 {% if app.session.get('facture_search').date_facture_start is defined %}
-    {% set dateFactureStart = app.session.get('facture_search').date_facture_start | date('Y-m-d') %}
+    {% set dateFactureStart = app.session.get('facture_search').date_facture_start  %}
 {% endif %}
 {% if app.session.get('facture_search').date_facture_end is defined %}
-    {% set dateFactureEnd = app.session.get('facture_search').date_facture_end | date('Y-m-d') %}
+    {% set dateFactureEnd = app.session.get('facture_search').date_facture_end  %}
 {% endif %}
 {% if app.session.get('facture_search').numero_facture is defined %}
     {% set numFacture = app.session.get('facture_search').numero_facture %}
@@ -107,6 +107,11 @@
                 <div class="col-md-4">{{ form_widget(form.beneficiaire) }}</div><div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                 <div class="col-md-4">
                     <select id="select_beneficiaire_ajax" name="beneficiaire_ajax" class="form-control" style="position: absolute" >
+                        {% if app.session.get('facture_search').beneficiaire is defined and app.session.get('facture_search').beneficiaire is not null  %}
+                            {% set beneficiaire = app.session.get('facture_search').beneficiaire %}
+                            <option value="null" >Sélectionner</option>
+                            <option selected value="{{ beneficiaire.id }}">{{ beneficiaire.nomConso | upper ~" "~beneficiaire.prenomConso | capitalize }}</option>
+                        {% endif %}
                     </select>
                 </div>
             </div>

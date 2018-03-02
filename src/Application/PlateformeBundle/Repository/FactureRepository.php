@@ -57,25 +57,25 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
 
         if(!is_null($dateDebutAccompagnement) && !is_null($dateFinAccompagnement)){
             $queryBuilder->andWhere("f.dateDebutAccompagnement >= :dateDebutAccompagnement AND f.dateFinAccompagnement <= :dateFinAccompagnement");
-            $arrayParameters['dateDebutAccompagnement'] = $dateDebutAccompagnement->format('Y-m-d');
-            $arrayParameters['dateFinAccompagnement'] = $dateFinAccompagnement->format('Y-m-d');
+            $arrayParameters['dateDebutAccompagnement'] = $dateDebutAccompagnement;
+            $arrayParameters['dateFinAccompagnement'] = $dateFinAccompagnement;
         }
 
         if(!is_null($dateDebutAccompagnementStart) && !is_null($dateDebutAccompagnementEnd)){
             $queryBuilder->andWhere("f.dateDebutAccompagnement >= :dateDebutAccompagnementStart AND f.dateDebutAccompagnement <= :dateDebutAccompagnementEnd");
-            $arrayParameters['dateDebutAccompagnementStart'] = $dateDebutAccompagnementStart->format('Y-m-d');
-            $arrayParameters['dateDebutAccompagnementEnd'] = $dateDebutAccompagnementEnd->format('Y-m-d');
+            $arrayParameters['dateDebutAccompagnementStart'] = $dateDebutAccompagnementStart;
+            $arrayParameters['dateDebutAccompagnementEnd'] = $dateDebutAccompagnementEnd;
         }
         if(!is_null($dateFinAccompagnementStart) && !is_null($dateFinAccompagnementEnd)){
             $queryBuilder->andWhere("f.dateFinAccompagnement >= :dateFinAccompagnementStart AND f.dateFinAccompagnement <= :dateFinAccompagnementEnd");
-            $arrayParameters['dateFinAccompagnementStart'] = $dateFinAccompagnementStart->format('Y-m-d');
-            $arrayParameters['dateFinAccompagnementEnd'] = $dateFinAccompagnementEnd->format('Y-m-d');
+            $arrayParameters['dateFinAccompagnementStart'] = $dateFinAccompagnementStart;
+            $arrayParameters['dateFinAccompagnementEnd'] = $dateFinAccompagnementEnd;
         }
 
         if(!is_null($dateFactureStart) && !is_null($dateFactureEnd)){
             $queryBuilder->andWhere("f.date >= :dateFactureStart AND f.date <= :dateFactureEnd");
-            $arrayParameters['dateFactureStart'] = $dateFactureStart->format('Y-m-d');
-            $arrayParameters['dateFactureEnd'] = $dateFactureEnd->format('Y-m-d');
+            $arrayParameters['dateFactureStart'] = $dateFactureStart;
+            $arrayParameters['dateFactureEnd'] = $dateFactureEnd;
         }
 
         if(!is_null($consultant)){

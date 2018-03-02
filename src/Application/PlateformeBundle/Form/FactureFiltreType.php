@@ -3,7 +3,6 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\AbstractType;
@@ -58,79 +57,53 @@ class FactureFiltreType extends AbstractType
                     'class' => 'statutPaiementFacture'
                 )
             ))
-            ->add('date_debut_accompagnement_start', DateType::class, array(
-                'label' => 'Début accompagnement ',
-                'widget' => 'single_text',
-                'html5' => true,
-                'mapped' => false,
+
+            ->add('date_debut_accompagnement_start', TextType::class, array(
+                'label' => 'Début accompagnement',
                 'required' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
-                )
+                'mapped' => false,
+                'attr' => array('class' => 'datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
-            ->add('date_debut_accompagnement_end', DateType::class, array(
-                'label' => 'Début accompagnement ',
-                'widget' => 'single_text',
-                'html5' => true,
-                'mapped' => false,
+            ->add('date_debut_accompagnement_end', TextType::class, array(
+                'label' => 'Début accompagnement',
                 'required' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
-                )
+                'mapped' => false,
+                'attr' => array('class' => 'datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
 
-            ->add('date_fin_accompagnement_start', DateType::class, array(
-                'label' => 'Fin accompagnement ',
-                'widget' => 'single_text',
-                'html5' => true,
-                'mapped' => false,
+            ->add('date_fin_accompagnement_start', TextType::class, array(
+                'label' => 'Fin accompagnement',
                 'required' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
-                )
-            ))
-            ->add('date_fin_accompagnement_end', DateType::class, array(
-                'label' => 'Fin accompagnement ',
-                'widget' => 'single_text',
-                'html5' => true,
                 'mapped' => false,
-                'required' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
-                )
+                'attr' => array('class' => 'datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
-            ->add('date_facture_start', DateType::class, array(
+            ->add('date_fin_accompagnement_end', TextType::class, array(
+                'label' => 'Fin accompagnement',
+                'required' => false,
+                'mapped' => false,
+                'attr' => array('class' => 'datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
+            ))
+
+
+            ->add('date_facture_start', TextType::class, array(
                 'label' => 'Date facture',
-                'widget' => 'single_text',
-                'html5' => true,
                 'required' => false,
                 'mapped' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => 'dateFactureField dateFactureStartField'
-                )
+                'attr' => array('class' => 'dateFactureField dateFactureStartField datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
-            ->add('date_facture_end', DateType::class, array(
+            ->add('date_facture_end', TextType::class, array(
                 'label' => 'Date facture',
-                'widget' => 'single_text',
-                'html5' => true,
                 'required' => false,
                 'mapped' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => 'dateFactureField dateFactureEndField'
-                )
+                'attr' => array('class' => 'dateFactureField dateFactureEndField datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
+
             ->add('numero_facture', TextType::class, array(
                 'label' => 'N° facture',
                 'required' => false,
@@ -169,30 +142,22 @@ class FactureFiltreType extends AbstractType
                     'placeholder' => 'Entrer une ville'
                 ),
             ))
-            ->add('date_debut_accompagnement', DateType::class, array(
+
+            ->add('date_debut_accompagnement', TextType::class, array(
                 'label' => 'Début et fin accompagnement',
-                'widget' => 'single_text',
-                'html5' => true,
-                'mapped' => false,
                 'required' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
-                )
+                'mapped' => false,
+                'attr' => array('class' => 'datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
-            ->add('date_fin_accompagnement', DateType::class, array(
+            ->add('date_fin_accompagnement', TextType::class, array(
                 'label' => 'Début et fin accompagnement',
-                'widget' => 'single_text',
-                'html5' => true,
-                'mapped' => false,
                 'required' => false,
-                //'format' => 'dd/MM/yyyy',
-                'attr' => array(
-                    'placeholder' => 'JJ/MM/AAAA',
-                    'class' => ' '
-                )
+                'mapped' => false,
+                'attr' => array('class' => 'datepicker',
+                    'placeholder' => 'JJ/MM/AAAA'),
             ))
+
             ->add('filtrer', SubmitType::class, array(
                 'label' => "Filtrer",
                 'attr' => array('class' => 'btn  btn-primary'),

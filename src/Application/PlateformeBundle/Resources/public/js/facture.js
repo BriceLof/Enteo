@@ -2,7 +2,7 @@ $(function () {
     $(".tablesorter").tablesorter({
         dateFormat : "ddmmyyyy"
     });
-    
+
     // --------------------------- FIN Page facture : Formulaire de paiement
     $(".lienModalPaiement").click(function(){
         nomLien = $(this).attr("data-target")
@@ -51,17 +51,39 @@ $(function () {
             $(".banqueFacture").css('display', 'none')
         }
     });
-
-
-
-
-
-
-
-
     // --------------------------- FIN Page facture : Formulaire de paiement
 
     // --------------------------- Page facture : filtre de recherche
+
+    // -------- Gestion des datepicker --------
+    $( ".datepicker" ).datepicker({
+        dateFormat : 'dd/mm/yy',
+        monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" ],
+        dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+        dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ]
+    });
+    // Tranforme date version EN vers FR pour l'affichage
+    $( ".datepicker" ).each(function(){
+        if($(this).val().length > 0){
+            dateEn = $(this).val()
+            dateSplit = dateEn.split("-")
+            dateFr = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0]
+            $(this).val(dateFr)
+        }
+    })
+    // Tranforme date version FR vers EN pour la bdd
+    $("form[name='formulaire_filtre_facture']").submit(function () {
+        $( ".datepicker" ).each(function(){
+            if($(this).val().length > 0){
+                dateFr = $(this).val()
+                dateSplit = dateFr.split("/")
+                dateEn = dateSplit[2]+"-"+dateSplit[1]+"-"+dateSplit[0]
+                $(this).val(dateEn)
+            }
+        })
+    })
+    //-------- FIN Gestion des datepicker --------
+
     $(".beneficiaireSearchFactureField").keyup(function () {
         nom = $(this).val();
         if (nom.length >= 3) {
@@ -79,7 +101,6 @@ $(function () {
                     console.log(tab.length)
                     $("#select_beneficiaire_ajax option").remove()
                     for (var i = 0; i < tab.length; i++) {
-                        c//onsole.log(tab[i])
                         $("#select_beneficiaire_ajax").append("<option value=" + tab[i].id + ">" + tab[i].nom +" "+ tab[i].prenom +"</option>")
                     }
                 });
@@ -103,10 +124,8 @@ $(function () {
     // Gestion des dates debut et fin, pour que les 2 champs soient obligatoires, si l'un est rempli
     $(".dateFactureField").change(function () {
         date = $(this).val();
-        console.log(date)
         if(date.length == 0) {
             $(".dateFactureField").removeAttr('required min max ')
-            //console.log("vide")
         }
         else{
             $(".dateFactureField").attr('required', 'required')
@@ -115,25 +134,15 @@ $(function () {
             }else{
                 $(".dateFactureStartField").attr('max', date)
             }
-            //console.log("pas vide")
         }
     });
 
     $("#export_csv_facture").click(function () {
         document.formulaire_filtre_facture.action = Routing.generate('application_csv_getListFacture');
         document.formulaire_filtre_facture.submit();
-        //document.search_beneficiaire.action = Routing.generate('application_search_beneficiaire', {'page': 1});
     })
     // --------------------------- FIN Page facture : filtre de recherche
 
-
-
-    // Durant le submit d'un formulaire, desactive le bouton de submit pour eviter des multiples submit
-    // $('form').submit(function()
-    // {
-    //     $("button[type='submit']", this).attr('disabled', 'disabled');
-    //     return true;
-    // });
 });
 
 function paiementFieldShowHidde(valeur)
