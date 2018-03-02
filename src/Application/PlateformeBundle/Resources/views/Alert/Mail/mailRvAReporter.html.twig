@@ -11,7 +11,11 @@
     {% endif %}
     <br>
     {% for new in news %}
-        <p style='margin-left:10px;'>&bull; {{ new.beneficiaire.civiliteConso|capitalize~' '~new.beneficiaire.prenomConso|capitalize~' '~new.beneficiaire.nomConso|capitalize~' - '~new.detailStatut.detail }}  </p>
+        <p style='margin-left:10px;'>&bull;
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  new.beneficiaire.id }}">
+                {{ new.beneficiaire.civiliteConso|capitalize~' '~new.beneficiaire.prenomConso|capitalize~' '~new.beneficiaire.nomConso|capitalize}}
+            </a> - {{ new.detailStatut.detail }}
+        </p>
     {% endfor %}
     <br>
     <br>
