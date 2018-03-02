@@ -1,7 +1,7 @@
 {% extends "::mail/layout.html.twig" %}
 {% block ref %}{{ reference }}{% endblock %}
 {% block contentMail %}
-    Bonjour {{ consultant.prenom|capitalize~" "~consultant.nom|upper }},
+    Bonjour Audrey,
     <br>
     <br>
     {% if news|length > 1 %}

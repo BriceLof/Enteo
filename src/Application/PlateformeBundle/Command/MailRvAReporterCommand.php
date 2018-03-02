@@ -22,8 +22,8 @@ class MailRvAReporterCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $consultants = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
+        $tab = array();
         foreach ($consultants as $consultant) {
-            $tab = array();
 
             $beneficiaires = $consultant->getBeneficiaire();
             foreach ($beneficiaires as $beneficiaire) {
@@ -40,21 +40,21 @@ class MailRvAReporterCommand extends ContainerAwareCommand
                     }
                 }
             }
+        }
 
-            if (!empty($tab)){
-                usort($tab, function($a, $b) {
-                    if ($a->getDateHeure() == $b->getDateHeure()) {
-                        return 0;
-                    }
-                    return $a->getDateHeure() > $b->getDateHeure() ? -1 : 1;
-                });
-                $attachement = new \Swift_Attachment(
-                    $this->getContainer()->get('application_plateforme.csv')->getCvsForMailNews($tab),
-                    'dossiers_rv_a_reporter_'.(new \DateTime('now'))->format('d_m_y').'.csv',
-                    'application/csv'
-                );
-                $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvAReporter($tab,  $attachement, $consultant);
-            }
+        if (!empty($tab)){
+            usort($tab, function($a, $b) {
+                if ($a->getDateHeure() == $b->getDateHeure()) {
+                    return 0;
+                }
+                return $a->getDateHeure() > $b->getDateHeure() ? -1 : 1;
+            });
+            $attachement = new \Swift_Attachment(
+                $this->getContainer()->get('application_plateforme.csv')->getCvsForMailNews($tab),
+                'dossiers_rv_a_reporter_'.(new \DateTime('now'))->format('d_m_y').'.csv',
+                'application/csv'
+            );
+            $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvAReporter($tab,  $attachement);
         }
     }
 }

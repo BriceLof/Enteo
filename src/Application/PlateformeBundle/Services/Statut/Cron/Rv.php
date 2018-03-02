@@ -220,13 +220,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 //        $this->sendMessage($from,"support.informatique@entheor.com", $replyTo, null,null,$subject,$body);
     }
 
-    public function mailRvAReporter($news, $attachement, $consultant){
+    public function mailRvAReporter($news, $attachement){
         $ref = "rv-reporter";
         $from = "christine.clementmolier@entheor.com";
         $replyTo = "christine.clementmolier@entheor.com";
         $subject = "Suivi des Rendez-Vous à reporter et no show de S-1 ( du ".(new \DateTime('now'))->modify('-7 day')->format('d/m/Y')." au ". (new \DateTime('now'))->format('d/m/Y') ." )";
         $template = '@Apb/Alert/Mail/mailRvAReporter.html.twig';
-        $to =  $consultant->getEmail();
+        $to =  array("audrey.azoulay@entheor.com" => "Audrey AZOULAY");
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "contact@entheor.com" => "Contact ENTHEOR",
@@ -234,7 +234,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $body = $this->templating->render($template, array(
             'news' => $news,
             'reference' => $ref,
-            'consultant' => $consultant
         ));
         $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body,$attachement);
 //        $this->sendMessage($from, 'support.informatique@entheor.com',null, null, null, $subject, $body, $attachement);
