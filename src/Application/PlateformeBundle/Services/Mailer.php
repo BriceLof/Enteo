@@ -40,7 +40,7 @@ class Mailer
         if (!empty($attachement)){
             $mail->attach($attachement);
         }
-       
+
         $mail
             ->setFrom($from)
             ->setTo($to)
