@@ -26,7 +26,7 @@ class Mailer
         $this->date = $date;
     }
 
-    protected function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
+    public function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
         $mail = \Swift_Message::newInstance();
 
         if(!empty($replyTo))
@@ -40,11 +40,12 @@ class Mailer
         if (!empty($attachement)){
             $mail->attach($attachement);
         }
+       
         $mail
             ->setFrom($from)
             ->setTo($to)
-            ->setBody($body)
-            ->setContentType('text/html');
+            ->setBody($body, 'text/html')
+            ->addPart(strip_tags($body), 'text/plain');
 
         $this->mailer->send($mail);
     }
