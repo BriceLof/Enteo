@@ -17,17 +17,25 @@ class Mailer
     protected $from = "admin@entheor.com";
     protected $reply = "";
     protected $name = "Equipe Entheo";
+    protected $webDirectory;
     
-    public function __construct(\Swift_Mailer $mailer , EngineInterface $templating, EntityManager $em, Date $date)
+    public function __construct(\Swift_Mailer $mailer , EngineInterface $templating, EntityManager $em, Date $date, $webDirectory)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->em = $em;
         $this->date = $date;
+        $this->webDirectory = $webDirectory;
     }
 
     public function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
+
         $mail = \Swift_Message::newInstance();
+
+        //---- DKIM
+        $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
+        $signer = new \Swift_Signers_DKIMSigner($privateKey, $_SERVER['HTTP_HOST'], 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
+        $mail->attachSigner($signer);
 
         if(!empty($replyTo))
             $mail->setReplyTo($replyTo);

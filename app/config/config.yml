@@ -9,6 +9,7 @@ parameters:
     locale: fr
     avatars_directory: '%kernel.root_dir%/web/uploads/avatars'
     export_csv_directory: '%kernel.root_dir%/../web/export/csv'
+    web_directory: '%kernel.root_dir%/../web/'
 
 
 framework:
