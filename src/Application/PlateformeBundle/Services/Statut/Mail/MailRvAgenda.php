@@ -175,7 +175,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 
         //expediteur RV1 RV2
         if ($type == 'RV1' || $type == 'RV2'){
-            $from = "audrey.azoulay@entheor.com";
+            $from = "contact@entheor.com";
             $cc = array($consultant->getEmail());
             $bool = true;
             $reference = '7a' ;

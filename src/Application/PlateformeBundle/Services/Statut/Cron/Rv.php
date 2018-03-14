@@ -279,7 +279,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             {
                 if ($rdv->getCanceled() === 1 or $rdv->getCanceled() === 2) {
                 }else {
-                    $from = "audrey.azoulay@entheor.com";
+                    $from = "contact@entheor.com";
                     $consultant = $rdv->getConsultant();
                     $tabConsultant[] = $rdv->getConsultant()->getId();
                     $dateRdv = $rdv->getDateDebut();
@@ -386,7 +386,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $rdvConsultant = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDateAndConsultant($dateMoreOneDay, $consultant_id); 
                 
                 $ref = "1-c";
-                $from = "audrey.azoulay@entheor.com";
+                $from = "contact@entheor.com";
                 $to = $rdvConsultant[0]->getConsultant()->getEmail();
 				//$to = "b.lof@iciformation.fr";
                 $cc = "";
