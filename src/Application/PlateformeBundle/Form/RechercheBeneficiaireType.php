@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Doctrine\ORM\EntityRepository;
 
 class RechercheBeneficiaireType extends AbstractType
@@ -100,6 +101,12 @@ class RechercheBeneficiaireType extends AbstractType
 
             ->add('refFinanceur', TextType::class, array(
                 'label' => 'Réf. Financeur',
+                'required' => false,
+            ))
+
+            ->add('cacher', CheckboxType::class, array(
+                "mapped" => false,
+                'label'    => 'Ne pas afficher les Bénéficiaires en Statut Abandon, Reporté, Terminé',
                 'required' => false,
             ))
 

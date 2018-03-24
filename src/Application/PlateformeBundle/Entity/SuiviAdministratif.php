@@ -198,4 +198,16 @@ class SuiviAdministratif
     {
         return $this->info;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function enableBeneficiaire()
+    {
+        if ($this->statut->getId() == 11 || $this->statut->getId() == 12 || $this->statut->getId() == 13){
+            $this->getBeneficiaire()->setDeleted(true);
+        }else{
+            $this->getBeneficiaire()->setDeleted(false);
+        }
+    }
 }

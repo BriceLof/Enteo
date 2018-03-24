@@ -8,17 +8,24 @@
             {% set style = "display:none" %}
          	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %} {% set style = "display:block" %} {% endif %}
             <span style="{{ style }}" class="col-md-2">{{ form_widget(form.consultant) }}</span>
-            <div class="col-md-6">
+            <div class="col-md-6" style="{{ style }}">
                 <div class="row">
-                    <span class="col-md-5" style="{{ style }}">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
+                    <span class="col-md-5">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
                     <span class="col-md-2">{{ form_widget(form.complementStatut) }}</span>
-                    <span class="col-md-5" style="{{ style }}">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
+                    <span class="col-md-5">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
                 </div>
             </div>
 			<div class="moreFilterSearch" style="display:none;margin-top: 42px;">
 				<span class="col-md-2" style="{{ style }}">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
             	<span class="col-md-2">{{ form_widget(form.ville, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
                 <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
+            </div>
+            <div class="moreFilterSearch text-left" style="display:none;margin-top: 42px;">
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                <span class="col-md-12">{{ form_widget(form.cacher) }}</span>
+            {% else %}
+                <span class="col-md-12">{{ form_widget(form.cacher, { 'attr': {'checked': 'checked'} }) }}</span>
+            {% endif %}
             </div>
         </div>
         <div class="row" style="margin-top:12px;margin-right: -2px;">

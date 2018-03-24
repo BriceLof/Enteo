@@ -79,9 +79,6 @@ class HomeController extends Controller
                 $em->persist($news);
                 $em->flush();
 
-                //recuperation du bénéficiaire
-                $beneficiaire = $repository_beneficiaire->findOneById($beneficiaire_id);
-
                 $template = $this->forward('ApplicationPlateformeBundle:Home:infoBeneficiaire', (array('beneficiaire' => $beneficiaire)))->getContent();
                 $json = json_encode($template);
                 $response = new Response($json, 200);
@@ -132,7 +129,7 @@ class HomeController extends Controller
                 //var_dump($beneficiaires);
             } // CONSULTANT
             else {
-                $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage, $this->getUser()->getId());
+                $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage, $this->getUser()->getId(), true);
                 $nombreBeneficiaire = count($beneficiaires);
                 //$this->getUser()->getBeneficiaire();
                 if (count($beneficiaires) == 0) {

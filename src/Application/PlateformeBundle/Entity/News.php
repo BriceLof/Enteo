@@ -175,6 +175,12 @@ class News
         if($this->statut->getSlug() == "telephone" OR $this->statut->getSlug() == "rv1-a-faire" OR $this->statut->getSlug() == "rv2-a-faire" OR $this->statut->getSlug() == "abandon"
                 OR $this->statut->getSlug() == "reporte" OR $this->statut->getSlug() == "termine")
             $this->getBeneficiaire()->increaseNbAppelTel();
+
+        if ($this->statut->getId() == 11 || $this->statut->getId() == 12 || $this->statut->getId() == 13){
+            $this->getBeneficiaire()->setDeleted(true);
+        }else{
+            $this->getBeneficiaire()->setDeleted(false);
+        }
     }
     
     
