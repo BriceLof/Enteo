@@ -88,20 +88,28 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         $results = $query->getResult();
         return $results;
     }
+
     /**
-     * retourne les bénéficiaires correspondant aux conditions qui sont mis en parametre
-     *
      * @param Beneficiaire $beneficiaire
      * @param $debut
      * @param $fin
      * @param null $idUtilisateur
      * @param bool $bool
-     * @param $tri
-     * @param $ville
-     * @return \Doctrine\ORM\NativeQuery
+     * @param int $tri
+     * @param null $ville
+     * @param null $detailStatut
+     * @param null $complementStatut
+     * @return mixed
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $detailStatut = null)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null,$statut = null, $detailStatut = null, $complementStatut = null)
     {
+        $idsAd = array(7,8,9,10,14);
+        $type = 'news';
+        if (in_array($statut->getId(),$idsAd)){
+            $type = 'suiviAdministratif';
+        }
+
+
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
         if(!is_null($ville)) {
@@ -114,9 +122,14 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         $query = 'SELECT b.* FROM beneficiaire b';
         $params = array();
 		
-		if(!is_null($detailStatut)) {
-            $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
-			$params['beneficiaire_id'] = $detailStatut->getId();
+		if(!is_null($detailStatut) || !is_null($statut)) {
+		    if ($type == 'news'){
+                $query .= ' INNER JOIN news n ON b.id = n.beneficiaire_id';
+                $params['beneficiaire_id'] = $detailStatut->getId();
+            }elseif($type == 'suiviAdministratif'){
+                $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
+                $params['beneficiaire_id'] = $detailStatut->getId();
+            }
         }
 		
         if(!is_null($ville)) {
@@ -126,14 +139,43 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query .= ' WHERE 1';
 
+        if(!is_null($complementStatut) && $complementStatut == "="){
+            if ($type == 'news'){
+                $query .= ' AND n.id = (SELECT MAX(id)
+                                         FROM news 
+                                         WHERE beneficiaire_id = b.id
+                                         AND detail_statut_id IS NOT NULL)';
+            }elseif ($type == 'suiviAdministratif'){
+                $query .= ' AND sa.id = (SELECT MAX(id)
+                                         FROM suivi_administratif 
+                                         WHERE beneficiaire_id = b.id
+                                         AND detail_statut_id IS NOT NULL)';
+            }
+        }
+
         if(!is_null($ville)) {
             $query .= ' AND v.ville LIKE :villeNom';
             $params['villeNom'] = '%'.$ville.'%';
         }
 		
 		if(!is_null($detailStatut)) {
-            $query .= ' AND sa.detail_statut_id = :detailStatut';
-            $params['detailStatut'] = $detailStatut->getId();
+            if ($type == 'news'){
+                $query .= ' AND n.detail_statut_id = :detailStatut';
+                $params['detailStatut'] = $detailStatut->getId();
+            }else{
+                $query .= ' AND sa.detail_statut_id = :detailStatut';
+                $params['detailStatut'] = $detailStatut->getId();
+            }
+        }
+
+        if(!is_null($statut)) {
+            if ($type == 'news'){
+                $query .= ' AND n.statut_id = :statut';
+                $params['statut'] = $statut->getId();
+            }else{
+                $query .= ' AND sa.detail_statut_id = :detailStatut';
+                $params['detailStatut'] = $detailStatut->getId();
+            }
         }
 
         if(!is_null($beneficiaire->getNomConso())) {

@@ -297,8 +297,10 @@ class BeneficiaireController extends Controller
         $form->handleRequest($request);
 		
         if ($form->isValid()){
-        	
+
+            $complementStatut = $form->get('complementStatut')->getData();
 			$detailStatut =  $form->get("detailStatut")->getData();
+			$statut =  $form->get("statut")->getData();
             $tri = (int)$form['tri']->getData();
             $page = (int)$form['page']->getData();
             $ville = $form['ville']->getData();
@@ -307,7 +309,7 @@ class BeneficiaireController extends Controller
             $dateDebut = null;
             $dateFin = null;
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville, $detailStatut);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut);
             $results = $query->getResult();
 
             $start = 50*$page;
