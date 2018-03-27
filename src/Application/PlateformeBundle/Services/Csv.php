@@ -243,17 +243,21 @@ class Csv
         $response->setCallback(function() use ($factures) {
             $handle = fopen('php://output', 'w+');
             fputcsv($handle, array(
-                'Beneficiaire',
+                utf8_decode('Bénéficiaire'),
                 'Ville mer',
-                'Debut accompagnement',
+                utf8_decode('Début accompagnement'),
                 'Fin accompagnement',
                 'Financeur',
                 'Consultant',
-                'Numero',
+                utf8_decode('Numéro'),
                 'Date',
-                'Montant',
-                'Statut creation',
+                'Montant facture',
+                utf8_decode('Montant réglé'),
+                utf8_decode('Statut création'),
                 'Statut facture',
+                utf8_decode('Mode de réglement'),
+                utf8_decode('Date de réglement'),
+                utf8_decode('Montant réglé'),
             ), ';');
 
             foreach ($factures as $facture)
@@ -273,11 +277,14 @@ class Csv
                         $facture->getNumero(),
                         $facture->getDate()->format('d-m-Y'),
                         $facture->getMontant(),
+                        $facture->getMontantPayer(),
                         $statutCreation,
                         ucfirst($facture->getStatut()),
                     ),
                     ';'
                 );
+
+
             }
             fclose($handle);
         });
