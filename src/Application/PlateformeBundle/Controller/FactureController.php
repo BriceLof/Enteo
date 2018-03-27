@@ -262,13 +262,17 @@ class FactureController extends Controller
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
 
             $facture = $form->getData();
+            $montantRegler = $facture->getMontantPayer();
+            $montantReglerTotal = ( $form->get("montantFactureDejaReglerHidden")->getData() + ( $facture->getMontantPayer() ) );
+            $facture->setMontantPayer($montantReglerTotal);
             $em->persist($facture);
 
             $historique = new HistoriquePaiementFacture();
             $historique->setFacture($facture);
             $historique->setStatut($facture->getStatut());
-            $historique->setMontant($facture->getMontantPayer());
+            $historique->setMontant($montantRegler);
             $historique->setModePaiement($facture->getModePaiement());
+            $historique->setDatePaiement($facture->getDatePaiement());
             $historique->setCommentaire($facture->getCommentaire());
             $em->persist($historique);
 

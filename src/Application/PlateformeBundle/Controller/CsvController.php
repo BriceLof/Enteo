@@ -81,6 +81,6 @@ class CsvController extends Controller
         $factures = $query;
 
 //        ici la création du fichier csv
-        return $this->get('application_plateforme.csv')->getCvForFacture($factures);
+        return $this->get('application_plateforme.csv')->getCsvForFacture($factures);
     }
 }

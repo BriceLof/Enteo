@@ -197,7 +197,14 @@ function controleMontant(form){
             form.find(".error").html("Le montant total réglé est supérieur au montant de la facture").show()
             valid = false;
         }else{
-            form.find(".error").hide()
+            if((Number(montantSubmit) + Number(montantDejaRegler)) == Number(montantAReglerTotal)){
+                form.find(".error").html("Ce règlement solde la facture. Merci de l'enregistrer en statut \"Paid\"").show()
+                valid = false;
+            }
+            else{
+                form.find(".error").hide()
+            }
+
         }
     }
     return valid

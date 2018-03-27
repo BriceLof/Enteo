@@ -237,7 +237,7 @@ class Csv
         return $csv;
     }
 
-    public function getCvForFacture($factures)
+    public function getCsvForFacture($factures)
     {
         $response = new StreamedResponse();
         $response->setCallback(function() use ($factures) {
