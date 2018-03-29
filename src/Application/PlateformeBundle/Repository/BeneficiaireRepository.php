@@ -74,15 +74,19 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
-    public function getBeneficiaireWithDate($dateDebut, $dateFin)
+    public function getBeneficiaireWithDate($dateDebut = null , $dateFin = null)
     {
-        $queryBuilder = $this->createQueryBuilder("b")
-            ->where('b.dateConfMer BETWEEN :dateDebut AND :dateFin')
-            ->setParameters(array(
-                "dateDebut" => $dateDebut,
-                "dateFin" => $dateFin
-            ))
-            ->orderBy('b.id', 'ASC');
+        $queryBuilder = $this->createQueryBuilder("b");
+
+        if(!is_null($dateDebut) && !is_null($dateFin)){
+            $queryBuilder->where('b.dateConfMer BETWEEN :dateDebut AND :dateFin')
+                        ->setParameters(array("dateDebut" => $dateDebut, "dateFin" => $dateFin))
+                        ->orderBy('b.id' , 'ASC');
+        }else{
+            $dateCurrent = date('Y-m-d');
+            $queryBuilder->where('b.dateConfMer LIKE :dateCurrent')
+                ->setParameter("dateCurrent", $dateCurrent.'%');
+        }
 
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();

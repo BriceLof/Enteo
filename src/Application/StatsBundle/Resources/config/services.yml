@@ -1,4 +1,4 @@
 services:
-#    application_stats.example:
-#        class: Application\StatsBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    application_stats_beneficiaire:
+        class: Application\StatsBundle\Services\StatsBeneficiaire
+        arguments: ["@doctrine.orm.entity_manager"]

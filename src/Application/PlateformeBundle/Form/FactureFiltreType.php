@@ -62,14 +62,14 @@ class FactureFiltreType extends AbstractType
                 'label' => 'Début accompagnement',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'datepicker',
+                'attr' => array('class' => 'datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
             ->add('date_debut_accompagnement_end', TextType::class, array(
                 'label' => 'Début accompagnement',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'datepicker',
+                'attr' => array('class' => 'datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
 
@@ -77,14 +77,14 @@ class FactureFiltreType extends AbstractType
                 'label' => 'Fin accompagnement',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'datepicker',
+                'attr' => array('class' => 'datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
             ->add('date_fin_accompagnement_end', TextType::class, array(
                 'label' => 'Fin accompagnement',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'datepicker',
+                'attr' => array('class' => 'datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
 
@@ -93,14 +93,14 @@ class FactureFiltreType extends AbstractType
                 'label' => 'Date facture',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'dateFactureField dateFactureStartField datepicker',
+                'attr' => array('class' => 'dateFactureField dateFactureStartField datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
             ->add('date_facture_end', TextType::class, array(
                 'label' => 'Date facture',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'dateFactureField dateFactureEndField datepicker',
+                'attr' => array('class' => 'dateFactureField dateFactureEndField datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
 
@@ -147,14 +147,14 @@ class FactureFiltreType extends AbstractType
                 'label' => 'Début et fin accompagnement',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'datepicker',
+                'attr' => array('class' => 'datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
             ->add('date_fin_accompagnement', TextType::class, array(
                 'label' => 'Début et fin accompagnement',
                 'required' => false,
                 'mapped' => false,
-                'attr' => array('class' => 'datepicker',
+                'attr' => array('class' => 'datepickerBrice',
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
 

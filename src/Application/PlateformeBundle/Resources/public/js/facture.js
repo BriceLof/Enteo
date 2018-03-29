@@ -55,34 +55,6 @@ $(function () {
 
     // --------------------------- Page facture : filtre de recherche
 
-    // -------- Gestion des datepicker --------
-    $( ".datepicker" ).datepicker({
-        dateFormat : 'dd/mm/yy',
-        monthNames: [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre" ],
-        dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
-        dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ]
-    });
-    // Tranforme date version EN vers FR pour l'affichage
-    $( ".datepicker" ).each(function(){
-        if($(this).val().length > 0){
-            dateEn = $(this).val()
-            dateSplit = dateEn.split("-")
-            dateFr = dateSplit[2]+"/"+dateSplit[1]+"/"+dateSplit[0]
-            $(this).val(dateFr)
-        }
-    })
-    // Tranforme date version FR vers EN pour la bdd
-    $("form[name='formulaire_filtre_facture']").submit(function () {
-        $( ".datepicker" ).each(function(){
-            if($(this).val().length > 0){
-                dateFr = $(this).val()
-                dateSplit = dateFr.split("/")
-                dateEn = dateSplit[2]+"-"+dateSplit[1]+"-"+dateSplit[0]
-                $(this).val(dateEn)
-            }
-        })
-    })
-    //-------- FIN Gestion des datepicker --------
 
     $(".beneficiaireSearchFactureField").keyup(function () {
         nom = $(this).val();

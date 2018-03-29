@@ -272,7 +272,8 @@ class FactureController extends Controller
             $historique->setStatut($facture->getStatut());
             $historique->setMontant($montantRegler);
             $historique->setModePaiement($facture->getModePaiement());
-            $historique->setDatePaiement($facture->getDatePaiement());
+            $datePaiement = new \DateTime($form->get("date_paiement")->getData());
+            $historique->setDatePaiement($datePaiement);
             $historique->setCommentaire($facture->getCommentaire());
             $em->persist($historique);
 

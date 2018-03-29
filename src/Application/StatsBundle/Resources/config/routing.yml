@@ -2,3 +2,7 @@
 application_stats_appel:
     resource: "@ApplicationStatsBundle/Resources/config/routing/appel.yml"
     prefix:   /appel
+
+application_stats_commercial:
+    resource: "@ApplicationStatsBundle/Resources/config/routing/statCommercial.yml"
+
