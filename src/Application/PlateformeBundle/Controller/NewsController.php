@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Form\NewsType;
 use Application\PlateformeBundle\Form\StatutRecevabiliteType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -91,10 +93,22 @@ class NewsController extends Controller
 
             $this->get('session')->getFlashBag()->add('info', 'Statut bénéficiaire bien ajouté');
 
-            return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
-                'beneficiaire' => $beneficiaire,
-                'id' => $beneficiaire->getId(),
-            )));
+            //Mis à jour du statut : verifie si la requete est une requete AJAX
+            if ($request->isXmlHttpRequest()) {
+                $template = $this->forward('ApplicationPlateformeBundle:Home:infoBeneficiaire', (array(
+                    'beneficiaire' => $beneficiaire,
+                )))->getContent();
+
+                $json = json_encode($template);
+                $response = new Response($json, 200);
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            }else{
+                return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'beneficiaire' => $beneficiaire,
+                    'id' => $beneficiaire->getId(),
+                )));
+            }
         }
 
         return $this->render('ApplicationPlateformeBundle:News:new.html.twig', array(
