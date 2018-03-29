@@ -243,17 +243,22 @@ class Csv
         $response->setCallback(function() use ($factures) {
             $handle = fopen('php://output', 'w+');
             fputcsv($handle, array(
-                'Beneficiaire',
+                utf8_decode('Bénéficiaire'),
                 'Ville mer',
-                'Debut accompagnement',
+                utf8_decode('Début accompagnement'),
                 'Fin accompagnement',
                 'Financeur',
                 'Consultant',
-                'Numero',
+                utf8_decode('Numéro'),
                 'Date',
-                'Montant',
-                'Statut creation',
+                'Montant facture',
+                utf8_decode('Montant réglé'),
+                utf8_decode('Statut création'),
                 'Statut facture',
+                utf8_decode('Mode de réglement'),
+                utf8_decode('Date de réglement'),
+                utf8_decode('Montant'),
+                'Commentaire',
             ), ';');
 
             foreach ($factures as $facture)
@@ -261,10 +266,8 @@ class Csv
                 if($facture->getOuvert() == 1) $statutCreation = "Ouvert";
                 else $statutCreation = "Fermer";
 
-                fputcsv(
-                    $handle,
-                    array(
-                        utf8_decode($facture->getBeneficiaire()->getNomConso()." ".$facture->getBeneficiaire()->getPrenomConso()),
+                $tabValue = array(
+                        ucwords(utf8_decode($facture->getBeneficiaire()->getNomConso()." ".$facture->getBeneficiaire()->getPrenomConso())),
                         $facture->getBeneficiaire()->getVilleMer()->getNom(),
                         $facture->getDateDebutAccompagnement()->format('d-m-Y'),
                         $facture->getDateFinAccompagnement()->format('d-m-Y'),
@@ -273,11 +276,44 @@ class Csv
                         $facture->getNumero(),
                         $facture->getDate()->format('d-m-Y'),
                         $facture->getMontant(),
+                        $facture->getMontantPayer(),
                         $statutCreation,
                         ucfirst($facture->getStatut()),
-                    ),
-                    ';'
-                );
+                    );
+
+                $historiquesFactures = $this->em->getRepository('ApplicationPlateformeBundle:HistoriquePaiementFacture')->findByFacture($facture);
+                $i = 0;
+
+                foreach($historiquesFactures as $historiqueFacture){
+
+                    if(!is_null($historiqueFacture->getDatePaiement()) && $historiqueFacture->getDatePaiement() != '')
+                        $datePaiementPrevu = $historiqueFacture->getDatePaiement()->format('d-m-Y');
+                    else
+                        $datePaiementPrevu = "N.C.";
+
+                    array_push($tabValue,   ucfirst($historiqueFacture->getModePaiement()), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
+
+                    if($i == 0){
+                        fputcsv(
+                            $handle,
+                            $tabValue,
+                            ';'
+                        );
+                    }else{
+                        fputcsv(
+                            $handle,
+                            array(
+                                '','','','','','','','','','','','',
+                                ucfirst($historiqueFacture->getModePaiement()),
+                                $datePaiementPrevu,
+                                $historiqueFacture->getMontant(),
+                                ucfirst(utf8_decode($historiqueFacture->getCommentaire()))
+                            ),
+                            ';'
+                        );
+                    }
+                    $i++;
+                }
             }
             fclose($handle);
         });
