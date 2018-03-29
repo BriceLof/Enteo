@@ -23,7 +23,7 @@ class ContratType extends AbstractType
             ))
             ->add('date', DateType::class, array(
                 'required' => true,
-                'label' => 'Date du contrat'
+                'label' => 'Date de signature du contrat'
             ))
         ;
     }

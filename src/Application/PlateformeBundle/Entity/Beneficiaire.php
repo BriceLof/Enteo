@@ -329,6 +329,13 @@ class Beneficiaire
     private $nouvelle;
 
     /**
+     * @var datetime $deletedAt
+     *
+     * @ORM\Column(name="deleted", type="boolean")
+     */
+    private $deleted;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -337,6 +344,7 @@ class Beneficiaire
         $this->nouvelle = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->updatedAt = new \DateTime('now');
+        $this->deleted = false;
     }
 
     /**
@@ -1694,5 +1702,29 @@ class Beneficiaire
     public function getFactures()
     {
         return $this->factures;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param boolean $deleted
+     *
+     * @return Beneficiaire
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return boolean
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
     }
 }

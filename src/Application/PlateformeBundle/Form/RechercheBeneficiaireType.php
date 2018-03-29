@@ -6,11 +6,13 @@ use Application\PlateformeBundle\Entity\Ville;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Doctrine\ORM\EntityRepository;
 
 class RechercheBeneficiaireType extends AbstractType
@@ -54,6 +56,16 @@ class RechercheBeneficiaireType extends AbstractType
                     'class' => ''
                 )
             ))
+
+            ->add('complementStatut', ChoiceType::class, array(
+                "mapped" => false,
+                'required' => false,
+                'placeholder' => false,
+                'choices' => array(
+                    '>=' => '>=',
+                    '=' => '=',
+                ),
+            ))
 			
 			->add('statut', EntityType::class, array(
 				"mapped" => false,
@@ -63,11 +75,10 @@ class RechercheBeneficiaireType extends AbstractType
                 'choice_label' => 'nom', 
                 'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('s')
-                                ->where('s.slug = :slug1')
-                                ->orWhere('s.slug = :slug2')
-                                ->orWhere('s.slug = :slug3')
-                                ->orWhere('s.slug = :slug4')
-                                ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'facturation','slug4' => 'reglement'))
+                                ->where('s.slug NOT IN (:slug1)')
+                                ->setParameters(array(
+                                    'slug1' => 'recevabilite',
+                                    ))
                             ;
                 },
             ))
@@ -90,6 +101,12 @@ class RechercheBeneficiaireType extends AbstractType
 
             ->add('refFinanceur', TextType::class, array(
                 'label' => 'Réf. Financeur',
+                'required' => false,
+            ))
+
+            ->add('cacher', CheckboxType::class, array(
+                "mapped" => false,
+                'label'    => 'Ne pas afficher les Bénéficiaires en Statut Abandon, Reporté, Terminé',
                 'required' => false,
             ))
 

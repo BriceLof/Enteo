@@ -29,8 +29,10 @@ services:
    application_plateforme.text:
        class: Application\PlateformeBundle\Services\Text
 
+
    #application_users.type.user:
     #   class: Application\UsersBundle\Form\UsersType
     #   arguments: ["@doctrine.orm.entity_manager"]
     #   tags:
     #       - { name: form.type }
+

@@ -52,12 +52,12 @@
         </tr>
 
         {% if facture.historiquesPaiement | length > 0 %}
-            <aside id="block_historique_paiement_facture_{{ facture.id }}" class="block_historique_paiement_facture" style="background-color: #ecececf5;padding: 4px 10px 10px 10px;width: 80%;margin: auto;border-radius: 2px;margin-bottom: 19px;position: absolute;left:25px;display:none;cursor:pointer !important">
+            <aside id="block_historique_paiement_facture_{{ facture.id }}" class="block_historique_paiement_facture" style="background-color: #fffffff7;border: 1px solid #f1f1f1;padding: 4px 10px 10px 10px;width: 80%;margin: auto;border-radius: 2px;margin-bottom: 19px;position: absolute;z-index:1;left:25px;display:none;cursor:pointer !important">
                 <h5 style="text-align:center;color:#428bca;margin-bottom: 16px;">Historique des réglements</h5>
                 {% for historique in facture.historiquesPaiement | reverse %}
-                    <p style="font-size:13px;line-height: 8px;"> - <b>{{ historique.dateHeure | date ('d/m/Y') }}</b> à {{ historique.dateHeure | date ('H:i')}} / <b>{{ historique.statut | capitalize }}</b> / <b>{{ historique.modePaiement | capitalize }}</b> / <b>{{ historique.montant }}</b> €</p> <br>
-                    <span class="commentaire" style="display: block;margin-top: -29px;margin-left: 5px;font-size: 11px;color: #891c1c;margin-bottom: 10px;font-style: italic;">
-                        {{ historique.commentaire }}
+                    <p style="font-size:11px;"> - <b>{{ historique.statut | capitalize }}</b> / <b>{{ historique.modePaiement | capitalize }}</b> le <b>{{ (historique.datePaiement is not null) ? historique.datePaiement| date('d/m/Y') : 'N.C.'  }}</b> / <b>{{ historique.montant }}</b> € </p>
+                    <span class="commentaire" style="display: block;margin-top: -12px;margin-left: 7px;font-size: 11px;color: #891c1c;margin-bottom: 10px;font-style: italic;">
+                        {{ historique.commentaire | capitalize}}
                     </span>
                 {% endfor %}
             </aside>

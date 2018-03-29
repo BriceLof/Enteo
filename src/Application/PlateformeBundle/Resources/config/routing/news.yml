@@ -5,6 +5,8 @@ application_add_news:
 application_new_news:
     path:     /new/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:News:new" }
+    options:
+        expose:  true
 
 application_show_all_news:
     path:     /showAll

@@ -17,6 +17,10 @@ function addNews(el) {
     // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
     $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id);
 
+    console.log(Routing.generate('application_new_news', { id: beneficiaire_id }))
+
+    $(formDuBeneficiaire + ' form').attr('action', Routing.generate('application_new_news', { id: beneficiaire_id }))
+
     //---------- START : Si on change le statut
     $(formDuBeneficiaire + " .statut").change(function () {
         var statutId = $(this).children("option:selected").val();
@@ -31,7 +35,7 @@ function addNews(el) {
         e.preventDefault();
 
         $.ajax({
-            url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
+            url: $(this).attr('action'), // le nom du fichier indiqué dans le formulaire
             type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
             data: $(this).serialize(),
             cache: true,

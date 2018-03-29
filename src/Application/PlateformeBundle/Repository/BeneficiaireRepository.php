@@ -14,29 +14,32 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  * repository methods below.
  */
 class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
-{   
-    public function getBeneficiaire($page, $nbPerPage, $idConsultant = null)
+{
+    public function getBeneficiaire($page, $nbPerPage, $idConsultant = null, $cacher = false)
     {
-       $query = $this->createQueryBuilder('b')
+        $query = $this->createQueryBuilder('b')
             ->leftJoin('b.news', 'n')
             ->addSelect('n')
             ->leftJoin('b.ville', 'v')
             ->addSelect('v')
-            ->orderBy('b.id', 'DESC')  
-        ;
-       
-       if($idConsultant != null)
-       {
+            ->orderBy('b.id', 'DESC');
+
+        if ($idConsultant != null) {
             $query->where('b.consultant = :id')
-                  ->setParameter('id', $idConsultant);   
-       }
-       
-        $query->setFirstResult(($page-1) * $nbPerPage)
-               ->setMaxResults($nbPerPage);
-        
+                ->setParameter('id', $idConsultant);
+        }
+
+        if ($cacher == true){
+            $query->andWhere('b.deleted = :deleted')
+                ->setParameter('deleted', false);
+        }
+
+        $query->setFirstResult(($page - 1) * $nbPerPage)
+            ->setMaxResults($nbPerPage);
+
         // Enfin, on retourne l'objet Paginator correspondant à la requête construite
         // (n'oubliez pas le use correspondant en début de fichier)
-        return new Paginator($query); 
+        return new Paginator($query);
     }
 
     public function getBeneficiaireWithDetailStatut($detailStatut = null)
@@ -47,8 +50,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('n.detailStatut', 'ds')
             ->addSelect('ds')
             ->where('ds.detail NOT IN (:detailStatut)')
-            ->setParameter('detailStatut', $detailStatut)
-            ;
+            ->setParameter('detailStatut', $detailStatut);
 
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
@@ -65,8 +67,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
                 "dateDebut" => $dateDebut,
                 "dateFin" => $dateFin
             ))
-            ->orderBy('b.id' , 'ASC')
-        ;
+            ->orderBy('b.id', 'ASC');
 
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
@@ -81,30 +82,37 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
                 "dateDebut" => $dateDebut,
                 "dateFin" => $dateFin
             ))
-            ->orderBy('b.id' , 'ASC')
-        ;
+            ->orderBy('b.id', 'ASC');
 
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
         return $results;
     }
+
     /**
-     * retourne les bénéficiaires correspondant aux conditions qui sont mis en parametre
-     *
      * @param Beneficiaire $beneficiaire
      * @param $debut
      * @param $fin
      * @param null $idUtilisateur
      * @param bool $bool
-     * @param $tri
-     * @param $ville
-     * @return \Doctrine\ORM\NativeQuery
+     * @param int $tri
+     * @param null $ville
+     * @param null $detailStatut
+     * @param null $complementStatut
+     * @return mixed
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $detailStatut = null)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false)
     {
+        $idsAd = array(7, 8, 9, 10, 14);
+        $type = 'news';
+        if (!is_null($statut) && in_array($statut->getId(), $idsAd)) {
+            $type = 'suiviAdministratif';
+        }
+
+
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
-        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire','b');
-        if(!is_null($ville)) {
+        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire', 'b');
+        if (!is_null($ville)) {
             $rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', 'ville', array(
                 'id' => 'v_id',
                 'ville' => 'ville_nom'
@@ -113,96 +121,135 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query = 'SELECT b.* FROM beneficiaire b';
         $params = array();
-		
-		if(!is_null($detailStatut)) {
-            $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
-			$params['beneficiaire_id'] = $detailStatut->getId();
+
+        if (!is_null($detailStatut) || !is_null($statut)) {
+            if ($type == 'news') {
+                $query .= ' INNER JOIN news n ON b.id = n.beneficiaire_id';
+                $params['beneficiaire_id'] = $detailStatut->getId();
+            } elseif ($type == 'suiviAdministratif') {
+                $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
+                $params['beneficiaire_id'] = $detailStatut->getId();
+            }
         }
-		
-        if(!is_null($ville)) {
+
+        if (!is_null($ville)) {
             $query .= ' INNER JOIN ville v ON b.ville_mer_id = v.id';
             $params['villeMerId'] = $ville;
         }
 
         $query .= ' WHERE 1';
 
-        if(!is_null($ville)) {
+        if (!is_null($complementStatut) && $complementStatut == "=") {
+            if ($type == 'news') {
+                $query .= ' AND n.id = (SELECT MAX(id)
+                                         FROM news 
+                                         WHERE beneficiaire_id = b.id
+                                         AND detail_statut_id IS NOT NULL)';
+            } elseif ($type == 'suiviAdministratif') {
+                $query .= ' AND sa.id = (SELECT MAX(id)
+                                         FROM suivi_administratif 
+                                         WHERE beneficiaire_id = b.id
+                                         AND detail_statut_id IS NOT NULL)';
+            }
+        }
+
+        if (!is_null($ville)) {
             $query .= ' AND v.ville LIKE :villeNom';
-            $params['villeNom'] = '%'.$ville.'%';
-        }
-		
-		if(!is_null($detailStatut)) {
-            $query .= ' AND sa.detail_statut_id = :detailStatut';
-            $params['detailStatut'] = $detailStatut->getId();
+            $params['villeNom'] = '%' . $ville . '%';
         }
 
-        if(!is_null($beneficiaire->getNomConso())) {
+        if (!is_null($detailStatut)) {
+            if ($type == 'news') {
+                $query .= ' AND n.detail_statut_id = :detailStatut';
+                $params['detailStatut'] = $detailStatut->getId();
+            } else {
+                $query .= ' AND sa.detail_statut_id = :detailStatut';
+                $params['detailStatut'] = $detailStatut->getId();
+            }
+        }
+
+        if (!is_null($statut)) {
+            if ($type == 'news') {
+                $query .= ' AND n.statut_id = :statut';
+                $params['statut'] = $statut->getId();
+            } else {
+                $query .= ' AND sa.detail_statut_id = :detailStatut';
+                $params['detailStatut'] = $detailStatut->getId();
+            }
+        }
+
+        if (!is_null($beneficiaire->getNomConso())) {
             $query .= ' AND b.nom_conso LIKE :nomConso';
-            $params['nomConso'] = "%".$beneficiaire->getNomConso()."%";
+            $params['nomConso'] = "%" . $beneficiaire->getNomConso() . "%";
         }
 
-        if(!is_null($beneficiaire->getPrenomConso())) {
+        if ($cacher == true) {
+            $query .= ' AND b.deleted  <> 1';
+        }
+
+        if (!is_null($beneficiaire->getPrenomConso())) {
             $query .= ' AND b.prenom_conso LIKE :prenomConso';
-            $params['prenomConso'] = "%".$beneficiaire->getPrenomConso()."%";
+            $params['prenomConso'] = "%" . $beneficiaire->getPrenomConso() . "%";
         }
 
-        if(!is_null($beneficiaire->getEmailConso())){
+        if (!is_null($beneficiaire->getEmailConso())) {
             $query .= ' AND b.email_conso LIKE :emailConso';
-            $params['emailConso'] = "%".$beneficiaire->getEmailConso()."%";
+            $params['emailConso'] = "%" . $beneficiaire->getEmailConso() . "%";
         }
-        
-        if(!is_null($beneficiaire->getConsultant())){
+
+        if (!is_null($beneficiaire->getConsultant())) {
             $query .= ' AND b.consultant_id = :consultant';
             $params['consultant'] = $beneficiaire->getConsultant()->getId();
         }
 
-        if(!is_null($idUtilisateur)){
+        if (!is_null($idUtilisateur)) {
             $query .= ' AND b.consultant_id = :consultantId';
             $params['consultantId'] = $idUtilisateur;
         }
 
-        if(!is_null($debut)){
+        if (!is_null($debut)) {
             $query .= ' AND b.date_conf_mer >= :dateDebut';
             $params['dateDebut'] = $debut;
         }
 
-        if(!is_null($fin)){
+        if (!is_null($fin)) {
             $query .= ' AND b.date_conf_mer <= :dateFin';
             $params['dateFin'] = $fin;
         }
 
-        if(!is_null($beneficiaire->getRefFinanceur())){
+        if (!is_null($beneficiaire->getRefFinanceur())) {
             $query .= ' AND b.ref_financeur LIKE :refFinanceur';
-            $params['refFinanceur'] = '%'.$beneficiaire->getRefFinanceur().'%';
+            $params['refFinanceur'] = '%' . $beneficiaire->getRefFinanceur() . '%';
         }
 
         if ($tri === 0) {
             $query .= ' ORDER BY b.id DESC';
-        }elseif ($tri === 1){
+        } elseif ($tri === 1) {
             $query .= ' ORDER BY b.nom_conso ASC';
-        }elseif ($tri === 2){
+        } elseif ($tri === 2) {
             $query .= ' ORDER BY b.nom_conso DESC';
-        }elseif ($tri === 3){
+        } elseif ($tri === 3) {
             $query .= ' ORDER BY b.date_heure_mer ASC';
-        }elseif ($tri === 4){
+        } elseif ($tri === 4) {
             $query .= ' ORDER BY b.date_heure_mer DESC';
         }
 
-        if ($bool == true){
+        if ($bool == true) {
             $query .= ' LIMIT 10';
         }
 
-        $request = $this->getEntityManager()->createNativeQuery($query,$rsm);
+        $request = $this->getEntityManager()->createNativeQuery($query, $rsm);
         $request->setParameters($params);
 
         return $request;
     }
 
-    public function searchBeneficiaireByNom($string){
+    public function searchBeneficiaireByNom($string)
+    {
         $queryBuilder = $this->createQueryBuilder("b")
-                ->where("b.nomConso LIKE :nom")
-                ->setParameter("nom", '%'.$string.'%')
-                ->orderBy("b.id", "DESC");
+            ->where("b.nomConso LIKE :nom")
+            ->setParameter("nom", '%' . $string . '%')
+            ->orderBy("b.id", "DESC");
 
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();

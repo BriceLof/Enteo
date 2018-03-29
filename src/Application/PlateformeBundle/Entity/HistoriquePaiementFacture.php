@@ -49,6 +49,11 @@ class HistoriquePaiementFacture
     private $montant;
 
     /**
+     * @ORM\Column(name="date_paiement", type="date", nullable=true)
+     */
+    private $datePaiement;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="mode_paiement", type="string", length=255, nullable=true)
@@ -220,5 +225,29 @@ class HistoriquePaiementFacture
     public function getFacture()
     {
         return $this->facture;
+    }
+
+    /**
+     * Set datePaiement
+     *
+     * @param \DateTime $datePaiement
+     *
+     * @return HistoriquePaiementFacture
+     */
+    public function setDatePaiement($datePaiement)
+    {
+        $this->datePaiement = $datePaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get datePaiement
+     *
+     * @return \DateTime
+     */
+    public function getDatePaiement()
+    {
+        return $this->datePaiement;
     }
 }
