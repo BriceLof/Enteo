@@ -77,7 +77,7 @@ class RechercheBeneficiaireType extends AbstractType
                             return $er->createQueryBuilder('s')
                                 ->where('s.slug NOT IN (:slug1)')
                                 ->setParameters(array(
-                                    'slug1' => 'recevabilite',
+                                    'slug1' => array('recevabilite', 'reporte')
                                     ))
                             ;
                 },

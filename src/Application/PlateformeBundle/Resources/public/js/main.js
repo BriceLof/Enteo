@@ -161,6 +161,11 @@ $(function () {
         $("#newsForm .statut").change(function () {
             var statutId = $(this).children("option:selected").val()
             $(".detailStatut").attr("disabled", "disabled")
+            if (statutId == 12){
+                $("#newsForm #message_news").show()
+            }else {
+                $("#newsForm #message_news").hide()
+            }
             ajaxFormNews(statutId, true)
         });
 
@@ -405,3 +410,27 @@ $( function() {
     }
     setTimeout(afficheMessageFlash,5000);
 })();
+
+/**
+ * validation pour le news form
+ *
+ *
+ */
+$(function () {
+    $("#newsForm").validate({
+        rules: {
+            "application_plateformebundle_news[statut]": {
+                "required": true,
+            },
+            "application_plateformebundle_news[detailStatut]": {
+                "required": true,
+            },
+            "application_plateformebundle_news[motif]": {
+                "required": function(element){
+                    return $("#application_plateformebundle_news_statut").val() == 12;
+                }
+            }
+        },
+        errorElement: 'div'
+    })
+});

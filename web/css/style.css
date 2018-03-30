@@ -806,3 +806,6 @@ textarea {
 #ModalTarif .modal-body{
     margin-bottom: 40px;
 }
+#newsForm #message_news{
+    display: none;
+}
