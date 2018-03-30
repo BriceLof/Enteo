@@ -34,6 +34,9 @@ class CsvController extends Controller
 
         $complementStatut = $form->get('complementStatut')->getData();
         $complementDetailStatut = $form->get('complementDetailStatut')->getData();
+        if (is_null($complementDetailStatut)){
+            $complementDetailStatut = '>=';
+        }
         $detailStatut =  $form->get("detailStatut")->getData();
         $cacher =  $form->get("cacher")->getData();
         $statut =  $form->get("statut")->getData();
