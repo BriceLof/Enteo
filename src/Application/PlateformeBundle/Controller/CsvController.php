@@ -33,6 +33,7 @@ class CsvController extends Controller
         $form->handleRequest($request);
 
         $complementStatut = $form->get('complementStatut')->getData();
+        $complementDetailStatut = $form->get('complementDetailStatut')->getData();
         $detailStatut =  $form->get("detailStatut")->getData();
         $cacher =  $form->get("cacher")->getData();
         $statut =  $form->get("statut")->getData();
@@ -43,7 +44,7 @@ class CsvController extends Controller
         $dateDebut = null;
         $dateFin = null;
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher);
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher, $complementDetailStatut);
         $results = $query->getResult();
 
         $beneficiaires = $results;

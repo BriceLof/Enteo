@@ -65,6 +65,9 @@ class RechercheBeneficiaireType extends AbstractType
                     '>=' => '>=',
                     '=' => '=',
                 ),
+                'attr' => array(
+                    'class' => 'complement'
+                )
             ))
 			
 			->add('statut', EntityType::class, array(
@@ -76,6 +79,7 @@ class RechercheBeneficiaireType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('s')
                                 ->where('s.slug NOT IN (:slug1)')
+                                ->orderBy('s.ordre', 'ASC')
                                 ->setParameters(array(
                                     'slug1' => array('recevabilite', 'reporte')
                                     ))
@@ -88,6 +92,20 @@ class RechercheBeneficiaireType extends AbstractType
                 'placeholder' => 'Détail Statut',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail', 
+            ))
+
+            ->add('complementDetailStatut', ChoiceType::class, array(
+                "mapped" => false,
+                'required' => false,
+                'placeholder' => false,
+                'choices' => array(
+                    '>=' => '>=',
+                    '=' => '=',
+                ),
+                'attr' => array(
+                    'class' => 'complement',
+                    'disabled' => 'disabled'
+                )
             ))
 			
             ->add('ville', TextType::class, array(

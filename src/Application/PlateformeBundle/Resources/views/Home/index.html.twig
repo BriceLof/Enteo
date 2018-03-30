@@ -59,6 +59,9 @@
                                                                                  src="{{ asset('images/ajax-loader.gif') }}"/>
                         <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                     {{ form_widget(form_news.detailStatut, {'attr' : {'class': 'detailStatut', 'disabled':'disabled'}}) }}
+                    <div class="hide">
+                        {{ form_widget(form_news.motif) }}
+                    </div>
                     <div class="submit_news" style="text-align: right;margin-top: 14px;width: 95%;margin-bottom: 0px;">
                         {{ form_widget(form_news.Enregistrer) }}
                     </div>

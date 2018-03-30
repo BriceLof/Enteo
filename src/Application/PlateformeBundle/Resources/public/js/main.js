@@ -434,3 +434,19 @@ $(function () {
         errorElement: 'div'
     })
 });
+
+/**
+ * validation pour le news form
+ *
+ *
+ */
+$(function () {
+    $('#recherche_beneficiaire_complementStatut').on('change', function () {
+        if ($(this).val() == '>='){
+            $('#recherche_beneficiaire_complementDetailStatut').prop('disabled', true)
+            $('#recherche_beneficiaire_complementDetailStatut option[value=">="]').prop('selected', true)
+        }else{
+            $('#recherche_beneficiaire_complementDetailStatut').prop('disabled', false)
+        }
+    })
+});
