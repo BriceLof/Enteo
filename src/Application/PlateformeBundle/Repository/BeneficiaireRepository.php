@@ -103,10 +103,9 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      */
     public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut)
     {
-        $idsAd = array(7, 8, 9, 10, 14);
-        $type = 'news';
-        if (!is_null($statut) && in_array($statut->getId(), $idsAd)) {
-            $type = 'suiviAdministratif';
+        $type = 'suiviAdministratif';
+        if ($statut->getType() == 'commercial') {
+            $type = 'news';
         }
 
 
