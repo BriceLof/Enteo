@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\StatutRecevabilite;
 use Application\PlateformeBundle\Entity\Historique;
@@ -86,6 +87,14 @@ class NewsController extends Controller
                         'state' => 'abandonned'
                     ));
                 }
+                $nouvelle = new Nouvelle();
+                $nouvelle->setBeneficiaire($beneficiaire);
+                $nouvelle->setUtilisateur($this->getUser());
+                $nouvelle->setTitre("Abandon du bénéficiaire");
+                $nouvelle->setMessage($form->get('motif')->getData());
+                $em->persist($nouvelle);
+
+                $this->get('application_plateforme.statut.mail.mail_for_statut')->AbandonBeneficiaire($beneficiaire, $this->getUser(), $form->get('motif')->getData());
             }
             
             $em->persist($news);

@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -33,7 +34,8 @@ class NewsType extends AbstractType
                         ->andWhere('s.slug != :slug3')
                         ->andWhere('s.slug != :slug4')
                         ->andWhere('s.slug != :slug5')
-                        ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation','slug5' => 'reglement'))
+                        ->andWhere('s.slug != :slug6')
+                        ->setParameters(array('slug1' => 'dossier-en-cours', 'slug2' => 'financement', 'slug3' => 'recevabilite','slug4' => 'facturation','slug5' => 'reglement', 'slug6' => 'reporte'))
                         ;
                 },
                 'attr' => array(
@@ -47,6 +49,14 @@ class NewsType extends AbstractType
                 'attr' => array(
                     'class' => 'news'
                 )
+            ))
+
+            ->add('motif', TextareaType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => '',
+                ),
             ))
 
             ->add('Enregistrer', SubmitType::class, array(

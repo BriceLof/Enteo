@@ -101,12 +101,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param null $complementStatut
      * @return mixed
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut)
     {
-        $idsAd = array(7, 8, 9, 10, 14);
-        $type = 'news';
-        if (!is_null($statut) && in_array($statut->getId(), $idsAd)) {
-            $type = 'suiviAdministratif';
+        $type = 'suiviAdministratif';
+        if ($statut->getType() == 'commercial') {
+            $type = 'news';
         }
 
 
@@ -125,10 +124,10 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if (!is_null($detailStatut) || !is_null($statut)) {
             if ($type == 'news') {
                 $query .= ' INNER JOIN news n ON b.id = n.beneficiaire_id';
-                $params['beneficiaire_id'] = $detailStatut->getId();
+                $query .= ' INNER JOIN statut s ON s.id = n.statut_id';
             } elseif ($type == 'suiviAdministratif') {
                 $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
-                $params['beneficiaire_id'] = $detailStatut->getId();
+                $query .= ' INNER JOIN statut s ON s.id = sa.statut_id';
             }
         }
 
@@ -139,7 +138,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query .= ' WHERE 1';
 
-        if (!is_null($complementStatut) && $complementStatut == "=") {
+        if (!is_null($detailStatut) || !is_null($statut)) {
             if ($type == 'news') {
                 $query .= ' AND n.id = (SELECT MAX(id)
                                          FROM news 
@@ -160,22 +159,22 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         if (!is_null($detailStatut)) {
             if ($type == 'news') {
-                $query .= ' AND n.detail_statut_id = :detailStatut';
-                $params['detailStatut'] = $detailStatut->getId();
+                $query .= ' AND n.detail_statut_id '.$complementDetailStatut.' :detailStatut';
             } else {
-                $query .= ' AND sa.detail_statut_id = :detailStatut';
-                $params['detailStatut'] = $detailStatut->getId();
+                $query .= ' AND sa.detail_statut_id '.$complementDetailStatut.' :detailStatut';
             }
+            $params['detailStatut'] = $detailStatut->getId();
         }
 
         if (!is_null($statut)) {
+            $query .= ' AND s.ordre '.$complementStatut.' :ordre';
+            $params['ordre'] = $statut->getOrdre();
             if ($type == 'news') {
-                $query .= ' AND n.statut_id = :statut';
-                $params['statut'] = $statut->getId();
+                $query .= ' AND n.statut_id '.$complementStatut.' :statut';
             } else {
-                $query .= ' AND sa.detail_statut_id = :detailStatut';
-                $params['detailStatut'] = $detailStatut->getId();
+                $query .= ' AND sa.statut_id '.$complementStatut.' :statut';
             }
+            $params['statut'] = $statut->getId();
         }
 
         if (!is_null($beneficiaire->getNomConso())) {
