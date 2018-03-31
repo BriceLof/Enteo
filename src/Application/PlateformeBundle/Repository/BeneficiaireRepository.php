@@ -104,7 +104,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
     public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut)
     {
         $type = 'suiviAdministratif';
-        if ($statut->getType() == 'commercial') {
+        if (!is_null($statut) && $statut->getType() == 'commercial') {
             $type = 'news';
         }
 
