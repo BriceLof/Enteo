@@ -45,10 +45,9 @@ class NewsController extends Controller
             $news = $form->getData();
             $news->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
-            
+
             // ajouter un historique
-            if($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR $news->getStatut()->getSlug() == "recevabilite" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise"))
-            {
+            if ($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR $news->getStatut()->getSlug() == "recevabilite" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise")) {
                 $historique = new Historique();
                 $historique->setHeuredebut(new \DateTime('now'));
                 $historique->setHeurefin(new \DateTime('now'));
@@ -61,10 +60,9 @@ class NewsController extends Controller
                 $historique->setUser($this->getUser());
                 $em->persist($historique);
             }
-            
+
             // ajouter un suivi administratif 
-            if($news->getDetailStatut()->getDetail() == "RV1 Positif" OR $news->getDetailStatut()->getDetail() == "RV2 Positif")
-            {
+            if ($news->getDetailStatut()->getDetail() == "RV1 Positif" OR $news->getDetailStatut()->getDetail() == "RV2 Positif") {
                 $statutRepo = $em->getRepository('ApplicationPlateformeBundle:Statut')->findOneBySlug("dossier-en-cours");
                 $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByStatut($statutRepo->getId());
 
@@ -75,7 +73,7 @@ class NewsController extends Controller
                 $em->persist($suiviAdministraif);
             }
 
-            if ($news->getStatut()->getId() == 12){
+            if ($news->getStatut()->getId() == 12) {
                 $mission = $em->getRepository('ApplicationUsersBundle:Mission')->findOneBy(array(
                     "beneficiaire" => $beneficiaire
                 ));
@@ -87,16 +85,18 @@ class NewsController extends Controller
                         'state' => 'abandonned'
                     ));
                 }
-                $nouvelle = new Nouvelle();
-                $nouvelle->setBeneficiaire($beneficiaire);
-                $nouvelle->setUtilisateur($this->getUser());
-                $nouvelle->setTitre("Abandon du bénéficiaire");
-                $nouvelle->setMessage($form->get('motif')->getData());
-                $em->persist($nouvelle);
+                if (!is_null($form->get('motif')->getData())) {
+                    $nouvelle = new Nouvelle();
+                    $nouvelle->setBeneficiaire($beneficiaire);
+                    $nouvelle->setUtilisateur($this->getUser());
+                    $nouvelle->setTitre("Abandon du bénéficiaire");
+                    $nouvelle->setMessage($form->get('motif')->getData());
+                    $em->persist($nouvelle);
 
-                $this->get('application_plateforme.statut.mail.mail_for_statut')->AbandonBeneficiaire($beneficiaire, $this->getUser(), $form->get('motif')->getData());
+                    $this->get('application_plateforme.statut.mail.mail_for_statut')->AbandonBeneficiaire($beneficiaire, $this->getUser(), $form->get('motif')->getData());
+                }
             }
-            
+
             $em->persist($news);
             $em->flush();
 
@@ -112,7 +112,7 @@ class NewsController extends Controller
                 $response = new Response($json, 200);
                 $response->headers->set('Content-Type', 'application/json');
                 return $response;
-            }else{
+            } else {
                 return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
                     'beneficiaire' => $beneficiaire,
                     'id' => $beneficiaire->getId(),
@@ -126,7 +126,7 @@ class NewsController extends Controller
             'form' => $form->createView(),
         ));
     }
-    
+
     // Ajout d'un statut de recevabilité
     public function addStatutAction(Request $request, $id)
     {
@@ -141,10 +141,9 @@ class NewsController extends Controller
             $statut = $form->getData();
             $statut->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
-            
+
             // ajouter un historique
-            if($statut->getDetailStatut()->getDetail() == "Email suite No Contact" OR $statut->getStatut()->getSlug() == "recevabilite" OR ($statut->getStatut()->getSlug() == "rv1-realise" OR $statut->getStatut()->getSlug() == "rv2-realise"))
-            {
+            if ($statut->getDetailStatut()->getDetail() == "Email suite No Contact" OR $statut->getStatut()->getSlug() == "recevabilite" OR ($statut->getStatut()->getSlug() == "rv1-realise" OR $statut->getStatut()->getSlug() == "rv2-realise")) {
                 $historique = new Historique();
                 $historique->setHeuredebut(new \DateTime('now'));
                 $historique->setHeurefin(new \DateTime('now'));
@@ -157,10 +156,9 @@ class NewsController extends Controller
                 $historique->setUser($this->getUser());
                 $em->persist($historique);
             }
-            
+
             // ajouter un suivi administratif 
-            if($statut->getDetailStatut()->getDetail() == "RV1 Positif" OR $statut->getDetailStatut()->getDetail() == "RV2 Positif")
-            {
+            if ($statut->getDetailStatut()->getDetail() == "RV1 Positif" OR $statut->getDetailStatut()->getDetail() == "RV2 Positif") {
                 $statutRepo = $em->getRepository('ApplicationPlateformeBundle:Statut')->findOneBySlug("dossier-en-cours");
                 $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByStatut($statutRepo->getId());
 
@@ -170,7 +168,7 @@ class NewsController extends Controller
                 $suiviAdministraif->setDetailStatut($detailStatutRepo);
                 $em->persist($suiviAdministraif);
             }
-            
+
             $em->persist($statut);
             $em->flush();
 
@@ -254,9 +252,9 @@ class NewsController extends Controller
         }
 
         return $this->render('ApplicationPlateformeBundle:News:edit.html.twig', array(
-            'news'      => $news,
+            'news' => $news,
             'beneficiaire' => $beneficiaire,
-            'edit_form'   => $editForm->createView(),
+            'edit_form' => $editForm->createView(),
         ));
     }
 
