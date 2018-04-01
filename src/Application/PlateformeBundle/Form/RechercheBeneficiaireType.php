@@ -124,7 +124,7 @@ class RechercheBeneficiaireType extends AbstractType
 
             ->add('cacher', CheckboxType::class, array(
                 "mapped" => false,
-                'label'    => 'Ne pas afficher les Bénéficiaires en Statut Abandon, Reporté, Terminé',
+                'label'    => 'Ne pas afficher les Bénéficiaires en Statut Abandon, Terminé',
                 'required' => false,
             ))
 
