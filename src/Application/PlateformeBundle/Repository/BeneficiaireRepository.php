@@ -74,7 +74,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
-    public function getBeneficiaireWithDate($dateDebut = null , $dateFin = null, $groupBy = null)
+    public function getBeneficiaireWithDate($dateDebut = null , $dateFin = null)
     {
         $queryBuilder = $this->createQueryBuilder("b");
 
@@ -87,10 +87,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter("dateCurrent", $dateCurrent.'%');
         }
 
-        if(!is_null($groupBy)){
-            $queryBuilder->groupBy('b.'.$groupBy);
-        }
-
         $queryBuilder->orderBy('b.id' , 'DESC');
 
         $query = $queryBuilder->getQuery();
@@ -99,10 +95,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
-    public function getBeneficiaireNonAbouti()
-    {
 
-    }
 
     /**
      * @param Beneficiaire $beneficiaire
