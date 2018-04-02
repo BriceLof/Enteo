@@ -283,6 +283,8 @@ class BeneficiaireController extends Controller
      */
     public function searchAction(Request $request)
     {
+        ini_set('memory_limit',-1);
+
         $idUtilisateur = null;
 
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or true === $this->get('security.authorization_checker')->isGranted('ROLE_COMMERCIAL') or true === $this->get('security.authorization_checker')->isGranted('ROLE_GESTION')) {
@@ -299,6 +301,10 @@ class BeneficiaireController extends Controller
         if ($form->isValid()){
 
             $complementStatut = $form->get('complementStatut')->getData();
+            $complementDetailStatut = $form->get('complementDetailStatut')->getData();
+            if (is_null($complementDetailStatut)){
+                $complementDetailStatut = '>=';
+            }
 			$detailStatut =  $form->get("detailStatut")->getData();
 			$cacher =  $form->get("cacher")->getData();
 			$statut =  $form->get("statut")->getData();
@@ -310,7 +316,7 @@ class BeneficiaireController extends Controller
             $dateDebut = null;
             $dateFin = null;
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher, $complementDetailStatut);
             $results = $query->getResult();
 
             $start = 50*$page;

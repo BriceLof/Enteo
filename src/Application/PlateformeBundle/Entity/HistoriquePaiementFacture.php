@@ -63,6 +63,13 @@ class HistoriquePaiementFacture
     /**
      * @var string
      *
+     * @ORM\Column(name="banque", type="string", length=255, nullable=true)
+     */
+    private $banque;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="commentaire", type="string", length=255, nullable=true)
      */
     private $commentaire;
@@ -249,5 +256,29 @@ class HistoriquePaiementFacture
     public function getDatePaiement()
     {
         return $this->datePaiement;
+    }
+
+    /**
+     * Set banque
+     *
+     * @param string $banque
+     *
+     * @return HistoriquePaiementFacture
+     */
+    public function setBanque($banque)
+    {
+        $this->banque = $banque;
+
+        return $this;
+    }
+
+    /**
+     * Get banque
+     *
+     * @return string
+     */
+    public function getBanque()
+    {
+        return $this->banque;
     }
 }

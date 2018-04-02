@@ -1,0 +1,10 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}{{ reference }}{% endblock %}
+{% block contentMail %}
+    {{ user.civilite|capitalize~" "~user.nom }} a passé le Bénéficiaire
+    <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
+        {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
+    </a>
+    en statut Abandon au motif suivant : <br><br>
+    {{ motif }}
+{% endblock %}

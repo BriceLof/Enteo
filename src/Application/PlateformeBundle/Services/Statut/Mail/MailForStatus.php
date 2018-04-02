@@ -78,5 +78,20 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
 //        $this->sendMessage($from, 'f.azoulay@entheor.com',null, null, null, $subject, $body, $attachment);
     }
+
+    public function AbandonBeneficiaire($beneficiaire, $user, $motif){
+        $ref = "5a";
+        $from = "christine.clementmolier@entheor.com";
+        $subject = "Abandon d'un Bénéficiaire";
+        $template = '@Apb/Alert/Mail/alerteAbandon.html.twig';
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
+            'user' => $user,
+            'reference' => $ref,
+            'motif' => $motif
+        ));
+
+        $this->sendMessageToAdminAndGestion($from, $subject, $body);
+    }
     
 }

@@ -92,7 +92,10 @@ class LifecycleEventListener extends \Twig_Extension
                 La fiche de votre bénéficiaire <b></b><a href='https://appli.entheor.com/web/beneficiaire/show/" . $beneficiaire->getId() . "'>" . ucfirst($beneficiaire->getCiviliteConso()) . " " . ucfirst($beneficiaire->getPrenomConso()) . " " . strtoupper($beneficiaire->getNomConso()) . "</a></b> a été mise à jour.<br><br>  
                 De nouvelles informations sont affichées dans la partie '" . $section . "'.  
                 ";
-                $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
+
+                // Desabonner christine des notifications
+                if($consultant->getEmail() !='christine.clementmolier@entheor.com')
+                    $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
             }
         }
     }

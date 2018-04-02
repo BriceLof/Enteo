@@ -33,8 +33,9 @@ class Mailer
         $mail = \Swift_Message::newInstance();
 
         //---- DKIM
+        //var_dump($_SERVER['HTTP_HOST']);exit;
         $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
-        $signer = new \Swift_Signers_DKIMSigner($privateKey, $_SERVER['HTTP_HOST'], 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
+        $signer = new \Swift_Signers_DKIMSigner($privateKey, 'appli-dev.entheor.com', 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
         $mail->attachSigner($signer);
 
         if(!empty($replyTo))
@@ -45,6 +46,37 @@ class Mailer
             $mail->setBcc($bcc);
         if(!empty($subject))
             $mail->setSubject($subject);
+        if (!empty($attachement)){
+            $mail->attach($attachement);
+        }
+
+        $mail
+            ->setFrom($from)
+            ->setTo($to)
+            ->setBody($body, 'text/html')
+            ->addPart(strip_tags($body), 'text/plain');
+
+        $this->mailer->send($mail);
+    }
+
+    public function sendMessageToAdminAndGestion($from, $subject, $body, $attachement = null){
+        $mail = \Swift_Message::newInstance();
+
+        //---- DKIM
+        $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
+        $signer = new \Swift_Signers_DKIMSigner($privateKey, 'appli-dev.entheor.com', 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
+        $mail->attachSigner($signer);
+
+        $emails [] = 'virginie.hiairrassary@entheor.com';
+        $emails [] = 'f.azoulay@entheor.com';
+        $emails [] = 'ph.rouzaud@entheor.com';
+        $emails [] = 'christine.clementmolier@entheor.com';
+        $emails [] = 'contact@entheor.com';
+        $to = $emails;
+        $bcc = "support.informatique@entheor.com";
+
+        $mail->setBcc($bcc);
+        $mail->setSubject($subject);
         if (!empty($attachement)){
             $mail->attach($attachement);
         }
@@ -124,6 +156,7 @@ class Mailer
             'reference' => 'Notification'
         ));
         $bcc = array("support.informatique@entheor.com" => "Support", "f.azoulay@entheor.com" => "Franck Azoulay");
+
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
