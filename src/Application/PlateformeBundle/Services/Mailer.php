@@ -35,7 +35,7 @@ class Mailer
         //---- DKIM
         //var_dump($_SERVER['HTTP_HOST']);exit;
         $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
-        $signer = new \Swift_Signers_DKIMSigner($privateKey, 'appli-dev.entheor.com', 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
+        $signer = new \Swift_Signers_DKIMSigner($privateKey, 'appli.entheor.com', 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
         $mail->attachSigner($signer);
 
         if(!empty($replyTo))
@@ -156,6 +156,7 @@ class Mailer
             'reference' => 'Notification'
         ));
         $bcc = array("support.informatique@entheor.com" => "Support", "f.azoulay@entheor.com" => "Franck Azoulay");
+        
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
