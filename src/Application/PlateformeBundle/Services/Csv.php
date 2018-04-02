@@ -256,6 +256,7 @@ class Csv
                 utf8_decode('Statut création'),
                 'Statut facture',
                 utf8_decode('Mode de réglement'),
+                'Banque',
                 utf8_decode('Date de réglement'),
                 utf8_decode('Montant'),
                 'Commentaire',
@@ -291,7 +292,17 @@ class Csv
                     else
                         $datePaiementPrevu = "N.C.";
 
-                    array_push($tabValue,   ucfirst($historiqueFacture->getModePaiement()), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
+                    if($historiqueFacture->getModePaiement() == 'cheque'){
+                        if(!is_null($historiqueFacture->getBanque()) && $historiqueFacture->getBanque() != '')
+                            $banque = $historiqueFacture->getBanque();
+                        else
+                            $banque = "N.C.";
+                    }else{
+                        $banque = "";
+                    }
+
+
+                    array_push($tabValue,   ucfirst($historiqueFacture->getModePaiement()), ucfirst(utf8_decode($banque)), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
 
                     if($i == 0){
                         fputcsv(
@@ -305,6 +316,7 @@ class Csv
                             array(
                                 '','','','','','','','','','','','',
                                 ucfirst($historiqueFacture->getModePaiement()),
+                                ucfirst(utf8_decode($banque)),
                                 $datePaiementPrevu,
                                 $historiqueFacture->getMontant(),
                                 ucfirst(utf8_decode($historiqueFacture->getCommentaire()))
