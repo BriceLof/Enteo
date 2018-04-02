@@ -156,7 +156,7 @@ class Mailer
             'reference' => 'Notification'
         ));
         $bcc = array("support.informatique@entheor.com" => "Support", "f.azoulay@entheor.com" => "Franck Azoulay");
-        
+
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
