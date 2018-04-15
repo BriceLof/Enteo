@@ -8,7 +8,7 @@
             {% set style = "display:none" %}
          	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %} {% set style = "display:block" %} {% endif %}
             <span style="{{ style }}" class="col-md-2">{{ form_widget(form.consultant) }}</span>
-            <div class="col-md-6" style="{{ style }}">
+            <div class="col-md-6">
                 <div class="row">
                     <span class="col-md-1">{{ form_widget(form.complementStatut) }}</span>
                     <span class="col-md-5">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>

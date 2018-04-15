@@ -35,219 +35,226 @@
                     <div id="editBeneficiaire" class="tableOnglet">
                         <table>
                             <caption class="titreSection" style="position: relative">
-                                <a href="#collapseFicheBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseFicheBeneficiaire">
+                                <a href="#collapseFicheBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse"
+                                   role="button" aria-expanded="false" aria-controls="collapseFicheBeneficiaire">
                                     <span class="glyphicon glyphicon-minus"></span>
                                     <span>Fiche Bénéficiaire</span>
                                 </a>
-                                <span onclick="window.print()" title="imprimer cette fiche" class="btn btn-bg glyphicon glyphicon-print" style="position: absolute;right: 1px;top: -1px;"></span>
+                                <span onclick="window.print()" title="imprimer cette fiche"
+                                      class="btn btn-bg glyphicon glyphicon-print"
+                                      style="position: absolute;right: 1px;top: -1px;"></span>
                             </caption>
                         </table>
                         <div class="collapse in" id="collapseFicheBeneficiaire">
-                            <form action="{{ path('application_show_beneficiaire', { 'id':beneficiaire.id }) }}" method="POST" id="ficheBeneficiaireForm">
+                            <form action="{{ path('application_show_beneficiaire', { 'id':beneficiaire.id }) }}"
+                                  method="POST" id="ficheBeneficiaireForm">
                                 <table>
                                     <tbody>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.dateConfMer) }}</td>
+                                        <td>{{ form_widget(edit_form.dateConfMer) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.civiliteConso) }}</td>
+                                        <td>{{ form_widget(edit_form.civiliteConso) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.nomConso) }}</td>
+                                        <td>{{ form_widget(edit_form.nomConso) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.prenomConso) }}</td>
+                                        <td>{{ form_widget(edit_form.prenomConso) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.poste) }}</td>
+                                        <td>{{ form_widget(edit_form.poste) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.csp ) }}</td>
+                                        <td>{{ form_widget(edit_form.csp) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.type) }}</td>
+                                        <td>{{ form_widget(edit_form.type) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSection">Coordonnées</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.telConso) }}</td>
+                                        <td>{{ form_widget(edit_form.telConso) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.tel2) }}</td>
+                                        <td>{{ form_widget(edit_form.tel2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.emailConso) }}</td>
+                                        <td>{{ form_widget(edit_form.emailConso) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.email2) }}</td>
+                                        <td>{{ form_widget(edit_form.email2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSection">Adresse Bénéficiaire</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.adresse) }}{{ form_widget(edit_form.proposition_adresse, {'attr':{'value': beneficiaire.adresse}}) }}</td>
+                                        <td>{{ form_widget(edit_form.adresse) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.adresseComplement) }}</td>
+                                        <td>{{ form_widget(edit_form.adresseComplement) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.code_postal) }}</td>
+                                        <td>{{ form_widget(edit_form.code_postal, {'attr':{'value': beneficiaire.ville.cp }}) }}</td>
+                                    </tr>
+                                    {% if beneficiaire.ville is not null %}
                                         <tr>
-                                            <td>{{ form_label(edit_form.dateConfMer) }}</td>
-                                            <td>{{ form_widget(edit_form.dateConfMer) }}</td>
+                                            <td>Ville</td>
+                                            <td>{{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjaxBeneficiaire' }}) }}</td>
                                         </tr>
+                                    {% else %}
                                         <tr>
-                                            <td>{{ form_label(edit_form.civiliteConso) }}</td>
-                                            <td>{{ form_widget(edit_form.civiliteConso) }}</td>
+                                            <td>{{ form_label(edit_form.ville.nom) }}</td>
+                                            <td>{{ form_widget(edit_form.ville.nom ) }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.nomConso) }}</td>
-                                            <td>{{ form_widget(edit_form.nomConso) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.prenomConso) }}</td>
-                                            <td>{{ form_widget(edit_form.prenomConso) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.poste) }}</td>
-                                            <td>{{ form_widget(edit_form.poste) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.csp )}}</td>
-                                            <td>{{ form_widget(edit_form.csp) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.type) }}</td>
-                                            <td>{{ form_widget(edit_form.type) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tableSection">Coordonnées</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.telConso) }}</td>
-                                            <td>{{ form_widget(edit_form.telConso) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.tel2) }}</td>
-                                            <td>{{ form_widget(edit_form.tel2) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.emailConso) }}</td>
-                                            <td>{{ form_widget(edit_form.emailConso) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.email2) }}</td>
-                                            <td>{{ form_widget(edit_form.email2) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tableSection">Adresse Bénéficiaire</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.adresse) }}{{ form_widget(edit_form.proposition_adresse, {'attr':{'value': beneficiaire.adresse}}) }}</td>
-                                            <td>{{ form_widget(edit_form.adresse) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.adresseComplement) }}</td>
-                                            <td>{{ form_widget(edit_form.adresseComplement) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.code_postal) }}</td>
-                                            <td>{{ form_widget(edit_form.code_postal, {'attr':{'value': beneficiaire.ville.cp }}) }}</td>
-                                        </tr>
-                                        {% if beneficiaire.ville is not null %}
-                                            <tr>
-                                                <td>Ville </td>
-                                                <td>{{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjaxBeneficiaire' }}) }}</td>
-                                            </tr>
-                                        {% else %}
-                                            <tr>
-                                                <td>{{ form_label(edit_form.ville.nom) }}</td>
-                                                <td>{{ form_widget(edit_form.ville.nom ) }}</td>
-                                            </tr>
-                                        {% endif %}
-                                        <tr>
-                                            <td>{{ form_label(edit_form.pays) }}</td>
-                                            <td>{{ form_widget(edit_form.pays) }}</td>
-                                        </tr>
-										<tr>
-                                            <td>{{ form_label(edit_form.regionTravail) }}</td>
-                                            <td>{{ form_widget(edit_form.regionTravail) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.dptTravail) }}</td>
-                                            <td>{{ form_widget(edit_form.dptTravail) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.numSecu) }}</td>
-                                            <td><span style="display: inline-block">{{ form_widget(edit_form.numSecu) }}</span><span style="display: inline-block;">{{ form_widget(edit_form.numSecuCle) }}</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.dateNaissance) }}</td>
-                                            <td>{{ form_widget(edit_form.dateNaissance) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="tableSection">
-                                                Employeur
-                                                {{ form_widget(edit_form.employeur.codePostalHiddenEmployeur, {'attr':{'value': codePostalHiddenEmployeur }}) }}
-                                                {{ form_widget(edit_form.employeur.idVilleHiddenEmployeur, {'attr':{'value': idVilleHiddenEmployeur }}) }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.raisonSociale) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.raisonSociale, {'attr':{'class': 'fiche' }}) }}</td>
-                                        </tr>
-                                        <div class="hide">
-                                            <div>
-                                                <span>{{ form_label(edit_form.employeur.typeFinanceur) }}</span>
-                                                <span>{{ form_widget(edit_form.employeur.typeFinanceur, {'attr':{'class': 'fiche' }}) }}</span>
-                                            </div>
-                                            <div style="display: none" id="tdElement">
-                                                <span>{{ form_label(edit_form.employeur.organisme) }}</span>
-                                                <span>{{ form_widget(edit_form.employeur.organisme, { 'id': 'organisme' }) }}</span>
-                                            </div>
+                                    {% endif %}
+                                    <tr>
+                                        <td>{{ form_label(edit_form.pays) }}</td>
+                                        <td>{{ form_widget(edit_form.pays) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.regionTravail) }}</td>
+                                        <td>{{ form_widget(edit_form.regionTravail) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.dptTravail) }}</td>
+                                        <td>{{ form_widget(edit_form.dptTravail) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.numSecu) }}</td>
+                                        <td>
+                                            <span style="display: inline-block">{{ form_widget(edit_form.numSecu) }}</span><span
+                                                    style="display: inline-block;">{{ form_widget(edit_form.numSecuCle) }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.dateNaissance) }}</td>
+                                        <td>{{ form_widget(edit_form.dateNaissance) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tableSection">
+                                            Employeur
+                                            {{ form_widget(edit_form.employeur.codePostalHiddenEmployeur, {'attr':{'value': codePostalHiddenEmployeur }}) }}
+                                            {{ form_widget(edit_form.employeur.idVilleHiddenEmployeur, {'attr':{'value': idVilleHiddenEmployeur }}) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.raisonSociale) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.raisonSociale, {'attr':{'class': 'fiche' }}) }}</td>
+                                    </tr>
+                                    <div class="hide">
+                                        <div>
+                                            <span>{{ form_label(edit_form.employeur.typeFinanceur) }}</span>
+                                            <span>{{ form_widget(edit_form.employeur.typeFinanceur, {'attr':{'class': 'fiche' }}) }}</span>
                                         </div>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.siret) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.siret) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.conventionCollective) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.conventionCollective) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.apeNace) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.apeNace) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.adresse) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.adresse) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>{{ form_label(edit_form.employeur.adresseComplement) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.adresseComplement) }}</td>
-                                        </tr>
-                                        {% if beneficiaire.employeur is not null %}
-                                            {% if beneficiaire.employeur.ville is not null %}
-                                                <tr>
-                                                    <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
-                                                    <td>{{ form_widget(edit_form.employeur.code_postal, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ville </td>
-                                                    <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
-                                                </tr>
-                                            {% else %}
-                                                <tr>
-                                                    <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
-                                                    <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{ form_label(edit_form.employeur.ville) }}</td>
-                                                    <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
-                                                </tr>
-                                            {% endif %}
+                                        <div style="display: none" id="tdElement">
+                                            <span>{{ form_label(edit_form.employeur.organisme) }}</span>
+                                            <span>{{ form_widget(edit_form.employeur.organisme, { 'id': 'organisme' }) }}</span>
+                                        </div>
+                                    </div>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.siret) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.siret) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.conventionCollective) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.conventionCollective) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.apeNace) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.apeNace) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.adresse) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.adresse) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.adresseComplement) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.adresseComplement) }}</td>
+                                    </tr>
+                                    {% if beneficiaire.employeur is not null %}
+                                        {% if beneficiaire.employeur.ville is not null %}
+                                            <tr>
+                                                <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
+                                                <td>{{ form_widget(edit_form.employeur.code_postal, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Ville</td>
+                                                <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
+                                            </tr>
                                         {% else %}
                                             <tr>
                                                 <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
                                                 <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Ville </td>
+                                                <td>{{ form_label(edit_form.employeur.ville) }}</td>
                                                 <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
                                             </tr>
                                         {% endif %}
+                                    {% else %}
                                         <tr>
-                                            <td>{{ form_label(edit_form.pays) }}</td>
-                                            <td>{{ form_widget(edit_form.pays) }}</td>
+                                            <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
                                         </tr>
                                         <tr>
-                                        <tr>
-                                            <td class="tableSection">contact</td>
+                                            <td>Ville</td>
+                                            <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
                                         </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>{{ form_label(edit_form.pays) }}</td>
+                                        <td>{{ form_widget(edit_form.pays) }}</td>
+                                    </tr>
+                                    <tr>
+                                    <tr>
+                                        <td class="tableSection">contact</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 {# ajout modification de contact #}
-                                        <div>
-                                            <div class="contact_employeur">{{ form_widget(edit_form.contactEmployeur) }}</div>
-                                        </div>
+                                <div>
+                                    <div class="contact_employeur">{{ form_widget(edit_form.contactEmployeur) }}</div>
+                                </div>
                                 <table>
                                     <tbody>
-                                        <tr>
-                                            <td>{{ form_errors(edit_form) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                            <td class="valider">{{ form_widget(edit_form.submit) }}</td>
-                                        </tr>
-                                        <tr class="form-rest">
-                                            <td>{{ form_rest(edit_form) }}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ form_errors(edit_form) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td class="valider">{{ form_widget(edit_form.submit) }}</td>
+                                    </tr>
+                                    <tr class="form-rest">
+                                        <td>{{ form_rest(edit_form) }}</td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </form>
@@ -259,82 +266,113 @@
                 <div class="sectionBeneficiaire">
                     <div id="statut" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse" onclick="plusMoins(this);" role="button" aria-expanded="false" aria-controls="collapseStatut"><span class="glyphicon glyphicon-minus"></span><span>Statut bénéficiaire</span></a></caption>
+                            <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse"
+                                                             onclick="plusMoins(this);" role="button"
+                                                             aria-expanded="false" aria-controls="collapseStatut"><span
+                                            class="glyphicon glyphicon-minus"></span><span>Statut bénéficiaire</span></a>
+                            </caption>
                         </table>
                         <div class="collapse in" id="collapseStatut">
                             {% if(beneficiaire.news | length > 0) %}
                                 {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
                             {% endif %}
-                            
+
                             {# Boucle sur le tableau à l'envers, pour obtenir le dernier suivi administratif qui est egal à 'financement' ou 'dossier-en-...' #}
                             {# La variable 'break' set à quitter la boucle lorsque j'ai ce que je souhaite #}
                             {% set break, indexSuiviAd = 0, null %}
                             {% for suiviAd in beneficiaire.suiviAdministratif | reverse if break == 0 %}
-                                {% if suiviAd.statut is not null %}    
+                                {% if suiviAd.statut is not null %}
                                     {% if suiviAd.statut.slug == 'financement' or suiviAd.statut.slug == 'dossier-en-cours' %}
                                         {% set break, indexSuiviAd  = 1, loop.index0 %}
-                                    {% endif %} 
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
-                            
+
                             <div class="row" style="margin-left: -6px;">
-                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut commercial : </p>
+                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
+                                    commercial : </p>
                                 <p class="col-xs-4">
-                                    <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_new" class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a>
+                                    <a href="#" title="Mise à jour du statut bénéficiaire maj"
+                                       style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}"
+                                       data-toggle="modal" data-target="#block_formulaire_ajout_new"
+                                       class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a>
                                 </p>
                                 <p class="col-xs-4">
                                     {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
                                 </p>
                             </div>
-                            <div class="row" style="margin-left: -6px;">    
-                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut de recevabilité : </p>
+                            <div class="row" style="margin-left: -6px;">
+                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut de
+                                    recevabilité : </p>
                                 <p class="col-xs-4">
-                                    <a href="#" title="Mise à jour du statut bénéficiaire maj" style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}" data-toggle="modal" data-target="#block_formulaire_ajout_statut_recevabilite" class="link_formulaire_add_news maj">{{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].statut.nom : 'Maj Statut' }}</a>
+                                    <a href="#" title="Mise à jour du statut bénéficiaire maj"
+                                       style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}"
+                                       data-toggle="modal" data-target="#block_formulaire_ajout_statut_recevabilite"
+                                       class="link_formulaire_add_news maj">{{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].statut.nom : 'Maj Statut' }}</a>
                                 </p>
                                 <p class="col-xs-4">
                                     {{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].detailStatut.detail : '' }}
                                 </p>
-                             </div>
-                             <div class="row" style="margin-left: -6px;">   
-                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut administratif : </p>
-                                <p class="col-xs-4">
-                                    {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
-                                </p>
-                                <p class="col-xs-4">
-                                    {% if indexSuiviAd is not null and beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut is not null %}
-                                        {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }}
-                                    {% endif %}
-                                </p>
                             </div>
-                            
-                            <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="row" style="margin-left: -6px;">
+                                <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
+                                    administratif : </p>
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+                                    <p class="col-xs-4">
+                                        {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
+                                    </p>
+                                    <p class="col-xs-4">
+                                        {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
+                                    </p>
+                                {% else %}
+                                    <p class="col-xs-4">
+                                        {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
+                                    </p>
+                                    <p class="col-xs-4">
+                                        {% if indexSuiviAd is not null and beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut is not null %}
+                                            {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }}
+                                        {% endif %}
+                                    </p>
+                                {% endif %}
+                            </div>
+
+                            <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new"
+                                   tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header my_header_modal">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Maj Statut bénéficiaire</h4>  
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Maj Statut bénéficiaire</h4>
                                         </div>
-                                        <div class="modal-body">        
-                                            <form method="POST" id="newsForm" action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}" >
+                                        <div class="modal-body">
+                                            <form method="POST" id="newsForm"
+                                                  action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}">
                                                 {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
-                                                <input type="hidden" id="statutIDCurrentBlockStatut" value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}" />
+                                                <input type="hidden" id="statutIDCurrentBlockStatut"
+                                                       value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}"/>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </aside>
-                                            
-                            <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_statut_recevabilite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+                            <aside class="modal fade block_formulaire_ajout_new"
+                                   id="block_formulaire_ajout_statut_recevabilite" tabindex="-1" role="dialog"
+                                   aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header my_header_modal">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Maj Statut Recevabilité</h4>  
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">Maj Statut Recevabilité</h4>
                                         </div>
-                                        <div class="modal-body">        
-                                            <form method="POST" id="newsForm" action="{{ path('application_add_news', { 'id' : beneficiaire.id }) }}" >
+                                        <div class="modal-body">
+                                            <form method="POST" id="newsForm"
+                                                  action="{{ path('application_add_news', { 'id' : beneficiaire.id }) }}">
                                                 {{ render(controller("ApplicationPlateformeBundle:News:addStatut",{'id': beneficiaire.id })) }}
-                                                <input type="hidden" id="statutIDCurrentBlockStatut" value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}" />
+                                                <input type="hidden" id="statutIDCurrentBlockStatut"
+                                                       value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}"/>
                                             </form>
                                         </div>
                                     </div>
@@ -345,7 +383,12 @@
 
                     <div class="tableOnglet" id="agenda_consultant_pour_beneficiaire">
                         <table>
-                            <caption class="titreSection"><a  id="agendaCollapse" href="#collapseAgenda" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Rendez-vous</span></a></caption>
+                            <caption class="titreSection"><a id="agendaCollapse" href="#collapseAgenda"
+                                                             onclick="plusMoins(this);" data-toggle="collapse"
+                                                             role="button" aria-expanded="false"
+                                                             aria-controls="collapseHistorique"><span
+                                            class="glyphicon glyphicon-minus"></span><span>Rendez-vous</span></a>
+                            </caption>
                         </table>
                         {% include "ApplicationPlateformeBundle:Beneficiaire:afficheConsultant.html.twig" %}
                     </div>
@@ -358,7 +401,8 @@
                                     </button>
                                     <h4 class="modal-title" id="myModalLabel">Changement de Consultant</h4>
                                 </div>
-                                <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}" method="post">
+                                <form action="{{ path('application_edit_consultant_beneficiaire', { 'id' : beneficiaire.id }) }}"
+                                      method="post">
                                     {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:editConsultant",{'id': beneficiaire.id})) }}
                                 </form>
                             </div>
@@ -367,59 +411,79 @@
 
                     <div id="ProjetBeneficiaire" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a href="#collapseProjetBeneficiaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseProjetBeneficiaire"><span class="glyphicon glyphicon-minus"></span><span>Projet Bénéficiaire</span></a></caption>
+                            <caption class="titreSection"><a href="#collapseProjetBeneficiaire"
+                                                             onclick="plusMoins(this);" data-toggle="collapse"
+                                                             role="button" aria-expanded="false"
+                                                             aria-controls="collapseProjetBeneficiaire"><span
+                                            class="glyphicon glyphicon-minus"></span><span>Projet Bénéficiaire</span></a>
+                            </caption>
                         </table>
                         <div class="collapse in" id="collapseProjetBeneficiaire">
-                            <form method="POST" id="projetEditForm" action="{{ path('application_projet_beneficiaire', { 'id' : beneficiaire.id }) }}" >
+                            <form method="POST" id="projetEditForm"
+                                  action="{{ path('application_projet_beneficiaire', { 'id' : beneficiaire.id }) }}">
                                 <table>
                                     <tbody>
-                                        {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:projet",{'id': beneficiaire.id})) }}
+                                    {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:projet",{'id': beneficiaire.id})) }}
                                     </tbody>
                                 </table>
                             </form>
                         </div>
                     </div>
-    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
-                    <div id="accompagnement" class="tableOnglet">
-                        <table>
-                            <caption class="titreSection"><a href="#collapseAccompagnement" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseAccompagnement"><span class="glyphicon glyphicon-minus"></span><span>Accompagnement</span></a></caption>
-                        </table>
-                        <div class="collapse in" id="collapseAccompagnement">
-                            <div id="form_accompagnement">
-                                <form method="POST" id="accompagnementEditForm" action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}" >
-                                    <div>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+                        <div id="accompagnement" class="tableOnglet">
+                            <table>
+                                <caption class="titreSection"><a href="#collapseAccompagnement"
+                                                                 onclick="plusMoins(this);" data-toggle="collapse"
+                                                                 role="button" aria-expanded="false"
+                                                                 aria-controls="collapseAccompagnement"><span
+                                                class="glyphicon glyphicon-minus"></span><span>Accompagnement</span></a>
+                                </caption>
+                            </table>
+                            <div class="collapse in" id="collapseAccompagnement">
+                                <div id="form_accompagnement">
+                                    <form method="POST" id="accompagnementEditForm"
+                                          action="{{ path('application_edit_accompagnement', { 'id' : beneficiaire.id }) }}">
                                         <div>
-                                            {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div id="doc_accompagnement">
-                                {% include "ApplicationPlateformeBundle:Document:docAccompagnement.html.twig" %}
-                            </div>
-                        </div>
-                        {% if beneficiaire.accompagnement is not null %}
-                            <div id="bloc_add_financment">
-                                <div  class="modal fade" id="addfinancement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                <h4 class="modal-title" id="myModalLabel">Ajouter un Financement</h4>
+                                            <div>
+                                                {{ render(controller("ApplicationPlateformeBundle:Accompagnement:show",{'id': beneficiaire.id})) }}
                                             </div>
-                                            {{ render(controller("ApplicationPlateformeBundle:Financeur:new",{'id': beneficiaire.id})) }}
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="doc_accompagnement">
+                                    {% include "ApplicationPlateformeBundle:Document:docAccompagnement.html.twig" %}
+                                </div>
+                            </div>
+                            {% if beneficiaire.accompagnement is not null %}
+                                <div id="bloc_add_financment">
+                                    <div class="modal fade" id="addfinancement" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel">Ajouter un
+                                                        Financement</h4>
+                                                </div>
+                                                {{ render(controller("ApplicationPlateformeBundle:Financeur:new",{'id': beneficiaire.id})) }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endif %}
-                    </div>
-    {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
                     <div id="espaceDocumentaire" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a href="#collapseEspaceDocumentaire" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseEspaceDocumentaire"><span class="glyphicon glyphicon-minus"></span><span>Espace Documentaire</span></a></caption>
+                            <caption class="titreSection"><a href="#collapseEspaceDocumentaire"
+                                                             onclick="plusMoins(this);" data-toggle="collapse"
+                                                             role="button" aria-expanded="false"
+                                                             aria-controls="collapseEspaceDocumentaire"><span
+                                            class="glyphicon glyphicon-minus"></span><span>Espace Documentaire</span></a>
+                            </caption>
                         </table>
                         <div class="collapse in" id="collapseEspaceDocumentaire">
                             <div>
@@ -431,34 +495,55 @@
                                             {% if 'pdf' in document.path or 'docx' in document.path or 'doc' in document.path %}
                                                 {{ afficherDocument(beneficiaire, document.path) }}
                                                 <tr>
-                                                    <td><a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>
+                                                    <td>
+                                                        <a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}"
+                                                           target="_blank"
+                                                           style="color:#333;">{{ document.description }}</a></td>
                                                     <td></td>
                                                     <td class="btn" width="100%">
-                                                            <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
-                                                            <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+                                                        <span style="font-size: 11px;" data-toggle="modal"
+                                                              data-target="#myModalDocumentDelete{{ loop.index }}"
+                                                              class="glyphicon glyphicon-remove"
+                                                              title="Supprimer le document"></span>
+                                                        <span style="font-size: 11px;" data-toggle="modal"
+                                                              data-target="#myModalDocumentModify{{ loop.index }}"
+                                                              class="glyphicon glyphicon-pencil"
+                                                              title="Modifier le document"></span>
 
                                                     </td>
                                                 </tr>
                                             {% else %}
                                                 <tr>
-                                                    <td><a href="{{ path('application_show_document', { 'path' : document.path }) }}" target="_blank" style="color:#333;">{{ document.description }}</a></td>
+                                                    <td>
+                                                        <a href="{{ path('application_show_document', { 'path' : document.path }) }}"
+                                                           target="_blank"
+                                                           style="color:#333;">{{ document.description }}</a></td>
                                                     <td></td>
                                                     <td class="btn" width="100%">
-                                                        <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentDelete{{ loop.index }}" class="glyphicon glyphicon-remove" title="Supprimer le document"></span>
-                                                        <span style="font-size: 11px;" data-toggle="modal" data-target="#myModalDocumentModify{{ loop.index }}" class="glyphicon glyphicon-pencil" title="Modifier le document"></span>
+                                                        <span style="font-size: 11px;" data-toggle="modal"
+                                                              data-target="#myModalDocumentDelete{{ loop.index }}"
+                                                              class="glyphicon glyphicon-remove"
+                                                              title="Supprimer le document"></span>
+                                                        <span style="font-size: 11px;" data-toggle="modal"
+                                                              data-target="#myModalDocumentModify{{ loop.index }}"
+                                                              class="glyphicon glyphicon-pencil"
+                                                              title="Modifier le document"></span>
 
                                                     </td>
                                                 </tr>
                                             {% endif %}
 
-                                            <div  class="modal fade" id="myModalDocumentDelete{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal fade" id="myModalDocumentDelete{{ loop.index }}"
+                                                 tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
-                                                            <h4 class="modal-title" id="myModalLabel">Supprimer un document</h4>
+                                                            <h4 class="modal-title" id="myModalLabel">Supprimer un
+                                                                document</h4>
                                                         </div>
                                                         <div class="modal-body">
                                                             <div>
@@ -467,8 +552,11 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div>
-                                                                <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
-                                                                <a style="width: 95px;float: right" class="deleteBtn" href="{{ path('application_delete_document', { 'id': document.id }) }}">
+                                                                <button type="button" class="btn btn-default deleteBtn"
+                                                                        data-dismiss="modal">Annuler
+                                                                </button>
+                                                                <a style="width: 95px;float: right" class="deleteBtn"
+                                                                   href="{{ path('application_delete_document', { 'id': document.id }) }}">
                                                                     <button class="btn btn-danger">Supprimer</button>
                                                                 </a>
                                                             </div>
@@ -476,23 +564,33 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div  class="modal fade" id="myModalDocumentModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal fade" id="myModalDocumentModify{{ loop.index }}"
+                                                 tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-                                                        <form method="POST" action="{{ path('application_update_document', { 'id': document.id }) }}">
-                                                            <div class="modal-header" >
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <form method="POST"
+                                                              action="{{ path('application_update_document', { 'id': document.id }) }}">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
-                                                                <h4 class="modal-title" id="myModalLabel">Modifier un document</h4>
+                                                                <h4 class="modal-title" id="myModalLabel">Modifier un
+                                                                    document</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Nom du fichier : <input type="text" value="{{ document.description }}" name="document_nom_modifier" />
+                                                                Nom du fichier : <input type="text"
+                                                                                        value="{{ document.description }}"
+                                                                                        name="document_nom_modifier"/>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <div>
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                                                    <button type="submit" class="btn btn-warning">Modifier</button>
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Annuler
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-warning">
+                                                                        Modifier
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -504,8 +602,13 @@
                                 </table>
                             </div>
                             <div id="AjoutDocument" class="collapse in">
-                                <a href="#" id="add_document" class=""><span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right: 5px;"></span>Ajouter un Document</a>
-                                <form id="newDocumentsForm" action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}" method="POST" enctype="multipart/form-data">
+                                <a href="#" id="add_document" class=""><span class="glyphicon glyphicon-plus"
+                                                                             aria-hidden="true"
+                                                                             style="margin-right: 5px;"></span>Ajouter
+                                    un Document</a>
+                                <form id="newDocumentsForm"
+                                      action="{{ path('application_new_document', { 'id' : beneficiaire.id }) }}"
+                                      method="POST" enctype="multipart/form-data">
                                     {{ render(controller("ApplicationPlateformeBundle:Document:new",{'id': beneficiaire.id})) }}
                                 </form>
                             </div>
@@ -513,7 +616,12 @@
                     </div>
                     <div id="satisfactionRecommandation" class="tableOnglet">
                         <table class="table-condensed">
-                            <caption class="titreSection"><a href="#collapseSatisfationRecommandation" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSatisfactionRecommandation"><span class="glyphicon glyphicon-minus"></span><span>Satisfaction/Recommandation</span></a></caption>
+                            <caption class="titreSection"><a href="#collapseSatisfationRecommandation"
+                                                             onclick="plusMoins(this);" data-toggle="collapse"
+                                                             role="button" aria-expanded="false"
+                                                             aria-controls="collapseSatisfactionRecommandation"><span
+                                            class="glyphicon glyphicon-minus"></span><span>Satisfaction/Recommandation</span></a>
+                            </caption>
                             <tbody class="collapse in" id="collapseSatisfationRecommandation">
                             </tbody>
                         </table>
@@ -528,46 +636,63 @@
                     </div>
                     <div id="historique" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a  id="historiqueCollapse" href="#collapseHistorique" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseHistorique"><span class="glyphicon glyphicon-minus"></span><span>Historique bénéficiaire</span></a></caption>
+                            <caption class="titreSection"><a id="historiqueCollapse" href="#collapseHistorique"
+                                                             onclick="plusMoins(this);" data-toggle="collapse"
+                                                             role="button" aria-expanded="false"
+                                                             aria-controls="collapseHistorique"><span
+                                            class="glyphicon glyphicon-minus"></span><span>Historique bénéficiaire</span></a>
+                            </caption>
                         </table>
                         <div id="collapseHistorique" class="collapse in">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                 {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
+                                {{ render(controller("ApplicationPlateformeBundle:Historique:showAll",{'beneficiaire': beneficiaire})) }}
                             </div>
                         </div>
                     </div>
 
-    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
-                    <div id="suiviAdministratif" class="tableOnglet">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+                        <div id="suiviAdministratif" class="tableOnglet">
                             <table>
-                                <caption class="titreSection"><a id="suiviAdministratifCollapse" href="#collapseSuiviAdministratif" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSuiviAdministratif"><span class="glyphicon glyphicon-minus"></span><span>Suivi Administratif</span></a></caption>
+                                <caption class="titreSection"><a id="suiviAdministratifCollapse"
+                                                                 href="#collapseSuiviAdministratif"
+                                                                 onclick="plusMoins(this);" data-toggle="collapse"
+                                                                 role="button" aria-expanded="false"
+                                                                 aria-controls="collapseSuiviAdministratif"><span
+                                                class="glyphicon glyphicon-minus"></span><span>Suivi Administratif</span></a>
+                                </caption>
                             </table>
                             <div class="collapse in" id="collapseSuiviAdministratif">
                                 {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:showAll",{'beneficiaire': beneficiaire})) }}
 
-                                <form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm" action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}" >
+                                <form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm"
+                                      action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}">
                                     <table>
                                         <tbody>
-                                            {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:new",{'id': beneficiaire.id})) }}
+                                        {{ render(controller("ApplicationPlateformeBundle:SuiviAdministratif:new",{'id': beneficiaire.id})) }}
                                         </tbody>
                                     </table>
                                 </form>
 
 
                             </div>
-                          
+
                             {% if(beneficiaire.suiviAdministratif | length > 0) %}
                                 {% set dernier_suivi = beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif | length -1] %}
                                 <!-- ID du statut du dernier suivi administratif du bénéficiaire ou celui de Recevabilité si aucun suivi encore. On s'en sert dans js pour avoir le statut suivant -->
-                                <input type="hidden" value="{% if dernier_suivi.statut is not null and beneficiaire.suiviAdministratif | length > 0 %} {{ dernier_suivi.statut.id }} {% else %} 7 {% endif %}" class="statutIDCurrentSuiviAd"/>
+                                <input type="hidden"
+                                       value="{% if dernier_suivi.statut is not null and beneficiaire.suiviAdministratif | length > 0 %} {{ dernier_suivi.statut.id }} {% else %} 7 {% endif %}"
+                                       class="statutIDCurrentSuiviAd"/>
                             {% else %}
                                 <input type="hidden" value="7" class="statutIDCurrentSuiviAd"/>
                             {% endif %}
-					</div>
-    {% endif %}
+                        </div>
+                    {% endif %}
                     <div id="news" class="tableOnglet">
                         <table>
-                            <caption class="titreSection"><a id="newsCollapse" href="#news" onclick="plusMoins(this);" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="news"><span class="glyphicon glyphicon-minus"></span><span>News</span></a></caption>
+                            <caption class="titreSection"><a id="newsCollapse" href="#news" onclick="plusMoins(this);"
+                                                             data-toggle="collapse" role="button" aria-expanded="false"
+                                                             aria-controls="news"><span
+                                            class="glyphicon glyphicon-minus"></span><span>News</span></a></caption>
                         </table>
                         <div class="collapse in" id="news_collapse">
                             <div id="tabNews">
@@ -592,14 +717,15 @@
 
 {% block javascripts %}
     {{ parent() }}
-    
+
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.js"></script>
-    <script type="text/javascript" src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript"
+            src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/locale/fr.js"></script>
-    
+
     {% javascripts filter="?jsqueeze"
-    '@ApplicationPlateformeBundle/Resources/public/js/beneficiaire.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
+        '@ApplicationPlateformeBundle/Resources/public/js/beneficiaire.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
-{% endblock%}
+{% endblock %}
 

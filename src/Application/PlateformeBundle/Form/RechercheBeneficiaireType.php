@@ -14,12 +14,95 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 
 class RechercheBeneficiaireType extends AbstractType
 {
+
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $user = $this->tokenStorage->getToken()->getUser();
+        if (!$user) {
+            throw new \LogicException(
+                'The FriendMessageFormType cannot be used without an authenticated user!'
+            );
+        }
+
         $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user){
+                $form = $event->getForm();
+                if ($user->getRoles()[0] == 'ROLE_CONSULTANT'){
+                    $form
+                        ->add('statut', EntityType::class, array(
+                            "mapped" => false,
+                            'required' => false,
+                            'placeholder' => 'Statut',
+                            'class' => 'ApplicationPlateformeBundle:Statut',
+                            'choice_label' => 'nom',
+                            'query_builder' => function (EntityRepository $er) {
+                                return $er->createQueryBuilder('s')
+                                    ->where('s.accesConsultant = (:slug1)')
+                                    ->orderBy('s.ordre', 'ASC')
+                                    ->setParameters(array(
+                                        'slug1' => true
+                                    ))
+                                    ;
+                            },
+                        ))
+                    ;
+                }
+                else{
+                    $form
+                        ->add('statut', EntityType::class, array(
+                            "mapped" => false,
+                            'required' => false,
+                            'placeholder' => 'Statut',
+                            'class' => 'ApplicationPlateformeBundle:Statut',
+                            'choice_label' => 'nom',
+                            'query_builder' => function (EntityRepository $er) {
+                                return $er->createQueryBuilder('s')
+                                    ->where('s.slug NOT IN (:slug1)')
+                                    ->orderBy('s.ordre', 'ASC')
+                                    ->setParameters(array(
+                                        'slug1' => array('recevabilite', 'reporte')
+                                    ))
+                                    ;
+                            },
+                        ))
+                    ;
+                }
+            })
+            ->add('consultant', EntityType::class, array(
+                'placeholder' => 'Consultant',
+                'required' => false,
+                'class' => 'ApplicationUsersBundle:Users',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.roles LIKE :role ')
+                        ->setParameter('role', '%ROLE_CONSULTANT%')
+                        ->orderBy('u.nom', 'ASC')
+                        ;
+                },
+                'attr' => array(
+                    'class' => ''
+                )
+            ))
+
+            ->add('refFinanceur', TextType::class, array(
+                'label' => 'Réf. Financeur',
+                'required' => false,
+            ))
 
             ->add('nomConso', TextType::class, array(
                 'required' => false,
@@ -41,21 +124,6 @@ class RechercheBeneficiaireType extends AbstractType
                     'placeholder' => 'Email',
                 )
             ))
-            ->add('consultant', EntityType::class, array(
-                'placeholder' => 'Consultant',
-				'required' => false,
-                'class' => 'ApplicationUsersBundle:Users',
-                'query_builder' => function (EntityRepository $er) {
-                            return $er->createQueryBuilder('u')
-                                ->where('u.roles LIKE :role ')
-                                ->setParameter('role', '%ROLE_CONSULTANT%')
-								->orderBy('u.nom', 'ASC')
-                              ;
-                },
-                'attr' => array(
-                    'class' => ''
-                )
-            ))
 
             ->add('complementStatut', ChoiceType::class, array(
                 "mapped" => false,
@@ -68,23 +136,6 @@ class RechercheBeneficiaireType extends AbstractType
                 'attr' => array(
                     'class' => 'complement'
                 )
-            ))
-			
-			->add('statut', EntityType::class, array(
-				"mapped" => false,
-				'required' => false,
-                'placeholder' => 'Statut',
-                'class' => 'ApplicationPlateformeBundle:Statut',
-                'choice_label' => 'nom', 
-                'query_builder' => function (EntityRepository $er) {
-                            return $er->createQueryBuilder('s')
-                                ->where('s.slug NOT IN (:slug1)')
-                                ->orderBy('s.ordre', 'ASC')
-                                ->setParameters(array(
-                                    'slug1' => array('recevabilite', 'reporte')
-                                    ))
-                            ;
-                },
             ))
 			->add('detailStatut', EntityType::class, array(
                 "mapped" => false,
@@ -115,11 +166,6 @@ class RechercheBeneficiaireType extends AbstractType
                     'placeholder' => 'Veuillez saisir la ville',
                     'autocomplete' => 'off'
                 )
-            ))
-
-            ->add('refFinanceur', TextType::class, array(
-                'label' => 'Réf. Financeur',
-                'required' => false,
             ))
 
             ->add('cacher', CheckboxType::class, array(

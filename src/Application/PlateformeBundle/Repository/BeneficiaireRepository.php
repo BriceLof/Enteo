@@ -109,7 +109,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param null $complementStatut
      * @return mixed
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut = null)
     {
         $type = 'suiviAdministratif';
         if (!is_null($statut) && $statut->getType() == 'commercial') {

@@ -73,3 +73,9 @@ services:
     application_plateforme.csv:
         class: Application\PlateformeBundle\Services\Csv
         arguments: ["@doctrine.orm.entity_manager"]
+
+    application_plateforme.form.recherche:
+        class: Application\PlateformeBundle\Form\RechercheBeneficiaireType
+        arguments: ['@security.token_storage']
+        tags:
+            - { name: form.type }

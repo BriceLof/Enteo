@@ -161,6 +161,8 @@ class CalendarController extends Controller
             //recuperation du bénéficiaire
             $beneficiaire = $historique->getBeneficiaire();
 
+            var_dump($beneficiaire);die;
+
             //recuperation du consultant renseigné dans le formulaire
             $consultant = $historique->getConsultant();
 

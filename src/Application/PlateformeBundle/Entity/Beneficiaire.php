@@ -84,6 +84,12 @@ class Beneficiaire
     protected $accompagnement;
 
     /**
+     * @ORM\OneToOne(targetEntity="DetailStatut", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $lastDetailStatutConsultant;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})
      */
     protected $missionArchives;
@@ -1726,5 +1732,21 @@ class Beneficiaire
     public function getDeleted()
     {
         return $this->deleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastDetailStatutConsultant()
+    {
+        return $this->lastDetailStatutConsultant;
+    }
+
+    /**
+     * @param mixed $lastDetailStatutConsultant
+     */
+    public function setLastDetailStatutConsultant($lastDetailStatutConsultant)
+    {
+        $this->lastDetailStatutConsultant = $lastDetailStatutConsultant;
     }
 }

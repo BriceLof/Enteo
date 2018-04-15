@@ -118,28 +118,41 @@
             {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("d/m/Y") ~ ' à' : '' }}
             {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : '' }}
         </td>
-        <td>
-            <b>
+
+        {% if is_granted('ROLE_CONSULTANT') and beneficiaire.LastDetailStatutConsultant is not null %}
+            <td>
+                <b>
+                    {{ beneficiaire.LastDetailStatutConsultant.statut.nom }}
+                </b>
+            </td>
+            <td>
+                {{ beneficiaire.LastDetailStatutConsultant.detail }}
+            </td>
+        {% else %}
+            <td>
+                <b>
+                    {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                        {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                            {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                        {% endif %}
+                    {% else %}
+                        {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                    {% endif %}
+                </b>
+            </td>
+            <td>
                 {% if statutBeneficiaire[beneficiaire.id] is defined %}
                     {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
-                        {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                        {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
+                            {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+                        {% endif %}
                     {% endif %}
                 {% else %}
-                    {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                    {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
                 {% endif %}
-            </b>
-        </td>
-        <td>
-            {% if statutBeneficiaire[beneficiaire.id] is defined %}
-                {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
-                    {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
-                        {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
-                    {% endif %}
-                {% endif %}
-            {% else %}
-                {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
-            {% endif %}
-        </td>
+            </td>
+        {% endif %}
+
         <td colspan=5>
             {% if(beneficiaire.nouvelle | length > 0) %}
                 {% set last_nouvelle = beneficiaire.nouvelle[beneficiaire.nouvelle | length -1] %}

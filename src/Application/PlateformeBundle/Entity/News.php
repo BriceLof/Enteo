@@ -181,7 +181,8 @@ class News
         }else{
             $this->getBeneficiaire()->setDeleted(false);
         }
+        if ($this->statut->isAccesConsultant() == true){
+            $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
+        }
     }
-    
-    
 }

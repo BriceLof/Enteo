@@ -57,6 +57,13 @@ class Statut
     private $ordre;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="acces_consultant", type="boolean")
+     */
+    private $accesConsultant;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -187,5 +194,21 @@ class Statut
     public function setOrdre($ordre)
     {
         $this->ordre = $ordre;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccesConsultant()
+    {
+        return $this->accesConsultant;
+    }
+
+    /**
+     * @param bool $accesConsultant
+     */
+    public function setAccesConsultant($accesConsultant)
+    {
+        $this->accesConsultant = $accesConsultant;
     }
 }
