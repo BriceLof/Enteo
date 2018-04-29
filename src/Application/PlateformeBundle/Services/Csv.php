@@ -175,6 +175,45 @@ class Csv
         return $response;
     }
 
+    public function getCsvForFicheNonMaj($historiques){
+        $handle = fopen('php://temp', 'r+');
+        fputcsv($handle, array(
+            'date = '.(new \DateTime('now'))->modify('-15 day')->format('d-m-Y')
+        ));
+        fputcsv($handle, array());
+        fputcsv($handle, array(
+            'date RV',
+            'Type Rv',
+            utf8_decode('Bénéficiaire'),
+            'Consultant',
+            utf8_decode('Tél Consultant'),
+            'Ville',
+        ), ';');
+
+        foreach ($historiques as $historique) {
+            $beneficiaire = $historique->getBeneficiaire();
+            $consultant = $historique->getConsultant();
+
+
+            fputcsv(
+                $handle,
+                array(
+                    $historique->getDateDebut()->format('d-m-Y'),
+                    $historique->getSummary(),
+                    utf8_decode($beneficiaire->getPrenomConso().' '.strtoupper($beneficiaire->getNomConso())),
+                    utf8_decode($consultant->getPrenom().' '.strtoupper($consultant->getNom())),
+                    $consultant->getTel1(),
+                    (is_null($historique->getBureau())) ? 'Distanciel' : $historique->getBureau()->getVille()->getNom(),
+                ),
+                ';'
+            );
+        }
+        rewind($handle);
+        $csv = stream_get_contents($handle);
+        fclose($handle);
+        return $csv;
+    }
+
     public function getCvsForMailSuivi($suivis, $statut){
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, array(

@@ -259,6 +259,29 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
 //        $this->sendMessage($from,"support.informatique@entheor.com", $replyTo,null,null,$subject,$body);
     }
+
+    public function lastMailRvFicheNonMaj($rvs, $attachement){
+        $from = "christine.clementmolier@entheor.com";
+        $replyTo = "christine.clementmolier@entheor.com";
+        $subject = "Liste des ".count($rvs)." Bénéficiaires dont le statut n'a pas été mis à jour après R1 ou R2";
+        $template = '@Apb/Alert/Mail/lastMailRvFicheNonMaj.html.twig';
+        $to = array(
+            'contact@entheor.com' => 'Contact Entheor',
+            'virginie.hiairrassary@entheor.com' => 'Virginie HIAIRRASSARY'
+        );
+        $cc = array(
+            'f.azoulay@entheor.com' => 'Franck AZOULAY',
+            'ph.rouzaud@entheor.com' => 'Philippe ROUZAUD'
+        );
+        $cci = array(
+            "support.informatique@entheor.com" =>"support informatique"
+        );
+        $body = $this->templating->render($template, array(
+            'rvs' => $rvs
+        ));
+        $this->sendMessage($from,$to,$replyTo,$cc,$cci,$subject,$body, $attachement);
+//        $this->sendMessage($from,"support.informatique@entheor.com", $replyTo,null,null,$subject,$body);
+    }
     
     // Envoi un mail rappel au beneficiaire et lui signalant son rdv pour demain + un recap pour le consultant 
     public function alerteRappelRdvAgenda()
