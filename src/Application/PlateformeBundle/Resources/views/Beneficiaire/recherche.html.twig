@@ -20,6 +20,7 @@
 				<span class="col-md-2" style="{{ style }}">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
             	<span class="col-md-2">{{ form_widget(form.ville, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
                 <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
+                <span class="col-md-2">{{ form_widget(form.telConso) }}</span>
             </div>
             <div class="moreFilterSearch text-left" style="display:none;margin-top: 42px;">
             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}

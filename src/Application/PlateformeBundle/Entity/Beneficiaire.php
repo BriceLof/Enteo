@@ -58,7 +58,7 @@ class Beneficiaire
     protected $villeMer;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire")
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire", cascade={"persist"} )
      */
     private $news;
 
@@ -84,10 +84,16 @@ class Beneficiaire
     protected $accompagnement;
 
     /**
-     * @ORM\OneToOne(targetEntity="DetailStatut", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="DetailStatut", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     protected $lastDetailStatutConsultant;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DetailStatut", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $lastDetailStatut;
 
     /**
      * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})
@@ -327,6 +333,13 @@ class Beneficiaire
      * @ORM\Column(name="ref_financeur", type="string", length=255, nullable=true)
      */
     private $refFinanceur;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="ecole_universite", type="string", length=255, nullable=true)
+     */
+    private $ecoleUniversite;
 
     /**
      * @ORM\OneToMany(targetEntity="Nouvelle", mappedBy="beneficiaire", cascade={"persist"})
@@ -1748,5 +1761,37 @@ class Beneficiaire
     public function setLastDetailStatutConsultant($lastDetailStatutConsultant)
     {
         $this->lastDetailStatutConsultant = $lastDetailStatutConsultant;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastDetailStatut()
+    {
+        return $this->lastDetailStatutConsultant;
+    }
+
+    /**
+     * @param mixed $lastDetailStatut
+     */
+    public function setLastDetailStatut($lastDetailStatut)
+    {
+        $this->lastDetailStatut = $lastDetailStatut;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEcoleUniversite()
+    {
+        return $this->ecoleUniversite;
+    }
+
+    /**
+     * @param mixed $ecoleUniversite
+     */
+    public function setEcoleUniversite($ecoleUniversite)
+    {
+        $this->ecoleUniversite = $ecoleUniversite;
     }
 }

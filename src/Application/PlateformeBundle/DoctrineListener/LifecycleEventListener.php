@@ -15,6 +15,7 @@ use Application\PlateformeBundle\Entity\Beneficiaire;
 /*
  * Envoi un mail dès la creation/maj d'une entite lie au beneficiaire, si ce n'est pas le consultant qui s'en est charger.
  */
+
 class LifecycleEventListener extends \Twig_Extension
 {
     private $mailer;
@@ -29,61 +30,63 @@ class LifecycleEventListener extends \Twig_Extension
         $this->container = $container;
         // Liste des entités touchant la page bénéficiaire dont on veut avoir les notifications
         $this->listEntity = array(
-            "Accompagnement"        => "Projet bénéficiaire",
-            "Financeur"             => "Projet bénéficiaire",
-            "Nouvelle"              => "News",
-            "Document"              => "Espace Documentaire",
-            "News"                  => "Statut bénéficiaire",
-            "StatutRecevabilite"    => "Statut bénéficiaire",
+            "Accompagnement" => "Projet bénéficiaire",
+            "Financeur" => "Projet bénéficiaire",
+            "Nouvelle" => "News",
+            "Document" => "Espace Documentaire",
+            "News" => "Statut bénéficiaire",
+            "StatutRecevabilite" => "Statut bénéficiaire",
         );
     }
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        $this->currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
-        $this->mailer = $this->container->get('application_plateforme.mail');
-        $this->em = $this->container->get('doctrine.orm.entity_manager');
-        // L'entité touché lors de l'update
-        $this->entity = $args->getObject();
-        // Obtenir le nom de l'entité utilisé (=> le nom de sa classe)
-        $entityName = $this->getEntityName($this->entity);
-        // Vérification, si l'entité touché lors de l'update fait partie de notre tableau d'entités
-        if(array_key_exists($entityName, $this->listEntity) !== false){
-            $section = $this->listEntity[$entityName];
-            $this->notificationByEntity($this->entity, $entityName, $section);
+        if (is_object($this->container->get('security.token_storage')->getToken())) {
+            $this->currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+            $this->mailer = $this->container->get('application_plateforme.mail');
+            $this->em = $this->container->get('doctrine.orm.entity_manager');
+            // L'entité touché lors de l'update
+            $this->entity = $args->getObject();
+            // Obtenir le nom de l'entité utilisé (=> le nom de sa classe)
+            $entityName = $this->getEntityName($this->entity);
+            // Vérification, si l'entité touché lors de l'update fait partie de notre tableau d'entités
+            if (array_key_exists($entityName, $this->listEntity) !== false) {
+                $section = $this->listEntity[$entityName];
+                $this->notificationByEntity($this->entity, $entityName, $section);
+            }
         }
     }
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        $this->currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
-        $this->mailer = $this->container->get('application_plateforme.mail');
-        $this->em = $this->container->get('doctrine.orm.entity_manager');
-        // L'entité touché lors de l'update
-        $this->entity = $args->getObject();
-        // Obtenir le nom de l'entité utilisé (=> le nom de sa classe)
-        $entityName = $this->getEntityName($this->entity);
-        // Vérification, si l'entité touché lors de l'update fait partie de notre tableau d'entités
-        if(array_key_exists($entityName, $this->listEntity) !== false){
-            $section = $this->listEntity[$entityName];
-            $this->notificationByEntity($this->entity, $entityName, $section);
+        if (is_object($this->container->get('security.token_storage')->getToken())) {
+            $this->currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+            $this->mailer = $this->container->get('application_plateforme.mail');
+            $this->em = $this->container->get('doctrine.orm.entity_manager');
+            // L'entité touché lors de l'update
+            $this->entity = $args->getObject();
+            // Obtenir le nom de l'entité utilisé (=> le nom de sa classe)
+            $entityName = $this->getEntityName($this->entity);
+            // Vérification, si l'entité touché lors de l'update fait partie de notre tableau d'entités
+            if (array_key_exists($entityName, $this->listEntity) !== false) {
+                $section = $this->listEntity[$entityName];
+                $this->notificationByEntity($this->entity, $entityName, $section);
+            }
         }
     }
 
     public function notificationByEntity($entity, $theEntityName, $section)
     {
         $beneficiaireRepository = $this->em->getRepository(Beneficiaire::class);
-        if($theEntityName == "Accompagnement") {
+        if ($theEntityName == "Accompagnement") {
             $beneficiaire = $beneficiaireRepository->findOneByAccompagnement($entity);
-        }
-        elseif($theEntityName == "Financeur") {
+        } elseif ($theEntityName == "Financeur") {
             $beneficiaire = $beneficiaireRepository->findOneByAccompagnement($entity->getAccompagnement()->getId());
-        }
-        else{
+        } else {
             $beneficiaire = $entity->getBeneficiaire();
         }
 
-        if(!is_null($beneficiaire) && !is_null($beneficiaire->getConsultant())) {
+        if (!is_null($beneficiaire) && !is_null($beneficiaire->getConsultant())) {
             $consultant = $beneficiaire->getConsultant();
             if ($this->currentUser != $consultant) {
                 $subject = "Notification : mise à jour de votre bénéficiaire";
@@ -94,7 +97,7 @@ class LifecycleEventListener extends \Twig_Extension
                 ";
 
                 // Desabonner christine des notifications
-                if($consultant->getEmail() !='christine.clementmolier@entheor.com')
+                if ($consultant->getEmail() != 'christine.clementmolier@entheor.com')
                     $this->mailer->sendNewNotification($consultant->getEmail(), $subject, $message);
             }
         }

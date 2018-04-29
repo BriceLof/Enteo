@@ -209,6 +209,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['consultant'] = $beneficiaire->getConsultant()->getId();
         }
 
+        if (!is_null($beneficiaire->getTelConso())) {
+            $query .= ' AND (b.tel_conso = :tel OR b.tel_2 = :tel)';
+            $params['tel'] = $beneficiaire->getTelConso();
+        }
+
         if (!is_null($idUtilisateur)) {
             $query .= ' AND b.consultant_id = :consultantId';
             $params['consultantId'] = $idUtilisateur;
@@ -262,5 +267,33 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         $results = $query->getResult();
 
         return $results;
+    }
+
+    public function searchByEcoleAndDate($debut = null, $fin = null){
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire', 'b');
+
+        $query = 'SELECT b.* FROM beneficiaire b';
+        $params = array();
+
+
+        $query .= ' INNER JOIN accompagnement a ON a.id = b.accompagnement_id';
+
+        $query .= ' WHERE b.ecole_universite IS NOT NULL';
+
+        if (!is_null($debut)){
+            $query .= ' AND a.date_debut >= :debut';
+            $params['debut'] = $debut;
+        }
+
+        if ((!is_null($fin))){
+            $query .= ' AND a.date_debut <= :fin';
+            $params['fin'] = $fin;
+        }
+
+        $request = $this->getEntityManager()->createNativeQuery($query, $rsm);
+        $request->setParameters($params);
+
+        return $request;
     }
 }

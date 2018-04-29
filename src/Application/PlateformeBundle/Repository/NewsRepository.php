@@ -23,4 +23,20 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
         $results = $query->getResult();
         return $results;
     }
+
+    public function getLast($beneficiaire)
+    {
+        $queryBuilder = $this->createQueryBuilder('n')
+            ->where('n.beneficiaire = :beneficiaire')
+            ->setParameter('beneficiaire', $beneficiaire)
+            ->andWhere('n.detailStatut != :statut')
+            ->setParameter('statut', "NULL")
+            ->orderBy('n.id', 'DESC')
+            ->setMaxResults(1)
+        ;
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }

@@ -158,15 +158,13 @@ class CalendarController extends Controller
         //si le formulaire est validé et qu'il ne présente pas d'erreur
         if ($request->isMethod('POST') && $beneficiaire == null && $form->handleRequest($request)->isValid()) {
 
-            //recuperation du bénéficiaire
-            $beneficiaire = $historique->getBeneficiaire();
-
-            var_dump($beneficiaire);die;
-
             //recuperation du consultant renseigné dans le formulaire
             $consultant = $historique->getConsultant();
 
             $em = $this->getDoctrine()->getManager();
+            $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($form['beneficiaire']->getData());
+
+            $historique->setBeneficiaire($beneficiaire);
 
             $this->get("application_plateforme.calendar")->createEvent($form, $historique, $beneficiaire, $consultant);
 

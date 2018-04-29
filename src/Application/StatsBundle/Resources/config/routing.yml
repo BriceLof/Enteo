@@ -6,3 +6,7 @@ application_stats_appel:
 application_stats_commercial:
     resource: "@ApplicationStatsBundle/Resources/config/routing/statCommercial.yml"
 
+application_stats_ecole_universite:
+    resource: "@ApplicationStatsBundle/Resources/config/routing/ecoleUniversite.yml"
+    prefix:   /ecole-universite
+

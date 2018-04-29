@@ -122,6 +122,59 @@ class Csv
         return $response;
     }
 
+    public function getCsvFromEcoleBeneficiaire($beneficiaires){
+
+        $response = new StreamedResponse();
+        $response->setCallback(function() use ($beneficiaires) {
+            $handle = fopen('php://output', 'w+');
+            fputcsv($handle, array(
+                utf8_decode('École/Université'),
+                utf8_decode('diplome visé'),
+                utf8_decode('Nom Prénom'),
+                utf8_decode('Téléphone'),
+                utf8_decode('Date Début'),
+                'Date Fin',
+                'statut'
+            ), ';');
+
+            foreach ($beneficiaires as $beneficiaire) {
+                $dateDebut = null;
+                $dateFin = null;
+
+
+                if (!is_null($beneficiaire->getAccompagnement())){
+                    if ( !is_null($beneficiaire->getAccompagnement()->getDateDebut())) {
+                        $dateDebut = $beneficiaire->getAccompagnement()->getDateDebut()->format('d/m/Y');
+                    }
+                    if ( !is_null($beneficiaire->getAccompagnement()->getDateFin())) {
+                        $dateFin = $beneficiaire->getAccompagnement()->getDateFin()->format('d/m/Y');
+                    }
+                }
+
+
+                fputcsv(
+                    $handle,
+                    array(
+                        utf8_encode($beneficiaire->getEcoleUniversite()),
+                        utf8_decode($beneficiaire->getDiplomeVise()),
+                        utf8_decode($beneficiaire->getNomConso()).' '.utf8_decode($beneficiaire->getPrenomConso()),
+                        $dateDebut,
+                        $dateFin,
+                        utf8_decode($beneficiaire->getDiplomeVise()),
+                        utf8_decode((is_null($beneficiaire->getLastDetailStatut())) ? '' : utf8_encode($beneficiaire->getLastDetailStatut()->getStatut()->getNom().'-'.$beneficiaire->getLastDetailStatut()->getDetail()))
+                    ),
+                    ';'
+                );
+            }
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        return $response;
+    }
+
     public function getCvsForMailSuivi($suivis, $statut){
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, array(

@@ -93,5 +93,25 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $this->sendMessageToAdminAndGestion($from, $subject, $body);
     }
+
+    /**
+     * ref 6
+     * email suite a la cron
+     * Détail Statut = Tentative 1 depuis >= 5 jours
+     *
+     * @param $beneficiaire
+     */
+    public function EmailSuiteNoContactBeneficiaire($beneficiaire){
+        $ref = "6";
+        $from = "audrey.azoulay@entheor.com";
+        $subject = "Votre demande d'information pour une VAE";
+        $template = '@Apb/Alert/Mail/emailSuiteNoContact.html.twig';
+        $body = $this->templating->render($template, array(
+            'beneficiaire' => $beneficiaire,
+            'reference' => $ref,
+        ));
+
+        $this->sendMessageToAdminAndGestion($from, $subject, $body);
+    }
     
 }

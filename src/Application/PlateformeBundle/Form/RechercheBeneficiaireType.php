@@ -99,6 +99,14 @@ class RechercheBeneficiaireType extends AbstractType
                 )
             ))
 
+            ->add('telConso', TextType::class, array(
+                'label' => 'téléphone',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => 'Téléphone',
+                )
+            ))
+
             ->add('refFinanceur', TextType::class, array(
                 'label' => 'Réf. Financeur',
                 'required' => false,

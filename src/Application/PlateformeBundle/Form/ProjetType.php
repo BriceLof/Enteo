@@ -101,6 +101,15 @@ class ProjetType extends AbstractType
                     'class' => 'projet'
                 )
             ))
+
+            ->add('ecoleUniversite', TextType::class, array(
+                'label' => 'Ecole/Université :',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => '',
+                    'class' => 'projet'
+                )
+            ))
 			
 			->add('diplomeObtenu', ChoiceType::class, array(
                 'required' => false,
