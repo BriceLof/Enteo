@@ -1,0 +1,4 @@
+ecole_universite_homepage:
+    path:    /
+    defaults:
+        _controller: ApplicationStatsBundle:EcoleUniversite:index

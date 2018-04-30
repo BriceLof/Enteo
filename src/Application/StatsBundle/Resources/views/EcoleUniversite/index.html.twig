@@ -1,0 +1,44 @@
+{% extends "ApplicationStatsBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/ecole_universite.css') }}" type="text/css">
+{% endblock %}
+
+{% block title %}Stat Appel{% endblock%}
+
+{% block body %}
+<div id="flashbag" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% for message in app.session.flashbag.get('info') %}
+                {% if message != 'not message' %}
+                    <div class="alert alert-success" role="alert">{{ message }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="bold text-md">École Université</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3">
+            <form action="{{ path('ecole_universite_homepage') }}" method="POST">
+                <div class="row">
+                    <div class="col-md-6"><span>Du</span> {{ form_widget(form.dateFrom, {'attr' : {"value": ''  } }) }}</div>
+                    <div class="col-md-6"><span>Au</span> {{ form_widget(form.dateTo, {'attr' : {"value": ''  } }) }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">{{ form_widget(form.submit, { 'attr' : {'class' : 'btn-primary btn'  } }) }}</div>
+                </div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

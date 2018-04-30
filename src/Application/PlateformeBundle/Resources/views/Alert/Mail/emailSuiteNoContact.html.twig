@@ -1,0 +1,28 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}{{ reference }}{% endblock %}
+{% block contentMail %}
+    {% if beneficiaire.civiliteConso == 'm.' %}
+        Cher Monsieur {{ beneficiaire.nomConso|capitalize }},
+    {% else %}
+        Chère Madame {{ beneficiaire.nomConso|capitalize }},
+    {% endif %}
+    <br>
+    <br>
+    Vous avez demandé à être rappelé{{ (beneficiaire.civiliteConso == 'm.') ? '':'e' }} par notre Cabinet de {{ beneficiaire.villeMer.nom }} pour avoir des informations sur la VAE (Validation des Acquis de l'Expérience.
+    <br>
+    <br>
+    Malgré nos différentes tentatives de rappel, nous n'avons pas pu vous joindre.
+    <br>
+    <br>
+    <b>Si votre projet de VAE est toujours d'actualité, je vous renseignerai avec plaisir.</b>
+    <br>
+    <br>
+    Vous pouvez me joindre du Lundi au Vendredi, de 9h à 12h et de 14h00 à 16h au 06.89.33.87.83
+    Je suis souvent en RdV téléphonique, n'hésitez pas à me laisser un. message.
+    <br>
+    <br>
+    Dans l'attente du plaisir de vous parler,
+    <br>
+    <br>
+    <span>Audrey Azoulay</span>
+{% endblock %}

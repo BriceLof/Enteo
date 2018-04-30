@@ -1,0 +1,29 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}2d{% endblock %}
+{% block contentMail %}
+    Bonjour,<br><br>
+    Merci de prendre contact avec les Consultants qui n'ont pas mis à jour le statut de leurs bénéficiaires après un R1 ou un R2
+    <br>
+    <br>
+    {% for rv in rvs %}
+        <p style='margin-left:10px;'>&bull;
+            {{ rv.dateDebut|date('d/m/Y') }} - {{ rv.summary }} -
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  rv.beneficiaire.id }}">
+                {{ rv.beneficiaire.civiliteConso|capitalize~' '~rv.beneficiaire.prenomConso|capitalize~' '~rv.beneficiaire.nomConso|capitalize}}
+            </a>
+            - {{ rv.consultant.prenom~' '~rv.consultant.nom|upper }} -
+            {{ (rv.bureau is null) ? 'Distanciel' : rv.bureau.ville.nom }}
+        </p>
+    {% endfor %}
+
+
+    <br><br>
+    <span>Bien Cordialement,</span>
+    <br><br>
+    <span>Christine Clément</span>
+    <br>
+    <a href="mailto:christine.clement@entheor.com">christine.clement@entheor.com</a>
+    <br>
+    <span>06 81 84 85 24</span>
+
+{% endblock %}

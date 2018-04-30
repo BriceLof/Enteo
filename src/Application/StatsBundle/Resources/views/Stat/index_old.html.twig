@@ -1,0 +1,184 @@
+{# Version avec les graphiques #}
+
+{% extends "ApplicationStatsBundle::layout.html.twig" %}
+{% block title %}Stat{% endblock%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@ApplicationStatsBundle/Resources/public/css/stats.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <form action="{{ path('stat_commercial_home') }}" method="POST" class="form_block">
+                    <div class="row">
+                        <div class="col-md-6" style="margin-top: -10px;"><span style="font-size:10px">Du</span> {{ form_widget(form.dateFrom, {'attr' : {"value": ''  } }) }}</div>
+                        <div class="col-md-6" style="margin-top: -10px;"><span style="font-size:10px">Au</span> {{ form_widget(form.dateTo, {'attr' : {"value": ''  } }) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">{{ form_widget(form.submit, { 'attr' : {'class' : 'btn-primary btn'  } }) }}</div>
+                    </div>
+
+                    {{ form_rest(form) }}
+                </form>
+            </div>
+        </div><br>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="block_info_stat">
+                    <div class="text-center">
+                        <h3>Nouveaus contacts</h3>
+                        <p class="info_important">{{ beneficiaireOfDay[0] | length  }}</p>
+                        {% if beneficiaireOfDay[1].dateDebut is null or beneficiaireOfDay[1].dateFin == ''  %}
+                            <b>Auj.</b>
+                        {% else %}
+                            Du <b>{{  beneficiaireOfDay[1].dateDebut | date('d/m/Y') }}</b> Au <b>{{  beneficiaireOfDay[1].dateFin | date('d/m/Y') }}</b>
+                        {% endif %}
+                    </div>
+                    <p class="btn_detail">Détail</p>
+                    <div class="detail" style="display:none">
+                        <ul>
+                            {% for beneficiaire in beneficiaireOfDay[0] %}
+                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="block_info_stat">
+                    <div class="text-center">
+                        <h3>Contacts commerciaux non aboutis</h3>
+                        <p class="info_important">{{ beneficiaireNonAboutiOfDay[0] | length  }}</p>
+                        {% if beneficiaireNonAboutiOfDay[1].dateDebut is null or beneficiaireNonAboutiOfDay[1].dateFin == ''  %}
+                            <b>Auj.</b>
+                        {% else %}
+                            Du <b>{{  beneficiaireNonAboutiOfDay[1].dateDebut | date('d/m/Y') }}</b> Au <b>{{  beneficiaireNonAboutiOfDay[1].dateFin | date('d/m/Y') }}</b>
+                        {% endif %}
+                    </div>
+                    <p class="btn_detail">Détail</p>
+                    <div class="detail" style="display:none">
+                        <ul>
+                            {% for beneficiaire in beneficiaireNonAboutiOfDay[0] %}
+                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <div class="block_info_stat">
+                    <div class="text-center">
+                        <h3>RV commerciaux</h3>
+                        {% set totalRvFaire = beneficiaireRvCommerciauxOfDay[0].rvFaire | length %}
+                        {% set totalRvPositif = beneficiaireRvCommerciauxOfDay[0].rvRealisePositif | length %}
+                        {% set totalRvNegatif = beneficiaireRvCommerciauxOfDay[0].rvRealiseNegatif | length %}
+                        {% set totalRvRealiseAutre = beneficiaireRvCommerciauxOfDay[0].rvRealiseAutre | length %}
+                        <p class="info_important">{{  totalRvFaire + totalRvPositif + totalRvNegatif + totalRvRealiseAutre}}</p>
+                        {#{{ dump(totalRvFaire, totalRvPositif, totalRvNegatif, totalRvRealiseAutre) }}#}
+                        <canvas id="chartRvCommerciaux"></canvas>
+
+                        <script>
+                            var ctx = document.getElementById('chartRvCommerciaux').getContext('2d');
+                            var chart = new Chart(ctx, {
+                                type: 'pie',
+                                data :{
+                                    datasets: [{
+                                        data: [ {{ totalRvFaire }} , {{ totalRvPositif }}, {{ totalRvNegatif }} , {{ totalRvRealiseAutre }}],
+                                        backgroundColor: [
+                                            '#DA366C','#22A6DA', '#E25F89', '#FAF2F4'
+                                        ]
+                                    }],
+                                    labels: [
+                                        'RV à faire',
+                                        'RV réalisé positif',
+                                        'RV réalisé negatif',
+                                        'RV réalisé autre'
+                                    ]
+                                },
+                                options: {}
+                            });
+
+                        </script>
+                    </div>
+                    <p class="btn_detail">Détail</p>
+                    <div class="detail" style="display:none">
+                        <ul>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#<div class="col-sm-6 col-md-4">#}
+        {#<div class="block_info_stat">#}
+        {#<div class="text-center">#}
+        {#<h3>Statut Financement</h3>#}
+        {#<p class="info_important"></p>#}
+        {#{% set totalRvFaire = beneficiaireRvCommerciauxOfDay[0].rvFaire | length %}#}
+        {#{% set totalRvPositif = beneficiaireRvCommerciauxOfDay[0].rvRealisePositif | length %}#}
+        {#{% set totalRvNegatif = beneficiaireRvCommerciauxOfDay[0].rvRealiseNegatif | length %}#}
+        {#{% set totalRvRealiseAutre = beneficiaireRvCommerciauxOfDay[0].rvRealiseAutre | length %}#}
+        {#{{ dump(totalRvFaire, totalRvPositif, totalRvNegatif, totalRvRealiseAutre) }}#}
+        {#<canvas id="chartStatutFinancement"></canvas>#}
+
+        {#<script>#}
+        {#var ctx = document.getElementById('chartStatutFinancement').getContext('2d');#}
+        {#var chart = new Chart(ctx, {#}
+        {#type: 'pie',#}
+        {#data :{#}
+        {#datasets: [{#}
+        {#data: [ {{ totalRvFaire }} , {{ totalRvPositif }}, {{ totalRvNegatif }} , {{ totalRvRealiseAutre }}],#}
+        {#backgroundColor: [#}
+        {#'#DA366C','#22A6DA', '#E25F89', '#FAF2F4'#}
+        {#]#}
+        {#}],#}
+        {#labels: [#}
+        {#'RV à faire',#}
+        {#'RV réalisé positif',#}
+        {#'RV réalisé negatif',#}
+        {#'RV réalisé autre'#}
+        {#]#}
+        {#},#}
+        {#options: {}#}
+        {#});#}
+
+        {#</script>#}
+        {#</div>#}
+        {#<p class="btn_detail">Détail</p>#}
+        {#<div class="detail" style="display:none">#}
+        {#<ul>#}
+
+        {#</ul>#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
+    </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+    {% javascripts filter="?jsqueeze"
+        '@ApplicationStatsBundle/Resources/public/js/stats.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+
+{% endblock%}
+
+
