@@ -1768,7 +1768,7 @@ class Beneficiaire
      */
     public function getLastDetailStatut()
     {
-        return $this->lastDetailStatutConsultant;
+        return $this->lastDetailStatut;
     }
 
     /**

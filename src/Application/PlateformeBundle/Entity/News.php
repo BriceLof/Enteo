@@ -184,6 +184,5 @@ class News
         if ($this->statut->isAccesConsultant() == true){
             $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
         }
-        $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
     }
 }

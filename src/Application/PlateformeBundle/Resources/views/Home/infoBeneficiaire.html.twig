@@ -119,7 +119,78 @@
             {{ beneficiaire.news | length > 0 ? derniere_news.dateHeure|date("H:i") : '' }}
         </td>
 
-        {% if is_granted('ROLE_CONSULTANT') and beneficiaire.LastDetailStatutConsultant is not null %}
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+            {% if beneficiaire.lastDetailStatut is not null %}
+                <td>
+                    <b>
+                        {{ beneficiaire.LastDetailStatut.statut.nom }}
+                    </b>
+                </td>
+                <td>
+                    {{ beneficiaire.LastDetailStatut.detail }}
+                </td>
+            {% else %}
+                <td>
+                    <b>
+                        {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                            {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                                {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                            {% endif %}
+                        {% else %}
+                            {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                        {% endif %}
+                    </b>
+                </td>
+                <td>
+                    {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                        {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                            {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
+                                {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% else %}
+            {% if beneficiaire.lastDetailStatutConsultant is not null %}
+                <td>
+                    <b>
+                        {{ beneficiaire.LastDetailStatutConsultant.statut.nom }}
+                    </b>
+                </td>
+                <td>
+                    {{ beneficiaire.LastDetailStatutConsultant.detail }}
+                </td>
+            {% else %}
+                <td>
+                    <b>
+                        {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                            {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                                {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                            {% endif %}
+                        {% else %}
+                            {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                        {% endif %}
+                    </b>
+                </td>
+                <td>
+                    {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                        {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                            {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
+                                {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% endif %}
+
+
+        {#{% if is_granted('ROLE_CONSULTANT') and beneficiaire.LastDetailStatutConsultant is not null %}
             <td>
                 <b>
                     {{ beneficiaire.LastDetailStatutConsultant.statut.nom }}
@@ -129,29 +200,40 @@
                 {{ beneficiaire.LastDetailStatutConsultant.detail }}
             </td>
         {% else %}
-            <td>
-                <b>
+            {% if not is_granted('ROLE_CONSULTANT') and beneficiaire.lastDetailStatut is not null %}
+                <td>
+                    <b>
+                        {{ beneficiaire.LastDetailStatut.statut.nom }}
+                    </b>
+                </td>
+                <td>
+                    {{ beneficiaire.LastDetailStatut.detail }}
+                </td>
+            {% else %}
+                <td>
+                    <b>
+                        {% if statutBeneficiaire[beneficiaire.id] is defined %}
+                            {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
+                                {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                            {% endif %}
+                        {% else %}
+                            {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                        {% endif %}
+                    </b>
+                </td>
+                <td>
                     {% if statutBeneficiaire[beneficiaire.id] is defined %}
                         {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
-                            {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].statut.nom }}
+                            {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
+                                {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
+                            {% endif %}
                         {% endif %}
                     {% else %}
-                        {{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : '' }}
+                        {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
                     {% endif %}
-                </b>
-            </td>
-            <td>
-                {% if statutBeneficiaire[beneficiaire.id] is defined %}
-                    {% if suiviAdministratifByBeneficiaire[beneficiaire.id] is defined %}
-                        {% if suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut is not null %}
-                            {{ suiviAdministratifByBeneficiaire[beneficiaire.id][0].detailStatut.detail }}
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                    {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
-                {% endif %}
-            </td>
-        {% endif %}
+                </td>
+            {% endif %}
+        {% endif %}#}
 
         <td colspan=5>
             {% if(beneficiaire.nouvelle | length > 0) %}

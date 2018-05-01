@@ -162,7 +162,6 @@ class StatsBeneficiaire
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
             if(!is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
-                dump($lastSuiviAdOfBenef->getDetailStatut()->getDetail());
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Réglement partiel"){
                     $tabReglementPartiel[] = $benef;
                 }

@@ -318,21 +318,39 @@
                                 <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
                                     administratif : </p>
                                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
-                                    <p class="col-xs-4">
-                                        {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
-                                    </p>
-                                    <p class="col-xs-4">
-                                        {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
-                                    </p>
+                                    {% if beneficiaire.lastDetailStatut is not null %}
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.lastDetailStatut.statut.nom }}
+                                        </p>
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.lastDetailStatut.detail }}
+                                        </p>
+                                    {% else %}
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
+                                        </p>
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
+                                        </p>
+                                    {% endif %}
                                 {% else %}
-                                    <p class="col-xs-4">
-                                        {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
-                                    </p>
-                                    <p class="col-xs-4">
-                                        {% if indexSuiviAd is not null and beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut is not null %}
-                                            {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }}
-                                        {% endif %}
-                                    </p>
+                                    {% if beneficiaire.lastDetailStatutConsultant is not null %}
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
+                                        </p>
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.lastDetailStatutConsultant.detail }}
+                                        </p>
+                                    {% else %}
+                                        <p class="col-xs-4">
+                                            {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
+                                        </p>
+                                        <p class="col-xs-4">
+                                            {% if indexSuiviAd is not null and beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut is not null %}
+                                                {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }}
+                                            {% endif %}
+                                        </p>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 
