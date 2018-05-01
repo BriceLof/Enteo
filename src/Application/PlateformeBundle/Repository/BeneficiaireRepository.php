@@ -209,8 +209,8 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         }
 
         if (!is_null($beneficiaire->getTelConso())) {
-            $query .= ' AND (b.tel_conso = :tel OR b.tel_2 = :tel)';
-            $params['tel'] = $beneficiaire->getTelConso();
+            $query .= ' AND (b.tel_conso LIKE :tel OR b.tel_2 LIKE :tel)';
+            $params['tel'] = '%'.$beneficiaire->getTelConso().'%';
         }
 
         if (!is_null($idUtilisateur)) {

@@ -298,7 +298,8 @@ class BeneficiaireController extends Controller
         $form->add('submit', SubmitType::class, array('label' => 'Affiner'));
         $form->handleRequest($request);
 		
-        if ($form->isValid()){
+//        if ($form->isValid()){
+        if ($form->isSubmitted()){
 
             $complementStatut = $form->get('complementStatut')->getData();
             $complementDetailStatut = $form->get('complementDetailStatut')->getData();

@@ -104,6 +104,7 @@ class RechercheBeneficiaireType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'placeholder' => 'Téléphone',
+                    'maxlength' => 10,
                 )
             ))
 
