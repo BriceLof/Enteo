@@ -1,4 +1,4 @@
 stat_commercial_home:
-    path:    /test
+    path:    /commercial
     defaults:
         _controller: ApplicationStatsBundle:Stat:index

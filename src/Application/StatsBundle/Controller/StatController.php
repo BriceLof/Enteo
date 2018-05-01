@@ -27,6 +27,19 @@ class StatController extends Controller
         $beneficiaireStatutFinancementToday = $statsBeneficiaire->getBeneficiaireStatutFinancement();
         $listeInfoBeneficiaireStatutFinancementToday = array($beneficiaireStatutFinancementToday, array('dateDebut' => '', 'dateFin' => ''));
 
+        $beneficiaireStatutFacturationToday = $statsBeneficiaire->getBeneficiaireStatutFacturation();
+        $listeInfoBeneficiaireStatutFacturationToday = array($beneficiaireStatutFacturationToday, array('dateDebut' => '', 'dateFin' => ''));
+
+        $beneficiaireStatutReglementToday = $statsBeneficiaire->getBeneficiaireStatutReglement();
+        $listeInfoBeneficiaireStatutReglementToday = array($beneficiaireStatutReglementToday, array('dateDebut' => '', 'dateFin' => ''));
+
+        $beneficiaireTerminerToday = $statsBeneficiaire->getBeneficiaireTerminer();
+        $listeInfoBeneficiairesTerminerToday = array($beneficiaireTerminerToday, array('dateDebut' => '', 'dateFin' => ''));
+
+        $beneficiaireAbandonToday = $statsBeneficiaire->getBeneficiaireAbandon();
+        $listeInfoBeneficiairesAbandonToday = array($beneficiaireAbandonToday, array('dateDebut' => '', 'dateFin' => ''));
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,10 +55,30 @@ class StatController extends Controller
             $beneficiaireRvCommerciaux = $statsBeneficiaire->getBeneficiaireRvCommerciaux($dateDebut, $dateFin);
             $listeInfoBeneficiaireRvCommerciaux = array($beneficiaireRvCommerciaux, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
 
+            $beneficiaireStatutFinancement = $statsBeneficiaire->getBeneficiaireStatutFinancement($dateDebut, $dateFin);
+            $listeInfoBeneficiaireStatutFinancement = array($beneficiaireStatutFinancement, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
+
+            $beneficiaireStatutFacturation = $statsBeneficiaire->getBeneficiaireStatutFacturation($dateDebut, $dateFin);
+            $listeInfoBeneficiaireStatutFacturation = array($beneficiaireStatutFacturation, array('dateDebut' => '', 'dateFin' => ''));
+
+            $beneficiaireStatutReglement = $statsBeneficiaire->getBeneficiaireStatutReglement($dateDebut, $dateFin);
+            $listeInfoBeneficiaireStatutReglement = array($beneficiaireStatutReglement, array('dateDebut' => '', 'dateFin' => ''));
+
+            $beneficiaireTerminer = $statsBeneficiaire->getBeneficiaireTerminer($dateDebut, $dateFin);
+            $listeInfoBeneficiairesTerminer = array($beneficiaireTerminer, array('dateDebut' => '', 'dateFin' => ''));
+
+            $beneficiaireAbandon = $statsBeneficiaire->getBeneficiaireAbandon($dateDebut, $dateFin);
+            $listeInfoBeneficiairesAbandon = array($beneficiaireAbandon, array('dateDebut' => '', 'dateFin' => ''));
+
             return $this->render("ApplicationStatsBundle:Stat:index.html.twig", array(
                 'beneficiaireOfDay' => $listeInfoNewBeneficiaires,
                 'beneficiaireNonAboutiOfDay' => $listeInfoBeneficiairesNonAbouti,
                 'beneficiaireRvCommerciauxOfDay' => $listeInfoBeneficiaireRvCommerciaux,
+                'beneficiaireStatutFinancementOfDay' => $listeInfoBeneficiaireStatutFinancement,
+                'beneficiaireStatutFacturationOfDay' => $listeInfoBeneficiaireStatutFacturation,
+                'beneficiaireStatutReglementOfDay' => $listeInfoBeneficiaireStatutReglement,
+                'beneficiaireTerminerOfDay' => $listeInfoBeneficiairesTerminer,
+                'beneficiaireAbandonOfDay' => $listeInfoBeneficiairesAbandon,
                 'form' => $form->createView(),
             ));
         }
@@ -56,6 +89,10 @@ class StatController extends Controller
             'beneficiaireNonAboutiOfDay' => $listeInfoBeneficiairesNonAboutiToday,
             'beneficiaireRvCommerciauxOfDay' => $listeInfoBeneficiaireRvCommerciauxToday,
             'beneficiaireStatutFinancementOfDay' => $listeInfoBeneficiaireStatutFinancementToday,
+            'beneficiaireStatutFacturationOfDay' => $listeInfoBeneficiaireStatutFacturationToday,
+            'beneficiaireStatutReglementOfDay' => $listeInfoBeneficiaireStatutReglementToday,
+            'beneficiaireTerminerOfDay' => $listeInfoBeneficiairesTerminerToday,
+            'beneficiaireAbandonOfDay' => $listeInfoBeneficiairesAbandonToday,
             'form' => $form->createView(),
         ));
     }

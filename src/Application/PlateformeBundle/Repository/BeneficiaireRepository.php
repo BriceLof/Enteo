@@ -96,7 +96,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-
     /**
      * @param Beneficiaire $beneficiaire
      * @param $debut

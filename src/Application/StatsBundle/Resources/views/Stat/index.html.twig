@@ -26,264 +26,490 @@
                 </form>
             </div>
         </div><br>
+
+        <div style="font-size: 22px;color: #565656;">
+            {% if beneficiaireOfDay[1].dateDebut is null or beneficiaireOfDay[1].dateFin == ''  %}
+                <b>Aujourd'hui</b>
+            {% else %}
+                Du <b>{{  beneficiaireOfDay[1].dateDebut | date('d/m/Y') }}</b> Au <b>{{  beneficiaireOfDay[1].dateFin | date('d/m/Y') }}</b>
+            {% endif %}
+        </div>
+
         <hr>
 
-        {% set totalRvFaire = beneficiaireRvCommerciauxOfDay[0].rvFaire | length %}
-        {% set totalRvPositif = beneficiaireRvCommerciauxOfDay[0].rvRealisePositif | length %}
-        {% set totalRvNegatif = beneficiaireRvCommerciauxOfDay[0].rvRealiseNegatif | length %}
-        {% set totalRvRealiseAutre = beneficiaireRvCommerciauxOfDay[0].rvRealiseAutre | length %}
-
         <div class="row">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
+            <div class="col-md-6">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
                             <th></th>
                             <th>Total</th>
                             <th>en % des contacts</th>
                             <th>en % des Rdv</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Nouveaux contacts</th>
-                            <td>{{ beneficiaireOfDay[0] | length  }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr style="height: 30px;"></tr>
-                        <tr>
-                            <th scope="row">Contacts commerciaux non aboutis</th>
-                            <td>{{ beneficiaireNonAboutiOfDay[0] | length  }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nouveaux contacts</th>
+                                <td><b>{{  beneficiaireOfDay[0] | length  }}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">Contacts commerciaux non aboutis</th>
+                                <td><b>{{ beneficiaireNonAboutiOfDay[0] | length  }}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
 
-                        {# Début RV commerciaux #}
-                        <tr style="height: 30px;"></tr>
-                        <tr>
-                            <th scope="row">RV commerciaux</th>
-                            <td>{{  totalRvFaire + totalRvPositif + totalRvNegatif + totalRvRealiseAutre}}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont RV à faire</td>
-                            <td>{{ totalRvFaire }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont RV réalisés positifs</td>
-                            <td>{{ totalRvPositif }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont RV réalisés négatifs</td>
-                            <td>{{ totalRvNegatif }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont RV réalisés avec autres statuts</td>
-                            <td>{{ totalRvRealiseAutre }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        {# FIN RV commerciaux #}
-
-                        {# Début Statut financement #}
-                        <tr style="height: 30px;"></tr>
-                        <tr>
-                            <th scope="row">Statut fincanement</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont "en attente accord"</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont OK Financeur</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont Ok financement partiel</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>dont refus financement</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        {# FIN Statut financement #}
-                    </tbody>
-                </table>
-            </div>
+                            {# Début RV commerciaux #}
 
 
+                            {% set totalRvFaire = beneficiaireRvCommerciauxOfDay[0].rvFaire | length %}
+                            {% set totalRvPositif = beneficiaireRvCommerciauxOfDay[0].rvRealisePositif | length %}
+                            {% set totalRvNegatif = beneficiaireRvCommerciauxOfDay[0].rvRealiseNegatif | length %}
+                            {% set totalRvRealiseAutre = beneficiaireRvCommerciauxOfDay[0].rvRealiseAutre | length %}
 
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">RV commerciaux</th>
+                                <td><b>{{  totalRvFaire + totalRvPositif + totalRvNegatif + totalRvRealiseAutre}}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont RV à faire</td>
+                                <td>{{ totalRvFaire }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont RV réalisés positifs</td>
+                                <td>{{ totalRvPositif }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont RV réalisés négatifs</td>
+                                <td>{{ totalRvNegatif }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont RV réalisés avec autres statuts</td>
+                                <td>{{ totalRvRealiseAutre }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {# FIN RV commerciaux #}
 
+                            {# Début Statut financement #}
 
+                            {% set totalAttenteAccord = beneficiaireStatutFinancementOfDay[0].attenteAccord | length %}
+                            {% set totalOkFinanceur = beneficiaireStatutFinancementOfDay[0].okFinanceur | length %}
+                            {% set totalOkFinancementPartiel = beneficiaireStatutFinancementOfDay[0].okFinancementPartiel | length %}
+                            {% set totalRefusFinancement = beneficiaireStatutFinancementOfDay[0].refusFinancement | length %}
 
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">Statut financement</th>
+                                <td><b>{{  totalAttenteAccord + totalOkFinanceur + totalOkFinancementPartiel + totalRefusFinancement}}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont En attente accord</td>
+                                <td>{{ totalAttenteAccord }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont OK Financeur</td>
+                                <td>{{ totalOkFinanceur }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Ok financement partiel</td>
+                                <td>{{ totalOkFinancementPartiel }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Refus financement</td>
+                                <td>{{ totalRefusFinancement }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {# FIN Statut financement #}
 
+                            {# Début Statut facturation #}
 
+                            {% set totalAcompte = beneficiaireStatutFacturationOfDay[0].acompte | length %}
+                            {% set totalStatutFacturationTotale = beneficiaireStatutFacturationOfDay[0].totale | length %}
 
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">Statut facturation</th>
+                                <td><b>{{  totalAcompte + totalStatutFacturationTotale }}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Facturation acompte</td>
+                                <td>{{ totalAcompte }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Facturation totale</td>
+                                <td>{{ totalStatutFacturationTotale }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {# FIN Statut facturation #}
 
+                            {# Début Statut reglement #}
 
+                            {% set totalReglementPartiel = beneficiaireStatutReglementOfDay[0].partiel | length %}
+                            {% set totalReglementTotal = beneficiaireStatutReglementOfDay[0].total | length %}
+                            {% set totalReglementAnnuler = beneficiaireStatutReglementOfDay[0].annuler | length %}
 
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">Statut réglement</th>
+                                <td><b>{{  totalReglementPartiel + totalReglementTotal + totalReglementAnnuler }}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Réglement partiel</td>
+                                <td>{{ totalReglementPartiel }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Réglement total</td>
+                                <td>{{ totalReglementTotal }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Réglement annulé</td>
+                                <td>{{ totalReglementAnnuler }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            {# FIN Statut reglement #}
 
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">Statut terminé</th>
+                                <td><b>{{ beneficiaireTerminerOfDay[0] | length  }}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
 
-
-
-
-
-            <div class="col-sm-6 col-md-4">
-                <div class="block_info_stat">
-                    <div class="text-center">
-                        <h3>Nouveaus contacts</h3>
-                        <p class="info_important">{{ beneficiaireOfDay[0] | length  }}</p>
-                        {% if beneficiaireOfDay[1].dateDebut is null or beneficiaireOfDay[1].dateFin == ''  %}
-                            <b>Auj.</b>
-                        {% else %}
-                            Du <b>{{  beneficiaireOfDay[1].dateDebut | date('d/m/Y') }}</b> Au <b>{{  beneficiaireOfDay[1].dateFin | date('d/m/Y') }}</b>
-                        {% endif %}
-                    </div>
-                    <p class="btn_detail">Détail</p>
-                    <div class="detail" style="display:none">
-                        <ul>
-                            {% for beneficiaire in beneficiaireOfDay[0] %}
-                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                            <tr style="height: 30px;"></tr>
+                            <tr>
+                                <th scope="row">Statut abandon</th>
+                                <td><b>{{ beneficiaireAbandonOfDay[0] | length  }}</b></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="col-sm-6 col-md-4">
-                <div class="block_info_stat">
-                    <div class="text-center">
-                        <h3>Contacts commerciaux non aboutis</h3>
-                        <p class="info_important">{{ beneficiaireNonAboutiOfDay[0] | length  }}</p>
-                        {% if beneficiaireNonAboutiOfDay[1].dateDebut is null or beneficiaireNonAboutiOfDay[1].dateFin == ''  %}
-                            <b>Auj.</b>
-                        {% else %}
-                            Du <b>{{  beneficiaireNonAboutiOfDay[1].dateDebut | date('d/m/Y') }}</b> Au <b>{{  beneficiaireNonAboutiOfDay[1].dateFin | date('d/m/Y') }}</b>
-                        {% endif %}
+            <div class="col-md-6">
+                {#---------------- Début Version graph -------------#}
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Nouveaus contacts</h3>
+                                <p class="info_important">{{ beneficiaireOfDay[0] | length  }}</p>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaire in beneficiaireOfDay[0] %}
+                                        <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <p class="btn_detail">Détail</p>
-                    <div class="detail" style="display:none">
-                        <ul>
-                            {% for beneficiaire in beneficiaireNonAboutiOfDay[0] %}
-                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-sm-6 col-md-4">
-                <div class="block_info_stat">
-                    <div class="text-center">
-                        <h3>RV commerciaux</h3>
-                        {% set totalRvFaire = beneficiaireRvCommerciauxOfDay[0].rvFaire | length %}
-                        {% set totalRvPositif = beneficiaireRvCommerciauxOfDay[0].rvRealisePositif | length %}
-                        {% set totalRvNegatif = beneficiaireRvCommerciauxOfDay[0].rvRealiseNegatif | length %}
-                        {% set totalRvRealiseAutre = beneficiaireRvCommerciauxOfDay[0].rvRealiseAutre | length %}
-                        <p class="info_important">{{  totalRvFaire + totalRvPositif + totalRvNegatif + totalRvRealiseAutre}}</p>
-                        {#{{ dump(totalRvFaire, totalRvPositif, totalRvNegatif, totalRvRealiseAutre) }}#}
-                        <canvas id="chartRvCommerciaux"></canvas>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Contacts commerciaux non aboutis</h3>
+                                <p class="info_important">{{ beneficiaireNonAboutiOfDay[0] | length  }}</p>
+                            </div>
 
-                        <script>
-                            var ctx = document.getElementById('chartRvCommerciaux').getContext('2d');
-                            var chart = new Chart(ctx, {
-                                type: 'pie',
-                                data :{
-                                    datasets: [{
-                                        data: [ {{ totalRvFaire }} , {{ totalRvPositif }}, {{ totalRvNegatif }} , {{ totalRvRealiseAutre }}],
-                                        backgroundColor: [
-                                            '#DA366C','#22A6DA', '#E25F89', '#FAF2F4'
-                                        ]
-                                    }],
-                                    labels: [
-                                        'RV à faire',
-                                        'RV réalisé positif',
-                                        'RV réalisé negatif',
-                                        'RV réalisé autre'
-                                    ]
-                                },
-                                options: {}
-                            });
-
-                        </script>
-                    </div>
-                    <p class="btn_detail">Détail</p>
-                    <div class="detail" style="display:none">
-                        <ul>
-
-                        </ul>
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaire in beneficiaireNonAboutiOfDay[0] %}
+                                        <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>RV commerciaux</h3>
+                                <p class="info_important">{{  totalRvFaire + totalRvPositif + totalRvNegatif + totalRvRealiseAutre}}</p>
+                                {#{{ dump(totalRvFaire, totalRvPositif, totalRvNegatif, totalRvRealiseAutre) }}#}
+                                <canvas id="chartRvCommerciaux"></canvas>
+
+                                <script>
+                                    var ctx = document.getElementById('chartRvCommerciaux').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data :{
+                                            datasets: [{
+                                                data: [ {{ totalRvFaire }} , {{ totalRvPositif }}, {{ totalRvNegatif }} , {{ totalRvRealiseAutre }}],
+                                                backgroundColor: [
+                                                    '#DA366C','#22A6DA', '#E25F89', '#FAF2F4'
+                                                ]
+                                            }],
+                                            labels: [
+                                                'RV à faire',
+                                                'RV réalisé positif',
+                                                'RV réalisé negatif',
+                                                'RV réalisé autre'
+                                            ],
+                                        },
+                                        options: {
+                                            legend: {
+                                                display: false,
+                                            }
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaireRvCommerciauxArray in beneficiaireRvCommerciauxOfDay[0] %}
+                                        {% if beneficiaireRvCommerciauxArray is not empty %}
+                                            {% for beneficiaire in beneficiaireRvCommerciauxArray %}
+                                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Statut financement</h3>
+                                <p class="info_important">{{ totalAttenteAccord + totalOkFinanceur + totalOkFinancementPartiel + totalRefusFinancement }}</p>
+                                <canvas id="chartStatutFinancement"></canvas>
+
+                                <script>
+                                    var ctx = document.getElementById('chartStatutFinancement').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data :{
+                                            datasets: [{
+                                                data: [ {{ totalAttenteAccord }} , {{ totalOkFinanceur }}, {{ totalOkFinancementPartiel }} , {{ totalRefusFinancement }}],
+                                                backgroundColor: [
+                                                    '#DA366C','#22A6DA', '#E25F89', '#FAF2F4'
+                                                ]
+                                            }],
+                                            labels: [
+                                                'Attente accord',
+                                                'Ok financeur',
+                                                'Ok financement partiel',
+                                                'Refus financement'
+                                            ]
+                                        },
+                                        options: {
+                                            legend: {
+                                                display: false,
+                                            }
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaireStatutFinancementArray in beneficiaireStatutFinancementOfDay[0] %}
+                                        {% if beneficiaireStatutFinancementArray is not empty %}
+                                            {% for beneficiaire in beneficiaireStatutFinancementArray %}
+                                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Statut facturation</h3>
+                                <p class="info_important">{{  totalAcompte + totalStatutFacturationTotale }}</p>
+                                <canvas id="chartStatutFacturation"></canvas>
+
+                                <script>
+                                    var ctx = document.getElementById('chartStatutFacturation').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data :{
+                                            datasets: [{
+                                                data: [ {{ totalAcompte }} , {{ totalStatutFacturationTotale }}],
+                                                backgroundColor: [
+                                                    '#DA366C','#22A6DA'
+                                                ]
+                                            }],
+                                            labels: [
+                                                'Acompte',
+                                                'Totale',
+                                            ]
+                                        },
+                                        options: {
+                                            legend: {
+                                                display: false,
+                                            }
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaireStatutFacturationArray in beneficiaireStatutFacturationOfDay[0] %}
+                                        {% if beneficiaireStatutFacturationArray is not empty %}
+                                            {% for beneficiaire in beneficiaireStatutFacturationArray %}
+                                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Statut réglement</h3>
+                                <p class="info_important">{{  totalReglementPartiel + totalReglementTotal + totalReglementAnnuler }}</p>
+                                <canvas id="chartStatutReglement"></canvas>
+
+                                <script>
+                                    var ctx = document.getElementById('chartStatutReglement').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data :{
+                                            datasets: [{
+                                                data: [ {{ totalReglementPartiel }} , {{ totalReglementTotal }}, {{ totalReglementAnnuler }}],
+                                                backgroundColor: [
+                                                    '#DA366C','#22A6DA', '#E25F89'
+                                                ]
+                                            }],
+                                            labels: [
+                                                'Partiel',
+                                                'Total',
+                                                'Annlé'
+                                            ]
+                                        },
+                                        options: {
+                                            legend: {
+                                                display: false,
+                                            }
+                                        }
+                                    });
+
+                                </script>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaireStatutReglementArray in beneficiaireStatutReglementOfDay[0] %}
+                                        {% if beneficiaireStatutReglementArray is not empty %}
+                                            {% for beneficiaire in beneficiaireStatutReglementArray %}
+                                                <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Statut terminé</h3>
+                                <p class="info_important">{{ beneficiaireTerminerOfDay[0] | length  }}</p>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaire in beneficiaireTerminerOfDay[0] %}
+                                        <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="block_info_stat">
+                            <div class="text-center">
+                                <h3>Statut abandon</h3>
+                                <p class="info_important">{{ beneficiaireAbandonOfDay[0] | length  }}</p>
+                            </div>
+
+                            <p class="btn_detail">Détail</p>
+                            <div class="detail" style="display:none">
+                                <ul>
+                                    {% for beneficiaire in beneficiaireAbandonOfDay[0] %}
+                                        <li><a href="{{ path("application_show_beneficiaire", {'id' : beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ beneficiaire.nomConso | capitalize ~ ' '~ beneficiaire.prenomConso | capitalize }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# FIN Version graph #}
             </div>
+
+
+
+
         </div>
-
-        {#<div class="col-sm-6 col-md-4">#}
-            {#<div class="block_info_stat">#}
-                {#<div class="text-center">#}
-                    {#<h3>Statut Financement</h3>#}
-                    {#<p class="info_important"></p>#}
-                    {#{% set totalRvFaire = beneficiaireRvCommerciauxOfDay[0].rvFaire | length %}#}
-                    {#{% set totalRvPositif = beneficiaireRvCommerciauxOfDay[0].rvRealisePositif | length %}#}
-                    {#{% set totalRvNegatif = beneficiaireRvCommerciauxOfDay[0].rvRealiseNegatif | length %}#}
-                    {#{% set totalRvRealiseAutre = beneficiaireRvCommerciauxOfDay[0].rvRealiseAutre | length %}#}
-                    {#{{ dump(totalRvFaire, totalRvPositif, totalRvNegatif, totalRvRealiseAutre) }}#}
-                    {#<canvas id="chartStatutFinancement"></canvas>#}
-
-                    {#<script>#}
-                        {#var ctx = document.getElementById('chartStatutFinancement').getContext('2d');#}
-                        {#var chart = new Chart(ctx, {#}
-                            {#type: 'pie',#}
-                            {#data :{#}
-                                {#datasets: [{#}
-                                    {#data: [ {{ totalRvFaire }} , {{ totalRvPositif }}, {{ totalRvNegatif }} , {{ totalRvRealiseAutre }}],#}
-                                    {#backgroundColor: [#}
-                                        {#'#DA366C','#22A6DA', '#E25F89', '#FAF2F4'#}
-                                    {#]#}
-                                {#}],#}
-                                {#labels: [#}
-                                    {#'RV à faire',#}
-                                    {#'RV réalisé positif',#}
-                                    {#'RV réalisé negatif',#}
-                                    {#'RV réalisé autre'#}
-                                {#]#}
-                            {#},#}
-                            {#options: {}#}
-                        {#});#}
-
-                    {#</script>#}
-                {#</div>#}
-                {#<p class="btn_detail">Détail</p>#}
-                {#<div class="detail" style="display:none">#}
-                    {#<ul>#}
-
-                    {#</ul>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
     </div>
-    </div>
-
-
-
 {% endblock %}
 
 {% block javascripts %}

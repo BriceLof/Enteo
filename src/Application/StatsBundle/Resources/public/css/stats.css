@@ -14,6 +14,7 @@
 .block_info_stat{
     box-shadow: 7px 7px 8px #e8e8e8;
     padding: 6px;
+    margin-bottom: 30px;
 }
 
 .block_info_stat h3{
@@ -38,7 +39,7 @@
     border-radius: 1px;
     padding: 10px;
     line-height: 24px;
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
     font-size: 12px;
 }
