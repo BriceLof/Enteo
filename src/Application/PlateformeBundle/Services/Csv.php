@@ -155,7 +155,7 @@ class Csv
                 fputcsv(
                     $handle,
                     array(
-                        utf8_encode($beneficiaire->getEcoleUniversite()),
+                        utf8_decode($beneficiaire->getEcoleUniversite()),
                         utf8_decode($beneficiaire->getDiplomeVise()),
                         utf8_decode($beneficiaire->getNomConso()).' '.utf8_decode($beneficiaire->getPrenomConso()),
                         $dateDebut,

@@ -12,14 +12,40 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
-class EcoleUniversiteType extends IntervalDateType
+class EcoleUniversiteType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
+        $builder
+            ->add('dateFrom', DateType::class, array(
+                'label' => 'Début',
+                'required' => false,
+                'mapped' => false,
+                'html5' => false,
+                'widget' => 'single_text',
+                'attr' => array(
+                    'class' => 'accompagnementDate'
+                ),
+            ))
+
+            ->add('dateTo', DateType::class, array(
+                'label' => 'Fin',
+                'required' => false,
+                'mapped' => false,
+                'html5' => false,
+                'widget' => 'single_text',
+                'attr' => array(
+                    'class' => 'accompagnementDate'
+                ),
+            ))
+
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Rechercher',
+                'attr' => array('class' => 'btn btn-primary')
+            ))
         ;
     }
 
@@ -36,6 +62,6 @@ class EcoleUniversiteType extends IntervalDateType
      */
     public function getName()
     {
-        return 'application_plateformebundle_accompagnementType';
+        return 'application_stasbundle_ecole_universite_Type';
     }
 }

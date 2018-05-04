@@ -326,12 +326,20 @@
                                             {{ beneficiaire.lastDetailStatut.detail }}
                                         </p>
                                     {% else %}
-                                        <p class="col-xs-4">
-                                            {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
-                                        </p>
-                                        <p class="col-xs-4">
-                                            {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
-                                        </p>
+                                        {% if beneficiaire.suiviAdministratif is not null %}
+                                            <p class="col-xs-4">
+                                            </p>
+                                            <p class="col-xs-4">
+                                            </p>
+                                        {% else %}
+                                            <p class="col-xs-4">
+                                                {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
+                                            </p>
+                                            <p class="col-xs-4">
+                                                {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
+                                            </p>
+                                        {% endif %}
+
                                     {% endif %}
                                 {% else %}
                                     {% if beneficiaire.lastDetailStatutConsultant is not null %}

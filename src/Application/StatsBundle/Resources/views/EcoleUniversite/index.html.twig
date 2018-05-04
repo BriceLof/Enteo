@@ -32,7 +32,7 @@
                     <div class="col-md-6"><span>Du</span> {{ form_widget(form.dateFrom, {'attr' : {"value": ''  } }) }}</div>
                     <div class="col-md-6"><span>Au</span> {{ form_widget(form.dateTo, {'attr' : {"value": ''  } }) }}</div>
                 </div>
-                <div class="row">
+                <div class="row mt-5">
                     <div class="col-md-12">{{ form_widget(form.submit, { 'attr' : {'class' : 'btn-primary btn' }} ) }}</div>
                 </div>
                 {{ form_rest(form) }}
@@ -42,3 +42,30 @@
 </div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        /**
+         * datepicker sur les input date
+         */
+        $(function () {
+            $(".accompagnementDate").datepicker({
+                dateFormat: 'dd/mm/yy',
+                yearRange: '2016:2025',
+                firstDay: 1,
+                changeMonth: true,
+                changeYear: true,
+                closeText: 'Fermer',
+                prevText: 'Précédent',
+                nextText: 'Suivant',
+                currentText: 'Aujourd\'hui',
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
+                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
+                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+                weekHeader: 'Sem.'
+            });
+        });
+    </script>
+{% endblock %}

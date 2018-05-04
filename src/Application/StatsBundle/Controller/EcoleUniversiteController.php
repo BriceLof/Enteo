@@ -13,7 +13,7 @@ class EcoleUniversiteController extends Controller
         $form = $this->createForm(EcoleUniversiteType::class);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $debut = $form['dateFrom']->getData();
             $fin = $form['dateTo']->getData();
 

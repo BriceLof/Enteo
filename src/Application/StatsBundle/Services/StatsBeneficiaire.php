@@ -93,7 +93,7 @@ class StatsBeneficiaire
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if(!is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "financement"){
+            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "financement"){
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Attente accord"){
                     $tabFinancementEnAttente[] = $benef;
                 }
@@ -131,7 +131,7 @@ class StatsBeneficiaire
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if(!is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "facturation"){
+            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "facturation"){
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture acompte"){
                     $tabFacturationAcompte[] = $benef;
                 }
@@ -161,7 +161,7 @@ class StatsBeneficiaire
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if(!is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
+            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Réglement partiel"){
                     $tabReglementPartiel[] = $benef;
                 }
