@@ -61,6 +61,8 @@ class NewsController extends Controller
                 $em->persist($historique);
             }
 
+            $em->persist($news);
+
             // ajouter un suivi administratif 
             if ($news->getDetailStatut()->getDetail() == "RV1 Positif" OR $news->getDetailStatut()->getDetail() == "RV2 Positif") {
                 $statutRepo = $em->getRepository('ApplicationPlateformeBundle:Statut')->findOneBySlug("dossier-en-cours");
@@ -97,7 +99,6 @@ class NewsController extends Controller
                 }
             }
 
-            $em->persist($news);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', 'Statut bénéficiaire bien ajouté');
