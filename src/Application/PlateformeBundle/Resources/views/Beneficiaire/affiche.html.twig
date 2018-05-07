@@ -345,13 +345,20 @@
 
                                     {% endif %}
                                 {% else %}
-                                    {% if beneficiaire.lastDetailStatutConsultant is not null and beneficiaire.lastDetailStatutConsultant.statut.type != 'commercial' %}
-                                        <p class="col-xs-4">
-                                            {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
-                                        </p>
-                                        <p class="col-xs-4">
-                                            {{ beneficiaire.lastDetailStatutConsultant.detail }}
-                                        </p>
+                                    {% if beneficiaire.lastDetailStatutConsultant is not null %}
+                                        {% if beneficiaire.lastDetailStatutConsultant.statut.type != 'commercial' %}
+                                            <p class="col-xs-4">
+                                                {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
+                                            </p>
+                                            <p class="col-xs-4">
+                                                {{ beneficiaire.lastDetailStatutConsultant.detail }}
+                                            </p>
+                                        {% else %}
+                                            <p class="col-xs-4">
+                                            </p>
+                                            <p class="col-xs-4">
+                                            </p>
+                                        {% endif %}
                                     {% else %}
                                         <p class="col-xs-4">
                                             {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
