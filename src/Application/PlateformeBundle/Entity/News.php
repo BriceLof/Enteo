@@ -178,10 +178,11 @@ class News
 
         if ($this->statut->getId() == 11 || $this->statut->getId() == 12 || $this->statut->getId() == 13){
             $this->getBeneficiaire()->setDeleted(true);
+//            $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
         }else{
             $this->getBeneficiaire()->setDeleted(false);
         }
-        if ($this->statut->isAccesConsultant() == true){
+        if (!is_null($this->statut) && $this->statut->isAccesConsultant() == true){
             $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
         }
     }

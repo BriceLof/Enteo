@@ -326,18 +326,21 @@
                                             {{ beneficiaire.lastDetailStatut.detail }}
                                         </p>
                                     {% else %}
-                                        {% if beneficiaire.suiviAdministratif is not null %}
+                                        {% if beneficiaire.suiviAdministratif is null %}
                                             <p class="col-xs-4">
                                             </p>
                                             <p class="col-xs-4">
                                             </p>
                                         {% else %}
                                             <p class="col-xs-4">
-                                                {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
+                                                {% if beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut is not null %}
+                                                    {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
+                                                {% endif %}
                                             </p>
                                             <p class="col-xs-4">
-                                                {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
-                                            </p>
+                                                {% if beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut is not null %}
+                                                    {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.nom }}
+                                                {% endif %}                                            </p>
                                         {% endif %}
 
                                     {% endif %}

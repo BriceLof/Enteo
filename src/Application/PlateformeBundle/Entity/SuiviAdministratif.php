@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 /**
  * SuiviAdministratif
@@ -36,8 +37,7 @@ class SuiviAdministratif
      */
     private $date;
 
-    
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Statut")
      * @ORM\JoinColumn(nullable=true)
@@ -49,15 +49,15 @@ class SuiviAdministratif
      * @ORM\JoinColumn(nullable=true)
      */
     private $detailStatut;
-    
+
     /**
      * @var
      *
      * @ORM\Column(name="info", type="string", length=255, nullable=true)
-     * 
+     *
      */
     private $info;
-    
+
     /**
      * SuiviAdministratif constructor.
      * @param $date
@@ -102,7 +102,6 @@ class SuiviAdministratif
         return $this->date;
     }
 
-    
 
     /**
      * Set beneficiaire
@@ -203,11 +202,20 @@ class SuiviAdministratif
     /**
      * @ORM\PrePersist
      */
-    public function modifyBeneficiaire()
+    public function modifyBeneficiaire(LifecycleEventArgs $args)
     {
-        if ($this->statut->isAccesConsultant() == true){
-            $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
+        if (!is_null($this->statut)
+            && ($this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12
+            || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13
+            )) {
+            if ($this->statut->isAccesConsultant() == true) {
+                $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
+            }
+            $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
+            if ($this->statut->getId() == 9 || $this->statut->getId() == 10 || $this->statut->getId() == 14){
+                $detail = $args->getEntityManager()->getRepository('ApplicationPlateformeBundle:DetailStatut')->find(22);
+                $this->getBeneficiaire()->setLastDetailStatutConsultant($detail);
+            }
         }
-        $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
     }
 }
