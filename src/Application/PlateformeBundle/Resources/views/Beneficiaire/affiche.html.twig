@@ -339,13 +339,13 @@
                                             </p>
                                             <p class="col-xs-4">
                                                 {% if beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut is not null %}
-                                                    {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.nom }}
+                                                    {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
                                                 {% endif %}                                            </p>
                                         {% endif %}
 
                                     {% endif %}
                                 {% else %}
-                                    {% if beneficiaire.lastDetailStatutConsultant is not null %}
+                                    {% if beneficiaire.lastDetailStatutConsultant is not null and beneficiaire.lastDetailStatutConsultant.statut.type != 'commercial' %}
                                         <p class="col-xs-4">
                                             {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
                                         </p>
