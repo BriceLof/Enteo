@@ -2,7 +2,7 @@
     {% if beneficiaire.consultant is not null %}
         <div>
             <div>
-                <span id="labelConsultant">Consulant :</span>
+                <span id="labelConsultant">Consultant :</span>
                 <span id="nomPrenomConsultant"><span>{{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|capitalize~" " }}</span>
                     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
                         <span class="modifierConsultant maj" data-toggle="modal" data-target="#myModal">Modifier</span>

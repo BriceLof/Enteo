@@ -11,6 +11,8 @@ class StatController extends Controller
 {
     public function indexAction(Request $request)
     {
+        ini_set(‘memory_limit’,-1);
+
         $statsBeneficiaire = $this->container->get('application_stats_beneficiaire');
 
         $form = $this->createForm(IntervalDateType::class);

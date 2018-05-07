@@ -86,3 +86,10 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<IfModule mod_expires.c>
+	<FilesMatch "\.(css|js)$">
+		ExpiresActive On
+		ExpiresDefault "access plus 2 days"
+	</FilesMatch>
+</IfModule>

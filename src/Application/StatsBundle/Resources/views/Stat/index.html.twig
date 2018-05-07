@@ -149,11 +149,13 @@
 
                             {% set totalAcompte = beneficiaireStatutFacturationOfDay[0].acompte | length %}
                             {% set totalStatutFacturationTotale = beneficiaireStatutFacturationOfDay[0].totale | length %}
+                            {% set totalStatutFacturationSolde = beneficiaireStatutFacturationOfDay[0].solde | length %}
+                            {% set totalStatutFacturationAvoir = beneficiaireStatutFacturationOfDay[0].avoir | length %}
 
                             <tr style="height: 30px;"></tr>
                             <tr>
                                 <th scope="row">Statut facturation</th>
-                                <td><b>{{  totalAcompte + totalStatutFacturationTotale }}</b></td>
+                                <td><b>{{  totalAcompte + totalStatutFacturationTotale + totalStatutFacturationSolde + totalStatutFacturationAvoir}}</b></td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -371,7 +373,7 @@
                         <div class="block_info_stat">
                             <div class="text-center">
                                 <h3>Statut facturation</h3>
-                                <p class="info_important">{{  totalAcompte + totalStatutFacturationTotale }}</p>
+                                <p class="info_important">{{ totalAcompte + totalStatutFacturationTotale + totalStatutFacturationSolde + totalStatutFacturationAvoir}}</p>
                                 <canvas id="chartStatutFacturation"></canvas>
 
                                 <script>
@@ -380,14 +382,16 @@
                                         type: 'pie',
                                         data :{
                                             datasets: [{
-                                                data: [ {{ totalAcompte }} , {{ totalStatutFacturationTotale }}],
+                                                data: [ {{ totalAcompte }} , {{ totalStatutFacturationTotale }}, {{ totalStatutFacturationSolde }} , {{ totalStatutFacturationAvoir }}],
                                                 backgroundColor: [
-                                                    '#DA366C','#22A6DA'
+                                                    '#DA366C','#22A6DA', '#E25F89', '#FAF2F4'
                                                 ]
                                             }],
                                             labels: [
                                                 'Acompte',
                                                 'Totale',
+                                                'Solde',
+                                                'Avoir'
                                             ]
                                         },
                                         options: {

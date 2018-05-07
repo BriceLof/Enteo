@@ -26,10 +26,14 @@ class StatsBeneficiaire
         foreach($beneficiaires as $benef){
             $news = $benef->getNews();
             // derniere news
-            $lastNews = $news[count($news) - 1]->getStatut()->getSlug();
+            if( !is_null($news[count($news) - 1]) && !is_null($news[count($news) - 1]->getStatut()) )
+            {
+                $lastNews = $news[count($news) - 1]->getStatut()->getSlug();
 
-            if($lastNews == 'menr' || $lastNews == 'telephone' || $lastNews == 'reporte')
-                $tabBenefNonAbouti[] = $benef;
+                if($lastNews == 'menr' || $lastNews == 'telephone' || $lastNews == 'reporte')
+                    $tabBenefNonAbouti[] = $benef;
+            }
+
 
         }
         return $tabBenefNonAbouti;
@@ -46,28 +50,34 @@ class StatsBeneficiaire
 
         foreach($beneficiaires as $benef){
             $news = $benef->getNews();
-
-            // derniere news
-            $lastNews = $news[count($news) - 1];
-            $lastNewsStatut = $lastNews->getStatut()->getSlug();
-            $lastNewsDetailStatut = $lastNews->getDetailStatut()->getDetail();
-
-            if($lastNewsStatut == 'rv1-a-faire' || $lastNewsStatut == 'rv2-a-faire')
+            if( !is_null($news[count($news) - 1]) && !is_null($news[count($news) - 1]->getStatut()) )
             {
-                $tabRvFaire[] = $benef;
-            }
-            elseif ($lastNewsStatut == 'rv1-realise' || $lastNewsStatut == 'rv2-realise'){
-                if($lastNewsDetailStatut == 'RV1 Positif' || $lastNewsDetailStatut == 'RV2 Positif')
+                // derniere news
+                $lastNews = $news[count($news) - 1];
+                $lastNewsStatut = $lastNews->getStatut()->getSlug();
+
+                if($lastNewsStatut == 'rv1-a-faire' || $lastNewsStatut == 'rv2-a-faire')
                 {
-                    $tabRvRealisePositif[] = $benef;
+                    $tabRvFaire[] = $benef;
                 }
-                else if($lastNewsDetailStatut == 'RV1 Négatif' || $lastNewsDetailStatut == 'RV2 Négatif'){
-                    $tabRvRealiseNegatif[] = $benef;
-                }
-                else{
-                    $tabRvRealiseAutre[] = $benef;
+                elseif ($lastNewsStatut == 'rv1-realise' || $lastNewsStatut == 'rv2-realise'){
+                    if( !is_null($lastNews->getDetailStatut()) )
+                    {
+                        $lastNewsDetailStatut = $lastNews->getDetailStatut()->getDetail();
+                        if($lastNewsDetailStatut == 'RV1 Positif' || $lastNewsDetailStatut == 'RV2 Positif')
+                        {
+                            $tabRvRealisePositif[] = $benef;
+                        }
+                        else if($lastNewsDetailStatut == 'RV1 Négatif' || $lastNewsDetailStatut == 'RV2 Négatif'){
+                            $tabRvRealiseNegatif[] = $benef;
+                        }
+                        else{
+                            $tabRvRealiseAutre[] = $benef;
+                        }
+                    }
                 }
             }
+
         }
 
         $tabRvCommerciaux = array(
@@ -93,7 +103,7 @@ class StatsBeneficiaire
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "financement"){
+            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "financement"){
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Attente accord"){
                     $tabFinancementEnAttente[] = $benef;
                 }
@@ -126,17 +136,25 @@ class StatsBeneficiaire
 
         $tabFacturationAcompte = array();
         $tabFacturationTotale = array();
+        $tabFacturationSolde = array();
+        $tabFacturationAvoir = array();
 
         foreach($beneficiaires as $benef) {
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "facturation"){
+            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "facturation"){
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture acompte"){
                     $tabFacturationAcompte[] = $benef;
                 }
                 elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture totale"){
                     $tabFacturationTotale[] = $benef;
+                }
+                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture solde"){
+                    $tabFacturationSolde[] = $benef;
+                }
+                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Avoir"){
+                    $tabFacturationAvoir[] = $benef;
                 }
             }
         }
@@ -144,6 +162,8 @@ class StatsBeneficiaire
         $tabStatutFacturation = array(
             "acompte" => $tabFacturationAcompte,
             "totale" => $tabFacturationTotale,
+            "solde" => $tabFacturationSolde,
+            "avoir" => $tabFacturationAvoir,
         );
 
         return $tabStatutFacturation;
@@ -161,7 +181,7 @@ class StatsBeneficiaire
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
             $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
+            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
                 if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Réglement partiel"){
                     $tabReglementPartiel[] = $benef;
                 }
@@ -191,11 +211,16 @@ class StatsBeneficiaire
 
         foreach($beneficiaires as $benef){
             $news = $benef->getNews();
-            // derniere news
-            $lastNews = $news[count($news) - 1]->getStatut()->getSlug();
 
-            if($lastNews == 'termine')
-                $tabBenefTerminer[] = $benef;
+            if( !is_null($news[count($news) - 1]) )
+            {
+                // derniere news
+                $lastNews = $news[count($news) - 1]->getStatut()->getSlug();
+
+                if($lastNews == 'termine')
+                    $tabBenefTerminer[] = $benef;
+            }
+
 
         }
         return $tabBenefTerminer;
@@ -208,12 +233,15 @@ class StatsBeneficiaire
 
         foreach($beneficiaires as $benef){
             $news = $benef->getNews();
-            // derniere news
-            $lastNews = $news[count($news) - 1]->getStatut()->getSlug();
 
-            if($lastNews == 'abandon')
-                $tabBenefAbandon[] = $benef;
+            if( !is_null($news[count($news) - 1]) && !is_null($news[count($news) - 1]->getStatut()) )
+            {
+                // derniere news
+                $lastNews = $news[count($news) - 1]->getStatut()->getSlug();
 
+                if($lastNews == 'abandon')
+                    $tabBenefAbandon[] = $benef;
+            }
         }
         return $tabBenefAbandon;
     }
