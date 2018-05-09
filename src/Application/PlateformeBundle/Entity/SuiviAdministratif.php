@@ -204,7 +204,7 @@ class SuiviAdministratif
      */
     public function modifyBeneficiaire(LifecycleEventArgs $args)
     {
-        if (!is_null($this->statut)
+        if (!is_null($this->statut) && !is_null($this->getBeneficiaire()->getLastDetailStatutConsultant())
             && ($this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12
             || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13
             )) {

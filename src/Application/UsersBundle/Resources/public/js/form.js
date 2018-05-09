@@ -1,9 +1,9 @@
 $(window).load(function() {
     $("#overlayB").fadeOut("1500");
-    console.log("Infos disponibles ");
+    //console.log("Infos disponibles ");
 });
 $(function(){
-    console.log("Recupération de vos infos");
+    //console.log("Recupération de vos infos");
     //-----------------------------------------------------------------------------------------------------------------------//
     //-------------------------- Formulaire AJOUT/MODIFICATION d'un USER ----------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//

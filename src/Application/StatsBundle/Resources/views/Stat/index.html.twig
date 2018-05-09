@@ -9,11 +9,16 @@
 {% endblock %}
 
 {% block body %}
+    <div id="overlayB" style="position:fixed;top:0;width:100%;bottom:0;z-index:9;background-color:rgba(255,255,255, 0.91)">
+        <p style="position:absolute;top:43%;right:48.6%"><b>Chargement</b></p>
+        <img style="position:absolute;top:50%;right:50%" src="{{ asset('images/ajax-loader.gif') }}"/>
+    </div>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-4">
-                <form action="{{ path('stat_commercial_home') }}" method="POST" class="form_block">
+                <form action="{{ path('stat_commercial_home') }}" method="POST" class="form_date_interval_stats">
                     <div class="row">
                         <div class="col-md-6" style="margin-top: -10px;"><span style="font-size:10px">Du</span> {{ form_widget(form.dateFrom, {'attr' : {"value": ''  } }) }}</div>
                         <div class="col-md-6" style="margin-top: -10px;"><span style="font-size:10px">Au</span> {{ form_widget(form.dateTo, {'attr' : {"value": ''  } }) }}</div>
@@ -24,6 +29,7 @@
 
                     {{ form_rest(form) }}
                 </form>
+
             </div>
         </div><br>
 
@@ -168,6 +174,18 @@
                             <tr>
                                 <td>dont Facturation totale</td>
                                 <td>{{ totalStatutFacturationTotale }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Facturation solde</td>
+                                <td>{{ totalStatutFacturationSolde }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Facturation avoir</td>
+                                <td>{{ totalStatutFacturationAvoir }}</td>
                                 <td></td>
                                 <td></td>
                             </tr>
