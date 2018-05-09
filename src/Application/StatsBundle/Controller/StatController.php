@@ -11,7 +11,8 @@ class StatController extends Controller
 {
     public function indexAction(Request $request)
     {
-        ini_set(‘memory_limit’,-1);
+        ini_set('memory_limit',-1);
+        ini_set('max_execution_time', 300);
 
         $statsBeneficiaire = $this->container->get('application_stats_beneficiaire');
 
@@ -50,6 +51,9 @@ class StatController extends Controller
 
             $beneficiaires = $statsBeneficiaire->getBeneficiaireOnPeriod($dateDebut, $dateFin);
             $listeInfoNewBeneficiaires = array($beneficiaires, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
+
+            // Pour les autres recherches il nous faut la date du jour en date de fin
+            //$dateFin = new \DateTime();
 
             $beneficiaireNonAbouti = $statsBeneficiaire->getBeneficiaireNonAbouti($dateDebut, $dateFin);
             $listeInfoBeneficiairesNonAbouti = array($beneficiaireNonAbouti, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
