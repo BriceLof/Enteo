@@ -197,6 +197,8 @@ class StatsBeneficiaire
         $tabReglementPartiel = array();
         $tabReglementTotal = array();
         $tabReglementAnnuler = array();
+        $tabReglementAvoir = array();
+        $tabReglementPP = array();
 
         foreach($beneficiaires as $benef) {
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
@@ -223,8 +225,14 @@ class StatsBeneficiaire
                     elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Prestation soldée"){
                         $tabReglementTotal[] = $benef;
                     }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Avoir"){
+                        $tabReglementAvoir[] = $benef;
+                    }
                     elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Erreur"){
                         $tabReglementAnnuler[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "P&P"){
+                        $tabReglementPP[] = $benef;
                     }
                 }
             }
@@ -234,6 +242,8 @@ class StatsBeneficiaire
             "partiel" => $tabReglementPartiel,
             "total" => $tabReglementTotal,
             "annuler" => $tabReglementAnnuler,
+            "avoir" => $tabReglementAvoir,
+            "p_p" => $tabReglementPP
         );
 
         return $tabStatutReglement;

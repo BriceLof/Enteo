@@ -196,11 +196,13 @@
                             {% set totalReglementPartiel = beneficiaireStatutReglementOfDay[0].partiel | length %}
                             {% set totalReglementTotal = beneficiaireStatutReglementOfDay[0].total | length %}
                             {% set totalReglementAnnuler = beneficiaireStatutReglementOfDay[0].annuler | length %}
+                            {% set totalReglementAvoir = beneficiaireStatutReglementOfDay[0].avoir | length %}
+                            {% set totalReglementPP = beneficiaireStatutReglementOfDay[0].p_p | length %}
 
                             <tr style="height: 30px;"></tr>
                             <tr>
                                 <th scope="row">Statut réglement</th>
-                                <td><b>{{  totalReglementPartiel + totalReglementTotal + totalReglementAnnuler }}</b></td>
+                                <td><b>{{  totalReglementPartiel + totalReglementTotal + totalReglementAnnuler + totalReglementAvoir + totalReglementPP }}</b></td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -219,6 +221,18 @@
                             <tr>
                                 <td>dont Réglement annulé</td>
                                 <td>{{ totalReglementAnnuler }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Réglement avoir</td>
+                                <td>{{ totalReglementAvoir }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>dont Réglement P&P</td>
+                                <td>{{ totalReglementPP}}</td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -441,7 +455,7 @@
                         <div class="block_info_stat">
                             <div class="text-center">
                                 <h3>Statut réglement</h3>
-                                <p class="info_important">{{  totalReglementPartiel + totalReglementTotal + totalReglementAnnuler }}</p>
+                                <p class="info_important">{{  totalReglementPartiel + totalReglementTotal + totalReglementAnnuler + totalReglementAvoir + totalReglementPP }}</p>
                                 <canvas id="chartStatutReglement"></canvas>
 
                                 <script>
@@ -450,15 +464,17 @@
                                         type: 'pie',
                                         data :{
                                             datasets: [{
-                                                data: [ {{ totalReglementPartiel }} , {{ totalReglementTotal }}, {{ totalReglementAnnuler }}],
+                                                data: [ {{ totalReglementPartiel }} , {{ totalReglementTotal }}, {{ totalReglementAnnuler }}, {{ totalReglementAvoir }}, {{ totalReglementPP }}],
                                                 backgroundColor: [
-                                                    '#DA366C','#22A6DA', '#E25F89'
+                                                    '#DA366C','#22A6DA', '#E25F89', '#4A849F', '#B4D6C6'
                                                 ]
                                             }],
                                             labels: [
                                                 'Partiel',
                                                 'Total',
-                                                'Annlé'
+                                                'Annulé',
+                                                'Avoir',
+                                                'P&P'
                                             ]
                                         },
                                         options: {
