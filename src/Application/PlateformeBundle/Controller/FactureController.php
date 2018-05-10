@@ -388,7 +388,7 @@ class FactureController extends Controller
             $anneeNumeroFacture = $form->get('annee_numero_facture')->getData();
             if(($numeroFacture != '' && !is_null($numeroFacture)) || ($anneeNumeroFacture != '' && !is_null($anneeNumeroFacture))){
                 $recherche['numero_facture'] = $numeroFacture.$anneeNumeroFacture;
-                $numFactu = $numeroFacture.$anneeNumeroFacture;
+                $numFactu = $numeroFacture.'-'.$anneeNumeroFacture;
             }
             elseif(is_null($numeroFacture) && is_null($anneeNumeroFacture)){
                 unset($recherche['numero_facture']);

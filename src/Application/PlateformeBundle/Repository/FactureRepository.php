@@ -83,9 +83,27 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             $arrayParameters['consultant'] = $consultant;
         }
 
+        $explodeNumFacture = explode("-", $numeroFacture);
+        $numFactu = $explodeNumFacture[0];
+        if(count($explodeNumFacture) == 2)
+            $anneeFactu = $explodeNumFacture[1];
+        elseif (count($explodeNumFacture) == 3)
+            $anneeFactu = $explodeNumFacture[2];
+
         if(!is_null($numeroFacture)){
-            $queryBuilder->andWhere("f.numero LIKE :numFactu");
-            $arrayParameters['numFactu'] = '%'.$numeroFacture.'%';
+            if($numFactu != "" && $anneeFactu == ""){
+                $queryBuilder->andWhere("f.id = :numFactu");
+                $arrayParameters['numFactu'] = $numFactu;
+            }
+            elseif ($numFactu == "" && $anneeFactu != ""){
+                $queryBuilder->andWhere("f.numero LIKE :anneeFactu");
+                $arrayParameters['anneeFactu'] = '%-'.$anneeFactu;
+            }
+            else{
+                $numeroFacture = $numFactu.'-'.$anneeFactu;
+                $queryBuilder->andWhere("f.numero = :numeroFacture");
+                $arrayParameters['numeroFacture'] = $numeroFacture;
+            }
         }
 
         if(!is_null($financeur)){
