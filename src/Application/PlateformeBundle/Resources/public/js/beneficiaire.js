@@ -121,6 +121,11 @@ $(function () {
         $(".disabledFacturationGeneration").hide()
     });
 
+    $(".histo_consultant a").click(function () {
+        $(".histo_consultant p").toggle('slow')
+        return false;
+    });
+
 });
 
 /**

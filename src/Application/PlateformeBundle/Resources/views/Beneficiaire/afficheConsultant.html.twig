@@ -12,8 +12,20 @@
             <div>
                 <a style="width:90px; padding: 0px 12px;" title="Voir l'agenda" alt="Voir l'agenda"
                    href="{{ path('application_add_evenement', { 'id' : beneficiaire.id }) }}" target="_blank"
-                   class="btn btn-info" type="button">Agenda</a>
+                   class="btn btn-info " type="button">Agenda</a>
             </div>
+
+            {% if histoConsultant | length > 1 %}
+                <div class="histo_consultant" style="text-align: right;margin-right: 7px;">
+                    <a href="#" alt="Consulter historiques des consultans">Voir Historique</a>
+                    {% for historiqueC in histoConsultant %}
+                        {% if loop.index0 > 0 %}
+                            <p style="display:none;margin-bottom: -3px;">{{ historiqueC.consultant.prenom|capitalize~" "~historiqueC.consultant.nom|capitalize }} (jusqu'au {{ histoConsultant[loop.index0 - 1].dateDebut | date('d/m/Y') }})</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
         </div>
     {% else %}
         {#{% if beneficiaire.mission is not null %}#}

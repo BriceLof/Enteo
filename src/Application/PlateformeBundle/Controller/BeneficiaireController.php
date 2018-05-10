@@ -98,12 +98,15 @@ class BeneficiaireController extends Controller
             $em->flush();
         }
 
+        $historiqueConsultant = $em->getRepository('ApplicationPlateformeBundle:Historique')->getHistoriqueConsultantForBeneficiaire($beneficiaire);
+
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
             'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
             'form_consultant' => $editConsultantForm->createView(),
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),
+            'histoConsultant' => $historiqueConsultant
         ));
     }
 
