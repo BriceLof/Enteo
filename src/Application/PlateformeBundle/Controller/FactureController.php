@@ -265,6 +265,10 @@ class FactureController extends Controller
             $montantRegler = $facture->getMontantPayer();
             $montantReglerTotal = ( $form->get("montantFactureDejaReglerHidden")->getData() + ( $facture->getMontantPayer() ) );
             $facture->setMontantPayer($montantReglerTotal);
+
+            $datePaiement = new \DateTime($form->get("date_paiement")->getData());
+            $facture->setDatePaiement($datePaiement);
+
             $em->persist($facture);
 
             $historique = new HistoriquePaiementFacture();
@@ -273,7 +277,7 @@ class FactureController extends Controller
             $historique->setMontant($montantRegler);
             $historique->setModePaiement($facture->getModePaiement());
 
-            $datePaiement = new \DateTime($form->get("date_paiement")->getData());
+
             
             $historique->setDatePaiement($datePaiement);
             $historique->setBanque($facture->getBanque());
@@ -365,6 +369,18 @@ class FactureController extends Controller
             elseif(is_null($dateFactureEnd))
                 unset($recherche['date_facture_end']);
 
+            $datePaiementStart = $form->get('date_paiement_start')->getData();
+            if($datePaiementStart != '' && !is_null($datePaiementStart))
+                $recherche['date_paiement_start'] = $datePaiementStart;
+            elseif(is_null($datePaiementStart))
+                unset($recherche['date_paiement_start']);
+
+            $datePaiementEnd = $form->get('date_paiement_end')->getData();
+            if($datePaiementEnd != '' && !is_null($datePaiementEnd))
+                $recherche['date_paiement_end'] = $datePaiementEnd;
+            elseif(is_null($datePaiementEnd))
+                unset($recherche['date_paiement_end']);
+
             $consultant = $form->get('consultant')->getData();
             if($consultant != '' && !is_null($consultant))
                 $recherche['consultant'] = $consultant;
@@ -405,7 +421,11 @@ class FactureController extends Controller
 
             $session->set('facture_search', $recherche);
 
-            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer);
+            $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd,
+                    $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart,
+                    $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer,
+                    $datePaiementStart, $datePaiementEnd
+                );
             
 
             return $this->render('ApplicationPlateformeBundle:Facture:search.html.twig', array(
