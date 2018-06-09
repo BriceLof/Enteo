@@ -23,6 +23,12 @@ class Semaine{
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users" )
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $commercial;
+
+    /**
      * @var
      *
      * @ORM\Column(name="annee", type="integer", nullable=true)
@@ -168,4 +174,24 @@ class Semaine{
     {
         return $this->numero;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCommercial()
+    {
+        return $this->commercial;
+    }
+
+    /**
+     * @param mixed $commercial
+     */
+    public function setCommercial($commercial)
+    {
+        $this->commercial = $commercial;
+
+        $commercial->addSemaine($this);
+    }
+
+
 }

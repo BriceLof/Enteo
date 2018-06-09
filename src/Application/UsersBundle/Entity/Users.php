@@ -20,9 +20,14 @@ class Users extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="consultant")
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="consultant", cascade={"persist"})
      */
     private $beneficiaire;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\StatsBundle\Entity\Semaine", mappedBy="commercial")
+     */
+    private $semaine;
 
     /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Historique", mappedBy="user")
@@ -672,5 +677,47 @@ class Users extends BaseUser
     public function getContrat()
     {
         return $this->contrat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSemaine()
+    {
+        return $this->semaine;
+    }
+
+    /**
+     * @param mixed $semaine
+     */
+    public function setSemaine($semaine)
+    {
+        $this->semaine = $semaine;
+    }
+
+
+
+    /**
+     * Add semaine
+     *
+     * @param \Application\StatsBundle\Entity\Semaine $semaine
+     *
+     * @return Users
+     */
+    public function addSemaine(\Application\StatsBundle\Entity\Semaine $semaine)
+    {
+        $this->semaine[] = $semaine;
+
+        return $this;
+    }
+
+    /**
+     * Remove semaine
+     *
+     * @param \Application\StatsBundle\Entity\Semaine $semaine
+     */
+    public function removeSemaine(\Application\StatsBundle\Entity\Semaine $semaine)
+    {
+        $this->semaine->removeElement($semaine);
     }
 }

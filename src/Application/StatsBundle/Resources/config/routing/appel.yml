@@ -5,6 +5,20 @@ appel_edit:
     options:
         expose: true
 
+appel_show:
+    path:     /{numero}/{annee}/{id}
+    defaults:
+        _controller: ApplicationStatsBundle:Appel:show
+    options:
+        expose: true
+
+appel_user_show:
+    path:     /{id}
+    defaults:
+        _controller: ApplicationStatsBundle:Appel:show
+    options:
+        expose: true
+
 appel_homepage:
     path:    /
     defaults:
