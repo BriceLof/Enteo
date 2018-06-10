@@ -59,6 +59,8 @@ class NewsType extends AbstractType
                 ),
             ))
 
+            ->add('consultantId', HiddenType::class, array('mapped' => false))
+
             ->add('Enregistrer', SubmitType::class, array(
                 'attr' => array('class' => 'btn  btn-primary'),
             ))

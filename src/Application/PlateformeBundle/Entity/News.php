@@ -49,6 +49,11 @@ class News
      */
     private $dateHeure;
 
+    /**
+     * @ORM\Column(name="consultant_id", type="integer", nullable=true)
+     */
+    protected $consultant;
+
     public function __construct()
     {
         $this->dateHeure = new \DateTime();
@@ -185,5 +190,31 @@ class News
         if (!is_null($this->statut) && $this->statut->isAccesConsultant() == true){
             $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
         }
+    }
+
+
+
+    /**
+     * Set consultant
+     *
+     * @param integer $consultant
+     *
+     * @return News
+     */
+    public function setConsultant($consultant)
+    {
+        $this->consultant = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Get consultant
+     *
+     * @return integer
+     */
+    public function getConsultant()
+    {
+        return $this->consultant;
     }
 }
