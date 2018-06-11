@@ -273,4 +273,13 @@ class UsersController extends Controller
             throw new \Exception('erreur');
         }
     }
+
+    public function getAllCommercialAction(){
+        $em = $this->getDoctrine()->getManager();
+        $commercials = $em->getRepository('ApplicationUsersBundle:Users')->findByTypeUser('ROLE_COMMERCIAL', true);
+
+        return $this->render('ApplicationUsersBundle:Users:listCommercial.html.twig', array(
+            'commercials' => $commercials,
+        ));
+    }
 }
