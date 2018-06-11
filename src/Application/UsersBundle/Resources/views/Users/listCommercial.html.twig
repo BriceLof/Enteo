@@ -2,6 +2,6 @@
     {% if app.user.id == commercial.id or is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('appel_user_show', { 'id': commercial.id }) }}">Appels {{ commercial.prenom }}</a></li>
     {% else %}
-        <li>Appels {{ commercial.prenom }}</li>
+        <li style="padding: 3px 20px;">Appels {{ commercial.prenom }}</li>
     {% endif %}
 {% endfor %}

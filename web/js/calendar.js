@@ -221,7 +221,7 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
                                     $('#admin_calendar_nomBureau').val(item.nom);
                                     $('#admin_calendar_bureau').val(item.id);
                                     cp = (item.cp);
-                                    return item.ville;
+                                    return item.ville + ' (' + item.adresse + ')';
                                 }
                             }
                         }));
