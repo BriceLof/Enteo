@@ -393,7 +393,7 @@ class CalendarController extends Controller
         }
 
         $form = $this->createForm(AdminCalendarType::class, $historique);
-        $form->add('submit', SubmitType::class, array('label' => 'Mofidier'));
+        $form->add('submit', SubmitType::class, array('label' => 'Modifier'));
 
         //si le formulaire est validé et qu'il ne présente pas d'erreur
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
