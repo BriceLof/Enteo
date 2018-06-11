@@ -33,7 +33,10 @@ class NewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
+
+
         $news = new News();
+
         /*$news = $em->getRepository("ApplicationPlateformeBundle:News")->findOneBy(
             array("beneficiaire"    => $beneficiaire), 
             array("id"              => "DESC")
@@ -43,7 +46,14 @@ class NewsController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $news = $form->getData();
+
             $news->setBeneficiaire($beneficiaire);
+
+            $consultant = $em->getRepository("ApplicationUsersBundle:Users")->find($form->get("consultantId")->getData());
+
+            if(!is_null($consultant))
+                $news->setConsultant($consultant->getId());
+
             $em = $this->getDoctrine()->getManager();
 
             // ajouter un historique

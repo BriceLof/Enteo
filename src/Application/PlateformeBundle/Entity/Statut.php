@@ -211,4 +211,14 @@ class Statut
     {
         $this->accesConsultant = $accesConsultant;
     }
+
+    /**
+     * Get accesConsultant
+     *
+     * @return boolean
+     */
+    public function getAccesConsultant()
+    {
+        return $this->accesConsultant;
+    }
 }

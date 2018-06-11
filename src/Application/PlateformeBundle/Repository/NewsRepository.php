@@ -39,4 +39,21 @@ class NewsRepository extends \Doctrine\ORM\EntityRepository
         $results = $query->getResult();
         return $results;
     }
+
+    public function getListConsultantGotRv1OrRv2($beneficiaire){
+        // en sortie dans $result, on a un tableau avec des clés par défaut,
+        // et pour définir une autre clé, par exemple l'id d'une entité, il suffit d'ajouter le 2nd argument à createQueryBuilder()
+        $queryBuilder = $this->createQueryBuilder('n', 'n.consultant')
+            ->where('n.beneficiaire = :beneficiaire')
+            ->setParameter('beneficiaire', $beneficiaire)
+            ->andWhere('n.consultant IS NOT NULL ')
+            ->andWhere('n.statut IN (3,4,5,6)')
+            ->groupBy('n.consultant')
+            ->orderBy('n.id', 'DESC')
+        ;
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }

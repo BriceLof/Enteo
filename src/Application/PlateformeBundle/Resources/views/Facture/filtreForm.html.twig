@@ -1,4 +1,4 @@
-{% set statut, consultant, beneficiaire, dateDebutAccompagnement, dateFinAccompagnement, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur, villeMer = '', '', '', '', '', '','','', '', '', '', '', '', '' %}
+{% set statut, consultant, beneficiaire, dateDebutAccompagnement, dateFinAccompagnement, dateDebutAccompagnementStart, dateDebutAccompagnementEnd, dateFinAccompagnementStart, dateFinAccompagnementEnd, dateFactureStart, dateFactureEnd, numFacture, financeur, villeMer, datePaiementStart, datePaiementEnd = '', '', '', '', '', '','','', '', '', '', '', '', '', '', '' %}
 
 {% if app.session.get('facture_search').statut is defined %}
     {% set statut = app.session.get('facture_search').statut %}
@@ -42,7 +42,12 @@
 {% if app.session.get('facture_search').ville_mer is defined %}
     {% set villeMer = app.session.get('facture_search').ville_mer %}
 {% endif %}
-
+{% if app.session.get('facture_search').date_paiement_start is defined %}
+    {% set datePaiementStart = app.session.get('facture_search').date_paiement_start  %}
+{% endif %}
+{% if app.session.get('facture_search').date_paiement_end is defined %}
+    {% set datePaiementEnd = app.session.get('facture_search').date_paiement_end  %}
+{% endif %}
 <form action="{{ path('application_search_facture') }}" method="POST" name="formulaire_filtre_facture">
     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location.href='{{ path('application_list_facture_home') }}'" style="float:right">Reset</button>
     {{ form_widget(form.filtrer, {'attr' : {'style': 'float:right;margin-right:12px;'}} ) }}
@@ -85,6 +90,12 @@
         <div class="col-md-2" style="margin-top: -10px;"><span style="font-size:10px">Du</span> {{ form_widget(form.date_facture_start, {'attr' : {"value": dateFactureStart  } }) }}</div>
         <div class="col-md-2" style="margin-top: -10px;"><span style="font-size:10px">Au</span> {{ form_widget(form.date_facture_end, {'attr' : {"value": dateFactureEnd  } }) }}</div>
 
+        <div class="col-md-1" style="margin-top: 10px;">{{ form_label(form.date_paiement_start, 'Date paiement',  {'label_attr' : {'class' : ''}}) }}</div>
+        <div class="col-md-2" style="margin-top: -10px;"><span style="font-size:10px">Du</span> {{ form_widget(form.date_paiement_start, {'attr' : {"value": datePaiementStart  } }) }}</div>
+        <div class="col-md-2" style="margin-top: -10px;"><span style="font-size:10px">Au</span> {{ form_widget(form.date_paiement_end, {'attr' : {"value": datePaiementEnd  } }) }}</div>
+    </div><br>
+
+    <div class="row">
         <div class="col-md-2" style="margin-top: 10px;">{{ form_label(form.date_debut_accompagnement) }}</div>
         <div class="col-md-2" style="margin-top: -10px;"><span style="font-size:10px">Du</span> {{ form_widget(form.date_debut_accompagnement, {'attr' : {"value": dateDebutAccompagnement  } }) }}</div>
         <div class="col-md-2" style="margin-top: -10px;"><span style="font-size:10px">Au</span> {{ form_widget(form.date_fin_accompagnement, {'attr' : {"value": dateFinAccompagnement  } }) }}</div>

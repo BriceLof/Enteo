@@ -104,6 +104,21 @@ class FactureFiltreType extends AbstractType
                     'placeholder' => 'JJ/MM/AAAA'),
             ))
 
+            ->add('date_paiement_start', TextType::class, array(
+                'label' => 'Début paiement',
+                'required' => false,
+                'mapped' => false,
+                'attr' => array('class' => 'datepickerBrice',
+                    'placeholder' => 'JJ/MM/AAAA'),
+            ))
+            ->add('date_paiement_end', TextType::class, array(
+                'label' => 'Fin paiement',
+                'required' => false,
+                'mapped' => false,
+                'attr' => array('class' => 'datepickerBrice',
+                    'placeholder' => 'JJ/MM/AAAA'),
+            ))
+
             ->add('numero_facture', TextType::class, array(
                 'label' => 'N° facture',
                 'required' => false,

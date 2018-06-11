@@ -1,11 +1,11 @@
-.form_block{
+.form_date_interval_stats{
     background-color: #eaeaea;
     padding: 12px;
     border-radius: 3px;
     margin-top: 25px;
 }
 
-.form_block button[type="submit"]{
+.form_date_interval_stats button[type="submit"]{
     width: 45%;
     float: right;
     margin-top: 11px;

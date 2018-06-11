@@ -32,7 +32,8 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
            $dateFinAccompagnementStart = null, $dateFinAccompagnementEnd = null,
            $dateFactureStart = null, $dateFactureEnd = null,
            $consultant = null, Beneficiaire $beneficiaire = null,
-           $numeroFacture = null, $financeur = null, $villeMer = null
+           $numeroFacture = null, $financeur = null, $villeMer = null,
+           $datePaiementStart = null, $datePaiementEnd = null
     )
     {
 
@@ -78,14 +79,38 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
             $arrayParameters['dateFactureEnd'] = $dateFactureEnd;
         }
 
+        if(!is_null($datePaiementStart) && !is_null($datePaiementEnd)){
+            $queryBuilder->andWhere("f.datePaiement >= :datePaiementStart AND f.datePaiement <= :datePaiementEnd");
+            $arrayParameters['datePaiementStart'] = $datePaiementStart;
+            $arrayParameters['datePaiementEnd'] = $datePaiementEnd;
+        }
+
         if(!is_null($consultant)){
             $queryBuilder->andWhere("b.consultant = :consultant");
             $arrayParameters['consultant'] = $consultant;
         }
 
-        if(!is_null($numeroFacture)){
-            $queryBuilder->andWhere("f.numero LIKE :numFactu");
-            $arrayParameters['numFactu'] = '%'.$numeroFacture.'%';
+        $explodeNumFacture = explode("-", $numeroFacture);
+        $numFactu = $explodeNumFacture[0];
+        if(count($explodeNumFacture) == 2)
+            $anneeFactu = $explodeNumFacture[1];
+        elseif (count($explodeNumFacture) == 3)
+            $anneeFactu = $explodeNumFacture[2];
+        
+        if(!is_null($numeroFacture) && $numeroFacture != ""){
+            if($numFactu != "" && $anneeFactu == ""){
+                $queryBuilder->andWhere("f.id = :numFactu");
+                $arrayParameters['numFactu'] = $numFactu;
+            }
+            elseif ($numFactu == "" && $anneeFactu != ""){
+                $queryBuilder->andWhere("f.numero LIKE :anneeFactu");
+                $arrayParameters['anneeFactu'] = '%-'.$anneeFactu;
+            }
+            else{
+                $numeroFacture = $numFactu.'-'.$anneeFactu;
+                $queryBuilder->andWhere("f.numero = :numeroFacture");
+                $arrayParameters['numeroFacture'] = $numeroFacture;
+            }
         }
 
         if(!is_null($financeur)){

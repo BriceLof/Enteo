@@ -37,6 +37,7 @@ class BeneficiaireController extends Controller
     public function showAction(Request $request,$id){
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
+        $listConsultantRv = $em->getRepository('ApplicationPlateformeBundle:News')->getListConsultantGotRv1OrRv2($beneficiaire);
 
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
@@ -98,12 +99,16 @@ class BeneficiaireController extends Controller
             $em->flush();
         }
 
+        $historiqueConsultant = $em->getRepository('ApplicationPlateformeBundle:Historique')->getHistoriqueConsultantForBeneficiaire($beneficiaire);
+
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
             'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
             'form_consultant' => $editConsultantForm->createView(),
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),
+            'histoConsultant' => $historiqueConsultant,
+            'listConsultantRv' => $listConsultantRv
         ));
     }
 

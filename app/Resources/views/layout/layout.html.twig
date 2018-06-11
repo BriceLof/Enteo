@@ -56,7 +56,13 @@
                                         <li class="dropdown-submenu">
                                             <a tabindex="-1" href="#">Stats</a>
                                             <ul class="dropdown-menu">
-                                                <li><a tabindex="-1" href="{{ path('appel_homepage') }}">Appels Leads</a></li>
+                                                <li class="dropdown-submenu">
+                                                    <a tabindex="-1" href="{{ path('appel_homepage') }}">Appels Leads</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="{{ path('appel_user_show', { 'id': 8 }) }}">Appel Audrey</a></li>
+                                                        <li><a href="{{ path('appel_user_show',{ 'id': 9 }) }}">Appel Brice</a></li>
+                                                    </ul>
+                                                </li>
                                                 <li><a href="{{ path('stat_commercial_home') }}">Commercial</a></li>
                                                 <li><a href="{{ path('ecole_universite_homepage') }}">Ecole/Université</a></li>
                                             </ul>

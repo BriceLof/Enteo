@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/appel.css') }}" type="text/css">
 {% endblock %}
 
-{% block title %}Stat Appel{% endblock%}
+{% block title %}Stat Appel{% endblock %}
 
 {% block body %}
     <div id="flashbag" class="container">
@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-3">
-                <span class="bold text-md">Appel</span>
+                <span class="bold text-md">Appel Leads</span>
             </div>
             <div class="col-xs-9">
                 {{ render(controller("ApplicationStatsBundle:Appel:list", { 'numero': numero , 'annee' : annee })) }}
@@ -30,119 +30,117 @@
         </div>
 
 
-        {{ form_start(form) }}
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-bordered">
-                        <thead>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <td>{{ annee }}</td>
+                        <td colspan="5">MATIN</td>
+                        <td colspan="5">APRES-MIDI</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Semaine du {{ firstDay|date('d/m') }} au {{ lastDay|date('d/m') }}</td>
+                        <td>Créneaux horaires</td>
+                        <td>Total Appels</td>
+                        <td>Sans Réponse</td>
+                        <td>Contactés</td>
+                        <td>Nombre de RDV</td>
+                        <td>Créneaux horaires</td>
+                        <td>Total Appels</td>
+                        <td>Sans Réponse</td>
+                        <td>Contactés</td>
+                        <td>Nombre de RDV</td>
+                        <td>Commentaires</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tab in tabs %}
                         <tr>
-                            <td>{{ annee }}</td>
-                            <td colspan="5">MATIN</td>
-                            <td colspan="5">APRES-MIDI</td>
+                            <td>{{ jourEnLettre(loop.index) }}</td>
+                            <td></td>
+                            <td>{{ tab.totalAm }}</td>
+                            <td>{{ tab.nbReponseAm }}</td>
+                            <td>{{ tab.nbContactAm }}</td>
+                            <td>{{ tab.nbRdvAm }}</td>
+                            <td></td>
+                            <td>{{ tab.totalPm }}</td>
+                            <td>{{ tab.nbReponsePm }}</td>
+                            <td>{{ tab.nbContactPm }}</td>
+                            <td>{{ tab.nbRdvPm }}</td>
                             <td></td>
                         </tr>
-                        <tr>
-                            <td>Semaine du {{ firstDay|date('d/m') }} au {{ lastDay|date('d/m') }}</td>
-                            <td>Créneaux horaires</td>
-                            <td>Total Appels</td>
-                            <td>Sans Réponse</td>
-                            <td>Contactés</td>
-                            <td>Nombre de RDV</td>
-                            <td>Créneaux horaires</td>
-                            <td>Total Appels</td>
-                            <td>Sans Réponse</td>
-                            <td>Contactés</td>
-                            <td>Nombre de RDV</td>
-                            <td>Commentaires</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for jour in form.appels %}
-                            <tr>
-                                <td>{{ jourEnLettre(loop.index) }}</td>
-                                <td>{{ form_row(jour.horaireAm) }}</td>
-                                <td>{{ form_row(jour.totalAm, { 'attr': {'value': totalAm[loop.index] }}) }}</td>
-                                <td>{{ form_row(jour.nbReponseAm) }}</td>
-                                <td>{{ form_row(jour.nbContactAm) }}</td>
-                                <td>{{ form_row(jour.nbRdvAm) }}</td>
-                                <td>{{ form_row(jour.horairePm) }}</td>
-                                <td>{{ form_row(jour.totalPm, { 'attr': {'value': totalPm[loop.index] }}) }}</td>
-                                <td>{{ form_row(jour.nbReponsePm) }}</td>
-                                <td>{{ form_row(jour.nbContactPm) }}</td>
-                                <td>{{ form_row(jour.nbRdvPm) }}</td>
-                                <td>{{ form_row(jour.commentaire) }}</td>
-                            </tr>
-                        {% endfor %}
-                        <tr>
-                            <td class="height-30" colspan="12"></td>
-                        </tr>
-                        <tr class="text-right">
-                            <td class="text-left">TOTAL</td>
-                            <td></td>
-                            <td>{{ totalAppelAm }}</td>
-                            <td>{{ totalSansReponseAm }}</td>
-                            <td>{{ totalNbContactAm }}</td>
-                            <td>{{ totalNbRdvAm }}</td>
-                            <td></td>
-                            <td>{{ totalAppelPm }}</td>
-                            <td>{{ totalSansReponsePm }}</td>
-                            <td>{{ totalNbContactPm }}</td>
-                            <td>{{ totalNbRdvPm }}</td>
-                            <td></td>
-                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="height-30" colspan="12"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td class="text-left">TOTAL</td>
+                        <td></td>
+                        <td>{{ totalAppelAm }}</td>
+                        <td>{{ totalSansReponseAm }}</td>
+                        <td>{{ totalNbContactAm }}</td>
+                        <td>{{ totalNbRdvAm }}</td>
+                        <td></td>
+                        <td>{{ totalAppelPm }}</td>
+                        <td>{{ totalSansReponsePm }}</td>
+                        <td>{{ totalNbContactPm }}</td>
+                        <td>{{ totalNbRdvPm }}</td>
+                        <td></td>
+                    </tr>
 
-                        <tr class="text-right">
-                            <td class="text-left">%</td>
+                    <tr class="text-right">
+                        <td class="text-left">%</td>
+                        <td></td>
+                        <td>100%</td>
+                        <td>{{ percentSansReponseAm|number_format(0) }}%</td>
+                        <td>{{ percentNbContactAm|number_format(0) }}%</td>
+                        <td>{{ percentNbRdvAm|number_format(0) }}%</td>
+                        <td></td>
+                        <td>100%</td>
+                        <td>{{ percentSansReponsePm|number_format(0) }}%</td>
+                        <td>{{ percentNbContactPm|number_format(0) }}%</td>
+                        <td>{{ percentNbRdvPm|number_format(0) }}%</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="height-30" colspan="12"></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td class="text-left" rowspan="2">Total Semaine</td>
+                        <td colspan="6"></td>
+                        <td>{{ totalAppelAm + totalAppelPm }}</td>
+                        <td>{{ totalSansReponseAm + totalSansReponsePm }}</td>
+                        <td>{{ totalNbContactAm + totalNbContactPm }}</td>
+                        <td>{{ totalNbRdvAm + totalNbRdvPm }}</td>
+                        <td></td>
+                    </tr>
+                    <tr class="text-right">
+                        <td colspan="6"></td>
+                        <td>100%</td>
+                        {% if (totalAppelAm + totalAppelPm) != 0 %}
+                            <td>{{ ((totalSansReponseAm + totalSansReponsePm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}
+                                %
+                            </td>
+                            <td>{{ ((totalNbContactAm + totalNbContactPm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}
+                                %
+                            </td>
+                            <td>{{ ((totalNbRdvAm + totalNbRdvPm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}
+                                %
+                            </td>
                             <td></td>
-                            <td>100%</td>
-                            <td>{{ percentSansReponseAm|number_format(0) }}%</td>
-                            <td>{{ percentNbContactAm|number_format(0) }}%</td>
-                            <td>{{ percentNbRdvAm|number_format(0) }}%</td>
+                        {% else %}
+                            <td>0%</td>
+                            <td>0%</td>
+                            <td>0%</td>
                             <td></td>
-                            <td>100%</td>
-                            <td>{{ percentSansReponsePm|number_format(0) }}%</td>
-                            <td>{{ percentNbContactPm|number_format(0) }}%</td>
-                            <td>{{ percentNbRdvPm|number_format(0) }}%</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="height-30" colspan="12"></td>
-                        </tr>
-                        <tr class="text-right">
-                            <td class="text-left" rowspan="2">Total Semaine</td>
-                            <td colspan="6"></td>
-                            <td>{{ totalAppelAm + totalAppelPm }}</td>
-                            <td>{{ totalSansReponseAm + totalSansReponsePm }}</td>
-                            <td>{{ totalNbContactAm + totalNbContactPm }}</td>
-                            <td>{{ totalNbRdvAm + totalNbRdvPm }}</td>
-                            <td></td>
-                        </tr>
-                        <tr class="text-right">
-                            <td colspan="6"></td>
-                            <td>100%</td>
-                            {% if (totalAppelAm + totalAppelPm) != 0 %}
-                                <td>{{ ((totalSansReponseAm + totalSansReponsePm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
-                                <td>{{ ((totalNbContactAm + totalNbContactPm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
-                                <td>{{ ((totalNbRdvAm + totalNbRdvPm)*100/(totalAppelAm + totalAppelPm))|number_format(0) }}%</td>
-                                <td></td>
-                            {% else %}
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td>0%</td>
-                                <td></td>
-                            {% endif %}
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="row">
-                <div class="col-md-12 text-right valider">
-                    {{ form_widget(form.submit) }}
-                    {{ form_rest(form) }}
-                </div>
-            </div>
-        {{ form_end(form) }}
+        </div>
     </div>
 
 

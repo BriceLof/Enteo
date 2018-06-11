@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Application\StatsBundle\Form\IntervalDateType;
+use Application\StatsBundle\Services\StatsBeneficiaire;
 
 class StatController extends Controller
 {
@@ -14,6 +15,7 @@ class StatController extends Controller
         ini_set('memory_limit',-1);
         ini_set('max_execution_time', 300);
 
+        // Appeler le service normalement
         $statsBeneficiaire = $this->container->get('application_stats_beneficiaire');
 
         $form = $this->createForm(IntervalDateType::class);
@@ -49,31 +51,33 @@ class StatController extends Controller
             $dateDebut = new \DateTime($form->get('dateFrom')->getData());
             $dateFin = new \DateTime($form->get('dateTo')->getData());
 
-            $beneficiaires = $statsBeneficiaire->getBeneficiaireOnPeriod($dateDebut, $dateFin);
+            $em = $this->getDoctrine()->getManager();
+            // Appeler le service en passant des arguments aux constructeur. L'instancier comme une classe normale. Ne pas oublier le use en début de fichier
+            $statsBeneficiaire = new StatsBeneficiaire($em, $dateDebut, $dateFin);
+
+            $beneficiaires = $statsBeneficiaire->getBeneficiaireOnPeriod();
             $listeInfoNewBeneficiaires = array($beneficiaires, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
+            
 
-            // Pour les autres recherches il nous faut la date du jour en date de fin
-            //$dateFin = new \DateTime();
-
-            $beneficiaireNonAbouti = $statsBeneficiaire->getBeneficiaireNonAbouti($dateDebut, $dateFin);
+            $beneficiaireNonAbouti = $statsBeneficiaire->getBeneficiaireNonAbouti();
             $listeInfoBeneficiairesNonAbouti = array($beneficiaireNonAbouti, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
 
-            $beneficiaireRvCommerciaux = $statsBeneficiaire->getBeneficiaireRvCommerciaux($dateDebut, $dateFin);
+            $beneficiaireRvCommerciaux = $statsBeneficiaire->getBeneficiaireRvCommerciaux();
             $listeInfoBeneficiaireRvCommerciaux = array($beneficiaireRvCommerciaux, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
 
-            $beneficiaireStatutFinancement = $statsBeneficiaire->getBeneficiaireStatutFinancement($dateDebut, $dateFin);
+            $beneficiaireStatutFinancement = $statsBeneficiaire->getBeneficiaireStatutFinancement();
             $listeInfoBeneficiaireStatutFinancement = array($beneficiaireStatutFinancement, array('dateDebut' => $dateDebut, 'dateFin' => $dateFin));
 
-            $beneficiaireStatutFacturation = $statsBeneficiaire->getBeneficiaireStatutFacturation($dateDebut, $dateFin);
+            $beneficiaireStatutFacturation = $statsBeneficiaire->getBeneficiaireStatutFacturation();
             $listeInfoBeneficiaireStatutFacturation = array($beneficiaireStatutFacturation, array('dateDebut' => '', 'dateFin' => ''));
 
-            $beneficiaireStatutReglement = $statsBeneficiaire->getBeneficiaireStatutReglement($dateDebut, $dateFin);
+            $beneficiaireStatutReglement = $statsBeneficiaire->getBeneficiaireStatutReglement();
             $listeInfoBeneficiaireStatutReglement = array($beneficiaireStatutReglement, array('dateDebut' => '', 'dateFin' => ''));
 
-            $beneficiaireTerminer = $statsBeneficiaire->getBeneficiaireTerminer($dateDebut, $dateFin);
+            $beneficiaireTerminer = $statsBeneficiaire->getBeneficiaireTerminer();
             $listeInfoBeneficiairesTerminer = array($beneficiaireTerminer, array('dateDebut' => '', 'dateFin' => ''));
 
-            $beneficiaireAbandon = $statsBeneficiaire->getBeneficiaireAbandon($dateDebut, $dateFin);
+            $beneficiaireAbandon = $statsBeneficiaire->getBeneficiaireAbandon();
             $listeInfoBeneficiairesAbandon = array($beneficiaireAbandon, array('dateDebut' => '', 'dateFin' => ''));
 
             return $this->render("ApplicationStatsBundle:Stat:index.html.twig", array(

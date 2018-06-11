@@ -7,20 +7,26 @@ use Doctrine\ORM\EntityManagerInterface;
 class StatsBeneficiaire
 {
     private $em;
+    private $dateFrom;
+    private $dateTo;
+    private $beneficiaires;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, $dateFrom = null, $dateTo = null)
     {
         $this->em = $em;
+        $this->dateFrom = $dateFrom;
+        $this->dateTo = $dateTo;
+        $this->beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
     }
 
-    public function getBeneficiaireOnPeriod($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireOnPeriod()
     {
-        return $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        return $this->beneficiaires;
     }
 
-    public function getBeneficiaireNonAbouti($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireNonAbouti()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
         $tabBenefNonAbouti = array();
 
         foreach($beneficiaires as $benef){
@@ -39,9 +45,9 @@ class StatsBeneficiaire
         return $tabBenefNonAbouti;
     }
 
-    public function getBeneficiaireRvCommerciaux($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireRvCommerciaux()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
 
         $tabRvFaire = array();
         $tabRvRealisePositif = array();
@@ -90,9 +96,9 @@ class StatsBeneficiaire
         return $tabRvCommerciaux;
     }
 
-    public function getBeneficiaireStatutFinancement($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireStatutFinancement()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
 
         $tabFinancementEnAttente = array();
         $tabFinancementOkFinanceur = array();
@@ -130,9 +136,9 @@ class StatsBeneficiaire
 
     }
 
-    public function getBeneficiaireStatutFacturation($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireStatutFacturation()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
 
         $tabFacturationAcompte = array();
         $tabFacturationTotale = array();
@@ -141,20 +147,35 @@ class StatsBeneficiaire
 
         foreach($beneficiaires as $benef) {
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
-            $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "facturation"){
-                if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture acompte"){
-                    $tabFacturationAcompte[] = $benef;
+            if($totalSuiviAdOfBenef > 0){
+                $indexMinus = 1;
+
+                $arraySuivi = $benef->getSuiviAdministratif()->toArray();
+                foreach(array_reverse($arraySuivi) as $suivi)
+                {
+                    if($suivi->getDetailStatut() == null){
+                        $indexMinus++;
+                    }
+                    else
+                        break;
                 }
-                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture totale"){
-                    $tabFacturationTotale[] = $benef;
-                }
-                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture solde"){
-                    $tabFacturationSolde[] = $benef;
-                }
-                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Avoir"){
-                    $tabFacturationAvoir[] = $benef;
+
+                $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - $indexMinus];
+
+                if(!is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "facturation"){
+                    if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture acompte"){
+                        $tabFacturationAcompte[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture totale"){
+                        $tabFacturationTotale[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Facture solde"){
+                        $tabFacturationSolde[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Avoir"){
+                        $tabFacturationAvoir[] = $benef;
+                    }
                 }
             }
         }
@@ -169,27 +190,50 @@ class StatsBeneficiaire
         return $tabStatutFacturation;
     }
 
-    public function getBeneficiaireStatutReglement($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireStatutReglement()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
 
         $tabReglementPartiel = array();
         $tabReglementTotal = array();
         $tabReglementAnnuler = array();
+        $tabReglementAvoir = array();
+        $tabReglementPP = array();
 
         foreach($beneficiaires as $benef) {
             $totalSuiviAdOfBenef = count($benef->getSuiviAdministratif());
-            $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - 1];
 
-            if( !is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && !is_null($lastSuiviAdOfBenef->getStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
-                if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Réglement partiel"){
-                    $tabReglementPartiel[] = $benef;
+            if($totalSuiviAdOfBenef > 0){
+                $indexMinus = 1;
+
+                $arraySuivi = $benef->getSuiviAdministratif()->toArray();
+                foreach(array_reverse($arraySuivi) as $suivi)
+                {
+                    if($suivi->getDetailStatut() == null){
+                        $indexMinus++;
+                    }
+                    else
+                        break;
                 }
-                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Prestation soldée"){
-                    $tabReglementTotal[] = $benef;
-                }
-                elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Erreur"){
-                    $tabReglementAnnuler[] = $benef;
+
+                $lastSuiviAdOfBenef = $benef->getSuiviAdministratif()[$totalSuiviAdOfBenef - $indexMinus];
+
+                if(!is_null($lastSuiviAdOfBenef) && !is_null($lastSuiviAdOfBenef->getDetailStatut()) && $lastSuiviAdOfBenef->getStatut()->getSlug() == "reglement"){
+                    if($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Réglement partiel"){
+                        $tabReglementPartiel[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Prestation soldée"){
+                        $tabReglementTotal[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Avoir"){
+                        $tabReglementAvoir[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "Erreur"){
+                        $tabReglementAnnuler[] = $benef;
+                    }
+                    elseif($lastSuiviAdOfBenef->getDetailStatut()->getDetail() == "P&P"){
+                        $tabReglementPP[] = $benef;
+                    }
                 }
             }
         }
@@ -198,15 +242,17 @@ class StatsBeneficiaire
             "partiel" => $tabReglementPartiel,
             "total" => $tabReglementTotal,
             "annuler" => $tabReglementAnnuler,
+            "avoir" => $tabReglementAvoir,
+            "p_p" => $tabReglementPP
         );
 
         return $tabStatutReglement;
 
     }
 
-    public function getBeneficiaireTerminer($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireTerminer()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
         $tabBenefTerminer = array();
 
         foreach($beneficiaires as $benef){
@@ -226,9 +272,9 @@ class StatsBeneficiaire
         return $tabBenefTerminer;
     }
 
-    public function getBeneficiaireAbandon($dateFrom = null, $dateTo = null)
+    public function getBeneficiaireAbandon()
     {
-        $beneficiaires = $this->em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireWithDate($dateFrom, $dateTo);
+        $beneficiaires = $this->beneficiaires;
         $tabBenefAbandon = array();
 
         foreach($beneficiaires as $benef){

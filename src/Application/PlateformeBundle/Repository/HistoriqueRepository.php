@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Repository;
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
+
 /**
  * HistoriqueRepository
  *
@@ -127,6 +128,19 @@ class HistoriqueRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('arch',$ar)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getHistoriqueConsultantForBeneficiaire($beneficiaire){
+        $queryBuilder = $this->createQueryBuilder("h")
+            ->where('h.beneficiaire = :beneficiaire')
+            ->setParameter("beneficiaire", $beneficiaire)
+            ->andWhere("h.description LIKE '%Ajout/modification de consultant%'")
+            ->orderBy('h.id' , 'DESC');
+
+        $query = $queryBuilder->getQuery();
+        //var_dump($query->getDql());
+        $results = $query->getResult();
+        return $results;
     }
 
 }
