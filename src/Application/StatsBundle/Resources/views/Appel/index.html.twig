@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/appel.css') }}" type="text/css">
 {% endblock %}
 
-{% block title %}Stat Appel{% endblock %}
+{% block title %}Appels Leads{% endblock %}
 
 {% block body %}
     <div id="flashbag" class="container">
@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-3">
-                <span class="bold text-md">Appel Leads</span>
+                <span class="bold text-md">Appels Leads</span>
             </div>
             <div class="col-xs-9">
                 {{ render(controller("ApplicationStatsBundle:Appel:list", { 'numero': numero , 'annee' : annee })) }}

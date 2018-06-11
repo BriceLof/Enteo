@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-3">
-                <span class="bold text-md">Appel {{ commercial.prenom|capitalize }}</span>
+                <span class="bold text-md">Appels {{ commercial.prenom|capitalize }}</span>
             </div>
             <div class="col-xs-9">
                 {{ render(controller("ApplicationStatsBundle:Appel:listUser", { 'numero': numero , 'annee' : annee, 'id': commercial.id  })) }}
