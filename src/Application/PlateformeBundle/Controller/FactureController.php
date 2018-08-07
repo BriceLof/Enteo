@@ -34,7 +34,7 @@ class FactureController extends Controller
         if($this->container->get("kernel")->getEnvironment() == 'dev')
             $nbPerPage = 20;
         else
-            $nbPerPage = 100;
+            $nbPerPage = 1000;
         $factures = $em->getRepository('ApplicationPlateformeBundle:Facture')->getAllFacture($page, $nbPerPage);
         $nbPages = ceil(count($factures) / $nbPerPage);
 
