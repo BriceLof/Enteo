@@ -23,6 +23,11 @@ application_plateforme_received_mer:
     defaults: 
         _controller: ApplicationPlateformeBundle:Webservice:index 
 
+#ressource partage
+application_plateforme_ressource_share:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/ressource.yml"
+    prefix:   /ressource
+
 #feedback
 application_plateforme_feedback:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/feedback.yml"

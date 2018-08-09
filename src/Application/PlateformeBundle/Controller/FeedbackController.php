@@ -11,7 +11,21 @@ use Application\PlateformeBundle\Form\FeedbackType;
 class FeedbackController extends Controller
 {
     public function postAction(Request $request, $type){
-       
+
+        /* Test mail DKIM
+        $from = "audrey.azoulay@entheor.com";
+        $to = "brice.lof@gmail.com";
+        $subject = "test dkim";
+
+        $bcc = array(
+            "support.informatique@entheor.com" => "Support",
+            "f.azoulay@entheor.com" => "Franck Azoulay",
+            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
+            "christine.clementmolier@entheor.com" => "Christine Molier");
+
+        $this->get('application_plateforme.mail')->sendMessage($from, $to, null, 'b.lof@iciformation.fr', $bcc, $subject, "dedede");
+       */
+        
         $feedback = new Feedback();
          
         $form = $this->createForm(FeedbackType::class, $feedback);

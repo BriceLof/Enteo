@@ -28,6 +28,7 @@ class MailRvCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $consultants = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
         foreach ($consultants as $consultant) {
+            $tab = array();
             $tab2 = array();
             $tab3 = array();
 
@@ -64,8 +65,19 @@ class MailRvCommand extends ContainerAwareCommand
                         $rv = $historique->getSummary();
                         //si l'historique n'est pas archivé ou annulé ou modifié
                         if ($historique->getEventarchive() == 'off' && $historique->getCanceled() == 0) {
-                            //si la date de cet historique date de mois de 24h au moment du lancement de la cron journalier
+
+                            //si la date de cet historique = date du jour au moment du lancement de la cron journalier
                             if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->format('d-m-Y') ) {
+                                if (($rv == "RV1" || $rv == "RV2" ) && ($lastNews->getStatut()->getId() == 3 || ($lastNews->getStatut()->getId() == 5 && $nextToNews->getStatut()->getId() != 3 ))) {
+
+                                    if (!in_array($beneficiaire, $tab)){
+                                        $tab[] = $beneficiaire;
+                                    }
+                                }
+                            }
+
+                            //si la date de cet historique date de mois de 24h au moment du lancement de la cron journalier
+                            if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->modify('-1 day')->format('d-m-Y') ) {
                                 if (($rv == "RV1" || $rv == "RV2" ) && ($lastNews->getStatut()->getId() == 3 || ($lastNews->getStatut()->getId() == 5 && $nextToNews->getStatut()->getId() != 3 ))) {
 
                                     if (!in_array($beneficiaire, $tab2)){
@@ -75,7 +87,7 @@ class MailRvCommand extends ContainerAwareCommand
                             }
 
                             //si la date de cet historique date de mois de 48h au moment du lancement de la cron journalier
-                            if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->modify('-1 day')->format('d-m-Y')) {
+                            if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->modify('-2 day')->format('d-m-Y')) {
                                 if (($rv == "RV1" || $rv == "RV2" ) && ($lastNews->getStatut()->getId() == 3 || ($lastNews->getStatut()->getId() == 5 && $nextToNews->getStatut()->getId() != 3 ) )) {
                                     if (!in_array($beneficiaire, $tab3)) {
                                         $tab3[] = $beneficiaire;
@@ -86,6 +98,10 @@ class MailRvCommand extends ContainerAwareCommand
                     }
                 }
 
+            }
+
+            if ($tab != null) {
+                $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvFicheNonMaj($consultant, $tab);
             }
 
             if ($tab2 != null) {

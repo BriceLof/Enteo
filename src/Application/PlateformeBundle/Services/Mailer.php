@@ -33,9 +33,11 @@ class Mailer
         $mail = \Swift_Message::newInstance();
 
         //---- DKIM
-        //var_dump($_SERVER['HTTP_HOST']);exit;
+
         $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
+
         $signer = (new \Swift_Signers_DKIMSigner($privateKey, 'appli.entheor.com', 'default' )); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
+
         $mail->attachSigner($signer);
 
         if(!empty($replyTo))
@@ -55,7 +57,6 @@ class Mailer
             ->setTo($to)
             ->setBody($body, 'text/html')
             ->addPart(strip_tags($body), 'text/plain');
-
         $this->mailer->send($mail);
     }
 
