@@ -1,0 +1,44 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}2{% endblock %}
+
+{% block contentMail %}
+
+    {% if consultant.civilite == 'm.' %}
+        Cher {{ consultant.prenom|capitalize }},
+    {% else %}
+        Chère {{ consultant.prenom|capitalize }},
+    {% endif %}
+
+    <br><br>
+    <div>
+
+        Vous avez reçu le <b>{{ date }}</b> en RV de Positionnement :<br>
+        <ul>
+            {% for beneficiaire in beneficiaires %}
+                <li><b>{{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize~' ' }}</b></li>
+            {% endfor %}
+        </ul>
+        <br>
+        <br>
+        <b>
+            Je vous remercie de bien vouloir mettre à jour les informations suivantes sur <a href='https://appli.entheor.com/web/'>ENTHEO</a> :
+        </b>:
+        <br>
+            <span>- Statut du bénéficiaire à l'issue du RV (positif, négatif, indécis, à reporter...)</span>
+            <br>
+            <span>- Compléter les informations clés du bénéficiaire : Coordonnées, Statut dans le poste, type de Contrat, n° de sécu, date de naissance, informations employeur, OPCA...</span>
+        <br>
+        <br>
+        <u>Ces informations sont requises</u> pour monter le dossier de financement et vous permettre de démarrer au plus vite la prestation d'accompagnement.
+        <br>
+        <br>
+        <span>Bien Cordialement,</span>
+        <br>
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clementmolier@entheor.com">christine.clementmolier@entheor.com</a>
+        <br>
+        <span>06 81 84 85 24</span>
+    </div>
+{% endblock %}
