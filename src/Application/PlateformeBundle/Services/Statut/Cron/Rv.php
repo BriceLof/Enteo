@@ -101,7 +101,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                                 'message' => $message,
                                 'reference' => $ref
                             ));
-                            $this->sendMessage($from, $to, null, $cc, $bcc, $subject, $body);
+//                            $this->sendMessage($from, $to, null, $cc, $bcc, $subject, $body);
                         }
                     }
 				}

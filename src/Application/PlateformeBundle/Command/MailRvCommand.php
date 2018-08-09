@@ -70,7 +70,7 @@ class MailRvCommand extends ContainerAwareCommand
                             if ($historique->getDateDebut()->format('d-m-Y') == (new \DateTime('now'))->format('d-m-Y') ) {
                                 if (($rv == "RV1" || $rv == "RV2" ) && ($lastNews->getStatut()->getId() == 3 || ($lastNews->getStatut()->getId() == 5 && $nextToNews->getStatut()->getId() != 3 ))) {
 
-                                    if (!in_array($beneficiaire, $tab2)){
+                                    if (!in_array($beneficiaire, $tab)){
                                         $tab[] = $beneficiaire;
                                     }
                                 }
