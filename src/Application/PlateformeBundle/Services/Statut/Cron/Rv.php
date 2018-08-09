@@ -108,41 +108,62 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 			}	
 		}
     }
-    
+
+    public function mailRvFicheNonMaj(Users $consultant , $beneficiaires){
+        $date = $this->date->dateFr(new \DateTime('now'));
+        $from = "christine.clement@entheor.com";
+        $replyTo = "christine.clement@entheor.com";
+        $subject = "Comment se  sont passés vos rendez-vous du " .$date. " ?";
+        $template = '@Apb/Alert/Mail/mailRvFicheNonMaj.html.twig';
+        $to = $consultant->getEmail();
+        $cci = array(
+            "f.azoulay@entheor.com" => "Franck AZOULAY",
+            "resp.administratif@entheor.com" => "Responsable Administratif",
+            "support.informatique@entheor.com" =>"support informatique"
+        );
+        $body = $this->templating->render($template, array(
+            'consultant' => $consultant,
+            'beneficiaires' => $beneficiaires,
+            'date' => $date
+        ));
+        $this->sendMessage($from,$to,$replyTo,null,$cci,$subject,$body);
+//        $this->sendMessage($from,"support.informatique@entheor.com", $replyTo, null,null,$subject,$body);
+    }
+
     public function alerteSuiteRv1()
     {
         $newsRepo = $this->em->getRepository("ApplicationPlateformeBundle:News");
-        // Récupération des news qui sont au statut RV1 (id 3) 
+        // Récupération des news qui sont au statut RV1 (id 3)
         $listeRv = $newsRepo->getNewsByStatut();
 
         foreach($listeRv as $rv)
-        {   
+        {
             $beneficiaireID = $rv->getBeneficiaire()->getId();
-            // beneficiaire ayant fini le RV1 
+            // beneficiaire ayant fini le RV1
             $nextStep = $newsRepo->findOneBy(array('beneficiaire' => $beneficiaireID, 'statut' => '4'));
-            
+
             var_dump("beneficiaire ID : ".$beneficiaireID." | RV2 : ".count($nextStep));
 
-            // envoi email en fonction du temps passé entre la RV1 et la date du jour 
+            // envoi email en fonction du temps passé entre la RV1 et la date du jour
             if(is_null($nextStep))
             {
                 $dateRv = $rv->getDateHeure();
                 $dateCurrent = new \DateTime();
-                
+
                 $dateMoreOneDay = $dateRv->add(new \DateInterval('P1D'))->format('Y-m-d');
                 $dateMoreTwoDay = $dateRv->add(new \DateInterval('P2D'))->format('Y-m-d');
                 $dateMoreThreeDay = $dateRv->add(new \DateInterval('P3D'))->format('Y-m-d');
-                
+
                 $template = "@Apb/Alert/Mail/mailDefault.html.twig";
-                
+
                 $emailConsultant = $rv->getBeneficiaire()->getConsultant()->getEmail();
-                
+
                 if($dateMoreOneDay == $dateCurrent->format('Y-m-d'))
                 {
                     // Alerte 1 à J+1
                     var_dump("j+1");
                     $subject = "Rappel J+1 : Post RV1 ";
-                    $to = $emailConsultant; 
+                    $to = $emailConsultant;
                 }
                 elseif($dateMoreTwoDay == $dateCurrent->format('Y-m-d'))
                 {
@@ -162,23 +183,23 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                             "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
                 }
-                
+
                 $message = "Votre bénéficiaire <b>".$rv->getBeneficiaire()->getCiviliteConso()." ".$rv->getBeneficiaire()->getNomConso()." ".$rv->getBeneficiaire()->getPrenomConso()." "
                         . "</b> a fait son RV1 le <b>".$rv->getDateHeure()->format('d/m/Y')."</b> .<br>
                           Il est en attente d'une mise à jour de son statut.";
-                
+
                 $body = $this->templating->render($template, array(
-                    'consultant' => $rv->getBeneficiaire()->getConsultant(), 
+                    'consultant' => $rv->getBeneficiaire()->getConsultant(),
                     'beneficiaire' => $rv->getBeneficiaire(),
                     'sujet' => $subject ,
                     'message' => $message
                 ));
-                
+
                 $this->sendMessage($this->from, $to, null, $cc,null, $subject, $body);
 
                 return "mail envoyé";
-            }  
-        }  
+            }
+        }
     }
 
     public function mailRvRealise(Beneficiaire $beneficiaire, Historique $lastRv){
@@ -201,7 +222,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function firstMailRvFicheNonMaj(Users $consultant , $beneficiaires){
-        $dateHier = $this->date->dateFr(new \DateTime('now'));
+        $dateHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
         $from = "christine.clement@entheor.com";
         $replyTo = "christine.clement@entheor.com";
         $subject = "[URGENT] Mise à Jour de vos Rendez-vous du ".$dateHier;
@@ -241,7 +262,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
-        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
+        $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-2 day"));
         $from = "christine.clementmolier@entheor.com";
         $replyTo = "christine.clementmolier@entheor.com";
         $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche du ".$dateAvantHier;
