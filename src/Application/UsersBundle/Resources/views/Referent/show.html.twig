@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span>Liste des Consultants de <span class="bold">{{ referent.civilite|capitalize~" "~referent.prenom|capitalize~" "~referent.nom|upper }}</span></span>
+    </div>
+    <div class="panel-body">
+        <table class="table table-condensed">
+            <tbody>
+            {% for consultant in referent.consultants %}
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd;">
+                        {{ consultant.prenom|capitalize~" "~consultant.nom|upper }}
+                        <span onclick="removeConsultant({{ referent.id }},{{ consultant.id }})" style="float: right" class="glyphicon glyphicon-remove"></span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div>
+            <button  class="glyphicon glyphicon-plus btn btn-primary" data-toggle="modal" data-target="#addConsultantModal" style="float: right"></button>
+        </div>
+    </div>
+</div>
+
+{{ render(controller("ApplicationUsersBundle:Referent:addConsultant",{'id': referent.id })) }}

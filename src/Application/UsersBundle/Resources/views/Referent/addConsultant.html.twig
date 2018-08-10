@@ -1,0 +1,29 @@
+{{ form_start(form, {'attr': { 'id' : 'form_add_consultant_referent' }}) }}
+    <div class="modal fade" id="addConsultantModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choisissez le Consultant à ajouter</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalEditConsultant">
+                    <div class="row">
+                        <div>
+                            <span class="col-md-6" style="margin-top: 10px">{{ form_label(form.consultants) }}</span>
+                            <span class="col-md-6">{{ form_widget(form.consultants) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    {{ form_widget(form.submit) }}
+                </div>
+                <div>{{ form_rest(form) }}</div>
+                <span>{{ form_errors(form) }}</span>
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}

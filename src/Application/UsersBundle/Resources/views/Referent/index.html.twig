@@ -1,0 +1,50 @@
+{% extends "ApplicationUsersBundle::layout.html.twig" %}
+
+{% block title %}Consultants Référents{% endblock %}
+
+{% block body %}
+    <section class="col-md-12">
+        {# dump(app.request.get("typeUser")) #}
+        {% for info in app.session.flashbag.get('info') %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ info }}
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 style="margin-bottom: 35px">Gestion Consultants Référents<br></h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Consultants Référents
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed">
+                            <tbody>
+                            {% for referent in referents %}
+                                <tr>
+                                    <td class="pointer" style="border-bottom: 1px solid #ddd;" onclick="showList({{ referent.id }})">{{ referent.prenom|capitalize~" "~referent.nom|upper }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" id="liste_consultant">
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/referent.js') }}"></script>
+{% endblock %}
