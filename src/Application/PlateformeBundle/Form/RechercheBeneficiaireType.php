@@ -40,9 +40,9 @@ class RechercheBeneficiaireType extends AbstractType
         }
 
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user){
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user) {
                 $form = $event->getForm();
-                if ($user->getRoles()[0] == 'ROLE_CONSULTANT'){
+                if ($user->getRoles()[0] == 'ROLE_CONSULTANT') {
                     $form
                         ->add('statut', EntityType::class, array(
                             "mapped" => false,
@@ -56,13 +56,10 @@ class RechercheBeneficiaireType extends AbstractType
                                     ->orderBy('s.ordre', 'ASC')
                                     ->setParameters(array(
                                         'slug1' => true
-                                    ))
-                                    ;
+                                    ));
                             },
-                        ))
-                    ;
-                }
-                else{
+                        ));
+                } else {
                     $form
                         ->add('statut', EntityType::class, array(
                             "mapped" => false,
@@ -76,29 +73,49 @@ class RechercheBeneficiaireType extends AbstractType
                                     ->orderBy('s.ordre', 'ASC')
                                     ->setParameters(array(
                                         'slug1' => array('recevabilite', 'reporte')
-                                    ))
-                                    ;
+                                    ));
                             },
-                        ))
-                    ;
+                        ));
+                }
+                if (in_array('ROLE_REFERENT', $user->getRoles())) {
+                    $ids[] = $user->getId();
+                    foreach ($user->getConsultants() as $consultant){
+                        $ids[] = $consultant->getId();
+                    }
+                    $form
+                        ->add('consultant', EntityType::class, array(
+                            'placeholder' => 'Consultant',
+                            'required' => false,
+                            'class' => 'ApplicationUsersBundle:Users',
+                            'query_builder' => function (EntityRepository $er) use ($ids) {
+                                return $er->createQueryBuilder('u')
+                                    ->where('u.roles LIKE :role ')
+                                    ->setParameter('role', '%ROLE_CONSULTANT%')
+                                    ->andWhere($er->createQueryBuilder('v')->expr()->in('u.id', $ids))
+                                    ->orderBy('u.nom', 'ASC');
+                            },
+                            'attr' => array(
+                                'class' => ''
+                            )
+                        ));
+                }else{
+                    $form
+                        ->add('consultant', EntityType::class, array(
+                            'placeholder' => 'Consultant',
+                            'required' => false,
+                            'class' => 'ApplicationUsersBundle:Users',
+                            'query_builder' => function (EntityRepository $er) {
+                                return $er->createQueryBuilder('u')
+                                    ->where('u.roles LIKE :role ')
+                                    ->setParameter('role', '%ROLE_CONSULTANT%')
+                                    ->orderBy('u.nom', 'ASC');
+                            },
+                            'attr' => array(
+                                'class' => ''
+                            )
+                        ));
                 }
             })
-            ->add('consultant', EntityType::class, array(
-                'placeholder' => 'Consultant',
-                'required' => false,
-                'class' => 'ApplicationUsersBundle:Users',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->where('u.roles LIKE :role ')
-                        ->setParameter('role', '%ROLE_CONSULTANT%')
-                        ->orderBy('u.nom', 'ASC')
-                        ;
-                },
-                'attr' => array(
-                    'class' => ''
-                )
-            ))
-
             ->add('telConso', TextType::class, array(
                 'label' => 'téléphone',
                 'required' => false,
@@ -107,12 +124,10 @@ class RechercheBeneficiaireType extends AbstractType
                     'maxlength' => 10,
                 )
             ))
-
             ->add('refFinanceur', TextType::class, array(
                 'label' => 'Réf. Financeur',
                 'required' => false,
             ))
-
             ->add('nomConso', TextType::class, array(
                 'required' => false,
                 'attr' => array(
@@ -133,7 +148,6 @@ class RechercheBeneficiaireType extends AbstractType
                     'placeholder' => 'Email',
                 )
             ))
-
             ->add('complementStatut', ChoiceType::class, array(
                 "mapped" => false,
                 'required' => false,
@@ -146,14 +160,13 @@ class RechercheBeneficiaireType extends AbstractType
                     'class' => 'complement'
                 )
             ))
-			->add('detailStatut', EntityType::class, array(
+            ->add('detailStatut', EntityType::class, array(
                 "mapped" => false,
                 'required' => false,
                 'placeholder' => 'Détail Statut',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
-                'choice_label' => 'detail', 
+                'choice_label' => 'detail',
             ))
-
             ->add('complementDetailStatut', ChoiceType::class, array(
                 "mapped" => false,
                 'required' => false,
@@ -167,7 +180,6 @@ class RechercheBeneficiaireType extends AbstractType
                     'disabled' => 'disabled'
                 )
             ))
-			
             ->add('ville', TextType::class, array(
                 "mapped" => false,
                 "required" => false,
@@ -176,26 +188,20 @@ class RechercheBeneficiaireType extends AbstractType
                     'autocomplete' => 'off'
                 )
             ))
-
             ->add('cacher', CheckboxType::class, array(
                 "mapped" => false,
-                'label'    => 'Ne pas afficher les Bénéficiaires en Statut Abandon, Terminé',
+                'label' => 'Ne pas afficher les Bénéficiaires en Statut Abandon, Terminé',
                 'required' => false,
             ))
-
             ->add('tri', HiddenType::class, array(
                 'mapped' => false,
                 'data' => 0
             ))
-
             ->add('page', HiddenType::class, array(
                 'mapped' => false,
                 'data' => 0
             ))
-
-            ->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));
-
-            ;
+            ->add('submit', SubmitType::class, array('label' => 'Mettre à jour'));;
     }
 
     /**

@@ -25,6 +25,11 @@ class Users extends BaseUser
     private $beneficiaire;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Application\UsersBundle\Entity\Users", cascade={"persist"})
+     */
+    private $consultants;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\StatsBundle\Entity\Semaine", mappedBy="commercial")
      */
     private $semaine;
@@ -719,5 +724,37 @@ class Users extends BaseUser
     public function removeSemaine(\Application\StatsBundle\Entity\Semaine $semaine)
     {
         $this->semaine->removeElement($semaine);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConsultants()
+    {
+        return $this->consultants;
+    }
+
+    /**
+     * Add consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Users
+     */
+    public function addConsultant(\Application\UsersBundle\Entity\Users $consultant)
+    {
+        $this->consultants[] = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     */
+    public function removeConsultant(\Application\UsersBundle\Entity\Users $consultant)
+    {
+        $this->consultants->removeElement($consultant);
     }
 }

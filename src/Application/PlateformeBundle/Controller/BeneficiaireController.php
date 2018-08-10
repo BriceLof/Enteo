@@ -40,7 +40,11 @@ class BeneficiaireController extends Controller
         $listConsultantRv = $em->getRepository('ApplicationPlateformeBundle:News')->getListConsultantGotRv1OrRv2($beneficiaire);
 
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
+        if (true === $authorization->isGranted('ROLE_ADMIN')
+            || true === $authorization->isGranted('ROLE_COMMERCIAL')
+            || true === $authorization->isGranted('ROLE_GESTION')
+            || $this->getUser()->getBeneficiaire()->contains($beneficiaire )
+            || $this->getUser()->getConsultants()->contains($beneficiaire->getConsultant()) ) {
         }else{
             return $this->redirect($this->generateUrl('application_plateforme_homepage'));
         }
@@ -262,6 +266,13 @@ class BeneficiaireController extends Controller
     private function createConsultantEditForm(Beneficiaire $beneficiaire)
     {
         $form = $this->createForm(ConsultantType::class, $beneficiaire);
+        $form->add('submit', SubmitType::class, array(
+            'label' => 'Enregister',
+            'attr' => array(
+                'class' => 'btn btn-primary'
+            )
+        ));
+
         return $form;
     }
 
@@ -291,10 +302,15 @@ class BeneficiaireController extends Controller
         ini_set('memory_limit',-1);
 
         $idUtilisateur = null;
+        $ids = null;
 
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or true === $this->get('security.authorization_checker')->isGranted('ROLE_COMMERCIAL') or true === $this->get('security.authorization_checker')->isGranted('ROLE_GESTION')) {
         }else{
             $idUtilisateur = $this->getUser()->getId();
+            $ids[] = $this->getUser()->getId();
+            foreach ($this->getUser()->getConsultants() as $consultant){
+                $ids[] = $consultant->getId();
+            }
         }
 
         $beneficiaire = new Beneficiaire();
@@ -322,7 +338,7 @@ class BeneficiaireController extends Controller
             $dateDebut = null;
             $dateFin = null;
             
-            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher, $complementDetailStatut);
+            $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher, $complementDetailStatut, $ids);
             $results = $query->getResult();
 
             $start = 50*$page;

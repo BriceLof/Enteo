@@ -38,7 +38,11 @@ class HomeController extends Controller
             //var_dump($beneficiaires);
         } // CONSULTANT
         else {
-            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage, $this->getUser()->getId(), true);
+            $ids[] = $this->getUser()->getId();
+            foreach ($this->getUser()->getConsultants() as $consultant){
+                $ids[] = $consultant->getId();
+            }
+            $beneficiaires = $repository_beneficiaire->getBeneficiaire($page, $nbPerPage, null, true, $ids);
             $nombreBeneficiaire = count($beneficiaires);
             //$this->getUser()->getBeneficiaire();
             if (count($beneficiaires) == 0) {
@@ -59,46 +63,7 @@ class HomeController extends Controller
         // Formulaire de mise à jour du statut d'un bénéficiaire
         $news = new News;
         $form = $this->get("form.factory")->create(NewsType::class, $news);
-        //$form->get('detailStatutActuelIDHidden')->setData($news->getStatut()->getId());
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $news = $form->getData();
-            $beneficiaire_id = $request->request->get('beneficiaire_id');
-            $news->setBeneficiaire($repository_beneficiaire->findOneById($beneficiaire_id));
-
-            if ($news->getDetailStatut()->getDetail() == "Email suite No Contact" OR ($news->getStatut()->getSlug() == "rv1-realise" OR $news->getStatut()->getSlug() == "rv2-realise")) {
-                $historique = new Historique();
-                $historique->setHeuredebut(new \DateTime('now'));
-                $historique->setHeurefin(new \DateTime('now'));
-                $historique->setSummary("");
-                $historique->setTypeRdv("");
-                $historique->setBeneficiaire($news->getBeneficiaire());
-                $historique->setDescription($news->getDetailStatut()->getDetail());
-                $historique->setEventId("0");
-                $em->persist($historique);
-            }
-
-            // ajouter un suivi administratif
-            if ($news->getDetailStatut()->getDetail() == "RV1 Positif" OR $news->getDetailStatut()->getDetail() == "RV2 Positif") {
-                $statutRepo = $em->getRepository('ApplicationPlateformeBundle:Statut')->findOneBySlug("dossier-en-cours");
-                $detailStatutRepo = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->findOneByStatut($statutRepo->getId());
-
-                $suiviAdministraif = new SuiviAdministratif();
-                $suiviAdministraif->setBeneficiaire($news->getBeneficiaire());
-                $suiviAdministraif->setStatut($statutRepo);
-                $suiviAdministraif->setDetailStatut($detailStatutRepo);
-                $em->persist($suiviAdministraif);
-            }
-
-            $em->persist($news);
-            $em->flush();
-
-            // Envoi d'un mail selon le statut, ( parametres : detail du statut, bénéficiaire concerné )
-            //$service = $this->container->get('application_plateforme.statut.mail.mail_for_statut')->alerteForStatus($news->getDetailStatut(), $news->getBeneficiaire() );
-
-            $url = $this->get('router')->generate('application_plateforme_homepage') . '#b' . $beneficiaire_id;
-            return $this->redirect($url);
-        }
-
+        
         $nouvelle = new Nouvelle;
         $form_nouvelle = $this->get("form.factory")->create(NouvelleType::class, $nouvelle);
 

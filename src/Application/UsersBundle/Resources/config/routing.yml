@@ -15,6 +15,11 @@ application_user_mission:
 application_user_facturation:
     resource: "@ApplicationUsersBundle/Resources/config/routing/facturation.yml"
     prefix:   /faturation
+
+#facturation
+application_user_referent:
+    resource: "@ApplicationUsersBundle/Resources/config/routing/referent.yml"
+    prefix:   /user/referent
     
 user_type:
     path: /type/{typeUser}

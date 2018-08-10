@@ -34,7 +34,11 @@ class DisponibilitesController extends Controller
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
 
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getId() == $id ) {
+        if (true === $authorization->isGranted('ROLE_ADMIN')
+            || true === $authorization->isGranted('ROLE_COMMERCIAL')
+            || true === $authorization->isGranted('ROLE_GESTION')
+            || $this->getUser()->getId() == $id
+            || $this->getUser()->getConsultants()->contains($consultant) ){
         }else{
             return $this->redirect($this->generateUrl('application_plateforme_homepage'));
         }

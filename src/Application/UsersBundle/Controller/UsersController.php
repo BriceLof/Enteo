@@ -9,6 +9,7 @@ use Application\UsersBundle\Form\PhotoDeProfileType;
 use Application\UsersBundle\Form\PhotoProfileType;
 use Application\UsersBundle\Form\StatutConsultantType;
 use Application\UsersBundle\Form\UsersType;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;

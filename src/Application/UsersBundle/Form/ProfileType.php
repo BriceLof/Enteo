@@ -20,6 +20,7 @@ class ProfileType extends AbstractType
                 'choices' => array(
                     'Administrateur' => "ROLE_ADMIN",
                     'Gestionnaire' => "ROLE_GESTION",
+                    'Consultant Référent' => "ROLE_REFERENT",
                     'Consultant' => "ROLE_CONSULTANT",
                     'Commercial' => "ROLE_COMMERCIAL",
                 ),

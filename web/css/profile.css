@@ -95,3 +95,10 @@
 div.error{
     color: red;
 }
+
+.pointer{
+    cursor: pointer;
+}
+.bold{
+    font-weight: bold;
+}

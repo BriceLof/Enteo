@@ -20,10 +20,15 @@ class CsvController extends Controller
     public function getListBeneficiaireAction(Request $request){
 
         $idUtilisateur = null;
+        $ids = null;
 
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or true === $this->get('security.authorization_checker')->isGranted('ROLE_COMMERCIAL') or true === $this->get('security.authorization_checker')->isGranted('ROLE_GESTION')) {
         }else{
             $idUtilisateur = $this->getUser()->getId();
+            $ids[] = $this->getUser()->getId();
+            foreach ($this->getUser()->getConsultants() as $consultant){
+                $ids[] = $consultant->getId();
+            }
         }
 
         $beneficiaire = new Beneficiaire();
@@ -47,7 +52,7 @@ class CsvController extends Controller
         $dateDebut = null;
         $dateFin = null;
 
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher, $complementDetailStatut);
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->search($form->getData(), $dateDebut, $dateFin, $idUtilisateur, false, $tri, $ville,$statut, $detailStatut, $complementStatut, $cacher, $complementDetailStatut, $ids);
         $results = $query->getResult();
 
         $beneficiaires = $results;
