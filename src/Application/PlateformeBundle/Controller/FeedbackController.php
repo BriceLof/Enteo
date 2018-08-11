@@ -12,19 +12,17 @@ class FeedbackController extends Controller
 {
     public function postAction(Request $request, $type){
 
-        /* Test mail DKIM
-        $from = "audrey.azoulay@entheor.com";
-        $to = "brice.lof@gmail.com";
-        $subject = "test dkim";
+//        $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey");
+//        $to = array("email_adress" => "brice.lof@gmail.com", "alias" => "brice");
+//        $subject = "test dkim";
+//        $cc =  array("email_adress" => "brice.lof@gmail.com", "alias" => "brice");
+//        $bcc = array(
+//            "support.informatique@entheor.com" => "Support",
+//            "b.lof@iciformation.fr" => "brice"
+//           );
+//
+//        $this->get('application_plateforme.mail')->sendMessage($from, $to, null, $cc, $bcc, $subject, "Test brice mail");
 
-        $bcc = array(
-            "support.informatique@entheor.com" => "Support",
-            "f.azoulay@entheor.com" => "Franck Azoulay",
-            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
-            "christine.clementmolier@entheor.com" => "Christine Molier");
-
-        $this->get('application_plateforme.mail')->sendMessage($from, $to, null, 'b.lof@iciformation.fr', $bcc, $subject, "dedede");
-       */
         
         $feedback = new Feedback();
          

@@ -12,19 +12,20 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $typeRdv = $rdv->getTypeRdv();
 
         if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2") {
-            $from = "audrey.azoulay@entheor.com";
+            $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey Azoulay");
         }else{
-            $from = $consultant->getEmail();
+            $from = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         }
 		
 		$dateJ = new \DateTime('now');  
         if($dateRdv >= $dateJ){
-            $to =  $beneficiaire->getEmailConso();
+            $to = array("email_adress" => $beneficiaire->getEmailConso(), "alias" => $beneficiaire->getEmailConso());
         }else{
-            $to = 'support.informatique@entheor.com';
+            $to = array("email_adress" => 'support.informatique@entheor.com', "alias" => 'Support');
         }
 
-        $cc = array($consultant->getEmail());
+        $cc = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
+
         $bcc = array(
             "support.informatique@entheor.com" => "Support",
             "f.azoulay@entheor.com" => "Franck Azoulay", 
@@ -174,12 +175,12 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 
         //expediteur RV1 RV2
         if ($type == 'RV1' || $type == 'RV2'){
-            $from = "contact@entheor.com";
-            $cc = array($consultant->getEmail());
+            $from = array("email_adress" => "contact@entheor.com", "alias" => "contact@entheor.com");
+            $cc = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
             $bool = true;
             $reference = '7a' ;
         }else{
-            $from = $consultant->getEmail();
+            $from = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
             $cc = null;
             $reference = '7b';
             if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
@@ -187,17 +188,17 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             }
         }
 
-        $to =  $beneficiaire->getEmailConso();
+        $to = array("email_adress" => $beneficiaire->getEmailConso(), "alias" => $beneficiaire->getEmailConso());
 		
 		$adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $listeAdministrateurs = array();
         foreach($adminitrateurs as $admin){
         	if($admin->getEmail() != "ph.rouzaud@iciformation.fr" && $admin->getEmail() != "christine.clement@entheor.com")
-    	 		$listeAdministrateurs[] = $admin->getEmail(); 
+    	 		$listeAdministrateurs[$admin->getEmail()] = $admin->getEmail();
 		}
-		array_push($listeAdministrateurs, "audrey.azoulay@entheor.com", "support.informatique@entheor.com");
+		array_push($listeAdministrateurs, array("audrey.azoulay@entheor.com" => "audrey.azoulay@entheor.com", "support.informatique@entheor.com" => "support.informatique@entheor.com"));
         $bcc = $listeAdministrateurs;
-            
+
         $template = "@Apb/Alert/Mail/supprimerRdv.html.twig";
             
         $body = $this->templating->render($template, array(

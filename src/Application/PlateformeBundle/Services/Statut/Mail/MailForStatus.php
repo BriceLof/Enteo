@@ -14,7 +14,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         
         if($detailStatut->getDetail() == "Email suite No Contact"){
             $subject = "Pas de réponse suite aux appels";
-            $to =  $beneficiaire->getEmailConso();
+            $to =  array("email_adress" => $beneficiaire->getEmailConso(), "alias" => $beneficiaire->getEmailConso());
             $message = "Bonjour <b>".$beneficiaire->getCiviliteConso()." ".$beneficiaire->getNomConso()." ".$beneficiaire->getPrenomConso()."</b>, <br><br>"
                 . "Nous avons essayé de vous joindre à plusieurs reprises, mais sans succès.<br>
                 Ci-dessous les coordonnées téléphonique d'un commercial pour que vous puissiez prendre contact : <br>
@@ -32,19 +32,17 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
     public function alerteAttenteAccord($suivis, $attachment){
         $ref = "4a";
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Liste des ".count($suivis)." dossiers en Financement - Attente Accord depuis plus de 15 jours ( antérieur à ".(new \DateTime('now'))->modify('-15 day')->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
-        $to = array(
-            "contact@entheor.com" => "Contact"
-        );
+        $to = array("email_adress" => "contact@entheor.com", "alias" => "contact@entheor.com");
         $cc = array(
             "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary",
             "christine.clementmolier@entheor.com" => "Christine Clement Molier",
             "f.azoulay@entheor.com" => "Franck Azoulay",
             "ph.rouzaud@entheor.com" => "Philippe Rouzaud"
         );
-        $bcc = "support.informatique@entheor.com";
+        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $body = $this->templating->render($template, array(
             'suivis' => $suivis,
             'reference' => $ref
@@ -57,19 +55,17 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
     public function alerteAttenteTraitement($suivis, $attachment){
         $ref = "4b";
-        $from = "christine.clement@entheor.com";
+        $from = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
         $subject = "Liste des ".count($suivis)." dossiers en Attente Traitement depuis plus de 15 jours ( antérieur à ".(new \DateTime('now'))->modify('-15 day')->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
-        $to = array(
-            "contact@entheor.com" => "Contact"
-        );
+        $to = array("email_adress" => "contact@entheor.com", "alias" => "contact@entheor.com");
         $cc = array(
             "virginie.hiairrassary@entheor.com" => "Virginie Hiairrassary",
             "christine.clementmolier@entheor.com" => "Christine Clement Molier",
             "f.azoulay@entheor.com" => "Franck Azoulay",
             "ph.rouzaud@entheor.com" => "Philippe Rouzaud"
         );
-        $bcc = "support.informatique@entheor.com";
+        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $body = $this->templating->render($template, array(
             'suivis' => $suivis,
             'reference' => $ref
@@ -81,7 +77,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
     public function AbandonBeneficiaire($beneficiaire, $user, $motif){
         $ref = "5a";
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Abandon d'un Bénéficiaire";
         $template = '@Apb/Alert/Mail/alerteAbandon.html.twig';
         $body = $this->templating->render($template, array(
@@ -103,7 +99,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
      */
     public function EmailSuiteNoContactBeneficiaire($beneficiaire){
         $ref = "6";
-        $from = "audrey.azoulay@entheor.com";
+        $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "audrey.azoulay@entheor.com");
         $subject = "Votre demande d'information pour une VAE";
         $template = '@Apb/Alert/Mail/emailSuiteNoContact.html.twig';
         $body = $this->templating->render($template, array(

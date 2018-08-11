@@ -11,10 +11,10 @@ class MissionMailer extends Mailer
     public function newMission(Beneficiaire $beneficiaire, Users $consultant, $attachement){
 
         $ref = 'm-1';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Proposition de mission pour l'accompagnement VAE de ". ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
         $template = '@Aub/Mission/mail/newMission.html.twig';
-        $to = $consultant->getEmail();
+        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         $cc = null;
         $bcc = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
@@ -35,20 +35,20 @@ class MissionMailer extends Mailer
         $consultant = $mission->getConsultant();
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-2a';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "La Proposition de mission pour l'accompagnement de ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso()[0])." ".strtoupper($beneficiaire->getNomConso())." a été acceptée par ".ucfirst($consultant->getCivilite())." ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom());
         $template = '@Aub/Mission/mail/acceptedMission.html.twig';
         $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
         $gestionnaires = $query->getResult();
         foreach ($gestionnaires as $gestionnaire){
-            $emails [] = $gestionnaire->getEmail();
+            $emails [$gestionnaire->getEmail()] = $gestionnaire->getEmail();
         }
-        $emails [] = 'f.azoulay@entheor.com';
-        $emails [] = 'ph.rouzaud@entheor.com';
-        $emails [] = 'christine.clementmolier@entheor.com';
+        $emails ['f.azoulay@entheor.com'] = 'f.azoulay@entheor.com';
+        $emails ['ph.rouzaud@entheor.com'] = 'ph.rouzaud@entheor.com';
+        $emails ['christine.clementmolier@entheor.com'] = 'christine.clementmolier@entheor.com';
         $to = $emails;
         $cc = null;
-        $bcc = "support.informatique@entheor.com";
+        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $body = $this->templating->render($template, array(
             'mission' => $mission,
             'reference' => $ref
@@ -61,11 +61,11 @@ class MissionMailer extends Mailer
         $consultant = $mission->getConsultant();
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-2b';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Vous avez accepté l'accompagnement VAE de ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
-        $to = $consultant->getEmail();
+        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         $cc = null;
-        $bcc = "support.informatique@entheor.com";
+        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $template = '@Aub/Mission/mail/acceptedMissionB.html.twig';
         $body = $this->templating->render($template, array(
             'mission' => $mission,
@@ -80,10 +80,10 @@ class MissionMailer extends Mailer
     public function confirmedMission(Beneficiaire $beneficiaire, Users $consultant){
 
         $ref = 'm-3a';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Vous pouvez démarrer l'accompagnement de ". ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
         $template = '@Aub/Mission/mail/confirmedMission.html.twig';
-        $to = $consultant->getEmail();
+        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         $cc = null;
         $bcc = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
@@ -104,17 +104,17 @@ class MissionMailer extends Mailer
     public function declinedMission(Mission $mission, $message){
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-2r';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Mission refusée par le consultant";
         $template = '@Aub/Mission/mail/declinedMission.html.twig';
         $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
         $gestionnaires = $query->getResult();
         foreach ($gestionnaires as $gestionnaire){
-            $emails [] = $gestionnaire->getEmail();
+            $emails [$gestionnaire->getEmail()] = $gestionnaire->getEmail();
         }
-        $emails [] = 'f.azoulay@entheor.com';
-        $emails [] = 'ph.rouzaud@entheor.com';
-        $emails [] = 'christine.clementmolier@entheor.com';
+        $emails ['f.azoulay@entheor.com'] = 'f.azoulay@entheor.com';
+        $emails ['ph.rouzaud@entheor.com'] = 'ph.rouzaud@entheor.com';
+        $emails ['christine.clementmolier@entheor.com'] = 'christine.clementmolier@entheor.com';
         $to = $emails;
         $cc = null;
         $bcc = array(
@@ -135,19 +135,19 @@ class MissionMailer extends Mailer
     public function revokedMission(Mission $mission, $message){
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-3r';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Accompagnement de ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
         $template = '@Aub/Mission/mail/revokedMission.html.twig';
         $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
         $gestionnaires = $query->getResult();
         foreach ($gestionnaires as $gestionnaire){
-            $emails [] = $gestionnaire->getEmail();
+            $emails [$gestionnaire->getEmail()] = $gestionnaire->getEmail();
         }
-        $emails [] = 'f.azoulay@entheor.com';
-        $emails [] = 'ph.rouzaud@entheor.com';
-        $emails [] = 'christine.clementmolier@entheor.com';
-        $emails[] = "support.informatique@entheor.com";
-        $to = $mission->getConsultant()->getEmail();
+        $emails ['f.azoulay@entheor.com'] = 'f.azoulay@entheor.com';
+        $emails ['ph.rouzaud@entheor.com'] = 'ph.rouzaud@entheor.com';
+        $emails ['christine.clementmolier@entheor.com'] = 'christine.clementmolier@entheor.com';
+        $emails['support.informatique@entheor.com'] = "support.informatique@entheor.com";
+        $to = array("email_adress" => $mission->getConsultant()->getEmail(), "alias" => $mission->getConsultant()->getEmail());
         $cc = null;
         $bcc = $emails;
         $body = $this->templating->render($template, array(
@@ -162,20 +162,20 @@ class MissionMailer extends Mailer
 
     public function modifiedMission(Mission $mission, Beneficiaire $beneficiaire){
         $ref = 'm-3r-change';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso()).": changement de consultant en cours d'accompagnement";
         $template = '@Aub/Mission/mail/modifiedMission.html.twig';
         $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
         $gestionnaires = $query->getResult();
         foreach ($gestionnaires as $gestionnaire){
-            $emails [] = $gestionnaire->getEmail();
+            $emails [$gestionnaire->getEmail()] = $gestionnaire->getEmail();
         }
-        $emails [] = 'f.azoulay@entheor.com';
-        $emails [] = 'ph.rouzaud@entheor.com';
-        $emails [] = 'christine.clementmolier@entheor.com';
+        $emails ['f.azoulay@entheor.com'] = 'f.azoulay@entheor.com';
+        $emails ['ph.rouzaud@entheor.com'] = 'ph.rouzaud@entheor.com';
+        $emails ['christine.clementmolier@entheor.com'] = 'christine.clementmolier@entheor.com';
         $to = $emails;
         $cc = null;
-        $bcc = "support.informatique@entheor.com";
+        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
             'mission' => $mission,
@@ -188,15 +188,15 @@ class MissionMailer extends Mailer
     public function abandonnedMission(Mission $mission){
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-3r-abandonned';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso()).": arrêt de la VAE en cours d'accompagnement";
         $template = '@Aub/Mission/mail/abandonnedMission.html.twig';
         $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
         $gestionnaires = $query->getResult();
         foreach ($gestionnaires as $gestionnaire){
-            $emails [] = $gestionnaire->getEmail();
+            $emails [$gestionnaire->getEmail()] = $gestionnaire->getEmail();
         }
-        $emails [] = $mission->getConsultant()->getEmail();
+        $emails [$mission->getConsultant()->getEmail()] = $mission->getConsultant()->getEmail();
         $to = $emails;
         $cc = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
@@ -204,9 +204,7 @@ class MissionMailer extends Mailer
             "christine.clementmolier@entheor.com" => "Christine Clement",
             "support.information@entheor.com" => "support info",
         );
-        $bcc = array(
-            "support.information@entheor.com" => "support info",
-        );
+        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $body = $this->templating->render($template, array(
             'mission' => $mission,
             'reference' => $ref,
@@ -218,15 +216,15 @@ class MissionMailer extends Mailer
 
     public function changeConsultant(Users $consultant, Beneficiaire $beneficiaire){
         $ref = 'm-3r-change consultant';
-        $from = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Suspension de la mission d'accompagnement de ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
         $template = '@Aub/Mission/mail/changeConsultant.html.twig';
         $query = $this->em->getRepository('ApplicationUsersBundle:Users')->search('ROLE_GESTION');
         $gestionnaires = $query->getResult();
         foreach ($gestionnaires as $gestionnaire){
-            $emails [] = $gestionnaire->getEmail();
+            $emails [$gestionnaire->getEmail()] = $gestionnaire->getEmail();
         }
-        $to = $consultant->getEmail();
+        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         $cc = null;
         $bcc = array_merge(array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",

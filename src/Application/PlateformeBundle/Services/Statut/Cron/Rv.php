@@ -51,16 +51,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                             $cher = "Cher";
 
                         $subject = "Comment se  sont passés vos rendez-vous du " . $Jour[$today->format('l')] . " " . $today->format('j') . " " . $Mois[$today->format('F')] . " ?";
-                        $from = "christine.clement@entheor.com";
+                        $from = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
                         $ref = "2";
-                        $to = $consultant->getEmail();
-                        //$to = array("b.lof@iciformation.fr", "f.azoulay@iciformation.fr");
+                        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
                         $cc = "";
                         $bcc = array(
                             "support.informatique@entheor.com" => "Support",
                             "f.azoulay@entheor.com" => "Franck Azoulay",
                         );
-                        //$bcc = "";
 
                         $message = $cher . " " . $consultant->getPrenom() . ", <br><br> 
                             Vous avez reçu le <b>" . $Jour[$today->format('l')] . " " . $today->format('j') . " " . $Mois[$today->format('F')] . "</b> en RV de Positionnement :<br><br>";
@@ -142,13 +140,13 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     // Alerte 1 à J+1
                     var_dump("j+1");
                     $subject = "Rappel J+1 : Post RV1 ";
-                    $to = $emailConsultant; 
+                    $to = array("email_adress" => $emailConsultant, "alias" => $emailConsultant);
                 }
                 elseif($dateMoreTwoDay == $dateCurrent->format('Y-m-d'))
                 {
                     // Alerte 2 à J+3
                     $subject = "Rappel J+3 : Post RV1 ";
-                    $to = $emailConsultant;
+                    $to = array("email_adress" => $emailConsultant, "alias" => $emailConsultant);
                     $cc = array(
                             "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
@@ -157,7 +155,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 {
                     // Alerte 3 à J+7
                     $subject = "Rappel J+7 [URGENT] : Post RV1 ";
-                    $to = $emailConsultant;
+                    $to = array("email_adress" => $emailConsultant, "alias" => $emailConsultant);
                     $cc = array(
                             "support.informatique@entheor.com" => "Support",
                             "b.lof@iciformation.fr" => "Brice");
@@ -182,11 +180,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function mailRvRealise(Beneficiaire $beneficiaire, Historique $lastRv){
-        $from = "christine.clement@entheor.com";
-        $replyTo = "christine.clement@entheor.com";
+        $from = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
+        $replyTo = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
-        $to =  "virginie.hiairrassary@entheor.com";
+        $to = array("email_adress" => "virginie.hiairrassary@entheor.com", "alias" => "virginie.hiairrassary@entheor.com");
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "ph.rouzaud@iciformation.fr" => "Philippe ROUZAUD",
@@ -202,11 +200,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function firstMailRvFicheNonMaj(Users $consultant , $beneficiaires){
         $dateHier = $this->date->dateFr(new \DateTime('now'));
-        $from = "christine.clement@entheor.com";
-        $replyTo = "christine.clement@entheor.com";
+        $from = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
+        $replyTo = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
         $subject = "[URGENT] Mise à Jour de vos Rendez-vous du ".$dateHier;
         $template = '@Apb/Alert/Mail/firstMailRvFicheNonMaj.html.twig';
-        $to = $consultant->getEmail();
+        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
@@ -222,11 +220,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function mailRvAReporter($news, $attachement){
         $ref = "rv-reporter";
-        $from = "christine.clementmolier@entheor.com";
-        $replyTo = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
+        $replyTo = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
         $subject = "Suivi des Rendez-Vous à reporter et no show de S-1 ( du ".(new \DateTime('now'))->modify('-7 day')->format('d/m/Y')." au ". (new \DateTime('now'))->format('d/m/Y') ." )";
         $template = '@Apb/Alert/Mail/mailRvAReporter.html.twig';
-        $to =  array("audrey.azoulay@entheor.com" => "Audrey AZOULAY");
+        $to = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey AZOULAY");
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "contact@entheor.com" => "Contact ENTHEOR",
@@ -242,11 +240,11 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
     public function secondMailRvFicheNonMaj(Users $consultant , $beneficiaires){
         $dateAvantHier = $this->date->dateFr((new \DateTime('now'))->modify("-1 day"));
-        $from = "christine.clementmolier@entheor.com";
-        $replyTo = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
+        $replyTo = array("email_adress" => "christine.clement@entheor.com", "alias" => "christine.clement@entheor.com");
         $subject = "[DERNIER RAPPEL] Mise à Jour de la fiche du ".$dateAvantHier;
         $template = '@Apb/Alert/Mail/secondMailRvFicheNonMaj.html.twig';
-        $to = $consultant->getEmail();
+        $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
             "resp.administratif@entheor.com" => "Responsable Administratif",
@@ -261,8 +259,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function lastMailRvFicheNonMaj($rvs, $attachement){
-        $from = "christine.clementmolier@entheor.com";
-        $replyTo = "christine.clementmolier@entheor.com";
+        $from = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
+        $replyTo = array("email_adress" => "christine.clementmolier@entheor.com", "alias" => "christine.clementmolier@entheor.com");
         $subject = "Liste des ".count($rvs)." Bénéficiaires dont le statut n'a pas été mis à jour après R1 ou R2";
         $template = '@Apb/Alert/Mail/lastMailRvFicheNonMaj.html.twig';
         $to = array(
@@ -273,9 +271,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             'f.azoulay@entheor.com' => 'Franck AZOULAY',
             'ph.rouzaud@entheor.com' => 'Philippe ROUZAUD'
         );
-        $cci = array(
-            "support.informatique@entheor.com" =>"support informatique"
-        );
+        $cci = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
         $body = $this->templating->render($template, array(
             'rvs' => $rvs
         ));
@@ -302,14 +298,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             {
                 if ($rdv->getCanceled() === 1 or $rdv->getCanceled() === 2) {
                 }else {
-                    $from = "contact@entheor.com";
+                    $from = array("email_adress" => "contact@entheor.com", "alias" => "contact@entheor.com");
                     $consultant = $rdv->getConsultant();
                     $tabConsultant[] = $rdv->getConsultant()->getId();
                     $dateRdv = $rdv->getDateDebut();
                     $typeRdv = $rdv->getTypeRdv();
 
                     $ref = "1-b";
-                    $to = $rdv->getBeneficiaire()->getEmailConso();
+                    $to = array("email_adress" => $rdv->getBeneficiaire()->getEmailConso(), "alias" => $rdv->getBeneficiaire()->getEmailConso());
                     $cc = "";
                     $bcc = array(
                         "support.informatique@entheor.com" => "Support",
@@ -409,16 +405,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                 $rdvConsultant = $this->em->getRepository("ApplicationPlateformeBundle:Historique")->findEventByDateAndConsultant($dateMoreOneDay, $consultant_id); 
                 
                 $ref = "1-c";
-                $from = "contact@entheor.com";
-                $to = $rdvConsultant[0]->getConsultant()->getEmail();
-				//$to = "b.lof@iciformation.fr";
+                $from = array("email_adress" => "contact@entheor.com", "alias" => "contact@entheor.com");
+                $to = array("email_adress" => $rdvConsultant[0]->getConsultant()->getEmail(), "alias" => $rdvConsultant[0]->getConsultant()->getEmail());
                 $cc = "";
                 $bcc = array(
                     "support.informatique@entheor.com" => "Support",
                     "f.azoulay@entheor.com" => "Franck Azoulay", 
                     "audrey.azoulay@entheor.com" => "Audrey Azoulay",
                     "christine.clementmolier@entheor.com" => "Christine Molier");
-				//$bcc = "";
                 $dateRv = new \DateTime("NOW");
                 $dateRvOneMore = $dateRv->add(new \DateInterval('P1D'));
                 
@@ -468,8 +462,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $gestionnaires = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_GESTION");
         $listeAdministrateurs = array();
         $listeGestionnaires = array();
-        foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
-        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[] = $gestionnaire->getEmail(); }
+        foreach($adminitrateurs as $admin){ $listeAdministrateurs[$admin->getEmail()] = $admin->getEmail(); }
+        foreach($gestionnaires as $gestionnaire){ $listeGestionnaires[$gestionnaire->getEmail()] = $gestionnaire->getEmail(); }
 		
 		$envoiMail = array("no");
 
@@ -515,12 +509,12 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 		if(in_array("yes", $envoiMail)){		
 			$ref = "4";
 			$subject = "Financement - Attente accord ";
-	        $from = "christine.molier@entheor.com";
+	        $from = array("email_adress" => "christine.molier@entheor.com", "alias" => "christine.molier@entheor.com");
 	        $to = $listeGestionnaires;
-			$to = array("b.lof@iciformation.fr", "f.azoulay@entheor.com");
+			$to = array("b.lof@iciformation.fr" => "b.lof@iciformation.fr", "f.azoulay@entheor.com" => "f.azoulay@entheor.com");
 	        $cc = $listeAdministrateurs;
 			$cc = "";
-	        $bcc = "support.informatique@entheor.com";
+	        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
 			
 			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
 	

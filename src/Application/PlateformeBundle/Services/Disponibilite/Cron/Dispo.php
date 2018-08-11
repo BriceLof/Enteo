@@ -22,20 +22,19 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
             $listeAdministrateurs = array();
             $listeCommerciaux = array();
 
-            foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
-            foreach($commerciaux as $commercial){ $listeCommerciaux[] = $commercial->getEmail(); }
+            foreach($adminitrateurs as $admin){ $listeAdministrateurs[$admin->getEmail()] = $admin->getEmail(); }
+            foreach($commerciaux as $commercial){ $listeCommerciaux[$commercial->getEmail()] = $commercial->getEmail(); }
             
             $subject = "Récapitulatif des disponibilités des consultants";
             $from = $this->from;
             $ref = "5";
             $to = $listeCommerciaux ;
-            //$to = array("b.lof@iciformation.fr" => "Brice",/* "f.azoulay@iciformation.fr" => "Franck"*/) ;
+
             $cc = $listeAdministrateurs;
-            //$cc = "";
-            $bcc = array(
-				"support@iciformation.fr" => "Support",
-			);
-            
+
+            $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
+
+
             $arrayConsultant = array();
             
             // Récupération des ids des consultant concernés 
@@ -124,7 +123,7 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
         $ref = "5-b";
 		
 		foreach($consultantSansDispo as $consultantSsDispo){	
-			$to = $consultantSsDispo->getEmail();
+			$to = array("email_adress" => $consultantSsDispo->getEmail(), "alias" => $consultantSsDispo->getEmail());
 			$message = ucfirst($consultantSsDispo->getPrenom()).", <br><br>
 			
 						Vous n'avez actuellement aucune disponibilité enregistrée dans votre Agenda sur la plateforme ENTHEO.<br><br>
@@ -148,8 +147,9 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
 							<img src='https://appli.entheor.com/web/images/mail/img_mail_tuto_dispo.JPG' /> 
 						</div>";
 						
-			$cc = "f.azoulay@entheor.com";
-	        $bcc = array("support@iciformation.fr" => "Support");
+			$cc = array("email_adress" => "f.azoulay@entheor.com", "alias" => "f.azoulay@entheor.com");
+
+            $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
 			$template = "@Apb/Alert/Mail/mailDefault.html.twig";
 	        $body = $this->templating->render($template, array(
 	            'sujet' => $subject ,
@@ -164,4 +164,4 @@ class Dispo extends \Application\PlateformeBundle\Services\Mailer
         
 	}
 }
-?>                  
+?>
