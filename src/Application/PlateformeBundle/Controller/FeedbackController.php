@@ -12,21 +12,6 @@ class FeedbackController extends Controller
 {
     public function postAction(Request $request, $type){
 
-<<<<<<< Updated upstream
-        /* Test mail DKIM
-        $from = "audrey.azoulay@entheor.com";
-        $to = "brice.lof@gmail.com";
-        $subject = "test dkim";
-
-        $bcc = array(
-            "support.informatique@entheor.com" => "Support",
-            "f.azoulay@entheor.com" => "Franck Azoulay",
-            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
-            "christine.clementmolier@entheor.com" => "Christine Molier");
-
-        $this->get('application_plateforme.mail')->sendMessage($from, $to, null, 'b.lof@iciformation.fr', $bcc, $subject, "dedede");
-       */
-=======
         $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey");
         $to = array("email_adress" => "aurelie@gmail.com", "alias" => "brice");
         $subject = "test dkim";
@@ -38,7 +23,7 @@ class FeedbackController extends Controller
 
         $this->get('application_plateforme.mail')->sendMessage($from, $to, null, $cc, $bcc, $subject, "Test brice mail");
         //$this->get('application_plateforme.statut.cron.cron_beneficiaire')->beneficiairePreviousWeekNoContact();
->>>>>>> Stashed changes
+
         
         $feedback = new Feedback();
          
