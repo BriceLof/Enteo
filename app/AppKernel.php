@@ -28,7 +28,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Fungio\GoogleCalendarBundle\FungioGoogleCalendarBundle(),
             //new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Application\UploadBundle\ApplicationUploadBundle(),
+//            new Application\UploadBundle\ApplicationUploadBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test', 'pre_prod'], true)) {

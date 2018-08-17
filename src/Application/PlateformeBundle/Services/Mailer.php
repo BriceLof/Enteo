@@ -31,15 +31,7 @@ class Mailer
     public function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
 
         $mail = \Swift_Message::newInstance();
-
-        //---- DKIM
-
-        $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
-
-        $signer = (new \Swift_Signers_DKIMSigner($privateKey, 'appli.entheor.com', 'default' )); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
-
-        $mail->attachSigner($signer);
-
+        
         if(!empty($replyTo))
             $mail->setReplyTo($replyTo);
         if(!empty($cc))
