@@ -18,7 +18,7 @@ class Mailer
     protected $reply = "";
     protected $name = "Equipe Entheo";
     protected $webDirectory;
-
+    
     public function __construct(\Swift_Mailer $mailer , EngineInterface $templating, EntityManager $em, Date $date, $webDirectory)
     {
         $this->mailer = $mailer;
@@ -31,13 +31,6 @@ class Mailer
     public function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
 
         $mail = \Swift_Message::newInstance();
-
-        //---- DKIM
-
-        $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
-        $signer = new \Swift_Signers_DKIMSigner($privateKey, 'appli-dev.entheor.com', 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
-
-        $mail->attachSigner($signer);
 
         if(!empty($replyTo))
             $mail->setReplyTo($replyTo);
@@ -61,11 +54,6 @@ class Mailer
 
     public function sendMessageToAdminAndGestion($from, $subject, $body, $attachement = null){
         $mail = \Swift_Message::newInstance();
-
-        //---- DKIM
-        $privateKey = file_get_contents($this->webDirectory."private/dkim.private.key");
-        $signer = new \Swift_Signers_DKIMSigner($privateKey, 'appli.entheor.com', 'default' ); // param 1 : private key, 2 : domaine, 3 : selecteur DNS
-        $mail->attachSigner($signer);
 
         $emails [] = 'virginie.hiairrassary@entheor.com';
         $emails [] = 'f.azoulay@entheor.com';
@@ -114,18 +102,18 @@ class Mailer
         ));
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
     }
-
+    
     public function mailFeedback(Feedback $feedback){
-
+        
         $subject = "Feedback [".ucfirst($feedback->getType())."]";
-
+        
         $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $listeAdministrateurs = array();
         foreach($adminitrateurs as $admin){ $listeAdministrateurs[] = $admin->getEmail(); }
         $to = $listeAdministrateurs;
-        $bcc = array(
-            "support.informatique@entheor.com" => "Support",
-        );
+		$bcc = array(
+				"support.informatique@entheor.com" => "Support",
+			);
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b><a href='https://appli.entheor.com/web/user/".$feedback->getUser()->getId()."/show'>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</a></b> : <br>
                 <ul>
@@ -137,8 +125,8 @@ class Mailer
                     <li><img src='https://appli.entheor.com/web/uploads/feedback/img/".$feedback->getImage()."'></li>";
         }
 
-        $message .= "</ul>";
-
+		$message .= "</ul>";
+		
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
             'message' => $message,
@@ -181,4 +169,5 @@ class Mailer
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body, $attachement);
     }
 }
+
 ?>

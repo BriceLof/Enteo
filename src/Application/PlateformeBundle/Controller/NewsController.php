@@ -49,10 +49,12 @@ class NewsController extends Controller
 
             $news->setBeneficiaire($beneficiaire);
 
-            $consultant = $em->getRepository("ApplicationUsersBundle:Users")->find($form->get("consultantId")->getData());
+            if($form->get("consultantId")->getData() != ""){
+                $consultant = $em->getRepository("ApplicationUsersBundle:Users")->find($form->get("consultantId")->getData());
 
-            if(!is_null($consultant))
-                $news->setConsultant($consultant->getId());
+                if(!is_null($consultant))
+                    $news->setConsultant($consultant->getId());
+            }
 
             $em = $this->getDoctrine()->getManager();
 

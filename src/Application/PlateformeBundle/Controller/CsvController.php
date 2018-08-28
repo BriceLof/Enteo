@@ -78,6 +78,9 @@ class CsvController extends Controller
         $consultant = $form->get('consultant')->getData();
         $financeur = $form->get('financeur')->getData();
         $villeMer = $form->get('ville_mer')->getData();
+        $datePaiementStart = $form->get('date_paiement_start')->getData();
+        $datePaiementEnd = $form->get('date_paiement_end')->getData();
+
 
         $numeroFacture = $form->get('numero_facture')->getData();
         $anneeNumeroFacture = $form->get('annee_numero_facture')->getData();
@@ -85,8 +88,11 @@ class CsvController extends Controller
 
         $beneficiaireGet = $request->get('beneficiaire_ajax');
         $beneficiaire = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
-
-        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd, $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart, $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer);
+        
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd,
+            $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart,
+            $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer,
+            $datePaiementStart, $datePaiementEnd);
         $factures = $query;
 
 //        ici la création du fichier csv
