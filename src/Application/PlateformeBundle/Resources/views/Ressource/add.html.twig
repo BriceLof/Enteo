@@ -1,0 +1,25 @@
+<form method="POST" id="" action="{{ path('application_add_ressource') }}" enctype="multipart/form-data">
+    <tr>
+        <td>{{ form_label(form.nom) }}</td>
+        <td>{{ form_widget(form.nom) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_label(form.rubrique) }}</td>
+        <td>{{ form_widget(form.rubrique) }}</td>
+    </tr>
+    <tr>
+        <td>{{ form_widget(form.file, {'attr': {'required' : 'true'}}) }}</td>
+    </tr>
+
+    <tr>
+        <td class="valider">{{ form_widget(form.submit) }}</td>
+    </tr>
+
+    <tr class="form-rest">
+        <td>{{ form_rest(form) }}</td>
+        <td>{{ form_errors(form) }}</td>
+    </tr>
+
+</form>
+
+

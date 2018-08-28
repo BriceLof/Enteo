@@ -1,0 +1,15 @@
+application_delete_ressource:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Ressource:delete" }
+
+application_update_ressource:
+    path:     /update/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Ressource:edit" }
+
+application_add_ressource:
+    path:     /add
+    defaults: { _controller: "ApplicationPlateformeBundle:Ressource:add" }
+
+application_index_ressource:
+    path:     /
+    defaults: { _controller: "ApplicationPlateformeBundle:Ressource:index" }
