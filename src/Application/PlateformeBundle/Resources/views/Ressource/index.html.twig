@@ -65,6 +65,7 @@
                                         {% elseif ressource.format == 'jpg' or ressource.format == 'jpeg'%} {% set type = "image" %}
                                         {% elseif ressource.format == 'word' %} {% set type = "word" %}
                                         {% elseif ressource.format == 'pdf' %} {% set type = "pdf" %}
+                                        {% elseif ressource.format == 'xlsx' or ressource.format == 'csv' %} {% set type = "excel" %}
                                         {% endif %}
 
                                         {%  if ressource.rubrique.id == rubrique.id %}

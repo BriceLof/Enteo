@@ -55,10 +55,14 @@ class Ressource
      *          "image/png",
      *          "image/jpg",
      *          "image/gif",
+     *           "image/tiff",
      *          "application/pdf",
      *          "application/x-pdf",
      *          "application/msword",
-     *          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+     *          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+     *          "application/vnd.ms-excel",
+     *          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     *          "text/csv"
      *     },
      *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
      *     uploadErrorMessage = "Erreur dans l'upload du fichier")
