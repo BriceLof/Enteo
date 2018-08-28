@@ -12,16 +12,16 @@ class FeedbackController extends Controller
 {
     public function postAction(Request $request, $type){
 
-        $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey");
-        $to = array("email_adress" => "aurelie@gmail.com", "alias" => "brice");
-        $subject = "test dkim";
-        $cc =  array("email_adress" => "brice.lof@gmail.com", "alias" => "brice");
-        $bcc = array(
-            "support.informatique@entheor.com" => "Support",
-            "b.lof@iciformation.fr" => "brice"
-           );
-
-        $this->get('application_plateforme.mail')->sendMessage($from, $to, null, $cc, $bcc, $subject, "Test brice mail");
+//        $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey");
+//        $to = array("email_adress" => "aurelie@gmail.com", "alias" => "brice");
+//        $subject = "test dkim";
+//        $cc =  array("email_adress" => "brice.lof@gmail.com", "alias" => "brice");
+//        $bcc = array(
+//            "support.informatique@entheor.com" => "Support",
+//            "b.lof@iciformation.fr" => "brice"
+//           );
+//
+//        $this->get('application_plateforme.mail')->sendMessage($from, $to, null, $cc, $bcc, $subject, "Test brice mail");
         //$this->get('application_plateforme.statut.cron.cron_beneficiaire')->beneficiairePreviousWeekNoContact();
 
         
