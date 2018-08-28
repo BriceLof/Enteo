@@ -7,11 +7,13 @@ use Application\PlateformeBundle\Entity\Nouvelle;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\SuiviAdministratif;
 use Application\PlateformeBundle\Entity\DetailStatut;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Application\PlateformeBundle\Form\NouvelleType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -42,10 +44,22 @@ class NouvelleController extends Controller
 
             $this->get('session')->getFlashBag()->add('info', 'News bien ajoutée');
 
-            return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
-                'beneficiaire' => $beneficiaire,
-                'id' => $beneficiaire->getId(),
-            )));
+            //Mis à jour du statut : verifie si la requete est une requete AJAX
+            if ($request->isXmlHttpRequest()) {
+                $template = $this->forward('ApplicationPlateformeBundle:Home:infoBeneficiaire', (array(
+                    'beneficiaire' => $beneficiaire,
+                )))->getContent();
+
+                $json = json_encode($template);
+                $response = new Response($json, 200);
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            } else {
+                return $this->redirect($this->generateUrl('application_show_beneficiaire', array(
+                    'beneficiaire' => $beneficiaire,
+                    'id' => $beneficiaire->getId(),
+                )));
+            }
         }
 
         return $this->render('ApplicationPlateformeBundle:Nouvelle:new.html.twig', array(

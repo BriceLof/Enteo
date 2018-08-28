@@ -15,7 +15,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getBeneficiaire($page, $nbPerPage, $idConsultant = null, $cacher = false)
+    public function getBeneficiaire($page, $nbPerPage, $idConsultant = null, $cacher = false, $ids = null)
     {
         $query = $this->createQueryBuilder('b')
             ->leftJoin('b.news', 'n')
@@ -27,9 +27,11 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if ($idConsultant != null) {
             $query->where('b.consultant = :id')
                 ->setParameter('id', $idConsultant);
+        } else if (!is_null($ids)) {
+            $query->add('where', $query->expr()->in('b.consultant', $ids));
         }
 
-        if ($cacher == true){
+        if ($cacher == true) {
             $query->andWhere('b.deleted = :deleted')
                 ->setParameter('deleted', false);
         }
@@ -74,7 +76,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
-    public function getBeneficiaireWithDate($dateDebut = null , $dateFin = null)
+    public function getBeneficiaireWithDate($dateDebut = null, $dateFin = null)
     {
         $queryBuilder = $this->createQueryBuilder("b")
             ->leftJoin('b.suiviAdministratif', 'sa')
@@ -87,16 +89,16 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('s');
 
 
-        if(!is_null($dateDebut) && !is_null($dateFin)){
+        if (!is_null($dateDebut) && !is_null($dateFin)) {
             $queryBuilder->where('b.dateConfMer BETWEEN :dateDebut AND :dateFin')
-                        ->setParameters(array("dateDebut" => $dateDebut, "dateFin" => $dateFin));
-        }else{
+                ->setParameters(array("dateDebut" => $dateDebut, "dateFin" => $dateFin));
+        } else {
             $dateCurrent = date('Y-m-d');
             $queryBuilder->where('b.dateConfMer LIKE :dateCurrent')
-                ->setParameter("dateCurrent", $dateCurrent.'%');
+                ->setParameter("dateCurrent", $dateCurrent . '%');
         }
 
-        $queryBuilder->orderBy('b.id' , 'DESC');
+        $queryBuilder->orderBy('b.id', 'DESC');
 
         $query = $queryBuilder->getQuery();
         //var_dump($query->getDql());
@@ -117,7 +119,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      * @param null $complementStatut
      * @return mixed
      */
-    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut = null)
+    public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut = null, $ids = null)
     {
         $type = 'suiviAdministratif';
         if (!is_null($statut) && $statut->getType() == 'commercial') {
@@ -175,20 +177,20 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         if (!is_null($detailStatut)) {
             if ($type == 'news') {
-                $query .= ' AND n.detail_statut_id '.$complementDetailStatut.' :detailStatut';
+                $query .= ' AND n.detail_statut_id ' . $complementDetailStatut . ' :detailStatut';
             } else {
-                $query .= ' AND sa.detail_statut_id '.$complementDetailStatut.' :detailStatut';
+                $query .= ' AND sa.detail_statut_id ' . $complementDetailStatut . ' :detailStatut';
             }
             $params['detailStatut'] = $detailStatut->getId();
         }
 
         if (!is_null($statut)) {
-            $query .= ' AND s.ordre '.$complementStatut.' :ordre';
+            $query .= ' AND s.ordre ' . $complementStatut . ' :ordre';
             $params['ordre'] = $statut->getOrdre();
             if ($type == 'news') {
-                $query .= ' AND n.statut_id '.$complementStatut.' :statut';
+                $query .= ' AND n.statut_id ' . $complementStatut . ' :statut';
             } else {
-                $query .= ' AND sa.statut_id '.$complementStatut.' :statut';
+                $query .= ' AND sa.statut_id ' . $complementStatut . ' :statut';
             }
             $params['statut'] = $statut->getId();
         }
@@ -215,16 +217,18 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if (!is_null($beneficiaire->getConsultant())) {
             $query .= ' AND b.consultant_id = :consultant';
             $params['consultant'] = $beneficiaire->getConsultant()->getId();
+        } else if (!is_null($idUtilisateur)) {
+            if (!is_null($ids)) {
+                $query .= ' AND b.consultant_id IN ('. implode(',', $ids). ')';
+            } else {
+                $query .= ' AND b.consultant_id = :consultantId';
+                $params['consultantId'] = $idUtilisateur;
+            }
         }
 
         if (!is_null($beneficiaire->getTelConso())) {
             $query .= ' AND (b.tel_conso LIKE :tel OR b.tel_2 LIKE :tel)';
-            $params['tel'] = '%'.$beneficiaire->getTelConso().'%';
-        }
-
-        if (!is_null($idUtilisateur)) {
-            $query .= ' AND b.consultant_id = :consultantId';
-            $params['consultantId'] = $idUtilisateur;
+            $params['tel'] = '%' . $beneficiaire->getTelConso() . '%';
         }
 
         if (!is_null($debut)) {
@@ -277,7 +281,8 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         return $results;
     }
 
-    public function searchByEcoleAndDate($debut = null, $fin = null){
+    public function searchByEcoleAndDate($debut = null, $fin = null)
+    {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire', 'b');
 
@@ -289,12 +294,12 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query .= ' WHERE b.ecole_universite IS NOT NULL';
 
-        if (!is_null($debut)){
+        if (!is_null($debut)) {
             $query .= ' AND a.date_debut >= :debut';
             $params['debut'] = $debut;
         }
 
-        if ((!is_null($fin))){
+        if ((!is_null($fin))) {
             $query .= ' AND a.date_debut <= :fin';
             $params['fin'] = $fin;
         }

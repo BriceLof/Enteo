@@ -1,6 +1,8 @@
 application_new_nouvelle:
     path:     /new/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Nouvelle:new" }
+    options:
+        expose:  true
 
 application_show_all_ajax_nouvelle:
     path:     /show_all_ajax/{idBeneficiaire}

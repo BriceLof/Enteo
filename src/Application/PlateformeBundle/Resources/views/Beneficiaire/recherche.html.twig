@@ -1,12 +1,13 @@
-<form name="search_beneficiaire" action="{{ path('application_search_beneficiaire', { 'page' : 1 }) }}" method="POST" id="ajaxForm" >
+<form name="search_beneficiaire" action="{{ path('application_search_beneficiaire', { 'page' : 1 }) }}" method="POST"
+      id="ajaxForm">
     <div class="container-fluid">
-        
+
         <div class="row">
             <span class="col-md-2">{{ form_widget(form.nomConso) }}</span>
             <span class="col-md-2">{{ form_widget(form.prenomConso) }}</span>
 
             {% set style = "display:none" %}
-         	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %} {% set style = "display:block" %} {% endif %}
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') or is_granted('ROLE_REFERENT') %} {% set style = "display:block" %} {% endif %}
             <span style="{{ style }}" class="col-md-2">{{ form_widget(form.consultant) }}</span>
             <div class="col-md-6">
                 <div class="row">
@@ -16,26 +17,27 @@
                     <span class="col-md-5">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
                 </div>
             </div>
-			<div class="moreFilterSearch" style="display:none;margin-top: 42px;">
-				<span class="col-md-2" style="{{ style }}">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
-            	<span class="col-md-2">{{ form_widget(form.ville, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
+            <div class="moreFilterSearch" style="display:none;margin-top: 42px;">
+                <span class="col-md-2"
+                      style="{{ style }}">{{ form_widget(form.refFinanceur, { 'attr': {'placeholder': 'Réf. Financeur' }}) }}</span>
+                <span class="col-md-2">{{ form_widget(form.ville, { 'attr': {'placeholder': 'Ville de MenR' }}) }}</span>
                 <span class="col-md-2">{{ form_widget(form.emailConso) }}</span>
                 <span class="col-md-2">{{ form_widget(form.telConso) }}</span>
             </div>
             <div class="moreFilterSearch text-left" style="display:none;margin-top: 42px;">
-            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
-                <span class="col-md-12">{{ form_widget(form.cacher) }}</span>
-            {% else %}
-                <span class="col-md-12">{{ form_widget(form.cacher, { 'attr': {'checked': 'checked'} }) }}</span>
-            {% endif %}
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION') %}
+                    <span class="col-md-12">{{ form_widget(form.cacher) }}</span>
+                {% else %}
+                    <span class="col-md-12">{{ form_widget(form.cacher, { 'attr': {'checked': 'checked'} }) }}</span>
+                {% endif %}
             </div>
         </div>
         <div class="row" style="margin-top:12px;margin-right: -2px;">
-        	<a href="#" id="linkMoreFilter" class="col-md-1 col-md-offset-9" style="margin-top: 6px;">+ de Filtres</a>
-       		<span class="col-md-1 ">{{ form_widget(form.submit) }}</span>
+            <a href="#" id="linkMoreFilter" class="col-md-1 col-md-offset-9" style="margin-top: 6px;">+ de Filtres</a>
+            <span class="col-md-1 ">{{ form_widget(form.submit) }}</span>
             <a class='col-md-1 btn btn-default' href="{{ path('application_plateforme_homepage') }}">Reset</a>
             {{ form_rest(form) }}
-    	</div>
+        </div>
     </div>
 </form>
         

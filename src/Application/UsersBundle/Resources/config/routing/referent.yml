@@ -1,0 +1,27 @@
+referent_index:
+  path: /
+  defaults:
+    _controller: ApplicationUsersBundle:Referent:index
+  options:
+    expose:  true
+
+referent_show:
+  path: /show/{id}
+  defaults:
+    _controller: ApplicationUsersBundle:Referent:show
+  options:
+    expose:  true
+
+referent_add:
+  path: /add/{id}
+  defaults:
+    _controller: ApplicationUsersBundle:Referent:addConsultant
+  options:
+    expose:  true
+
+referent_remove:
+  path: /remove/{idReferent}/{idConsultant}
+  defaults:
+    _controller: ApplicationUsersBundle:Referent:removeConsultant
+  options:
+    expose:  true

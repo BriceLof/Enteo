@@ -64,7 +64,11 @@ class CalendarController extends Controller
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
+        if (true === $authorization->isGranted('ROLE_ADMIN')
+            || true === $authorization->isGranted('ROLE_COMMERCIAL')
+            || true === $authorization->isGranted('ROLE_GESTION')
+            || $this->getUser()->getBeneficiaire()->contains($beneficiaire )
+            || $this->getUser()->getConsultants()->contains($beneficiaire->getConsultant()) ){
         }else{
             return $this->redirect($this->generateUrl('application_admin_add_evenement'));
         }
@@ -379,7 +383,11 @@ class CalendarController extends Controller
         $old_rdv = $historique->getDateDebut();
         
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getBeneficiaire()->contains($beneficiaire ) ) {
+        if (true === $authorization->isGranted('ROLE_ADMIN')
+            || true === $authorization->isGranted('ROLE_COMMERCIAL')
+            || true === $authorization->isGranted('ROLE_GESTION') 
+            || $this->getUser()->getBeneficiaire()->contains($beneficiaire )
+            || $this->getUser()->getConsultants()->contains($beneficiaire->getConsultant()) ){
         }else{
             return $this->redirect($this->generateUrl('application_plateforme_homepage'));
         }

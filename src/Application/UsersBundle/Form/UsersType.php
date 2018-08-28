@@ -36,6 +36,7 @@ class UsersType extends AbstractType
                 'choices' => array(
                     //'Basic'             =>  "ROLE_USER",
                     'Gestionnaire' => "ROLE_GESTION",
+                    'Consultant Référent' => "ROLE_REFERENT",
                     'Consultant' => "ROLE_CONSULTANT",
                     'Commercial' => "ROLE_COMMERCIAL",
                     'Administrateur' => "ROLE_ADMIN",

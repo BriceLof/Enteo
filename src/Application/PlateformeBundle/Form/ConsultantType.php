@@ -32,12 +32,6 @@ class ConsultantType extends AbstractType
                 },
 
             ))
-            ->add('submit', SubmitType::class, array(
-                'label' => 'Enregister',
-                'attr' => array(
-                    'class' => 'btn btn-primary'
-                )
-            ));
         ;
     }
 

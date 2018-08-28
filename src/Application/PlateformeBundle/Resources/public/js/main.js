@@ -79,12 +79,14 @@ function addNouvelle(el) {
     // Valeur qui servira à identifier le bénéficiaire lors de l'appel au controlleur pour ajouter une news
     $(formDuBeneficiaire + " #hidden_beneficiaire_id").val(beneficiaire_id);
 
+    $(formDuBeneficiaire + ' form').attr('action', Routing.generate('application_new_nouvelle', { id: beneficiaire_id }))
+
     $("#form_add_nouvelle").on("submit", function (e) {
         //ne pas envoyer le formulaire et ne pas affiche le # sur l'url
         e.preventDefault();
 
         $.ajax({
-            url: Routing.generate('application_plateforme_homepage'), // le nom du fichier indiqué dans le formulaire
+            url: $(this).attr('action'), // le nom du fichier indiqué dans le formulaire
             type: $(this).attr('method'), // la méthode indiquée dans le formulaire (get ou post)
             data: $(this).serialize(),
             cache: true,
