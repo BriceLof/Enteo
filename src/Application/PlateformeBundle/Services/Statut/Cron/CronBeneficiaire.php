@@ -98,7 +98,7 @@ class CronBeneficiaire
                 Veuillez trouver ci-joint la liste des ".$totalBeneficiaireNoContact." bénéficiaires (sur un total de ".count($beneficiairesAddLastWeek).") qui n'ont pu être joints la semaine du ".$dateDebutFr." au ".$dateFinFr.", dont ".$totalBeneficiaireEnAttente."
                 en statut 'En attente Contact Tél' et ".$totalBeneficiaireTentative." en statut 'Tentative 1'.
                 ";
-        $this->mailer->listeBeneficiairesPreviousWeekNoContact($message, \Swift_Attachment::fromPath($path.'/export_benef_pevious_week_no_contact.csv') );
+        $this->mailer->listeBeneficiairesPreviousWeekNoContact($message, $path.'/export_benef_pevious_week_no_contact.csv' );
 
 
         /*

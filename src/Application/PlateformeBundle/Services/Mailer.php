@@ -16,59 +16,86 @@ class Mailer
     protected $mailer;
     protected $templating;
     protected $date;
-    protected $from = array("email_adress" => "admin@entheor.com", "alias" => "admin@entheor.com");
+    protected $from = array("email" => "admin@entheor.com", "name" => "admin@entheor.com");
     protected $reply = "";
     protected $name = "Equipe Entheo";
     protected $webDirectory;
+    protected $hostname;
     
-    public function __construct(\Swift_Mailer $mailer , EngineInterface $templating, EntityManager $em, Date $date, $webDirectory)
+    public function __construct(\Swift_Mailer $mailer , EngineInterface $templating, EntityManager $em, Date $date, $webDirectory, $hostname)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
         $this->em = $em;
         $this->date = $date;
         $this->webDirectory = $webDirectory;
+        $this->hostname = $hostname;
     }
 
-    public function sendMessage($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
+    public function sendMessage($from, $to, $replyTo = null, $cc = null, $bcc = null, $subject, $body, $attachement = null){
 
+        if(is_null($replyTo)) $reply =  array("email" => $from['email']);
 
-        $mail = new SendinblueSmtp('admin@entheor.com', 'pmKx329kNw6BaFct');
+        $data = array(
+            "tags" => array("Entheor"),
+            "sender" => $from,
+            "to" => $to,
+            "htmlContent" => $body,
+            "textContent" => strip_tags($body),
+            "replyTo" => $reply,
+            "subject" => $subject
+        );
 
-
-        if (array_key_exists('email_adress', $from)) $mail->setFrom($from['email_adress'], $from['alias']);
-        else $mail->setFrom($from);
-
-        if (array_key_exists('email_adress', $to)) $mail->addTo($to['email_adress'], $to['alias']);
-        else $mail->addTo($to);
-
-
-        if(!empty($replyTo)){
-            if (array_key_exists('email_adress', $replyTo)) $mail->setReplyTo($replyTo['email_adress'], $replyTo['alias']);
+        if(!is_null($cc) && $cc != ''){
+            $data["cc"] = $cc;
+        }
+        if(!is_null($bcc) && $bcc != ''){
+            $data["bcc"] = $bcc;
+        }
+        if(!is_null($attachement)){
+            $file_name_explode = explode("/web", $attachement);
+            $file = explode("/",$file_name_explode[1]);
+            $file_path = $this->hostname.$file_name_explode[1];
+            $data["attachment"] = array(array("url" => $file_path, "name" => $file[count($file) - 1]));
         }
 
-        if(!empty($cc)){
-            if (array_key_exists('email_adress', $cc)) $mail->addCc($cc['email_adress'], $cc['alias']);
-            else $mail->addCc($cc);
+        if($this->hostname == "https://appli-dev.entheor.com/web"){
+            $data["to"] = array(array("email" => "brice.lof@gmail.com", "name" => "Brice Lof"));
+            if(!is_null($cc) && $cc != ''){
+                $data["cc"] = $data["to"];
+            }
+            if(!is_null($bcc) && $bcc != ''){
+                $data["bcc"] = $data["to"];
+            }
         }
 
-        if(!empty($bcc)){
-            if (array_key_exists('email_adress', $bcc)) $mail->addBcc($bcc['email_adress'], $bcc['alias']);
-            else $mail->addBcc($bcc);
+        // Mail envoye par smtp de sentingblue
+        $header = array('Accept: application/json', 'Content-Type: application/json', 'api-key: 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');
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_HTTPHEADER => $header,
+            CURLOPT_URL => "https://api.sendinblue.com/v3/smtp/email",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data)
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
         }
-
-        if(!empty($subject)){
-            $mail->setSubject($subject);
-        }
-
-
-        $mail->
-            setHtml($body)->
-            setText(strip_tags($body));
-
-        $res = $mail->send();
-        var_dump($res);
-
     }
 
     public function sendMessageToAdminAndGestion($from, $subject, $body, $attachement = null){
@@ -114,7 +141,7 @@ class Mailer
     public function sendFactureSoldeMessage(Beneficiaire $beneficiaire){
         $subject = "Facture solde message";
         $template = '@Apb/SuiviAdministratif/mail/factureSoldeMail.html.twig';
-        $to = array("email_adress" => "n.ranaivoson@iciformation.fr", "alias" => "n.ranaivoson@iciformation.fr");
+        $to = array(array("email" => "n.ranaivoson@iciformation.fr", "name" => "n.ranaivoson@iciformation.fr"));
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
@@ -129,7 +156,7 @@ class Mailer
     public function mailRecapCronDocument($compteur){
         $subject = "Rapport CRON suppression des documents Enteo";
         $template = '@Apb/Alert/Mail/rapportCronDocument.html.twig';
-        $to = array("email_adress" => "n.ranaivoson@iciformation.fr", "alias" => "n.ranaivoson@iciformation.fr");
+        $to = array(array("email" => "n.ranaivoson@iciformation.fr", "name" => "n.ranaivoson@iciformation.fr"));
         $body = $this->templating->render($template, array(
             'compteur' => $compteur,
         ));
@@ -142,9 +169,12 @@ class Mailer
         
         $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $listeAdministrateurs = array();
-        foreach($adminitrateurs as $admin){ $listeAdministrateurs[$admin->getEmail()] = $admin->getEmail(); }
+        foreach($adminitrateurs as $admin){
+           // $listeAdministrateurs[$admin->getEmail()] = $admin->getEmail();
+            array_push($listeAdministrateurs, array("email" => $admin->getEmail(), "name" => $admin->getEmail()));
+        }
         $to = $listeAdministrateurs;
-		$bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
+		$bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b><a href='https://appli.entheor.com/web/user/".$feedback->getUser()->getId()."/show'>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</a></b> : <br>
                 <ul>
@@ -174,7 +204,7 @@ class Mailer
             'message' => $message,
             'reference' => 'Notification'
         ));
-        $bcc = array("support.informatique@entheor.com" => "Support", "f.azoulay@entheor.com" => "Franck Azoulay");
+        $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "Support"), array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"));
 
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
@@ -188,16 +218,15 @@ class Mailer
             'message' => $message,
             'reference' => '10-a'
         ));
-        $to = array(
-            //'b.lof@iciformation.fr' => "Brice",
-            'f.azoulay@entheor.com' => 'Franck Azoulay',
-            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
-            "ph.rouzauf@entheor.com" => "Philippe Rouzaud",
-            "christine.clementmolier@entheor.com" => "Christine Molier"
-        );
 
-        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
-        $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body, $attachement);
+        $to = array(
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "audrey.azoulay@entheor.com", "name" => "Audrey Azoulay"),
+            array("email" => "ph.rouzauf@entheor.com", "name" => "Philippe Rouzaud"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Molier")
+        );
+        $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
+        $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null ,$subject,$body, $attachement);
     }
 }
 ?>

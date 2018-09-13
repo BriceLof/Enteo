@@ -12,25 +12,26 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $typeRdv = $rdv->getTypeRdv();
 
         if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2") {
-            $from = array("email_adress" => "audrey.azoulay@entheor.com", "alias" => "Audrey Azoulay");
+            $from = array("email" => "audrey.azoulay@entheor.com", "name" => "Audrey Azoulay");
         }else{
-            $from = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
+            $from = array("email" => $consultant->getEmail(), "name" => $consultant->getEmail());
         }
 		
 		$dateJ = new \DateTime('now');  
         if($dateRdv >= $dateJ){
-            $to = array("email_adress" => $beneficiaire->getEmailConso(), "alias" => $beneficiaire->getEmailConso());
+            $to = array(array("email" => $beneficiaire->getEmailConso(), "name" => $beneficiaire->getEmailConso()));
         }else{
-            $to = array("email_adress" => 'support.informatique@entheor.com', "alias" => 'Support');
+            $to = array(array("email" => 'support.informatique@entheor.com', "name" => 'Support'));
         }
 
-        $cc = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
+        $cc = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
 
         $bcc = array(
-            "support.informatique@entheor.com" => "Support",
-            "f.azoulay@entheor.com" => "Franck Azoulay", 
-            "audrey.azoulay@entheor.com" => "Audrey Azoulay",
-            "christine.clementmolier@entheor.com" => "Christine Molier");
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "audrey.azoulay@entheor.com", "name" => "Audrey Azoulay"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Molier"),
+            array("email" => "support.informatique@entheor.com", "name" => "Support"),
+        );
 
         if($typeRdv == "presenciel" || $typeRdv == "presentiel")
         {
@@ -175,12 +176,12 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 
         //expediteur RV1 RV2
         if ($type == 'RV1' || $type == 'RV2'){
-            $from = array("email_adress" => "contact@entheor.com", "alias" => "contact@entheor.com");
-            $cc = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
+            $from = array("email" => "contact@entheor.com", "name" => "contact@entheor.com");
+            $cc = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
             $bool = true;
             $reference = '7a' ;
         }else{
-            $from = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
+            $from = array("email" => $consultant->getEmail(), "name" => $consultant->getEmail());
             $cc = null;
             $reference = '7b';
             if ($old_rdv > new \DateTime() && $old_rdv < (new \DateTime())->modify('+1 day')){
@@ -188,15 +189,17 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             }
         }
 
-        $to = array("email_adress" => $beneficiaire->getEmailConso(), "alias" => $beneficiaire->getEmailConso());
+        $to = array(array("email" => $beneficiaire->getEmailConso(), "name" => $beneficiaire->getEmailConso()));
 		
 		$adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $listeAdministrateurs = array();
         foreach($adminitrateurs as $admin){
         	if($admin->getEmail() != "ph.rouzaud@iciformation.fr" && $admin->getEmail() != "christine.clement@entheor.com")
-    	 		$listeAdministrateurs[$admin->getEmail()] = $admin->getEmail();
+                array_push($listeAdministrateurs, array("email" => $admin->getEmail(), "name" => $admin->getEmail()));
+
 		}
-		array_push($listeAdministrateurs, array("audrey.azoulay@entheor.com" => "audrey.azoulay@entheor.com", "support.informatique@entheor.com" => "support.informatique@entheor.com"));
+        array_push($listeAdministrateurs, array("email" => "audrey.azoulay@entheor.com", "name" => "audrey.azoulay@entheor.com"));
+		
         $bcc = $listeAdministrateurs;
 
         $template = "@Apb/Alert/Mail/supprimerRdv.html.twig";

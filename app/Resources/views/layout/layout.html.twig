@@ -121,7 +121,7 @@
                                     <li><a style="color:black;width:100%" href="{{ asset('public-ressources/Liste_diplomes_et_referentiels_2018.docx.dot') }}" target="_blank">Référentiels Diplômes</a></li>
                                     <li><a style="color:black;width:100%" href="https://drive.google.com/drive/folders/14Kt7UEs4OKo6e0U4yaj3S5nBK_0DQ7RV?usp=sharing_eip&ts=5ae9d449" target="_blank" title="Drive Enthéor">Drive Enthéor</a></li>
                                     {% if is_granted('ROLE_ADMIN')%}
-                                        <li><a style="color:black" href="{{ path('application_index_ressource') }}" target="_blank">En voir +</a></li>
+                                        {#<li><a style="color:black" href="{{ path('application_index_ressource') }}" target="_blank">En voir +</a></li>#}
                                     {% endif %}
                                 </ul>
                             </li>
