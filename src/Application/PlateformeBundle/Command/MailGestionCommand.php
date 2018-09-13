@@ -60,13 +60,10 @@ class MailGestionCommand extends ContainerAwareCommand
                 }
                 return $a->getDate() > $b->getDate() ? -1 : 1;
             });
-            $attachement1 = new \Swift_Attachment(
-                $this->getContainer()->get('application_plateforme.csv')->getCvsForMailSuivi($tab1, "Financement - Attente accord"),
-                'dossiers_attente_accord_' . (new \DateTime('now'))->format('d_m_y') . '.csv',
-                'application/csv'
-            );
-            $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')
-                ->alerteAttenteAccord($tab1, $attachement1);
+
+            $csv = $this->getContainer()->get('application_plateforme.csv')->getCvsForMailSuivi($tab1, "Financement - Attente accord");
+            $attachement1 = array("name" => 'dossiers_attente_accord_' . (new \DateTime('now'))->format('d_m_y') . '.csv', "file" => $csv);
+            $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->alerteAttenteAccord($tab1, $attachement1);
         }
 
         if ($j > 0) {
@@ -77,13 +74,9 @@ class MailGestionCommand extends ContainerAwareCommand
                 return $a->getDate() > $b->getDate() ? -1 : 1;
             });
 
-            $attachement2 = new \Swift_Attachment(
-                $this->getContainer()->get('application_plateforme.csv')->getCvsForMailSuivi($tab2, "Dossier en cours - En attente de traitement Entheor"),
-                'dossiers_attente_traitement_' . (new \DateTime('now'))->format('d_m_y') . '.csv',
-                'application/csv'
-            );
-            $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')
-                ->alerteAttenteTraitement($tab2, $attachement2);
+            $csv2 = $this->getContainer()->get('application_plateforme.csv')->getCvsForMailSuivi($tab2, "Dossier en cours - En attente de traitement Entheor");
+            $attachement2 = array("name" => 'dossiers_attente_traitement_' . (new \DateTime('now'))->format('d_m_y') . '.csv', "file" => $csv2);
+            $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->alerteAttenteTraitement($tab2, $attachement2);
         }
     }
 }

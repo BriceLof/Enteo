@@ -49,11 +49,9 @@ class MailRvAReporterCommand extends ContainerAwareCommand
                 }
                 return $a->getDateHeure() > $b->getDateHeure() ? -1 : 1;
             });
-            $attachement = new \Swift_Attachment(
-                $this->getContainer()->get('application_plateforme.csv')->getCvsForMailNews($tab),
-                'dossiers_rv_a_reporter_'.(new \DateTime('now'))->format('d_m_y').'.csv',
-                'application/csv'
-            );
+
+            $csv = $this->getContainer()->get('application_plateforme.csv')->getCvsForMailNews($tab);
+            $attachement = array("name" => 'dossiers_rv_a_reporter_'.(new \DateTime('now'))->format('d_m_y').'.csv', "file" => $csv);
             $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvAReporter($tab,  $attachement);
         }
     }

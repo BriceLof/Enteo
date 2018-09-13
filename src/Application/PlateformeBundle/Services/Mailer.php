@@ -35,6 +35,7 @@ class Mailer
     public function sendMessage($from, $to, $replyTo = null, $cc = null, $bcc = null, $subject, $body, $attachement = null){
 
         if(is_null($replyTo)) $reply =  array("email" => $from['email']);
+        else $reply = $replyTo;
 
         $data = array(
             "tags" => array("Entheor"),
@@ -46,96 +47,78 @@ class Mailer
             "subject" => $subject
         );
 
-        if(!is_null($cc) && $cc != ''){
-            $data["cc"] = $cc;
-        }
-        if(!is_null($bcc) && $bcc != ''){
-            $data["bcc"] = $bcc;
-        }
-        if(!is_null($attachement)){
-            $file_name_explode = explode("/web", $attachement);
-            $file = explode("/",$file_name_explode[1]);
-            $file_path = $this->hostname.$file_name_explode[1];
-            $data["attachment"] = array(array("url" => $file_path, "name" => $file[count($file) - 1]));
+        if(!is_null($attachement) && $attachement != ''){
+            // Fichier non stocké sur le serveur mais créer juste pour etre dans l'email
+            if (array_key_exists('name', $attachement) && array_key_exists('file', $attachement) && count($attachement) == 2) {
+                $data["attachment"] = array(array("content" => base64_encode ( $attachement['file'] ), "name" => $attachement['name']));
+            }else{
+                // Fichier stocker sur le serveur
+                $file_name_explode = explode("/web", $attachement);
+                $file = explode("/",$file_name_explode[1]);
+                $file_path = $this->hostname.$file_name_explode[1];
+                $data["attachment"] = array(array("url" => $file_path, "name" => $file[count($file) - 1]));
+            }
         }
 
         if($this->hostname == "https://appli-dev.entheor.com/web"){
             $data["to"] = array(array("email" => "brice.lof@gmail.com", "name" => "Brice Lof"));
+//            if(!is_null($cc) && $cc != ''){
+//                $data["cc"] = $data["to"];
+//            }
+//            if(!is_null($bcc) && $bcc != ''){
+//                $data["bcc"] = $data["to"];
+//            }
+        }else{
             if(!is_null($cc) && $cc != ''){
-                $data["cc"] = $data["to"];
+                $data["cc"] = $cc;
             }
             if(!is_null($bcc) && $bcc != ''){
-                $data["bcc"] = $data["to"];
+                $data["bcc"] = $bcc;
             }
         }
 
-        // Mail envoye par smtp de sentingblue
-        $header = array('Accept: application/json', 'Content-Type: application/json', 'api-key: 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');
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_HTTPHEADER => $header,
-            CURLOPT_URL => "https://api.sendinblue.com/v3/smtp/email",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode($data)
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }
+        $this->apiCurlSmtpSendinblue($data);
     }
 
     public function sendMessageToAdminAndGestion($from, $subject, $body, $attachement = null){
 
-        $mail = new SendinblueSmtp('admin@entheor.com', 'pmKx329kNw6BaFct');
         $to = array(
-            "virginie.hiairrassary@entheor.com" => "virginie.hiairrassary@entheor.com",
-            "f.azoulay@entheor.com" => "f.azoulay@entheor.com",
-            "ph.rouzaud@entheor.com" => "ph.rouzaud@entheor.com",
-            "christine.clementmolier@entheor.com" => "christine.clementmolier@entheor.com",
-            "contact@entheor.com" => "contact@entheor.com",
+            array("email" => "virginie.hiairrassary@entheor.com", "name" => "virginie.hiairrassary@entheor.com"),
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "ph.rouzaud@entheor.com", "name" => "ph.rouzaud@entheor.com"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Molier"),
+            array("email" => "contact@entheor.com", "name" => "contact@entheor.com"),
         );
 
-        $bcc = array("email_adress" => "support.informatique@entheor.com", "alias" => "support.informatique@entheor.com");
+        $data = array(
+            "tags" => array("Entheor"),
+            "sender" => $from,
+            "subject" => $subject,
+            "to" => $to,
+            "bcc" => array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com")),
+            "htmlContent" => $body,
+            "textContent" => strip_tags($body),
+            "replyTo" => $from,
+        );
 
-
-        if (array_key_exists('email_adress', $from)) $mail->setFrom($from['email_adress'], $from['alias']);
-        else $mail->setFrom($from);
-
-        if(!empty($bcc)){
-            if (array_key_exists('email_adress', $bcc)) $mail->addBcc($bcc['email_adress'], $bcc['alias']);
-            else $mail->addBcc($bcc);
+        if(!is_null($attachement) && $attachement != ''){
+            // Fichier non stocké sur le serveur mais créer juste pour etre dans l'email
+            if (array_key_exists('name', $attachement) && array_key_exists('file', $attachement) && count($attachement) == 2) {
+                $data["attachment"] = array(array("content" => base64_encode ( $attachement['file'] ), "name" => $attachement['name']));
+            }else{
+                // Fichier stocker sur le serveur
+                $file_name_explode = explode("/web", $attachement);
+                $file = explode("/",$file_name_explode[1]);
+                $file_path = $this->hostname.$file_name_explode[1];
+                $data["attachment"] = array(array("url" => $file_path, "name" => $file[count($file) - 1]));
+            }
         }
 
-        if(!empty($subject)){
-            $mail->setSubject($subject);
+        if($this->hostname == "https://appli-dev.entheor.com/web"){
+            $data["to"] = array(array("email" => "brice.lof@gmail.com", "name" => "Brice Lof"));
         }
 
-
-        if (!empty($attachement)){
-            // a faire fonctionner avec sendinblue et puis decommenter
-            //$mail->attach($attachement);
-        }
-
-        $mail
-            ->setTo($to)
-            ->setBody($body, 'text/html')
-            ->addPart(strip_tags($body), 'text/plain');
-
-        $this->mailer->send($mail);
+        $this->apiCurlSmtpSendinblue($data);
     }
 
     public function sendFactureSoldeMessage(Beneficiaire $beneficiaire){
@@ -227,6 +210,38 @@ class Mailer
         );
         $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null ,$subject,$body, $attachement);
+    }
+
+    public function apiCurlSmtpSendinblue($data){
+
+        // Mail envoye par smtp de sentingblue
+        $header = array('Accept: application/json', 'Content-Type: application/json', 'api-key: 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');
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_HTTPHEADER => $header,
+            CURLOPT_URL => "https://api.sendinblue.com/v3/smtp/email",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($data)
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
+
     }
 }
 ?>
