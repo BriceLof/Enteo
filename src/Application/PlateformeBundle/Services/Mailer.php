@@ -236,11 +236,12 @@ class Mailer
 
         curl_close($curl);
 
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
-        }
+        // A décommenter pour voir le retour de l'api en cas d'erreur
+//        if ($err) {
+//            echo "cURL Error #:" . $err;
+//        } else {
+//            echo $response;
+//        }
 
     }
 }
