@@ -326,23 +326,10 @@
                                             {{ beneficiaire.lastDetailStatut.detail }}
                                         </p>
                                     {% else %}
-                                        {% if beneficiaire.suiviAdministratif is null %}
                                             <p class="col-xs-4">
                                             </p>
                                             <p class="col-xs-4">
                                             </p>
-                                        {% else %}
-                                            <p class="col-xs-4">
-                                                {% if beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut is not null %}
-                                                    {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].statut.nom }}
-                                                {% endif %}
-                                            </p>
-                                            <p class="col-xs-4">
-                                                {% if beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut is not null %}
-                                                    {{ beneficiaire.suiviAdministratif[beneficiaire.suiviAdministratif|length -1].detailStatut.detail }}
-                                                {% endif %}                                            </p>
-                                        {% endif %}
-
                                     {% endif %}
                                 {% else %}
                                     {% if beneficiaire.lastDetailStatutConsultant is not null %}
@@ -359,15 +346,6 @@
                                             <p class="col-xs-4">
                                             </p>
                                         {% endif %}
-                                    {% else %}
-                                        <p class="col-xs-4">
-                                            {% if indexSuiviAd is not null %} {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].statut.nom }} {% endif %}
-                                        </p>
-                                        <p class="col-xs-4">
-                                            {% if indexSuiviAd is not null and beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut is not null %}
-                                                {{ beneficiaire.suiviAdministratif | reverse [indexSuiviAd].detailStatut.detail }}
-                                            {% endif %}
-                                        </p>
                                     {% endif %}
                                 {% endif %}
                             </div>

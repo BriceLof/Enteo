@@ -74,7 +74,7 @@ class Beneficiaire
     protected $consultant;
 
     /**
-     * @ORM\OneToMany(targetEntity="SuiviAdministratif", mappedBy="beneficiaire")
+     * @ORM\OneToMany(targetEntity="SuiviAdministratif", mappedBy="beneficiaire", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $suiviAdministratif;
 

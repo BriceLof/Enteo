@@ -61,7 +61,7 @@ class Mailer
         }
 
         if($this->hostname == "https://appli-dev.entheor.com/web"){
-            $data["to"] = array(array("email" => "brice.lof@gmail.com", "name" => "Brice Lof"));
+            $data["to"] = array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof"));
 //            if(!is_null($cc) && $cc != ''){
 //                $data["cc"] = $data["to"];
 //            }
