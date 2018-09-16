@@ -27,7 +27,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-3">
-            <form action="{{ path('ecole_universite_homepage') }}" method="POST">
+            <form name="export_ecole_universite" action="{{ path('ecole_universite_homepage') }}" method="POST" id="form_date_ecole_universite">
                 <div class="row">
                     <div class="col-md-6"><span>Du</span> {{ form_widget(form.dateFrom, {'attr' : {"value": ''  } }) }}</div>
                     <div class="col-md-6"><span>Au</span> {{ form_widget(form.dateTo, {'attr' : {"value": ''  } }) }}</div>
@@ -38,34 +38,15 @@
                 {{ form_rest(form) }}
             </form>
         </div>
+
+        <div class="col-xs-12 col-sm-9" id="ecole_universite_body">
+
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        /**
-         * datepicker sur les input date
-         */
-        $(function () {
-            $(".accompagnementDate").datepicker({
-                dateFormat: 'dd/mm/yy',
-                yearRange: '2016:2025',
-                firstDay: 1,
-                changeMonth: true,
-                changeYear: true,
-                closeText: 'Fermer',
-                prevText: 'Précédent',
-                nextText: 'Suivant',
-                currentText: 'Aujourd\'hui',
-                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-                monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-                dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-                dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-                weekHeader: 'Sem.'
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{ asset('js/ecoleUniversite.js') }}"></script>
 {% endblock %}

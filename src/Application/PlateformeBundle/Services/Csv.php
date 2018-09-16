@@ -161,7 +161,7 @@ class Csv
                         $dateDebut,
                         $dateFin,
                         utf8_decode($beneficiaire->getDiplomeVise()),
-                        utf8_decode((is_null($beneficiaire->getLastDetailStatut())) ? '' : utf8_encode($beneficiaire->getLastDetailStatut()->getStatut()->getNom().'-'.$beneficiaire->getLastDetailStatut()->getDetail()))
+                        utf8_decode($beneficiaire->getStatut()),
                     ),
                     ';'
                 );

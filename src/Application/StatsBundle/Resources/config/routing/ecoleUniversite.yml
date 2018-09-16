@@ -2,3 +2,19 @@ ecole_universite_homepage:
     path:    /
     defaults:
         _controller: ApplicationStatsBundle:EcoleUniversite:index
+    options:
+        expose:  true
+
+ecole_universite_show:
+    path:    /show
+    defaults:
+        _controller: ApplicationStatsBundle:EcoleUniversite:show
+    options:
+        expose:  true
+
+ecole_universite_export:
+    path:    /export
+    defaults:
+        _controller: ApplicationStatsBundle:EcoleUniversite:export
+    options:
+        expose:  true
