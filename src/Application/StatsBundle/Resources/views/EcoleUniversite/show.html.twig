@@ -1,0 +1,30 @@
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>École/Université</th>
+        <th>Diplome visé</th>
+        <th>Nom Prénom</th>
+        <th>Téléphone</th>
+        <th>Date Début</th>
+        <th>Date Fin</th>
+        <th>Statut</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for beneficiaire in beneficiaires %}
+        <tr>
+            <td>{{ beneficiaire.ecoleUniversite }}</td>
+            <td>{{ beneficiaire.diplomeVise }}</td>
+            <td>{{ beneficiaire.nomConso | upper }} {{ beneficiaire.prenomConso | capitalize }}</td>
+            <td>{{ beneficiaire.telConso }}</td>
+            <td>{{ beneficiaire.accompagnement.dateDebut | date("d/m/Y") }}</td>
+            <td>{{ beneficiaire.accompagnement.dateFin | date("d/m/Y") }}</td>
+            <td>{{ beneficiaire.statut }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div title="enregister un fichier Excel du résultat" id="excel_ecole_universite">
+    <button onclick="exportCsv()" class="btn-success btn">Exporter</button>
+</div>
