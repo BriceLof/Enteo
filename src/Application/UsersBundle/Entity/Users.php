@@ -50,9 +50,9 @@ class Users extends BaseUser
     protected $mission;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Contrat", mappedBy="consultant" )
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Contrat", mappedBy="consultant" )
      */
-    protected $contrat;
+    protected $contrats;
 
     /**
      * @ORM\OneToOne(targetEntity="StatutConsultant", cascade={"persist"})
@@ -661,30 +661,6 @@ class Users extends BaseUser
     }
 
     /**
-     * Set contrat
-     *
-     * @param \Application\UsersBundle\Entity\Contrat $contrat
-     *
-     * @return Users
-     */
-    public function setContrat(\Application\UsersBundle\Entity\Contrat $contrat = null)
-    {
-        $this->contrat = $contrat;
-
-        return $this;
-    }
-
-    /**
-     * Get contrat
-     *
-     * @return \Application\UsersBundle\Entity\Contrat
-     */
-    public function getContrat()
-    {
-        return $this->contrat;
-    }
-
-    /**
      * @return mixed
      */
     public function getSemaine()
@@ -756,5 +732,39 @@ class Users extends BaseUser
     public function removeConsultant(\Application\UsersBundle\Entity\Users $consultant)
     {
         $this->consultants->removeElement($consultant);
+    }
+
+    /**
+     * Add contrat
+     *
+     * @param \Application\UsersBundle\Entity\Contrat $contrat
+     *
+     * @return Users
+     */
+    public function addContrat(\Application\UsersBundle\Entity\Contrat $contrat)
+    {
+        $this->contrats[] = $contrat;
+
+        return $this;
+    }
+
+    /**
+     * Remove contrat
+     *
+     * @param \Application\UsersBundle\Entity\Contrat $contrat
+     */
+    public function removeContrat(\Application\UsersBundle\Entity\Contrat $contrat)
+    {
+        $this->contrats->removeElement($contrat);
+    }
+
+    /**
+     * Get contrats
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContrats()
+    {
+        return $this->contrats;
     }
 }

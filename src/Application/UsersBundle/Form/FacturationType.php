@@ -104,30 +104,29 @@ class FacturationType extends AbstractType
                 'required' => false,
                 'choices' => array(
                     '...' => '',
-                    'Monsieur' => 'M.',
-                    'Madame' => 'Mme',
-                    'Mademoiselle' => 'Mlle',
+                    'Monsieur' => 'm.',
+                    'Madame' => 'mme',
                 ),
                 'attr' => array(
-                    'class' => 'input-sm not_required'
+                    'class' => 'input-sm'
                 )
             ))
             ->add('representantLegalNom', TextType::class, array(
                 'required' => false,
                 'label' => 'Nom',
                 'attr' => array(
-                    'class' => 'input-sm not_required'
+                    'class' => 'input-sm'
                 )
             ))
             ->add('representantLegalPrenom', TextType::class, array(
                 'required' => false,
                 'label' => 'Prenom',
                 'attr' => array(
-                    'class' => 'input-sm not_required'
+                    'class' => 'input-sm'
                 )
             ))
             ->add('representantLegalFonction', ChoiceType::class, array(
-                'label' => 'forme de la société',
+                'label' => 'fonction',
                 'required' => false,
                 'choices' => array(
                     '...' => '',
@@ -137,6 +136,9 @@ class FacturationType extends AbstractType
                     'Directeur Général' => 'directeur',
                     'Autre' => 'autre',
                 ),
+                'attr' => array(
+                    'class' => 'input-sm'
+                )
             ))
             ->add('intitule', TextType::class, array(
                 'required' => false,

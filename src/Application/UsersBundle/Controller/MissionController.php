@@ -79,7 +79,11 @@ class MissionController extends Controller
         $mission->setDocument($name);
         $em->persist($mission);
 
-        $attachement = new \Swift_Attachment($data, 'contrat_'.$beneficiaire->getNomConso().'_'.$beneficiaire->getPrenomConso(), 'application/pdf');
+        $attachement = array(
+            "name" => $name,
+            "file" => $data
+        );
+
         $this->get('application_users.mailer.mail_for_mission')->newMission($beneficiaire,$consultant,$attachement);
     }
 
@@ -155,6 +159,7 @@ class MissionController extends Controller
 
     /**
      * affichage de la vue du formulaire quand on decline une mission
+     * fait par le consultant
      * @param Request $request
      * @param $id
      * @return Response
