@@ -98,7 +98,7 @@ class LifecycleEventListener extends \Twig_Extension
 
                 // Desabonner christine des notifications
                 if ($consultant->getEmail() != 'christine.clementmolier@entheor.com') {
-                    $to = array("email_adress" => $consultant->getEmail(), "alias" => $consultant->getEmail());
+                    $to = $consultant->getEmail();
                     $this->mailer->sendNewNotification($to, $subject, $message);
                 }
             }

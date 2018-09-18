@@ -147,13 +147,14 @@ class Mailer
     }
 
     public function sendFactureSoldeMessage(Beneficiaire $beneficiaire){
+        $from = "admin@entheor.com";
         $subject = "Facture solde message";
         $template = '@Apb/SuiviAdministratif/mail/factureSoldeMail.html.twig';
-        $to = array(array("email" => "n.ranaivoson@iciformation.fr", "name" => "n.ranaivoson@iciformation.fr"));
+        $to = "n.ranaivoson@iciformation.fr";
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessageSwiftmailer($this->from,$to,$cc = null, $bcc = null,$subject,$body);
+        $this->sendMessageSwiftmailer($from,$to,$cc = null, $bcc = null,$subject,$body);
     }
 
 
@@ -164,25 +165,25 @@ class Mailer
     public function mailRecapCronDocument($compteur){
         $subject = "Rapport CRON suppression des documents Enteo";
         $template = '@Apb/Alert/Mail/rapportCronDocument.html.twig';
-        $to = array(array("email" => "n.ranaivoson@iciformation.fr", "name" => "n.ranaivoson@iciformation.fr"));
+        $from = "admin@entheor.com";
+        $to = "n.ranaivoson@iciformation.fr";
         $body = $this->templating->render($template, array(
             'compteur' => $compteur,
         ));
-        $this->sendMessageSwiftmailer($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
+        $this->sendMessageSwiftmailer($from, $to,null,$cc = null, $bcc = null,$subject,$body);
     }
     
     public function mailFeedback(Feedback $feedback){
         
         $subject = "Feedback [".ucfirst($feedback->getType())."]";
-        
+        $from = "admin@entheor.com";
         $adminitrateurs = $this->em->getRepository("ApplicationUsersBundle:Users")->findByTypeUser("ROLE_ADMIN");
         $listeAdministrateurs = array();
         foreach($adminitrateurs as $admin){
-           // $listeAdministrateurs[$admin->getEmail()] = $admin->getEmail();
-            array_push($listeAdministrateurs, array("email" => $admin->getEmail(), "name" => $admin->getEmail()));
+            $listeAdministrateurs[$admin->getEmail()] = $admin->getEmail();
         }
         $to = $listeAdministrateurs;
-		$bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
+		$bcc = array("support.informatique@entheor.com" => "Support");
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         $message = "Bonjour, <br><br> Un feedback vous a été envoyé par <b><a href='https://appli.entheor.com/web/user/".$feedback->getUser()->getId()."/show'>".ucfirst($feedback->getUser()->getCivilite())."".ucfirst($feedback->getUser()->getPrenom())." ".ucfirst($feedback->getUser()->getNom())."</a></b> : <br>
                 <ul>
@@ -201,20 +202,21 @@ class Mailer
             'message' => $message,
             'reference' => '400'
         ));
-        $this->sendMessageSwiftmailer($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
+        $this->sendMessageSwiftmailer($from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
     public function sendNewNotification($to, $subject, $message)
     {
+        $from = "admin@entheor.com";
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
             'message' => $message,
             'reference' => 'Notification'
         ));
-        $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "Support"), array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"));
+        $bcc = array("support.informatique@entheor.com"=> "Support", "f.azoulay@entheor.com"=> "Franck Azoulay");
 
-        $this->sendMessageSwiftmailer($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
+        $this->sendMessageSwiftmailer($from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
     public function listeBeneficiairesPreviousWeekNoContact($message, $attachement)
