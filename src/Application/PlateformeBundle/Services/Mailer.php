@@ -32,6 +32,7 @@ class Mailer
         $this->hostname = $hostname;
     }
 
+    // Envoi avec SMTP SendinBlue
     public function sendMessage($from, $to, $replyTo = null, $cc = null, $bcc = null, $subject, $body, $attachement = null){
 
         if(is_null($replyTo)) $reply =  array("email" => $from['email']);
@@ -78,6 +79,30 @@ class Mailer
         }
 
         $this->apiCurlSmtpSendinblue($data);
+    }
+
+    // Envoi par swfitmailer des mails pas important pour économiser notre quota sendinblue
+    public function sendMessageSwiftmailer($from, $to, $replyTo, $cc = null, $bcc = null, $subject, $body, $attachement = null){
+        $mail = \Swift_Message::newInstance();
+
+        if(!empty($replyTo))
+            $mail->setReplyTo($replyTo);
+        if(!empty($cc))
+            $mail->setCc($cc);
+        if(!empty($bcc))
+            $mail->setBcc($bcc);
+        if(!empty($subject))
+            $mail->setSubject($subject);
+        if (!empty($attachement)){
+            $mail->attach($attachement);
+        }
+
+        $mail
+            ->setFrom($from)
+            ->setTo($to)
+            ->setBody($body, 'text/html')
+            ->addPart(strip_tags($body), 'text/plain');
+        $this->mailer->send($mail);
     }
 
     public function sendMessageToAdminAndGestion($from, $subject, $body, $attachement = null){
@@ -128,7 +153,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
         ));
-        $this->sendMessage($this->from,$to,$cc = null, $bcc = null,$subject,$body);
+        $this->sendMessageSwiftmailer($this->from,$to,$cc = null, $bcc = null,$subject,$body);
     }
 
 
@@ -143,7 +168,7 @@ class Mailer
         $body = $this->templating->render($template, array(
             'compteur' => $compteur,
         ));
-        $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
+        $this->sendMessageSwiftmailer($this->from,$to,null,$cc = null, $bcc = null,$subject,$body);
     }
     
     public function mailFeedback(Feedback $feedback){
@@ -176,7 +201,7 @@ class Mailer
             'message' => $message,
             'reference' => '400'
         ));
-        $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
+        $this->sendMessageSwiftmailer($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
     public function sendNewNotification($to, $subject, $message)
@@ -189,7 +214,7 @@ class Mailer
         ));
         $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "Support"), array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"));
 
-        $this->sendMessage($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
+        $this->sendMessageSwiftmailer($this->from,$to,null,$cc = null, $bcc ,$subject,$body);
     }
 
     public function listeBeneficiairesPreviousWeekNoContact($message, $attachement)
