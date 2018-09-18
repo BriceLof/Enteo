@@ -33,3 +33,7 @@ application_search_beneficiaire:
 application_print_beneficiaire:
     path:     /print/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:print" }
+
+application_remove_suivi_beneficiaire:
+    path:     /remove
+    defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:removeSuivi" }
