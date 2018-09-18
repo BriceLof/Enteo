@@ -19,9 +19,14 @@
                         {{ info }}
                     </div>
                 {% endfor %}
+
                 <div class="page-header">
                     <div class="row">
-                        <h1 class="col-md-10">Gestion - Ressources partagées<br><small>Ajouter, modifier, voir </small></h1>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                            <h1 class="col-md-10">Gestion - Ressources partagées<br><small>Ajouter, modifier, voir </small></h1>
+                        {% else %}
+                            <h1 class="col-md-10">Ressources partagées</h1>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -30,64 +35,74 @@
                 <div class="row">
                     <nav class="col-md-12">
                         <h4>Rubriques</h4>
-                        <ul class="list-group">
+                        <ul class="list-group list_rubrique_ressource">
                             {% for rubrique in ressourceRubriques %}
-                                {% if rubrique.compteur > 0 %}
                                     <li class="list-group-item">
                                         <span class="badge">{{ rubrique.compteur }}</span>
                                         {{ rubrique.nom }}
                                     </li>
-                                {% endif %}
+                                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                                        <aside>
+                                            <a href="#" data-toggle="modal" alt="Modifier la rubrique" title="Modifier la rubrique" data-target="#modifyRubrique{{ rubrique.id }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                            <a href="#" data-toggle="modal" alt="Supprimer la rubrique" title="Supprimer la rubrique" data-target="#deleteRubrique{{ rubrique.id }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        </aside>
+
+                                        <!-- Modal formulaire -->
+                                        {{ render(controller("ApplicationPlateformeBundle:RubriqueRessource:edit", {'id': rubrique.id} )) }}
+                                        {{ render(controller("ApplicationPlateformeBundle:RubriqueRessource:delete", {'id': rubrique.id} )) }}
+                                    {% endif %}
                             {% endfor %}
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                                <li class="list-group-item" data-toggle="modal" data-target="#modalAddRubrique" style="cursor: pointer;margin-top: 5px;background-color: #ededed;color:#747474;" title="Ajouter une rubrique">+ <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span></li>
+                            {% endif %}
                         </ul>
                     </nav>
 
-                    <div class="col-md-12 block_form_add_file">
-                        <h4>Ajouter un fichier</h4>
-                        <div class="hide_show_form_add_file" style="display:none">
-                            {{ render(controller("ApplicationPlateformeBundle:Ressource:add", {request: app.request})) }}
-                        </div>
-
-                    </div>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                        <div class="col-md-12 block_form_add_file"><h4 data-toggle="modal" data-target="#modalAddFile">Ajouter un fichier</h4></div>
+                        <!-- Modal formulaire -->
+                        {{ render(controller("ApplicationPlateformeBundle:Ressource:add", {request: app.request})) }}
+                        {{ render(controller("ApplicationPlateformeBundle:RubriqueRessource:add", {request: app.request})) }}
+                    {% endif %}
                 </div>
             </div>
 
             <div class="col-md-9 col-md-offset-1">
                     {% for rubrique in ressourceRubriques %}
                         <section>
-                            {% if rubrique.compteur > 0 %}
-                                <h3>{{ rubrique.nom }}</h3>
-                                <hr>
-                                <div class="row">
-                                    {% for ressource in ressources %}
+                            <h3>{{ rubrique.nom }}</h3>
+                            <hr>
+                            <div class="row">
+                                {% for ressource in ressources %}
 
-                                        {% if ressource.format == 'pdf' %} {% set type = "pdf" %}
-                                        {% elseif ressource.format == 'jpg' or ressource.format == 'jpeg'%} {% set type = "image" %}
-                                        {% elseif ressource.format == 'word' %} {% set type = "word" %}
-                                        {% elseif ressource.format == 'pdf' %} {% set type = "pdf" %}
-                                        {% elseif ressource.format == 'xlsx' or ressource.format == 'csv' %} {% set type = "excel" %}
-                                        {% endif %}
+                                    {% if ressource.format == 'pdf' %} {% set type = "pdf" %}
+                                    {% elseif ressource.format == 'jpg' or ressource.format == 'jpeg'%} {% set type = "image" %}
+                                    {% elseif ressource.format == 'word' %} {% set type = "word" %}
+                                    {% elseif ressource.format == 'pdf' %} {% set type = "pdf" %}
+                                    {% elseif ressource.format == 'xlsx' or ressource.format == 'csv' %} {% set type = "excel" %}
+                                    {% endif %}
 
-                                        {%  if ressource.rubrique.id == rubrique.id %}
-                                            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 file_block">
-                                                <div class="file">
-                                                    <img src="{{ asset("images/icon_"~type~"_ressource.svg") }}" width="30" />
-                                                    <aside style="display: none">
-                                                        <a href="{{ asset('uploads/ressource_share/' ~ ressource.file) }}" title="Télécharger le document" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                    {%  if ressource.rubrique.id == rubrique.id %}
+                                        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 file_block">
+                                            <div class="file">
+                                                <img src="{{ asset("images/icon_"~type~"_ressource.svg") }}" width="30" />
+                                                <aside style="display: none">
+                                                    <a href="{{ asset('uploads/ressource_share/' ~ ressource.file) }}" title="Télécharger le document" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
                                                         <a href="#" data-toggle="modal" data-target="#modifyDocument{{ ressource.id }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                                         <a href="#" data-toggle="modal" data-target="#deleteDocument{{ ressource.id }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                                    </aside>
-                                                </div>
-                                                <p><a href="{{ asset('uploads/ressource_share/' ~ ressource.file) }}" title="Télécharger le document" target="_blank">{{ ressource.nom }}</a></p>
+                                                    {% endif %}
+                                                </aside>
                                             </div>
+                                            <p><a href="{{ asset('uploads/ressource_share/' ~ ressource.file) }}" title="Télécharger le document" target="_blank">{{ ressource.nom }}</a></p>
+                                        </div>
 
-                                            <!-- Modal formulaire -->
-                                            {{ render(controller("ApplicationPlateformeBundle:Ressource:edit", {'id': ressource.id} )) }}
-                                            {{ render(controller("ApplicationPlateformeBundle:Ressource:delete", {'id': ressource.id} )) }}
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                                        <!-- Modal formulaire -->
+                                        {{ render(controller("ApplicationPlateformeBundle:Ressource:edit", {'id': ressource.id} )) }}
+                                        {{ render(controller("ApplicationPlateformeBundle:Ressource:delete", {'id': ressource.id} )) }}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </section>
                     {% endfor %}
             </div>

@@ -63,3 +63,26 @@
     font-weight: bold;
     float: right;
 }
+
+.list_rubrique_ressource , .list_rubrique_ressource aside{
+    position: relative;
+}
+.list_rubrique_ressource aside{
+    position: absolute;
+    right: -20%;
+    margin-top: -28px;
+}
+.list_rubrique_ressource aside a{
+    color:#777777;
+}
+.list_rubrique_ressource aside a:first-child{
+    margin-right: 5px;
+}
+
+.list_rubrique_ressource aside a:first-child:hover{
+    color:#ffc107;
+}
+.list_rubrique_ressource aside a:last-child:hover{
+    color:#dc3545;
+}
+

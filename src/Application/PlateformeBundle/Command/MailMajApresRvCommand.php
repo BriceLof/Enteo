@@ -66,11 +66,10 @@ class MailMajApresRvCommand extends ContainerAwareCommand
             }
             return $a->getDateDebut() > $b->getDateDebut() ? -1 : 1;
         });
-        $attachement1 = new \Swift_Attachment(
-            $this->getContainer()->get('application_plateforme.csv')->getCsvForFicheNonMaj($tab2),
-            'dossiers_non_maj_' . (new \DateTime('now'))->format('d_m_y') . '.csv',
-            'application/csv'
-        );
+
+        $csv = $this->getContainer()->get('application_plateforme.csv')->getCsvForFicheNonMaj($tab2);
+        $attachement1 = array("name" => 'dossiers_non_maj_' . (new \DateTime('now'))->format('d_m_y') . '.csv', "file" => $csv);
         $this->getContainer()->get('application_plateforme.statut.cron.rv')->lastMailRvFicheNonMaj($tab2, $attachement1);
+        
     }
 }

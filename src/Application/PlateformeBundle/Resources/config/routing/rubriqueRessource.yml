@@ -1,0 +1,15 @@
+application_delete_rubrique_ressource:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:delete" }
+
+application_update_rubrique_ressource:
+    path:     /update/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:edit" }
+
+application_add_rubrique_ressource:
+    path:     /add
+    defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:add" }
+
+application_index_rubrique_ressource:
+    path:     /
+    defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:index" }

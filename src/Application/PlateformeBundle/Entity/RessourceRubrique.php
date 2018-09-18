@@ -7,12 +7,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
+
 /**
  * Ressource
  *
  * @ORM\Table(name="ressource_rubrique")
  * @ORM\Entity(repositoryClass="Application\PlateformeBundle\Repository\RessourceRubriqueRepository")
-
+ * @ORM\HasLifecycleCallbacks()
  */
 class RessourceRubrique
 {
@@ -98,4 +99,5 @@ class RessourceRubrique
     {
         return $this->compteur;
     }
+    
 }

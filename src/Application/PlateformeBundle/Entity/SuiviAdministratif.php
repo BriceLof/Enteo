@@ -204,17 +204,18 @@ class SuiviAdministratif
      */
     public function modifyBeneficiaire(LifecycleEventArgs $args)
     {
-        if (!is_null($this->statut) && !is_null($this->getBeneficiaire()->getLastDetailStatutConsultant())
-            && ($this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12
-            || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13
-            )) {
-            if ($this->statut->isAccesConsultant() == true) {
-                $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
-            }
-            $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
+        if (!is_null($this->statut)){
             if ($this->statut->getId() == 9 || $this->statut->getId() == 10 || $this->statut->getId() == 14){
                 $detail = $args->getEntityManager()->getRepository('ApplicationPlateformeBundle:DetailStatut')->find(22);
                 $this->getBeneficiaire()->setLastDetailStatutConsultant($detail);
+            }
+
+            if  ( !is_null($this->getBeneficiaire()->getLastDetailStatutConsultant()) && ( $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12 || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13) ) {
+                $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
+            }
+
+            if ($this->statut->isAccesConsultant() == true) {
+                $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
             }
         }
     }

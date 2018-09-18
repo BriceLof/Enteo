@@ -421,30 +421,13 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
     jourCourant = dateCourant.getDate(); // jour
     moisCourant = dateCourant.getMonth()+1; // mois +1 (parce que le mois.val commence par 1)
     anneeCourant = dateCourant.getFullYear(); // année
-    //mise a jour de la date on change
-    /*
-    $('#admin_calendar_dateDebut select').on('change', function () {
-        if($('#admin_calendar_dateDebut_year').val() == anneeCourant){
-            //si le jour est inferieure a la date du jour, on augment le mois
-            if($('#admin_calendar_dateDebut_month').val() <= moisCourant && $('#admin_calendar_dateDebut_day').val() < jourCourant){
-                if($(this).attr('id') == 'admin_calendar_dateDebut_month'){
-                    value = anneeCourant + 1;
-                    $('#admin_calendar_dateDebut_year option[value="'+value+'"]').prop('selected', true)
-                }else{
-                    value = moisCourant+1;
-                    $('#admin_calendar_dateDebut_month option[value="'+value+'"]').prop('selected', true)
-                }
-            }
-        }
-    });
-    */
     //mise à jour de l'heure et la minute
     $('#admin_calendar_heureDebut_hour').on('change', function () {
         var value = $(this).val();
         value++;
         $('#admin_calendar_heureFin_hour option[value="'+value+'"]').prop('selected', true);
         $('#admin_calendar_heureFin_hour option').each(function () {
-            if($(this).val() <= 21 && $(this).val() >= value - 1){
+            if($(this).val() <= 22 && $(this).val() >= value - 1){
                 $(this).prop('disabled',false);
             }else{
                 $(this).attr('disabled', 'disabled');
@@ -452,12 +435,12 @@ if(document.getElementById('admin_calendar_consultant_consultant')) {
         });
     });
     $('#admin_calendar_heureDebut_hour option').each(function () {
-        if($(this).val()>20 || $(this).val()< 7){
+        if($(this).val()>21 || $(this).val()< 7){
             $(this).attr('disabled', 'disabled');
         }
     });
     $('#admin_calendar_heureFin_hour option').each(function () {
-        if($(this).val()>21 || $(this).val()< 8){
+        if($(this).val()>22 || $(this).val()< 8){
             $(this).attr('disabled', 'disabled');
         }
     });

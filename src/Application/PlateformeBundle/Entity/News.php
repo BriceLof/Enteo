@@ -181,9 +181,18 @@ class News
                 OR $this->statut->getSlug() == "reporte" OR $this->statut->getSlug() == "termine")
             $this->getBeneficiaire()->increaseNbAppelTel();
 
-        if ($this->statut->getId() == 11 || $this->statut->getId() == 12 || $this->statut->getId() == 13){
+
+        if (!in_array($this->detailStatut->getId(), array(7,14))){
+            $suivis = $this->getBeneficiaire()->getSuiviAdministratif();
+            foreach ($suivis as $suivi){
+                $this->getBeneficiaire()->removeSuiviAdministratif($suivi);
+            }
+        }
+
+
+        if (in_array($this->statut->getId(), array(11,12,13))){
             $this->getBeneficiaire()->setDeleted(true);
-//            $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
+            $this->getBeneficiaire()->setLastDetailStatut(null);
         }else{
             $this->getBeneficiaire()->setDeleted(false);
         }
