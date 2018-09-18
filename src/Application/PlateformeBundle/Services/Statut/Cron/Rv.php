@@ -203,8 +203,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     }
 
     public function mailRvRealise(Beneficiaire $beneficiaire, Historique $lastRv){
-        $from = "christine.clement@entheor.com";
-        $replyTo = "christine.clement@entheor.com";
+        $from = "christine.clementmolier@entheor.com";
+        $replyTo = "christine.clementmolier@entheor.com";
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
         $to =  "virginie.hiairrassary@entheor.com";
@@ -214,11 +214,14 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             "christine.clementmolier@entheor.com" => "Christine Clement",
             "support.informatique@entheor.com" => 'Support'
         );
+        $cc = array(
+            "contact@entheor.com" => "Contact Entheor"
+        );
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
             'lastRv' => $lastRv,
         ));
-        $this->sendMessage($from,$to,null,null,$cci,$subject,$body);
+        $this->sendMessage($from,$to,null,$cc,$cci,$subject,$body);
 
     }
 
