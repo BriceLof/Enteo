@@ -8,6 +8,13 @@ use Application\UsersBundle\Entity\Users;
 
 class MissionMailer extends Mailer
 {
+    /**
+     * reference m-1
+     *
+     * @param Beneficiaire $beneficiaire
+     * @param Users $consultant
+     * @param $attachement
+     */
     public function newMission(Beneficiaire $beneficiaire, Users $consultant, $attachement){
 
         $ref = 'm-1';
@@ -31,6 +38,11 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachement);
     }
 
+    /**
+     * reference m-2a
+     *
+     * @param Mission $mission
+     */
     public function acceptedMission(Mission $mission){
         $consultant = $mission->getConsultant();
         $beneficiaire = $mission->getBeneficiaire();
@@ -59,6 +71,11 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-2b
+     *
+     * @param Mission $mission
+     */
     public function acceptedMissionB(Mission $mission){
         $consultant = $mission->getConsultant();
         $beneficiaire = $mission->getBeneficiaire();
@@ -67,7 +84,9 @@ class MissionMailer extends Mailer
         $subject = "Vous avez accepté l'accompagnement VAE de ".ucfirst($beneficiaire->getCiviliteConso())." ".ucfirst($beneficiaire->getPrenomConso())." ".strtoupper($beneficiaire->getNomConso());
         $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cc = null;
-        $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
+        $bcc = array(
+            array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com")
+        );
         $template = '@Aub/Mission/mail/acceptedMissionB.html.twig';
         $body = $this->templating->render($template, array(
             'mission' => $mission,
@@ -79,6 +98,12 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-3a
+     *
+     * @param Beneficiaire $beneficiaire
+     * @param Users $consultant
+     */
     public function confirmedMission(Beneficiaire $beneficiaire, Users $consultant){
 
         $ref = 'm-3a';
@@ -103,6 +128,12 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-2r
+     *
+     * @param Mission $mission
+     * @param $message
+     */
     public function declinedMission(Mission $mission, $message){
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-2r';
@@ -117,7 +148,9 @@ class MissionMailer extends Mailer
             array("email" => "ph.rouzaud@entheor.com", "name" => "ph.rouzaud@entheor.com"),
             array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com"),
         );
-        foreach($gestionnaires as $gestionnaire){ array_push($listeGestionnaires, array("email" => $gestionnaire->getEmail(), "name" => $gestionnaire->getEmail()));}
+        foreach($gestionnaires as $gestionnaire){
+            array_push($listeGestionnaires, array("email" => $gestionnaire->getEmail(), "name" => $gestionnaire->getEmail()));
+        }
         $to = $listeGestionnaires;
         $cc = null;
         $bcc = array(
@@ -135,6 +168,12 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-3r
+     *
+     * @param Mission $mission
+     * @param $message
+     */
     public function revokedMission(Mission $mission, $message){
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-3r';
@@ -165,6 +204,12 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-3r-change
+     *
+     * @param Mission $mission
+     * @param Beneficiaire $beneficiaire
+     */
     public function modifiedMission(Mission $mission, Beneficiaire $beneficiaire){
         $ref = 'm-3r-change';
         $from = array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com");
@@ -190,6 +235,11 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-3r-abandonned
+     *
+     * @param Mission $mission
+     */
     public function abandonnedMission(Mission $mission){
         $beneficiaire = $mission->getBeneficiaire();
         $ref = 'm-3r-abandonned';
@@ -222,6 +272,12 @@ class MissionMailer extends Mailer
     }
 
 
+    /**
+     * reference m-3r-change consultant
+     *
+     * @param Users $consultant
+     * @param Beneficiaire $beneficiaire
+     */
     public function changeConsultant(Users $consultant, Beneficiaire $beneficiaire){
         $ref = 'm-3r-change consultant';
         $from = array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com");

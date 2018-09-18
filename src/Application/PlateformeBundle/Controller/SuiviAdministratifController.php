@@ -40,11 +40,11 @@ class SuiviAdministratifController extends Controller
         $tab = [];
         $consultant = $beneficiaire->getConsultant();
         if (!is_null($consultant)){
-            (is_null($consultant->getFacturation())) ? $tab [] = 'Manque Contact facturation Consultant' : null;
-            (is_null($consultant->getContrat())) ? $tab [] = 'Manque Contrat cadre Consultant' : null;
+            (is_null($consultant->getFacturation())) ? $tab [] = 'Contact facturation Consultant' : null;
+            (is_null($consultant->getContrats())) ? $tab [] = 'Contrat cadre Consultant' : null;
         }
-        (is_null($beneficiaire->getAccompagnement()->getDateDebut())) ? $tab [] = 'Manque Date debut Accompagnement' : null;
-        (is_null($beneficiaire->getAccompagnement()->getDateFin())) ? $tab [] = 'Manque Date fin Accompagnement' : null;
+        (is_null($beneficiaire->getAccompagnement()->getDateDebut())) ? $tab [] = 'Date debut Accompagnement' : null;
+        (is_null($beneficiaire->getAccompagnement()->getDateFin())) ? $tab [] = 'Date fin Accompagnement' : null;
         $autorisation = (empty($tab)) ? 'true' : 'false';
 
         $bool = 'false';
@@ -66,7 +66,7 @@ class SuiviAdministratifController extends Controller
             elseif ($mission->getState() == 'accepted') $stateMission = "en attente acceptation Enthéor";
             elseif ($mission->getState() == 'confirmed') $stateMission = "en cours";
             elseif ($mission->getState() == 'finished') $stateMission = "mission terminée";
-        }elseif (!empty($beneficiaire->getMissionArchives())) $stateMission = "mission archivée";
+        }elseif (!$beneficiaire->getMissionArchives()->isEmpty()) $stateMission = "mission archivée";
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $suiviAdministratif = $form->getData();

@@ -4,50 +4,86 @@
 
 {% block stylesheets %}
     <style>
-        .page{
-            height: 1020px;position: relative;padding: 0 50px;font-size: 13px;
+        .page {
+            height: 1020px;
+            position: relative;
+            padding: 0 50px;
+            font-size: 13px;
         }
-        .center{
+
+        .center {
             text-align: center;
         }
-        .liste li{
+
+        .liste li {
             margin-bottom: 10px;
         }
-        .logo_entheor{
+
+        .logo_entheor {
             width: 200px;
         }
-        .line-heigth{
+
+        .line-heigth {
             line-height: 2;
         }
-        .titre{
+
+        .titre {
             background-color: rgba(128, 128, 128, 0.22);
         }
-        .top50{margin-top: 50px}
-        .top30{margin-top: 30px}
-        .top20{margin-top: 20px}
-        .top200{margin-top: 200px}
-        .top10{margin-top: 10px}
-        .font12{
+
+        .top50 {
+            margin-top: 50px
+        }
+
+        .top30 {
+            margin-top: 30px
+        }
+
+        .top20 {
+            margin-top: 20px
+        }
+
+        .top200 {
+            margin-top: 200px
+        }
+
+        .top10 {
+            margin-top: 10px
+        }
+
+        .font12 {
             font-size: 12px;
         }
-        .right{
+
+        .right {
             text-align: right;
         }
-        .footer{
-            position: absolute;bottom: 0;text-align: center;width: 100%; margin-left: -50px;
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+            margin-left: -50px;
         }
-        .footer p{
-            text-align: center;font-size: 12px; font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+
+        .footer p {
+            text-align: center;
+            font-size: 12px;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
         }
-        .signature{
+
+        .signature {
             display: inline-block;
             width: 30%;
             border-top: 1px solid black;
         }
-        #signature_right{
+
+        .signature_right {
             float: right;
         }
-        #signature_left{
+
+        .signature_left {
             float: left;
         }
     </style>
@@ -76,9 +112,11 @@
                 <div class="row" style="margin-top: 80px">
                     <h5><b><u>ENTRE LES SOUSSIGNES :</u></b></h5>
                     <p class="top50">
-                        ENTHEOR dont le siège est sis : 21 rue Louis Dansard, 69007 Lyon immatriculée sous le numéro SIREN 527 732 069 000 28<br>
+                        ENTHEOR dont le siège social est sis : 21, rue Louis Dansard, 69007 Lyon immatriculée sous le
+                        numéro SIREN 527 732 069 000 44<br>
                         et le numéro d'activité : 82 69 110 2369 <br>
-                        et représentée par <b>Madame Christine CLEMENT MOLIER </b>agissant en qualité de gérant de ladite société, ayant tous les pouvoirs à l'effet des présentes.
+                        et représentée par <b>Madame Christine CLEMENT MOLIER </b>agissant en qualité de gérant de
+                        ladite société, ayant tous les pouvoirs à l'effet des présentes.
                     </p>
                     <p class="top50 right line-heigth">
                         Ci-après dénommée « <b>le Client</b> »,<br>
@@ -90,9 +128,20 @@
 
                     <p class="top50">
                         {% if facturation.type == 'entreprise' %}
-                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}, {{ facturation.representantLegalFonction }} de la SASU {{ facturation.raisonSociale }}, domiciliée au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}</b>, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
-                        {% else %}
-                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}</b>, ayant tous pouvoirs à l'effet des présentes.
+                            <b>{{ facturation.representantLegalCivilite|capitalize~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper }}</b>
+                                , {{ facturation.representantLegalFonction }} de la SASU {{ facturation.raisonSociale }}
+                                , domiciliée
+                                au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
+                        {% elseif facturation.type == 'entrepreneur' %}
+                            {{ facturation.raisonSociale }}, auto-entrepreneur ou micro-entreprise, domiciliée au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, et immatriculée sous le numéro SIRET, {{ facturation.siret }}, représentée par
+                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}</b> ayant tous pouvoirs à l'effet des présentes.
+                        {% elseif facturation.type == 'personne' %}
+                            {% if consultant.civilite == 'm.' %}
+                                {% set domicile = 'domicilié' %}
+                            {% else %}
+                                {% set domicile = 'domiciliée' %}
+                            {% endif %}
+                            <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}</b>, {{ domicile }} au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, ayant tous pouvoirs à l'effet des présentes
                         {% endif %}
                     </p>
                     <p class="top50 right line-heigth">
@@ -126,10 +175,16 @@
                         DECLARATION PREALABLE
                     </p>
                     <p class="top30">
-                        Les parties ont conclu le <b>{{ consultant.contrat.date|date('d/m/Y') }}</b> un accord cadre de Convention de Service. Le prestataire, entrepreneur individuel ou sous forme de société déclare sur l'honneur au Client qu'il est à jour de la totalité de ses obligations sociales et fiscales et s'engage en outre à en assumer la totale responsabilité et à dégager le Client de toutes conséquences financières ou juridiques qui pourraient résulter du non-respect des dites obligations
+                        {% for contrat in consultant.contrats %}
+                            {% if contrat.enabled == true %}
+                                Les parties ont conclu le
+                                <b>{{ consultant.contrat.date|date('d/m/Y') }}</b> un accord cadre de Convention de Service. Le prestataire, entrepreneur individuel ou sous forme de société déclare sur l'honneur au Client qu'il est à jour de la totalité de ses obligations sociales et fiscales et s'engage en outre à en assumer la totale responsabilité et à dégager le Client de toutes conséquences financières ou juridiques qui pourraient résulter du non-respect des dites obligations. En particulier, il s'engage à transmettre au Client tous les 6 mois une attestation de vigilance datant de moins de 30 jours.
+                            {% endif %}
+                        {% endfor %}
                     </p>
                     <p class="top30">
-                        Il s'engage à informer le Client au cas où ses autres activités risqueraient d'être en conflit d'intérêt ou incompatibles avec les activités du Client et les Bénéficiaires.
+                        Il s'engage à informer le Client au cas où ses autres activités risqueraient d'être en conflit
+                        d'intérêt ou incompatibles avec les activités du Client et les Bénéficiaires.
                     </p>
                 </div>
                 <div class="row top50">
@@ -137,14 +192,16 @@
                         ARTICLES I - OBJET
                     </p>
                     <p class="top30">
-                        Le présent Avenant définit les conditions de réalisation de la mission d'accompagnement à la VAE (Validation des Acquis de l'Experience), ci-après la Mission.
+                        Le présent Avenant définit les conditions de réalisation de la mission d'accompagnement à la VAE
+                        (Validation des Acquis de l'Experience), ci-après la Mission.
                     </p>
                     <p class="top30">
-                        Conformément à l'accord cadre de Convention de Service, le Client propose par cet Avenant une Mission au Prestataire qui peut l'accepter ou le refuser.
+                        Conformément à l'accord cadre de Convention de Service, le Client propose par cet Avenant une
+                        Mission au Prestataire qui peut l'accepter ou le refuser.
                     </p>
                     <p class="top30">
                         Le prestataire dispose de 72h pour signaler son accord. <br>
-                        En l'absence, le Client pourra proposer cette Mission à un autre Prestataire
+                        En l'absence, le Client pourra proposer cette Mission à un autre Prestataire.
                     </p>
                 </div>
 
@@ -168,24 +225,45 @@
                         ARTICLE II - DEROULEMENT DE LA MISSION
                     </p>
                     <ul class="top30 liste">
-                        <li>Bénéficiaire de l'Accompagnement : {{ beneficiaire.civiliteConso|capitalize~" "~beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}</li>
-                        <li>Diplôme visé : {{ beneficiaire.diplomeVise }}</li>
-                        <li>La Mission devra se dérouler entre le : {{ beneficiaire.accompagnement.dateDebut|date("d/m/Y") }} et le {{ beneficiaire.accompagnement.dateFin|date("d/m/Y") }}</li>
-                        <li>La durée prévue de l'accompagnement est de : {{ beneficiaire.accompagnement.heure }} heures</li>
-                        <li>Lieu de réalisation : en les bureaux mis à disposition par ENTHEOR ou en les bureaux du Prestataire</li>
-                        <li>Le Prestataire a réalisé l'entretien de positionnement pour ce Bénéficiaire: OUI</li>
+                        <li>Bénéficiaire de l'Accompagnement
+                            : {{ beneficiaire.civiliteConso|capitalize~" "~beneficiaire.prenomConso|capitalize~" "~beneficiaire.nomConso|upper }}</li>
+                        <li>
+                            Diplôme visé : {{ beneficiaire.diplomeVise }} <br>
+                            Le diplôme visé est mentionné ici à titre indicatif. Le Prestateire ayant la charge de
+                            confirmer le diplôme cible avec le bénéficiaire lors du démarrage de l'accompagnement.
+                        </li>
+                        <li>La Mission devra se dérouler entre le
+                            : {{ beneficiaire.accompagnement.dateDebut|date("d/m/Y") }} et
+                            le {{ beneficiaire.accompagnement.dateFin|date("d/m/Y") }}</li>
+                        <li>La durée prévue de l'accompagnement est de : {{ beneficiaire.accompagnement.heure }}
+                            heures
+                        </li>
                     </ul>
                     <p class="top50">
-                        La mission d'accompagnement à réaliser par le Prestataire comprend l'aide à la rédaction du Livret 2 et la Préparation au passage devant le Jury, et si nécessaire l'aide à la rédation du Livret 1.
+                        La mission d'accompagnement à réaliser par le Prestataire comprend l'aide à la rédaction du
+                        Livret 2 et la Préparation au passage devant le Jury, et si nécessaire l'aide à la rédation du
+                        Livret 1.
                     </p>
                     <p class="top20">
-                        Le Client a mis à la disposition du Prestataire un outil de suivi des Bénéficiaires (https://appli.entheor.com/web/login) pour lequel il dispose d'un accès personnel.
+                        Le Client a mis à la disposition du Prestataire un outil de suivi des Bénéficiaires
+                        (https://appli.entheor.com/web/login) pour lequel il dispose d'un accès personnel.
                     </p>
                     <p class="top20">
-                        Le Prestataire complètera la fiche du Bénéficiaire des information liées à l'Accompagnement. Il enregistrera notamment chaque rendez-vous de travail avec le Bénéficiaire.
+                        A la suite de la signature du présent Avenant, et après qu'ENTHEOR l'ait validé, le Client devra
+                        contacter le Bénéficiaire sous 3 jours ouvrés et lui proposer un premier rendez-vous
+                        d'accompagnement dans les 14 jours calendaires qui suivent.
                     </p>
                     <p class="top20">
-                        Au terme de la Mission, le Prestataire devra impérativement transmettre au Client une fauille de présence, relatant les séances de travail avec le Bénéficiaire. Cette fauille de présence doit impérativement être signée du Bénéficiaire comme du Prestataire. L'original de la feuille de présence est à adresser par voie postale au siège du Client.
+                        Le Prestataire complètera la fiche du Bénéficiaire des information liées à l'Accompagnement. Il
+                        enregistrera notamment chaque rendez-vous de travail avec le Bénéficiaire, que ces rendez-vous
+                        se déroule en présentiel ou à distance.
+                    </p>
+                    <p class="top20">
+                        Au terme de la Mission, le Prestataire devra impérativement transmettre au Client une fauille de
+                        présence, relatant les séances de travail avec le Bénéficiaire. Cette fauille de présence doit
+                        impérativement être signée du Bénéficiaire comme du Prestataire. L'original de la feuille de
+                        présence est à adresser par voie postale au siège du Client. Le Prestataire devra en conserver
+                        une copie.
                     </p>
                 </div>
 
@@ -209,17 +287,19 @@
                         ARTICLE III - REMUNERATION
                     </p>
                     <p class="top20">
-                        Conformément à la Convention de Service conclue entre le Client et le Prestataire, et sous réserve :
+                        Conformément à la Convention de Service conclue entre le Client et le Prestataire, et sous
+                        réserve :
                     </p>
                     <ul class="top20">
-                        <li>que la Mission d'accompagnement à la VAEsoit terminée dans les délais impartis, en ce inclus la préparation au passage devant le jury ;</li>
+                        <li>que la Mission d'accompagnement à la VAE soit terminée dans les délais impartis ;</li>
                         <li>que la feuille de présence orginale aie été réceptionnée par le Client ;</li>
                         <li>que la fiche du Bénéficiaire soit complète,</li>
                         <li>que de Livret 2 aie été téléchargé dans l'espace documentaire du Bénéficiaire ;</li>
                         <li>que le Prestataire aie adressé au Client sa facture</li>
                     </ul>
                     <p class="top20">
-                        Le Prestataire percevra en rémunération de sa Mission d'accompagnement à la VAE des honoraires définis forfaitement, soit :
+                        Le Prestataire percevra en rémunération de sa Mission d'accompagnement à la VAE des honoraires
+                        définis forfaitement, soit :
                     </p>
                     <p class="top20">
                         - <b>{{ mission.tarif }} Euros</b> net de taxe,
@@ -237,13 +317,21 @@
                         ARTICLE IV - DUREE ET DENONCIATION DE LA CONVENTION
                     </p>
                     <p class="top30">
-                        Le présent Avenant est conclu à compter de la signature des présentes. Il étend ses effets jusqu'à la conclusion de la Mission et n'engage pas les Parties au-delà de celle-ci.
+                        Le présent Avenant est conclu à compter de la signature des présentes. Il étend ses effets
+                        jusqu'à la conclusion de la Mission et n'engage pas les Parties au-delà de celle-ci.
                     </p>
                     <p class="top20">
-                        En cas d'impossibilité à mener à bien la Mission, le Prestataire pourra dénoncer à tout moment celle-ci par lettre avec accusé de réception. Ce faisant, il renoncera au bénéfice de la rémunération.
+                        En cas d'impossibilité à mener à bien la Mission, le Prestataire pourra dénoncer à tout moment
+                        celle-ci par lettre avec accusé de réception. Ce faisant, il renoncera au bénéfice de la
+                        rémunération.
                     </p>
                     <p class="top20">
-                        Le Client pourra déssaisir le Prestataire de la Mission au cas où le Prestataire n'observerait pas l'une des dispositions décrites dans la Convention de Service ou dans le présent Avenant. Dans une telle éventualité, le Prestataire percevra 50% du montant des honoraires dus pour la prestation si tant est que la moitié au moins des heures prévues pour la Mission aient été réalisées et que le Prestataire puisse l'attester par une feuille de présence signée du Bénéficiaire.
+                        Le Client pourra déssaisir le Prestataire de la Mission au cas où le Prestataire n'observerait
+                        pas l'une des dispositions décrites dans la Convention de Service ou dans le présent Avenant.
+                        Dans une telle éventualité, le Prestataire percevra 50% du montant des honoraires dus pour la
+                        prestation si tant est que la moitié au moins des heures prévues pour la Mission aient été
+                        réalisées et que le Prestataire puisse l'attester par une feuille de présence signée du
+                        Bénéficiaire.
                     </p>
                 </div>
 
@@ -267,10 +355,12 @@
                         ARTICLE V - INTUITUE PERSONAE
                     </p>
                     <p class="top30">
-                        Le présent Avenant est conclu en tenant compte des aptitudes et des compétences propres au Prestataire qui prend l'engagement d'executer personnellement la Mission.
+                        Le présent Avenant est conclu en tenant compte des aptitudes et des compétences propres au
+                        Prestataire qui prend l'engagement d'executer personnellement la Mission.
                     </p>
                     <p class="top20">
-                        En conséquence, le Prestataire ne pourra en aucune façon confier tout ou partie de l'exécution de la Mission à un tiers sans obtenir pour ce faire l'accord préalable exprès du Client.
+                        En conséquence, le Prestataire ne pourra en aucune façon confier tout ou partie de l'exécution
+                        de la Mission à un tiers sans obtenir pour ce faire l'accord préalable exprès du Client.
                     </p>
                 </div>
 
@@ -279,13 +369,19 @@
                         ARTICLE VI - INDEPENDANCE DES PARTIES
                     </p>
                     <p class="top30">
-                        Le Prestataire, en sa qualité de prestataire de services indépendant, jouit de la plus grande indépendance dans l'organisation de son activité commerciale et de sa structure juridique.
+                        Le Prestataire, en sa qualité de prestataire de services indépendant, jouit de la plus grande
+                        indépendance dans l'organisation de son activité commerciale et de sa structure juridique.
                     </p>
                     <p class="top20">
-                        Le Préstataire déclarant intervenir en qualité de prestataire de services indépendant, il ne saurait en aucun cas être considéré comme salarié de son Client. Le Prestataire n'est pas placé sous l'autorité hiérarchique du Client. C'est notamment lui qui décide d'accepter les Missions qui lui sont proposées.
+                        Le Préstataire déclarant intervenir en qualité de prestataire de services indépendant, il ne
+                        saurait en aucun cas être considéré comme salarié de son Client. Le Prestataire n'est pas placé
+                        sous l'autorité hiérarchique du Client. C'est notamment lui qui décide d'accepter les Missions
+                        qui lui sont proposées.
                     </p>
                     <p class="top20">
-                        Le Prestataire déclare de plus souhaiter poursuivre ses activiés établies antérieurement à la présente Convention et à continuer de rechercher d'autres clients aux fins de maintenir et de développer ses compétences et ses affaires commerciales.
+                        Le Prestataire déclare de plus souhaiter poursuivre ses activiés établies antérieurement à la
+                        présente Convention et à continuer de rechercher d'autres clients aux fins de maintenir et de
+                        développer ses compétences et ses affaires commerciales.
                     </p>
                 </div>
 
@@ -297,10 +393,15 @@
                         Toute modification juridique affectant le Prestataire devra être communiquée au Client.
                     </p>
                     <p class="top20">
-                        En présence de tout differend survenant entre le Prestataire et le Client, concernant l'interprétation du présent Avenant, ou son exécution, ceux-ci conviennent de négocier de bonne foi en vue de parvenir à une transaction.
+                        En présence de tout differend survenant entre le Prestataire et le Client, concernant
+                        l'interprétation du présent Avenant, ou son exécution, ceux-ci conviennent de négocier de bonne
+                        foi en vue de parvenir à une transaction.
                     </p>
                     <p class="top20">
-                        Tous les litiges auxquels la présente Convention et ses contrats d'application pourraient donner lieu et qui n'auraient pas pu être réglés à l'amiable, seront de la compétence exclusive du Tribunal de Commerce du siège du Client, nonobstant appel en garantie ou pluralité de défendeurs.
+                        Tous les litiges auxquels la présente Convention et ses contrats d'application pourraient donner
+                        lieu et qui n'auraient pas pu être réglés à l'amiable, seront de la compétence exclusive du
+                        Tribunal de Commerce du siège du Client, nonobstant appel en garantie ou pluralité de
+                        défendeurs.
                     </p>
                 </div>
 
@@ -338,14 +439,20 @@
                         Signatures précédées de la mention manuscrite <i>« Lu et approuvé, bon pour accord »</i>
                     </p>
                 </div>
-                <div class="top200 row">
-                    <div class="top50">
-                        <p id="signature_left" class="signature">
+                <div class="row">
+                    <div>
+                        <img src="https://appli.entheor.com/web/images/signature_christine.JPG" class="logo_entheor"/>
+                    </div>
+                    <div>
+                        <img src="https://appli.entheor.com/web/images/lu_approuve.JPG" class="logo_entheor"/>
+                    </div>
+                    <div>
+                        <p class="signature signature_left">
                             <br>
                             Pour ENTHEOR <br>
                             Mme Christine CLEMENT MOLIER
                         </p>
-                        <p id="signature_right" class="signature">
+                        <p class="signature signature_right">
                             <br>
                             Pour le Prestataire
                         </p>

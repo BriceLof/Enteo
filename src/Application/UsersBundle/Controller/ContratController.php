@@ -35,11 +35,17 @@ class ContratController extends Controller
             $contrat = $form->getData();
             $contrat->setConsultant($consultant);
 
+            foreach ($consultant->getContrats() as $c){
+                $c->setEnabled(false);
+                $em->persist($c);
+            }
+
             $file = $contrat->getFile();
             if (!is_null($file)) {
-                $name = strtolower("contrat_cadre_" . $contrat->getConsultant()->getNom() . "_" . $contrat->getConsultant()->getPrenom() . ".pdf");
+                $name = strtolower("contrat_cadre_" . $contrat->getConsultant()->getNom() . "_" . $contrat->getConsultant()->getPrenom() . time() . ".pdf");
                 $fileName = $this->get('app.file_uploader')->uploadAvatar($file, 'uploads/consultant/' . $contrat->getConsultant()->getId(), $name, $name);
                 $contrat->setFile($fileName);
+                $contrat->setEnabled(true);
             }
 
             $em->persist($contrat);

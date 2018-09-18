@@ -25,7 +25,7 @@ class Contrat
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\UsersBundle\Entity\Users")
      * @ORM\JoinColumn(name="consultant_id", nullable=false)
      */
     protected $consultant;
@@ -39,6 +39,11 @@ class Contrat
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+
+    /**
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
     /**
      * Get id
@@ -109,7 +114,7 @@ class Contrat
     {
         $this->consultant = $consultant;
 
-        $consultant->setContrat($this);
+        $consultant->addContrat($this);
 
         return $this;
     }
@@ -122,5 +127,29 @@ class Contrat
     public function getConsultant()
     {
         return $this->consultant;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return Contrat
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

@@ -22,6 +22,10 @@ class FacturationController extends Controller
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
         $facturation = new Facturation();
 
+        $facturation->setRepresentantLegalCivilite($consultant->getCivilite());
+        $facturation->setRepresentantLegalNom($consultant->getNom());
+        $facturation->setRepresentantLegalPrenom($consultant->getPrenom());
+
         $form = $this->createForm(FacturationType::class, $facturation, array(
             'action' => $this->generateUrl('application_users_new_facturation', array(
                 'id' => $id
