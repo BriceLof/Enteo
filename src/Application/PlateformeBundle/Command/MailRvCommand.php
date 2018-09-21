@@ -47,7 +47,6 @@ class MailRvCommand extends ContainerAwareCommand
                         //si le dernier news date de mois de 24h
                         if ($dateLastNews >= (new \DateTime('now'))->modify('-1 day')) {
                             $lastRdv = $em->getRepository('ApplicationPlateformeBundle:Historique')->getLastRv1orRv2($beneficiaire);
-                            $output->writeln($beneficiaire->getNomConso());
                             $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastRdv[0]);
                         }
                     }
@@ -96,15 +95,15 @@ class MailRvCommand extends ContainerAwareCommand
 
             }
 
-            if (empty($tab)) {
+            if (!empty($tab)) {
                 $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvFicheNonMaj($consultant, $tab);
             }
 
-            if (empty($tab2)) {
+            if (!empty($tab2)) {
                 $this->getContainer()->get('application_plateforme.statut.cron.rv')->firstMailRvFicheNonMaj($consultant, $tab2);
             }
 
-            if (empty($tab3)) {
+            if (!empty($tab3)) {
                 $this->getContainer()->get('application_plateforme.statut.cron.rv')->secondMailRvFicheNonMaj($consultant, $tab3);
             }
         }

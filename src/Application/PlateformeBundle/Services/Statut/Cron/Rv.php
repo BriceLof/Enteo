@@ -116,7 +116,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to = $consultant->getEmail();
         $cci = array(
             "f.azoulay@entheor.com" => "Franck AZOULAY",
-            "resp.administratif@entheor.com" => "Responsable Administratif",
             "support.informatique@entheor.com" =>"support informatique"
         );
         $body = $this->templating->render($template, array(
@@ -233,7 +232,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cci = array(
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
-            array("email" => "resp.administratif@entheor.com", "name" => "Responsable Administratif"),
             array("email" => "support.informatique@entheor.com", "name" => "Support"),
         );
         $body = $this->templating->render($template, array(
@@ -273,7 +271,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cci = array(
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
-            array("email" => "resp.administratif@entheor.com", "name" => "Responsable Administratif"),
             array("email" => "support.informatique@entheor.com", "name" => "Support"),
         );
         $body = $this->templating->render($template, array(
