@@ -212,7 +212,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Clement"),
         );
         $cc = array(
-            "contact@entheor.com" => "Contact Entheor"
+            array("email" => "contact@entheor.com", "name" => "Contact Entheor"),
         );
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
