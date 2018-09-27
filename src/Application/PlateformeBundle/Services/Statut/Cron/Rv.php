@@ -113,10 +113,12 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $replyTo = "christine.clement@entheor.com";
         $subject = "Comment se  sont passés vos rendez-vous du " .$date. " ?";
         $template = '@Apb/Alert/Mail/mailRvFicheNonMaj.html.twig';
-        $to = $consultant->getEmail();
+        $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cci = array(
-            "f.azoulay@entheor.com" => "Franck AZOULAY",
-            "support.informatique@entheor.com" =>"support informatique"
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "ph.rouzaud@iciformation.fr", "name" => "Philippe ROUZAUD"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Clement"),
+            array("email" => "support.informatique@entheor.com", "name" => "support"),
         );
         $body = $this->templating->render($template, array(
             'consultant' => $consultant,
@@ -210,6 +212,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
             array("email" => "ph.rouzaud@iciformation.fr", "name" => "Philippe ROUZAUD"),
             array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Clement"),
+            array("email" => "support.informatique@entheor.com", "name" => "support"),
         );
         $cc = array(
             array("email" => "contact@entheor.com", "name" => "Contact Entheor"),

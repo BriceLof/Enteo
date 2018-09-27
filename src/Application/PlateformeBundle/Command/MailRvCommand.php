@@ -47,7 +47,9 @@ class MailRvCommand extends ContainerAwareCommand
                         //si le dernier news date de mois de 24h
                         if ($dateLastNews >= (new \DateTime('now'))->modify('-1 day')) {
                             $lastRdv = $em->getRepository('ApplicationPlateformeBundle:Historique')->getLastRv1orRv2($beneficiaire);
-                            $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastRdv[0]);
+                            if (isset($lastRdv[0])) {
+                                $this->getContainer()->get('application_plateforme.statut.cron.rv')->mailRvRealise($beneficiaire, $lastRdv[0]);
+                            }
                         }
                     }
 
