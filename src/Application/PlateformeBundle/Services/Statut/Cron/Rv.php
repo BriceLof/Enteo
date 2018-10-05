@@ -113,11 +113,12 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $replyTo = "christine.clement@entheor.com";
         $subject = "Comment se  sont passés vos rendez-vous du " .$date. " ?";
         $template = '@Apb/Alert/Mail/mailRvFicheNonMaj.html.twig';
-        $to = $consultant->getEmail();
+        $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cci = array(
-            "f.azoulay@entheor.com" => "Franck AZOULAY",
-            "resp.administratif@entheor.com" => "Responsable Administratif",
-            "support.informatique@entheor.com" =>"support informatique"
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "ph.rouzaud@iciformation.fr", "name" => "Philippe ROUZAUD"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Clement"),
+            array("email" => "support.informatique@entheor.com", "name" => "support"),
         );
         $body = $this->templating->render($template, array(
             'consultant' => $consultant,
@@ -203,6 +204,7 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
     public function mailRvRealise(Beneficiaire $beneficiaire, Historique $lastRv){
         $from = array("email" => "christine.clement@entheor.com", "name" => "christine.clement@entheor.com");
         $replyTo = array("email" => "christine.clement@entheor.com", "name" => "christine.clement@entheor.com");
+
         $subject = "Nouveau dossier bénéficiaire ". $beneficiaire->getPrenomConso()." ". $beneficiaire->getNomConso() ." à établir";
         $template = '@Apb/Alert/Mail/mailRvRealise.html.twig';
         $to = array(array("email" => "virginie.hiairrassary@entheor.com", "name" => "virginie.hiairrassary@entheor.com"));
@@ -210,12 +212,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
             array("email" => "ph.rouzaud@iciformation.fr", "name" => "Philippe ROUZAUD"),
             array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Clement"),
+            array("email" => "support.informatique@entheor.com", "name" => "support"),
+        );
+        $cc = array(
+            array("email" => "contact@entheor.com", "name" => "Contact Entheor"),
         );
         $body = $this->templating->render($template, array(
             'beneficiaire' => $beneficiaire,
             'lastRv' => $lastRv,
         ));
-        $this->sendMessage($from,$to,null,null,$cci,$subject,$body);
+        $this->sendMessage($from,$to,null,$cc,$cci,$subject,$body);
 
     }
 
@@ -229,7 +235,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cci = array(
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
-            array("email" => "resp.administratif@entheor.com", "name" => "Responsable Administratif"),
             array("email" => "support.informatique@entheor.com", "name" => "Support"),
         );
         $body = $this->templating->render($template, array(
@@ -269,7 +274,6 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $to = array(array("email" => $consultant->getEmail(), "name" => $consultant->getEmail()));
         $cci = array(
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
-            array("email" => "resp.administratif@entheor.com", "name" => "Responsable Administratif"),
             array("email" => "support.informatique@entheor.com", "name" => "Support"),
         );
         $body = $this->templating->render($template, array(
