@@ -25,59 +25,77 @@ $(function () {
      Cependant si les champs code postal et ville qui n'étaient pas vide lors de la validation, lors du reload de la page le champs ville charger en ajax sera vide mais on pourra valider malgré tout le form
      ce qui provoquera une erreur par la suite dans la fiche detail du benef.
      */
-    if ($(".codePostalInputForAjaxBeneficiaire").val().length == 5) {
-        cp = $(".codePostalInputForAjaxBeneficiaire").val()
-        $.ajax({
-            type: 'get',
-            url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
-            beforeSend: function () {
-                console.log('ça charge');
-                $(".villeAjaxBeneficiaire option").remove();
-                $(".block_info_chargement").show();
-            }
-        })
-            .done(function (data) {
-                $(".block_info_chargement").hide();
-                $(".villeAjaxBeneficiaire").removeAttr("disabled");
-                for (var i = 0; i < data.villes.length; i++) {
-                    console.log($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == String(data.villes[i].id));
-                    if ($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == data.villes[i].id) {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
-                    } else {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+
+    $(".countryBeneficiaire").change(function () {
+        country = $(this).children("option:selected").val()
+        console.log(country)
+        if (country == 'FR') {
+            $(".block_ville_fr").show()
+            $(".block_ville_no_fr").hide()
+            $(".block_ville_no_fr .villeNoFrBeneficiaire").removeAttr('required')
+            if ($(".codePostalInputForAjaxBeneficiaire").val().length == 5) {
+                cp = $(".codePostalInputForAjaxBeneficiaire").val()
+                $.ajax({
+                    type: 'get',
+                    url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
+                    beforeSend: function () {
+                        $(".villeAjaxBeneficiaire option").remove();
+                        $(".block_info_chargement").show();
                     }
+                })
+                    .done(function (data) {
+                        $(".block_info_chargement").hide();
+                        $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                        for (var i = 0; i < data.villes.length; i++) {
+                            if ($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == data.villes[i].id) {
+                                $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
+                            } else {
+                                $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                            }
+                        }
+                    });
+            }
+
+            $(".codePostalInputForAjaxBeneficiaire").keyup(function () {
+                $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
+                cp = $(this).val();
+                if (cp.length == 5) {
+                    $.ajax({
+                        type: 'get',
+                        url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
+                        beforeSend: function () {
+                            $(".villeAjaxBeneficiaire option").remove();
+                            $(".block_info_chargement").show();
+                        }
+                    })
+                        .done(function (data) {
+                            $(".block_info_chargement").hide();
+                            $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                            for (var i = 0; i < data.villes.length; i++) {
+                                $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                            }
+                        });
+                } else {
+                    $(".villeAjaxBeneficiaire option").remove();
+                    $(".villeAjaxBeneficiaire").removeAttr("disabled");
                 }
             });
-    }
-
-    $(".codePostalInputForAjaxBeneficiaire").keyup(function () {
-        $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
-        cp = $(this).val();
-        if (cp.length == 5) {
-            $.ajax({
-                type: 'get',
-                url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
-                beforeSend: function () {
-                    $(".villeAjaxBeneficiaire option").remove();
-                    $(".block_info_chargement").show();
-                }
-            })
-                .done(function (data) {
-                    $(".block_info_chargement").hide();
-                    $(".villeAjaxBeneficiaire").removeAttr("disabled");
-                    for (var i = 0; i < data.villes.length; i++) {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
-                    }
-                });
-        } else {
-            $(".villeAjaxBeneficiaire option").remove();
-            $(".villeAjaxBeneficiaire").removeAttr("disabled");
+        }
+        else{
+            console.log("pas fr")
+            $(".codePostalInputForAjaxBeneficiaire").off()
+            $(".codePostalInputForAjaxBeneficiaire").val("");
+            $(".block_ville_fr").hide()
+            $(".block_ville_no_fr").show()
+            $(".block_ville_no_fr .villeNoFrBeneficiaire").attr('required', 'required')
         }
     });
+
 
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
+
     $(".origineMerQui").change(function () {
         $origineMerQui = $(this).children("option:selected").val()
         if ($origineMerQui != '') {
@@ -209,12 +227,10 @@ $(function () {
         $(".villeAjaxEmployeur").attr("disabled", "disabled");
         cp = $(this).val();
         if (cp.length == 5) {
-            console.log("je lance l'ajax");
             $.ajax({
                 type: 'get',
                 url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
                 beforeSend: function () {
-                    console.log('ça charge');
                     $(".villeAjaxEmployeur option").remove();
                     //$(".block_info_chargement").show();
                 }
@@ -237,12 +253,10 @@ $(function () {
         cp = $("#beneficiaire_employeur_codePostalHiddenEmployeur").val();
         idVille = $("#beneficiaire_employeur_idVilleHiddenEmployeur").val();
         if (cp.length == 5) {
-            console.log("je lance l'ajax");
             $.ajax({
                 type: 'get',
                 url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
                 beforeSend: function () {
-                    console.log('ça charge');
                     // $(".block_info_chargement").show();
                 }
             })
@@ -322,7 +336,6 @@ function ajaxListDepartement(region, element) {
         dataType: 'json',
         beforeSend: function () {
             element.empty();
-            console.log('ça charge');
         },
         success: function (data) {
             $.each(JSON.parse(data), function (i, item) {
@@ -332,7 +345,6 @@ function ajaxListDepartement(region, element) {
                     element.append("<option value=\"" + item.code + "\">" + item.codeShow + ' ' + item.dpt + "</option>");
                 }
             });
-            console.log('fini');
         }
     });
 }
@@ -380,7 +392,6 @@ function listeOpcaOpacifEmployeur($name, element) {
         dataType: 'json',
         beforeSend: function () {
             element.empty();
-            console.log('ça charge');
         },
         success: function (data) {
             $.each(JSON.parse(data), function (i, item) {
@@ -390,7 +401,6 @@ function listeOpcaOpacifEmployeur($name, element) {
                     element.append("<option value=\"" + item + "\">" + item + "</option>");
                 }
             });
-            console.log('fini');
         }
     });
 }

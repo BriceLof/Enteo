@@ -424,7 +424,22 @@ class BeneficiaireController extends Controller
             $beneficiaire = $form->getData();
             $beneficiaire->setDateConfMer(new \DateTime());
             $beneficiaire->setDateHeureMer(new \DateTime());
-            $beneficiaire->setVilleMer($beneficiaire->getVille());
+
+            $country = $form->get('country')->getData();
+            if($country == "FR")
+                $beneficiaire->setVilleMer($beneficiaire->getVille());
+            else{
+                $villeNoFr = $form->get('villeNoFr')->getData();
+                $zipNoFr = $form->get('codePostal')->getData();
+                $ville = new Ville();
+                $ville->setNom($villeNoFr);
+                $ville->setCp($zipNoFr);
+                $ville->setDepartementId(0);
+                $em->persist($ville);
+                $beneficiaire->setVilleMer($ville);
+                $beneficiaire->setVille($ville);
+            }
+
             // origine beneficiaire 
             $origineBene1 =$form->get('origineMerQui')->getData();
             $origineBene2 =$form->get('origineMerComment')->getData();
