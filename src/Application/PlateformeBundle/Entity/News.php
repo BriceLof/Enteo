@@ -184,8 +184,12 @@ class News
 
         if (!in_array($this->detailStatut->getId(), array(7,14))){
             $suivis = $this->getBeneficiaire()->getSuiviAdministratif();
-            foreach ($suivis as $suivi){
-                $this->getBeneficiaire()->removeSuiviAdministratif($suivi);
+
+            if(count($suivis) > 0 && !is_null($suivis)){
+                foreach ($suivis as $suivi){
+                    var_dump($suivi);exit;
+                    $this->getBeneficiaire()->removeSuiviAdministratif($suivi);
+                }
             }
         }
 
