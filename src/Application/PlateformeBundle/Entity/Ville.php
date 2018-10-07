@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Ville
@@ -44,7 +45,7 @@ class Ville
 
     /**
      * @var string
-     *
+     * @Gedmo\Slug(fields={"nom"})
      * @ORM\Column(name="slug_ville", type="string", length=255, nullable=false)
      */
     private $slugVille;
