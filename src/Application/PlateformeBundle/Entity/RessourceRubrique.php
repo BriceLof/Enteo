@@ -131,4 +131,6 @@ class RessourceRubrique
     {
         return $this->ordre;
     }
+
+
 }

@@ -14,11 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 class RessourceController extends Controller
 {
 
-    public function indexAction()
+    public function indexAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findAll();
+        if($id == null)
+            $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findAll();
+        else
+            $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findByRubrique($id);
+
         $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findBy(array(), array('ordre' => 'ASC'));
 
         $rubrique = new RessourceRubrique();
@@ -28,6 +32,7 @@ class RessourceController extends Controller
             'ressources' => $ressources,
             'ressourceRubriques' => $ressourceRubriques,
             'formOrdreRubrique' => $formOrdreRubrique->createView(),
+            'idRubrique' => $id
         ));
     }
 

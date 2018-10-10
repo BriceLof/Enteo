@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,21 @@ class RessourceType extends AbstractType
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:RessourceRubrique',
                 'choice_label' => 'nom'
+            ))
+            ->add('droit', ChoiceType::class, array(
+                'choices' => array(
+                    'Tous' => "all",
+                    'Tous sauf consultant' => "all_except_consultant",
+                    'Administrateur' => "admin",
+                ),
+                //'mapped' => false,
+                'label' => "Droit d'accès *",
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'placeholder' => "Choisissez"
+
+
             ))
             ->add('submit', SubmitType::class, array(
                 'label' => "Enregistrer",
