@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Ressource;
+use Application\PlateformeBundle\Entity\RessourceRubrique;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,11 +19,15 @@ class RessourceController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findAll();
-        $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findAll();
+        $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findBy(array(), array('ordre' => 'ASC'));
+
+        $rubrique = new RessourceRubrique();
+        $formOrdreRubrique = $this->createForm('Application\PlateformeBundle\Form\RubriqueRessourceOrdreType', $rubrique);
 
         return $this->render('ApplicationPlateformeBundle:Ressource:index.html.twig', array(
             'ressources' => $ressources,
-            'ressourceRubriques' => $ressourceRubriques
+            'ressourceRubriques' => $ressourceRubriques,
+            'formOrdreRubrique' => $formOrdreRubrique->createView(),
         ));
     }
 

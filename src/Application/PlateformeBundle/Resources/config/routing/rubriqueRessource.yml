@@ -2,6 +2,10 @@ application_delete_rubrique_ressource:
     path:     /delete/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:delete" }
 
+application_update_rubrique_ordre:
+    path:     /update-ordre
+    defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:editOrdre" }
+
 application_update_rubrique_ressource:
     path:     /update/{id}
     defaults: { _controller: "ApplicationPlateformeBundle:RubriqueRessource:edit" }
