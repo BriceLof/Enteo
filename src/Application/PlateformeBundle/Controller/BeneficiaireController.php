@@ -80,6 +80,27 @@ class BeneficiaireController extends Controller
                 $employeur = new Employeur();
             }
 
+            $country = $editForm->get('pays')->getData();
+            if($country == "FR"){
+                $beneficiaire->setVilleMer($beneficiaire->getVille());
+                $beneficiaire->setPays('FR');
+            }
+            else{
+                $villeNoFr = $editForm->get('villeNoFr')->getData();
+                $zipNoFr = $editForm->get('code_postal')->getData();
+                $ville = new Ville();
+                $ville->setNom($villeNoFr);
+                $ville->setCp($zipNoFr);
+                $ville->setDepartementId(0);
+
+                $ville->setPays($country);
+                $em->persist($ville);
+
+                $beneficiaire->setVilleMer($ville);
+                $beneficiaire->setVille($ville);
+                $beneficiaire->setPays($country);
+            }
+
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
@@ -426,8 +447,10 @@ class BeneficiaireController extends Controller
             $beneficiaire->setDateHeureMer(new \DateTime());
 
             $country = $form->get('country')->getData();
-            if($country == "FR")
+            if($country == "FR"){
                 $beneficiaire->setVilleMer($beneficiaire->getVille());
+                $beneficiaire->setPays('FR');
+            }
             else{
                 $villeNoFr = $form->get('villeNoFr')->getData();
                 $zipNoFr = $form->get('codePostal')->getData();
@@ -435,9 +458,12 @@ class BeneficiaireController extends Controller
                 $ville->setNom($villeNoFr);
                 $ville->setCp($zipNoFr);
                 $ville->setDepartementId(0);
+                $ville->setPays($country);
                 $em->persist($ville);
+
                 $beneficiaire->setVilleMer($ville);
                 $beneficiaire->setVille($ville);
+                $beneficiaire->setPays($country);
             }
 
             // origine beneficiaire 

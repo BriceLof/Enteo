@@ -115,13 +115,23 @@
                                         <td>{{ form_widget(edit_form.adresseComplement) }}</td>
                                     </tr>
                                     <tr>
+                                        <td>{{ form_label(edit_form.pays) }}</td>
+                                        <td>{{ form_widget(edit_form.pays, {'attr':{'value': beneficiaire.pays, 'class': 'countryBeneficiaire' }}) }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>{{ form_label(edit_form.code_postal) }}</td>
                                         <td>{{ form_widget(edit_form.code_postal, {'attr':{'value': beneficiaire.ville.cp }}) }}</td>
                                     </tr>
+
                                     {% if beneficiaire.ville is not null %}
-                                        <tr>
+                                        <tr class="block_ville_fr">
                                             <td>Ville</td>
                                             <td>{{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjaxBeneficiaire' }}) }}</td>
+                                        </tr>
+
+                                        <tr class="block_ville_no_fr" style="display:none">
+                                            <td>Ville</td>
+                                            <td>{{ form_widget(edit_form.villeNoFr) }}</td>
                                         </tr>
                                     {% else %}
                                         <tr>
@@ -129,10 +139,7 @@
                                             <td>{{ form_widget(edit_form.ville.nom ) }}</td>
                                         </tr>
                                     {% endif %}
-                                    <tr>
-                                        <td>{{ form_label(edit_form.pays) }}</td>
-                                        <td>{{ form_widget(edit_form.pays) }}</td>
-                                    </tr>
+
                                     <tr>
                                         <td>{{ form_label(edit_form.regionTravail) }}</td>
                                         <td>{{ form_widget(edit_form.regionTravail) }}</td>

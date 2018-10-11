@@ -106,6 +106,14 @@ class Ville
      */
     private $prePosition;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=false)
+     */
+    private $pays;
+
     /**
      * Get id
      *
@@ -475,5 +483,29 @@ class Ville
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Ville
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Form;
 use Application\PlateformeBundle\Entity\ContactEmployeur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -178,19 +179,30 @@ class BeneficiaireType extends AbstractType
                 },
                 'choice_label' => 'nom',
             ))
+            ->add('villeNoFr', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array("class" => "villeNoFrBeneficiaire")
+            ))
 
             ->add('proposition_adresse', HiddenType::class, array(
                 'mapped' => false,
             ))
-
-            ->add('pays', TextType::class, array(
-                'label' => 'Pays ',
-                'data' => 'FRANCE',
+            ->add('pays', CountryType::class, array(
+                "placeholder" => "Choisissez",
+                "label" => "Pays de résidence *",
+                'preferred_choices' => array('FR'),
                 'attr' => array(
-                    'placeholder' => '',
                     'class' => 'fiche'
                 )
             ))
+//            ->add('pays', TextType::class, array(
+//                'label' => 'Pays ',
+//                'attr' => array(
+//                    'placeholder' => '',
+//                    'class' => 'fiche'
+//                )
+//            ))
 			
 			->add('regionTravail', ChoiceType::class, array(
                 'label' => 'Région du travail',
