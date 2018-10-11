@@ -28,6 +28,7 @@ class AddBeneficiaireType extends AbstractType
                 "placeholder" => "Choisissez",
                 "mapped" => false,
                 "label" => "Pays de résidence *",
+                'preferred_choices' => array('FR'),
             ))
             // Me sert juste à activer l'ajax pour la recherche de ville correspondant
             ->add('codePostal', TextType::class, array(
@@ -106,7 +107,11 @@ class AddBeneficiaireType extends AbstractType
             ->add('telConso', TextType::class, array(
                 'label' => 'Téléphone *',
                 'required' => true,
-            )) 
+            ))
+            ->add('indicatifTel', HiddenType::class, array(
+                'required' => true,
+                'attr' => array("class" => "indicatifTel")
+            ))
             ->add('emailConso', EmailType::class, array(
                 'label' => 'Email *',
                 'required' => true,

@@ -272,6 +272,12 @@ class Beneficiaire
     private $telConso;
 
     /**
+     * @ORM\Column(name="indicatif_tel", type="string", length=10)
+     * @Assert\Type("string")
+     */
+    private $indicatifTel;
+
+    /**
      * @ORM\Column(name="email_conso", type="string", length=255)
      *
      */
@@ -1793,5 +1799,29 @@ class Beneficiaire
     public function setEcoleUniversite($ecoleUniversite)
     {
         $this->ecoleUniversite = $ecoleUniversite;
+    }
+
+    /**
+     * Set indicatifTel
+     *
+     * @param string $indicatifTel
+     *
+     * @return Beneficiaire
+     */
+    public function setIndicatifTel($indicatifTel)
+    {
+        $this->indicatifTel = $indicatifTel;
+
+        return $this;
+    }
+
+    /**
+     * Get indicatifTel
+     *
+     * @return string
+     */
+    public function getIndicatifTel()
+    {
+        return $this->indicatifTel;
     }
 }

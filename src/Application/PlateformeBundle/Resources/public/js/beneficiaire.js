@@ -119,6 +119,16 @@ $(function () {
         }
     });
 
+    $(".countryBeneficiaire").change(function () {
+        countryCode = $(this).children("option:selected").val()
+        $.ajax({
+            url: window.location.origin+"/web/file/country_phone_code.json",
+            success: function(result){
+                $(".indicatifTel").val(result[countryCode])
+            }
+        });
+    });
+
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------------------------------  Page Bénéficiaire  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
