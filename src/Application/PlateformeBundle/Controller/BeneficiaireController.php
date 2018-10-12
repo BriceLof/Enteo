@@ -147,7 +147,7 @@ class BeneficiaireController extends Controller
 
         $historiqueConsultant = $em->getRepository('ApplicationPlateformeBundle:Historique')->getHistoriqueConsultantForBeneficiaire($beneficiaire);
 
-        $countryCodeJson = file_get_contents("https://appli-dev.entheor.com/web/file/country_code.json");
+        $countryCodeJson = file_get_contents($this->getParameter('host_name')."/file/country_code.json");
         $countryCode = (array) json_decode($countryCodeJson);
         !is_null($beneficiaire->getEmployeur())  ? $paysEmployeur = $beneficiaire->getEmployeur()->getPaysEmployeur() : $paysEmployeur = "";
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(

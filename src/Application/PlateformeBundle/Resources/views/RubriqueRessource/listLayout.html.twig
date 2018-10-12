@@ -1,0 +1,5 @@
+{% for rubrique in rubriques %}
+    {% if rubrique.compteur > 0 %}
+        <li><a style="color:black;width:100%" href="{{ path('application_category_ressource', {'id': rubrique.id })}}" target="_blank">{{ rubrique.nom }}</a></li>
+    {% endif %}
+{% endfor %}

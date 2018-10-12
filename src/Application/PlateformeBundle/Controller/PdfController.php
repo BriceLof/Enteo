@@ -115,7 +115,7 @@ class PdfController extends Controller
 			}
 		}
 
-		$countryCodeJson = file_get_contents("https://appli-dev.entheor.com/web/file/country_code.json");
+		$countryCodeJson = file_get_contents($this->getParameter('host_name')."/file/country_code.json");
 		$countryCode = (array) json_decode($countryCodeJson);
 
         $html = $this->renderView('ApplicationPlateformeBundle:Pdf:demandeFinancement.html.twig', array(
