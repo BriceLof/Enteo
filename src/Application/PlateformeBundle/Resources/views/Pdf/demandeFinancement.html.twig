@@ -236,7 +236,7 @@
                            
 				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='{{ employeur.getVille() is not null ? employeur.getVille().getCp() : "" }}' /></div>
                 <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='{{ employeur.getVille() is not null ? employeur.getVille().getNom() : "" }}' /></div>
-                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='France' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='{{ employeur.getPaysEmployeur() is not null ? country[employeur.getPaysEmployeur()] : "" }}' /></div>
             </div>
 			<div class="row">
                 <div class="aField" style=""><p class="myLabel">Intitulé de la convention collective (code IDCC)</p> <input style="width:421px" type='text' value='{{ employeur is not null ? employeur.getConventionCollective() : "" }}' /></div> 

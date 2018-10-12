@@ -71,7 +71,7 @@ class Employeur
      *     message = "Erreur sur le nom du Pays"
      * )
      */
-    private $pays;
+    private $paysEmployeur;
 
     /**
      * @var
@@ -306,27 +306,27 @@ class Employeur
     }
 
     /**
-     * Set pays
+     * Set paysEmployeur
      *
-     * @param string $pays
+     * @param string $paysEmployeur
      *
      * @return Employeur
      */
-    public function setPays($pays)
+    public function setPaysEmployeur($paysEmployeur)
     {
-        $this->pays = $pays;
+        $this->paysEmployeur = $paysEmployeur;
 
         return $this;
     }
 
     /**
-     * Get pays
+     * Get paysEmployeur
      *
      * @return string
      */
-    public function getPays()
+    public function getPaysEmployeur()
     {
-        return $this->pays;
+        return $this->paysEmployeur;
     }
 
     /**

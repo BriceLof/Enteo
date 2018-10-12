@@ -81,13 +81,9 @@ class BeneficiaireController extends Controller
             }
 
             $country = $editForm->get('pays')->getData();
-            
             if($country == "FR"){
                 $beneficiaire->setVilleMer($beneficiaire->getVille());
                 $beneficiaire->setPays('FR');
-
-                $employeur->setVille($employeur->getVille());
-                $employeur->setPays('FR');
             }
             else{
 
@@ -104,9 +100,26 @@ class BeneficiaireController extends Controller
                 $beneficiaire->setVilleMer($ville);
                 $beneficiaire->setVille($ville);
                 $beneficiaire->setPays($country);
+            }
+
+            $countryEmployeur = $editForm['employeur']['paysEmployeur']->getData();
+            if($countryEmployeur == "FR"){
+                $employeur->setVille($employeur->getVille());
+                $employeur->setPaysEmployeur('FR');
+            }else{
+                $villeNoFr = $editForm['employeur']['villeNoFrEmployeur']->getData();
+                $zipNoFr = $editForm['employeur']['code_postal_employeur']->getData();
+                $ville = new Ville();
+                $ville->setNom($villeNoFr);
+                $ville->setCp($zipNoFr);
+                $ville->setDepartementId(0);
+
+                $ville->setPays($countryEmployeur);
+                $em->persist($ville);
 
                 $employeur->setVille($ville);
-                $employeur->setPays($country);
+                $employeur->setPaysEmployeur($countryEmployeur);
+
             }
 
             $em->persist($employeur);
@@ -134,6 +147,9 @@ class BeneficiaireController extends Controller
 
         $historiqueConsultant = $em->getRepository('ApplicationPlateformeBundle:Historique')->getHistoriqueConsultantForBeneficiaire($beneficiaire);
 
+        $countryCodeJson = file_get_contents("https://appli-dev.entheor.com/web/file/country_code.json");
+        $countryCode = (array) json_decode($countryCodeJson);
+        !is_null($beneficiaire->getEmployeur())  ? $paysEmployeur = $beneficiaire->getEmployeur()->getPaysEmployeur() : $paysEmployeur = "";
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
             'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
@@ -141,7 +157,8 @@ class BeneficiaireController extends Controller
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),
             'histoConsultant' => $historiqueConsultant,
-            'listConsultantRv' => $listConsultantRv
+            'listConsultantRv' => $listConsultantRv,
+            'paysEmployeur' => $paysEmployeur
         ));
     }
 

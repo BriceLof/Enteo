@@ -20,7 +20,7 @@ $(function () {
     $(".villeAjaxBeneficiaire option:first-child").val("");
     $(".villeAjaxBeneficiaire option:first-child").text("");
     $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
-
+    $(".villeAjaxEmployeur").attr("disabled", "disabled");
 
     /* Si lors de la validation du formulaire, erreur de validation d'un champs coté php, la page sera racharger en montrant le champs erroner.
      Cependant si les champs code postal et ville qui n'étaient pas vide lors de la validation, lors du reload de la page le champs ville charger en ajax sera vide mais on pourra valider malgré tout le form
@@ -28,17 +28,21 @@ $(function () {
      */
 
     getVilleByZipAjax("Beneficiaire")
-    getVilleByZipAjax("Employeur")
+
+    if($(".codePostalInputForAjaxEmployeur").length > 0){
+        getVilleByZipAjax("Employeur")
+    }
+
 
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
 
-    if( $(".countryBeneficiaire option:selected").val() != "FR") {
+    if( $(".countryBeneficiaire option:selected").val() != "FR" && $(".countryBeneficiaire option:selected").val() != "") {
         showHideVille("Beneficiaire")
     };
 
-    if( $(".countryEmployeur option:selected").val() != "FR") {
+    if( $(".countryEmployeur option:selected").val() != "FR" && $(".countryEmployeur option:selected").val() != "") {
         showHideVille("Employeur")
     };
 
@@ -54,7 +58,7 @@ $(function () {
             $(".block_ville_no_fr"+type).hide()
             $(".block_ville_no_fr"+type+" .villeNoFr"+type).removeAttr('required')
 
-            getVilleByZipAjax("Beneficiaire")
+            getVilleByZipAjax(type)
         }
         else{
             $(".codePostalInputForAjax"+type).removeAttr("minlength");
@@ -92,6 +96,7 @@ $(function () {
 
     $(".country").change(function () {
         countryCode = $(this).children("option:selected").val()
+        console.log(countryCode)
         $.ajax({
             url: window.location.origin+"/web/file/country_phone_code.json",
             success: function(result){
@@ -124,6 +129,8 @@ $(function () {
         $(".histo_consultant p").toggle('slow')
         return false;
     });
+
+
 
 });
 
@@ -388,6 +395,8 @@ function listeOpcaOpacifEmployeur($name, element) {
 
 // Ajax pour recuperer la ville en fonction du CP
 function getVilleByZipAjax(type){
+    console.log(type)
+    console.log($(".codePostalInputForAjax"+type).val())
     if ($(".codePostalInputForAjax"+type).val().length == 5 && $(".country"+type).val() == "FR") {
         cp = $(".codePostalInputForAjax"+type).val()
         $.ajax({

@@ -102,7 +102,7 @@ class EmployeurType extends AbstractType
                 )
             ))
 
-            ->add('code_postal', TextType::class, array(
+            ->add('code_postal_employeur', TextType::class, array(
                 'mapped' => false,
                 'label' => "Code postal *",
                 'required' => true,
@@ -120,7 +120,7 @@ class EmployeurType extends AbstractType
                 },
                 'choice_label' => 'nom',
             ))
-            ->add('villeNoFr', TextType::class, array(
+            ->add('villeNoFrEmployeur', TextType::class, array(
                 'mapped' => false,
                 'required' => false,
                 'attr' => array("class" => "villeNoFrEmployeur")
@@ -128,9 +128,10 @@ class EmployeurType extends AbstractType
             ->add('proposition_adresse', HiddenType::class, array(
                 'mapped' => false,
             ))
-            ->add('pays', CountryType::class, array(
+            ->add('paysEmployeur', CountryType::class, array(
+
                 "placeholder" => "Choisissez",
-                "label" => "Pays de résidence *",
+                "label" => "Pays *",
                 'preferred_choices' => array('FR'),
                 'attr' => array(
                     'class' => 'fiche'
