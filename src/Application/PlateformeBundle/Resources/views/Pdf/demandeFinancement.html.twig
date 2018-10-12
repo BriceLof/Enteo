@@ -139,10 +139,11 @@
             <div class="row">
                 <div class="aField" style="width:100%"><p class="myLabel">Adresse</p> <input style="width:598px" type='text' value='{{ beneficiaire.getAdresse() }}' /></div>
             </div>
+
             <div class="row">
 				<div class="aField" style="width:25%"><p class="myLabel">Code postal</p> <input style="width:80px" type='text' value='{{ beneficiaire.getVille().getCp() }}' /></div>
                 <div class="aField" style="width:33%"><p class="myLabel">Ville</p> <input style="width:180px" type='text' value='{{ beneficiaire.getVille().getNom() }}' /></div>
-                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='France' /></div>
+                <div class="aField" style="width:33%"><p class="myLabel">Pays</p> <input style="width:180px" type='text' value='{{ country[beneficiaire.getPays()] }}' /></div>
             </div>
             <div class="row">
                 <div class="aField" style=""><p class="myLabel">Tél.</p> <input style="width:140px" type='text' value='{{ beneficiaire.getTelConso() }}' /></div>

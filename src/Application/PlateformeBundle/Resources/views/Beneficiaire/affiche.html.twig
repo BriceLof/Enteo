@@ -131,7 +131,7 @@
 
                                         <tr class="block_ville_no_fr" style="display:none">
                                             <td>Ville</td>
-                                            <td>{{ form_widget(edit_form.villeNoFr) }}</td>
+                                            <td>{{ form_widget(edit_form.villeNoFr, {'attr':{'value': beneficiaire.ville.nom }}) }}</td>
                                         </tr>
                                     {% else %}
                                         <tr>

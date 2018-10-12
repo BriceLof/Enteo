@@ -36,6 +36,14 @@ $(function () {
     // if($(".countryBeneficiaire").length > 0){
     //     $(".codePostalInputForAjaxBeneficiaire").attr("disabled", "disabled");
     // }
+    if( $(".countryBeneficiaire option:selected").val() != "FR") {
+        $(".codePostalInputForAjaxBeneficiaire").removeAttr("disabled");
+        $(".codePostalInputForAjaxBeneficiaire").removeAttr("minlength");
+        $(".block_ville_fr").hide()
+        $(".block_ville_no_fr").show()
+        $(".block_ville_no_fr .villeNoFrBeneficiaire").attr('required', 'required')
+
+    };
 
     $(".countryBeneficiaire").change(function () {
         $(".codePostalInputForAjaxBeneficiaire").removeAttr("disabled");

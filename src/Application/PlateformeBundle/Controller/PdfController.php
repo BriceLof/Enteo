@@ -114,12 +114,16 @@ class PdfController extends Controller
 				$cout_total_financement = $financeur->getMontant() + $cout_total_financement;
 			}
 		}
-              
+
+		$countryCodeJson = file_get_contents("https://appli-dev.entheor.com/web/file/country_code.json");
+		$countryCode = (array) json_decode($countryCodeJson);
+
         $html = $this->renderView('ApplicationPlateformeBundle:Pdf:demandeFinancement.html.twig', array(
             'beneficiaire' => $beneficiaire,
 			'employeur' => $employeur,
 			'accompagnement' => $accompagnement,
-			'cout_total_financement' => $cout_total_financement
+			'cout_total_financement' => $cout_total_financement,
+            'country' => $countryCode
         ));
 
         $this->get('application_plateforme.document')->saveDocument($beneficiaire, "financement", $html);
