@@ -116,7 +116,7 @@
                                     </tr>
                                     <tr>
                                         <td>{{ form_label(edit_form.pays) }}</td>
-                                        <td>{{ form_widget(edit_form.pays, {'attr':{'value': beneficiaire.pays, 'class': 'countryBeneficiaire' }}) }}</td>
+                                        <td>{{ form_widget(edit_form.pays, {'attr':{'value': beneficiaire.pays, 'class': 'countryBeneficiaire country', 'data-country-type': "Beneficiaire" }}) }}</td>
                                     </tr>
                                     <tr>
                                         <td>{{ form_label(edit_form.code_postal) }}</td>
@@ -124,12 +124,12 @@
                                     </tr>
 
                                     {% if beneficiaire.ville is not null %}
-                                        <tr class="block_ville_fr">
+                                        <tr class="block_ville_frBeneficiaire">
                                             <td>Ville</td>
                                             <td>{{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjaxBeneficiaire' }}) }}</td>
                                         </tr>
 
-                                        <tr class="block_ville_no_fr" style="display:none">
+                                        <tr class="block_ville_no_frBeneficiaire" style="display:none">
                                             <td>Ville</td>
                                             <td>{{ form_widget(edit_form.villeNoFr, {'attr':{'value': beneficiaire.ville.nom }}) }}</td>
                                         </tr>
@@ -206,15 +206,30 @@
                                         <td>{{ form_label(edit_form.employeur.adresseComplement) }}</td>
                                         <td>{{ form_widget(edit_form.employeur.adresseComplement) }}</td>
                                     </tr>
+
+                                    {% if beneficiaire.employeur is not null %}
+                                        {% set paysEmployeur = beneficiaire.employeur.pays %}
+                                    {% else %}
+                                        {% set paysEmployeur = "" %}
+                                    {% endif %}
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.pays) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.pays, {'attr':{'value': paysEmployeur, 'class': 'countryEmployeur country', 'data-country-type': "Employeur" }}) }}</td>
+                                    </tr>
                                     {% if beneficiaire.employeur is not null %}
                                         {% if beneficiaire.employeur.ville is not null %}
+
                                             <tr>
                                                 <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
                                                 <td>{{ form_widget(edit_form.employeur.code_postal, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
                                             </tr>
-                                            <tr>
+                                            <tr class="block_ville_frEmployeur">
                                                 <td>Ville</td>
                                                 <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
+                                            </tr>
+                                            <tr class="block_ville_no_frEmployeur" style="display:none">
+                                                <td>Ville</td>
+                                                <td>{{ form_widget(edit_form.employeur.villeNoFr, {'attr':{'value': beneficiaire.employeur.ville.nom }}) }}</td>
                                             </tr>
                                         {% else %}
                                             <tr>
@@ -236,10 +251,7 @@
                                             <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
                                         </tr>
                                     {% endif %}
-                                    <tr>
-                                        <td>{{ form_label(edit_form.pays) }}</td>
-                                        <td>{{ form_widget(edit_form.pays) }}</td>
-                                    </tr>
+
                                     <tr>
                                     <tr>
                                         <td class="tableSection">contact</td>

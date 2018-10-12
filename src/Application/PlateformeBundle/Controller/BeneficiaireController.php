@@ -81,11 +81,16 @@ class BeneficiaireController extends Controller
             }
 
             $country = $editForm->get('pays')->getData();
+            
             if($country == "FR"){
                 $beneficiaire->setVilleMer($beneficiaire->getVille());
                 $beneficiaire->setPays('FR');
+
+                $employeur->setVille($employeur->getVille());
+                $employeur->setPays('FR');
             }
             else{
+
                 $villeNoFr = $editForm->get('villeNoFr')->getData();
                 $zipNoFr = $editForm->get('code_postal')->getData();
                 $ville = new Ville();
@@ -99,6 +104,9 @@ class BeneficiaireController extends Controller
                 $beneficiaire->setVilleMer($ville);
                 $beneficiaire->setVille($ville);
                 $beneficiaire->setPays($country);
+
+                $employeur->setVille($ville);
+                $employeur->setPays($country);
             }
 
             $em->persist($employeur);

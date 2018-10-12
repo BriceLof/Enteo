@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -119,16 +120,19 @@ class EmployeurType extends AbstractType
                 },
                 'choice_label' => 'nom',
             ))
-
+            ->add('villeNoFr', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array("class" => "villeNoFrEmployeur")
+            ))
             ->add('proposition_adresse', HiddenType::class, array(
                 'mapped' => false,
             ))
-
-            ->add('pays', TextType::class, array(
-                'label' => 'Pays ',
-                'data' => 'FRANCE',
+            ->add('pays', CountryType::class, array(
+                "placeholder" => "Choisissez",
+                "label" => "Pays de résidence *",
+                'preferred_choices' => array('FR'),
                 'attr' => array(
-                    'placeholder' => '',
                     'class' => 'fiche'
                 )
             ))

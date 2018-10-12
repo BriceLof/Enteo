@@ -27,45 +27,43 @@ $(function () {
      ce qui provoquera une erreur par la suite dans la fiche detail du benef.
      */
 
-    getVilleByZipAjax()
+    getVilleByZipAjax("Beneficiaire")
+    getVilleByZipAjax("Employeur")
 
     //-----------------------------------------------------------------------------------------------------------------------//
     //--------------------------  Page Ajout d'un bénéficiaire manuellement  ------------------------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
 
-    // if($(".countryBeneficiaire").length > 0){
-    //     $(".codePostalInputForAjaxBeneficiaire").attr("disabled", "disabled");
-    // }
     if( $(".countryBeneficiaire option:selected").val() != "FR") {
-        $(".codePostalInputForAjaxBeneficiaire").removeAttr("disabled");
-        $(".codePostalInputForAjaxBeneficiaire").removeAttr("minlength");
-        $(".block_ville_fr").hide()
-        $(".block_ville_no_fr").show()
-        $(".block_ville_no_fr .villeNoFrBeneficiaire").attr('required', 'required')
-
+        showHideVille("Beneficiaire")
     };
 
-    $(".countryBeneficiaire").change(function () {
-        $(".codePostalInputForAjaxBeneficiaire").removeAttr("disabled");
+    if( $(".countryEmployeur option:selected").val() != "FR") {
+        showHideVille("Employeur")
+    };
+
+    $(".country").change(function () {
+        type = $(this).data("country-type")
+        $(".codePostalInputForAjax"+type).removeAttr("disabled");
         country = $(this).children("option:selected").val()
         console.log(country)
         if (country == 'FR') {
-            $(".codePostalInputForAjaxBeneficiaire").val("");
-            $(".codePostalInputForAjaxBeneficiaire").attr("minlength", "5");
-            $(".block_ville_fr").show()
-            $(".block_ville_no_fr").hide()
-            $(".block_ville_no_fr .villeNoFrBeneficiaire").removeAttr('required')
+            $(".codePostalInputForAjax"+type).val("");
+            $(".codePostalInputForAjax"+type).attr("minlength", "5");
+            $(".block_ville_fr"+type).show()
+            $(".block_ville_no_fr"+type).hide()
+            $(".block_ville_no_fr"+type+" .villeNoFr"+type).removeAttr('required')
 
-            getVilleByZipAjax()
+            getVilleByZipAjax("Beneficiaire")
         }
         else{
-            $(".codePostalInputForAjaxBeneficiaire").removeAttr("minlength");
-            $(".codePostalInputForAjaxBeneficiaire").off()
-            $(".codePostalInputForAjaxBeneficiaire").val("");
-            $(".block_ville_fr").hide()
-            $(".block_ville_no_fr").show()
-            $(".block_ville_no_fr .villeNoFrBeneficiaire").val("")
-            $(".block_ville_no_fr .villeNoFrBeneficiaire").attr('required', 'required')
+            $(".codePostalInputForAjax"+type).removeAttr("minlength");
+            $(".codePostalInputForAjax"+type).off()
+            $(".codePostalInputForAjax"+type).val("");
+            $(".block_ville_fr"+type).hide()
+            $(".block_ville_no_fr"+type).show()
+            $(".block_ville_no_fr"+type+" .villeNoFr"+type).val("")
+            $(".block_ville_no_fr"+type+" .villeNoFr"+type).attr('required', 'required')
         }
     });
 
@@ -92,7 +90,7 @@ $(function () {
         }
     });
 
-    $(".countryBeneficiaire").change(function () {
+    $(".country").change(function () {
         countryCode = $(this).children("option:selected").val()
         $.ajax({
             url: window.location.origin+"/web/file/country_phone_code.json",
@@ -388,79 +386,88 @@ function listeOpcaOpacifEmployeur($name, element) {
     });
 }
 
-
-function getVilleByZipAjax(){
-    if ($(".codePostalInputForAjaxBeneficiaire").val().length == 5 && $(".countryBeneficiaire").val() == "FR") {
-        cp = $(".codePostalInputForAjaxBeneficiaire").val()
+// Ajax pour recuperer la ville en fonction du CP
+function getVilleByZipAjax(type){
+    if ($(".codePostalInputForAjax"+type).val().length == 5 && $(".country"+type).val() == "FR") {
+        cp = $(".codePostalInputForAjax"+type).val()
         $.ajax({
             type: 'get',
             url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
             beforeSend: function () {
-                $(".villeAjaxBeneficiaire option").remove();
+                $(".villeAjax"+type+" option").remove();
                 $(".block_info_chargement").show();
             }
         })
             .done(function (data) {
                 $(".block_info_chargement").hide();
-                $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                $(".villeAjax"+type).removeAttr("disabled");
                 for (var i = 0; i < data.villes.length; i++) {
                     if ($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == data.villes[i].id) {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
+                        $(".villeAjax"+type).append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
                     } else {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                        $(".villeAjax"+type).append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
                     }
                 }
             });
     }
-    else if($(".codePostalInputForAjaxBeneficiaire").val().length > 1 && $(".countryBeneficiaire").val() != "FR"){
-        cp = $(".codePostalInputForAjaxBeneficiaire").val()
+    else if($(".codePostalInputForAjax"+type).val().length > 1 && $(".country"+type).val() != "FR"){
+        cp = $(".codePostalInputForAjax"+type).val()
         $.ajax({
             type: 'get',
             url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
             beforeSend: function () {
-                $(".villeAjaxBeneficiaire option").remove();
+                $(".villeAjax"+type+" option").remove();
                 $(".block_info_chargement").show();
             }
         })
             .done(function (data) {
                 $(".block_info_chargement").hide();
-                $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                $(".villeAjax"+type).removeAttr("disabled");
                 for (var i = 0; i < data.villes.length; i++) {
                     if ($('#beneficiaire_idVilleHiddenBeneficiaire').attr('value') == data.villes[i].id) {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
+                        $(".villeAjax"+type).append("<option value=" + data.villes[i].id + " selected>" + data.villes[i].nom + "</option>")
                     } else {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                        $(".villeAjax"+type).append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
                     }
                 }
             });
     }
     else{
-        $(".villeAjaxBeneficiaire option").remove();
-        $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
+        $(".villeAjax"+type+" option").remove();
+        $(".villeAjax"+type).attr("disabled", "disabled");
     }
 
-    $(".codePostalInputForAjaxBeneficiaire").keyup(function () {
-        $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
+    $(".codePostalInputForAjax"+type).keyup(function () {
+        $(".villeAjax"+type).attr("disabled", "disabled");
         cp = $(this).val();
         if (cp.length == 5) {
             $.ajax({
                 type: 'get',
                 url: Routing.generate("application_plateforme_get_ville_ajax", {departement: cp}),
                 beforeSend: function () {
-                    $(".villeAjaxBeneficiaire option").remove();
+                    $(".villeAjax"+type+" option").remove();
                     $(".block_info_chargement").show();
                 }
             })
                 .done(function (data) {
                     $(".block_info_chargement").hide();
-                    $(".villeAjaxBeneficiaire").removeAttr("disabled");
+                    $(".villeAjax"+type).removeAttr("disabled");
                     for (var i = 0; i < data.villes.length; i++) {
-                        $(".villeAjaxBeneficiaire").append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
+                        $(".villeAjax"+type).append("<option value=" + data.villes[i].id + ">" + data.villes[i].nom + "</option>")
                     }
                 });
         } else {
-            $(".villeAjaxBeneficiaire option").remove();
-            $(".villeAjaxBeneficiaire").attr("disabled", "disabled");
+            $(".villeAjax"+type+" option").remove();
+            $(".villeAjax"+type).attr("disabled", "disabled");
         }
     });
+}
+
+// Sert à afficher ou cacher le champ ville en fonction du pays (France ou un pays etranger). Le champ ville sera un select ou simple champ texte
+function showHideVille(type){
+    $(".codePostalInputForAjax"+type).removeAttr("disabled");
+    $(".codePostalInputForAjax"+type).removeAttr("minlength");
+    $(".block_ville_fr"+type).hide()
+    $(".block_ville_no_fr"+type).show()
+    $(".block_ville_no_fr"+type+" .villeNoFr"+type).attr('required', 'required')
 }
