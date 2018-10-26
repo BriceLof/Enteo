@@ -52,7 +52,7 @@ class Statut
     /**
      * @var integer
      *
-     * @ORM\Column(name="ordre", type="integer")
+     * @ORM\Column(name="ordre", type="integer", unique=true)
      */
     private $ordre;
 

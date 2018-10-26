@@ -13,8 +13,8 @@
                             <div class="row">
                                 <p class="col-md-3"><b>Financeur * : </b></p>
                                 <p class="col-md-12">{{ form_widget(form.nom_financeur) }}</p>
-                                <p class="col-md-6">{{ form_widget(form.rue_financeur) }}</p>
-                                <p class="col-md-6">{{ form_widget(form.code_postal_financeur) }}</p>
+                                <p class="col-md-6">{{ form_widget(form.rue_financeur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].adresse~" - "~beneficiaire.accompagnement.financeur[0].complementAdresse }}) }}</p>
+                                <p class="col-md-6">{{ form_widget(form.code_postal_financeur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].cp~" "~beneficiaire.accompagnement.financeur[0].ville }}) }}</p>
                             </div>
                             <p id="objet" class="row">
                                 <br>

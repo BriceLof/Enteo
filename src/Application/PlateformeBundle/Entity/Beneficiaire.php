@@ -96,6 +96,18 @@ class Beneficiaire
     protected $lastDetailStatut;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DetailStatut", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $lastDetailStatutAdmin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DetailStatut", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $lastDetailStatutCommercial;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})
      */
     protected $missionArchives;
@@ -1823,5 +1835,53 @@ class Beneficiaire
     public function getIndicatifTel()
     {
         return $this->indicatifTel;
+    }
+
+    /**
+     * Set lastDetailStatutCommercial
+     *
+     * @param \Application\PlateformeBundle\Entity\DetailStatut $lastDetailStatutCommercial
+     *
+     * @return Beneficiaire
+     */
+    public function setLastDetailStatutCommercial(\Application\PlateformeBundle\Entity\DetailStatut $lastDetailStatutCommercial = null)
+    {
+        $this->lastDetailStatutCommercial = $lastDetailStatutCommercial;
+
+        return $this;
+    }
+
+    /**
+     * Get lastDetailStatutCommercial
+     *
+     * @return \Application\PlateformeBundle\Entity\DetailStatut
+     */
+    public function getLastDetailStatutCommercial()
+    {
+        return $this->lastDetailStatutCommercial;
+    }
+
+    /**
+     * Set lastDetailStatutAdmin
+     *
+     * @param \Application\PlateformeBundle\Entity\DetailStatut $lastDetailStatutAdmin
+     *
+     * @return Beneficiaire
+     */
+    public function setLastDetailStatutAdmin(\Application\PlateformeBundle\Entity\DetailStatut $lastDetailStatutAdmin = null)
+    {
+        $this->lastDetailStatutAdmin = $lastDetailStatutAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get lastDetailStatutAdmin
+     *
+     * @return \Application\PlateformeBundle\Entity\DetailStatut
+     */
+    public function getLastDetailStatutAdmin()
+    {
+        return $this->lastDetailStatutAdmin;
     }
 }
