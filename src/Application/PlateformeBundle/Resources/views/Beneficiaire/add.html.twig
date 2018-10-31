@@ -12,16 +12,28 @@
             <div class="panel-body">
                 <div class="row">
                     {{ form_start(form, {'method': 'post', 'action': path('application_add_beneficiaire') }) }}
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        {{ form_label(form.country) }}
+                        {{ form_errors(form.country) }}
+                        {{ form_widget(form.country, {'attr' : {"class":"countryBeneficiaire country", 'data-country-type': "Beneficiaire"} }) }}
+                    </div>
+                    <div class="col-md-4">
                         {{ form_label(form.codePostal) }}
                         {{ form_errors(form.codePostal) }}
                         {{ form_widget(form.codePostal) }}
                     </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-4 block_ville_frBeneficiaire">
                         {{ form_label(form.ville) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                         {{ form_errors(form.ville) }}
                         {{ form_widget(form.ville, {'attr' : {"class":"villeAjaxBeneficiaire"} }) }}
                     </div>
+                    <div class="col-md-4 block_ville_no_frBeneficiaire" style="display:none">
+                        {# Quand pays n'est pas FR, la ville devient un input text simple #}
+                        {{ form_label(form.ville) }}
+                        {{ form_widget(form.villeNoFr) }}
+                    </div>
+
                     <div class="col-md-6">
                         {{ form_label(form.statut) }}
                         {{ form_errors(form.statut) }}
@@ -43,6 +55,8 @@
                         {{ form_widget(form.prenomConso) }}
                     </div>
                     <div class="col-md-6">
+                        {{ form_widget(form.indicatifTel) }}
+
                         {{ form_label(form.telConso) }}
                         {{ form_errors(form.telConso) }}
                         {{ form_widget(form.telConso) }}

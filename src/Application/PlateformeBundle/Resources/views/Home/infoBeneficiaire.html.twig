@@ -122,41 +122,34 @@
         </td>
 
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
-            {% if beneficiaire.lastDetailStatut is not null %}
+            {% if beneficiaire.lastDetailStatutAdmin is not null %}
                 <td>
                     <b>
-                        {{ beneficiaire.LastDetailStatut.statut.nom }}
+                        {{ beneficiaire.LastDetailStatutAdmin.statut.nom }}
                     </b>
                 </td>
                 <td>
-                    {{ beneficiaire.LastDetailStatut.detail }}
-                </td>
-            {% elseif beneficiaire.lastDetailStatutConsultant is not null %}
-                <td>
-                    <b>
-                        {{ beneficiaire.LastDetailStatutConsultant.statut.nom }}
-                    </b>
-                </td>
-                <td>
-                    {{ beneficiaire.LastDetailStatutConsultant.detail }}
-                </td>
-            {% endif %}
-        {% else %}
-            {% if beneficiaire.lastDetailStatutConsultant is not null %}
-                <td>
-                    <b>
-                        {{ beneficiaire.LastDetailStatutConsultant.statut.nom }}
-                    </b>
-                </td>
-                <td>
-                    {{ beneficiaire.LastDetailStatutConsultant.detail }}
+                    {{ beneficiaire.LastDetailStatutAdmin.detail }}
                 </td>
             {% else %}
                 <td>
+                    <b>
+                        {{ beneficiaire.LastDetailStatutCommercial.statut.nom }}
+                    </b>
                 </td>
                 <td>
+                    {{ beneficiaire.LastDetailStatutCommercial.detail }}
                 </td>
             {% endif %}
+        {% else %}
+            <td>
+                <b>
+                    {{ beneficiaire.LastDetailStatutConsultant.statut.nom }}
+                </b>
+            </td>
+            <td>
+                {{ beneficiaire.LastDetailStatutConsultant.detail }}
+            </td>
         {% endif %}
 
         <td colspan=5>

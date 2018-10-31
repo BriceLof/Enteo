@@ -80,6 +80,48 @@ class BeneficiaireController extends Controller
                 $employeur = new Employeur();
             }
 
+            $country = $editForm->get('pays')->getData();
+            if($country == "FR"){
+                $beneficiaire->setVilleMer($beneficiaire->getVille());
+                $beneficiaire->setPays('FR');
+            }
+            else{
+
+                $villeNoFr = $editForm->get('villeNoFr')->getData();
+                $zipNoFr = $editForm->get('code_postal')->getData();
+                $ville = new Ville();
+                $ville->setNom($villeNoFr);
+                $ville->setCp($zipNoFr);
+                $ville->setDepartementId(0);
+
+                $ville->setPays($country);
+                $em->persist($ville);
+
+                $beneficiaire->setVilleMer($ville);
+                $beneficiaire->setVille($ville);
+                $beneficiaire->setPays($country);
+            }
+
+            $countryEmployeur = $editForm['employeur']['paysEmployeur']->getData();
+            if($countryEmployeur == "FR"){
+                $employeur->setVille($employeur->getVille());
+                $employeur->setPaysEmployeur('FR');
+            }else{
+                $villeNoFr = $editForm['employeur']['villeNoFrEmployeur']->getData();
+                $zipNoFr = $editForm['employeur']['code_postal_employeur']->getData();
+                $ville = new Ville();
+                $ville->setNom($villeNoFr);
+                $ville->setCp($zipNoFr);
+                $ville->setDepartementId(0);
+
+                $ville->setPays($countryEmployeur);
+                $em->persist($ville);
+
+                $employeur->setVille($ville);
+                $employeur->setPaysEmployeur($countryEmployeur);
+
+            }
+
             $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
@@ -105,6 +147,9 @@ class BeneficiaireController extends Controller
 
         $historiqueConsultant = $em->getRepository('ApplicationPlateformeBundle:Historique')->getHistoriqueConsultantForBeneficiaire($beneficiaire);
 
+        $countryCodeJson = file_get_contents($this->getParameter('host_name')."/file/country_code.json");
+        $countryCode = (array) json_decode($countryCodeJson);
+        !is_null($beneficiaire->getEmployeur())  ? $paysEmployeur = $beneficiaire->getEmployeur()->getPaysEmployeur() : $paysEmployeur = "";
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:affiche.html.twig', array(
             'codePostalHiddenEmployeur' => $codePostalHiddenEmployeur,
             'idVilleHiddenEmployeur' => $idVilleHiddenEmployeur,
@@ -112,7 +157,8 @@ class BeneficiaireController extends Controller
             'beneficiaire'      => $beneficiaire,
             'edit_form'   => $editForm->createView(),
             'histoConsultant' => $historiqueConsultant,
-            'listConsultantRv' => $listConsultantRv
+            'listConsultantRv' => $listConsultantRv,
+            'paysEmployeur' => $paysEmployeur
         ));
     }
 
@@ -424,7 +470,27 @@ class BeneficiaireController extends Controller
             $beneficiaire = $form->getData();
             $beneficiaire->setDateConfMer(new \DateTime());
             $beneficiaire->setDateHeureMer(new \DateTime());
-            $beneficiaire->setVilleMer($beneficiaire->getVille());
+
+            $country = $form->get('country')->getData();
+            if($country == "FR"){
+                $beneficiaire->setVilleMer($beneficiaire->getVille());
+                $beneficiaire->setPays('FR');
+            }
+            else{
+                $villeNoFr = $form->get('villeNoFr')->getData();
+                $zipNoFr = $form->get('codePostal')->getData();
+                $ville = new Ville();
+                $ville->setNom($villeNoFr);
+                $ville->setCp($zipNoFr);
+                $ville->setDepartementId(0);
+                $ville->setPays($country);
+                $em->persist($ville);
+
+                $beneficiaire->setVilleMer($ville);
+                $beneficiaire->setVille($ville);
+                $beneficiaire->setPays($country);
+            }
+
             // origine beneficiaire 
             $origineBene1 =$form->get('origineMerQui')->getData();
             $origineBene2 =$form->get('origineMerComment')->getData();

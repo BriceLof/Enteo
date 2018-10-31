@@ -4,6 +4,7 @@ namespace Application\PlateformeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Ville
@@ -44,7 +45,7 @@ class Ville
 
     /**
      * @var string
-     *
+     * @Gedmo\Slug(fields={"nom"})
      * @ORM\Column(name="slug_ville", type="string", length=255, nullable=false)
      */
     private $slugVille;
@@ -104,6 +105,14 @@ class Ville
      * @ORM\Column(name="pre_position", type="string", length=10, nullable=true)
      */
     private $prePosition;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=false)
+     */
+    private $pays;
 
     /**
      * Get id
@@ -474,5 +483,29 @@ class Ville
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Ville
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

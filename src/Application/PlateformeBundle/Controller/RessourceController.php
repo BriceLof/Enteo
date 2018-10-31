@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Ressource;
+use Application\PlateformeBundle\Entity\RessourceRubrique;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,16 +14,25 @@ use Symfony\Component\HttpFoundation\Request;
 class RessourceController extends Controller
 {
 
-    public function indexAction()
+    public function indexAction($id = null)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findAll();
-        $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findAll();
+        if($id == null)
+            $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findAll();
+        else
+            $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findByRubrique($id);
+
+        $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findBy(array(), array('ordre' => 'ASC'));
+
+        $rubrique = new RessourceRubrique();
+        $formOrdreRubrique = $this->createForm('Application\PlateformeBundle\Form\RubriqueRessourceOrdreType', $rubrique);
 
         return $this->render('ApplicationPlateformeBundle:Ressource:index.html.twig', array(
             'ressources' => $ressources,
-            'ressourceRubriques' => $ressourceRubriques
+            'ressourceRubriques' => $ressourceRubriques,
+            'formOrdreRubrique' => $formOrdreRubrique->createView(),
+            'idRubrique' => $id
         ));
     }
 

@@ -121,10 +121,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
      */
     public function search(Beneficiaire $beneficiaire, $debut, $fin, $idUtilisateur = null, $bool = false, $tri = 0, $ville = null, $statut = null, $detailStatut = null, $complementStatut = null, $cacher = false, $complementDetailStatut = null, $ids = null)
     {
-        $type = 'suiviAdministratif';
-        if (!is_null($statut) && $statut->getType() == 'commercial') {
-            $type = 'news';
-        }
 
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire', 'b');
@@ -138,15 +134,8 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         $query = 'SELECT b.* FROM beneficiaire b';
         $params = array();
 
-        if (!is_null($detailStatut) || !is_null($statut)) {
-            if ($type == 'news') {
-                $query .= ' INNER JOIN news n ON b.id = n.beneficiaire_id';
-                $query .= ' INNER JOIN statut s ON s.id = n.statut_id';
-            } elseif ($type == 'suiviAdministratif') {
-                $query .= ' INNER JOIN suivi_administratif sa ON b.id = sa.beneficiaire_id';
-                $query .= ' INNER JOIN statut s ON s.id = sa.statut_id';
-            }
-        }
+        $query .= ' INNER JOIN detail_statut ds ON ds.id = b.last_detail_statut_id';
+        $query .= ' INNER JOIN statut s ON s.id = ds.statut_id';
 
         if (!is_null($ville)) {
             $query .= ' INNER JOIN ville v ON b.ville_mer_id = v.id';
@@ -155,43 +144,27 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         $query .= ' WHERE 1';
 
-        if (!is_null($detailStatut) || !is_null($statut)) {
-            if ($type == 'news') {
-                $query .= ' AND n.id = (SELECT MAX(id)
-                                         FROM news 
-                                         WHERE beneficiaire_id = b.id
-                                         AND detail_statut_id IS NOT NULL)';
-            } elseif ($type == 'suiviAdministratif') {
-                $query .= ' AND sa.id = (SELECT MAX(id)
-                                         FROM suivi_administratif 
-                                         WHERE beneficiaire_id = b.id
-                                         AND detail_statut_id IS NOT NULL)';
-            }
-        }
-
         if (!is_null($ville)) {
             $query .= ' AND v.ville LIKE :villeNom';
             $params['villeNom'] = '%' . $ville . '%';
         }
 
-        if (!is_null($detailStatut)) {
-            if ($type == 'news') {
-                $query .= ' AND n.detail_statut_id ' . $complementDetailStatut . ' :detailStatut';
-            } else {
-                $query .= ' AND sa.detail_statut_id ' . $complementDetailStatut . ' :detailStatut';
-            }
-            $params['detailStatut'] = $detailStatut->getId();
-        }
-
         if (!is_null($statut)) {
-            $query .= ' AND s.ordre ' . $complementStatut . ' :ordre';
-            $params['ordre'] = $statut->getOrdre();
-            if ($type == 'news') {
-                $query .= ' AND n.statut_id ' . $complementStatut . ' :statut';
-            } else {
-                $query .= ' AND sa.statut_id ' . $complementStatut . ' :statut';
+            if ($complementStatut == "=") {
+                $query .= ' AND s.ordre = :ordre';
+                if (!is_null($detailStatut)) {
+                    $query .= ' AND ds.id ' . $complementDetailStatut . ' :detailStatut';
+                    $params['detailStatut'] = $detailStatut->getId();
+                }
+            }else{
+                if (!is_null($detailStatut)) {
+                    $query .= ' AND (s.ordre >= :ordre OR (s.ordre = :ordre AND ds.id >= :detailStatut))';
+                    $params['detailStatut'] = $detailStatut->getId();
+                }else{
+                    $query .= ' AND s.ordre >= :ordre';
+                }
             }
-            $params['statut'] = $statut->getId();
+            $params['ordre'] = $statut->getOrdre();
         }
 
         if (!is_null($beneficiaire->getNomConso())) {
@@ -218,7 +191,7 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $params['consultant'] = $beneficiaire->getConsultant()->getId();
         } else if (!is_null($idUtilisateur)) {
             if (!is_null($ids)) {
-                $query .= ' AND b.consultant_id IN ('. implode(',', $ids). ')';
+                $query .= ' AND b.consultant_id IN (' . implode(',', $ids) . ')';
             } else {
                 $query .= ' AND b.consultant_id = :consultantId';
                 $params['consultantId'] = $idUtilisateur;

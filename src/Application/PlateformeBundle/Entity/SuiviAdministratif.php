@@ -33,7 +33,7 @@ class SuiviAdministratif
     /**
      * @var
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
@@ -60,7 +60,6 @@ class SuiviAdministratif
 
     /**
      * SuiviAdministratif constructor.
-     * @param $date
      */
     public function __construct()
     {
@@ -205,17 +204,17 @@ class SuiviAdministratif
     public function modifyBeneficiaire(LifecycleEventArgs $args)
     {
         if (!is_null($this->statut)){
-            if ($this->statut->getId() == 9 || $this->statut->getId() == 10 || $this->statut->getId() == 14){
-                $detail = $args->getEntityManager()->getRepository('ApplicationPlateformeBundle:DetailStatut')->find(22);
-                $this->getBeneficiaire()->setLastDetailStatutConsultant($detail);
-            }
+            $this->getBeneficiaire()->setLastDetailStatutAdmin($this->detailStatut);
 
             if  ( !is_null($this->getBeneficiaire()->getLastDetailStatutConsultant()) && ( $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12 || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13) ) {
                 $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
             }
 
-            if ($this->statut->isAccesConsultant() == true) {
+            if ($this->statut->isAccesConsultant()) {
                 $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
+            }else{
+                $detail = $args->getEntityManager()->getRepository('ApplicationPlateformeBundle:DetailStatut')->find(22);
+                $this->getBeneficiaire()->setLastDetailStatutConsultant($detail);
             }
         }
     }

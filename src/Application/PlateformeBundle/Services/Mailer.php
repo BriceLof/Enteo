@@ -17,6 +17,7 @@ class Mailer
     protected $templating;
     protected $date;
     protected $from = array("email" => "admin@entheor.com", "name" => "admin@entheor.com");
+    protected $fromSms = "Entheo";
     protected $reply = "";
     protected $name = "Equipe Entheo";
     protected $webDirectory;
@@ -33,7 +34,7 @@ class Mailer
     }
 
     // Envoi avec SMTP SendinBlue
-    public function sendMessage($from, $to, $replyTo = null, $cc = null, $bcc = null, $subject, $body, $attachement = null){
+    public function sendMessage($from, $to, $replyTo = null, $cc = null, $bcc = null, $subject, $body, $attachement = null, Array $sms = null){
 
         if(is_null($replyTo)) $reply =  array("email" => $from['email']);
         else $reply = $replyTo;
@@ -62,7 +63,7 @@ class Mailer
         }
 
         if($this->hostname == "https://appli-dev.entheor.com/web"){
-            $data["to"] = array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof"));
+            $data["to"] = array(array("email" => "brice.lof@gmail.com", "name" => "Brice Lof"));
 //            if(!is_null($cc) && $cc != ''){
 //                $data["cc"] = $data["to"];
 //            }
@@ -78,7 +79,11 @@ class Mailer
             }
         }
 
-        $this->apiCurlSmtpSendinblue($data);
+
+        if(is_null($sms))
+            $this->apiCurlSmtpSendinblue($data);
+        else
+            $this->apiCurlSmtpSendinblue($data, $sms);
     }
 
     // Envoi par swfitmailer des mails pas important pour économiser notre quota sendinblue
@@ -239,7 +244,7 @@ class Mailer
         $this->sendMessage($this->from,$to,null,$cc = null, $bcc = null ,$subject,$body, $attachement);
     }
 
-    public function apiCurlSmtpSendinblue($data){
+    public function apiCurlSmtpSendinblue($data, $sms = null){
 
         // Mail envoye par smtp de sentingblue
         $header = array('Accept: application/json', 'Content-Type: application/json', 'api-key: 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');
@@ -269,6 +274,44 @@ class Mailer
 //        } else {
 //            echo $response;
 //        }
+
+
+
+
+        // SMS transactionnel
+        // a reactiver quand sms sera vu avec Franck
+//        if(!is_null($sms)){
+//
+//            $sms['sender'] = $this->fromSms;
+//            $sms['type'] = "transactional";
+//
+//            $curl = curl_init();
+//
+//            curl_setopt_array($curl, array(
+//                CURLOPT_HTTPHEADER => $header,
+//                CURLOPT_URL => "https://api.sendinblue.com/v3/transactionalSMS/sms",
+//                CURLOPT_RETURNTRANSFER => true,
+//                CURLOPT_ENCODING => "",
+//                CURLOPT_MAXREDIRS => 10,
+//                CURLOPT_TIMEOUT => 30,
+//                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                CURLOPT_CUSTOMREQUEST => "POST",
+//                CURLOPT_POSTFIELDS => json_encode($sms)
+//            ));
+//
+//            $response = curl_exec($curl);
+//            $err = curl_error($curl);
+//
+//            curl_close($curl);
+//
+//            if ($err) {
+//                echo "cURL Error #:" . $err;
+//            } else {
+//                echo $response;
+//            }
+//        }
+
+
 
     }
 }

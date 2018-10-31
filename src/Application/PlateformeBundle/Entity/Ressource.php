@@ -74,6 +74,13 @@ class Ressource
      */
     private $rubrique;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="droit", type="string", length=255)
+     */
+    private $droit;
+
 
     /**
      * Get id
@@ -194,5 +201,29 @@ class Ressource
     public function getRubrique()
     {
         return $this->rubrique;
+    }
+
+    /**
+     * Set droit
+     *
+     * @param string $droit
+     *
+     * @return Ressource
+     */
+    public function setDroit($droit)
+    {
+        $this->droit = $droit;
+
+        return $this;
+    }
+
+    /**
+     * Get droit
+     *
+     * @return string
+     */
+    public function getDroit()
+    {
+        return $this->droit;
     }
 }

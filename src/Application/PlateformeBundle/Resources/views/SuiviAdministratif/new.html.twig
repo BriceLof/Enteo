@@ -1,42 +1,76 @@
-<form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm"
+<form method="POST" id="suiviAdministratifNewForm" class="suiviAdministratifForm container-fluid"
       action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}">
 
-    <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px">Information de suivi : </p>
+    <div class="row mt-10">
+        <div class="col-md-12 bold green">Information de suivi : </div>
+    </div>
     <div class="row">
-        <span class="col-xs-6">{{ form_widget(form.info) }}</span>
-    </div>
-    <br>
-
-    <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-bottom: 15px;margin-top: -2px;">Contact Financeur :</p>
-    <div id="contact_financeur">
-        <div class="form-group">
-            <label for="">Type Financeur</label>
-            <div>{{ form_widget(form.typeFinanceur, {'attr' : {'value': beneficiaire.typeFinanceur }}) }}</div>
-        </div>
-        <div class="form-group" id="tdElement" style="display: none">
-            <label for="">Organisme</label>
-            <div>{{ form_widget(form.organisme, {'id': 'organisme', 'attr': { 'value': beneficiaire.organisme}}) }}</div>
-        </div>
+        <div class="col-xs-6">{{ form_widget(form.info) }}</div>
     </div>
 
+    <div class="row mt-10">
+        <div class="col-md-12 bold green"> Contact Financeur :</div>
+    </div>
+    <div id="contact_financeur" class="row">
+        <div class="form-group mt-10 col-md-12 mb-0">
+            <label class="col-md-4">Type Financeur</label>
+            <div class="col-md-8">{{ form_widget(form.typeFinanceur, {'attr' : {'value': beneficiaire.typeFinanceur }}) }}</div>
+        </div>
+        <div class="form-group col-md-12 mb-0" id="tdElement" style="display: none">
+            <label class="col-md-4" for="">Organisme</label>
+            <div class="col-md-8">{{ form_widget(form.organisme, {'id': 'organisme', 'attr': { 'value': beneficiaire.organisme}}) }}</div>
+        </div>
 
-    <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top: 10px">Mofidier le Statut Administratif : </p>
+        <div id="financeur_information">
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4 mt-10" for="adresseFinanceur">Adresse</label>
+                <div class="col-md-8 mt-10">{{ form_widget(form.adresseFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].adresse }}) }}</div>
+            </div>
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Complément</label>
+                <div class="col-md-8">{{ form_widget(form.complementAdresseFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].complementAdresse }}) }}</div>
+            </div>
+
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Code Postal</label>
+                <div class="col-md-8">{{ form_widget(form.cpFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].cp }}) }}</div>
+            </div>
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Ville</label>
+                <div class="col-md-8">{{ form_widget(form.villeFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].ville }}) }}</div>
+            </div>
+
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4 mt-10" for="">Civilité</label>
+                <div class="col-md-8 mt-10">{{ form_widget(form.civiliteContactFinanceur, {'value': beneficiaire.accompagnement.financeur[0].civiliteContact }) }}</div>
+            </div>
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Nom</label>
+                <div class="col-md-8">{{ form_widget(form.nomContactFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].nomContact }}) }}</div>
+            </div>
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Prenom</label>
+                <div class="col-md-8">{{ form_widget(form.prenomContactFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].prenomContact }}) }}</div>
+            </div>
+
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Email</label>
+                <div class="col-md-8">{{ form_widget(form.emailContactFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].emailContact }}) }}</div>
+            </div>
+            <div class="form-group col-md-12 mb-0">
+                <label class="col-md-4" for="">Téléphone</label>
+                <div class="col-md-8">{{ form_widget(form.telContactFinanceur, {'attr' : {'value': beneficiaire.accompagnement.financeur[0].telContact }}) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-10" style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top: 10px">Mofidier le Statut Administratif : </div>
 
     <div class="row">
         <span class="col-xs-2">{{ form_label(form.statut) }}</span>
 
-        {% set break = 0 %}
-        {% set suivi = null %}
-        {% for suiviAd in beneficiaire.suiviAdministratif|reverse if break == 0 %}
-            {% if suiviAd.detailStatut is not null and suiviAd.statut is not null %}
-                {% set suivi = suiviAd %}
-                {% set break = 1 %}
-            {% endif %}
-        {% endfor %}
 
-
-        {% if suivi is not null %}
-            <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd', 'data-value' : suivi.statut.id }}) }}</span>
+        {% if beneficiaire.lastdetailStatutAdmin.statut.type != 'commercial' %}
+            <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd', 'data-value' : beneficiaire.lastdetailStatutAdmin.statut.id }}) }}</span>
         {% else %}
             <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
         {% endif %}
@@ -45,8 +79,8 @@
                                                                      src="{{ asset('images/ajax-loader.gif') }}"/> <span
                     class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
 
-        {% if suivi is not null %}
-            <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled', 'data-value' : suivi.detailStatut.id }}) }}</span>
+        {% if beneficiaire.lastdetailStatutAdmin.statut.type != 'commercial' %}
+            <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd',  'data-value' : beneficiaire.lastdetailStatutAdmin.id }}) }}</span>
         {% else %}
             <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
         {% endif %}
@@ -54,8 +88,10 @@
 
     {% set display = (mission is null) ? 'block' : 'none' %}
     {% set displayMission = ( afficher == 'true' ) ? 'block' : 'none' %}
-    <div style="display: {{ displayMission }}" class="row" data-afficher="{{ afficher }}" data-autorisation="{{ autorisation }}" id="add_mission_tarif">
-        <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px;margin-left: 15px">Mission : <span id="state_mission"><b style="color: black">({{ stateMission }})</b></span></p>
+    <div style="display: {{ displayMission }}" class="row" data-afficher="{{ afficher }}"
+         data-autorisation="{{ autorisation }}" id="add_mission_tarif">
+        <p style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top:11px;margin-left: 15px">Mission : <span
+                    id="state_mission"><b style="color: black">({{ stateMission }})</b></span></p>
         <div style="display: {{ (mission is null) ? 'block' : 'none' }}" class="col-md-12">
             <span id="link_add_mission" class="link-mission">Envoyer contrat</span>
         </div>
@@ -99,7 +135,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Proposer une nouvelle mission à {{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|upper }}</h4>
+                        <h4 class="modal-title">Proposer une nouvelle mission
+                            à {{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|upper }}</h4>
                     </div>
                     <div class="modal-body">
                         <label class="col-xs-2" for="input_tarif_modal">Tarif (€)</label>
@@ -133,9 +170,9 @@
                                 <div class="col-xs 12">
                                     <p>Champ(s) manquant(s) :</p>
                                     <ul>
-                                    {% for text in tab %}
-                                        <li>{{ text }}</li>
-                                    {% endfor %}
+                                        {% for text in tab %}
+                                            <li>{{ text }}</li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>

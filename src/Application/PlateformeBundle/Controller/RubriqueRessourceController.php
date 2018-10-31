@@ -17,11 +17,16 @@ class RubriqueRessourceController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $ressources = $em->getRepository('ApplicationPlateformeBundle:Ressource')->findAll();
-        $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findAll();
+        $ressourceRubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findBy(array(), array('ordre' => 'ASC'));
+
+        $rubrique = new RessourceRubrique();
+        $formOrdreRubrique = $this->createForm('Application\PlateformeBundle\Form\RubriqueRessourceOrdreType', $rubrique);
+
 
         return $this->render('ApplicationPlateformeBundle:Ressource:index.html.twig', array(
             'ressources' => $ressources,
-            'ressourceRubriques' => $ressourceRubriques
+            'ressourceRubriques' => $ressourceRubriques,
+            'formOrdreRubrique' => $formOrdreRubrique->createView(),
         ));
     }
 
@@ -33,10 +38,16 @@ class RubriqueRessourceController extends Controller
         $form->handleRequest($request);
 
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $rubrique = $form->getData();
             $rubrique->setCompteur(0);
+
+            $em = $this->getDoctrine()->getManager();
+            $nombreRubriques = count($em->getRepository("ApplicationPlateformeBundle:RessourceRubrique")->findAll());
+            $rubrique->setOrdre($nombreRubriques + 1 );
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($rubrique);
             $em->flush();
@@ -102,6 +113,30 @@ class RubriqueRessourceController extends Controller
         return $this->render('ApplicationPlateformeBundle:RubriqueRessource:delete.html.twig', array(
             'rubrique' => $rubrique,
         ));
+    }
+
+    // Liste des rubriques affichés dans le menu, onglet "ressource partagés"
+    public function listForLayoutAction(){
+        $em = $this->getDoctrine()->getManager();
+        $rubriques = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->findBy(array(), array('ordre' => 'ASC'));
+
+        return $this->render('ApplicationPlateformeBundle:RubriqueRessource:listLayout.html.twig', array(
+            'rubriques' => $rubriques,
+        ));
+    }
+
+    public function editOrdreAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $rubriqueOrderArray = $request->get('rubrique');
+        foreach($rubriqueOrderArray as $idRubrique => $ordre){
+            $rubrique = $em->getRepository('ApplicationPlateformeBundle:RessourceRubrique')->find($idRubrique);
+            $rubrique->setOrdre($ordre);
+        }
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('info', 'Ordre d\'affichage des rubriques modifiées avec succès');
+
+        return $this->redirectToRoute('application_index_ressource');
     }
 
 

@@ -181,23 +181,19 @@ class News
                 OR $this->statut->getSlug() == "reporte" OR $this->statut->getSlug() == "termine")
             $this->getBeneficiaire()->increaseNbAppelTel();
 
+        $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
+        $this->getBeneficiaire()->setLastDetailStatutCommercial($this->detailStatut);
+        $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
 
-        /*if (!in_array($this->detailStatut->getId(), array(7,14))){
-            $suivis = $this->getBeneficiaire()->getSuiviAdministratif();
-            foreach ($suivis as $suivi){
-                $this->getBeneficiaire()->removeSuiviAdministratif($suivi);
-            }
-        }*/
-
+        if (in_array($this->detailStatut->getId(), array(7,14)) || in_array($this->statut->getId(), array(11,12,13))){
+        }else{
+            $this->getBeneficiaire()->setLastDetailStatutAdmin($this->detailStatut);
+        }
 
         if (in_array($this->statut->getId(), array(11,12,13))){
             $this->getBeneficiaire()->setDeleted(true);
-            $this->getBeneficiaire()->setLastDetailStatut(null);
         }else{
             $this->getBeneficiaire()->setDeleted(false);
-        }
-        if (!is_null($this->statut) && $this->statut->isAccesConsultant() == true){
-            $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
         }
     }
 

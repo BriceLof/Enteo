@@ -28,6 +28,8 @@ class SuiviAdministratifController extends Controller
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
         $suiviAdministratif = new SuiviAdministratif();
+        $suiviAdministratif->setDetailStatut($beneficiaire->getLastDetailStatutAdmin());
+        $suiviAdministratif->setStatut($beneficiaire->getLastDetailStatutAdmin()->getStatut());
         $form = $this->createForm(SuiviAdministratifType::class, $suiviAdministratif);
 
 //        dernier suivi administratif
@@ -91,6 +93,15 @@ class SuiviAdministratifController extends Controller
                 if ($financeur != null) {
                     $financeur->setNom($form['typeFinanceur']->getData());
                     $financeur->setOrganisme($form['organisme']->getData());
+                    $financeur->setAdresse($form['adresseFinanceur']->getData());
+                    $financeur->setComplementAdresse($form['complementAdresseFinanceur']->getData());
+                    $financeur->setCp($form['cpFinanceur']->getData());
+                    $financeur->setVille($form['villeFinanceur']->getData());
+                    $financeur->setCiviliteContact($form['civiliteContactFinanceur']->getData());
+                    $financeur->setNomContact($form['nomContactFinanceur']->getData());
+                    $financeur->setPrenomContact($form['prenomContactFinanceur']->getData());
+                    $financeur->setTelContact($form['telContactFinanceur']->getData());
+                    $financeur->setEmailContact($form['emailContactFinanceur']->getData());
                     $em->persist($financeur);
                 }
             }

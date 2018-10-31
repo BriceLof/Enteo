@@ -115,13 +115,23 @@
                                         <td>{{ form_widget(edit_form.adresseComplement) }}</td>
                                     </tr>
                                     <tr>
+                                        <td>{{ form_label(edit_form.pays) }}</td>
+                                        <td>{{ form_widget(edit_form.pays, {'attr':{'value': beneficiaire.pays, 'class': 'countryBeneficiaire country', 'data-country-type': "Beneficiaire" }}) }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>{{ form_label(edit_form.code_postal) }}</td>
                                         <td>{{ form_widget(edit_form.code_postal, {'attr':{'value': beneficiaire.ville.cp }}) }}</td>
                                     </tr>
+
                                     {% if beneficiaire.ville is not null %}
-                                        <tr>
+                                        <tr class="block_ville_frBeneficiaire">
                                             <td>Ville</td>
                                             <td>{{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjaxBeneficiaire' }}) }}</td>
+                                        </tr>
+
+                                        <tr class="block_ville_no_frBeneficiaire" style="display:none">
+                                            <td>Ville</td>
+                                            <td>{{ form_widget(edit_form.villeNoFr, {'attr':{'value': beneficiaire.ville.nom }}) }}</td>
                                         </tr>
                                     {% else %}
                                         <tr>
@@ -129,10 +139,7 @@
                                             <td>{{ form_widget(edit_form.ville.nom ) }}</td>
                                         </tr>
                                     {% endif %}
-                                    <tr>
-                                        <td>{{ form_label(edit_form.pays) }}</td>
-                                        <td>{{ form_widget(edit_form.pays) }}</td>
-                                    </tr>
+
                                     <tr>
                                         <td>{{ form_label(edit_form.regionTravail) }}</td>
                                         <td>{{ form_widget(edit_form.regionTravail) }}</td>
@@ -199,40 +206,55 @@
                                         <td>{{ form_label(edit_form.employeur.adresseComplement) }}</td>
                                         <td>{{ form_widget(edit_form.employeur.adresseComplement) }}</td>
                                     </tr>
+
+                                    <tr>
+                                        <td>{{ form_label(edit_form.employeur.paysEmployeur) }}</td>
+                                        <td>{{ form_widget(edit_form.employeur.paysEmployeur, {'attr':{'value': paysEmployeur, 'class': 'countryEmployeur country', 'data-country-type': "Employeur" }}) }}</td>
+                                    </tr>
                                     {% if beneficiaire.employeur is not null %}
                                         {% if beneficiaire.employeur.ville is not null %}
+
                                             <tr>
-                                                <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
-                                                <td>{{ form_widget(edit_form.employeur.code_postal, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
+                                                <td>{{ form_label(edit_form.employeur.code_postal_employeur) }}</td>
+                                                <td>{{ form_widget(edit_form.employeur.code_postal_employeur, {'attr':{'value': beneficiaire.employeur.ville.cp }}) }}</td>
                                             </tr>
-                                            <tr>
+                                            <tr class="block_ville_frEmployeur">
                                                 <td>Ville</td>
                                                 <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
                                             </tr>
+                                            <tr class="block_ville_no_frEmployeur" style="display:none">
+                                                <td>Ville</td>
+                                                <td>{{ form_widget(edit_form.employeur.villeNoFrEmployeur, {'attr':{'value': beneficiaire.employeur.ville.nom }}) }}</td>
+                                            </tr>
                                         {% else %}
                                             <tr>
-                                                <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
-                                                <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
+                                                <td>{{ form_label(edit_form.employeur.code_postal_employeur) }}</td>
+                                                <td>{{ form_widget(edit_form.employeur.code_postal_employeur) }}</td>
                                             </tr>
-                                            <tr>
-                                                <td>{{ form_label(edit_form.employeur.ville) }}</td>
+                                            <tr class="block_ville_frEmployeur">
+                                                <td>Ville</td>
                                                 <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
+                                            </tr>
+                                            <tr class="block_ville_no_frEmployeur" style="display:none">
+                                                <td>Ville</td>
+                                                <td>{{ form_widget(edit_form.employeur.villeNoFrEmployeur) }}</td>
                                             </tr>
                                         {% endif %}
                                     {% else %}
                                         <tr>
-                                            <td>{{ form_label(edit_form.employeur.code_postal) }}</td>
-                                            <td>{{ form_widget(edit_form.employeur.code_postal) }}</td>
+                                            <td>{{ form_label(edit_form.employeur.code_postal_employeur) }}</td>
+                                            <td>{{ form_widget(edit_form.employeur.code_postal_employeur) }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr class="block_ville_frEmployeur">
                                             <td>Ville</td>
                                             <td>{{ form_widget(edit_form.employeur.ville, {'attr':{'class': 'villeAjaxEmployeur' }}) }}</td>
                                         </tr>
+                                        <tr class="block_ville_no_frEmployeur" style="display:none">
+                                            <td>Ville</td>
+                                            <td>{{ form_widget(edit_form.employeur.villeNoFrEmployeur) }}</td>
+                                        </tr>
                                     {% endif %}
-                                    <tr>
-                                        <td>{{ form_label(edit_form.pays) }}</td>
-                                        <td>{{ form_widget(edit_form.pays) }}</td>
-                                    </tr>
+
                                     <tr>
                                     <tr>
                                         <td class="tableSection">contact</td>
@@ -273,21 +295,6 @@
                             </caption>
                         </table>
                         <div class="collapse in" id="collapseStatut">
-                            {% if(beneficiaire.news | length > 0) %}
-                                {% set derniere_news = beneficiaire.news[beneficiaire.news | length -1] %}
-                            {% endif %}
-
-                            {# Boucle sur le tableau à l'envers, pour obtenir le dernier suivi administratif qui est egal à 'financement' ou 'dossier-en-...' #}
-                            {# La variable 'break' set à quitter la boucle lorsque j'ai ce que je souhaite #}
-                            {% set break, indexSuiviAd = 0, null %}
-                            {% for suiviAd in beneficiaire.suiviAdministratif | reverse if break == 0 %}
-                                {% if suiviAd.statut is not null %}
-                                    {% if suiviAd.statut.slug == 'financement' or suiviAd.statut.slug == 'dossier-en-cours' %}
-                                        {% set break, indexSuiviAd  = 1, loop.index0 %}
-                                    {% endif %}
-                                {% endif %}
-                            {% endfor %}
-
                             <div class="row" style="margin-left: -6px;">
                                 <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
                                     commercial : </p>
@@ -295,10 +302,10 @@
                                     <a href="#" title="Mise à jour du statut bénéficiaire maj"
                                        style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}"
                                        data-toggle="modal" data-target="#block_formulaire_ajout_new"
-                                       class="link_formulaire_add_news maj">{{ beneficiaire.news | length > 0 ? derniere_news.statut.nom : 'Maj Statut' }}</a>
+                                       class="link_formulaire_add_news maj">{{  beneficiaire.lastDetailStatutCommercial.statut.nom }}</a>
                                 </p>
                                 <p class="col-xs-4">
-                                    {{ beneficiaire.news | length > 0 ? derniere_news.detailStatut.detail : '' }}
+                                    {{ beneficiaire.lastDetailStatutCommercial.detail }}
                                 </p>
                             </div>
                             <div class="row" style="margin-left: -6px;">
@@ -318,12 +325,12 @@
                                 <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
                                     administratif : </p>
                                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
-                                    {% if beneficiaire.lastDetailStatut is not null %}
+                                    {% if beneficiaire.lastDetailStatutAdmin is not null and beneficiaire.lastDetailStatutAdmin.statut.type != 'commercial' %}
                                         <p class="col-xs-4">
-                                            {{ beneficiaire.lastDetailStatut.statut.nom }}
+                                            {{ beneficiaire.lastDetailStatutAdmin.statut.nom }}
                                         </p>
                                         <p class="col-xs-4">
-                                            {{ beneficiaire.lastDetailStatut.detail }}
+                                            {{ beneficiaire.lastDetailStatutAdmin.detail }}
                                         </p>
                                     {% else %}
                                             <p class="col-xs-4">
@@ -332,20 +339,18 @@
                                             </p>
                                     {% endif %}
                                 {% else %}
-                                    {% if beneficiaire.lastDetailStatutConsultant is not null %}
-                                        {% if beneficiaire.lastDetailStatutConsultant.statut.type != 'commercial' %}
-                                            <p class="col-xs-4">
-                                                {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
-                                            </p>
-                                            <p class="col-xs-4">
-                                                {{ beneficiaire.lastDetailStatutConsultant.detail }}
-                                            </p>
-                                        {% else %}
-                                            <p class="col-xs-4">
-                                            </p>
-                                            <p class="col-xs-4">
-                                            </p>
-                                        {% endif %}
+                                    {% if beneficiaire.lastDetailStatutConsultant.statut.type != 'commercial' %}
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
+                                        </p>
+                                        <p class="col-xs-4">
+                                            {{ beneficiaire.lastDetailStatutConsultant.detail }}
+                                        </p>
+                                    {% else %}
+                                        <p class="col-xs-4">
+                                        </p>
+                                        <p class="col-xs-4">
+                                        </p>
                                     {% endif %}
                                 {% endif %}
                             </div>
@@ -364,7 +369,7 @@
                                                   action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}">
                                                 {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
                                                 <input type="hidden" id="statutIDCurrentBlockStatut"
-                                                       value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}"/>
+                                                       value="{{ beneficiaire.lastDetailStatutCommercial.id }}"/>
                                             </form>
                                         </div>
                                     </div>
@@ -386,7 +391,7 @@
                                                   action="{{ path('application_add_news', { 'id' : beneficiaire.id }) }}">
                                                 {{ render(controller("ApplicationPlateformeBundle:News:addStatut",{'id': beneficiaire.id })) }}
                                                 <input type="hidden" id="statutIDCurrentBlockStatut"
-                                                       value="{{ beneficiaire.news | length > 0 ? derniere_news.statut.id : '1' }}"/>
+                                                       value="{{ beneficiaire.lastDetailStatutCommercial.id }}"/>
                                             </form>
                                         </div>
                                     </div>

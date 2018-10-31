@@ -21,6 +21,7 @@ class SuiviAdministratifType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $suivi = $builder->getData();
         $builder
             ->add('statut', EntityType::class, array(
                 'placeholder' => 'Choisissez',
@@ -39,7 +40,11 @@ class SuiviAdministratifType extends AbstractType
                 'placeholder' => 'Choisissez',
                 'class' => 'ApplicationPlateformeBundle:DetailStatut',
                 'choice_label' => 'detail',
-                'placeholder' => '',
+                'query_builder' => function(EntityRepository $er) use ($suivi) {
+                    return $er->createQueryBuilder('ds')
+                        ->where('ds.statut = :statut')
+                        ->setParameters(array('statut' => $suivi->getStatut()));
+                }
             ))
             ->add('tarif', NumberType::class, array(
                 'mapped' => false,
@@ -83,6 +88,74 @@ class SuiviAdministratifType extends AbstractType
                 'required' => false,
                 'attr' => array(
                     'class' => 'suivi organisme',
+                ),
+            ))
+            ->add('adresseFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('complementAdresseFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('cpFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('villeFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('civiliteContactFinanceur', ChoiceType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'choices' => array(
+                    'Monsieur' => 'M.',
+                    'Madame' => 'Mme',
+                    'Mademoiselle' => 'Mlle',
+                ),
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('nomContactFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('prenomContactFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('telContactFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
+                ),
+            ))
+            ->add('emailContactFinanceur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'suivi',
                 ),
             ))
             ->add('submit', SubmitType::class, array('label' => 'Ajouter')

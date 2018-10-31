@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -101,7 +102,7 @@ class EmployeurType extends AbstractType
                 )
             ))
 
-            ->add('code_postal', TextType::class, array(
+            ->add('code_postal_employeur', TextType::class, array(
                 'mapped' => false,
                 'label' => "Code postal *",
                 'required' => true,
@@ -119,16 +120,20 @@ class EmployeurType extends AbstractType
                 },
                 'choice_label' => 'nom',
             ))
-
+            ->add('villeNoFrEmployeur', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array("class" => "villeNoFrEmployeur")
+            ))
             ->add('proposition_adresse', HiddenType::class, array(
                 'mapped' => false,
             ))
+            ->add('paysEmployeur', CountryType::class, array(
 
-            ->add('pays', TextType::class, array(
-                'label' => 'Pays ',
-                'data' => 'FRANCE',
+                "placeholder" => "Choisissez",
+                "label" => "Pays *",
+                'preferred_choices' => array('FR'),
                 'attr' => array(
-                    'placeholder' => '',
                     'class' => 'fiche'
                 )
             ))

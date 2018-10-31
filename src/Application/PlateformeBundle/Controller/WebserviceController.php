@@ -67,6 +67,8 @@ class WebserviceController extends Controller
         $beneficiaire->setDateHeureMer($mer->getDateHeureMer());
         $beneficiaire->setDateConfMer($mer->getDateConfMer());
         $beneficiaire->setTelConso($mer->getTelConso());
+        $beneficiaire->setIndicatifTel('33');
+        $beneficiaire->setPays('FR');
         $beneficiaire->setEmailConso($mer->getEmailConso());
         $beneficiaire->setDomaineVae($mer->getDomaineVaeConso());
         $beneficiaire->setDiplomeVise($mer->getDiplomeViseConso());

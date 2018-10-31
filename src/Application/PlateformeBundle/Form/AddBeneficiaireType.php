@@ -5,6 +5,7 @@ namespace Application\PlateformeBundle\Form;
 use Application\PlateformeBundle\Entity\ContactEmployeur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -23,6 +24,12 @@ class AddBeneficiaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('country', CountryType::class, array(
+                "placeholder" => "Choisissez",
+                "mapped" => false,
+                "label" => "Pays de résidence *",
+                'preferred_choices' => array('FR'),
+            ))
             // Me sert juste à activer l'ajax pour la recherche de ville correspondant
             ->add('codePostal', TextType::class, array(
                 'mapped' => false, 
@@ -42,6 +49,11 @@ class AddBeneficiaireType extends AbstractType
                 },
                 'choice_label' => 'nom',
                 'required' => true,
+            ))
+            ->add('villeNoFr', TextType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'attr' => array("class" => "villeNoFrBeneficiaire")
             ))
             ->add('statut', ChoiceType::class, array(
                 'label' => 'Statut * ',
@@ -95,7 +107,11 @@ class AddBeneficiaireType extends AbstractType
             ->add('telConso', TextType::class, array(
                 'label' => 'Téléphone *',
                 'required' => true,
-            )) 
+            ))
+            ->add('indicatifTel', HiddenType::class, array(
+                'required' => true,
+                'attr' => array("class" => "indicatifTel")
+            ))
             ->add('emailConso', EmailType::class, array(
                 'label' => 'Email *',
                 'required' => true,

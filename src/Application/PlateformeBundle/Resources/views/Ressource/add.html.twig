@@ -18,6 +18,10 @@
                             {{ form_widget(form.rubrique) }}
                         </div>
                         <div class="form-group">
+                            <label>{{ form_label(form.droit) }}</label>
+                            {{ form_widget(form.droit) }}
+                        </div>
+                        <div class="form-group">
                             {{ form_widget(form.file, {'attr': {'required' : 'true'}}) }}
                         </div>
                     </div>

@@ -11,6 +11,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $dateRdv = $rdv->getDateDebut();
         $typeRdv = $rdv->getTypeRdv();
 
+        $sms = array('recipient' => null);
+
         if($rdv->getSummary() == "RV1" || $rdv->getSummary() == "RV2") {
             $from = array("email" => "audrey.azoulay@entheor.com", "name" => "Audrey Azoulay");
         }else{
@@ -20,6 +22,14 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
 		$dateJ = new \DateTime('now');  
         if($dateRdv >= $dateJ){
             $to = array(array("email" => $beneficiaire->getEmailConso(), "name" => $beneficiaire->getEmailConso()));
+
+            $telephone = $beneficiaire->getTelConso();
+            // Si c'est un telephone mobile francais
+            if(substr($telephone, 0, 2) == '06' || substr($telephone, 0, 2) == '07'){
+                $telephone = "33".substr($telephone, 1);
+                $sms['recipient'] = $telephone;
+            }
+
         }else{
             $to = array(array("email" => 'support.informatique@entheor.com', "name" => 'Support'));
         }
@@ -43,7 +53,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             
             if(!is_null($old_rdv)) $ref = "1-e";
                 
-            $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." ".$dateRdv->format('H')."h".$dateRdv->format('i');
+            $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." à ".$dateRdv->format('H')."h".$dateRdv->format('i');
         }
         else{
             if($rdv->getSummary() == "RV1")
@@ -149,14 +159,19 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             Bien Cordialement. <br>";
 
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
-        
+
+
+        $sms['content'] = $subject.". Un email vous a été envoyé avec les détails.";
+        if(is_null($sms['recipient'])) $sms = null;
+
+
         $body = $this->templating->render($template, array(
             'sujet' => $subject ,
             'message' => $message,
             'reference' => $ref
         ));
 
-        return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+        return $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, null, $sms);
     }
 
     /**
