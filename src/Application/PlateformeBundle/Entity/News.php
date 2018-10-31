@@ -186,7 +186,6 @@ class News
         $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
 
         if (in_array($this->detailStatut->getId(), array(7,14)) || in_array($this->statut->getId(), array(11,12,13))){
-
         }else{
             $this->getBeneficiaire()->setLastDetailStatutAdmin($this->detailStatut);
         }
@@ -197,8 +196,6 @@ class News
             $this->getBeneficiaire()->setDeleted(false);
         }
     }
-
-
 
     /**
      * Set consultant

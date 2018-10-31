@@ -22,7 +22,7 @@ class MailAttenteAccordFinancementCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // recuperation du service 
-        $service = $this->getContainer()->get('application_plateforme.statut.cron.rv')->rappelFinancement();
-		$output->writeln($service);
+//        $service = $this->getContainer()->get('application_plateforme.statut.cron.rv')->rappelFinancement();
+//		$output->writeln($service);
     }
 }
