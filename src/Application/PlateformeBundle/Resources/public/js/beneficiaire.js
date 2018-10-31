@@ -368,6 +368,10 @@ function changeOrganisme(typeFinanceur) {
     }
 }
 
+$('#suivi_administratif_detailStatut').change(function () {
+    $("#suivi_administratif_detailStatutHidden").val($(this).val())
+})
+
 /**
  * Ajax pour recuperer la liste des opca ou opacif
  */

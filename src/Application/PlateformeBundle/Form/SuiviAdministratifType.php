@@ -158,6 +158,10 @@ class SuiviAdministratifType extends AbstractType
                     'class' => 'suivi',
                 ),
             ))
+            ->add('detailStatutHidden', HiddenType::class, array(
+                'mapped' => false,
+                'required' => false,
+            ))
             ->add('submit', SubmitType::class, array('label' => 'Ajouter')
             );
     }
