@@ -197,8 +197,6 @@ class News
         }
     }
 
-
-
     /**
      * Set consultant
      *
