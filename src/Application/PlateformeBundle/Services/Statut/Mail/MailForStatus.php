@@ -28,6 +28,12 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         return $this->sendMessage($this->from, $to,null, $cc, $subject, $body);
     }
 
+    /**
+     * Ref 4a
+     *
+     * @param $suivis
+     * @param $attachment
+     */
     public function alerteAttenteAccord($suivis, $attachment){
         $ref = "4a";
         $from = array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com");
@@ -51,10 +57,16 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
     }
 
+    /**
+     * Ref 4b
+     *
+     * @param $suivis
+     * @param $attachment
+     */
     public function alerteAttenteTraitement($suivis, $attachment){
         $ref = "4b";
         $from = array("email" => "christine.clement@entheor.com", "name" => "christine.clement@entheor.com");
-        $subject = "Liste des ".count($suivis)." dossiers en Attente Traitement depuis plus de 15 jours ( antérieur à ".(new \DateTime('now'))->modify('-15 day')->format('d/m/Y').")";
+        $subject = "Liste des ".count($suivis)." dossiers en Attente Traitement depuis plus de 8 jours ( antérieur à ".(new \DateTime('now'))->modify('-8 day')->format('d/m/Y').")";
         $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
         $to = array(array("email" => "contact@entheor.com", "name" => "contact@entheor.com"));
         $cc = array(
@@ -73,6 +85,13 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 //        $this->sendMessage($from, 'f.azoulay@entheor.com',null, null, null, $subject, $body, $attachment);
     }
 
+    /**
+     * Ref 5a
+     *
+     * @param $beneficiaire
+     * @param $user
+     * @param $motif
+     */
     public function AbandonBeneficiaire($beneficiaire, $user, $motif){
         $ref = "5a";
         $from = array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com");

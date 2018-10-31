@@ -44,7 +44,7 @@ class MailGestionCommand extends ContainerAwareCommand
                     }
                     if ( $lastSuiviAdministratif->getDetailStatut()->getId() == 19 ) {
                         $dateLastSuivi = $lastSuiviAdministratif->getDate();
-                        if ($dateLastSuivi <= (new \DateTime('now'))->modify("-15 day")->setTime(0,0,0)) {
+                        if ($dateLastSuivi <= (new \DateTime('now'))->modify("-8 day")->setTime(0,0,0)) {
                             $j++;
                             $tab2[] = $lastSuiviAdministratif;
                         }
