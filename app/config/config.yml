@@ -11,7 +11,7 @@ parameters:
     export_csv_directory: '%kernel.root_dir%/../web/export/csv'
     web_directory: '%kernel.root_dir%/../web/'
     ressource_share_directory:  '%kernel.root_dir%/../web/uploads/ressource_share'
-    host_name: 'https://appli-dev.entheor.com/web'
+    host_name: 'https://appli.entheor.com/web'
 
 
 framework:
@@ -108,7 +108,7 @@ fos_user:
     
 # Swiftmailer Configuration
 swiftmailer:
-    delivery_address: ['brice.lof@gmail.com']
+    #delivery_address: ['brice.lof@gmail.com']
     
     transport: "%mailer_transport%"
     auth_mode: "%mailer_auth_mode%"
