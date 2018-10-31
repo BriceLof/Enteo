@@ -31,7 +31,7 @@ class Beneficiaire
     protected $ville;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Employeur", inversedBy="beneficiaire")
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Employeur", inversedBy="beneficiaire", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      */
     protected $employeur;

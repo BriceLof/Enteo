@@ -103,26 +103,26 @@ class BeneficiaireController extends Controller
             }
 
             $countryEmployeur = $editForm['employeur']['paysEmployeur']->getData();
-            if($countryEmployeur == "FR"){
-                $employeur->setVille($employeur->getVille());
-                $employeur->setPaysEmployeur('FR');
-            }else{
-                $villeNoFr = $editForm['employeur']['villeNoFrEmployeur']->getData();
-                $zipNoFr = $editForm['employeur']['code_postal_employeur']->getData();
-                $ville = new Ville();
-                $ville->setNom($villeNoFr);
-                $ville->setCp($zipNoFr);
-                $ville->setDepartementId(0);
+            if(!is_null($countryEmployeur)){
+                if($countryEmployeur == "FR"){
+                    $employeur->setVille($employeur->getVille());
+                    $employeur->setPaysEmployeur('FR');
+                }else{
+                    $villeNoFr = $editForm['employeur']['villeNoFrEmployeur']->getData();
+                    $zipNoFr = $editForm['employeur']['code_postal_employeur']->getData();
+                    $ville = new Ville();
+                    $ville->setNom($villeNoFr);
+                    $ville->setCp($zipNoFr);
+                    $ville->setDepartementId(0);
 
-                $ville->setPays($countryEmployeur);
-                $em->persist($ville);
+                    $ville->setPays($countryEmployeur);
+                    $em->persist($ville);
 
-                $employeur->setVille($ville);
-                $employeur->setPaysEmployeur($countryEmployeur);
-
+                    $employeur->setVille($ville);
+                    $employeur->setPaysEmployeur($countryEmployeur);
+                }
             }
 
-            $em->persist($employeur);
             $em->persist($beneficiaire);
             $em->flush();
 
