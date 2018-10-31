@@ -126,7 +126,6 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
             $type = 'news';
         }
 
-
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire', 'b');
         if (!is_null($ville)) {

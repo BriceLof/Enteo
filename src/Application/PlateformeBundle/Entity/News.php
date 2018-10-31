@@ -182,12 +182,12 @@ class News
             $this->getBeneficiaire()->increaseNbAppelTel();
 
 
-        if (!in_array($this->detailStatut->getId(), array(7,14))){
+        /*if (!in_array($this->detailStatut->getId(), array(7,14))){
             $suivis = $this->getBeneficiaire()->getSuiviAdministratif();
             foreach ($suivis as $suivi){
                 $this->getBeneficiaire()->removeSuiviAdministratif($suivi);
             }
-        }
+        }*/
 
 
         if (in_array($this->statut->getId(), array(11,12,13))){
