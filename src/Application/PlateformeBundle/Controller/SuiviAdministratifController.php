@@ -28,7 +28,7 @@ class SuiviAdministratifController extends Controller
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
         $suiviAdministratif = new SuiviAdministratif();
-        if ($beneficiaire->getLastDetailStatutAdmin()->getStatut()->getType() != "commercial") {
+        if (!is_null($beneficiaire->getLastDetailStatutAdmin()) && $beneficiaire->getLastDetailStatutAdmin()->getStatut()->getType() != "commercial") {
             $suiviAdministratif->setDetailStatut($beneficiaire->getLastDetailStatutAdmin());
             $suiviAdministratif->setStatut($beneficiaire->getLastDetailStatutAdmin()->getStatut());
         }

@@ -69,7 +69,7 @@
         <span class="col-xs-2">{{ form_label(form.statut) }}</span>
 
 
-        {% if beneficiaire.lastdetailStatutAdmin.statut.type != 'commercial' %}
+        {% if beneficiaire.lastdetailStatutAdmin is not null and beneficiaire.lastdetailStatutAdmin.statut.type != 'commercial' %}
             <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd', 'data-value' : beneficiaire.lastdetailStatutAdmin.statut.id }}) }}</span>
         {% else %}
             <span class="col-xs-3">{{ form_widget(form.statut, {'attr' : {'class': 'suivi statutSuiviAd'}}) }}</span>
@@ -79,7 +79,7 @@
                                                                      src="{{ asset('images/ajax-loader.gif') }}"/> <span
                     class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
 
-        {% if beneficiaire.lastdetailStatutAdmin.statut.type != 'commercial' %}
+        {% if beneficiaire.lastdetailStatutAdmin is not null and beneficiaire.lastdetailStatutAdmin.statut.type != 'commercial' %}
             <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd',  'data-value' : beneficiaire.lastdetailStatutAdmin.id }}) }}</span>
         {% else %}
             <span class="col-xs-4">{{ form_widget(form.detailStatut, {'attr' : {'class': 'suivi detailStatutSuiviAd', 'disabled':'disabled'}}) }}</span>
