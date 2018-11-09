@@ -163,7 +163,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
 
 
-        $sms['content'] = $sms['subject']."Un email vous a été envoyé avec les détails\nInfo et annulation : 01 02 03 04 05";
+        $sms['content'] = $sms['subject']."Un email vous a été envoyé avec les détails\nInfo et annulation : ".$consultant->getTel1();
         $sms['tag'] = "Prise de rdv";
         if(is_null($sms['recipient'])) $sms = null;
 
