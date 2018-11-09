@@ -127,7 +127,8 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
         if (!is_null($ville)) {
             $rsm->addJoinedEntityFromClassMetadata('Application\PlateformeBundle\Entity\Ville', 'v', 'b', 'ville', array(
                 'id' => 'v_id',
-                'ville' => 'ville_nom'
+                'ville' => 'ville_nom',
+                'pays' => 'pays_nom'
             ));
         }
 
