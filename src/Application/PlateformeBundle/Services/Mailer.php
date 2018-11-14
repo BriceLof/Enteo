@@ -17,7 +17,7 @@ class Mailer
     protected $templating;
     protected $date;
     protected $from = array("email" => "admin@entheor.com", "name" => "admin@entheor.com");
-    protected $fromSms = "Entheo";
+    protected $fromSms = "Entheor";
     protected $reply = "";
     protected $name = "Equipe Entheo";
     protected $webDirectory;
