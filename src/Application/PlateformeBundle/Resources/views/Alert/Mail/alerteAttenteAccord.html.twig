@@ -3,11 +3,9 @@
 {% block contentMail %}
     Bonjour Virgine,<br><br>
     {% if suivis|length > 1 %}
-        Cela fait 15 jours que ces dossiers sont en statut : 'Financement - Attente accord'<br>
-        Il faut secouer les Financeurs des dossiers suivants :
+        Voici la liste de tous les dossiers en statut : 'Financement - Attente accord :'
     {% else %}
-        Cela fait 15 jours que ce dossier est en statut : 'Financement - Attente accord'<br>
-        Il faut secouer les Financeurs du dossier suivant :
+        Voici le dossier en statut : 'Financement - Attente accord :'
     {% endif %}
     <br>
     {% for suivi in suivis %}

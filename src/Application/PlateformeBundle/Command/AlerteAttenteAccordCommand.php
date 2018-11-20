@@ -33,7 +33,7 @@ class AlerteAttenteAccordCommand extends ContainerAwareCommand
                 $lastSuiviAdministratif = $suiviAdministratif[count($suiviAdministratif) - 1];
                 if ($lastSuiviAdministratif->getDetailStatut() != null && $lastSuiviAdministratif->getDetailStatut()->getDetail() == "Attente accord") {
                     $dateLastSuivi = $lastSuiviAdministratif->getDate();
-                    $dateLastSuivi->modify('+21 day');
+                    $dateLastSuivi->modify('+15 day');
                     $date = date_format($dateLastSuivi, 'd-m-Y');
                     if ($date == $today) {
                         $i++;
