@@ -108,7 +108,7 @@ fos_user:
     
 # Swiftmailer Configuration
 swiftmailer:
-    
+
     #delivery_address: ['brice.lof@gmail.com']
     
     transport: "%mailer_transport%"
