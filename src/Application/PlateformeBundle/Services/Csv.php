@@ -227,9 +227,7 @@ class Csv
             'id',
             'Nom',
             'Prenom',
-            'consultant',
-            'financeur 1',
-            'financeur 2',
+            'financeur',
             'date',
         ), ';');
 
@@ -243,29 +241,13 @@ class Csv
             $consultant = null;
 
 
-            if (!is_null($beneficiaire->getAccompagnement())){
-                if (!is_null($beneficiaire->getAccompagnement()->getFinanceur()[0])){
-                    $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getNom();
-                }
-                if (!is_null($beneficiaire->getAccompagnement()->getFinanceur()[1])) {
-                    $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getNom();
-                }
-            }
-
-            if (!is_null($beneficiaire->getConsultant())){
-                $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]).". ".strtoupper($beneficiaire->getConsultant()->getNom());
-            }
-
-
             fputcsv(
                 $handle,
                 array(
                     $beneficiaire->getId(),
                     utf8_decode($beneficiaire->getNomConso()),
                     utf8_decode($beneficiaire->getPrenomConso()),
-                    $consultant,
-                    $financeur1,
-                    $financeur2,
+                    $beneficiaire->getTypeFinanceur().' '.$beneficiaire->getOrganisme(),
                     $suivi->getDate()->format('d-m-Y'),
                 ),
                 ';'

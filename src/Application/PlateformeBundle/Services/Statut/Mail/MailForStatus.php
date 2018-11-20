@@ -37,7 +37,7 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
     public function alerteAttenteAccord($suivis, $attachment){
         $ref = "4a";
         $from = array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com");
-        $subject = "Liste des ".count($suivis)." dossiers en Financement - Attente Accord depuis plus de 15 jours ( antérieur à ".(new \DateTime('now'))->modify('-15 day')->format('d/m/Y').")";
+        $subject = "Liste des ".count($suivis)." dossiers en Financement - Attente Accord à ce jour";
         $template = '@Apb/Alert/Mail/alerteAttenteAccord.html.twig';
         $to = array(array("email" => "contact@entheor.com", "name" => "contact@entheor.com"));
         $cc = array(
