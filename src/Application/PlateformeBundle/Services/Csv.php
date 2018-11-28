@@ -217,7 +217,7 @@ class Csv
     public function getCvsForMailSuivi($suivis, $statut){
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, array(
-            'date = '.(new \DateTime('now'))->modify('-15 day')->format('d-m-Y')
+            'date = '.(new \DateTime('now'))->format('d-m-Y')
         ));
         fputcsv($handle, array(
             'statut = '.$statut

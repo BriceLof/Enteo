@@ -54,6 +54,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             if(!is_null($old_rdv)) $ref = "1-e";
                 
             $subject = "[IMPORTANT] Votre rendez-vous VAE avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())." le ".$dateRdv->format('d/m/Y')." à ".$dateRdv->format('H')."h".$dateRdv->format('i');
+            $sms['subject'] = "[IMPORTANT] RDV VAE confirmé avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())."\nLe ".$dateRdv->format('d/m/Y')." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."\n";
         }
         else{
             if($rdv->getSummary() == "RV1")
@@ -64,6 +65,7 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
             if(!is_null($old_rdv)) $ref = "1-f";
             
             $subject = "[IMPORTANT] Votre dossier VAE : Confirmation de RDV téléphonique le ".$dateRdv->format('d/m/Y')." avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom());
+            $sms['subject'] = "[IMPORTANT] RDV VAE téléphonique confirmé avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())."\n";
         }
 		
         $Jour = array("Sunday" => "Dimanche", "Monday" => "Lundi", "Tuesday" => "Mardi" , "Wednesday" => "Mercredi" , "Thursday" => "Jeudi" , "Friday" => "Vendredi" ,"Saturday" => "Samedi");
@@ -161,7 +163,8 @@ class MailRvAgenda extends \Application\PlateformeBundle\Services\Mailer
         $template = "@Apb/Alert/Mail/mailDefault.html.twig";
 
 
-        $sms['content'] = $subject.". Un email vous a été envoyé avec les détails.";
+        $sms['content'] = $sms['subject']."Un email vous a été envoyé avec les détails\nInfo et annulation : ".$consultant->getTel1();
+        $sms['tag'] = "Prise de rdv";
         if(is_null($sms['recipient'])) $sms = null;
 
 

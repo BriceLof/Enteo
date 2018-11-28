@@ -77,8 +77,12 @@ class SuiviAdministratifController extends Controller
             $suiviAdministratif = $form->getData();
             $suiviAdministratif->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
-            $detailStatut = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->find($form['detailStatutHidden']->getData());
-            $suiviAdministratif->setDetailStatut($detailStatut);
+
+            if($form['detailStatutHidden']->getData() != '' && !is_null($form['detailStatutHidden']->getData())){
+                $detailStatut = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->find($form['detailStatutHidden']->getData());
+                $suiviAdministratif->setDetailStatut($detailStatut);
+            }
+
             if (!is_null($suiviAdministratif->getStatut())) {
                 if ($suiviAdministratif->getStatut()->getSlug() == "recevabilite") {
                     $historique = new Historique();
@@ -125,7 +129,6 @@ class SuiviAdministratifController extends Controller
             }
 
             if ($suiviAdministratif->getDetailStatut() == null || ( !is_null($lastSuivi) && $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut() )){
-                var_dump('aaaa');die;
                 if (!is_null($suiviAdministratif->getInfo())){
                     $suiviAdministratifT = new SuiviAdministratif();
                     $suiviAdministratifT->setBeneficiaire($beneficiaire);

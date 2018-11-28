@@ -317,7 +317,8 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
         $Mois = array("January" => "Janvier", "February" => "Février", "March" => "Mars", "April" => "Avril", "May" => "Mai", "June" => "Juin", "July" => "Juillet", "August" => "Août", "September" => "Septembre", "October" => "Octobre", "November" => "Novembre", "December" => "Décembre");
 
         $tabConsultant = array();
-        
+        $sms = array('recipient' => null);
+
         if(count($histoRepo) > 0){
             // Envoi d'un mail à chaque bénéficiaire
             foreach($histoRepo as $rdv)
@@ -331,7 +332,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                     $typeRdv = $rdv->getTypeRdv();
 
                     $ref = "1-b";
+
                     $to = array(array("email" => $rdv->getBeneficiaire()->getEmailConso(), "name" => $rdv->getBeneficiaire()->getEmailConso()));
+                    $telephoneBeneficiaire = $rdv->getBeneficiaire()->getTelConso();
+
+                    // Si c'est un telephone mobile francais
+                    if(substr($telephoneBeneficiaire, 0, 2) == '06' || substr($telephoneBeneficiaire, 0, 2) == '07'){
+                        $telephoneBeneficiaire = "33".substr($telephoneBeneficiaire, 1);
+                        $sms['recipient'] = $telephoneBeneficiaire;
+                    }
+
                     $cc = "";
                     $bcc = array(
                         array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
@@ -339,10 +349,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
                         array("email" => "support.informatique@entheor.com", "name" => "Support"),
                     );
 
-                    if ($typeRdv == "presenciel" || $typeRdv == "presentiel")
+                    if ($typeRdv == "presenciel" || $typeRdv == "presentiel"){
                         $subject = "[Rappel] Vous avez rendez-vous pour votre VAE demain à " . $dateRdv->format('H') . "h" . $dateRdv->format('i');
-                    else
+                        $sms['subject'] = "[Rappel] Vous avez un RDV VAE demain avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())."\nLe ".$dateRdv->format('d/m/Y')." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."\n";
+                        $sms['subject'] .= $rdv->getBureau()->getAdresse()."\n".$rdv->getBureau()->getVille()->getCp() . " " . $rdv->getBureau()->getVille()->getNom()."\n";
+                    }
+                    else{
                         $subject = "[Rappel] Vous avez un rendez-vous téléphonique pour votre VAE demain à " . $dateRdv->format('H') . "h" . $dateRdv->format('i');
+                        $sms['subject'] = "[Rappel] Vous avez un RDV VAE téléphonique demain avec ".ucfirst($consultant->getCivilite())." ".strtoupper($consultant->getNom())."\nLe ".$dateRdv->format('d/m/Y')." à ".$dateRdv->format('H')."h".$dateRdv->format('i')."\n";
+                    }
+
 
                     $acces = "";
                     $commentaire = "";
@@ -415,12 +431,16 @@ class Rv extends \Application\PlateformeBundle\Services\Mailer
 
                     $template = "@Apb/Alert/Mail/mailDefault.html.twig";
 
+                    $sms['content'] = $sms['subject'].$consultant->getTel1();
+                    $sms['tag'] = "Rappel J-1 rdv";
+                    if(is_null($sms['recipient'])) $sms = null;
+
                     $body = $this->templating->render($template, array(
                         'sujet' => $subject,
                         'message' => $message,
                         'reference' => $ref
                     ));
-                    $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+                    $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, null, $sms);
                 }
             }
             
