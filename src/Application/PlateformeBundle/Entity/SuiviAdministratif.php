@@ -203,18 +203,21 @@ class SuiviAdministratif
      */
     public function modifyBeneficiaire(LifecycleEventArgs $args)
     {
-        if (!is_null($this->statut)){
+        if (!is_null($this->statut)) {
             $this->getBeneficiaire()->setLastDetailStatutAdmin($this->detailStatut);
 
-            if  ( !is_null($this->getBeneficiaire()->getLastDetailStatutConsultant()) && ( $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12 || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13) ) {
+            if (!is_null($this->getBeneficiaire()->getLastDetailStatutConsultant()) && ($this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12 || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13)) {
                 $this->getBeneficiaire()->setLastDetailStatut($this->detailStatut);
             }
 
             if ($this->statut->isAccesConsultant()) {
-                $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
-            }else{
-                $detail = $args->getEntityManager()->getRepository('ApplicationPlateformeBundle:DetailStatut')->find(22);
-                $this->getBeneficiaire()->setLastDetailStatutConsultant($detail);
+                if (($this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12 || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13))
+                    $this->getBeneficiaire()->setLastDetailStatutConsultant($this->detailStatut);
+            } else {
+                if (($this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 12 || $this->getBeneficiaire()->getLastDetailStatutConsultant()->getStatut()->getId() != 13)) {
+                    $detail = $args->getEntityManager()->getRepository('ApplicationPlateformeBundle:DetailStatut')->find(22);
+                    $this->getBeneficiaire()->setLastDetailStatutConsultant($detail);
+                }
             }
         }
     }
