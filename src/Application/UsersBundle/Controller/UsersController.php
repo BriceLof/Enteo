@@ -85,10 +85,16 @@ class UsersController extends Controller
             $em->flush();
         }
 
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireByStatutOrDetailStatut($user->getId(), 7, null);
+        $results = $query->getResult();
+
+        $nbDossiersEnCours = count($results);
+
         return $this->render('ApplicationUsersBundle:Users:show.html.twig', array(
             'user' => $user,
             'typeUser' => $typeUser->typeUser($user),
-            'formStatut' => $formStatut->createView()
+            'formStatut' => $formStatut->createView(),
+            'nbDossiersEnCours' => $nbDossiersEnCours
         ));
     }
 
@@ -208,10 +214,17 @@ class UsersController extends Controller
             $em->persist($myself);
             $em->flush();
         }
+
+        $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->getBeneficiaireByStatutOrDetailStatut($myself->getId(), 7, null);
+        $results = $query->getResult();
+
+        $nbDossiersEnCours = count($results);
+
         return $this->render('ApplicationUsersBundle:Users:account.html.twig', array(
             'form' => $form->createView(),
             'user' => $myself, 
-            'typeUser' => $typeUser->typeUser($myself)
+            'typeUser' => $typeUser->typeUser($myself),
+            'nbDossiersEnCours' => $nbDossiersEnCours
         ));
     }
     

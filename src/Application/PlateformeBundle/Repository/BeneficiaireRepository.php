@@ -282,4 +282,37 @@ class BeneficiaireRepository extends \Doctrine\ORM\EntityRepository
 
         return $request;
     }
+
+    public function getBeneficiaireByStatutOrDetailStatut($consultant = null, $statut = null, $detailStatut = null){
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Beneficiaire', 'b');
+
+        $query = 'SELECT b.* FROM beneficiaire b';
+        $params = array();
+
+        $query .= ' INNER JOIN detail_statut ds ON ds.id = b.last_detail_statut_id';
+        $query .= ' INNER JOIN statut s ON s.id = ds.statut_id';
+
+        $query .= ' WHERE 1';
+
+        if (!is_null($statut)){
+            $query .= ' AND s.id  = :statut';
+            $params['statut'] = $statut;
+        }
+
+        if (!is_null($detailStatut)){
+            $query .= ' AND ds.id  = :detailStatut';
+            $params['detailStatut'] = $detailStatut;
+        }
+
+        if (!is_null($consultant)){
+            $query .= ' AND b.consultant_id  = :consultant';
+            $params['consultant'] = $consultant;
+        }
+
+        $request = $this->getEntityManager()->createNativeQuery($query, $rsm);
+        $request->setParameters($params);
+
+        return $request;
+    }
 }

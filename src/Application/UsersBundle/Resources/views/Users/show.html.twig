@@ -92,7 +92,7 @@
                             <b>N° de déclaration d'activité :</b>
                             <span>{{ user.numDeclarationActivite }}</span>
                         </p>
-                        <p><b>Dossiers en Cours :</b> {{ user.tel1 }}</p><br>
+                        <p><b>Dossiers en Cours :</b> {{ nbDossiersEnCours }}</p><br>
                         {% if is_granted('ROLE_ADMIN') %}
                             <p><b>Login :</b> {{ user.username }}</p>
                             <p><b>Mot de passe :</b> {{ user.password | slice(0,-45) }}</p>
@@ -107,18 +107,18 @@
                     </div>
                     <div class="panel-body">
                         {% for contrat in user.contrats %}
-                        <p>
-                            <a title="Afficher le document"
-                              href="{{ asset('uploads/consultant/'~user.id~'/'~contrat.file) }}"
-                              target="_blank"><span>Contrat Cadre</span>
-                            </a>
-                            <span>( {{ contrat.date|date('d/m/Y') }} )</span>
-                            {% if contrat.enabled == true %}
-                                <span class="text-success font-weight-bold"><b>- en cours</b></span>
-                            {% else %}
-                                <span class="text-muted">- archivé</span>
-                            {% endif %}
-                        </p>
+                            <p>
+                                <a title="Afficher le document"
+                                   href="{{ asset('uploads/consultant/'~user.id~'/'~contrat.file) }}"
+                                   target="_blank"><span>Contrat Cadre</span>
+                                </a>
+                                <span>( {{ contrat.date|date('d/m/Y') }} )</span>
+                                {% if contrat.enabled == true %}
+                                    <span class="text-success font-weight-bold"><b>- en cours</b></span>
+                                {% else %}
+                                    <span class="text-muted">- archivé</span>
+                                {% endif %}
+                            </p>
                         {% endfor %}
                         <div>
                             {{ render(controller("ApplicationUsersBundle:Contrat:new", {'id': user.id } )) }}
@@ -132,10 +132,10 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Caractéristiques d'Intervention</b></h3>
+                        <h3 class="panel-title"><b>Contact de facturation</b></h3>
                     </div>
                     <div class="panel-body">
-                        Panel content
+                        {% include "ApplicationUsersBundle:Facturation:show.html.twig" %}
                     </div>
                 </div>
             </div>

@@ -19,5 +19,9 @@ services:
             - { name: twig.extension }
 
     application_users.mailer.mail_for_mission:
-            class: Application\UsersBundle\Services\Mailer\MissionMailer
-            parent: application_plateforme.mail
+        class: Application\UsersBundle\Services\Mailer\MissionMailer
+        parent: application_plateforme.mail
+
+    application_users.mailer.mail_users:
+        class: Application\UsersBundle\Services\Mailer\UsersMailer
+        parent: application_plateforme.mail

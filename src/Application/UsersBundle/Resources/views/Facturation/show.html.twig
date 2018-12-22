@@ -1,60 +1,64 @@
 {% set facturation = user.facturation %}
 
-<div class="container-fluid">
-    <div class="row">
 
-        {% if facturation.type == 'entreprise' %}
-            <h4><b><u>Entreprise</u></b></h4>
-            <p><b>Raison sociale :</b> {{ facturation.raisonSociale }}</p>
-            <p><b>Forme de la société :</b> {{ facturation.formeSociete|capitalize }}</p>
-            <p><b>Adresse du facturation:</b>
-                {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}
-            </p>
-            <p><b>Représentant légal:</b>
-                {% if facturation.representantLegalNom is not null %}
-                    {{ facturation.representantLegalCivilite~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper~" ("~facturation.representantLegalFonction~")" }}
-                {% endif %}
-            </p>
-            <p><b>N° de SIRET de l'entreprise :</b> {{ facturation.siret }}</p>
+{% if facturation is not null %}
+    <div class="container-fluid">
+        <div class="row">
 
-        {% elseif facturation.type == 'entrepreneur' %}
-            <h4><b><u>Entrepreneur ou Micro-Entrepreneur</u></b></h4>
-            <p><b>Raison sociale :</b> {{ facturation.raisonSociale }}</p>
-            <p><b>Adresse du facturation:</b>
-                {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}
-            </p>
-            <p><b>N° de SIRET de l'entreprise :</b> {{ facturation.siret }}</p>
-
-        {% elseif facturation.type == 'portage' %}
-            <h4><b><u>Société de portage</u></b></h4>
-            <p><b>Raison sociale :</b> {{ facturation.raisonSociale }}</p>
-            <p><b>Forme de la société :</b> {{ facturation.formeSociete|capitalize }}</p>
-            <p><b>Adresse du facturation
-                    :</b> {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}</p>
-            <p><b>Représentant légal:</b>
-                {% if facturation.representantLegalNom is not null %}
-                    {{ facturation.representantLegalCivilite~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper~" ("~facturation.representantLegalFonction~")" }}
-                {% endif %}
-            </p>
-            <p>Votre référence dans la société de portage : </p>
-            <p><b>N° de SIRET de l'entreprise :</b> {{ facturation.siret }}</p>
-
-        {% elseif facturation.type == 'personne' %}
-            <h4><b><u>Personne physique</u></b></h4>
-            <p>{{ user.civilite~" "~user.prenom|capitalize~" "~user.nom|upper }}</p>
-        {% endif %}
-        {% if (facturation.type == 'entreprise' or facturation.type == 'entrepreneur' or facturation.type == 'portage') %}
-            {% if facturation.attestationUrssaf is not null %}
-                <p>
-                    <a title="Afficher le document"
-                       href="{{ asset('uploads/consultant/'~user.id~'/'~facturation.attestationUrssaf) }}"
-                       target="_blank"><span>Attestation de vigilance urssaf</span>
-                    </a>
-                    <span>( {{ facturation.date|date("d/m/Y") }} )</span>
+            {% if facturation.type == 'entreprise' %}
+                <h4><b><u>Entreprise</u></b></h4>
+                <p><b>Raison sociale :</b> {{ facturation.raisonSociale }}</p>
+                <p><b>Forme de la société :</b> {{ facturation.formeSociete|capitalize }}</p>
+                <p><b>Adresse du facturation:</b>
+                    {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}
                 </p>
-            {% else %}
-                <p><i>Vous avez pas encore envoyé votre attestation de vigilance URSSAF</i></p>
+                <p><b>Représentant légal:</b>
+                    {% if facturation.representantLegalNom is not null %}
+                        {{ facturation.representantLegalCivilite~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper~" ("~facturation.representantLegalFonction~")" }}
+                    {% endif %}
+                </p>
+                <p><b>N° de SIRET de l'entreprise :</b> {{ facturation.siret }}</p>
+
+            {% elseif facturation.type == 'entrepreneur' %}
+                <h4><b><u>Entrepreneur ou Micro-Entrepreneur</u></b></h4>
+                <p><b>Raison sociale :</b> {{ facturation.raisonSociale }}</p>
+                <p><b>Adresse du facturation:</b>
+                    {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}
+                </p>
+                <p><b>N° de SIRET de l'entreprise :</b> {{ facturation.siret }}</p>
+
+            {% elseif facturation.type == 'portage' %}
+                <h4><b><u>Société de portage</u></b></h4>
+                <p><b>Raison sociale :</b> {{ facturation.raisonSociale }}</p>
+                <p><b>Forme de la société :</b> {{ facturation.formeSociete|capitalize }}</p>
+                <p><b>Adresse du facturation
+                        :</b> {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}</p>
+                <p><b>Représentant légal:</b>
+                    {% if facturation.representantLegalNom is not null %}
+                        {{ facturation.representantLegalCivilite~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper~" ("~facturation.representantLegalFonction~")" }}
+                    {% endif %}
+                </p>
+                <p>Votre référence dans la société de portage : </p>
+                <p><b>N° de SIRET de l'entreprise :</b> {{ facturation.siret }}</p>
+
+            {% elseif facturation.type == 'personne' %}
+                <h4><b><u>Personne physique</u></b></h4>
+                <p>{{ user.civilite~" "~user.prenom|capitalize~" "~user.nom|upper }}</p>
             {% endif %}
-        {% endif %}
+            {% if (facturation.type == 'entreprise' or facturation.type == 'entrepreneur' or facturation.type == 'portage') %}
+                {% if facturation.attestationUrssaf is not null %}
+                    <p>
+                        <a title="Afficher le document"
+                           href="{{ asset('uploads/consultant/'~user.id~'/'~facturation.attestationUrssaf) }}"
+                           target="_blank"><span>Attestation de vigilance urssaf</span>
+                        </a>
+                        <span>( {{ facturation.date|date("d/m/Y") }} )</span>
+                    </p>
+                {% else %}
+                    <p><i>Vous avez pas encore envoyé votre attestation de vigilance URSSAF</i></p>
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
+
+{% endif %}

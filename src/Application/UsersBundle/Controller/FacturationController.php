@@ -62,6 +62,8 @@ class FacturationController extends Controller
         $em = $this->getDoctrine()->getManager();
         $facturation = $em->getRepository('ApplicationUsersBundle:Facturation')->find($id);
 
+        $attestationUrsaff = $facturation->getAttestationUrssaf();
+
         $form = $this->createForm(FacturationType::class, $facturation, array(
             'action' => $this->generateUrl('application_users_edit_facturation', array(
                 'id' => $id
@@ -79,6 +81,8 @@ class FacturationController extends Controller
                 $name = strtolower("attestation_ursaff_" . $facturation->getConsultant()->getNom() . "_" . $facturation->getConsultant()->getPrenom() . ".pdf");
                 $fileName = $this->get('app.file_uploader')->uploadAvatar($file, 'uploads/consultant/' . $facturation->getConsultant()->getId(), $name, $name);
                 $facturation->setAttestationUrssaf($fileName);
+            }else{
+                $facturation->setAttestationUrssaf($attestationUrsaff);
             }
 
             $em->persist($facturation);

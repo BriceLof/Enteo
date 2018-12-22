@@ -481,9 +481,7 @@ class Facturation
     public function setDateUploadAttestationUrssaf()
     {
         if (!is_null($this->attestationUrssaf)){
-            $this->setDate(new \DateTime('now'));
-        }else{
-            $this->setDate(null);
+            $this->setDate((new \DateTime('now'))->modify("+6 month"));
         }
     }
 
