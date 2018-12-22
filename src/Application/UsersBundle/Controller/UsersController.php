@@ -12,6 +12,7 @@ use Application\UsersBundle\Form\UsersType;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -281,6 +282,32 @@ class UsersController extends Controller
 
         return $this->render('ApplicationUsersBundle:Users:listCommercial.html.twig', array(
             'commercials' => $commercials,
+        ));
+    }
+
+    public function editDeclarationActiviteAction(Request $request){
+        $consultant = $this->getUser();
+
+        $form = $this->createFormBuilder($consultant)
+            ->add('numDeclarationActivite', TextType::class)
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Enregistrer'
+            ))
+            ->setAction($this->generateUrl('edit_declaration_activite'))
+            ->getForm();
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            $consultant = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($consultant);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('my_account'));
+        }
+
+        return $this->render('ApplicationUsersBundle:Users:Form/declarationActivite.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 }

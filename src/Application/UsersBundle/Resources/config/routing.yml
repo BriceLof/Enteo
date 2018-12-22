@@ -58,3 +58,7 @@ my_account:
 my_account_edit:
     path: /account/edit
     defaults: {_controller: ApplicationUsersBundle:Users:myAccountEdit }
+
+edit_declaration_activite:
+    path: /account/edit/declaration-activite
+    defaults: {_controller: ApplicationUsersBundle:Users:editDeclarationActivite }

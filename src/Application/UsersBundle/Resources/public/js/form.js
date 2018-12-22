@@ -158,3 +158,15 @@ $(function () {
     })
 });
 
+$('#form_declaration_activite').validate({
+    rules: {
+        "form[numDeclarationActivite]":{
+            "required": true,
+            "digits": true,
+            "minlength": 9,
+            "maxlength": 9,
+        }
+    },
+    errorElement: 'div'
+});
+

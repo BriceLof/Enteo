@@ -88,6 +88,10 @@
                         <p><b>Ville de rattachement : <span
                                         class="text-danger">{% if user.ville %} {{ user.ville.nom|capitalize }} {% endif %}</span></b>
                         </p>
+                        <p>
+                            <b>N° de déclaration d'activité :</b>
+                            <span>{{ user.numDeclarationActivite }}</span>
+                        </p>
                         <p><b>Dossiers en Cours :</b> {{ user.tel1 }}</p><br>
                         {% if is_granted('ROLE_ADMIN') %}
                             <p><b>Login :</b> {{ user.username }}</p>
