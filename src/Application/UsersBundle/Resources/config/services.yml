@@ -25,3 +25,7 @@ services:
     application_users.mailer.mail_users:
         class: Application\UsersBundle\Services\Mailer\UsersMailer
         parent: application_plateforme.mail
+
+    application_users.csv:
+        class: Application\UsersBundle\Services\Csv
+        arguments: ["@doctrine.orm.entity_manager"]

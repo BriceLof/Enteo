@@ -11,3 +11,7 @@ application_showAll_disponibilites:
     defaults: { _controller: "ApplicationPlateformeBundle:Disponibilites:showAll" }
     options:
         expose: true
+
+application_edit_disponibilites:
+    path:     /edit-event/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Disponibilites:edit" }

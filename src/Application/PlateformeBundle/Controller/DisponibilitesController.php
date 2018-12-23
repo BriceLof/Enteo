@@ -46,6 +46,8 @@ class DisponibilitesController extends Controller
 
         $formDispo = $this->createForm(DisponibilitesType::class, $disponibilite);
         $formDispo->add('submit',  SubmitType::class, array('label' => 'Enregistrer'));
+        $formDispo->get('date')->setData((new \DateTime())->modify('+1 day'));
+
 
         $formDispo->handleRequest($request);
 
@@ -112,6 +114,96 @@ class DisponibilitesController extends Controller
         return $this->render('ApplicationPlateformeBundle:Disponibilites:new.html.twig', array(
             'form_dispo' => $formDispo->createView(),
             'consultant' => $consultant,
+        ));
+    }
+
+    public function editAction(Request $request, $id){
+        $em = $this->getDoctrine()->getManager();
+        $disponibilite = $em->getRepository('ApplicationPlateformeBundle:Disponibilites')->find($id);
+
+        $consultant = $disponibilite->getConsultant();
+
+        $authorization = $this->get('security.authorization_checker');
+        if (true === $authorization->isGranted('ROLE_ADMIN')
+            || true === $authorization->isGranted('ROLE_COMMERCIAL')
+            || true === $authorization->isGranted('ROLE_GESTION')
+            || $this->getUser()->getId() == $consultant->getId()
+            || $this->getUser()->getConsultants()->contains($consultant) ){
+        }else{
+            return $this->redirect($this->generateUrl('application_plateforme_homepage'));
+        }
+
+        $formDispo = $this->createForm(DisponibilitesType::class, $disponibilite);
+        $formDispo->get('villeNom')->setData($disponibilite->getVille()->getNom());
+        $formDispo->get('date')->setData($disponibilite->getDateDebuts());
+
+        $formDispo->handleRequest($request);
+
+
+        if ($formDispo->isSubmitted() && $formDispo->isValid()) {
+
+
+            $stack = $this->get('request_stack');
+            $masterRequest = $stack->getMasterRequest();
+            $currentRoute = $masterRequest->get('_route');
+
+            $googleCalendar = $this->get('fungio.google_calendar');
+            $redirectUri = "http://dev.application.entheor.com/web/app_dev.php/calendar/getClient";
+            $googleCalendar->setRedirectUri($redirectUri);
+            //recuperation du client
+            if ($request->query->has('code') && $request->get('code')) {
+                $client = $googleCalendar->getClient($request->get('code'));
+            } else {
+                $client = $googleCalendar->getClient();
+            }
+            if (is_string($client)) {
+                return new RedirectResponse($client);
+            }
+
+            if ($formDispo["villeNom"]->getData() != null) {
+                $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
+                    'nom' => $formDispo["villeNom"]->getData(),
+                ));
+                $disponibilite->setVille($ville);
+                $location = $ville->getCp().' '.$ville->getNom();
+            }
+
+            $date = $formDispo['date']->getData();
+            $disponibilite->setConsultant($consultant);
+            $dateDebut = $disponibilite->getDateDebuts();
+            $dateFin = $disponibilite->getDateFins();
+            $disponibilite->setDateDebuts($dateDebut->setDate($date->format('Y'),$date->format('m'), $date->format('d')));
+            $disponibilite->setDateFins($dateFin->setDate($date->format('Y'),$date->format('m'), $date->format('d')));
+
+            if (isset($ville)){
+                $eventSummary = $ville->getNom().' de '.$disponibilite->getDateDebuts()->format('H').'h'.$disponibilite->getDateDebuts()->format('i').'-'.$disponibilite->getDateFins()->format('H').'h'.$disponibilite->getDateFins()->format('i');
+            }
+            else{
+                $eventSummary = 'De '.$disponibilite->getDateDebuts()->format('H').'h'.$disponibilite->getDateDebuts()->format('i').'-'.$disponibilite->getDateFins()->format('H').'h'.$disponibilite->getDateFins()->format('i');
+            }
+
+            $eventDescription = '<a href="http://dev.application.entheor.com/web/user/'.$consultant->getId().'/show">(voir le profil du consultant)<a/>';
+            //on ajoutera plus tard la disponibilité de la personne dans les bureaux de la ville
+            //ce qui veut dire qu'il faudra récuperer le bureau a partir de la ville en bouclant sur la ville, eventuellement le dpt
+
+            $event = $googleCalendar->updateEvent($consultant->getCalendrierid(), $disponibilite->getEventId(), $disponibilite->getDateDebuts(), $disponibilite->getDateFins(), $eventSummary, $eventDescription,"",$location, [], true);
+
+            $disponibilite->setEventId($event['id']);
+            $disponibilite->setSummary($eventSummary);
+
+            $em->persist($disponibilite);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Disponibilité modifiée avec succès');
+
+            return $this->forward('ApplicationPlateformeBundle:Calendar:adminAddEvent', array(
+                    'consult' => $disponibilite->getConsultant(),
+                )
+            );
+        }
+        return $this->render('ApplicationPlateformeBundle:Disponibilites:edit.html.twig', array(
+            'form_dispo' => $formDispo->createView(),
+            'disponibilite' => $disponibilite
         ));
     }
 

@@ -19,7 +19,6 @@ class DisponibilitesType extends AbstractType
         $builder
             ->add('date', DateType::class, array(
                 "mapped" => false,
-                'data' => (new \DateTime('now'))->modify('+1 day'),
             ))
             ->add('dateDebuts', TimeType::class, array(
                 'label' => 'Heure Début',
@@ -41,7 +40,8 @@ class DisponibilitesType extends AbstractType
                 "required" => false,
                 'attr' => array(
                     'placeholder' => 'Veuillez saisir la ville',
-                    'autocomplete' => 'off'
+                    'autocomplete' => 'off',
+                    'class' => 'ville-dispo'
                 )
             ))
             ->add('villeId', IntegerType::class, array(

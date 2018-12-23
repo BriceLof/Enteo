@@ -27,6 +27,7 @@
                     <td>{{ disponibilite.summary }}</td>
                 {% endif %}
                 <td><span title="Supprimer la Disponibilité" style="cursor:pointer;" data-toggle="modal" data-target="#myModalDisponibiliteDelete{{ loop.index }}" class="glyphicon glyphicon-remove"></span></td>
+                <td><span title="Modifier la Disponibilité" style="cursor:pointer;" data-toggle="modal" data-target="#myModalDisponibiliteModify{{ loop.index }}" class="glyphicon glyphicon-pencil"></span></td>
             </tr>
         {% endif %}
     {% endfor %}
@@ -54,6 +55,31 @@
                             <a style="width: 95px;float: right" href="{{ path('application_delete_disponibilites', { 'id': disponibilite.id }) }}">
                                 <button class="btn btn-danger">Supprimer</button>
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  class="modal fade" id="myModalDisponibiliteModify{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Modifier la Disponibilité</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            {{ render(controller("ApplicationPlateformeBundle:Disponibilites:edit",{'id': disponibilite.id })) }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div>
+                            <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler</button>
+                            {#<a style="width: 95px;float: right" href="{{ path('application_delete_disponibilites', { 'id': disponibilite.id }) }}">
+                                <button class="btn btn-danger">Supprimer</button>
+                            </a>#}
                         </div>
                     </div>
                 </div>
