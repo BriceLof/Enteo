@@ -1,0 +1,34 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+
+        Chers Entheoriennes et Entheoriens
+        <br>
+        <br>
+        Les Consultants ci-dessous n'ont pas renseigné de numéro de déclaration d'activité.
+        <br>
+        Disposer de ce numéro délivré par la DIRECCTE est un pré-requis pour travailler en collaboration avec Enthéor.
+        <br>
+        <br>
+        Merci de leur rappeler cette nécessité.
+        <br>
+        <br>
+        Liste des consultants sans numéro de déclaration d'activité au {{ "now"|date("d/m/Y") }}
+        <br>
+        {% for consultant in consultants %}
+            - {{ consultant.nom|upper~" "~consultant.prenom|capitalize }}
+            <br>
+        {% endfor %}
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clementmolier@entheor.com">christine.clementmolier@entheor.com</a>
+        <br>
+        <span>{{ tel_christine }}</span>
+    </p>
+{% endblock %}

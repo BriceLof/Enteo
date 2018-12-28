@@ -1,0 +1,4 @@
+<form action="{{ path('application_edit_disponibilites', { 'id' : disponibilite.id }) }}" method="POST" id="edit_form_dispo{{ disponibilite.id }}">
+    {% include "ApplicationPlateformeBundle:Disponibilites:form/champs.html.twig" %}
+    {{ form_rest(form_dispo) }}
+</form>

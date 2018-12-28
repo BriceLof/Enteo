@@ -1,0 +1,46 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    <p>
+
+        Chers Entheoriennes et Entheoriens
+        <br>
+        <br>
+        Les Consultants dont l'attestation de vigilance n'est plus valable ne devraient plus pouvoir recevoir de
+        nouvelles missions jusqu'à mise à jour de celle-ci.
+        <br>
+        <br>
+        Selon les cas, ils doivent se rendre sur le site de l'URSSAF (s'ils sont en Société) ou sur le site
+        lautoentrepreneur ou en faire la demande à leur société de portage pour obtenir une nouvelle attestation.
+        <br>
+        <br>
+        Merci de leur transmettre cette demande.
+        <br>
+        <br>
+        Liste des consultants dont l'attestation de vigilance est caduque au {{ "now"|date("d/m/Y") }}
+        <br>
+        {% for consultant in consultants %}
+            - {{ consultant.nom|upper~" "~consultant.prenom|capitalize }},
+            {% if consultant.facturation is not null %}
+                {% if consultant.facturation.date is not null %}
+                    attestation échue le {{ consultant.facturation.date|date("d/m/Y") }}
+                {% else %}
+                    pas encore d'attestation
+                {% endif %}
+            {% else %}
+                pas encore d'attestation
+            {% endif %}
+            <br>
+        {% endfor %}
+        <br>
+        <span>Christine Clément</span>
+        <br>
+        <a href="mailto:christine.clementmolier@entheor.com">christine.clementmolier@entheor.com</a>
+        <br>
+        <span>{{ tel_christine }}</span>
+    </p>
+{% endblock %}
