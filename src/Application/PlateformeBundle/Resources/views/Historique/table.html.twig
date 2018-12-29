@@ -31,7 +31,7 @@
                     <span style="color: red;">Modifié</span>
                 {% else %}
                     {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_CONSULTANT') or is_granted('ROLE_COMMERCIAL')) %}
-                        {% if date('-1 days') < date(historique.dateDebut) %}
+                        {% if date(historique.dateDebut) > date().setTime(0,0,0)  %}
                             <div class="modif-event-maj">
                                 {% if date(historique.dateDebut) < date('+1 days') and date(historique.dateDebut) > date() %}
                                     <span title="modifier l'historique"
