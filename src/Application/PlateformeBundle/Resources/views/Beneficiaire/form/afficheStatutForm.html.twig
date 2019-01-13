@@ -1,0 +1,56 @@
+<a data-toggle="modal" data-target="#myModalDateStatut" style="text-decoration: underline; cursor: pointer"><u>Modifier</u></a>
+
+<!-- Modal -->
+<div id="myModalDateStatut" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form action="{{ path('application_edit_date_previsionnel', {'id': beneficiaire.id}) }}" method="POST" id="planning_previsionnel_form" >
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter un planning previsionnel</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row mb-10">
+                        <div class="col-xs-6">
+                            {{ form_label(formPlanning.dateLivret1) }}
+                            {{ form_widget(formPlanning.dateLivret1) }}
+                        </div>
+                        <div class="col-xs-6">
+                            {{ form_label(formPlanning.statutLivret1) }}
+                            {{ form_widget(formPlanning.statutLivret1) }}
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <div class="col-xs-6">
+                            {{ form_label(formPlanning.dateLivret2) }}
+                            {{ form_widget(formPlanning.dateLivret2) }}
+                        </div>
+                        <div class="col-xs-6">
+                            {{ form_label(formPlanning.statutLivret2) }}
+                            {{ form_widget(formPlanning.statutLivret2) }}
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <div class="col-xs-6">
+                            {{ form_label(formPlanning.dateJury) }}
+                            {{ form_widget(formPlanning.dateJury) }}
+                        </div>
+                        <div class="col-xs-6">
+                            {{ form_label(formPlanning.statutJury) }}
+                            {{ form_widget(formPlanning.statutJury) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                {{ form_widget(formPlanning.submit) }}
+            </div>
+        </div>
+        {{ form_rest(formPlanning) }}
+        </form>
+
+    </div>
+</div>

@@ -37,3 +37,7 @@ application_print_beneficiaire:
 application_remove_suivi_beneficiaire:
     path:     /remove
     defaults: { _controller: "ApplicationPlateformeBundle:Beneficiaire:removeSuivi" }
+
+application_edit_date_previsionnel:
+    path: /edit/planning/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Statut:index" }

@@ -1,0 +1,180 @@
+<table>
+    <caption class="titreSection"><a href="#collapseStatut" data-toggle="collapse"
+                                     onclick="plusMoins(this);" role="button"
+                                     aria-expanded="false" aria-controls="collapseStatut"><span
+                    class="glyphicon glyphicon-minus"></span><span>Statut bénéficiaire</span></a>
+    </caption>
+</table>
+<div class="collapse in" id="collapseStatut">
+    <div class="row" style="margin-left: -6px;">
+        <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
+            commercial : </p>
+        <p class="col-xs-4">
+            <a href="#" title="Mise à jour du statut bénéficiaire maj"
+               style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}"
+               data-toggle="modal" data-target="#block_formulaire_ajout_new"
+               class="link_formulaire_add_news maj">{{ beneficiaire.lastDetailStatutCommercial.statut.nom }}</a>
+        </p>
+        <p class="col-xs-4">
+            {{ beneficiaire.lastDetailStatutCommercial.detail }}
+        </p>
+    </div>
+    <div class="row" style="margin-left: -6px;">
+        <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut de
+            recevabilité : </p>
+        <p class="col-xs-4">
+            <a href="#" title="Mise à jour du statut bénéficiaire maj"
+               style="color:#337ab7;text-decoration:underline;" id="{{ beneficiaire.id }}"
+               data-toggle="modal" data-target="#block_formulaire_ajout_statut_recevabilite"
+               class="link_formulaire_add_news maj">{{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].statut.nom : 'Maj Statut' }}</a>
+        </p>
+        <p class="col-xs-4">
+            {{ beneficiaire.statutRecevabilite | length > 0 ? beneficiaire.statutRecevabilite[beneficiaire.statutRecevabilite | length -1].detailStatut.detail : '' }}
+        </p>
+    </div>
+    <div class="row" style="margin-left: -6px;">
+        <p class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Statut
+            administratif : </p>
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_GESTION') %}
+            {% if beneficiaire.lastDetailStatutAdmin is not null and beneficiaire.lastDetailStatutAdmin.statut.type != 'commercial' %}
+                <p class="col-xs-4">
+                    {{ beneficiaire.lastDetailStatutAdmin.statut.nom }}
+                </p>
+                <p class="col-xs-4">
+                    {{ beneficiaire.lastDetailStatutAdmin.detail }}
+                </p>
+            {% else %}
+                <p class="col-xs-4">
+                </p>
+                <p class="col-xs-4">
+                </p>
+            {% endif %}
+        {% else %}
+            {% if beneficiaire.lastDetailStatutConsultant.statut.type != 'commercial' %}
+                <p class="col-xs-4">
+                    {{ beneficiaire.lastDetailStatutConsultant.statut.nom }}
+                </p>
+                <p class="col-xs-4">
+                    {{ beneficiaire.lastDetailStatutConsultant.detail }}
+                </p>
+            {% else %}
+                <p class="col-xs-4">
+                </p>
+                <p class="col-xs-4">
+                </p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="row" style="margin-left: -6px; margin-top: 20px">
+        <div>
+            <div class="col-xs-4" style="font-weight: bold;color: #50a60d;font-size: 12px;">Planning previsionnel :
+            </div>
+            <div class="col-xs-8">
+                {{ render(controller("ApplicationPlateformeBundle:Statut:index",{'id': beneficiaire.id })) }}
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <p class="col-xs-4">Date d'envoi livret 1 :</p>
+                <p class="col-xs-4">{{ beneficiaire.dateLivret1 is null ? '': beneficiaire.dateLivret1|date('d/m/Y') }}</p>
+                <p class="col-xs-4">
+                    {{ beneficiaire.statutLivret1 == '' ? '-': }}
+                    {% if beneficiaire.statutLivret1 == "prevu" %}
+                        {% if  date() > date(beneficaire.dateLivret1) %}
+                            <span class="text-danger">Prévu</span>
+                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
+                        {% elseif date() < date(beneficaire.dateLivret1) %}
+                            <span class="text-warning">Prévu</span>
+                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                        {% endif %}
+                    {% elseif beneficiaire.statutLivret1 == 'realise' %}
+                        <span class="text-success">Réalisé</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="row">
+                <p class="col-xs-4">Date d'envoi livret 2 :</p>
+                <p class="col-xs-4">{{ beneficiaire.dateLivret2 is null ? '': beneficiaire.dateLivret2|date('d/m/Y') }}</p>
+                <p class="col-xs-4">
+                    {{ beneficiaire.statutLivret2 == '' ? '-' }}
+                    {% if beneficiaire.statutLivret2 == "prevu" %}
+                        {% if  date() > date(beneficaire.dateLivret2) %}
+                            <span class="text-danger">Prévu</span>
+                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
+                        {% elseif date() < date(beneficaire.dateLivret2) %}
+                            <span class="text-warning">Prévu</span>
+                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                        {% endif %}
+                    {% elseif beneficiaire.statutLivret2 == 'realise' %}
+                        <span class="text-success">Réalisé</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="row">
+                <p class="col-xs-4">Date Jury VAE :</p>
+                <p class="col-xs-4">{{ beneficiaire.dateJury is null ? '': beneficiaire.dateJury|date('d/m/Y') }}</p>
+                <p class="col-xs-4">
+                    {{ beneficiaire.statutJury == '' ? '-': beneficiaire.statutJury }}
+                    {% if beneficiaire.statutJury == "prevu" %}
+                        {% if  date() > date(beneficaire.dateJury) %}
+                            <span class="text-danger">Prévu</span>
+                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
+                        {% elseif date() < date(beneficaire.dateJury) %}
+                            <span class="text-warning">Prévu</span>
+                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                        {% endif %}
+                    {% elseif beneficiaire.statutJury == 'realise' %}
+                        <span class="text-success">Réalisé</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <aside class="modal fade block_formulaire_ajout_new" id="block_formulaire_ajout_new"
+           tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header my_header_modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Maj Statut bénéficiaire</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="newsForm"
+                          action="{{ path('application_new_news', { 'id' : beneficiaire.id }) }}">
+                        {{ render(controller("ApplicationPlateformeBundle:News:new",{'id': beneficiaire.id })) }}
+                        <input type="hidden" id="statutIDCurrentBlockStatut"
+                               value="{{ beneficiaire.lastDetailStatutCommercial.id }}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <aside class="modal fade block_formulaire_ajout_new"
+           id="block_formulaire_ajout_statut_recevabilite" tabindex="-1" role="dialog"
+           aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header my_header_modal">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Maj Statut Recevabilité</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="newsForm"
+                          action="{{ path('application_add_news', { 'id' : beneficiaire.id }) }}">
+                        {{ render(controller("ApplicationPlateformeBundle:News:addStatut",{'id': beneficiaire.id })) }}
+                        <input type="hidden" id="statutIDCurrentBlockStatut"
+                               value="{{ beneficiaire.lastDetailStatutCommercial.id }}"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>

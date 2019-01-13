@@ -483,3 +483,34 @@ function showHideVille(type) {
     $(".block_ville_no_fr" + type).show()
     $(".block_ville_no_fr" + type + " .villeNoFr" + type).attr('required', 'required')
 }
+
+/**
+ * validation pour le news form
+ *
+ *
+ */
+$(function () {
+    $("#planning_previsionnel_form").validate({
+        rules: {
+            "planning_previsionnel[dateLivret1]": {
+                "required": true,
+            },
+            "planning_previsionnel[dateLivret2]": {
+                "required": true,
+            },
+            "planning_previsionnel[dateJury]": {
+                "required": true,
+            },
+            "planning_previsionnel[statutLivret1]": {
+                "required": true,
+            },
+            "planning_previsionnel[statutLivret2]": {
+                "required": true,
+            },
+            "planning_previsionnel[statutJury]": {
+                "required": true,
+            }
+        },
+        errorElement: 'div'
+    })
+});

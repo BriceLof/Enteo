@@ -366,6 +366,42 @@ class Beneficiaire
     private $nouvelle;
 
     /**
+     * @ORM\Column(name="date_livret_1", type="datetime", nullable=true)
+     */
+    private $dateLivret1;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="statut_livret_1", type="string", length=255, nullable=true)
+     */
+    private $statutLivret1;
+
+    /**
+     * @ORM\Column(name="date_livret_2", type="datetime", nullable=true)
+     */
+    private $dateLivret2;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="statut_livret_2", type="string", length=255, nullable=true)
+     */
+    private $statutLivret2;
+
+    /**
+     * @ORM\Column(name="date_jury", type="datetime", nullable=true)
+     */
+    private $dateJury;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="statut_jury", type="string", length=255, nullable=true)
+     */
+    private $statutJury;
+
+    /**
      * @var datetime $deletedAt
      *
      * @ORM\Column(name="deleted", type="boolean")
@@ -1883,5 +1919,149 @@ class Beneficiaire
     public function getLastDetailStatutAdmin()
     {
         return $this->lastDetailStatutAdmin;
+    }
+
+    /**
+     * Set dateLivret1
+     *
+     * @param \DateTime $dateLivret1
+     *
+     * @return Beneficiaire
+     */
+    public function setDateLivret1($dateLivret1)
+    {
+        $this->dateLivret1 = $dateLivret1;
+
+        return $this;
+    }
+
+    /**
+     * Get dateLivret1
+     *
+     * @return \DateTime
+     */
+    public function getDateLivret1()
+    {
+        return $this->dateLivret1;
+    }
+
+    /**
+     * Set dateLivret2
+     *
+     * @param \DateTime $dateLivret2
+     *
+     * @return Beneficiaire
+     */
+    public function setDateLivret2($dateLivret2)
+    {
+        $this->dateLivret2 = $dateLivret2;
+
+        return $this;
+    }
+
+    /**
+     * Get dateLivret2
+     *
+     * @return \DateTime
+     */
+    public function getDateLivret2()
+    {
+        return $this->dateLivret2;
+    }
+
+    /**
+     * Set dateJury
+     *
+     * @param \DateTime $dateJury
+     *
+     * @return Beneficiaire
+     */
+    public function setDateJury($dateJury)
+    {
+        $this->dateJury = $dateJury;
+
+        return $this;
+    }
+
+    /**
+     * Get dateJury
+     *
+     * @return \DateTime
+     */
+    public function getDateJury()
+    {
+        return $this->dateJury;
+    }
+
+    /**
+     * Set statutLivret1
+     *
+     * @param string $statutLivret1
+     *
+     * @return Beneficiaire
+     */
+    public function setStatutLivret1($statutLivret1)
+    {
+        $this->statutLivret1 = $statutLivret1;
+
+        return $this;
+    }
+
+    /**
+     * Get statutLivret1
+     *
+     * @return string
+     */
+    public function getStatutLivret1()
+    {
+        return $this->statutLivret1;
+    }
+
+    /**
+     * Set statutLivret2
+     *
+     * @param string $statutLivret2
+     *
+     * @return Beneficiaire
+     */
+    public function setStatutLivret2($statutLivret2)
+    {
+        $this->statutLivret2 = $statutLivret2;
+
+        return $this;
+    }
+
+    /**
+     * Get statutLivret2
+     *
+     * @return string
+     */
+    public function getStatutLivret2()
+    {
+        return $this->statutLivret2;
+    }
+
+    /**
+     * Set statutJury
+     *
+     * @param string $statutJury
+     *
+     * @return Beneficiaire
+     */
+    public function setStatutJury($statutJury)
+    {
+        $this->statutJury = $statutJury;
+
+        return $this;
+    }
+
+    /**
+     * Get statutJury
+     *
+     * @return string
+     */
+    public function getStatutJury()
+    {
+        return $this->statutJury;
     }
 }
