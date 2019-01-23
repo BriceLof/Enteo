@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9e769da82518c5cba5551e8e5b6efdf",
+    "content-hash": "299476994247acf54800fbee0ef184e0",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1058,12 +1058,12 @@
             "version": "v2.5.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "249b737094f1e7cba4f0a8d19acf5be6cf3ed504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/249b737094f1e7cba4f0a8d19acf5be6cf3ed504",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/249b737094f1e7cba4f0a8d19acf5be6cf3ed504",
                 "reference": "249b737094f1e7cba4f0a8d19acf5be6cf3ed504",
                 "shasum": ""
             },
@@ -1441,12 +1441,12 @@
             "version": "v2.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/google/google-api-php-client.git",
+                "url": "https://github.com/googleapis/google-api-php-client.git",
                 "reference": "f3fadd538315d62ebd1191d89ac791468c617260"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client/zipball/f3fadd538315d62ebd1191d89ac791468c617260",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/f3fadd538315d62ebd1191d89ac791468c617260",
                 "reference": "f3fadd538315d62ebd1191d89ac791468c617260",
                 "shasum": ""
             },
@@ -1500,12 +1500,12 @@
             "version": "v0.27",
             "source": {
                 "type": "git",
-                "url": "https://github.com/google/google-api-php-client-services.git",
+                "url": "https://github.com/googleapis/google-api-php-client-services.git",
                 "reference": "a78a34c76ba300d8236979d74f340b815151f893"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/a78a34c76ba300d8236979d74f340b815151f893",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/a78a34c76ba300d8236979d74f340b815151f893",
                 "reference": "a78a34c76ba300d8236979d74f340b815151f893",
                 "shasum": ""
             },
@@ -1537,12 +1537,12 @@
             "version": "v1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/google/google-auth-library-php.git",
+                "url": "https://github.com/googleapis/google-auth-library-php.git",
                 "reference": "db8e3022a308cb0e988026d38e67b91a42b41622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-auth-library-php/zipball/db8e3022a308cb0e988026d38e67b91a42b41622",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/db8e3022a308cb0e988026d38e67b91a42b41622",
                 "reference": "db8e3022a308cb0e988026d38e67b91a42b41622",
                 "shasum": ""
             },
@@ -1970,16 +1970,16 @@
         },
         {
             "name": "knplabs/knp-snappy-bundle",
-            "version": "v1.5.1",
+            "version": "v1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpSnappyBundle.git",
-                "reference": "7479ff2bcecb18fd2b9a9df9ebaafecfa8d4308f"
+                "reference": "efda38a2f9eb47830eb2a7642541abaaf5a1d34f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpSnappyBundle/zipball/7479ff2bcecb18fd2b9a9df9ebaafecfa8d4308f",
-                "reference": "7479ff2bcecb18fd2b9a9df9ebaafecfa8d4308f",
+                "url": "https://api.github.com/repos/KnpLabs/KnpSnappyBundle/zipball/efda38a2f9eb47830eb2a7642541abaaf5a1d34f",
+                "reference": "efda38a2f9eb47830eb2a7642541abaaf5a1d34f",
                 "shasum": ""
             },
             "require": {
@@ -2978,6 +2978,7 @@
                 "compression",
                 "minification"
             ],
+            "abandoned": "symfony/webpack-encore-pack",
             "time": "2017-07-14T07:26:46+00:00"
         },
         {
@@ -3961,7 +3962,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9"
+        "php": ">=5.6"
     },
     "platform-dev": [],
     "platform-overrides": {
