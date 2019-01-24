@@ -1,0 +1,37 @@
+Application\PlateformeBundle\Entity\Bureau:
+  attributes:
+    id:
+      groups: ['office']
+    nombureau:
+      groups: ['office']
+    adresse:
+      groups: ['office']
+    acces:
+      groups: ['office']
+    commentaire:
+      groups: ['office']
+    ville:
+      groups: ['office']
+
+Application\PlateformeBundle\Entity\Ville:
+  attributes:
+    id:
+      groups: ['office']
+    slugVille:
+      groups: ['office']
+    nom:
+      groups: ['office']
+    cp:
+      groups: ['office']
+    dpt:
+      groups: ['office']
+    region:
+      groups: ['office']
+    longitude:
+      groups: ['office']
+    latitude:
+      groups: ['office']
+    prePosition:
+      groups: ['office']
+    pays:
+      groups: ['office']

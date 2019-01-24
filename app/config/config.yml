@@ -25,6 +25,8 @@ framework:
     csrf_protection: ~
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
+    serializer:
+        enabled: true
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
@@ -163,3 +165,12 @@ fungio_google_calendar:
   #  namespace: Application\Migrations
    # table_name: migration_versions
     #name: Application Migrations
+
+fos_rest:
+    routing_loader:
+        include_format: false
+    view:
+        view_response_listener: true
+    format_listener:
+        rules:
+            - { path: '^/api/', priorities: ['json'], fallback_format: 'json' }

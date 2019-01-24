@@ -1,5 +1,5 @@
 <?php
-define('STDIN',fopen("php://stdin","r"));
+//define('STDIN',fopen("php://stdin","r"));
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -27,8 +27,8 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Fungio\GoogleCalendarBundle\FungioGoogleCalendarBundle(),
-            //new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-//            new Application\UploadBundle\ApplicationUploadBundle(),
+            new Api\PlatformBundle\ApiPlatformBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test', 'pre_prod'], true)) {
