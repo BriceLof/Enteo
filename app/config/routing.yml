@@ -33,3 +33,7 @@ fos_js_routing:
 offices:
     type: rest
     resource: Api\PlatformBundle\Controller\OfficeController
+
+beneficiary:
+    type: rest
+    resource: Api\PlatformBundle\Controller\BeneficiaryController
