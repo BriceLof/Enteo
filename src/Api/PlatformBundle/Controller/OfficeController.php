@@ -18,7 +18,17 @@ class OfficeController extends Controller
     public function getOfficesAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll();
+
+        $city = null;
+        $limit = $request->get('limit');
+
+        if (!is_null($request->get('zip'))){
+            $city = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array('cp' => $request->get('zip')));
+        }
+
+//        return $city;
+
+        $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($city, $limit);
 
         return $offices;
     }
