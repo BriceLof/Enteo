@@ -79,7 +79,7 @@
                 <p class="col-xs-4">Date d'envoi livret 1 :</p>
                 <p class="col-xs-4">{{ beneficiaire.dateLivret1 is null ? '': beneficiaire.dateLivret1|date('d/m/Y') }}</p>
                 <p class="col-xs-4">
-                    {{ beneficiaire.statutLivret1 == '' ? '-': }}
+                    {{ beneficiaire.statutLivret1 == '' ? '-' }}
                     {% if beneficiaire.statutLivret1 == "prevu" %}
                         {% if  date() > date(beneficaire.dateLivret1) %}
                             <span class="text-danger">Prévu</span>
