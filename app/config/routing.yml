@@ -1,3 +1,8 @@
+api_platform:
+    resource: "@ApiPlatformBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
 application_plateforme_ressource:
     resource: "@ApplicationPlateformeBundle/Controller/RessourceController.php"
     type:     annotation
@@ -24,3 +29,11 @@ application_plateforme:
     
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+offices:
+    type: rest
+    resource: Api\PlatformBundle\Controller\OfficeController
+
+beneficiary:
+    type: rest
+    resource: Api\PlatformBundle\Controller\BeneficiaryController

@@ -4,7 +4,6 @@ namespace Application\PlateformeBundle\Repository;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
