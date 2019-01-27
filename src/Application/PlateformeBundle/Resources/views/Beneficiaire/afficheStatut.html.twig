@@ -81,11 +81,11 @@
                 <p class="col-xs-4">
                     {{ beneficiaire.statutLivret1 == '' ? '-' }}
                     {% if beneficiaire.statutLivret1 == "prevu" %}
-                        {% if  date() > date(beneficaire.dateLivret1) %}
+                        {% if  date() > date(beneficiaire.dateLivret1) %}
                             <span class="text-danger">Prévu</span>
                             <span class="glyphicon glyphicon-warning-sign text-warning"></span>
                             <span class="glyphicon glyphicon-warning-sign text-danger"></span>
-                        {% elseif date() < date(beneficaire.dateLivret1) %}
+                        {% elseif date() < date(beneficiaire.dateLivret1) %}
                             <span class="text-warning">Prévu</span>
                             <span class="glyphicon glyphicon-warning-sign text-warning"></span>
                         {% endif %}
@@ -100,11 +100,11 @@
                 <p class="col-xs-4">
                     {{ beneficiaire.statutLivret2 == '' ? '-' }}
                     {% if beneficiaire.statutLivret2 == "prevu" %}
-                        {% if  date() > date(beneficaire.dateLivret2) %}
+                        {% if  date() > date(beneficiaire.dateLivret2) %}
                             <span class="text-danger">Prévu</span>
                             <span class="glyphicon glyphicon-warning-sign text-warning"></span>
                             <span class="glyphicon glyphicon-warning-sign text-danger"></span>
-                        {% elseif date() < date(beneficaire.dateLivret2) %}
+                        {% elseif date() < date(beneficiaire.dateLivret2) %}
                             <span class="text-warning">Prévu</span>
                             <span class="glyphicon glyphicon-warning-sign text-warning"></span>
                         {% endif %}
@@ -119,11 +119,11 @@
                 <p class="col-xs-4">
                     {{ beneficiaire.statutJury == '' ? '-': beneficiaire.statutJury }}
                     {% if beneficiaire.statutJury == "prevu" %}
-                        {% if  date() > date(beneficaire.dateJury) %}
+                        {% if  date() > date(beneficiaire.dateJury) %}
                             <span class="text-danger">Prévu</span>
                             <span class="glyphicon glyphicon-warning-sign text-warning"></span>
                             <span class="glyphicon glyphicon-warning-sign text-danger"></span>
-                        {% elseif date() < date(beneficaire.dateJury) %}
+                        {% elseif date() < date(beneficiaire.dateJury) %}
                             <span class="text-warning">Prévu</span>
                             <span class="glyphicon glyphicon-warning-sign text-warning"></span>
                         {% endif %}

@@ -79,3 +79,12 @@ services:
         arguments: ['@security.token_storage']
         tags:
             - { name: form.type }
+
+    application.beneficiary_factory:
+        class: Application\PlateformeBundle\Factory\BeneficiaryFactory
+
+    application.beneficiary:
+        class:   Application\Entity\Beneficiaire
+        # call a method on the specified factory service
+        factory: 'application.beneficiary_factory:createBeneficiary'
+        arguments: ["@doctrine.orm.entity_manager"]

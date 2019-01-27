@@ -1,0 +1,88 @@
+.file_block{
+    text-align: center;
+}
+.file_block a {
+    color: #545454;
+}
+.file{
+    border-radius: 3px;
+    background-color: #efefef;
+    text-align: center;
+    padding: 24% 0 24% 0px;
+    margin-bottom: 13px;
+    position:relative
+}
+
+.file aside{
+    position:absolute;
+    height:100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding-top: 27%;
+    background-color: #4e4e4ef2;
+    border-radius: 3px
+}
+
+.file aside a{
+    margin-right: 11%;
+    font-size: 14px;
+    color:white;
+}
+.file aside a:last-child{
+    margin-right: 0%;
+}
+
+
+
+.block_form_add_file h4 {
+    background-color: #3bb979;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.block_form_add_file h4:hover {
+    background-color: #34af70;
+}
+
+.block_form_add_file form {
+    border: 1px solid #e0e0e0;
+    padding: 15px 10px 44px 10px;
+    margin-top: -11px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.block_form_add_file form input, .block_form_add_file form select{
+    margin-bottom: 10px;
+}
+.block_form_add_file form button[type=submit]{
+    background-color: #d2d2d2;
+    font-weight: bold;
+    float: right;
+}
+
+.list_rubrique_ressource , .list_rubrique_ressource aside{
+    position: relative;
+}
+.list_rubrique_ressource aside{
+    position: absolute;
+    right: -20%;
+    margin-top: -19px;
+}
+.list_rubrique_ressource aside a{
+    color:#777777;
+}
+.list_rubrique_ressource aside a:first-child{
+    margin-right: 5px;
+}
+
+.list_rubrique_ressource aside a:first-child:hover{
+    color:#ffc107;
+}
+.list_rubrique_ressource aside a:last-child:hover{
+    color:#dc3545;
+}
+
