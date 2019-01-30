@@ -30,6 +30,10 @@ application_plateforme:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+
 offices:
     type: rest
     resource: Api\PlatformBundle\Controller\OfficeController

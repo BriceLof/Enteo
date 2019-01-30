@@ -29,6 +29,8 @@ class AppKernel extends Kernel
             new Fungio\GoogleCalendarBundle\FungioGoogleCalendarBundle(),
             new Api\PlatformBundle\ApiPlatformBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new FOS\CKEditorBundle\FOSCKEditorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test', 'pre_prod'], true)) {
