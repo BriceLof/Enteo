@@ -3,6 +3,7 @@
 namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Bureau;
+use Application\PlateformeBundle\Form\BureauEntheorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -54,6 +55,34 @@ class BureauController extends Controller
         }
 
         return $this->render('ApplicationPlateformeBundle:Bureau:new.html.twig', array(
+            'bureau' => $bureau,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * add a new office visible on Entheor.com
+     *
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function newEntheorAction(Request $request)
+    {
+        $bureau = new Bureau();
+        $form = $this->createForm(BureauEntheorType::class, $bureau);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($bureau);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Bureau Entheor ajouté avec succès');
+
+            return $this->redirect($this->generateUrl('application_index_bureau'));
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Bureau:entheor/new.html.twig', array(
             'bureau' => $bureau,
             'form' => $form->createView(),
         ));
