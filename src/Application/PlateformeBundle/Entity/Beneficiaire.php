@@ -418,6 +418,8 @@ class Beneficiaire
         $this->documents = new ArrayCollection();
         $this->updatedAt = new \DateTime('now');
         $this->deleted = false;
+        $this->nomConso = "";
+        $this->prenomConso = "";
     }
 
     /**

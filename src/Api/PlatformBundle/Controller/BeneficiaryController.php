@@ -2,6 +2,7 @@
 
 namespace Api\PlatformBundle\Controller;
 
+use Application\PlateformeBundle\Entity\Beneficiaire;
 use Api\PlatformBundle\Form\BeneficiaryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
