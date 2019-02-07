@@ -9,3 +9,10 @@ application_csv_getListFacture:
     defaults: { _controller: "ApplicationPlateformeBundle:Csv:getListFacture" }
     options:
         expose: true
+
+application_csv_getFileEmployeur:
+    path:     /getFileEmployeur
+    defaults: { _controller: "ApplicationPlateformeBundle:Csv:getFileEmployeur" }
+    options:
+        expose: true
+

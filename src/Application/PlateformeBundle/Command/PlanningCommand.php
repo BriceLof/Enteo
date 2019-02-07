@@ -52,6 +52,6 @@ class PlanningCommand extends ContainerAwareCommand
             }
         }
 
-
+        $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->planning($tab1, $tab2, $tab3);
     }
 }

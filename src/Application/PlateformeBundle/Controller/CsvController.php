@@ -98,4 +98,17 @@ class CsvController extends Controller
 //        ici la création du fichier csv
         return $this->get('application_plateforme.csv')->getCsvForFacture($factures);
     }
+
+    public function getFileEmployeurAction(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findAll();
+
+        foreach ($beneficiaires as $beneficiaire){
+            if (!is_null($beneficiaire->getEmployeur())){
+                $list[] = $beneficiaire;
+            }
+        }
+
+        return $this->get('application_plateforme.csv')->getCsvFileEmployeur($list);
+    }
 }
