@@ -65,7 +65,11 @@
                                 {% set financeur = facture.Financeur | split('|') %}
                                 <td>{{ financeur[0]~', '~financeur[2] }}</td>
                                 <!--<td>{{ facture.beneficiaire.ville.nom | capitalize }}</td>-->
-                                <td>{{ facture.beneficiaire.consultant.nom | capitalize ~ ' '~ facture.beneficiaire.consultant.prenom | capitalize }}</td>
+                                <td>
+                                    {% if facture.beneficiaire.consultant is not null %}
+                                        {{ facture.beneficiaire.consultant.nom | capitalize ~ ' '~ facture.beneficiaire.consultant.prenom | capitalize }}
+                                    {% endif %}
+                                </td>
                                 <td><a href="{{ path("application_show_facture", {'numero' : facture.numero }) }}" title="Afficher facture" target="_blank">{{ facture.numero }}</a></td>
                                 <td>{{ facture.date | date("d/m/Y") }}</td>
                                 <td>{{ facture.montant }} €</td>

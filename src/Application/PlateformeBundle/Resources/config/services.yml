@@ -88,3 +88,11 @@ services:
         # call a method on the specified factory service
         factory: 'application.beneficiary_factory:createBeneficiary'
         arguments: ["@doctrine.orm.entity_manager"]
+
+################################################################################
+###################################  FACTURE  ##################################
+################################################################################
+
+    application_plateforme.facture.cron.status:
+            class: Application\PlateformeBundle\Services\Facture\Cron\CronFactureStatus
+            parent: application_plateforme.mail

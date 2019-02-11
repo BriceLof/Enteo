@@ -131,4 +131,26 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
         return $results;
 
     }
+
+    public function getByStatusSincedate()
+    {
+        $queryBuilder = $this->createQueryBuilder("f")
+            ->where('f.id = 349')
+            ->orderBy("f.id", "ASC");
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+
+    }
+
+    public function getFactureAvecHistorique()
+    {
+        $queryBuilder = $this->createQueryBuilder('f')
+            ->innerJoin('f.historiquesPaiement', 'h')
+            ->orderBy('h.id', 'DESC')
+       ;
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }
