@@ -6,9 +6,10 @@ use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\News;
 use Application\PlateformeBundle\Entity\Historique;
 use Application\PlateformeBundle\Entity\DetailStatut;
+use Application\PlateformeBundle\Services\Mailer;
 use Application\UsersBundle\Entity\Users;
 
-class Rv extends \Application\PlateformeBundle\Services\Mailer
+class Rv extends Mailer
 { 
     // Alerte à +1h de l'heure du démarrage du rdv dans l'agenda (entity historique)
     public function alerteSuiteRvAgenda()

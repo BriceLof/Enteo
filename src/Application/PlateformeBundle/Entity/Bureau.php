@@ -82,12 +82,62 @@ class Bureau
      * @ORM\Column(name="supprimer", type="boolean")
      */
     private $supprimer;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="meta_title", type="string", length=255, nullable=true)
+     */
+    private $metaTitle;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="meta_description", type="string", length=255, nullable=true)
+     */
+    private $metaDescription;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="introduction", type="text", nullable=true)
+     */
+    private $intro;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="presentation", type="text", nullable=true)
+     */
+    private $content;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="public", type="array", nullable=true)
+     */
+    private $public;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="price", type="decimal", nullable=true)
+     */
+    private $price;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="enabled_entheor", type="boolean")
+     */
+    private $enabledEntheor;
 	
     public function __construct()
     {
         $this->actifInactif = true;
         $this->temporaire = false;
 		$this->supprimer = false;
+		$this->enabledEntheor = false;
     }
 
     /**
@@ -343,5 +393,173 @@ class Bureau
     public function __toString()
     {
         return (ucfirst($this->getNombureau()).', '.$this->getAdresse().' '.$this->getVille()->getCp().' ').' '.strtoupper($this->getVille()->getNom());
+    }
+
+    /**
+     * Set metaTitle
+     *
+     * @param string $metaTitle
+     *
+     * @return Bureau
+     */
+    public function setMetaTitle($metaTitle)
+    {
+        $this->metaTitle = $metaTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get metaTitle
+     *
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     *
+     * @return Bureau
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * Set intro
+     *
+     * @param string $intro
+     *
+     * @return Bureau
+     */
+    public function setIntro($intro)
+    {
+        $this->intro = $intro;
+
+        return $this;
+    }
+
+    /**
+     * Get intro
+     *
+     * @return string
+     */
+    public function getIntro()
+    {
+        return $this->intro;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Bureau
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set public
+     *
+     * @param array $public
+     *
+     * @return Bureau
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Get public
+     *
+     * @return array
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return Bureau
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set enabledEntheor
+     *
+     * @param boolean $enabledEntheor
+     *
+     * @return Bureau
+     */
+    public function setEnabledEntheor($enabledEntheor)
+    {
+        $this->enabledEntheor = $enabledEntheor;
+
+        return $this;
+    }
+
+    /**
+     * Get enabledEntheor
+     *
+     * @return boolean
+     */
+    public function getEnabledEntheor()
+    {
+        return $this->enabledEntheor;
     }
 }

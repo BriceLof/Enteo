@@ -76,14 +76,14 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <p class="col-xs-4">Date d'envoi livret 1 :</p>
+                <p class="col-xs-4">Envoi livret 1 :</p>
                 <p class="col-xs-4">{{ beneficiaire.dateLivret1 is null ? '': beneficiaire.dateLivret1|date('d/m/Y') }}</p>
                 <p class="col-xs-4">
                     {{ beneficiaire.statutLivret1 == '' ? '-' }}
                     {% if beneficiaire.statutLivret1 == "prevu" %}
                         <span class="text-warning">Prévu</span>
                         {% if  date() > date(beneficiaire.dateLivret1) %}
-                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
                         {% endif %}
                     {% elseif beneficiaire.statutLivret1 == 'realise' %}
                         <span class="text-success">Réalisé</span>
@@ -91,14 +91,14 @@
                 </p>
             </div>
             <div class="row">
-                <p class="col-xs-4">Date d'envoi livret 2 :</p>
+                <p class="col-xs-4">Envoi livret 2 :</p>
                 <p class="col-xs-4">{{ beneficiaire.dateLivret2 is null ? '': beneficiaire.dateLivret2|date('d/m/Y') }}</p>
                 <p class="col-xs-4">
                     {{ beneficiaire.statutLivret2 == '' ? '-' }}
                     {% if beneficiaire.statutLivret2 == "prevu" %}
                         <span class="text-warning">Prévu</span>
-                        {% if  date() > date(beneficiaire.dateLivret2) %}
-                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
+                        {% if  date() > date(beneficiaire.dateLivret2) or date() > date(beneficiaire.accompagnement.dateFin) %}
+                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
                         {% endif %}
                     {% elseif beneficiaire.statutLivret2 == 'realise' %}
                         <span class="text-success">Réalisé</span>
@@ -113,9 +113,6 @@
                     {% if beneficiaire.statutJury == "prevu" %}
                         <span class="text-warning">Prévu</span>
                         {% if date() > date(beneficiaire.dateJury) %}
-                            <span class="glyphicon glyphicon-warning-sign text-warning"></span>
-                        {% endif %}
-                        {% if date() > date(beneficiaire.accompagnement.dateFin) %}
                             <span class="glyphicon glyphicon-warning-sign text-danger"></span>
                         {% endif %}
                     {% elseif beneficiaire.statutJury == 'realise' %}

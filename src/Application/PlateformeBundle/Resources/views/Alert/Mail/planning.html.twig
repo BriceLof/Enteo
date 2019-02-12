@@ -1,0 +1,28 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}{{ reference }}{% endblock %}
+{% block contentMail %}
+    <u>Livret 1</u>
+    {% for beneficiaire in tab1 %}
+        <p style='margin-left:10px;'>&bull;
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
+                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
+            </a>
+        </p>
+    {% endfor %}
+    <br><br>
+    {% for beneficiaire in tab2 %}
+        <p style='margin-left:10px;'>&bull;
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
+                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
+            </a>
+        </p>
+    {% endfor %}
+    <br><br>
+    {% for beneficiaire in tab3 %}
+        <p style='margin-left:10px;'>&bull;
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
+                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
+            </a>
+        </p>
+    {% endfor %}
+{% endblock %}

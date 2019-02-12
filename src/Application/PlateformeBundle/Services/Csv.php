@@ -16,10 +16,11 @@ class Csv
         $this->em = $em;
     }
 
-    public function getCsvFromListBeneficiaire($beneficiaires){
+    public function getCsvFromListBeneficiaire($beneficiaires)
+    {
 
         $response = new StreamedResponse();
-        $response->setCallback(function() use ($beneficiaires) {
+        $response->setCallback(function () use ($beneficiaires) {
             $handle = fopen('php://output', 'w+');
             fputcsv($handle, array(
                 'id',
@@ -38,7 +39,7 @@ class Csv
                 'diplome vise',
                 'consultant',
                 'facture'
-                ), ';');
+            ), ';');
 
             foreach ($beneficiaires as $beneficiaire) {
 
@@ -56,13 +57,13 @@ class Csv
                 $query = $this->em->getRepository('ApplicationPlateformeBundle:Historique')->getLastRv1($beneficiaire, 'RV1', 1, 1);
                 $result = $query->getArrayResult();
 
-                foreach ($result as $lastRv1){
-                    $dateRv1 =  $lastRv1['dateDebut']->format('d/m/Y');
+                foreach ($result as $lastRv1) {
+                    $dateRv1 = $lastRv1['dateDebut']->format('d/m/Y');
                 }
 
 
-                if (!is_null($beneficiaire->getAccompagnement())){
-                    if (!is_null($beneficiaire->getAccompagnement()->getFinanceur()[0])){
+                if (!is_null($beneficiaire->getAccompagnement())) {
+                    if (!is_null($beneficiaire->getAccompagnement()->getFinanceur()[0])) {
                         $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getNom();
                         $montant1 = $beneficiaire->getAccompagnement()->getFinanceur()[0]->getMontant();
                     }
@@ -70,22 +71,22 @@ class Csv
                         $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getNom();
                         $montant2 = $beneficiaire->getAccompagnement()->getFinanceur()[1]->getMontant();
                     }
-                    if ( !is_null($beneficiaire->getAccompagnement()->getDateDebut())) {
+                    if (!is_null($beneficiaire->getAccompagnement()->getDateDebut())) {
                         $dateDebut = $beneficiaire->getAccompagnement()->getDateDebut()->format('d/m/Y');
                     }
-                    if ( !is_null($beneficiaire->getAccompagnement()->getDateFin())) {
+                    if (!is_null($beneficiaire->getAccompagnement()->getDateFin())) {
                         $dateFin = $beneficiaire->getAccompagnement()->getDateFin()->format('d/m/Y');
                     }
                     $duree = $beneficiaire->getAccompagnement()->getHeure();
                 }
 
-                if (!is_null($beneficiaire->getConsultant())){
-                    $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]).". ".strtoupper($beneficiaire->getConsultant()->getNom());
+                if (!is_null($beneficiaire->getConsultant())) {
+                    $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]) . ". " . strtoupper($beneficiaire->getConsultant()->getNom());
                 }
 
-                if (!is_null($beneficiaire->getFactures())){
-                    foreach ($beneficiaire->getFactures() as $factureBene){
-                        $facture .= ' '.$factureBene->getNumero().' ';
+                if (!is_null($beneficiaire->getFactures())) {
+                    foreach ($beneficiaire->getFactures() as $factureBene) {
+                        $facture .= ' ' . $factureBene->getNumero() . ' ';
                     }
                 }
 
@@ -109,7 +110,7 @@ class Csv
                         utf8_decode($beneficiaire->getDiplomeVise()),
                         $consultant,
                         $facture
-                        ),
+                    ),
                     ';'
                 );
             }
@@ -122,10 +123,86 @@ class Csv
         return $response;
     }
 
-    public function getCsvFromEcoleBeneficiaire($beneficiaires){
+    public function getCsvFileEmployeur($beneficiaires)
+    {
+        $response = new StreamedResponse();
+        $response->setCallback(function () use ($beneficiaires) {
+            $handle = fopen('php://output', 'w+');
+            fputcsv($handle, array(
+                'Employeur raison sociale',
+                'Employeur ape nace',
+                'Employeur cp',
+                'Employeur ville',
+                'Beneficiaire id',
+                'Beneficiaire nom',
+                'Beneficiaire prenom',
+                'Beneficiaire cp',
+                'Beneficiaire ville',
+                'Beneficiaire statut commercial',
+                'Beneficiaire statut administratif',
+                'Beneficiaire detail statut administratif',
+                'Contact employeur nature',
+                'Contact employeur civilite',
+                'Contact employeur nom',
+                'Contact employeur prenom',
+                'Contact employeur tel',
+                'Contact employeur email',
+                'Financeur 1 nom',
+                'Financeur 1 organisme',
+                'Financeur 2 nom',
+                'Financeur 2 organisme',
+            ), ';');
+
+            foreach ($beneficiaires as $beneficiaire) {
+
+                $employeur = $beneficiaire->getEmployeur();
+                $contact = $beneficiaire->getContactEmployeur()[0];
+                $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0];
+                $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1];
+
+                fputcsv(
+                    $handle,
+                    array(
+                        $employeur->getRaisonSociale(),
+                        $employeur->getApeNace(),
+                        $employeur->getVille()->getCp(),
+                        $employeur->getVille()->getNom(),
+                        $beneficiaire->getId(),
+                        $beneficiaire->getNomConso(),
+                        $beneficiaire->getPrenomConso(),
+                        $beneficiaire->getVille()->getCp(),
+                        $beneficiaire->getVille()->getNom(),
+                        $beneficiaire->getLastDetailStatutCommercial()->getStatut()->getNom(),
+                        $beneficiaire->getLastDetailStatutAdmin()->getStatut()->getNom(),
+                        $beneficiaire->getLastDetailStatutAdmin()->getDetail(),
+                        $contact->getNature(),
+                        $contact->getCivilite(),
+                        $contact->getNom(),
+                        $contact->getPrenom(),
+                        $contact->getTel(),
+                        $contact->getEmail(),
+                        $financeur1->getNom(),
+                        $financeur1->getOrganisme(),
+                        $financeur2->getNom(),
+                        $financeur2->getOrganisme()
+                    ),
+                    ';'
+                );
+            }
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+        return $response;
+    }
+
+    public function getCsvFromEcoleBeneficiaire($beneficiaires)
+    {
 
         $response = new StreamedResponse();
-        $response->setCallback(function() use ($beneficiaires) {
+        $response->setCallback(function () use ($beneficiaires) {
             $handle = fopen('php://output', 'w+');
             fputcsv($handle, array(
                 utf8_decode('École/Université'),
@@ -142,11 +219,11 @@ class Csv
                 $dateFin = null;
 
 
-                if (!is_null($beneficiaire->getAccompagnement())){
-                    if ( !is_null($beneficiaire->getAccompagnement()->getDateDebut())) {
+                if (!is_null($beneficiaire->getAccompagnement())) {
+                    if (!is_null($beneficiaire->getAccompagnement()->getDateDebut())) {
                         $dateDebut = $beneficiaire->getAccompagnement()->getDateDebut()->format('d/m/Y');
                     }
-                    if ( !is_null($beneficiaire->getAccompagnement()->getDateFin())) {
+                    if (!is_null($beneficiaire->getAccompagnement()->getDateFin())) {
                         $dateFin = $beneficiaire->getAccompagnement()->getDateFin()->format('d/m/Y');
                     }
                 }
@@ -157,7 +234,7 @@ class Csv
                     array(
                         utf8_decode($beneficiaire->getEcoleUniversite()),
                         utf8_decode($beneficiaire->getDiplomeVise()),
-                        utf8_decode($beneficiaire->getNomConso()).' '.utf8_decode($beneficiaire->getPrenomConso()),
+                        utf8_decode($beneficiaire->getNomConso()) . ' ' . utf8_decode($beneficiaire->getPrenomConso()),
                         $dateDebut,
                         $dateFin,
                         utf8_decode($beneficiaire->getDiplomeVise()),
@@ -175,10 +252,11 @@ class Csv
         return $response;
     }
 
-    public function getCsvForFicheNonMaj($historiques){
+    public function getCsvForFicheNonMaj($historiques)
+    {
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, array(
-            'date = '.(new \DateTime('now'))->modify('-15 day')->format('d-m-Y')
+            'date = ' . (new \DateTime('now'))->modify('-15 day')->format('d-m-Y')
         ));
         fputcsv($handle, array());
         fputcsv($handle, array(
@@ -200,8 +278,8 @@ class Csv
                 array(
                     $historique->getDateDebut()->format('d-m-Y'),
                     $historique->getSummary(),
-                    utf8_decode($beneficiaire->getPrenomConso().' '.strtoupper($beneficiaire->getNomConso())),
-                    utf8_decode($consultant->getPrenom().' '.strtoupper($consultant->getNom())),
+                    utf8_decode($beneficiaire->getPrenomConso() . ' ' . strtoupper($beneficiaire->getNomConso())),
+                    utf8_decode($consultant->getPrenom() . ' ' . strtoupper($consultant->getNom())),
                     $consultant->getTel1(),
                     (is_null($historique->getBureau())) ? 'Distanciel' : $historique->getBureau()->getVille()->getNom(),
                 ),
@@ -214,13 +292,14 @@ class Csv
         return $csv;
     }
 
-    public function getCvsForMailSuivi($suivis, $statut){
+    public function getCvsForMailSuivi($suivis, $statut)
+    {
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, array(
-            'date = '.(new \DateTime('now'))->format('d-m-Y')
+            'date = ' . (new \DateTime('now'))->format('d-m-Y')
         ));
         fputcsv($handle, array(
-            'statut = '.$statut
+            'statut = ' . $statut
         ));
         fputcsv($handle, array());
         fputcsv($handle, array(
@@ -247,7 +326,7 @@ class Csv
                     $beneficiaire->getId(),
                     utf8_decode($beneficiaire->getNomConso()),
                     utf8_decode($beneficiaire->getPrenomConso()),
-                    $beneficiaire->getTypeFinanceur().' '.$beneficiaire->getOrganisme(),
+                    $beneficiaire->getTypeFinanceur() . ' ' . $beneficiaire->getOrganisme(),
                     $suivi->getDate()->format('d-m-Y'),
                 ),
                 ';'
@@ -259,7 +338,8 @@ class Csv
         return $csv;
     }
 
-    public function getCvsForMailNews($news){
+    public function getCvsForMailNews($news)
+    {
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, array(
             'id',
@@ -279,15 +359,15 @@ class Csv
             $consultant = null;
             $nouvelle = null;
 
-            if (!is_null($beneficiaire->getConsultant())){
-                $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]).". ".strtoupper($beneficiaire->getConsultant()->getNom());
+            if (!is_null($beneficiaire->getConsultant())) {
+                $consultant = ucfirst($beneficiaire->getConsultant()->getPrenom()[0]) . ". " . strtoupper($beneficiaire->getConsultant()->getNom());
             }
 
-            $nomBeneficiaire = ucfirst($beneficiaire->getCiviliteConso()).' '.ucfirst($beneficiaire->getPrenomConso()).' '.strtoupper($beneficiaire->getNomConso());
+            $nomBeneficiaire = ucfirst($beneficiaire->getCiviliteConso()) . ' ' . ucfirst($beneficiaire->getPrenomConso()) . ' ' . strtoupper($beneficiaire->getNomConso());
 
-            if (!is_null($beneficiaire->getNouvelle()[count($beneficiaire->getNouvelle()) - 1])){
+            if (!is_null($beneficiaire->getNouvelle()[count($beneficiaire->getNouvelle()) - 1])) {
                 $lastNouvelle = $beneficiaire->getNouvelle()[count($beneficiaire->getNouvelle()) - 1];
-                $nouvelle = $lastNouvelle->getTitre()." : ".$lastNouvelle->getMessage();
+                $nouvelle = $lastNouvelle->getTitre() . " : " . $lastNouvelle->getMessage();
             }
 
             fputcsv(
@@ -297,7 +377,7 @@ class Csv
                     utf8_decode($nomBeneficiaire),
                     $beneficiaire->getTelConso(),
                     $beneficiaire->getDateConfMer()->format('d-m-Y'),
-                    $beneficiaire->getVilleMer()->getNom()." (".$beneficiaire->getVilleMer()->getCp(),
+                    $beneficiaire->getVilleMer()->getNom() . " (" . $beneficiaire->getVilleMer()->getCp(),
                     $consultant,
                     $new->getDetailStatut()->getDetail(),
                     $nouvelle
@@ -314,7 +394,7 @@ class Csv
     public function getCsvForFacture($factures)
     {
         $response = new StreamedResponse();
-        $response->setCallback(function() use ($factures) {
+        $response->setCallback(function () use ($factures) {
             $handle = fopen('php://output', 'w+');
             fputcsv($handle, array(
                 utf8_decode('Bénéficiaire'),
@@ -336,59 +416,58 @@ class Csv
                 'Commentaire',
             ), ';');
 
-            foreach ($factures as $facture)
-            {
-                if($facture->getOuvert() == 1) $statutCreation = "Ouvert";
+            foreach ($factures as $facture) {
+                if ($facture->getOuvert() == 1) $statutCreation = "Ouvert";
                 else $statutCreation = "Fermer";
 
                 $tabValue = array(
-                        ucwords(utf8_decode($facture->getBeneficiaire()->getNomConso()." ".$facture->getBeneficiaire()->getPrenomConso())),
-                        $facture->getBeneficiaire()->getVilleMer()->getNom(),
-                        $facture->getDateDebutAccompagnement()->format('d-m-Y'),
-                        $facture->getDateFinAccompagnement()->format('d-m-Y'),
-                        utf8_decode($facture->getFinanceur()),
-                        utf8_decode($facture->getBeneficiaire()->getConsultant()->getNom()." ".$facture->getBeneficiaire()->getConsultant()->getPrenom()),
-                        $facture->getNumero(),
-                        $facture->getDate()->format('d-m-Y'),
-                        $facture->getMontant(),
-                        $facture->getMontantPayer(),
-                        $statutCreation,
-                        ucfirst($facture->getStatut()),
-                    );
+                    ucwords(utf8_decode($facture->getBeneficiaire()->getNomConso() . " " . $facture->getBeneficiaire()->getPrenomConso())),
+                    $facture->getBeneficiaire()->getVilleMer()->getNom(),
+                    $facture->getDateDebutAccompagnement()->format('d-m-Y'),
+                    $facture->getDateFinAccompagnement()->format('d-m-Y'),
+                    utf8_decode($facture->getFinanceur()),
+                    utf8_decode($facture->getBeneficiaire()->getConsultant()->getNom() . " " . $facture->getBeneficiaire()->getConsultant()->getPrenom()),
+                    $facture->getNumero(),
+                    $facture->getDate()->format('d-m-Y'),
+                    $facture->getMontant(),
+                    $facture->getMontantPayer(),
+                    $statutCreation,
+                    ucfirst($facture->getStatut()),
+                );
 
                 $historiquesFactures = $this->em->getRepository('ApplicationPlateformeBundle:HistoriquePaiementFacture')->findByFacture($facture);
                 $i = 0;
 
-                foreach($historiquesFactures as $historiqueFacture){
+                foreach ($historiquesFactures as $historiqueFacture) {
 
-                    if(!is_null($historiqueFacture->getDatePaiement()) && $historiqueFacture->getDatePaiement() != '')
+                    if (!is_null($historiqueFacture->getDatePaiement()) && $historiqueFacture->getDatePaiement() != '')
                         $datePaiementPrevu = $historiqueFacture->getDatePaiement()->format('d-m-Y');
                     else
                         $datePaiementPrevu = "N.C.";
 
-                    if($historiqueFacture->getModePaiement() == 'cheque'){
-                        if(!is_null($historiqueFacture->getBanque()) && $historiqueFacture->getBanque() != '')
+                    if ($historiqueFacture->getModePaiement() == 'cheque') {
+                        if (!is_null($historiqueFacture->getBanque()) && $historiqueFacture->getBanque() != '')
                             $banque = $historiqueFacture->getBanque();
                         else
                             $banque = "N.C.";
-                    }else{
+                    } else {
                         $banque = "";
                     }
 
 
-                    array_push($tabValue,   ucfirst($historiqueFacture->getModePaiement()), ucfirst(utf8_decode($banque)), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
+                    array_push($tabValue, ucfirst($historiqueFacture->getModePaiement()), ucfirst(utf8_decode($banque)), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
 
-                    if($i == 0){
+                    if ($i == 0) {
                         fputcsv(
                             $handle,
                             $tabValue,
                             ';'
                         );
-                    }else{
+                    } else {
                         fputcsv(
                             $handle,
                             array(
-                                '','','','','','','','','','','','',
+                                '', '', '', '', '', '', '', '', '', '', '', '',
                                 ucfirst($historiqueFacture->getModePaiement()),
                                 ucfirst(utf8_decode($banque)),
                                 $datePaiementPrevu,

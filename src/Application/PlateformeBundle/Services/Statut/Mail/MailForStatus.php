@@ -126,5 +126,35 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $this->sendMessageToAdminAndGestion($from, $subject, $body);
     }
+
+    /**
+     * Ref 4b
+     *
+     * @param $suivis
+     * @param $attachment
+     */
+    public function planning($tab1, $tab2, $tab3){
+        $ref = "7";
+        $from = array("email" => "christine.clement@entheor.com", "name" => "christine.clement@entheor.com");
+        $subject = "Liste des Bénéficiaires dont le planning est en retard";
+        $template = '@Apb/Alert/Mail/planning.html.twig';
+        $to = array(array("email" => "contact@entheor.com", "name" => "contact@entheor.com"));
+        $cc = array(
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "virginie.hiairrassary@entheor.com", "name" => "Virginie Hiairrassary"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Molier"),
+            array("email" => "ph.rouzaud@entheor.com", "name" => "Philippe Rouzaud"),
+        );
+        $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
+        $body = $this->templating->render($template, array(
+            'tab1' => $tab1,
+            'tab2' => $tab2,
+            'tab3' => $tab3,
+            'reference' => $ref
+        ));
+
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+//        $this->sendMessage($from, 'f.azoulay@entheor.com',null, null, null, $subject, $body, $attachment);
+    }
     
 }
