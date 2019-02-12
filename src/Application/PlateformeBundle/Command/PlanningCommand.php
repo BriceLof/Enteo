@@ -30,23 +30,29 @@ class PlanningCommand extends ContainerAwareCommand
         $consultants = $em->getRepository('ApplicationUsersBundle:Users')->findAll();
         foreach ($consultants as $consultant) {
             $beneficiaires = $consultant->getBeneficiaire();
-            foreach ($beneficiaires as $beneficiaire){
+            foreach ($beneficiaires as $beneficiaire) {
 
-                if (!is_null($beneficiaire->getDateLivret1())) {
-                    if ($beneficiaire->getDateLivret1() <= (new \DateTime("now"))->setTime(0,0,0)){
-                        $tab1[] = $beneficiaire;
+                if ($beneficiaire->getStatutLivret1() == "prevu") {
+                    if (!is_null($beneficiaire->getDateLivret1())) {
+                        if ($beneficiaire->getDateLivret1() <= (new \DateTime("now"))->setTime(0, 0, 0)) {
+                            $tab1[] = $beneficiaire;
+                        }
                     }
                 }
 
-                if (!is_null($beneficiaire->getDateLivret2())) {
-                    if ($beneficiaire->getDateLivret2() <= (new \DateTime("now"))->setTime(0,0,0)){
-                        $tab2[] = $beneficiaire;
+                if ($beneficiaire->getStatutLivret2() == "prevu") {
+                    if (!is_null($beneficiaire->getDateLivret2())) {
+                        if ($beneficiaire->getDateLivret2() <= (new \DateTime("now"))->setTime(0, 0, 0)) {
+                            $tab2[] = $beneficiaire;
+                        }
                     }
                 }
 
-                if (!is_null($beneficiaire->getDateJury())) {
-                    if ($beneficiaire->getDateJury() <= (new \DateTime("now"))->setTime(0,0,0)){
-                        $tab1[] = $beneficiaire;
+                if ($beneficiaire->getStatutJury() == "prevu") {
+                    if (!is_null($beneficiaire->getDateJury())) {
+                        if ($beneficiaire->getDateJury() <= (new \DateTime("now"))->setTime(0, 0, 0)) {
+                            $tab3[] = $beneficiaire;
+                        }
                     }
                 }
             }

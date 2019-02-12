@@ -1,28 +1,36 @@
 {% extends "::mail/layout.html.twig" %}
 {% block ref %}{{ reference }}{% endblock %}
 {% block contentMail %}
-    <u>Livret 1</u>
-    {% for beneficiaire in tab1 %}
-        <p style='margin-left:10px;'>&bull;
-            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
-                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
-            </a>
-        </p>
-    {% endfor %}
-    <br><br>
-    {% for beneficiaire in tab2 %}
-        <p style='margin-left:10px;'>&bull;
-            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
-                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
-            </a>
-        </p>
-    {% endfor %}
-    <br><br>
-    {% for beneficiaire in tab3 %}
-        <p style='margin-left:10px;'>&bull;
-            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  beneficiaire.id }}">
-                {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
-            </a>
-        </p>
-    {% endfor %}
+    {% if tab1 is not empty %}
+        <u>Livret 1</u>
+        {% for beneficiaire in tab1 %}
+            <p style='margin-left:10px;'>&bull;
+                <a href="https://appli.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}">
+                    {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}
+                </a>
+            </p>
+        {% endfor %}
+        <br><br>
+    {% endif %}
+    {% if tab2 is not empty %}
+        <u>Livret 2</u>
+        {% for beneficiaire in tab2 %}
+            <p style='margin-left:10px;'>&bull;
+                <a href="https://appli.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}">
+                    {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}
+                </a>
+            </p>
+        {% endfor %}
+        <br><br>
+    {% endif %}
+    {% if tab3 is not empty %}
+        <u>Jury VAE</u>
+        {% for beneficiaire in tab3 %}
+            <p style='margin-left:10px;'>&bull;
+                <a href="https://appli.entheor.com/web/beneficiaire/show/{{ beneficiaire.id }}">
+                    {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize }}
+                </a>
+            </p>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

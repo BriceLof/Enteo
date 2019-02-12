@@ -153,8 +153,8 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
             'reference' => $ref
         ));
 
-        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
-//        $this->sendMessage($from, 'f.azoulay@entheor.com',null, null, null, $subject, $body, $attachment);
+//        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+        $this->sendMessage($from, array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof")) ,null, null, null, $subject, $body);
     }
     
 }

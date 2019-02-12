@@ -74,6 +74,7 @@
                 {{ render(controller("ApplicationPlateformeBundle:Statut:index",{'id': beneficiaire.id })) }}
             </div>
         </div>
+        <div class="clearfix"></div>
         <div class="container-fluid">
             <div class="row">
                 <p class="col-xs-4">Envoi livret 1 :</p>
@@ -83,7 +84,10 @@
                     {% if beneficiaire.statutLivret1 == "prevu" %}
                         <span class="text-warning">Prévu</span>
                         {% if  date() > date(beneficiaire.dateLivret1) %}
-                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
+                            <span
+                                    class="glyphicon glyphicon-warning-sign text-danger"
+                                    data-toggle="tooltip" title="La date prévue pour cette action est dépassée. Merci de mettre à jour la date ou le statut de l'action."
+                            ></span>
                         {% endif %}
                     {% elseif beneficiaire.statutLivret1 == 'realise' %}
                         <span class="text-success">Réalisé</span>
@@ -98,7 +102,10 @@
                     {% if beneficiaire.statutLivret2 == "prevu" %}
                         <span class="text-warning">Prévu</span>
                         {% if  date() > date(beneficiaire.dateLivret2) or date() > date(beneficiaire.accompagnement.dateFin) %}
-                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
+                            <span
+                                    class="glyphicon glyphicon-warning-sign text-danger"
+                                    data-toggle="tooltip" title="La date prévue pour cette action est dépassée. Merci de mettre à jour la date ou le statut de l'action."
+                            ></span>
                         {% endif %}
                     {% elseif beneficiaire.statutLivret2 == 'realise' %}
                         <span class="text-success">Réalisé</span>
@@ -113,7 +120,10 @@
                     {% if beneficiaire.statutJury == "prevu" %}
                         <span class="text-warning">Prévu</span>
                         {% if date() > date(beneficiaire.dateJury) %}
-                            <span class="glyphicon glyphicon-warning-sign text-danger"></span>
+                            <span
+                                    class="glyphicon glyphicon-warning-sign text-danger"
+                                    data-toggle="tooltip" title="La date prévue pour cette action est dépassée. Merci de mettre à jour la date ou le statut de l'action."
+                            ></span>
                         {% endif %}
                     {% elseif beneficiaire.statutJury == 'realise' %}
                         <span class="text-success">Réalisé</span>

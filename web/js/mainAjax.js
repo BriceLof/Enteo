@@ -1,4 +1,6 @@
 $("document").ready(function (initDynamicContent) {
+    $('[data-toggle="tooltip"]').tooltip();
+
     /**
      * les onglets dans la table news
      */
