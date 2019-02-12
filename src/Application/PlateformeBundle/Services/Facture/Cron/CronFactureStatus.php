@@ -2,6 +2,8 @@
 
 namespace Application\PlateformeBundle\Services\Facture\Cron;
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 class CronFactureStatus extends \Application\PlateformeBundle\Services\Mailer
 {
     public function listBeneficiareWithInvoice()
@@ -20,11 +22,11 @@ class CronFactureStatus extends \Application\PlateformeBundle\Services\Mailer
         // Get facture avec un historique de paiement, donc au delà du statut 'sent'
 
         $factureWithHisto = $repoFacture->getFactureAvecHistorique();
+
         $allFactureSentPartiel = array();
         $allFactureWithHisto = array();
         foreach ($factureWithHisto as $factureHisto)
         {
-
             $lastHisto = $factureHisto->getHistoriquesPaiement()[count($factureHisto->getHistoriquesPaiement()) - 1];
             if($lastHisto->getStatut() == 'sent' || $lastHisto->getStatut() == 'partiel')
             {
@@ -58,7 +60,10 @@ class CronFactureStatus extends \Application\PlateformeBundle\Services\Mailer
                 $interval = $dateEntity->diff($currentDate);
                 // facture qui n'a pas bouger depuis plus de 15 jours
                 if($interval->days > 15){
-                    $arrayFactureSansHisto[$factureAndHisto->getId()] = $factureAndHisto;
+                    if($factureAndHisto->getStatut() == 'sent' || $factureAndHisto->getStatut() == 'partiel'){
+                        $arrayFactureSansHisto[$factureAndHisto->getId()] = $factureAndHisto;
+                    }
+
                 }
             }
             elseif (get_class($factureAndHisto) == $nameClassHistoFacture){
@@ -68,25 +73,83 @@ class CronFactureStatus extends \Application\PlateformeBundle\Services\Mailer
             }
         }
 
-        // Envoyer le mail
+        //-------------------- Envoyer le mail
 
         //dump(($allFactureSentPartiel));
         //dump(($arrayFactureSansHisto));
 
+        $nbTotalDossier = count($allFactureSentPartiel) + count($arrayFactureSansHisto);
         $subject = "Dossier bénéficiaire avec facture en Sent ou Partiel";
         $from = $this->from;
         $to = array(array("email" => 'brice.lof@gmail.com', "name" => 'Brice lof'));
         $message = "
             Bonjour,<br><br>
             Cela fait  plus de 15 jours que ces factures sont en statut : 'Sent' ou 'Paid partiel' <br><br>
+            (".$nbTotalDossier." factures)<br><br>
         ";
-
+        $message .= "<ul>";
+        $message .= "<li><b>[Bénéficiaire] [Début - Fin  Accomp] [Financeur ou OPCA] [ N° Fact] [Date Facture] [Montant Fact] [Etat Fact] [Montant Total Dossier]</b></li>";
         foreach ($arrayFactureSansHisto as $facture){
-            $message .= $facture->getBeneficiaire()->getNomConso()."<br>";
+            $financeur = $facture->getFinanceur();
+            $financeurExplode = explode('|',$financeur);
+            $linkBeneficiaire = 'https://appli.entheor.com/web/beneficiaire/show/'.$facture->getBeneficiaire()->getId();
+            $linkFacture = 'https://appli.entheor.com/web/facture/show/'.$facture->getNumero();
+            $message .= "<li><a href='$linkBeneficiaire' title='Fiche bénéficiaire'>". $facture->getBeneficiaire()->getPrenomConso()." ".
+                                $facture->getBeneficiaire()->getNomConso()."</a> ".
+                                $facture->getDateDebutAccompagnement()->format('d/m/Y')." ".
+                                $facture->getDateFinAccompagnement()->format('d/m/Y')." ".
+                                $financeurExplode[0]." ".
+                                "<a href='$linkFacture' title='Voir la facture'>".$facture->getNumero()."</a> ".
+                                $facture->getDate()->format('d/m/Y')." ".
+                                ($facture->getMontantPayer() > 0 ? $facture->getMontantPayer() : 0)."€ ".
+                                $facture->getStatut()." ".
+                                $facture->getMontant()."€ 
+                        </li>";
         }
+
+
         foreach ($allFactureSentPartiel as $histo){
-            $message .= $histo->getFacture()->getBeneficiaire()->getNomConso()."<br>";
+            $facture = $histo->getFacture();
+            $financeur = $facture->getFinanceur();
+            $financeurExplode = explode('|',$financeur);
+            $linkBeneficiaire = 'https://appli.entheor.com/web/beneficiaire/show/'.$facture->getBeneficiaire()->getId();
+            $linkFacture = 'https://appli.entheor.com/web/facture/show/'.$facture->getNumero();
+            $message .= "<li><a href='$linkBeneficiaire' title='Fiche bénéficiaire'>". $facture->getBeneficiaire()->getPrenomConso()." ".
+                $facture->getBeneficiaire()->getNomConso()."</a> ".
+                $facture->getDateDebutAccompagnement()->format('d/m/Y')." ".
+                $facture->getDateFinAccompagnement()->format('d/m/Y')." ".
+                $financeurExplode[0]." ".
+                "<a href='$linkFacture' title='Voir la facture'>".$facture->getNumero()."</a> ".
+                $facture->getDate()->format('d/m/Y')." ".
+                ($facture->getMontantPayer() > 0 ? $facture->getMontantPayer() : 0)."€ ".
+                $facture->getStatut()." ".
+                $facture->getMontant()."€ 
+            </li>";
         }
+
+        $message .= "</ul>";
+
+        // Export en csv
+//        $dataCsv = array($arrayFactureSansHisto, $allFactureSentPartiel);
+//        $response = new StreamedResponse();
+//        $response->setCallback(function() use ($dataCsv) {
+//            $handle = fopen('php://output', 'w+');
+//
+//            fputcsv($handle, array('Bénéficiaire', 'Date debut accompagnement'), ';');
+//            foreach ($dataCsv[0] as $facture){
+//                fputcsv(
+//                    $handle,
+//                    array($facture->getBeneficiaire()->getPrenomConso()." ".$facture->getBeneficiaire()->getNomConso(), $facture->getDateDebutAccompagnement()->format('d/m/Y')),
+//                    ';'
+//                );
+//            }
+//            fclose($handle);
+//        });
+//
+//        $response->setStatusCode(200);
+//        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+//        $response->headers->set('Content-Disposition','attachment; filename="facture_statut.csv"');
+//        $attachment = array("name" => "facture_statut.csv", "file" => $response);
 
         //$cc = array(array("email" => "f.azoulay@entheor.com", "name" => "f.azoulay@entheor.com"));
 
