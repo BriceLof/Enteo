@@ -393,6 +393,12 @@ class Csv
 
     public function getCsvForFacture($factures)
     {
+//        dump($factures);
+//        foreach ($factures as $facture) {
+//            $historiquesFactures = $this->em->getRepository('ApplicationPlateformeBundle:HistoriquePaiementFacture')->findByFacture($facture);
+//            dump(count($historiquesFactures));
+//        }
+//        exit;
         $response = new StreamedResponse();
         $response->setCallback(function () use ($factures) {
             $handle = fopen('php://output', 'w+');
@@ -436,49 +442,59 @@ class Csv
                 );
 
                 $historiquesFactures = $this->em->getRepository('ApplicationPlateformeBundle:HistoriquePaiementFacture')->findByFacture($facture);
-                $i = 0;
 
-                foreach ($historiquesFactures as $historiqueFacture) {
+                if(count($historiquesFactures) > 0){
+                    $i = 0;
 
-                    if (!is_null($historiqueFacture->getDatePaiement()) && $historiqueFacture->getDatePaiement() != '')
-                        $datePaiementPrevu = $historiqueFacture->getDatePaiement()->format('d-m-Y');
-                    else
-                        $datePaiementPrevu = "N.C.";
+                    foreach ($historiquesFactures as $historiqueFacture) {
 
-                    if ($historiqueFacture->getModePaiement() == 'cheque') {
-                        if (!is_null($historiqueFacture->getBanque()) && $historiqueFacture->getBanque() != '')
-                            $banque = $historiqueFacture->getBanque();
+                        if (!is_null($historiqueFacture->getDatePaiement()) && $historiqueFacture->getDatePaiement() != '')
+                            $datePaiementPrevu = $historiqueFacture->getDatePaiement()->format('d-m-Y');
                         else
-                            $banque = "N.C.";
-                    } else {
-                        $banque = "";
+                            $datePaiementPrevu = "N.C.";
+
+                        if ($historiqueFacture->getModePaiement() == 'cheque') {
+                            if (!is_null($historiqueFacture->getBanque()) && $historiqueFacture->getBanque() != '')
+                                $banque = $historiqueFacture->getBanque();
+                            else
+                                $banque = "N.C.";
+                        } else {
+                            $banque = "";
+                        }
+
+
+                        array_push($tabValue, ucfirst($historiqueFacture->getModePaiement()), ucfirst(utf8_decode($banque)), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
+
+                        if ($i == 0) {
+                            fputcsv(
+                                $handle,
+                                $tabValue,
+                                ';'
+                            );
+                        } else {
+                            fputcsv(
+                                $handle,
+                                array(
+                                    '', '', '', '', '', '', '', '', '', '', '', '',
+                                    ucfirst($historiqueFacture->getModePaiement()),
+                                    ucfirst(utf8_decode($banque)),
+                                    $datePaiementPrevu,
+                                    $historiqueFacture->getMontant(),
+                                    ucfirst(utf8_decode($historiqueFacture->getCommentaire()))
+                                ),
+                                ';'
+                            );
+                        }
+                        $i++;
                     }
-
-
-                    array_push($tabValue, ucfirst($historiqueFacture->getModePaiement()), ucfirst(utf8_decode($banque)), $datePaiementPrevu, $historiqueFacture->getMontant(), ucfirst(utf8_decode($historiqueFacture->getCommentaire())));
-
-                    if ($i == 0) {
-                        fputcsv(
-                            $handle,
-                            $tabValue,
-                            ';'
-                        );
-                    } else {
-                        fputcsv(
-                            $handle,
-                            array(
-                                '', '', '', '', '', '', '', '', '', '', '', '',
-                                ucfirst($historiqueFacture->getModePaiement()),
-                                ucfirst(utf8_decode($banque)),
-                                $datePaiementPrevu,
-                                $historiqueFacture->getMontant(),
-                                ucfirst(utf8_decode($historiqueFacture->getCommentaire()))
-                            ),
-                            ';'
-                        );
-                    }
-                    $i++;
+                }else{
+                    fputcsv(
+                        $handle,
+                        $tabValue,
+                        ';'
+                    );
                 }
+
             }
             fclose($handle);
         });
