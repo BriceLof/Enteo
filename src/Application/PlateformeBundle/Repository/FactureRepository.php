@@ -128,6 +128,7 @@ class FactureRepository extends \Doctrine\ORM\EntityRepository
 
         $query = $queryBuilder->getQuery();
         $results = $query->getResult();
+      
         return $results;
 
     }

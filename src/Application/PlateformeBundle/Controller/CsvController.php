@@ -67,20 +67,19 @@ class CsvController extends Controller
         $form->handleRequest($request);
 
         $statut = $form->get('statut')->getData();
-        $dateDebutAccompagnement = $form->get('date_debut_accompagnement')->getData();
-        $dateFinAccompagnement = $form->get('date_fin_accompagnement')->getData();
-        $dateDebutAccompagnementStart = $form->get('date_debut_accompagnement_start')->getData();
-        $dateDebutAccompagnementEnd = $form->get('date_debut_accompagnement_end')->getData();
-        $dateFinAccompagnementStart = $form->get('date_fin_accompagnement_start')->getData();
-        $dateFinAccompagnementEnd = $form->get('date_fin_accompagnement_end')->getData();
-        $dateFactureStart = $form->get('date_facture_start')->getData();
-        $dateFactureEnd = $form->get('date_facture_end')->getData();
+        $dateDebutAccompagnement = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_debut_accompagnement')->getData());
+        $dateFinAccompagnement = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_fin_accompagnement')->getData());
+        $dateDebutAccompagnementStart = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_debut_accompagnement_start')->getData());
+        $dateDebutAccompagnementEnd = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_debut_accompagnement_end')->getData());
+        $dateFinAccompagnementStart = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_fin_accompagnement_start')->getData());
+        $dateFinAccompagnementEnd = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_fin_accompagnement_end')->getData());
+        $dateFactureStart = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_facture_start')->getData());
+        $dateFactureEnd = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_facture_end')->getData());
         $consultant = $form->get('consultant')->getData();
         $financeur = $form->get('financeur')->getData();
         $villeMer = $form->get('ville_mer')->getData();
-        $datePaiementStart = $form->get('date_paiement_start')->getData();
-        $datePaiementEnd = $form->get('date_paiement_end')->getData();
-
+        $datePaiementStart = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_paiement_start')->getData());
+        $datePaiementEnd = $this->get('application_plateforme.date')->transformDateFrtoEn($form->get('date_paiement_end')->getData());
 
         $numeroFacture = $form->get('numero_facture')->getData();
         $anneeNumeroFacture = $form->get('annee_numero_facture')->getData();
@@ -88,7 +87,7 @@ class CsvController extends Controller
 
         $beneficiaireGet = $request->get('beneficiaire_ajax');
         $beneficiaire = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findOneById($beneficiaireGet);
-        
+
         $query = $this->getDoctrine()->getRepository('ApplicationPlateformeBundle:Facture')->search($statut, $dateDebutAccompagnement, $dateFinAccompagnement, $dateDebutAccompagnementStart, $dateDebutAccompagnementEnd,
             $dateFinAccompagnementStart, $dateFinAccompagnementEnd, $dateFactureStart,
             $dateFactureEnd, $consultant, $beneficiaire, $numFactu, $financeur, $villeMer,
@@ -98,6 +97,8 @@ class CsvController extends Controller
 //        ici la création du fichier csv
         return $this->get('application_plateforme.csv')->getCsvForFacture($factures);
     }
+
+
 
     public function getFileEmployeurAction(Request $request){
         $em = $this->getDoctrine()->getManager();

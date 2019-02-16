@@ -56,6 +56,7 @@ $(function () {
     // --------------------------- Page facture : filtre de recherche
 
 
+
     $(".beneficiaireSearchFactureField").keyup(function () {
         nom = $(this).val();
         if (nom.length >= 3) {
@@ -109,9 +110,12 @@ $(function () {
         }
     });
 
+
     $("#export_csv_facture").click(function () {
         document.formulaire_filtre_facture.action = Routing.generate('application_csv_getListFacture');
         document.formulaire_filtre_facture.submit();
+        // je rechange l'action du formulaire pour que je puisse de nouveau faire une recherche sinon ça relance l'export d'un fichier et non le resubmit du form
+        document.formulaire_filtre_facture.action = Routing.generate('application_search_facture');
     })
     // --------------------------- FIN Page facture : filtre de recherche
 

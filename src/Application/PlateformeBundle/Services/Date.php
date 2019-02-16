@@ -26,4 +26,20 @@ class Date
         return $datefr;
     }
 
+    // Transforme date FR (d/m/Y) en EN (Y-m-d)
+    public function transformDateFrtoEn($date)
+    {
+        if(!is_null($date) && $date != '')
+        {
+            // si la date est deja dans le format EN
+            if(strstr($date, '-')){
+                return $date;
+            }
+            $dateExplode = explode('/', $date);
+            return $dateExplode[2].'-'.$dateExplode[1].'-'.$dateExplode[0];
+        }else{
+            return null;
+        }
+    }
+
 }

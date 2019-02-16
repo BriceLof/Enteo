@@ -7,6 +7,8 @@ application_search_facture_ajax_beneficiaire:
 application_search_facture:
     path:     /search
     defaults: { _controller: "ApplicationPlateformeBundle:Facture:search" }
+    options:
+        expose:  true
     
 # pagination url à à la page 1 : /facture/
 application_list_facture_home:
