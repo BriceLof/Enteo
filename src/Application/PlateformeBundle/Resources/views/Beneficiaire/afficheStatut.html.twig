@@ -101,10 +101,16 @@
                     {{ beneficiaire.statutLivret2 == '' ? '-' }}
                     {% if beneficiaire.statutLivret2 == "prevu" %}
                         <span class="text-warning">Prévu</span>
-                        {% if  date() > date(beneficiaire.dateLivret2) or date() > date(beneficiaire.accompagnement.dateFin) %}
+                        {% if  date() > date(beneficiaire.dateLivret2) %}
                             <span
                                     class="glyphicon glyphicon-warning-sign text-danger"
                                     data-toggle="tooltip" title="La date prévue pour cette action est dépassée. Merci de mettre à jour la date ou le statut de l'action."
+                            ></span>
+                        {% endif %}
+                        {% if date() > date(beneficiaire.accompagnement.dateFin) %}
+                            <span
+                                    class="glyphicon glyphicon-warning-sign text-danger"
+                                    data-toggle="tooltip" title="La date prévue pour cette action est postérieure à la date de fin d'accompagnement."
                             ></span>
                         {% endif %}
                     {% elseif beneficiaire.statutLivret2 == 'realise' %}

@@ -141,7 +141,6 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
         $to = array(array("email" => "contact@entheor.com", "name" => "contact@entheor.com"));
         $cc = array(
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
-            array("email" => "virginie.hiairrassary@entheor.com", "name" => "Virginie Hiairrassary"),
             array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Molier"),
             array("email" => "ph.rouzaud@entheor.com", "name" => "Philippe Rouzaud"),
         );
@@ -153,8 +152,8 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
             'reference' => $ref
         ));
 
-//        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
-        $this->sendMessage($from, array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof")) ,null, null, null, $subject, $body);
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
+//        $this->sendMessage($from, array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof")) ,null, null, null, $subject, $body);
     }
     
 }

@@ -36,12 +36,7 @@ class NewsController extends Controller
 
 
         $news = new News();
-
-        /*$news = $em->getRepository("ApplicationPlateformeBundle:News")->findOneBy(
-            array("beneficiaire"    => $beneficiaire), 
-            array("id"              => "DESC")
-        );*/
-        //var_dump($news);
+        
         $form = $this->createForm(NewsType::class, $news);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
