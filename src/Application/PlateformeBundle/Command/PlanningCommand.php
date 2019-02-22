@@ -34,7 +34,7 @@ class PlanningCommand extends ContainerAwareCommand
 
                 $lastDetailStatut = $beneficiaire->getLastDetailStatut();
 
-                if (!is_null($lastDetailStatut) && !in_array($lastDetailStatut->getStatut()->getId(), array(12,13))) {
+                if (!is_null($lastDetailStatut) && !in_array($lastDetailStatut->getStatut()->getId(), array(12))) {
                     if ($beneficiaire->getStatutLivret1() == "prevu") {
                         if (!is_null($beneficiaire->getDateLivret1())) {
                             if ($beneficiaire->getDateLivret1() <= (new \DateTime("now"))->setTime(0, 0, 0)) {
