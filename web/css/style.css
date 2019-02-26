@@ -8,6 +8,9 @@
 .mb-10, .my-10, .m-10{
     margin-bottom: 10px;
 }
+.mb-40, .my-40, .m-40{
+    margin-bottom: 40px;
+}
 .bold{
     font-weight: bold;
 }
@@ -828,4 +831,12 @@ textarea {
 }
 .complement{
     padding: 6px 0;
+}
+form[name='bureau'] .form-control{
+    width: 100%;
+}
+
+#bureau_submit{
+    padding: 7px 50px;
+    font-size: 17px;
 }

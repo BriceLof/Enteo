@@ -23,7 +23,7 @@ class Bureau
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="bureaux", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="bureaux", cascade={"persist"}, fetch="LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;

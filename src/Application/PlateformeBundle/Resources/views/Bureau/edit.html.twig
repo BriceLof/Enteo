@@ -1,41 +1,24 @@
-<div class="modal-body">
-    <div>
-        <div class="form-group">
-            <label>Nom du Bureau * : </label>
-            {{ form_widget(edit_form.nombureau) }}
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% block title %}Bureaux{% endblock%}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header col-md-12">
+                <div class="row">
+                    <h1 class="col-md-12">Gestion - Bureaux<br><small>Modifier le bureau <span class="text-primary">{{ bureau.nombureau }}</span></small></h1>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Adresse * : </label>
-            {{ form_widget(edit_form.adresse) }}
+        <div class="row">
+            {% include "ApplicationPlateformeBundle:Bureau:form.html.twig" %}
         </div>
-        <div class="form-group">
-            <label>Code Postal * : </label>
-           {{ form_widget(edit_form.code_postal) }}
-        </div>
-        <div class="form-group">
-            <label>Ville * : </label>
-            {{ form_widget(edit_form.ville, {'attr':{'class': 'villeAjax' }}) }}
-        </div>
-        <div class="form-group">
-            <label>Accès : </label>
-            {{ form_widget(edit_form.acces) }}
-        </div>
-        <div class="form-group">
-            <label>Commentaires : </label>
-            {{ form_widget(edit_form.commentaire) }}
-        </div>
-        
-       
     </div>
-</div>
-<div class="modal-footer">
-    <p><i>* champs obligatoires</i></p>
-    <div>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-        {{ form_widget(edit_form.submit, {'attr': {'class' : 'btn btn-primary'}}) }}
-    </div>
-    <div>
-        {{ form_rest(edit_form) }}
-        {{ form_errors(edit_form) }}
-    </div>
-</div>
+
+{% endblock %}
+{% block javascripts %}
+    {% javascripts filter="?jsqueeze"
+        '@ApplicationPlateformeBundle/Resources/public/js/bureau.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock%}

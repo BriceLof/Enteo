@@ -26,9 +26,7 @@ class BureauController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll();
-
         return $this->render('ApplicationPlateformeBundle:Bureau:index.html.twig', array(
             'bureaux' => $bureaux,
         ));
@@ -42,47 +40,24 @@ class BureauController extends Controller
     {
         $bureau = new Bureau();
         $form = $this->createForm(BureauType::class, $bureau);
+        $form->add('submit', SubmitType::class, array(
+            'label' => 'Ajouter',
+            'attr' => array(
+                'class' => 'btn btn-info'
+            )
+        ));
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($form['ville_select']->getData());
+            $bureau->setVille($ville);
             $em->persist($bureau);
             $em->flush();
-
             $this->get('session')->getFlashBag()->add('info', 'Bureau ajouté avec succès');
-
-            return $this->redirect($this->generateUrl('application_index_bureau'));
         }
 
         return $this->render('ApplicationPlateformeBundle:Bureau:new.html.twig', array(
-            'bureau' => $bureau,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * add a new office visible on Entheor.com
-     *
-     * @param Request $request
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function newEntheorAction(Request $request)
-    {
-        $bureau = new Bureau();
-        $form = $this->createForm(BureauEntheorType::class, $bureau);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($bureau);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', 'Bureau Entheor ajouté avec succès');
-
-            return $this->redirect($this->generateUrl('application_index_bureau'));
-        }
-
-        return $this->render('ApplicationPlateformeBundle:Bureau:entheor/new.html.twig', array(
             'bureau' => $bureau,
             'form' => $form->createView(),
         ));
@@ -111,25 +86,34 @@ class BureauController extends Controller
         if (!$bureau) {
             throw $this->createNotFoundException('Bureau introuvable.');
         }
-
         $editForm = $this->createForm(BureauType::class, $bureau);
-        $editForm->get('codePostalHidden')->setData($bureau->getVille()->getCp());
-        $editForm->get('idVilleHidden')->setData($bureau->getVille()->getId());
-        $editForm->handleRequest($request);
+        $editForm->add('submit', SubmitType::class, array(
+            'label' => 'Modifier',
+            'attr' => array(
+                'class' => 'btn btn-info'
+            )
+        ));
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted()) {
             $em = $this->getDoctrine()->getManager();
+
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville_select']->getData());
+            $bureau->setVille($ville);
+
             $em->persist($bureau);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('info', 'Bureau modifié avec succès');
+            $this->get('session')->getFlashBag()->add('info', 'Bureau Modifié avec succès');
 
             return $this->redirect($this->generateUrl('application_index_bureau'));
         }
 
+        $editForm->get('code_postal')->setData($bureau->getVille()->getCp());
+
         return $this->render('ApplicationPlateformeBundle:Bureau:edit.html.twig', array(
             'bureau' => $bureau,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
         ));
     }
 
