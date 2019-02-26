@@ -1,0 +1,120 @@
+{{ form_start(form, {'method': 'POST', 'attr': {'class' : 'container-fluid'}}) }}
+<div class="row">
+    <div id="infos" class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span>Identité Bureau</span></div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Nom du Bureau :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.nombureau) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Adresse :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.adresse) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Code Postal :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.code_postal) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Ville :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.ville_select) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Accès :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.acces) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Commentaire :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.commentaire) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Entheor.com :</label>
+                        <div class="col-sm-8">
+                            {{ form_widget(form.enabledEntheor) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 site_entheor">
+        <div id="metas">
+            <div class="panel panel-default">
+                <div class="panel-heading">Métas</div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Title :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.metaTitle) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Description :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.metaDescription) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="panel panel-default">
+                <div class="panel-heading">Content Page</div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Prix :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.price) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Public :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.public) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Introduction :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.intro) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Content :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.content) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-40">
+    <div class="col-md-4 text-right">
+        {{ form_widget(form.submit) }}
+        <div class="form-error">
+            {{ form_errors(form) }}
+        </div>
+        {{ form_rest(form) }}
+    </div>
+</div>
+{{ form_end(form) }}
