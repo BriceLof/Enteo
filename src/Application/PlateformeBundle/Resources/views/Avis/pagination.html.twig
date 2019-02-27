@@ -1,0 +1,17 @@
+{% from 'ApplicationPlateformeBundle:Facture:macroPagination.html.twig' import pageRange %}
+
+<ul class="pagination">
+    {% if nbPages < 9 %}
+        {{ pageRange(page, 1, nbPages, nbPages) }}
+    {% else %}
+        {% if page < 6 %}
+            {{ pageRange(page, 1, 9, nbPages) }}
+        {% else %}
+            {% if (nbPages-page) < 6 %}
+                {{ pageRange(page, nbPages-9, nbPages, nbPages) }}
+            {% else %}
+                {{ pageRange(page, page-4, page+4, nbPages) }}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</ul>

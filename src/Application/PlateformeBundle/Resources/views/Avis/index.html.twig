@@ -1,0 +1,99 @@
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@ApplicationPlateformeBundle/Resources/public/css/avis.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Avis{% endblock%}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                {% for info in app.session.flashbag.get('info') %}
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ info }}
+                    </div>
+                {% endfor %}
+                <div class="page-header">
+                    <div class="row">
+                        <h1 class="col-md-10">Gestion - Avis<br><small></small></h1>
+                        <!--<button id="btn_filtre_facture" class="btn btn-warning" style="margin-top:24px">Afficher les filtres</button>-->
+                    </div>
+
+                </div>
+
+                <div id="infosImportante" style="margin-bottom: 25px;background-color:#f9f9f9;padding:12px;border-radius: 3px;position:relative;text-align:center;">
+                    <div class="row" style="font-size: 25px;color: #6f6f6f;">
+                        <p class="col-md-3">Total Avis</p>
+                        <p class="col-md-3">Note Moyenne <span style="font-size: 10px">(recensés)</span></p>
+                        <p class="col-md-3">Note Moyenne <span style="font-size: 10px">(publiés)</span></p>
+                        <p class="col-md-3">Total Publié Entheor</p>
+                    </div>
+                    <div class="row" style="font-size: 30px;color: #428bca;">
+                        <p class="col-md-3">{{ avis | length }}</p>
+                        <p class="col-md-3">{{ noteMoyenne }}</p>
+                        <p class="col-md-3">{{ noteMoyenneAvisPublier }}</p>
+                        <p class="col-md-3">{{ nombreAvisPublierSurEntheor }}</p>
+                    </div>
+                </div>
+
+                <button data-toggle="modal" data-target="#modalAddAvis" class="btn btn-primary" style="margin-bottom: 20px">Ajouter</button>
+                {{ render(controller("ApplicationPlateformeBundle:Avis:add", {request: app.request})) }}
+
+                <div class="table-responsive">
+                    <table class="table table-striped tablesorter">
+                        <thead >
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Bénéficiaire</th>
+                            <th scope="col">Note globale</th>
+                            <th scope="col">Commentaire général</th>
+                            <th scope="col">Recommander</th>
+                            <th scope="col">Publication</th>
+                            <th scope="col">Date publication</th>
+                            <th scope="col">Publication Entheor</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for avisBeneficiaire in avis %}
+                                <tr>
+                                    <td>{{ avisBeneficiaire.id }}</td>
+                                    <td>{{ avisBeneficiaire.date | date('d/m/Y') }}</td>
+                                    <td>{{ avisBeneficiaire.beneficiaire.nomConso | capitalize ~ ' '~ avisBeneficiaire.beneficiaire.prenomConso | capitalize }}</td>
+                                    <td>{{ avisBeneficiaire.noteGlobale }}</td>
+                                    <td>{{ avisBeneficiaire.commentaireGeneral }}</td>
+                                    <td>{{ (avisBeneficiaire.recommendationAmi) ? 'Oui' : 'Non' }}</td>
+                                    <td>{{ (avisBeneficiaire.autorisationPublication) ? 'Oui' : 'Non'}}</td>
+                                    <td>{{ avisBeneficiaire.dateAccordPublication | date('d/m/Y') }}</td>
+                                    <td>{{ (avisBeneficiaire.autorisationPublicationEntheor) ? 'Oui' : 'Non'}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {#Je sors la modal du <table> car sinon les element du form seront en dehors de la balise form#}
+                    {#{% for facture in factures %}#}
+                    {#{{ render(controller("ApplicationPlateformeBundle:Facture:paiement", {'id': facture.id} )) }}#}
+                    {#{% endfor %}#}
+                </div>
+            </div>
+        </div>
+        <div id="pagination" style="text-align:center">
+            {#{% include "ApplicationPlateformeBundle:Avis:pagination.html.twig" %}#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.29.5/js/jquery.tablesorter.min.js"></script>
+    {% javascripts filter="?jsqueeze"
+    '@ApplicationPlateformeBundle/Resources/public/js/avis.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

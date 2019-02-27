@@ -1,0 +1,13 @@
+application_search_ajax_beneficiaire:
+    path:     /search-ajax-beneficiaire/{string}
+    defaults: { _controller: "ApplicationPlateformeBundle:Avis:searchAjaxBeneficiaire" }
+    options:
+        expose:  true
+
+application_list_avis:
+    path:     /
+    defaults: { _controller: "ApplicationPlateformeBundle:Avis:index" }
+
+application_add_avis:
+    path:     /add
+    defaults: { _controller: "ApplicationPlateformeBundle:Avis:add" }
