@@ -38,7 +38,7 @@ class AvisController extends Controller
             'noteMoyenne' => $noteTotalGlobale / count($avis),
             'noteMoyenneAvisPublier' => $noteMoyenneAvisPublier,
             'nombreAvisPublierSurEntheor' => $nombrePublierEntheor
-        ))
+        ));
     }
 
 
