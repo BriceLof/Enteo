@@ -61,8 +61,7 @@ $(function () {
             $(".block_ville_no_fr" + type + " .villeNoFr" + type).removeAttr('required')
 
             getVilleByZipAjax(type)
-        }
-        else {
+        } else {
             $(".codePostalInputForAjax" + type).removeAttr("minlength");
             $(".codePostalInputForAjax" + type).off()
             $(".codePostalInputForAjax" + type).val("");
@@ -78,8 +77,7 @@ $(function () {
         if ($origineMerQui != '') {
             $(".origineMerComment").css('visibility', 'initial')
             $(".origineMerComment").attr('required', 'required')
-        }
-        else {
+        } else {
             $(".origineMerComment").css('visibility', 'hidden')
             $(".origineMerComment").removeAttr('required')
         }
@@ -118,8 +116,7 @@ $(function () {
     $(".blockGenerationFacturePaiement").mouseenter(function () {
         if ($(".blockGenerationFacturePaiement button").prop("disabled") == true) {
             $(".disabledFacturationGeneration").show()
-        }
-        else {
+        } else {
             $(".disabledFacturationGeneration").hide()
         }
     });
@@ -421,8 +418,7 @@ function getVilleByZipAjax(type) {
                     }
                 }
             });
-    }
-    else if ($(".codePostalInputForAjax" + type).val().length > 1 && $(".country" + type).val() != "FR") {
+    } else if ($(".codePostalInputForAjax" + type).val().length > 1 && $(".country" + type).val() != "FR") {
         cp = $(".codePostalInputForAjax" + type).val()
         $.ajax({
             type: 'get',
@@ -443,8 +439,7 @@ function getVilleByZipAjax(type) {
                     }
                 }
             });
-    }
-    else {
+    } else {
         $(".villeAjax" + type + " option").remove();
         $(".villeAjax" + type).attr("disabled", "disabled");
     }
@@ -503,14 +498,50 @@ $(function () {
             },
             "planning_previsionnel[statutLivret1]": {
                 "required": true,
+                "realise1": true
             },
             "planning_previsionnel[statutLivret2]": {
                 "required": true,
+                "realise2": true
             },
             "planning_previsionnel[statutJury]": {
                 "required": true,
+                "realise3": true
             }
         },
         errorElement: 'div'
-    })
+    });
+
+    jQuery.validator.addMethod("realise1", function (value, element) {
+        date = $("#planning_previsionnel_dateLivret1").val()
+        parts = date.split("/")
+        var myDate = new Date(parts[2], parts[1] - 1, parts[0]);
+
+        if ($(element).val() == 'realise' && myDate > new Date()) {
+            return false
+        }
+        return true;
+    }, "");
+
+    jQuery.validator.addMethod("realise2", function (value, element) {
+        date = $("#planning_previsionnel_dateLivret2").val()
+        parts = date.split("/")
+        var myDate = new Date(parts[2], parts[1] - 1, parts[0]);
+
+        if ($(element).val() == 'realise' && myDate > new Date()) {
+            return false
+        }
+        return true;
+    }, "");
+
+    jQuery.validator.addMethod("realise3", function (value, element) {
+        date = $("#planning_previsionnel_dateJury").val()
+        parts = date.split("/")
+        var myDate = new Date(parts[2], parts[1] - 1, parts[0]);
+
+        if ($(element).val() == 'realise' && myDate > new Date()) {
+            return false
+        }
+        return true;
+    }, "");
 });
