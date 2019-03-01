@@ -145,6 +145,11 @@ class Users extends BaseUser
      * @ORM\Column(name="num_declaration_activite", type="string", length=255, nullable=true)
      */
     private $numDeclarationActivite;
+
+    /**
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
 	
     public function __construct()
     {
@@ -795,5 +800,29 @@ class Users extends BaseUser
     public function getNumDeclarationActivite()
     {
         return $this->numDeclarationActivite;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Users
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

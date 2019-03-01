@@ -1,0 +1,27 @@
+{% macro pageRange(pageActuel, start, fin, last) %}
+    {% if pageActuel > 1 %}
+        <li>
+            <a href="{{ path('application_list_facture') }}"><<</a>
+        </li>
+        <li>
+            <a href="{{ path('application_list_facture', {'page': pageActuel-1}) }}"><</a>
+        </li>
+    {% endif %}
+    {% for p in range(start, fin) %}
+        <li{% if p == pageActuel %} class="active"{% endif %}>
+            {% if p == 1 %}
+                <a href="{{ path('application_list_facture_home', {'page': p}) }}">{{ p }}</a>
+            {% else %}
+                <a href="{{ path('application_list_facture', {'page': p}) }}">{{ p }}</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+    {% if pageActuel < last %}
+        <li>
+            <a href="{{ path('application_list_facture', {'page': pageActuel+1}) }}">></a>
+        </li>
+        <li>
+            <a href="{{ path('application_list_facture', {'page': last}) }}">>></a>
+        </li>
+    {% endif %}
+{% endmacro %}

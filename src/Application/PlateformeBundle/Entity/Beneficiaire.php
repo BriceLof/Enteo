@@ -58,6 +58,12 @@ class Beneficiaire
     protected $villeMer;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="beneficiaires")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire", cascade={"persist"} )
      */
     private $news;
@@ -2065,5 +2071,29 @@ class Beneficiaire
     public function getStatutJury()
     {
         return $this->statutJury;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Beneficiaire
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
     }
 }
