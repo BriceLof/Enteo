@@ -2,7 +2,6 @@
 
 namespace Application\UsersBundle\Form;
 
-//use Application\UsersBundle\Form\DataTransformer\VilleToNumberTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -19,12 +18,6 @@ use Symfony\Component\Form\FormEvents;
 
 class UsersType extends AbstractType
 {
-    /*private $manager;
-
-    public function __construct(ObjectManager $manager)
-    {
-        $this->manager = $manager;
-    }*/
 
     /**
      * {@inheritdoc}
@@ -110,25 +103,22 @@ class UsersType extends AbstractType
             ))
             ->add('codePostalHidden', HiddenType::class, array("mapped" => false))
             ->add('typeUserHidden', HiddenType::class, array("mapped" => false))
-            ->add('idVilleHidden', HiddenType::class, array("mapped" => false));
+            ->add('idVilleHidden', HiddenType::class, array("mapped" => false))
+            ->add('description', TextareaType::class, array(
+                'required' => false,
+            ))
+            ->add('bureau', EntityType::class, array(
+                'class' => 'ApplicationPlateformeBundle:Bureau',
+                'label' => 'Bureau *',
+                'placeholder' => '...',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->where('b.enabledEntheor = 1');
+                },
+                'required' => false
+            ))
+        ;
 
-        /* if(isset($options['data']))
-         {
-             //var_dump($options['data']);
-             $builder->add('ville', EntityType::class, array(
-                 'class' => 'ApplicationPlateformeBundle:Ville',
-                 'label' => 'Ville *',
-                 'query_builder' => function (EntityRepository $er) use ($options) {
-                     return $er->createQueryBuilder('v')
-                             ->where('v.id = :id')
-                             ->setParameter('id',$options['data']->getVille()->getId() )
-                         ->orderBy('v.nom', 'ASC')
-                         ->setMaxResults( 1 );
-                 },
-                 'choice_label' => 'nom',
-             ));
-         }
-         else{*/
         $builder->add('ville', EntityType::class, array(
             'class' => 'ApplicationPlateformeBundle:Ville',
             'label' => 'Ville *',
@@ -144,9 +134,6 @@ class UsersType extends AbstractType
             'label' => 'Adresse ',
             'required' => false,
         ));
-        //if(isset($options['data'])) var_dump($options['data']->getVille());
-        /*$builder->get('ville')
-            ->addModelTransformer(new VilleToNumberTransformer($this->manager));*/
     }
 
     public function getParent()
@@ -175,6 +162,4 @@ class UsersType extends AbstractType
     {
         return 'application_usersbundle_users';
     }
-
-
 }

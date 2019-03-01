@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\EntityRepository;
 
 class AccompagnementType extends AbstractType
 {
@@ -90,6 +92,16 @@ class AccompagnementType extends AbstractType
 
             ->add('proposition_dateFin', HiddenType::class, array(
                 'mapped' => false,
+            ))
+            ->add('bureau', EntityType::class, array(
+                'mapped' => false,
+                'required' => false,
+                'placeholder' => '...',
+                'class' => 'ApplicationPlateformeBundle:Bureau',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->where('b.enabledEntheor = 1');
+                },
             ))
 
             ->add('submit', SubmitType::class, array('label' => 'Valider')

@@ -30,7 +30,6 @@ class ConsultantType extends AbstractType
                             ->setParameter('type', '%consultant%')
 							->orderBy('u.nom', 'ASC');
                 },
-
             ))
         ;
     }

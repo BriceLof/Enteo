@@ -25,6 +25,12 @@ class BureauType extends AbstractType
                     'placeholder' => '',
                 )
             ))
+            ->add('duree', TextType::class, array(
+                'label' => 'duree ',
+                'attr' => array(
+                    'placeholder' => '',
+                )
+            ))
             ->add('adresse', TextType::class, array(
                 'label' => 'adresse ',
                 'attr' => array(
@@ -61,10 +67,10 @@ class BureauType extends AbstractType
             ))
             ->add('public', ChoiceType::class, array(
                 'choices' => array(
-                    'one' => 1,
-                    'two' => 2,
-                    'three' => 3,
-                    'four' => 4
+                    'Salarié en poste' => 1,
+                    'Demandeur d\'emploi' => 2,
+                    'Entreprise' => 3,
+                    'Etudiant' => 4
                 ),
                 'multiple' => true,
                 'expanded' => true

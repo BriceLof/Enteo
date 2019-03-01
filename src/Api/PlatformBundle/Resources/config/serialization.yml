@@ -10,7 +10,74 @@ Application\PlateformeBundle\Entity\Bureau:
       groups: ['office']
     commentaire:
       groups: ['office']
+    metaTitle:
+      groups: ['office']
+    metaDescription:
+      groups: ['office']
+    intro:
+      groups: ['office']
+    content:
+      groups: ['office']
+    public:
+      groups: ['office']
+    price:
+      groups: ['office']
     ville:
+      groups: ['office']
+    beneficiaires:
+      groups: ['office']
+    consultants:
+      groups: ['office']
+
+Application\UsersBundle\Entity\Users:
+  attributes:
+    nom:
+      groups: ['office']
+    prenom:
+      groups: ['office']
+    image:
+      groups: ['office']
+    description:
+      groups: ['office']
+
+Application\PlateformeBundle\Entity\Beneficiaire:
+  attributes:
+    id:
+      groups: ['office' , 'beneficiary']
+    ville:
+      groups: ['office' , 'beneficiary']
+    nomConso:
+      groups: ['office']
+    prenomConso:
+      groups: ['office']
+    domaineVae:
+      groups: ['office' , 'beneficiary']
+    avis:
+      groups: ['office']
+    telConso:
+      groups: ['beneficiary']
+    emailConso:
+      groups: ['beneficiary']
+    statut:
+      groups: ['beneficiary']
+    civiliteConso:
+      groups: ['beneficiary']
+    heureRappel:
+      groups: ['beneficiary']
+    diplomeVise:
+      groups: ['beneficiary']
+
+Application\PlateformeBundle\Entity\Avis:
+  attributes:
+    id:
+      groups: ['office']
+    date:
+      groups: ['office']
+    noteGlobale:
+      groups: ['office']
+    commentaireGeneral:
+      groups: ['office']
+    recommendationAmi:
       groups: ['office']
 
 Application\PlateformeBundle\Entity\Ville:

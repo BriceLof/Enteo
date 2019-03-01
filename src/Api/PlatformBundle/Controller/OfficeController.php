@@ -46,7 +46,7 @@ class OfficeController extends Controller
             $city = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array('cp' => $request->get('zip')));
         }
 
-        $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($city, $limit);
+        $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($city, $limit, true);
 
         return $offices;
     }

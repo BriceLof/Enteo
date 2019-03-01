@@ -30,7 +30,7 @@ class Avis
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="news", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Beneficiaire", inversedBy="avis", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     protected $beneficiaire;

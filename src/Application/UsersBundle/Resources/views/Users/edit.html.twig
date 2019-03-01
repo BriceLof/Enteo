@@ -108,6 +108,11 @@
                         {{ form_errors(form.calendrieruri) }}
                         {{ form_widget(form.calendrieruri) }}
                     </div>
+                    <div class="col-md-6 block_form_format_presence" style="display:none">
+                        {{ form_label(form.bureau) }}
+                        {{ form_errors(form.bureau) }}
+                        {{ form_widget(form.bureau) }}
+                    </div>
                 {% else %}
                     <div class="col-md-12 block_form_calendar_id" style="display:none">
                         {{ form_label(form.calendrierid) }}
@@ -136,6 +141,11 @@
                     {{ form_label(form.adresse) }}
                     {{ form_errors(form.adresse) }}
                     {{ form_widget(form.adresse) }}
+                </div>
+                <div class="col-md-12 block_form_adresse" style="display:none">
+                    {{ form_label(form.description) }}
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description) }}
                 </div>
                 <div class="col-md-12">
                 	

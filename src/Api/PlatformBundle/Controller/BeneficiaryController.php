@@ -14,7 +14,7 @@ class BeneficiaryController extends Controller
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"beneficiary"})
      * @Rest\Post("/beneficiaries")
      */
     public function postBeneficiariesAction(Request $request)

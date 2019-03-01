@@ -15,7 +15,7 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 class BureauRepository extends EntityRepository
 {
 
-    public function findAll2($city = null, $limit = null)
+    public function findAll2($city = null, $limit = null, $entheor = false)
     {
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('Application\PlateformeBundle\Entity\Bureau', 'o');
@@ -35,11 +35,17 @@ class BureauRepository extends EntityRepository
 
         $query .= ' WHERE 1';
 
+        $query .= ' AND o.supprimer = 0';
+
+        if ($entheor == true){
+            $query .= ' AND o.enabled_entheor = 1';
+        }
+
         if (!is_null($city)) {
             $query .= ' HAVING distance < 50';
         }
 
-        $query .= ' AND o.supprimer = 0 ORDER BY o.nom';
+        $query .= ' ORDER BY distance';
 
         if (!is_null($limit)) {
             $query .= ' LIMIT ' . $limit;

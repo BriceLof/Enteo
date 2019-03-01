@@ -119,6 +119,12 @@ class Beneficiaire
     protected $missionArchives;
 
     /**
+     * @ORM\OneToMany(targetEntity="Avis", mappedBy="beneficiaire", cascade={"persist","remove"})
+     * @Assert\Valid
+     */
+    protected $avis;
+
+    /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
      * @Assert\Valid
      */
@@ -2095,5 +2101,39 @@ class Beneficiaire
     public function getBureau()
     {
         return $this->bureau;
+    }
+
+    /**
+     * Add avi
+     *
+     * @param \Application\PlateformeBundle\Entity\Avis $avi
+     *
+     * @return Beneficiaire
+     */
+    public function addAvi(\Application\PlateformeBundle\Entity\Avis $avi)
+    {
+        $this->avis[] = $avi;
+
+        return $this;
+    }
+
+    /**
+     * Remove avi
+     *
+     * @param \Application\PlateformeBundle\Entity\Avis $avi
+     */
+    public function removeAvi(\Application\PlateformeBundle\Entity\Avis $avi)
+    {
+        $this->avis->removeElement($avi);
+    }
+
+    /**
+     * Get avis
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvis()
+    {
+        return $this->avis;
     }
 }

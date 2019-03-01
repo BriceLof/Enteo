@@ -25,6 +25,7 @@ class AccompagnementController extends Controller
      */
     public function showAction(Request $request, $id)
     {
+
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
 
@@ -76,6 +77,9 @@ class AccompagnementController extends Controller
                 $em->persist($financeur);
             }
 
+            $bureau = $editForm['bureau']->getData();
+            $beneficiaire->setBureau($bureau);
+
             $beneficiaire->setAccompagnement($accompagnement);
             $em->persist($beneficiaire);
             foreach ($accompagnement->getFinanceur() as $financeur){
@@ -89,6 +93,7 @@ class AccompagnementController extends Controller
                 'id' => $beneficiaire->getId(),
             )).'#accompagnement');
         }
+        $editForm->get('bureau')->setData($beneficiaire->getBureau());
         return $this->render('ApplicationPlateformeBundle:Accompagnement:edit.html.twig', array(
             'montantTotal' => $montantTotal,
             'beneficiaire' => $beneficiaire,
