@@ -29,6 +29,11 @@ class Bureau
     protected $ville;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\beneficiaire", mappedBy="bureau", cascade={"persist"} )
+     */
+    private $beneficiaires;
+
+    /**
      * @var
      *
      * @ORM\Column(name="adresse", type="string", length=255)
@@ -561,5 +566,39 @@ class Bureau
     public function getEnabledEntheor()
     {
         return $this->enabledEntheor;
+    }
+
+    /**
+     * Add beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\beneficiaire $beneficiaire
+     *
+     * @return Bureau
+     */
+    public function addBeneficiaire(\Application\PlateformeBundle\Entity\beneficiaire $beneficiaire)
+    {
+        $this->beneficiaires[] = $beneficiaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\beneficiaire $beneficiaire
+     */
+    public function removeBeneficiaire(\Application\PlateformeBundle\Entity\beneficiaire $beneficiaire)
+    {
+        $this->beneficiaires->removeElement($beneficiaire);
+    }
+
+    /**
+     * Get beneficiaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBeneficiaires()
+    {
+        return $this->beneficiaires;
     }
 }
