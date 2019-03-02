@@ -6,20 +6,23 @@
     {% else %}
         Modification utilisateur
     {% endif %}
-{% endblock%}
+{% endblock %}
 
 {% block body %}
-    
-    <div id="overlayB" style="position:fixed;top:0;width:100%;bottom:0;z-index:9;background-color:rgba(255,255,255, 0.91)">
+
+    <div id="overlayB"
+         style="position:fixed;top:0;width:100%;bottom:0;z-index:9;background-color:rgba(255,255,255, 0.91)">
         <p style="position:absolute;top:43%;right:44%"><b>Chargement de votre formulaire</b></p>
         <img style="position:absolute;top:50%;right:50%" src="{{ asset('images/ajax-loader.gif') }}"/>
     </div>
-    
+
     <section class="col-md-9 col-md-offset-2">
         <div class="page-header">
-            <h1>Gestion - Utilisateurs<br><small>Modification</small></h1>
+            <h1>Gestion - Utilisateurs<br>
+                <small>Modification</small>
+            </h1>
         </div>
-        
+
         <!-- Changement de l'action du form, en fonction de notre route (soit modifier notre compte ou bien modifier un user (pour les admin))-->
         {% if app.request.attributes.get('_route') == "my_account_edit" %}
             {{ form_start(form, {'method': 'post', 'action': path('my_account_edit') }) }}
@@ -27,144 +30,148 @@
             {{ form_start(form, {'method': 'post', 'action': path('user_edit', {'id' : user.id}) }) }}
         {% endif %}
         <div class="panel panel-default" style="width:55%;margin:auto;margin-bottom:40px;">
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-6 block_form_role_user">
-                    {{ form_label(form.roles) }}
-                    {{ form_errors(form.roles) }}
-                    {{ form_widget(form.roles) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(form.email, "Email *") }}
-                    {{ form_errors(form.email) }}
-                    {{ form_widget(form.email) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(form.email2) }}
-                    {{ form_errors(form.email2) }}
-                    {{ form_widget(form.email2) }}
-                </div>
-
-                <div class="col-md-12">
-                    {{ form_label(form.username, "Login *") }}
-                    {{ form_errors(form.username) }}
-                    {{ form_widget(form.username) }}
-                </div>
-
-                <div class="col-md-6">
-                    {{ form_label(form.plainPassword.first, "Mot de passe *") }}
-                    {{ form_errors(form.plainPassword.first) }}
-                    {{ form_widget(form.plainPassword.first, {'value' : user.password }) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(form.plainPassword.second, "Répéter le mot de passe *") }}
-                    {{ form_errors(form.plainPassword.second) }}
-                    {{ form_widget(form.plainPassword.second,{'value' : user.password }) }}
-                </div>
-
-                <div class="col-md-12">
-                    {{ form_label(form.civilite) }}
-                    {{ form_errors(form.civilite) }}
-                    {{ form_widget(form.civilite) }}
-                </div>
-                
-                <div class="col-md-6">
-                    {{ form_label(form.nom, "Nom *") }}
-                    {{ form_errors(form.nom) }}
-                    {{ form_widget(form.nom) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(form.prenom, "Prénom *") }}
-                    {{ form_errors(form.prenom) }}
-                    {{ form_widget(form.prenom) }}
-                </div>
-
-                <div class="col-md-6">
-                    {{ form_label(form.tel1) }}
-                    {{ form_errors(form.tel1) }}
-                    {{ form_widget(form.tel1) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_label(form.tel2) }}
-                    {{ form_errors(form.tel2) }}
-                    {{ form_widget(form.tel2) }}
-                </div>
-
-                <div class="col-md-6 block_form_format_presence" style="display:none">
-                    {{ form_label(form.distanciel, "Format *") }}
-                    {{ form_errors(form.distanciel) }}
-                    {{ form_widget(form.distanciel) }}
-                </div>
-
-                {% if is_granted('ROLE_ADMIN') %}
-                    <div class="col-md-12 block_form_calendar_id" style="display:none">
-                        {{ form_label(form.calendrierid) }}
-                        {{ form_errors(form.calendrierid) }}
-                        {{ form_widget(form.calendrierid) }}
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 block_form_role_user">
+                        {{ form_label(form.roles) }}
+                        {{ form_errors(form.roles) }}
+                        {{ form_widget(form.roles) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.email, "Email *") }}
+                        {{ form_errors(form.email) }}
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.email2) }}
+                        {{ form_errors(form.email2) }}
+                        {{ form_widget(form.email2) }}
                     </div>
 
-                    <div class="col-md-12 block_form_calendar_uri" style="display:none">
-                        {{ form_label(form.calendrieruri) }}
-                        {{ form_errors(form.calendrieruri) }}
-                        {{ form_widget(form.calendrieruri) }}
+                    <div class="col-md-12">
+                        {{ form_label(form.username, "Login *") }}
+                        {{ form_errors(form.username) }}
+                        {{ form_widget(form.username) }}
                     </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.plainPassword.first, "Mot de passe *") }}
+                        {{ form_errors(form.plainPassword.first) }}
+                        {{ form_widget(form.plainPassword.first, {'value' : user.password }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.plainPassword.second, "Répéter le mot de passe *") }}
+                        {{ form_errors(form.plainPassword.second) }}
+                        {{ form_widget(form.plainPassword.second,{'value' : user.password }) }}
+                    </div>
+
+                    <div class="col-md-12">
+                        {{ form_label(form.civilite) }}
+                        {{ form_errors(form.civilite) }}
+                        {{ form_widget(form.civilite) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.nom, "Nom *") }}
+                        {{ form_errors(form.nom) }}
+                        {{ form_widget(form.nom) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.prenom, "Prénom *") }}
+                        {{ form_errors(form.prenom) }}
+                        {{ form_widget(form.prenom) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_label(form.tel1) }}
+                        {{ form_errors(form.tel1) }}
+                        {{ form_widget(form.tel1) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_label(form.tel2) }}
+                        {{ form_errors(form.tel2) }}
+                        {{ form_widget(form.tel2) }}
+                    </div>
+
                     <div class="col-md-6 block_form_format_presence" style="display:none">
-                        {{ form_label(form.bureau) }}
-                        {{ form_errors(form.bureau) }}
-                        {{ form_widget(form.bureau) }}
-                    </div>
-                {% else %}
-                    <div class="col-md-12 block_form_calendar_id" style="display:none">
-                        {{ form_label(form.calendrierid) }}
-                        {{ form_errors(form.calendrierid) }}
-                        {{ form_widget(form.calendrierid, {'attr': {'readonly': 'readonly', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                        {{ form_label(form.distanciel, "Format *") }}
+                        {{ form_errors(form.distanciel) }}
+                        {{ form_widget(form.distanciel) }}
                     </div>
 
-                    <div class="col-md-12 block_form_calendar_uri" style="display:none">
-                        {{ form_label(form.calendrieruri) }}
-                        {{ form_errors(form.calendrieruri) }}
-                        {{ form_widget(form.calendrieruri, {'attr': {'readonly': 'readonly', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
-                    </div>
-                {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="col-md-12 block_form_calendar_id" style="display:none">
+                            {{ form_label(form.calendrierid) }}
+                            {{ form_errors(form.calendrierid) }}
+                            {{ form_widget(form.calendrierid) }}
+                        </div>
 
-                <div class="col-md-6 block_form_departement" style="display:none">
-                    {{ form_label(form.departement) }}
-                    {{ form_errors(form.departement) }}
-                    {{ form_widget(form.departement) }}
-                </div>
-                <div class="col-md-6 block_form_ville" style="display:none">
-                    {{ form_label(form.ville) }}<div style="display:none" class="block_info_chargement"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
-                    {{ form_errors(form.ville) }}
-                    {{ form_widget(form.ville, {'attr' : {"class":"villeAjax"} }) }}
-                </div>
-                <div class="col-md-12 block_form_adresse" style="display:none">
-                    {{ form_label(form.adresse) }}
-                    {{ form_errors(form.adresse) }}
-                    {{ form_widget(form.adresse) }}
-                </div>
-                <div class="col-md-12 block_form_adresse" style="display:none">
-                    {{ form_label(form.description) }}
-                    {{ form_errors(form.description) }}
-                    {{ form_widget(form.description) }}
-                </div>
-                <div class="col-md-12">
-                	
-                </div>
-                <br>
-                <div class="col-md-4">
-                    <input type="submit" value="Modifier" class="btn btn-warning btn-block" style="margin-top:20px;"/>
-                </div>
-                {{ form_errors(form) }}
-                {{ form_rest(form) }}
-                <div class="col-md-12">
-                    <p><i>* champs obligatoires</i></p>
+                        <div class="col-md-12 block_form_calendar_uri" style="display:none">
+                            {{ form_label(form.calendrieruri) }}
+                            {{ form_errors(form.calendrieruri) }}
+                            {{ form_widget(form.calendrieruri) }}
+                        </div>
+                    {% else %}
+                        <div class="col-md-12 block_form_calendar_id" style="display:none">
+                            {{ form_label(form.calendrierid) }}
+                            {{ form_errors(form.calendrierid) }}
+                            {{ form_widget(form.calendrierid, {'attr': {'readonly': 'readonly', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                        </div>
+
+                        <div class="col-md-12 block_form_calendar_uri" style="display:none">
+                            {{ form_label(form.calendrieruri) }}
+                            {{ form_errors(form.calendrieruri) }}
+                            {{ form_widget(form.calendrieruri, {'attr': {'readonly': 'readonly', 'style': 'background-color: rgba(117, 115, 115, 0.48)'}}) }}
+                        </div>
+                    {% endif %}
+
+                    <div class="col-md-6 block_form_departement" style="display:none">
+                        {{ form_label(form.departement) }}
+                        {{ form_errors(form.departement) }}
+                        {{ form_widget(form.departement) }}
+                    </div>
+                    <div class="col-md-6 block_form_ville" style="display:none">
+                        {{ form_label(form.ville) }}
+                        <div style="display:none" class="block_info_chargement"><img class="img_loading"
+                                                                                     src="{{ asset('images/ajax-loader.gif') }}"/>
+                            <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+                        {{ form_errors(form.ville) }}
+                        {{ form_widget(form.ville, {'attr' : {"class":"villeAjax"} }) }}
+                    </div>
+                    <div class="col-md-12 block_form_adresse" style="display:none">
+                        {{ form_label(form.adresse) }}
+                        {{ form_errors(form.adresse) }}
+                        {{ form_widget(form.adresse) }}
+                    </div>
+                    <div class="col-md-12 block_form_adresse" style="display:none">
+                        {{ form_label(form.description) }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="col-md-6 block_form_adresse" style="display:none">
+                            {{ form_label(form.bureau) }}
+                            {{ form_errors(form.bureau) }}
+                            {{ form_widget(form.bureau) }}
+                        </div>
+                    {% endif %}
+                    <div class="clearfix"></div>
+                    <br>
+                    <div class="col-md-4">
+                        <input type="submit" value="Modifier" class="btn btn-warning btn-block"
+                               style="margin-top:20px;"/>
+                    </div>
+                    {{ form_errors(form) }}
+                    {{ form_rest(form) }}
+                    <div class="col-md-12">
+                        <p><i>* champs obligatoires</i></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        
-        </section>
-    
-    
-    
+
+    </section>
+
+
+
 {% endblock %}

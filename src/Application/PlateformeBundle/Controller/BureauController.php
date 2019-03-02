@@ -55,6 +55,7 @@ class BureauController extends Controller
             $em->persist($bureau);
             $em->flush();
             $this->get('session')->getFlashBag()->add('info', 'Bureau ajouté avec succès');
+            return $this->redirect($this->generateUrl('application_index_bureau'));
         }
 
         return $this->render('ApplicationPlateformeBundle:Bureau:new.html.twig', array(

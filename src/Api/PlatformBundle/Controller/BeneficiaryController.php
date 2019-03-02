@@ -33,6 +33,7 @@ class BeneficiaryController extends Controller
 
             $beneficiary->setVilleMer($ville);
             $beneficiary->setVille($ville);
+            $beneficiary->setPays("FR");
 
             $em->persist($beneficiary);
             $em->flush();
