@@ -43,15 +43,15 @@ Application\UsersBundle\Entity\Users:
 Application\PlateformeBundle\Entity\Beneficiaire:
   attributes:
     id:
-      groups: ['office' , 'beneficiary']
+      groups: ['office' , 'beneficiary', 'advice']
     ville:
-      groups: ['office' , 'beneficiary']
+      groups: ['office' , 'beneficiary', 'advice']
     nomConso:
-      groups: ['office']
+      groups: ['office', 'advice']
     prenomConso:
-      groups: ['office']
+      groups: ['office', 'advice']
     domaineVae:
-      groups: ['office' , 'beneficiary']
+      groups: ['office' , 'beneficiary', 'advice']
     avis:
       groups: ['office']
     telConso:
@@ -59,46 +59,48 @@ Application\PlateformeBundle\Entity\Beneficiaire:
     emailConso:
       groups: ['beneficiary']
     statut:
-      groups: ['beneficiary']
+      groups: ['beneficiary', 'advice']
     civiliteConso:
-      groups: ['beneficiary']
+      groups: ['beneficiary', 'advice']
     heureRappel:
       groups: ['beneficiary']
     diplomeVise:
-      groups: ['beneficiary']
+      groups: ['beneficiary', 'advice']
 
 Application\PlateformeBundle\Entity\Avis:
   attributes:
     id:
-      groups: ['office']
+      groups: ['office', 'advice']
     date:
-      groups: ['office']
+      groups: ['office', 'advice']
     noteGlobale:
-      groups: ['office']
+      groups: ['office', 'advice']
     commentaireGeneral:
-      groups: ['office']
+      groups: ['office', 'advice']
     recommendationAmi:
-      groups: ['office']
+      groups: ['office', 'advice']
+    beneficiaire:
+      groups: ['advice']
 
 Application\PlateformeBundle\Entity\Ville:
   attributes:
     id:
       groups: ['office']
     slugVille:
-      groups: ['office']
+      groups: ['office', 'advice']
     nom:
-      groups: ['office']
+      groups: ['office', 'advice']
     cp:
-      groups: ['office']
+      groups: ['office', 'advice']
     dpt:
-      groups: ['office']
+      groups: ['office', 'advice']
     region:
-      groups: ['office']
+      groups: ['office', 'advice']
     longitude:
-      groups: ['office']
+      groups: ['office', 'advice']
     latitude:
-      groups: ['office']
+      groups: ['office', 'advice']
     prePosition:
-      groups: ['office']
+      groups: ['office', 'advice']
     pays:
-      groups: ['office']
+      groups: ['office', 'advice']

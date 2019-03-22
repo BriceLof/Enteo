@@ -10,4 +10,21 @@ namespace Application\PlateformeBundle\Repository;
  */
 class AvisRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllEntheor($limit = null)
+    {
+        $queryBuilder = $this->createQueryBuilder("a");
+        $queryBuilder->leftJoin('a.beneficiaire', 'b', 'WITH', 'a.beneficiaire = (SELECT MAX(b2.id) FROM \Application\PlateformeBundle\Entity\Beneficiaire b2 WHERE b2 = a.beneficiaire)');
+
+        $queryBuilder->where('a.autorisationPublicationEntheor = 1');
+
+        if (!is_null($limit)) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        $queryBuilder->addOrderBy('a.id', 'DESC');
+
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }
