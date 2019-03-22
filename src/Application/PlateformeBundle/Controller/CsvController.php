@@ -101,11 +101,13 @@ class CsvController extends Controller
 
 
     public function getFileEmployeurAction(Request $request){
+        ini_set('memory_limit', -1);
         $em = $this->getDoctrine()->getManager();
-        $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findAll();
+        $employeurs = $em->getRepository('ApplicationPlateformeBundle:Employeur')->findAll();
 
-        foreach ($beneficiaires as $beneficiaire){
-            if (!is_null($beneficiaire->getEmployeur())){
+        foreach ($employeurs as $employeur){
+            $beneficiaires = $employeur->getBeneficiaire();
+            foreach ($beneficiaires as $beneficiaire){
                 $list[] = $beneficiaire;
             }
         }

@@ -107,7 +107,7 @@
                                     data-toggle="tooltip" title="La date prévue pour cette action est dépassée. Merci de mettre à jour la date ou le statut de l'action."
                             ></span>
                         {% endif %}
-                        {% if date() > date(beneficiaire.accompagnement.dateFin) %}
+                        {% if date(beneficiaire.dateLivret2) > date(beneficiaire.accompagnement.dateFin) %}
                             <span
                                     class="glyphicon glyphicon-warning-sign text-danger"
                                     data-toggle="tooltip" title="La date prévue pour cette action est postérieure à la date de fin d'accompagnement."

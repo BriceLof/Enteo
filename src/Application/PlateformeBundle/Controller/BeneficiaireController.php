@@ -158,7 +158,7 @@ class BeneficiaireController extends Controller
             'edit_form'   => $editForm->createView(),
             'histoConsultant' => $historiqueConsultant,
             'listConsultantRv' => $listConsultantRv,
-            'paysEmployeur' => $paysEmployeur
+            'paysEmployeur' => $paysEmployeur,
         ));
     }
 
@@ -278,10 +278,18 @@ class BeneficiaireController extends Controller
             ).'#projetEditForm');
         }
 
+        $montantTotal = 0;
+        if($beneficiaire->getAccompagnement() != null){
+            foreach ($beneficiaire->getAccompagnement()->getFinanceur() as $financeur){
+                $montantTotal += $financeur->getMontant();
+            }
+        }
+
         //$heureAccompagnement = $beneficiaire->getAccompagnement()->getHeure();
         return $this->render('ApplicationPlateformeBundle:Beneficiaire:projet.html.twig', array(
             'projet_form' => $projetForm->createView(),
             'beneficiaire'      => $beneficiaire,
+            'montantTotal' => $montantTotal
         ));
     }
 
