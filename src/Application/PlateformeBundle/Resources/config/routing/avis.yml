@@ -11,3 +11,11 @@ application_list_avis:
 application_add_avis:
     path:     /add
     defaults: { _controller: "ApplicationPlateformeBundle:Avis:add" }
+
+application_edit_avis:
+    path:     /edit/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Avis:edit" }
+
+application_delete_avis:
+    path:     /delete/{id}
+    defaults: { _controller: "ApplicationPlateformeBundle:Avis:delete" }

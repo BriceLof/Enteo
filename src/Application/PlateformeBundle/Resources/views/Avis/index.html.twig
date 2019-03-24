@@ -53,11 +53,14 @@
                             <th scope="col">Date</th>
                             <th scope="col">Bénéficiaire</th>
                             <th scope="col">Note globale</th>
+                            <th scope="col">Bureau de rattachement</th>
                             <th scope="col">Commentaire général</th>
                             <th scope="col">Recommander</th>
                             <th scope="col">Publication</th>
-                            <th scope="col">Date publication</th>
                             <th scope="col">Publication Entheor</th>
+                            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                                <th colspan="2">Actions</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -65,13 +68,20 @@
                                 <tr>
                                     <td>{{ avisBeneficiaire.id }}</td>
                                     <td>{{ avisBeneficiaire.date | date('d/m/Y') }}</td>
-                                    <td>{{ avisBeneficiaire.beneficiaire.nomConso | capitalize ~ ' '~ avisBeneficiaire.beneficiaire.prenomConso | capitalize }}</td>
+                                    <td><a href="{{ path("application_show_beneficiaire", {'id' : avisBeneficiaire.beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ avisBeneficiaire.beneficiaire.nomConso | capitalize ~ ' '~ avisBeneficiaire.beneficiaire.prenomConso | capitalize }}</a></td>
                                     <td>{{ avisBeneficiaire.noteGlobale }}</td>
+                                    <td>{# (avisBeneficiaire.beneficiaire.consultant is not null) ? dump(avisBeneficiaire.beneficiaire.consultant.bureau) : '' #}</td>
                                     <td>{{ avisBeneficiaire.commentaireGeneral }}</td>
                                     <td>{{ (avisBeneficiaire.recommendationAmi) ? 'Oui' : 'Non' }}</td>
                                     <td>{{ (avisBeneficiaire.autorisationPublication) ? 'Oui' : 'Non'}}</td>
-                                    <td>{{ avisBeneficiaire.dateAccordPublication | date('d/m/Y') }}</td>
                                     <td>{{ (avisBeneficiaire.autorisationPublicationEntheor) ? 'Oui' : 'Non'}}</td>
+                                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+                                        <td><span title="Modifier l'avis" style="cursor:pointer;color: black; float: right" class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#modalModify{{ avisBeneficiaire.id }}"></span></td>
+                                        <td><span title="Supprimer l'avis" style="cursor:pointer;color: black; float: right" class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#modalDelete{{ avisBeneficiaire.id }}"></span></td>
+
+                                        {{ render(controller("ApplicationPlateformeBundle:Avis:edit", {request: app.request, 'id' : avisBeneficiaire.id })) }}
+                                        {{ render(controller("ApplicationPlateformeBundle:Avis:delete", {request: app.request, 'id' : avisBeneficiaire.id })) }}
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>

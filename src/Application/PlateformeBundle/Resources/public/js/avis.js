@@ -17,7 +17,7 @@ $(function () {
                     console.log(tab.length)
                     $("#select_beneficiaire_ajax option").remove()
                     for (var i = 0; i < tab.length; i++) {
-                        $("#select_beneficiaire_ajax").append("<option value=" + tab[i].id + ">" + tab[i].nom +" "+ tab[i].prenom +"</option>")
+                        $("#select_beneficiaire_ajax").append("<option value=" + tab[i].id + ">" + tab[i].nom +" "+ tab[i].prenom + " ("+ tab[i].id +")</option>")
                     }
                 });
         } else {

@@ -76,6 +76,52 @@ class AvisController extends Controller
         ));
     }
 
+    public function editAction(Request $request, Avis $avis)
+    {
+        $form = $this->createForm(AvisType::class, $avis);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $avis = $form->getData();
+
+
+
+            $em->persist($avis);
+
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Avis modifié');
+
+            return $this->redirectToRoute('application_list_avis');
+
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Avis:edit.html.twig', array(
+            'form' => $form->createView(),
+            'avis' => $avis
+        ));
+    }
+
+
+    public function deleteAction(Request $request, Avis $avis)
+    {
+        if ($request->isMethod('POST')) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->remove($avis);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('info', 'Avis supprimé avec succès');
+
+            return $this->redirectToRoute('application_list_avis');
+
+        }
+
+        return $this->render('ApplicationPlateformeBundle:Avis:delete.html.twig', array(
+            'avis' => $avis
+        ));
+    }
+
     public function searchAjaxBeneficiaireAction($string)
     {
         $em = $this->getDoctrine()->getManager();
