@@ -66,6 +66,8 @@ Application\PlateformeBundle\Entity\Beneficiaire:
       groups: ['beneficiary']
     diplomeVise:
       groups: ['beneficiary', 'advice']
+    dateNaissance:
+      groups: ['office', 'advice']
 
 Application\PlateformeBundle\Entity\Avis:
   attributes:
