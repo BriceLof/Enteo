@@ -304,11 +304,32 @@ class Mailer
 
             curl_close($curl);
 
-//            if ($err) {
-//                echo "cURL Error #:" . $err;
-//            } else {
-//                echo $response;
-//            }
+            if ($err) {
+                //echo "cURL Error #:" . $err;
+            } else {
+                //echo $response;
+
+                // Alerte stock sms faible
+                $result = json_decode($response);
+                $stockSms = $result->remainingCredits;
+                if($stockSms <= 50)
+                {
+                    $to = array(array("email" => 'support.informatique@entheor.com', "name" => 'Support'));
+                    $bcc = array(
+                        array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+                        array("email" => "brice.lof@gmail.com", "name" => "Brice Lof"),
+                    );
+                    $subject = 'Stock sms faible : recharger';
+
+                    $template = "@Apb/Alert/Mail/mailDefault.html.twig";
+                    $body = $this->templating->render($template, array(
+                        'sujet' => $subject ,
+                        'message' => 'Il reste moins de 50 crédits sms. Veuillez recharger le compte.',
+                        'reference' => ''
+                    ));
+                    $this->sendMessage($this->from, $to, null, null, $bcc, $subject, $body);
+                }
+            }
         }
 
 

@@ -15,8 +15,12 @@ class AlerteController extends Controller
 {
     public function indexAction()
     {
-        $this->get('application_plateforme.facture.cron.status')->listBeneficiareWithInvoice();
-        exit;
+//        $sms = array('recipient' => '33785727803',
+//            'subject' => "test",
+//            'content' => 'Voici le contenu');
+//
+//        $this->get('application_plateforme.mail')->sendMessage(null, null,null, null, null, null, null, null, $sms);
+
         
         return $this->render("ApplicationPlateformeBundle:Alert:index.html.twig", array(
             
