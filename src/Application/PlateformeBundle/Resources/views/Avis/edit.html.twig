@@ -16,7 +16,7 @@
                                     {{ form_widget(form.beneficiaire) }}
                                 </div><div style="display:none" class="block_info_chargement col-md-4"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
                                 <div class="col-md-4">
-                                    <select id="select_beneficiaire_ajax" name="beneficiaire" class="form-control" style="position: absolute" disabled="disabled">
+                                    <select name="beneficiaire" class="form-control" style="position: absolute" disabled="disabled">
                                         <option value="{{ avis.beneficiaire.id }}">{{ avis.beneficiaire.nomConso | capitalize ~ ' '~ avis.beneficiaire.prenomConso | capitalize ~ ' (' ~ avis.beneficiaire.id ~ ')'}}</option>
                                     </select>
                                 </div>

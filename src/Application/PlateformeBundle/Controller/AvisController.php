@@ -23,21 +23,24 @@ class AvisController extends Controller
 
         $noteTotalGlobale = 0 ;
         $nombrePublierEntheor = 0 ;
-        $noteMoyenneAvisPublier = 0;
+        $noteTotalAvisPublierEntheor = 0;
         foreach ($avis as $avisBeneficiaire){
             $noteTotalGlobale = $noteTotalGlobale + $avisBeneficiaire->getNoteGlobale();
 
-            if($avisBeneficiaire->getAutorisationPublication())
-                $noteMoyenneAvisPublier = $noteMoyenneAvisPublier + $avisBeneficiaire->getNoteGlobale();
 
             if($avisBeneficiaire->getAutorisationPublicationEntheor())
+            {
                 $nombrePublierEntheor = $nombrePublierEntheor + 1;
+                $noteTotalAvisPublierEntheor = $noteTotalAvisPublierEntheor + $avisBeneficiaire->getNoteGlobale();
+
+            }
+
         }
         return $this->render('ApplicationPlateformeBundle:Avis:index.html.twig', array(
             'avis' => $avis,
-            'noteMoyenne' => $noteTotalGlobale / count($avis),
-            'noteMoyenneAvisPublier' => $noteMoyenneAvisPublier,
-            'nombreAvisPublierSurEntheor' => $nombrePublierEntheor
+            'noteMoyenne' => round($noteTotalGlobale / count($avis), 1),
+            'nombreAvisPublierSurEntheor' => $nombrePublierEntheor,
+            'noteMoyenneAvisPublierEntheor' => round($noteTotalAvisPublierEntheor / $nombrePublierEntheor, 1),
         ));
     }
 

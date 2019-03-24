@@ -42,6 +42,7 @@ class AvisType extends AbstractType
             ))
 
             ->add('commentaireGeneral', TextareaType::class, array(
+                'attr' => array('class' => 'tinymce'),
                 'label' => 'Commentaire général',
                 'required' => true
             ))

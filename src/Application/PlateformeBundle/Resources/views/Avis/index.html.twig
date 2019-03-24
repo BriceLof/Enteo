@@ -31,14 +31,24 @@
                     <div class="row" style="font-size: 25px;color: #6f6f6f;">
                         <p class="col-md-3">Total Avis</p>
                         <p class="col-md-3">Note Moyenne <span style="font-size: 10px">(recensés)</span></p>
-                        <p class="col-md-3">Note Moyenne <span style="font-size: 10px">(publiés)</span></p>
                         <p class="col-md-3">Total Publié Entheor</p>
+                        <p class="col-md-3">Note Moyenne <span style="font-size: 10px">(publiés)</span></p>
                     </div>
                     <div class="row" style="font-size: 30px;color: #428bca;">
                         <p class="col-md-3">{{ avis | length }}</p>
-                        <p class="col-md-3">{{ noteMoyenne }}</p>
-                        <p class="col-md-3">{{ noteMoyenneAvisPublier }}</p>
+                        <p class="col-md-3">
+                            {{ noteMoyenne }}<br>
+                            {% for i in 1..noteMoyenne  %}
+                                <img src="{{ asset('images/icon_star_note.png') }}" width="20px" style="display: inline-block"/>
+                            {% endfor %}
+                        </p>
                         <p class="col-md-3">{{ nombreAvisPublierSurEntheor }}</p>
+                        <p class="col-md-3">
+                            {{ noteMoyenneAvisPublierEntheor }}<br>
+                            {% for i in 1..noteMoyenne  %}
+                                <img src="{{ asset('images/icon_star_note.png') }}" width="20px" style="display: inline-block"/>
+                            {% endfor %}
+                        </p>
                     </div>
                 </div>
 
@@ -71,7 +81,18 @@
                                     <td><a href="{{ path("application_show_beneficiaire", {'id' : avisBeneficiaire.beneficiaire.id }) }}" target="_blank" title="Fiche bénéficiaire">{{ avisBeneficiaire.beneficiaire.nomConso | capitalize ~ ' '~ avisBeneficiaire.beneficiaire.prenomConso | capitalize }}</a></td>
                                     <td>{{ avisBeneficiaire.noteGlobale }}</td>
                                     <td>{# (avisBeneficiaire.beneficiaire.consultant is not null) ? dump(avisBeneficiaire.beneficiaire.consultant.bureau) : '' #}</td>
-                                    <td>{{ avisBeneficiaire.commentaireGeneral }}</td>
+                                    <td >
+                                        {% set commentaireGeneral = avisBeneficiaire.commentaireGeneral %}
+                                        {% set replace_value_var= '\n' %}
+                                        {% set replace_with_value_var = '<br>' %}
+
+                                        <span class="text_commentaire">
+                                            {{ commentaireGeneral | replace({ (replace_value_var): replace_with_value_var }) | raw }}
+                                        </span>
+
+
+                                        {#<span class="voir_plus">Voir +</span>#}
+                                    </td>
                                     <td>{{ (avisBeneficiaire.recommendationAmi) ? 'Oui' : 'Non' }}</td>
                                     <td>{{ (avisBeneficiaire.autorisationPublication) ? 'Oui' : 'Non'}}</td>
                                     <td>{{ (avisBeneficiaire.autorisationPublicationEntheor) ? 'Oui' : 'Non'}}</td>
