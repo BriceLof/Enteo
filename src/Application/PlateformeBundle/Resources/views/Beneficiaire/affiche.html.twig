@@ -25,6 +25,27 @@
             </div>
         </div>
     </div>
+    {% for message in app.session.flashbag.get('danger') %}
+        {% if message != 'not message' %}
+            <div id="myModalAlert" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Mise à jour Statut Commercial</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger" role="alert">{{ message }}</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
     <div id="imprimer">
         {{ render(controller("ApplicationPlateformeBundle:Beneficiaire:print",{'id': beneficiaire.id })) }}
     </div>
@@ -538,10 +559,14 @@
                         <div class="collapse in">
                             <p style="padding: 10px">
                                 <b>Lors de votre dernier RdV d'accompagnement Livret 2 :</b><br><br>
-                                1) <a href="{{ asset('/public-ressources/Questionnaire_Evaluation_Candidats_VAE.doc') }}" title="Télécharger questionnaire satisfaction"><b>Télécharger</b></a> le questionnaire<br>
+                                1)
+                                <a href="{{ asset('/public-ressources/Questionnaire_Evaluation_Candidats_VAE.doc') }}"
+                                   title="Télécharger questionnaire satisfaction"><b>Télécharger</b></a> le
+                                questionnaire<br>
                                 2) Faites-le remplir et signer par le bénéficiaire<br>
                                 3) Scanner et enregistrer le questionnaire dans l'Espace Documentaire<br>
-                                4) Envoyer un mail à <a href="mailto:contact@entheor.com">contact@entheor.com</a> pour prévenir de la mise à disposition de ce document
+                                4) Envoyer un mail à <a href="mailto:contact@entheor.com">contact@entheor.com</a> pour
+                                prévenir de la mise à disposition de ce document
                             </p>
                         </div>
                     </div>

@@ -449,6 +449,10 @@ $(document).ready(function() {
             return false;
         });
     }
+
+    if (document.getElementById("myModalAlert")) {
+        $('#myModalAlert').modal('show');
+    }
 });
 
 /**

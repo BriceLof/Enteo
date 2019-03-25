@@ -123,7 +123,7 @@ class Calendar
         return $color;
     }
     public function createEvent($form, Historique $historique, Beneficiaire $beneficiaire, Users $consultant, $edit = false, $old_rdv = null){
-        $location = "";
+        $location = " ";
         if($form['typerdv']->getData() == 'distantiel'){
             $historique->setBureau(null);
             $eventSummary = $beneficiaire->getPrenomConso()[0].' '.$beneficiaire->getNomConso().', '.$historique->getSummary();

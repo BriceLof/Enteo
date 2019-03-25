@@ -181,10 +181,10 @@ class Csv
                         utf8_decode($contact->getPrenom()),
                         $contact->getTel(),
                         $contact->getEmail(),
-                        $financeur1->getNom(),
-                        $financeur1->getOrganisme(),
-                        $financeur2->getNom(),
-                        $financeur2->getOrganisme()
+                        !is_null($beneficiaire->getAccompagnement()) ? $financeur1->getNom() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $financeur1->getOrganisme() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $financeur2->getNom() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $financeur2->getOrganisme() : ""
                     ),
                     ';'
                 );

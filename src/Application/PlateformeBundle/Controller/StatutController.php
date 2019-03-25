@@ -28,12 +28,14 @@ class StatutController extends Controller
             )
         ));
 
+        $statutLivret2 = $beneficiaire->getStatutLivret2();
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $beneficiaire = $form->getData();
 
-            if($beneficiaire->getStatutLivret2() == "realise"){
-                $this->get('session')->getFlashBag()->add('info', 'Si le Livret 2 a été envoyé, veuillez mettre à jour le Statut Commercial (par exemple au Statut : Terminé et Détail Statut : En attente résultat)');
+            if(($beneficiaire->getStatutLivret2() == "realise") && $beneficiaire->getStatutLivret2() != $statutLivret2){
+                $this->get('session')->getFlashBag()->add('danger', 'Si le Livret 2 a été envoyé, veuillez mettre à jour le Statut Commercial (par exemple au Statut : Terminé et Détail Statut : En attente résultat)');
             }
 
             $em->persist($beneficiaire);
