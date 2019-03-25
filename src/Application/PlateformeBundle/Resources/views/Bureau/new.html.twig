@@ -1,35 +1,24 @@
-<tr>
-    <td>Nom du Bureau * : </td>
-    <td>{{ form_widget(form.nombureau) }}</td>
-</tr>
-<tr>
-    <td>Adresse * : </td>
-    <td>{{ form_widget(form.adresse) }}</td>
-</tr>
-<tr>
-    <td>Code Postal * : </td>
-    <td>{{ form_widget(form.code_postal) }}</td>
-</tr>
-<tr>
-    <td>Ville * : </td>
-    <td>{{ form_widget(form.ville, {'attr':{'class': 'villeAjax' }}) }}</td>
-</tr>
-<tr>
-    <td>Accès : </td>
-    <td>{{ form_widget(form.acces) }}</td>
-</tr>
-<tr>
-    <td>Commentaires : </td>
-    <td>{{ form_widget(form.commentaire) }}</td>
-</tr>
+{% extends "ApplicationPlateformeBundle::layout.html.twig" %}
+{% block title %}Bureaux{% endblock%}
+{% block body %}
 
-<tr>
-    <td><p><i>* champs obligatoires</i></p></td>
-    <td class="valider">{{ form_widget(form.submit) }}</td>
-</tr>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="page-header col-md-12">
+                <div class="row">
+                    <h1 class="col-md-12">Gestion - Bureaux<br><small>Ajouter un nouveau Bureau</small></h1>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% include "ApplicationPlateformeBundle:Bureau:form.html.twig" %}
+        </div>
+    </div>
 
-
-<tr class="form-rest">
-    <td>{{ form_rest(form) }}</td>
-    <td>{{ form_errors(form) }}</td>
-</tr>
+{% endblock %}
+{% block javascripts %}
+    {% javascripts filter="?jsqueeze"
+        '@ApplicationPlateformeBundle/Resources/public/js/bureau.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock%}

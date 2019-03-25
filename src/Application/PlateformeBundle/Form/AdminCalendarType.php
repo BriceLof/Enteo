@@ -86,7 +86,8 @@ class AdminCalendarType extends AbstractType
                 "label" => 'Code postal',
                 "required" => false,
                 'attr' => array(
-                    'disabled' => true
+                    'disabled' => true,
+                    "autocomplete" => 'disabled',
                 )
             ))
             ->add('typerdv', ChoiceType::class, array(

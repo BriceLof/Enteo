@@ -100,6 +100,16 @@
                     {{ form_errors(form.adresse) }}
                     {{ form_widget(form.adresse) }}
                 </div>
+                <div class="col-md-12 block_form_adresse" style="display:none">
+                    {{ form_label(form.description) }}
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description) }}
+                </div>
+                <div class="col-md-6 block_form_format_presence" style="display:none" >
+                    {{ form_label(form.bureau) }}
+                    {{ form_errors(form.bureau) }}
+                    {{ form_widget(form.bureau) }}
+                </div>
                 <br>
                 <div class="col-md-4">
                     <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn btn-primary btn-block" style="margin-top:20px;"/>
@@ -111,27 +121,27 @@
             </div>
         </div>
     </div>
- 
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {# form_end(form) #}

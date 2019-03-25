@@ -10,28 +10,99 @@ Application\PlateformeBundle\Entity\Bureau:
       groups: ['office']
     commentaire:
       groups: ['office']
+    metaTitle:
+      groups: ['office']
+    metaDescription:
+      groups: ['office']
+    intro:
+      groups: ['office']
+    content:
+      groups: ['office']
+    public:
+      groups: ['office']
+    price:
+      groups: ['office']
     ville:
       groups: ['office']
+    beneficiaires:
+      groups: ['office']
+    consultants:
+      groups: ['office']
+
+Application\UsersBundle\Entity\Users:
+  attributes:
+    nom:
+      groups: ['office']
+    prenom:
+      groups: ['office']
+    image:
+      groups: ['office']
+    description:
+      groups: ['office']
+
+Application\PlateformeBundle\Entity\Beneficiaire:
+  attributes:
+    id:
+      groups: ['office' , 'beneficiary', 'advice']
+    ville:
+      groups: ['office' , 'beneficiary', 'advice']
+    nomConso:
+      groups: ['office', 'advice']
+    prenomConso:
+      groups: ['office', 'advice']
+    domaineVae:
+      groups: ['office' , 'beneficiary', 'advice']
+    avis:
+      groups: ['office']
+    telConso:
+      groups: ['beneficiary']
+    emailConso:
+      groups: ['beneficiary']
+    statut:
+      groups: ['beneficiary', 'advice']
+    civiliteConso:
+      groups: ['beneficiary', 'advice']
+    heureRappel:
+      groups: ['beneficiary']
+    diplomeVise:
+      groups: ['beneficiary', 'advice']
+    dateNaissance:
+      groups: ['office', 'advice']
+
+Application\PlateformeBundle\Entity\Avis:
+  attributes:
+    id:
+      groups: ['office', 'advice']
+    date:
+      groups: ['office', 'advice']
+    noteGlobale:
+      groups: ['office', 'advice']
+    commentaireGeneral:
+      groups: ['office', 'advice']
+    recommendationAmi:
+      groups: ['office', 'advice']
+    beneficiaire:
+      groups: ['advice']
 
 Application\PlateformeBundle\Entity\Ville:
   attributes:
     id:
       groups: ['office']
     slugVille:
-      groups: ['office']
+      groups: ['office', 'advice']
     nom:
-      groups: ['office']
+      groups: ['office', 'advice']
     cp:
-      groups: ['office']
+      groups: ['office', 'advice']
     dpt:
-      groups: ['office']
+      groups: ['office', 'advice']
     region:
-      groups: ['office']
+      groups: ['office', 'advice']
     longitude:
-      groups: ['office']
+      groups: ['office', 'advice']
     latitude:
-      groups: ['office']
+      groups: ['office', 'advice']
     prePosition:
-      groups: ['office']
+      groups: ['office', 'advice']
     pays:
-      groups: ['office']
+      groups: ['office', 'advice']

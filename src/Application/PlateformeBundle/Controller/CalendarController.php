@@ -199,6 +199,7 @@ class CalendarController extends Controller
      *
      * @param Request $request
      * @return JsonResponse
+     * @throws \Exception
      */
     public function ajaxBusySlotAction(Request $request){
         $bool = false;
@@ -279,6 +280,10 @@ class CalendarController extends Controller
         return $resultats;
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     */
     public function showAllEventAction(Request $request, $id)
     {
         //recuperation du consultant
@@ -294,6 +299,9 @@ class CalendarController extends Controller
         die;
     }
 
+    /**
+     * @param Request $request
+     */
     public function showEventAction(Request $request)
     {
         $this->getClientAction($request);
@@ -309,6 +317,10 @@ class CalendarController extends Controller
         die;
     }
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function listCalendarsAction(Request $request)
     {
         //recuperation du service
@@ -379,13 +391,13 @@ class CalendarController extends Controller
         $beneficiaire = $historique->getBeneficiaire();
         $historique->setUser($this->getUser());
 
-        
+
         $old_rdv = $historique->getDateDebut();
-        
+
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN')
+        if ( true === $authorization->isGranted('ROLE_ADMIN')
             || true === $authorization->isGranted('ROLE_COMMERCIAL')
-            || true === $authorization->isGranted('ROLE_GESTION') 
+            || true === $authorization->isGranted('ROLE_GESTION')
             || $this->getUser()->getBeneficiaire()->contains($beneficiaire )
             || $this->getUser()->getConsultants()->contains($beneficiaire->getConsultant()) ){
         }else{

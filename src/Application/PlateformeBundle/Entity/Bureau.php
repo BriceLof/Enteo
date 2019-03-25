@@ -23,10 +23,20 @@ class Bureau
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="bureaux", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Ville", inversedBy="bureaux", cascade={"persist"}, fetch="LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $ville;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="bureau", cascade={"persist"} )
+     */
+    private $beneficiaires;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Users", mappedBy="bureau", cascade={"persist"} )
+     */
+    private $consultants;
 
     /**
      * @var
@@ -124,6 +134,14 @@ class Bureau
      * @ORM\Column(name="price", type="decimal", nullable=true)
      */
     private $price;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="duree", type="string", nullable=true)
+     */
+    private $duree;
+
 
     /**
      * @var
@@ -561,5 +579,97 @@ class Bureau
     public function getEnabledEntheor()
     {
         return $this->enabledEntheor;
+    }
+
+    /**
+     * Add beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\beneficiaire $beneficiaire
+     *
+     * @return Bureau
+     */
+    public function addBeneficiaire(\Application\PlateformeBundle\Entity\beneficiaire $beneficiaire)
+    {
+        $this->beneficiaires[] = $beneficiaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove beneficiaire
+     *
+     * @param \Application\PlateformeBundle\Entity\beneficiaire $beneficiaire
+     */
+    public function removeBeneficiaire(\Application\PlateformeBundle\Entity\beneficiaire $beneficiaire)
+    {
+        $this->beneficiaires->removeElement($beneficiaire);
+    }
+
+    /**
+     * Get beneficiaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBeneficiaires()
+    {
+        return $this->beneficiaires;
+    }
+
+    /**
+     * Add consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     *
+     * @return Bureau
+     */
+    public function addConsultant(\Application\UsersBundle\Entity\Users $consultant)
+    {
+        $this->consultants[] = $consultant;
+
+        return $this;
+    }
+
+    /**
+     * Remove consultant
+     *
+     * @param \Application\UsersBundle\Entity\Users $consultant
+     */
+    public function removeConsultant(\Application\UsersBundle\Entity\Users $consultant)
+    {
+        $this->consultants->removeElement($consultant);
+    }
+
+    /**
+     * Get consultants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConsultants()
+    {
+        return $this->consultants;
+    }
+
+    /**
+     * Set duree
+     *
+     * @param string $duree
+     *
+     * @return Bureau
+     */
+    public function setDuree($duree)
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    /**
+     * Get duree
+     *
+     * @return string
+     */
+    public function getDuree()
+    {
+        return $this->duree;
     }
 }

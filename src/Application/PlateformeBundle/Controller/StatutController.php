@@ -32,6 +32,10 @@ class StatutController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $beneficiaire = $form->getData();
 
+            if($beneficiaire->getStatutLivret2() == "realise"){
+                $this->get('session')->getFlashBag()->add('info', 'Si le Livret 2 a été envoyé, veuillez mettre à jour le Statut Commercial (par exemple au Statut : Terminé et Détail Statut : En attente résultat)');
+            }
+
             $em->persist($beneficiaire);
             $em->flush();
             return $this->redirect($this->generateUrl('application_show_beneficiaire', array(

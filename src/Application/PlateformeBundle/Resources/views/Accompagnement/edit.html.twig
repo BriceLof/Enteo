@@ -17,6 +17,10 @@
         <div class="inputAccompagnement">{{ form_widget(edit_form_a.heure) }} Heures</div>
     </div>
 {% endif %}
+<div class="form-group">
+    <label>Bureau Entheor :</label>
+    <div class="inputAccompagnement col-md-6">{{ form_widget(edit_form_a.bureau) }}</div>
+</div>
 <div>
     <span>Date prévue accompagnement :
         {{ form_widget(edit_form_a.proposition_heure, { 'attr': {'value': heure }} ) }}

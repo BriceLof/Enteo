@@ -15,12 +15,12 @@ class BeneficiaryFactory
         $beneficiary->setDateConfMer(new \DateTime('now'));
         $beneficiary->setDateHeureMer(new \DateTime('now'));
         $beneficiary->setIndicatifTel("");
+        $beneficiary->setBureau(null);
 
         $detailStatus = $em->getRepository("ApplicationPlateformeBundle:DetailStatut")->find(1);
         $news = new News();
         $news->setDetailStatut($detailStatus);
         $news->setStatut($detailStatus->getStatut());
-
         $beneficiary->addNews($news);
 
         return $beneficiary;

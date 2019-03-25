@@ -30,6 +30,12 @@ class Users extends BaseUser
     private $consultants;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="consultants")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\StatsBundle\Entity\Semaine", mappedBy="commercial")
      */
     private $semaine;
@@ -145,6 +151,11 @@ class Users extends BaseUser
      * @ORM\Column(name="num_declaration_activite", type="string", length=255, nullable=true)
      */
     private $numDeclarationActivite;
+
+    /**
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
 	
     public function __construct()
     {
@@ -795,5 +806,53 @@ class Users extends BaseUser
     public function getNumDeclarationActivite()
     {
         return $this->numDeclarationActivite;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Users
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Users
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
     }
 }

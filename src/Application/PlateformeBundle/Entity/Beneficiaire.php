@@ -58,6 +58,12 @@ class Beneficiaire
     protected $villeMer;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="beneficiaires")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $bureau;
+
+    /**
      * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\News", mappedBy="beneficiaire", cascade={"persist"} )
      */
     private $news;
@@ -111,6 +117,12 @@ class Beneficiaire
      * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\MissionArchive", mappedBy="beneficiaire", cascade={"persist","remove"})
      */
     protected $missionArchives;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Avis", mappedBy="beneficiaire", cascade={"persist","remove"})
+     * @Assert\Valid
+     */
+    protected $avis;
 
     /**
      * @ORM\OneToMany(targetEntity="Document", mappedBy="beneficiaire", cascade={"persist","remove"})
@@ -2065,5 +2077,63 @@ class Beneficiaire
     public function getStatutJury()
     {
         return $this->statutJury;
+    }
+
+    /**
+     * Set bureau
+     *
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     *
+     * @return Beneficiaire
+     */
+    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    /**
+     * Get bureau
+     *
+     * @return \Application\PlateformeBundle\Entity\Bureau
+     */
+    public function getBureau()
+    {
+        return $this->bureau;
+    }
+
+    /**
+     * Add avi
+     *
+     * @param \Application\PlateformeBundle\Entity\Avis $avi
+     *
+     * @return Beneficiaire
+     */
+    public function addAvi(\Application\PlateformeBundle\Entity\Avis $avi)
+    {
+        $this->avis[] = $avi;
+
+        return $this;
+    }
+
+    /**
+     * Remove avi
+     *
+     * @param \Application\PlateformeBundle\Entity\Avis $avi
+     */
+    public function removeAvi(\Application\PlateformeBundle\Entity\Avis $avi)
+    {
+        $this->avis->removeElement($avi);
+    }
+
+    /**
+     * Get avis
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvis()
+    {
+        return $this->avis;
     }
 }

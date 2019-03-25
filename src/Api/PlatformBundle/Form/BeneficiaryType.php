@@ -36,9 +36,12 @@ class BeneficiaryType extends AbstractType
                     'Mademoiselle' => 'Mlle',
                 )
             ))
+            ->add('nomConso')
+            ->add('prenomConso')
             ->add('telConso')
             ->add('emailConso')
             ->add('heureRappel')
+            ->add('origineMer')
         ;
     }
 

@@ -14,7 +14,7 @@ class BeneficiaryController extends Controller
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"beneficiary"})
      * @Rest\Post("/beneficiaries")
      */
     public function postBeneficiariesAction(Request $request)
@@ -33,6 +33,7 @@ class BeneficiaryController extends Controller
 
             $beneficiary->setVilleMer($ville);
             $beneficiary->setVille($ville);
+            $beneficiary->setPays("FR");
 
             $em->persist($beneficiary);
             $em->flush();

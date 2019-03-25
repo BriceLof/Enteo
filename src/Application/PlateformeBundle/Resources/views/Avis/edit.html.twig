@@ -1,0 +1,61 @@
+<!-- Modal -->
+<div class="modal fade  bs-example-modal-lg" id="modalModify{{ avis.id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form action="{{ path('application_edit_avis', {'id' : avis.id }) }}" method="POST"  >
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modifier un avis</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">{{ form_label(form.beneficiaire) }}</div>
+                                <div class="col-md-4" style="display: none">
+                                    {{ form_widget(form.beneficiaire) }}
+                                </div><div style="display:none" class="block_info_chargement col-md-4"><img class="img_loading" src="{{ asset('images/ajax-loader.gif') }}" /> <span class="message_chargement text-info"><i>Chargement de la liste</i></span></div>
+                                <div class="col-md-4">
+                                    <select name="beneficiaire" class="form-control" style="position: absolute" disabled="disabled">
+                                        <option value="{{ avis.beneficiaire.id }}">{{ avis.beneficiaire.nomConso | capitalize ~ ' '~ avis.beneficiaire.prenomConso | capitalize ~ ' (' ~ avis.beneficiaire.id ~ ')'}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form_label(form.noteGlobale) }}</label>
+                            {{ form_widget(form.noteGlobale) }}
+                        </div>
+                        <div class="form-group">
+                            <label>{{ form_label(form.commentaireGeneral) }}</label>
+                            {{ form_widget(form.commentaireGeneral) }}
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>{{ form_label(form.recommendationAmi) }}</label>
+                                    {{ form_widget(form.recommendationAmi) }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label>{{ form_label(form.autorisationPublication) }}</label>
+                                    {{ form_widget(form.autorisationPublication) }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label>{{ form_label(form.autorisationPublicationEntheor) }}</label>
+                                    {{ form_widget(form.autorisationPublicationEntheor) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    {{ form_widget(form.submit, {'label' : 'Modifier', 'attr': {'class' : 'btn btn-warning'}}) }}
+                    <td>{{ form_rest(form) }}</td>
+                    <td>{{ form_errors(form) }}</td>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

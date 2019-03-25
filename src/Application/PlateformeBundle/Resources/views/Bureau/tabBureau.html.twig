@@ -1,0 +1,91 @@
+<tr>
+    <td>{{ bureau.ville.nom | capitalize }}</td>
+    <td>{{ bureau.nombureau | capitalize }}{% if bureau.temporaire %}<span title="Bureau temporaire"
+                                                                           style="margin-left:8px;"
+                                                                           class="glyphicon glyphicon-time"></span>{% endif %}
+    </td>
+    <td>{{ bureau.adresse | capitalize }} ({{ bureau.ville.cp }})</td>
+    <td>{{ bureau.acces | capitalize }}</td>
+    <td>{{ bureau.commentaire | capitalize }}</td>
+    <td>
+        {% if bureau.enabledEntheor == 0 %}
+            <span class="glyphicon glyphicon-ban-circle text-danger"></span>
+        {% else %}
+            <span class="glyphicon glyphicon-ok-circle text-success"></span>
+        {% endif %}
+    </td>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') %}
+        <td>
+            <span title="Activer/Désactiver le bureau"
+                  style="cursor:pointer;color: {{ bureau.actifInactif ? "green" : "red" }}; float: right"
+                  data-toggle="modal" data-target="#myModalBureauDelete{{ loop.index }}"
+                  class="glyphicon glyphicon-{{ bureau.actifInactif ? "ok" : "ban" }}-circle"></span>
+            <div class="modal fade" id="myModalBureauDelete{{ loop.index }}" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <span>Voulez-vous vraiment {{ bureau.actifInactif ? "désactiver" : "activer" }} ce bureau?</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler
+                                </button>
+                                <a class="deleteBtn"
+                                   href="{{ path('application_actif_inactif_bureau', { 'id': bureau.id }) }}">
+                                    <button class="btn btn-primary">{{ bureau.actifInactif ? "Désactiver" : "Activer" }}</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <a href="{{ path('application_edit_bureau', { id: bureau.id }) }}"><span title="Modifier le bureau"
+                                                                                     style="cursor:pointer;color: black; float: right"
+                                                                                     class="modifierBureau glyphicon glyphicon-pencil"></span></a>
+        </td>
+        <td>
+            <span title="Supprimer le bureau" style="cursor:pointer;color: black; float: right" data-toggle="modal"
+                  data-bureau-id="{{ bureau.id }}" data-target="#myModalBureauSupprimer{{ loop.index }}"
+                  class="supprimerBureau glyphicon glyphicon-remove"></span>
+            <div class="modal fade" id="myModalBureauSupprimer{{ loop.index }}" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <span>Voulez-vous vraiment supprimer ce bureau?</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div>
+                                <button type="button" class="btn btn-default deleteBtn" data-dismiss="modal">Annuler
+                                </button>
+                                <a class="deleteBtn"
+                                   href="{{ path('application_delete_bureau', { 'id': bureau.id }) }}">
+                                    <button class="btn btn-primary">Supprimer</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    {% endif %}
+</tr>

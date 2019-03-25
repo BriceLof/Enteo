@@ -23,6 +23,11 @@ application_plateforme_received_mer:
     defaults: 
         _controller: ApplicationPlateformeBundle:Webservice:index 
 
+#avis
+application_plateforme_avis:
+    resource: "@ApplicationPlateformeBundle/Resources/config/routing/avis.yml"
+    prefix:   /avis
+
 #rubrique ressource partage
 application_plateforme_rubrique_ressource_share:
     resource: "@ApplicationPlateformeBundle/Resources/config/routing/rubriqueRessource.yml"
