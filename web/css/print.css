@@ -1,0 +1,67 @@
+@media print {
+    #afficheBeneficiaire{
+        display: none;
+    }
+    #flashbag{
+        display: none;
+    }
+    #loading{
+        display: none;
+    }
+    #imprimer{
+        display: block;
+    }
+    table{
+        border-collapse: collapse;
+        width: 750px;
+    }
+    #id_beneficiaire{
+        font-size: 12px;
+        float: right;
+    }
+    #impr_renseignement td{
+        border: 1px solid;
+        padding-left: 1%;
+        padding-right: 1%;
+    }
+    #impr_historique td{
+
+    }
+    img{
+        width: 170px;
+    }
+    #titre{
+        font-size: 30px;
+        font-weight: bold;
+    }
+    #image_logo{
+        height: 100px;
+    }
+    .sous_titre{
+        background-color: #b3acb2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    #nom_responsable, #financement, #commentaire{
+        font-weight: bold;
+    }
+    #commentaire{
+        height: 275px;
+    }
+    #entheo{
+        color: #b0b0b0 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    #entheo p{
+        margin-bottom: 0;
+    }
+    #impr_renseignement{
+        page-break-after: always;
+    }
+    caption{
+        border: 1px solid;
+        margin-bottom: 7px;
+    }
+    #impr_historique table, #impr_statut table, #impr_suivi_administratif table{
+        margin-bottom: 30px;
+    }
+}

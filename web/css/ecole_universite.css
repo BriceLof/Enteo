@@ -1,0 +1,12 @@
+.bold{
+    font-weight: bold;
+}
+.text-lg{
+    font-size: 30px;
+}
+.text-md{
+    font-size: 23px;
+}
+.mt-5{
+    margin-top: 5px;
+}

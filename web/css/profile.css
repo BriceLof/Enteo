@@ -1,0 +1,115 @@
+.image_profile{
+    width: 130px;
+    height: 150px;
+    border: 1px solid black;
+    background-size: 160px auto;
+    background-repeat:no-repeat;
+    background-position: center center;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 2%;
+}
+.glyphicon-camera{
+    font-size: 25px;
+    cursor: pointer;
+    display: none;
+}
+.image_profile:hover .glyphicon-camera{
+    display: block;
+}
+#add_dates span{
+    color: blue;
+    text-decoration: underline;
+}
+
+#submit_profile_picture{
+    width: 70px;
+    float: right;
+    margin-left: 10px;
+}
+#submit_profile_picture .form-group{
+    margin-bottom: 0;
+}
+#input_image_profile{
+    display: inline-block;
+    vertical-align: top;
+}
+
+#statut_consultant_consultant{
+    display: inline-block;
+}
+#statut_consultant{
+    display: inline-block;
+    font-size: 12px;
+}
+#statut_consultant .btn{
+    padding: 0 12px;
+    background-color: #454545;
+    color: white;
+    margin-top: 20px;
+}
+
+#statut_consultant .form-control {
+    height: 25px;
+    padding: 0 12px;
+    font-size: 12px;
+}
+#statut_consultant .form-group{
+    margin: 0 0;
+}
+#statut_consultant .checkbox{
+    height: 20px;
+    padding-top: 0;
+    min-height: 20px;
+}
+#application_usersbundle_statut_consultant_submit{
+    float: right;
+}
+#statut_consultant .date{
+    width: 35%;
+}
+#statut_consultant #form_statut_detail{
+    display: inline-block;
+}
+#statut_consultant #form_dates{
+    vertical-align: text-top;
+}
+
+.glyphicon{
+    margin: 0 5px;
+    cursor: pointer;
+}
+.glyphicon-ok{
+    color: green;
+}
+.glyphicon-remove{
+    color: red;
+}
+.panel-body .table td{
+    border: none;
+}
+#tabs_mission{
+    border: none;
+}
+
+div.error{
+    color: red;
+}
+
+.pointer{
+    cursor: pointer;
+}
+.bold{
+    font-weight: bold;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+#form_numDeclarationActivite-error{
+    display: none !important;
+}
+#form_numDeclarationActivite.error{
+    border-color: red;
+}

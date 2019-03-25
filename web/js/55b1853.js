@@ -1,1 +1,0 @@
-;$(function(){$('.block_form_add_file h4').click(function(){$('.block_form_add_file .hide_show_form_add_file').toggle()});$('.file').hover(function(){$(this).children('aside').toggle()});$('#sortable').sortable({stop:function(o,t){$('.btn_submit_ordre_rubrique').show();$('#sortable li').each(function(o){i=o+1;$(this).attr('data-ordre',i);$(this).children('input').val(i)})}})});
