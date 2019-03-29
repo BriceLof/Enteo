@@ -157,8 +157,6 @@ class Csv
 
                 $employeur = $beneficiaire->getEmployeur();
                 $contact = $beneficiaire->getContactEmployeur()[0];
-                $financeur1 = $beneficiaire->getAccompagnement()->getFinanceur()[0];
-                $financeur2 = $beneficiaire->getAccompagnement()->getFinanceur()[1];
 
                 fputcsv(
                     $handle,
@@ -175,16 +173,16 @@ class Csv
                         !is_null($beneficiaire->getLastDetailStatutCommercial()) ? utf8_decode($beneficiaire->getLastDetailStatutCommercial()->getStatut()->getNom()) : '',
                         !is_null($beneficiaire->getLastDetailStatutAdmin()) ? utf8_decode($beneficiaire->getLastDetailStatutAdmin()->getStatut()->getNom()) : '',
                         !is_null($beneficiaire->getLastDetailStatutAdmin()) ? utf8_decode($beneficiaire->getLastDetailStatutAdmin()->getDetail()) : '',
-                        $contact->getNature(),
-                        $contact->getCivilite(),
-                        utf8_decode($contact->getNom()),
-                        utf8_decode($contact->getPrenom()),
-                        $contact->getTel(),
-                        $contact->getEmail(),
-                        !is_null($beneficiaire->getAccompagnement()) ? $financeur1->getNom() : "",
-                        !is_null($beneficiaire->getAccompagnement()) ? $financeur1->getOrganisme() : "",
-                        !is_null($beneficiaire->getAccompagnement()) ? $financeur2->getNom() : "",
-                        !is_null($beneficiaire->getAccompagnement()) ? $financeur2->getOrganisme() : ""
+                        !is_null($contact) ? $contact->getNature() : "",
+                        !is_null($contact) ? $contact->getCivilite() : "",
+                        !is_null($contact) ? utf8_decode($contact->getNom()) : "",
+                        !is_null($contact) ? utf8_decode($contact->getPrenom()) : "",
+                        !is_null($contact) ? $contact->getTel() : "",
+                        !is_null($contact) ? $contact->getEmail() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $beneficiaire->getAccompagnement()->getFinanceur()[0]->getNom() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $beneficiaire->getAccompagnement()->getFinanceur()[0]->getOrganisme() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $beneficiaire->getAccompagnement()->getFinanceur()[1]->getNom() : "",
+                        !is_null($beneficiaire->getAccompagnement()) ? $beneficiaire->getAccompagnement()->getFinanceur()[1]->getOrganisme() : ""
                     ),
                     ';'
                 );
