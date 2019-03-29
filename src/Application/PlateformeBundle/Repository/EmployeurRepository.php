@@ -10,4 +10,14 @@ namespace Application\PlateformeBundle\Repository;
  */
 class EmployeurRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAll()
+    {
+        parent::findAll();
+        $queryBuilder = $this->createQueryBuilder("e")
+            ->where("e.raisonSociale <> ''")
+            ->orderBy("e.raisonSociale", "ASC");
+        $query = $queryBuilder->getQuery();
+        $results = $query->getResult();
+        return $results;
+    }
 }
