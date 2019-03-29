@@ -163,7 +163,7 @@ class Csv
                 fputcsv(
                     $handle,
                     array(
-                        $employeur->getRaisonSociale(),
+                        utf8_decode($employeur->getRaisonSociale()),
                         $employeur->getApeNace(),
                         !is_null($employeur->getVille()) ? utf8_decode($employeur->getVille()->getCp()) : '',
                         !is_null($employeur->getVille()) ? utf8_decode($employeur->getVille()->getNom()) : '',
