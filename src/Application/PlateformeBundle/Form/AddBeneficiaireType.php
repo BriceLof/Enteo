@@ -164,7 +164,8 @@ class AddBeneficiaireType extends AbstractType
                     'IF' => 'if',
                     'Entheor.com' => 'entheor_com',
                     'Entreprise' => 'entreprise',
-                    'Recommandation' =>'recommandation'
+                    'Recommandation' =>'recommandation',
+                    'Ma formation' =>'ma_formation'
                 ),
             ))
             ->add('origineMerComment', ChoiceType::class, array(
