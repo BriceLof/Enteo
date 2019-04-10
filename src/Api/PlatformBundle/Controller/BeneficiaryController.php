@@ -3,6 +3,7 @@
 namespace Api\PlatformBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Beneficiaire;
+use Application\PlateformeBundle\Entity\Historique;
 use Api\PlatformBundle\Form\BeneficiaryType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,11 +32,26 @@ class BeneficiaryController extends Controller
 
             $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
 
+            $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
+            if(empty($offices)){
+                $offices[0] = $this->getOfficeAction(208, $request);
+            }
+
+            $beneficiary->setBureau($offices[0]);
             $beneficiary->setVilleMer($ville);
             $beneficiary->setVille($ville);
             $beneficiary->setPays("FR");
 
             $em->persist($beneficiary);
+
+            $historique = new Historique();
+            $historique->setSummary("");
+            $historique->setTypeRdv("");
+            $historique->setBeneficiaire($beneficiary);
+            $historique->setDescription(date('d/m/Y')." | ".$beneficiary->getVille()->getNom()." | ".$beneficiary->getOrigineMer());
+            $historique->setEventId("0");
+            $em->persist($historique);
+
             $em->flush();
             return $beneficiary;
         } else {

@@ -42,6 +42,8 @@ class BeneficiaryType extends AbstractType
             ->add('emailConso')
             ->add('heureRappel')
             ->add('origineMer')
+            ->add('experience')
+            ->add('poste')
         ;
     }
 

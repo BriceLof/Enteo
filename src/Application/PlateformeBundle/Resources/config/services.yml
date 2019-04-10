@@ -89,6 +89,10 @@ services:
         factory: 'application.beneficiary_factory:createBeneficiary'
         arguments: ["@doctrine.orm.entity_manager"]
 
+    application.bureau_handler:
+        class:   Application\PlateformeBundle\Form\Handler\BureauHandler
+        arguments: ['%bureau_image_directory%']
+
 ################################################################################
 ###################################  FACTURE  ##################################
 ################################################################################

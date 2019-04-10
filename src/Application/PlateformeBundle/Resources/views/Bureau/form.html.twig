@@ -79,21 +79,27 @@
                 <div class="panel-body">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Prix :</label>
-                            <div class="col-sm-10">
-                                {{ form_widget(form.price) }}
+                            <label class="control-label col-sm-2" for="email">Bannière (image) :</label>
+                            <div class="col-sm-3">
+                                {{ form_widget(form.banner_image) }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Durée :</label>
+                            <label class="control-label col-sm-2" for="email">Image 1 (image) :</label>
                             <div class="col-sm-10">
-                                {{ form_widget(form.duree) }}
+                                {{ form_widget(form.first_image) }}
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Public :</label>
+                            <label class="control-label col-sm-2" for="email">Image 2 (image) :</label>
                             <div class="col-sm-10">
-                                {{ form_widget(form.public) }}
+                                {{ form_widget(form.second_image) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email">Image 3 (image) :</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.third_image) }}
                             </div>
                         </div>
                         <div class="form-group">

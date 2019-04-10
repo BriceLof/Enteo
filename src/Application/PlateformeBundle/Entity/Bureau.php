@@ -142,6 +142,34 @@ class Bureau
      */
     private $duree;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image()
+     */
+    private $banner;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image()
+     */
+    private $firstImage;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image()
+     */
+    private $secondImage;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @Assert\Image()
+     */
+    private $thirdImage;
+
 
     /**
      * @var
@@ -671,5 +699,101 @@ class Bureau
     public function getDuree()
     {
         return $this->duree;
+    }
+
+    /**
+     * Set banner
+     *
+     * @param string $banner
+     *
+     * @return Bureau
+     */
+    public function setBanner($banner)
+    {
+        $this->banner = $banner;
+
+        return $this;
+    }
+
+    /**
+     * Get banner
+     *
+     * @return string
+     */
+    public function getBanner()
+    {
+        return $this->banner;
+    }
+
+    /**
+     * Set firstImage
+     *
+     * @param string $firstImage
+     *
+     * @return Bureau
+     */
+    public function setFirstImage($firstImage)
+    {
+        $this->firstImage = $firstImage;
+
+        return $this;
+    }
+
+    /**
+     * Get firstImage
+     *
+     * @return string
+     */
+    public function getFirstImage()
+    {
+        return $this->firstImage;
+    }
+
+    /**
+     * Set secondImage
+     *
+     * @param string $secondImage
+     *
+     * @return Bureau
+     */
+    public function setSecondImage($secondImage)
+    {
+        $this->secondImage = $secondImage;
+
+        return $this;
+    }
+
+    /**
+     * Get secondImage
+     *
+     * @return string
+     */
+    public function getSecondImage()
+    {
+        return $this->secondImage;
+    }
+
+    /**
+     * Set thirdImage
+     *
+     * @param string $thirdImage
+     *
+     * @return Bureau
+     */
+    public function setThirdImage($thirdImage)
+    {
+        $this->thirdImage = $thirdImage;
+
+        return $this;
+    }
+
+    /**
+     * Get thirdImage
+     *
+     * @return string
+     */
+    public function getThirdImage()
+    {
+        return $this->thirdImage;
     }
 }
