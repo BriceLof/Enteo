@@ -43,9 +43,8 @@ class BureauRepository extends EntityRepository
 
         if (!is_null($city)) {
             $query .= ' HAVING distance < 50';
+            $query .= ' ORDER BY distance';
         }
-
-        $query .= ' ORDER BY distance';
 
         if (!is_null($limit)) {
             $query .= ' LIMIT ' . $limit;

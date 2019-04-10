@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 
@@ -21,12 +22,6 @@ class BureauType extends AbstractType
         $builder
             ->add('nombureau', TextType::class, array(
                 'label' => 'nom ',
-                'attr' => array(
-                    'placeholder' => '',
-                )
-            ))
-            ->add('duree', TextType::class, array(
-                'label' => 'duree ',
                 'attr' => array(
                     'placeholder' => '',
                 )
@@ -62,19 +57,6 @@ class BureauType extends AbstractType
             ->add('metaDescription', TextareaType::class)
             ->add('intro', CKEditorType::class)
             ->add('content', CKEditorType::class)
-            ->add('price', MoneyType::class, array(
-                'divisor' => 100,
-            ))
-            ->add('public', ChoiceType::class, array(
-                'choices' => array(
-                    'Salarié en poste' => 1,
-                    'Demandeur d\'emploi' => 2,
-                    'Entreprise' => 3,
-                    'Etudiant' => 4
-                ),
-                'multiple' => true,
-                'expanded' => true
-            ))
             ->add('enabledEntheor', ChoiceType::class, array(
                 'choices' => array(
                     'Non' => 0,
@@ -84,7 +66,19 @@ class BureauType extends AbstractType
                     "onchange" => 'showEntheorField(this)'
                 )
             ))
-        ;
+            ->add('banner_image', FileType::class, array(
+                'required' => false,
+                'mapped' => false
+            ))
+            ->add('first_image', FileType::class, array(
+                'required' => false, 'mapped' => false
+            ))
+            ->add('second_image', FileType::class, array(
+                'required' => false, 'mapped' => false
+            ))
+            ->add('third_image', FileType::class, array(
+                'required' => false, 'mapped' => false
+            ));
         $builder->get('ville_select')->resetViewTransformers();
     }
 

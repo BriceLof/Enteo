@@ -22,7 +22,8 @@ class OfficeController extends Controller
      *  description="This method aims to get office(s) according to criterion that you provide",
      *  filters={
      *      {"name"="zip", "dataType"="string", "description"="zip code"},
-     *      {"name"="limit", "dataType"="integer", "description"="number of office in response"}
+     *      {"name"="limit", "dataType"="integer", "description"="number of office in response"},
+     *      {"name"="elearning", "dataType"="boolean", "description"="elearning office"}
      *  },
      *     statusCodes={
      *         200="Returned when successful",
@@ -47,6 +48,10 @@ class OfficeController extends Controller
         }
 
         $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($city, $limit, true);
+
+        if(empty($offices) || ($request->get('elearning') == true )){
+            $offices = $this->getOfficeAction(208, $request);
+        }
 
         return $offices;
     }

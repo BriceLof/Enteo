@@ -4,10 +4,13 @@ namespace Application\PlateformeBundle\Controller;
 
 use Application\PlateformeBundle\Entity\Bureau;
 use Application\PlateformeBundle\Form\BureauEntheorType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,14 +49,8 @@ class BureauController extends Controller
                 'class' => 'btn btn-info'
             )
         ));
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            $em = $this->getDoctrine()->getManager();
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($form['ville_select']->getData());
-            $bureau->setVille($ville);
-            $em->persist($bureau);
-            $em->flush();
+        $bureauHandler = $this->get('application.bureau_handler');
+        if ($bureauHandler->process($bureau, $form, $request, $this->getDoctrine()->getManager())) {
             $this->get('session')->getFlashBag()->add('info', 'Bureau ajouté avec succès');
             return $this->redirect($this->generateUrl('application_index_bureau'));
         }
@@ -87,6 +84,9 @@ class BureauController extends Controller
         if (!$bureau) {
             throw $this->createNotFoundException('Bureau introuvable.');
         }
+
+        $bureauHandler = $this->get('application.bureau_handler');
+
         $editForm = $this->createForm(BureauType::class, $bureau);
         $editForm->add('submit', SubmitType::class, array(
             'label' => 'Modifier',
@@ -94,24 +94,11 @@ class BureauController extends Controller
                 'class' => 'btn btn-info'
             )
         ));
-
-        $editForm->handleRequest($request);
-        if ($editForm->isSubmitted()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->find($editForm['ville_select']->getData());
-            $bureau->setVille($ville);
-
-            $em->persist($bureau);
-            $em->flush();
-
+        if ($bureauHandler->process($bureau, $editForm, $request, $this->getDoctrine()->getManager())) {
             $this->get('session')->getFlashBag()->add('info', 'Bureau Modifié avec succès');
-
             return $this->redirect($this->generateUrl('application_index_bureau'));
         }
-
         $editForm->get('code_postal')->setData($bureau->getVille()->getCp());
-
         return $this->render('ApplicationPlateformeBundle:Bureau:edit.html.twig', array(
             'bureau' => $bureau,
             'form' => $editForm->createView(),
@@ -183,16 +170,16 @@ class BureauController extends Controller
             foreach ($bureaux as $bureau) {
                 if (stristr($bureau->getVille()->getNom(), $nomVille) === false) {
                 } else {
-                    if($test != null){
-                        if (count($list) == 0){
+                    if ($test != null) {
+                        if (count($list) == 0) {
                             $list[] = array(
                                 'idVille' => $bureau->getVille()->getId(),
                                 'ville' => $bureau->getVille()->getNom(),
                                 'dpt' => $bureau->getVille()->getDpt(),
                             );
                             $listDpt[] = $bureau->getVille()->getDpt();
-                        }else{
-                            if (!in_array($bureau->getVille()->getDpt(),$listDpt)){
+                        } else {
+                            if (!in_array($bureau->getVille()->getDpt(), $listDpt)) {
                                 $list[] = array(
                                     'idVille' => $bureau->getVille()->getId(),
                                     'ville' => $bureau->getVille()->getNom(),
@@ -200,7 +187,7 @@ class BureauController extends Controller
                                 );
                             }
                         }
-                    }else{
+                    } else {
                         $list[] = array(
                             'id' => $bureau->getId(),
                             'nom' => $bureau->getNombureau(),
@@ -249,8 +236,7 @@ class BureauController extends Controller
                     'placeholder' => 'Veuillez saisir la ville',
                     'autocomplete' => 'off'
                 )
-            ))
-        ;
+            ));
 
         $form = $formBuilder->getForm();
 
@@ -270,7 +256,7 @@ class BureauController extends Controller
             foreach ($results as $bureau) {
                 if ($bureau->getCalendrierid() != "" || $bureau->getCalendrierid() != null) {
                     $sentinel = 0;
-                    if ($ville == $bureau->getVille()){
+                    if ($ville == $bureau->getVille()) {
                         $sentinel = 1;
                         $iframe .= 'src=' . $bureau->getCalendrierid() . '&amp;color=' . $color[$i] . '&amp;';
                     }

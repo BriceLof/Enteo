@@ -28,6 +28,14 @@ Application\PlateformeBundle\Entity\Bureau:
       groups: ['office']
     consultants:
       groups: ['office']
+    banner:
+      groups: ['office']
+    firstImage:
+      groups: ['office']
+    secondImage:
+      groups: ['office']
+    thirdImage:
+      groups: ['office']
 
 Application\UsersBundle\Entity\Users:
   attributes:
@@ -83,6 +91,8 @@ Application\PlateformeBundle\Entity\Avis:
       groups: ['office', 'advice']
     beneficiaire:
       groups: ['advice']
+    autorisationPublicationEntheor:
+      groups: ['advice', 'office']
 
 Application\PlateformeBundle\Entity\Ville:
   attributes:
