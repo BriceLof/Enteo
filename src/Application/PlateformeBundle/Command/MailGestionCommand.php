@@ -26,6 +26,7 @@ class MailGestionCommand extends ContainerAwareCommand
         $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findAll();
         $i = 0;
         $j = 0;
+        $k = 0;
 
         foreach ($beneficiaires as $beneficiaire) {
             $result = $em->getRepository('ApplicationPlateformeBundle:SuiviAdministratif')->getLast($beneficiaire);
@@ -47,6 +48,13 @@ class MailGestionCommand extends ContainerAwareCommand
                         if ($dateLastSuivi <= (new \DateTime('now'))->modify("-8 day")->setTime(0,0,0)) {
                             $j++;
                             $tab2[] = $lastSuiviAdministratif;
+                        }
+                    }
+                    if ( $lastSuiviAdministratif->getDetailStatut()->getId() == 53 ) {
+                        $dateLastSuivi = $lastSuiviAdministratif->getDate();
+                        if ($dateLastSuivi <= (new \DateTime('now'))->modify("-8 day")->setTime(0,0,0)) {
+                            $k++;
+                            $tab3[] = $lastSuiviAdministratif;
                         }
                     }
                 }
@@ -77,6 +85,19 @@ class MailGestionCommand extends ContainerAwareCommand
             $csv2 = $this->getContainer()->get('application_plateforme.csv')->getCvsForMailSuivi($tab2, "Dossier en cours - En attente de traitement Entheor");
             $attachement2 = array("name" => 'dossiers_attente_traitement_' . (new \DateTime('now'))->format('d_m_y') . '.csv', "file" => $csv2);
             $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->alerteAttenteTraitement($tab2, $attachement2);
+        }
+
+        if ($k > 0) {
+            usort($tab3, function ($a, $b) {
+                if ($a->getDate() == $b->getDate()) {
+                    return 0;
+                }
+                return $a->getDate() > $b->getDate() ? -1 : 1;
+            });
+
+            $csv3 = $this->getContainer()->get('application_plateforme.csv')->getCvsForMailSuivi($tab3, "Dossier en cours - En attente de documents");
+            $attachement3 = array("name" => 'dossiers_attente_documents_' . (new \DateTime('now'))->format('d_m_y') . '.csv', "file" => $csv3);
+            $this->getContainer()->get('application_plateforme.statut.mail.mail_for_statut')->alerteAttenteDocument($tab3, $attachement3);
         }
     }
 }

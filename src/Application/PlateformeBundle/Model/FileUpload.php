@@ -52,6 +52,8 @@ abstract class FileUpload
     public $file;
 
 
+
+
     abstract protected function getWebDir();
 
     protected function getUploadDir()
@@ -116,6 +118,12 @@ abstract class FileUpload
 
         if (null !== $this->file){
             $this->path = sha1(uniqid(mt_rand(),true)).'.'.$this->file->guessExtension();
+        }
+
+        $this->setUpdatedAt(new \DateTime('now'));
+
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTime('now'));
         }
     }
 

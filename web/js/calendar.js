@@ -253,7 +253,67 @@ if (document.getElementById('admin_calendar_consultant_consultant')) {
             $('.ui-menu').width($(this).outerWidth())
         }
     })
+
+
+
+    /**
+     * Autre bureau, autocomplete a partir du nom du bureau
+     */
+    $('#admin_calendar_nomBureau').autocomplete({
+        source: function (requete, reponse) {
+            if ($('#admin_calendar_autreBureau').is(':checked')) {
+                $.ajax({
+                    url: Routing.generate('application_ajax_search_bureau_temporaire'), // le nom du fichier indiqué dans le formulaire
+                    cache: true,
+                    data: {
+                        nomBureau: $('#admin_calendar_nomBureau').val(),
+                        ville: $('#admin_calendar_ville').val()
+                    },
+                    dataType: 'json',
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                        var ville = $.parseJSON(data);
+                        reponse($.map(ville, function (item) {
+                            return {
+                                value: function () {
+                                    bureau = item.adresse;
+                                    $('#admin_calendar_cpBureau').val(item.cp);
+                                    adresse = item.adresse;
+                                    bureau = item.id;
+                                    cp = (item.cp);
+                                    return item.nom.toLowerCase();
+                                }
+                            }
+                        }));
+                    }
+                });
+            }
+        },
+        select: function (event, ui) {
+            $('#admin_calendar_cpBureau').val(cp);
+            $('#admin_calendar_cpBureau').val(cp);
+            $('#admin_calendar_adresseBureau').val(adresse);
+            $('#admin_calendar_bureau').val(bureau);
+        },
+        change: function (event, ui) {
+            if (ui.item) {
+                $('#admin_calendar_cpBureau').val(cp);
+            } else {
+                $('#admin_calendar_adresseBureau').val("");
+                $('#admin_calendar_cpBureau').val("");
+                $('#admin_calendar_bureau').val("");
+            }
+            console.log("this.value: " + this.value);
+        },
+        open: function () {
+            console.log($(this).attr('id'))
+            $('.ui-menu').width($(this).outerWidth())
+        }
+    })
 })();
+
+
 
 $('.ui-autocomplete').on('mouseover', '.ui-menu-item', function (e) {
     el = e.target;

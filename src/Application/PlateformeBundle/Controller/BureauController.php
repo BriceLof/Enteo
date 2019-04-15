@@ -165,6 +165,8 @@ class BureauController extends Controller
             $em = $this->getDoctrine()->getManager();
             $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findBy(array(
                 'actifInactif' => true,
+                'temporaire' => false,
+                'supprimer' => false
             ));
 
             foreach ($bureaux as $bureau) {
@@ -197,6 +199,47 @@ class BureauController extends Controller
                             'villeId' => $bureau->getVille()->getId(),
                         );
                     }
+                }
+            }
+
+            $resultats = new JsonResponse(json_encode($list));
+            return $resultats;
+
+        } else {
+            throw new \Exception('erreur');
+        }
+    }
+
+    public function searchBureauTemporaireAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $list = [];
+            $nomBureau = $request->query->get('nomBureau');
+            $ville = $request->query->get('ville');
+
+            $em = $this->getDoctrine()->getManager();
+            $ville = $em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
+                'nom' => $ville,
+            ));
+
+            $bureaux = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findBy(array(
+                'temporaire' => true,
+                'ville' => $ville,
+                'supprimer' => false
+            ));
+
+            foreach ($bureaux as $bureau) {
+                if (stristr($bureau->getNombureau(), $nomBureau) === false) {
+
+                } else {
+                    $list[] = array(
+                        'id' => $bureau->getId(),
+                        'nom' => $bureau->getNombureau(),
+                        'adresse' => $bureau->getAdresse(),
+                        'cp' => $bureau->getVille()->getCp(),
+                        'ville' => $bureau->getVille()->getNom(),
+                        'villeId' => $bureau->getVille()->getId(),
+                    );
                 }
             }
 
