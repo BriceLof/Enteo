@@ -136,7 +136,8 @@ class Calendar
         $dateDebut = $historique->getHeureDebut()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $dateFin = $historique->getHeureFin()->setDate($historique->getDateDebut()->format('Y'),$historique->getDateDebut()->format('m'), $historique->getDateDebut()->format('d'));
         $antidated = ((new \DateTime('now'))->getTimestamp() > $dateDebut->getTimeStamp());
-        if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel'){
+        
+        if ($form['autreBureau']->getData() == true && $form['typerdv']->getData() != 'distantiel' && is_null($historique->getBureau())){
             $ville = $this->em->getRepository('ApplicationPlateformeBundle:Ville')->findOneBy(array(
                 'nom' => $form["ville"]->getData(),
             ));

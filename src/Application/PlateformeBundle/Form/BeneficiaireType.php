@@ -56,6 +56,15 @@ class BeneficiaireType extends AbstractType
                 )
             ))
 
+            ->add('nomNaissance', TextType::class, array(
+                'label' => 'Nom de naissance',
+                'required' => false,
+                'attr' => array(
+                    'placeholder' => '',
+                    'class' => 'fiche'
+                )
+            ))
+
             ->add('prenomConso', TextType::class, array(
                 'label' => 'Prénom ',
                 'attr' => array(

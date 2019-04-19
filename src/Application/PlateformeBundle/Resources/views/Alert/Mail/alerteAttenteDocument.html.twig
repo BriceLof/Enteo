@@ -1,0 +1,18 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}{{ reference }}{% endblock %}
+{% block contentMail %}
+    Bonjour Virgine,<br><br>
+    {% if suivis|length > 1 %}
+        Cela fait 8 jours que ces dossiers sont en statut : 'Dossiers en cours - En attente de Documents Candidat'<br>
+    {% else %}
+        Cela fait 8 jours que ce dossier est en statut : 'Dossiers en cours - En attente de Documents Candidat'<br>
+    {% endif %}
+    <br>
+    {% for suivi in suivis %}
+        <p style='margin-left:10px;'>&bull;
+            <a href="https://appli.entheor.com/web/beneficiaire/show/{{  suivi.beneficiaire.id }}">
+                {{ suivi.beneficiaire.civiliteConso|capitalize~' '~suivi.beneficiaire.prenomConso|capitalize~' '~suivi.beneficiaire.nomConso|capitalize}}
+            </a>
+            depuis le {{ suivi.date|date('d/m/Y') }}  </p>
+    {% endfor %}
+{% endblock %}

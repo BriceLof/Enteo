@@ -267,6 +267,12 @@ class Beneficiaire
     private $nomConso;
 
     /**
+     * @ORM\Column(name="nom_naissance", type="string", length=255, nullable=true)
+     * @Assert\Type("string")
+     */
+    private $nomNaissance;
+
+    /**
      * @ORM\Column(name="prenom_conso", type="string", length=255)
      * @Assert\Type("string")
      */
@@ -2135,5 +2141,29 @@ class Beneficiaire
     public function getAvis()
     {
         return $this->avis;
+    }
+
+    /**
+     * Set nomNaissance
+     *
+     * @param string $nomNaissance
+     *
+     * @return Beneficiaire
+     */
+    public function setNomNaissance($nomNaissance)
+    {
+        $this->nomNaissance = $nomNaissance;
+
+        return $this;
+    }
+
+    /**
+     * Get nomNaissance
+     *
+     * @return string
+     */
+    public function getNomNaissance()
+    {
+        return $this->nomNaissance;
     }
 }

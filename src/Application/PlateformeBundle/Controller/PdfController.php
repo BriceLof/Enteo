@@ -107,7 +107,7 @@ class PdfController extends Controller
 			array('accompagnement' => $beneficiaire->getAccompagnement()->getId())
 		);
 		
-		$cout_total_financement = "";
+		$cout_total_financement = 0;
 		if(count($financeurs) > 0){
 			foreach($financeurs as $financeur)
 			{

@@ -84,6 +84,10 @@
                                         <td>{{ form_widget(edit_form.nomConso) }}</td>
                                     </tr>
                                     <tr>
+                                        <td>{{ form_label(edit_form.nomNaissance) }}</td>
+                                        <td>{{ form_widget(edit_form.nomNaissance) }}</td>
+                                    </tr>
+                                    <tr>
                                         <td>{{ form_label(edit_form.prenomConso) }}</td>
                                         <td>{{ form_widget(edit_form.prenomConso) }}</td>
                                     </tr>
@@ -428,7 +432,11 @@
                                                     <td>
                                                         <a href="{{ asset('uploads/beneficiaire/documents/'~beneficiaire.id~'/'~document.path) }}"
                                                            target="_blank"
-                                                           style="color:#333;">{{ document.description }}</a></td>
+                                                           style="color:#333;">
+                                                            {{ document.description }}
+                                                            {{ (document.createdAt is not null) ? document.createdAt|date('(d/m/Y)') : '' }}
+                                                        </a>
+                                                    </td>
                                                     <td></td>
                                                     <td class="btn" width="100%">
                                                         <span style="font-size: 11px;" data-toggle="modal"

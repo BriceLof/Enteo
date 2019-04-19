@@ -58,10 +58,9 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
     }
 
     /**
-     * Ref 4b
-     *
      * @param $suivis
      * @param $attachment
+     * @throws \Exception
      */
     public function alerteAttenteTraitement($suivis, $attachment){
         $ref = "4b";
@@ -83,6 +82,33 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
 
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
 //        $this->sendMessage($from, 'f.azoulay@entheor.com',null, null, null, $subject, $body, $attachment);
+    }
+
+    /**
+     * @param $suivis
+     * @param $attachment
+     * @throws \Exception
+     */
+    public function alerteAttenteDocument($suivis, $attachment){
+        $ref = "4b";
+        $from = array("email" => "christine.clement@entheor.com", "name" => "christine.clement@entheor.com");
+        $subject = "Liste des ".count($suivis)." dossiers en Attente Documents depuis plus de 8 jours ( antérieur à ".(new \DateTime('now'))->modify('-8 day')->format('d/m/Y').")";
+        $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
+        $to = array(array("email" => "contact@entheor.com", "name" => "contact@entheor.com"));
+        $cc = array(
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
+            array("email" => "virginie.hiairrassary@entheor.com", "name" => "Virginie Hiairrassary"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "Christine Molier"),
+            array("email" => "ph.rouzaud@entheor.com", "name" => "Philippe Rouzaud"),
+        );
+        $bcc = array(array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"));
+        $body = $this->templating->render($template, array(
+            'suivis' => $suivis,
+            'reference' => $ref
+        ));
+
+        $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body, $attachment);
+//        $this->sendMessage($from, 'ranfidy@hotmail.com',null, null, null, $subject, $body, $attachment);
     }
 
     /**
