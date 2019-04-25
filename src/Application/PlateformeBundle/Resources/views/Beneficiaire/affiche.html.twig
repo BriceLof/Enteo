@@ -455,7 +455,10 @@
                                                     <td>
                                                         <a href="{{ path('application_show_document', { 'path' : document.path }) }}"
                                                            target="_blank"
-                                                           style="color:#333;">{{ document.description }}</a></td>
+                                                           style="color:#333;">
+                                                            {{ document.description }}
+                                                            {{ (document.createdAt is not null) ? document.createdAt|date('(d/m/Y)') : '' }}
+                                                        </a></td>
                                                     <td></td>
                                                     <td class="btn" width="100%">
                                                         <span style="font-size: 11px;" data-toggle="modal"
