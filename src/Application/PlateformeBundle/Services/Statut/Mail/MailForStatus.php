@@ -90,10 +90,10 @@ class MailForStatus extends \Application\PlateformeBundle\Services\Mailer
      * @throws \Exception
      */
     public function alerteAttenteDocument($suivis, $attachment){
-        $ref = "4b";
+        $ref = "4c";
         $from = array("email" => "christine.clement@entheor.com", "name" => "christine.clement@entheor.com");
         $subject = "Liste des ".count($suivis)." dossiers en Attente Documents depuis plus de 8 jours ( antérieur à ".(new \DateTime('now'))->modify('-8 day')->format('d/m/Y').")";
-        $template = '@Apb/Alert/Mail/alerteAttenteTraitement.html.twig';
+        $template = '@Apb/Alert/Mail/alerteAttenteDocument.html.twig';
         $to = array(array("email" => "contact@entheor.com", "name" => "contact@entheor.com"));
         $cc = array(
             array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
