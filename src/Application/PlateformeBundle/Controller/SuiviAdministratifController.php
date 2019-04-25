@@ -34,12 +34,6 @@ class SuiviAdministratifController extends Controller
         }
         $form = $this->createForm(SuiviAdministratifType::class, $suiviAdministratif);
 
-//        dernier suivi administratif
-        $lastSuivi = null;
-        if (!is_null($beneficiaire->getSuiviAdministratif())){
-            $lastSuivi = $beneficiaire->getSuiviAdministratif()[count($beneficiaire->getSuiviAdministratif())-1];
-        }
-
 //        creation des critères pour la génération d'un contrat de mission
         $tab = [];
         $consultant = $beneficiaire->getConsultant();
@@ -128,7 +122,7 @@ class SuiviAdministratifController extends Controller
                 $this->get('session')->getFlashBag()->add('info', 'Mission bien envoyée');
             }
 
-            if ($suiviAdministratif->getDetailStatut() == null || ( !is_null($lastSuivi) && $lastSuivi->getDetailStatut() == $suiviAdministratif->getDetailStatut() )){
+            if ($suiviAdministratif->getDetailStatut() == null ||  $beneficiaire->getLastDetailStatutAdmin() == $suiviAdministratif->getDetailStatut() ){
                 if (!is_null($suiviAdministratif->getInfo())){
                     $suiviAdministratifT = new SuiviAdministratif();
                     $suiviAdministratifT->setBeneficiaire($beneficiaire);
