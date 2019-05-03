@@ -89,10 +89,6 @@ class FactureController extends Controller
             $facture->setStatut('sent');
             $em->persist($facture);
 
-            $accompagnement->setDateDebut($facture->getDateDebutAccompagnement());
-            $accompagnement->setDateFin($facture->getDateFinAccompagnement());
-            $em->persist($accompagnement);
-
             $historique = new Historique();
             $historique->setHeuredebut(new \DateTime('now'));
             $historique->setHeurefin(new \DateTime('now'));
