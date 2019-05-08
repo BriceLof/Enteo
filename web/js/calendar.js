@@ -249,10 +249,10 @@ if (document.getElementById('admin_calendar_consultant_consultant')) {
             console.log("this.value: " + this.value);
         },
         open: function () {
-            console.log($(this).attr('id'))
+            console.log($(this).attr('id'));
             $('.ui-menu').width($(this).outerWidth())
         }
-    })
+    });
 
 
 

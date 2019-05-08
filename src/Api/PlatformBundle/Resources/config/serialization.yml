@@ -99,13 +99,13 @@ Application\PlateformeBundle\Entity\Ville:
     id:
       groups: ['office']
     slugVille:
-      groups: ['office', 'advice']
+      groups: ['office', 'advice', 'city']
     nom:
-      groups: ['office', 'advice']
+      groups: ['office', 'advice', 'city']
     cp:
-      groups: ['office', 'advice']
+      groups: ['office', 'advice', 'city']
     dpt:
-      groups: ['office', 'advice']
+      groups: ['office', 'advice', 'city']
     region:
       groups: ['office', 'advice']
     longitude:
