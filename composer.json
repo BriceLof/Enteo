@@ -43,7 +43,8 @@
         "knplabs/knp-snappy-bundle": "1.4",
         "friendsofsymfony/rest-bundle": "^2.1",
         "nelmio/api-doc-bundle": "^2.13",
-        "friendsofsymfony/ckeditor-bundle": "^1.2"
+        "friendsofsymfony/ckeditor-bundle": "^1.2",
+        "nelmio/cors-bundle": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
