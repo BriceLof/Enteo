@@ -37,18 +37,19 @@ class SuiviAdministratifController extends Controller
 //        creation des critères pour la génération d'un contrat de mission
         $tab = [];
         $consultant = $beneficiaire->getConsultant();
-        if (!is_null($consultant)){
+        if (!is_null($consultant)) {
             (is_null($consultant->getFacturation())) ? $tab [] = 'Contact facturation Consultant' : null;
             (is_null($consultant->getContrats())) ? $tab [] = 'Contrat cadre Consultant' : null;
         }
         (is_null($beneficiaire->getAccompagnement()->getDateDebut())) ? $tab [] = 'Date debut Accompagnement' : null;
         (is_null($beneficiaire->getAccompagnement()->getDateFin())) ? $tab [] = 'Date fin Accompagnement' : null;
+        (is_null($beneficiaire->getAccompagnement()->getHeure()) || ($beneficiaire->getAccompagnement()->getHeure() == 0)) ? $tab [] = 'Accompagnement en Heures' : null;
         $autorisation = (empty($tab)) ? 'true' : 'false';
 
         $bool = 'false';
-        foreach ($beneficiaire->getSuiviAdministratif() as $suivi){
-            if (!is_null($suivi->getDetailStatut())){
-                if ($suivi->getDetailStatut()->getId() == 21 || $suivi->getDetailStatut()->getId() == 22){
+        foreach ($beneficiaire->getSuiviAdministratif() as $suivi) {
+            if (!is_null($suivi->getDetailStatut())) {
+                if ($suivi->getDetailStatut()->getId() == 21 || $suivi->getDetailStatut()->getId() == 22) {
                     $bool = 'true';
                     break;
                 }
@@ -59,12 +60,12 @@ class SuiviAdministratifController extends Controller
             "beneficiaire" => $beneficiaire
         ));
         $stateMission = "pas de contrat envoyé";
-        if (!is_null($mission)){
+        if (!is_null($mission)) {
             if ($mission->getState() == 'new') $stateMission = "en attente acceptation Consultant";
             elseif ($mission->getState() == 'accepted') $stateMission = "en attente acceptation Enthéor";
             elseif ($mission->getState() == 'confirmed') $stateMission = "en cours";
             elseif ($mission->getState() == 'finished') $stateMission = "mission terminée";
-        }elseif (!$beneficiaire->getMissionArchives()->isEmpty()) $stateMission = "mission archivée";
+        } elseif (!$beneficiaire->getMissionArchives()->isEmpty()) $stateMission = "mission archivée";
 
         $form->handleRequest($request);
         if ($request->isMethod('POST') && $form->isSubmitted()) {
@@ -72,7 +73,7 @@ class SuiviAdministratifController extends Controller
             $suiviAdministratif->setBeneficiaire($beneficiaire);
             $em = $this->getDoctrine()->getManager();
 
-            if($form['detailStatutHidden']->getData() != '' && !is_null($form['detailStatutHidden']->getData())){
+            if ($form['detailStatutHidden']->getData() != '' && !is_null($form['detailStatutHidden']->getData())) {
                 $detailStatut = $em->getRepository('ApplicationPlateformeBundle:DetailStatut')->find($form['detailStatutHidden']->getData());
                 $suiviAdministratif->setDetailStatut($detailStatut);
             }
@@ -122,16 +123,16 @@ class SuiviAdministratifController extends Controller
                 $this->get('session')->getFlashBag()->add('info', 'Mission bien envoyée');
             }
 
-            if ($suiviAdministratif->getDetailStatut() == null ||  $beneficiaire->getLastDetailStatutAdmin() == $suiviAdministratif->getDetailStatut() ){
-                if (!is_null($suiviAdministratif->getInfo())){
+            if ($suiviAdministratif->getDetailStatut() == null || $beneficiaire->getLastDetailStatutAdmin() == $suiviAdministratif->getDetailStatut()) {
+                if (!is_null($suiviAdministratif->getInfo())) {
                     $suiviAdministratifT = new SuiviAdministratif();
                     $suiviAdministratifT->setBeneficiaire($beneficiaire);
                     $suiviAdministratifT->setInfo($suiviAdministratif->getInfo());
                     $em->persist($suiviAdministratifT);
-                }else{
+                } else {
                     $em->detach($suiviAdministratif);
                 }
-            }else{
+            } else {
                 $em->persist($suiviAdministratif);
                 $this->get('session')->getFlashBag()->add('info', 'Suivi Administratif bien enregistré');
             }
@@ -146,7 +147,7 @@ class SuiviAdministratifController extends Controller
 
         $factureRepo = $em->getRepository('ApplicationPlateformeBundle:Facture');
         $factures = $factureRepo->findByBeneficiaire($beneficiaire);
-        
+
         return $this->render('ApplicationPlateformeBundle:SuiviAdministratif:new.html.twig', array(
             'suiviAdministratif' => $suiviAdministratif,
             'beneficiaire' => $beneficiaire,
@@ -169,8 +170,8 @@ class SuiviAdministratifController extends Controller
         $suiviAdministratifs = $beneficiaire->getSuiviAdministratif();
 
         $tabFactureClosed = array();
-        foreach ($suiviAdministratifs as $suiviAdministratif){
-            if(stristr($suiviAdministratif->getInfo(),'Facture fermée N°') !== false){
+        foreach ($suiviAdministratifs as $suiviAdministratif) {
+            if (stristr($suiviAdministratif->getInfo(), 'Facture fermée N°') !== false) {
                 $tabFactureClosed[] = $suiviAdministratif->getInfo();
             }
         }
