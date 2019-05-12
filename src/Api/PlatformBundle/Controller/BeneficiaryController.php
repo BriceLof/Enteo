@@ -34,7 +34,7 @@ class BeneficiaryController extends Controller
 
             $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
             if(empty($offices)){
-                $offices[0] = $this->getOfficeAction(208, $request);
+                $offices[0] = $this->getOfficeAction($this->getParameter('id_bureau_distantiel'), $request);
             }
 
             $beneficiary->setBureau($offices[0]);
