@@ -30,17 +30,18 @@ class BeneficiaryController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
+            if (!is_null($form['codePostal']->getData())) {
+                $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
 
-            $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
-            if(empty($offices)){
-                $offices[0] = $this->getOfficeAction($this->getParameter('id_bureau_distantiel'), $request);
+                $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
+                if (empty($offices)) {
+                    $offices[0] = $this->getOfficeAction($this->getParameter('id_bureau_distantiel'), $request);
+                }
+
+                $beneficiary->setBureau($offices[0]);
+                $beneficiary->setVilleMer($ville);
+                $beneficiary->setVille($ville);
             }
-
-            $beneficiary->setBureau($offices[0]);
-            $beneficiary->setVilleMer($ville);
-            $beneficiary->setVille($ville);
-            $beneficiary->setPays("FR");
 
             $em->persist($beneficiary);
 
