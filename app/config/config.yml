@@ -54,25 +54,25 @@ twig:
         '%kernel.root_dir%/../src/Application/UsersBundle/Resources/views': Aub
     globals:
         # Informations générales
-        adresse : '74 rue Maurice Flandin - 69003 - LYON'
-        telephone : '04 37 28 59 28'
-        email : 'contact@entheor.com'
-        siret : '527 732 069 000 51'
-        num_declaration_activite : '82691102369'
+        adresse: '74 rue Maurice Flandin - 69003 - LYON'
+        telephone: '04 37 28 59 28'
+        email: 'contact@entheor.com'
+        siret: '527 732 069 000 51'
+        num_declaration_activite: '82691102369'
         # Fin Informations générales
 
         # RIB
-        banque : 'LCL - Genas Azieu'
-        code_banque : '30002'
-        code_guichet : '01793'
-        num_compte : '0000070026Y'
-        cle_rib : '34'
-        iban : 'FR36 3000 2017 9300 0007 0026 Y34'
-        bic : 'CRLYFRPP'
+        banque: 'CIC LYON REPUBLIQUE'
+        code_banque: '10096'
+        code_guichet: '18002'
+        num_compte: '00086183801'
+        cle_rib: '45'
+        iban: 'FR76 1009 6180 0200 0861 8380 145'
+        bic: 'CMCIFRPP'
         # Fin RIB
 
         # numero de tel christine
-        tel_christine : '04 37 28 59 28'
+        tel_christine: '04 37 28 59 28'
 
 
 # Doctrine Configuration
