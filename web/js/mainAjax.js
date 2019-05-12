@@ -1630,7 +1630,7 @@ if(document.getElementById('beneficiaire_contactEmployeur')) {
 }
 
 /**
- * Ajax qui permet l'autocompletion au niveau ville dans la recherche hom
+ * Ajax qui permet l'autocompletion au niveau ville dans la recherche home
  *
  */
 (function () {

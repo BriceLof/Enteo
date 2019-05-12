@@ -190,3 +190,11 @@ fos_ck_editor:
         my_config:
             toolbar: full
             uiColor:                "#2494515"
+
+nelmio_cors:
+    paths:
+        '^/api/':
+            allow_origin: ['https://dev-wp.entheor.com']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600

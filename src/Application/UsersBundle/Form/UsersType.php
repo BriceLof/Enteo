@@ -15,6 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvents;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class UsersType extends AbstractType
 {
@@ -27,21 +28,17 @@ class UsersType extends AbstractType
         $builder
             ->add('roles', ChoiceType::class, array(
                 'choices' => array(
-                    //'Basic'             =>  "ROLE_USER",
                     'Gestionnaire' => "ROLE_GESTION",
                     'Consultant Référent' => "ROLE_REFERENT",
                     'Consultant' => "ROLE_CONSULTANT",
                     'Commercial' => "ROLE_COMMERCIAL",
                     'Administrateur' => "ROLE_ADMIN",
                 ),
-                //'mapped' => false,
                 'label' => "Type Utilisateur *",
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
-                //'data' => array("ROLE_USER"),
                 'choice_attr' => function ($val, $key, $index) {
-                    // adds a class like attending_yes, attending_no, etc
                     return ['class' => 'role_user'];
                 },
 
@@ -63,8 +60,6 @@ class UsersType extends AbstractType
                 'multiple' => false,
                 'expanded' => true,
                 'required' => true,
-
-
             ))
             ->add('nom', null, array(
                 'required' => true
@@ -89,12 +84,10 @@ class UsersType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'required' => true,
-                /*'label_attr' => array('class' => 'format_label', 'style' => 'display:none;'),*/
                 'choice_attr' => function ($val, $key, $index) {
                     return ['class' => 'format_input'];
                 },
             ))
-            // Me sert juste à activer l'ajax pour la recherche de ville correspondant
             ->add('departement', TextType::class, array(
                 'mapped' => false,
                 'label' => "Département *",
@@ -104,7 +97,7 @@ class UsersType extends AbstractType
             ->add('codePostalHidden', HiddenType::class, array("mapped" => false))
             ->add('typeUserHidden', HiddenType::class, array("mapped" => false))
             ->add('idVilleHidden', HiddenType::class, array("mapped" => false))
-            ->add('description', TextareaType::class, array(
+            ->add('description', CKEditorType::class, array(
                 'required' => false,
             ))
             ->add('bureau', EntityType::class, array(
@@ -129,7 +122,6 @@ class UsersType extends AbstractType
             },
             'choice_label' => 'nom',
         ));
-        // }
         $builder->add('adresse', TextType::class, array(
             'label' => 'Adresse ',
             'required' => false,
@@ -139,9 +131,6 @@ class UsersType extends AbstractType
     public function getParent()
     {
         return 'FOS\UserBundle\Form\Type\RegistrationFormType';
-
-        // Or for Symfony < 2.8
-        // return 'fos_user_registration';
     }
 
 

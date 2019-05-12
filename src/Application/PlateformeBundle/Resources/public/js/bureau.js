@@ -50,6 +50,7 @@ $(window).load(function () {
         min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
     });
 });
+
 function getVille(el, target) {
     cp = $(el).val();
     if (cp.length == 5) {
@@ -72,9 +73,9 @@ function getVille(el, target) {
 }
 
 function showEntheorField(el) {
-    if ($(el).val() == 0){
+    if ($(el).val() == 0) {
         $(".site_entheor").hide();
-    }else{
+    } else {
         $(".site_entheor").show();
     }
 }
@@ -89,10 +90,22 @@ function showImage(input, target) {
 
         reader.onload = function (e) {
             $(target).css({
-                backgroundImage : 'url('+e.target.result+')'
+                backgroundImage: 'url(' + e.target.result + ')'
             });
         };
         reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function switchInput(el, input) {
+    if ($(el).css('display') !== 'none') {
+        $(el).hide();
+        $(input).show();
+    } else {
+        $(el).show();
+        $(input).hide();
+        clone = $(input).clone(true);
+        $(input).replaceWith(clone);
     }
 }
 

@@ -50,7 +50,7 @@ class OfficeController extends Controller
         $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($city, $limit, true);
 
         if(empty($offices) || ($request->get('elearning') == true )){
-            $offices = $this->getOfficeAction(290, $request);
+            $offices = $this->getOfficeAction($this->getParameter('id_bureau_distantiel'), $request);
         }
 
         return $offices;
