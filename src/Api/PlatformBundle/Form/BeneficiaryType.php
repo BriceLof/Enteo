@@ -44,6 +44,7 @@ class BeneficiaryType extends AbstractType
             ->add('origineMer')
             ->add('experience')
             ->add('poste')
+            ->add('pays', CountryType::class)
         ;
     }
 
