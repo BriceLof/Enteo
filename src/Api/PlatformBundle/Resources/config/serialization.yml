@@ -39,6 +39,8 @@ Application\PlateformeBundle\Entity\Bureau:
 
 Application\UsersBundle\Entity\Users:
   attributes:
+    id:
+      groups: ['office']
     nom:
       groups: ['office']
     prenom:
