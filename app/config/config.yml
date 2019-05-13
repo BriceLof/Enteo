@@ -194,7 +194,7 @@ fos_ck_editor:
 nelmio_cors:
     paths:
         '^/api/':
-            allow_origin: ['https://dev-wp.entheor.com']
+            allow_origin: ['https://dev-wp.entheor.com','^http://localhost:[0-9]+']
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
             max_age: 3600

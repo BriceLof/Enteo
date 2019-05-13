@@ -17,6 +17,7 @@ class BeneficiaryFactory
         $beneficiary->setIndicatifTel("");
         $beneficiary->setBureau(null);
         $beneficiary->setPays("FR");
+        $beneficiary->setHeureRappel("Indifférent");
 
         $detailStatus = $em->getRepository("ApplicationPlateformeBundle:DetailStatut")->find(1);
         $news = new News();
