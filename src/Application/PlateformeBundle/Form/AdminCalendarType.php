@@ -104,6 +104,18 @@ class AdminCalendarType extends AbstractType
                 'required' => false,
                 "mapped" => false,
             ))
+            ->add('autreBureauSelect', EntityType::class, array(
+                'class' => 'ApplicationPlateformeBundle:Bureau',
+                'label' => 'Liste autres bureaux',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('b')
+                        ->where('b.temporaire = 1')
+                        ->orderBy('b.nombureau', 'ASC')
+                        ;
+                },
+                'choice_label' => 'nombureau',
+                'mapped' => false
+            ))
             ->add('bureau', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:Bureau',
                 'label' => 'Bureau',
@@ -114,6 +126,7 @@ class AdminCalendarType extends AbstractType
                 },
                 'choice_label' => 'nombureau',
             ))
+
             ->add('summary', ChoiceType::class, array(
                 'choices' => array(
                     'Selectionner un rendez-vous' => '',

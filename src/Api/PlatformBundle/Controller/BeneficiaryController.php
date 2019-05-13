@@ -30,17 +30,19 @@ class BeneficiaryController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            if (!is_null($form['codePostal']->getData())) {
-                $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
+            $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
 
-                $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
-                if (empty($offices)) {
-                    $offices[0] = $this->getOfficeAction($this->getParameter('id_bureau_distantiel'), $request);
-                }
+            $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
+            if (empty($offices)) {
+                $offices[0] = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($this->getParameter('id_bureau_distantiel'));
+            }
 
-                $beneficiary->setBureau($offices[0]);
-                $beneficiary->setVilleMer($ville);
-                $beneficiary->setVille($ville);
+            $beneficiary->setBureau($offices[0]);
+            $beneficiary->setVilleMer($ville);
+            $beneficiary->setVille($ville);
+
+            if (is_null($beneficiary->getHeureRappel())) {
+                $beneficiary->setHeureRappel("Indifférent");
             }
 
             $em->persist($beneficiary);
@@ -49,7 +51,7 @@ class BeneficiaryController extends Controller
             $historique->setSummary("");
             $historique->setTypeRdv("");
             $historique->setBeneficiaire($beneficiary);
-            $historique->setDescription(date('d/m/Y')." | ".$beneficiary->getVille()->getNom()." | ".$beneficiary->getOrigineMer());
+            $historique->setDescription(date('d/m/Y') . " | " . $beneficiary->getVille()->getNom() . " | " . $beneficiary->getOrigineMer());
             $historique->setEventId("0");
             $em->persist($historique);
 
