@@ -71,4 +71,41 @@ class CityController extends Controller
         $countries = Intl::getRegionBundle()->getCountryNames();
         return $countries;
     }
+
+    /**
+     * This is the documentation description of your method, it will appear
+     * on a specific pane. It will read all the text until the first
+     * annotation.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="This method aims to get places",
+     *
+     *  statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when office is not found",
+     *           "Returned when something else is not found"
+     *         }
+     *     }
+     * )
+     * @Rest\View(serializerGroups={"places"})
+     * @Rest\Get("/places")
+     */
+    public function autocompleteCityAction(Request $request)
+    {
+        $term = $request->get('term');
+        $region = $request->get('region');
+
+        $data = $this->get('application_plateforme.places')->getPlaces($term,$region);
+
+        $arr = array();
+        foreach(json_decode($data)->predictions as $item){
+            $arr[] = array(
+                'name' => $item->description,
+                'city' => $item->structured_formatting->main_text,
+            );
+        }
+        return $arr;
+    }
 }
