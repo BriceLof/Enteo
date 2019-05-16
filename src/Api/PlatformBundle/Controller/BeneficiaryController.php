@@ -5,6 +5,7 @@ namespace Api\PlatformBundle\Controller;
 use Application\PlateformeBundle\Entity\Beneficiaire;
 use Application\PlateformeBundle\Entity\Historique;
 use Api\PlatformBundle\Form\BeneficiaryType;
+use Application\PlateformeBundle\Entity\Ville;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,11 +31,28 @@ class BeneficiaryController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
+            if ($form['bureauId']->getData() == 290) {
+                $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array(
+                    'nom' => $form['city']->getData(),
+                    'pays' => $form['pays']->getData()
+                ));
+                if (is_null($ville)) {
+                    $ville = new Ville();
+                    $ville->setNom($form['city']->getData());
+                    $ville->setPays($form['pays']->getData());
+                    $ville->setDepartementId(0);
+                    $em->persist($ville);
+                }
+            }else{
+                $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
+            }
 
-            $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
-            if (empty($offices)) {
-                $offices[0] = $em->getRepository('ApplicationPlateformeBundle:Bureau')->find($this->getParameter('id_bureau_distantiel'));
+            if (is_null($form['bureauId']->getData())) {
+                $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findAll2($ville, 1, true);
+            }else{
+                $offices = $em->getRepository('ApplicationPlateformeBundle:Bureau')->findBy(array(
+                    'id' => $this->getParameter('id_bureau_distantiel')
+                ));
             }
 
             $beneficiary->setBureau($offices[0]);

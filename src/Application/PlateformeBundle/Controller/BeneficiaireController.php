@@ -86,7 +86,6 @@ class BeneficiaireController extends Controller
                 $beneficiaire->setPays('FR');
             }
             else{
-
                 $villeNoFr = $editForm->get('villeNoFr')->getData();
                 $zipNoFr = $editForm->get('code_postal')->getData();
                 $ville = new Ville();

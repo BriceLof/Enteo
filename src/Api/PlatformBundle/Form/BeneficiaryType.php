@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,12 @@ class BeneficiaryType extends AbstractType
     {
         $builder
             ->add('codePostal', TextType::class, array(
+                'mapped' => false
+            ))
+            ->add('city', TextType::class, array(
+                'mapped' => false
+            ))
+            ->add('bureauId', TextType::class, array(
                 'mapped' => false
             ))
             ->add('domaineVae')
