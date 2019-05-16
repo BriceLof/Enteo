@@ -97,7 +97,7 @@ class CityController extends Controller
         $term = $request->get('term');
         $region = $request->get('region');
 
-        $data = $this->get('application_plateforme.places')->getPlaces($term,$region);
+        $data = $this->get('application_plateforme.places')->getPlaces($term,strtolower($region));
 
         $arr = array();
         foreach(json_decode($data)->predictions as $item){
