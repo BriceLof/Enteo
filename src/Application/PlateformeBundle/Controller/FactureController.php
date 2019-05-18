@@ -119,10 +119,6 @@ class FactureController extends Controller
             $suiviAdministratifFactureOpen->setInfo("Facture ouverte N° ".$lastNumFactu);
             $em->persist($suiviAdministratifFactureOpen);
 
-            $accompagnement->setDateDebut($facture->getDateDebutAccompagnement());
-            $accompagnement->setDateFin($facture->getDateFinAccompagnement());
-            $em->persist($accompagnement);
-
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('info', 'Facture correctement généré');
