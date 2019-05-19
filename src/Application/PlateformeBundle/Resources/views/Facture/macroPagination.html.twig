@@ -1,7 +1,7 @@
 {% macro pageRange(pageActuel, start, fin, last) %}
     {% if pageActuel > 1 %}
         <li>
-            <a href="{{ path('application_list_facture') }}"><<</a>
+            <a href="{{ path('application_list_facture_home', {'page': 1}) }}"><<</a>
         </li>
         <li>
             <a href="{{ path('application_list_facture', {'page': pageActuel-1}) }}"><</a>
