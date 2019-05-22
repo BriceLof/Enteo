@@ -288,7 +288,7 @@ class UsersController extends Controller
             ->setAction($this->generateUrl('edit_declaration_activite'))
             ->getForm();
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isSubmitted()) {
 
             $consultant = $form->getData();
             $em = $this->getDoctrine()->getManager();

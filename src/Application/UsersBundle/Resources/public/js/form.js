@@ -163,8 +163,8 @@ $('#form_declaration_activite').validate({
         "form[numDeclarationActivite]":{
             "required": true,
             "digits": true,
-            "minlength": 9,
-            "maxlength": 9,
+            "minlength": 11,
+            "maxlength": 11,
         }
     },
     errorElement: 'div'
