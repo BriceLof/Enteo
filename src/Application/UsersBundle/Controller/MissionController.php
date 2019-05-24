@@ -86,7 +86,7 @@ class MissionController extends Controller
             "file" => $data
         );
 
-//        $this->get('application_users.mailer.mail_for_mission')->newMission($beneficiaire,$consultant,$attachement);
+        $this->get('application_users.mailer.mail_for_mission')->newMission($beneficiaire,$consultant,$attachement);
     }
 
     /**

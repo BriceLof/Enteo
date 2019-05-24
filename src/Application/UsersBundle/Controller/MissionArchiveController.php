@@ -53,7 +53,7 @@ class MissionArchiveController extends Controller
             'id' => $mission->getId()
         ));
 
-        /*if ($state == 'declined'){
+        if ($state == 'declined'){
             $this->get('application_users.mailer.mail_for_mission')->declinedMission($mission,$message);
         }elseif ($state == 'declined'){
             $this->get('application_users.mailer.mail_for_mission')->revokedMission($mission,$message);
@@ -81,7 +81,7 @@ class MissionArchiveController extends Controller
             $historique->setUser($this->getUser());
             $em->persist($historique);
 
-        }*/
+        }
         $em->flush();
     }
 
