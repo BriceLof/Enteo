@@ -20,12 +20,11 @@ class MissionArchiveController extends Controller
 {
 
     /**
-     * cette fonction permet d'archiver et supprimer une mission
-     *
      * @param $mission
      * @param $message
      * @param $state
-     * @param $beneficiare
+     * @param null $beneficiaire
+     * @throws \Exception
      */
     public function newAction($mission, $message, $state, $beneficiaire = null){
         $em = $this->getDoctrine()->getManager();
@@ -54,7 +53,7 @@ class MissionArchiveController extends Controller
             'id' => $mission->getId()
         ));
 
-        if ($state == 'declined'){
+        /*if ($state == 'declined'){
             $this->get('application_users.mailer.mail_for_mission')->declinedMission($mission,$message);
         }elseif ($state == 'declined'){
             $this->get('application_users.mailer.mail_for_mission')->revokedMission($mission,$message);
@@ -82,22 +81,40 @@ class MissionArchiveController extends Controller
             $historique->setUser($this->getUser());
             $em->persist($historique);
 
-        }
+        }*/
         $em->flush();
     }
 
     /**
      * afficher tous les missions archivés
      *
-     * @return mixed
+     * @param int $limit
+     * @return Response
      */
-    public function showAllAction(){
+    public function showAllAction($limit = 10){
         $em = $this->getDoctrine()->getManager();
-        $missionArchives = $em->getRepository('ApplicationUsersBundle:MissionArchive')->findAll();
+        $missionArchives = $em->getRepository('ApplicationUsersBundle:MissionArchive')->getLastest($limit);
+
+        $next = count($missionArchives) <= 10;
 
         return $this->render('ApplicationUsersBundle:MissionArchive:showAll.html.twig', array(
             'missionArchives' => $missionArchives,
+            'next' => $next
         ));
     }
 
+    public function getListAction($page){
+        $limit = 50;
+        $offset = 10 + ($page * $limit);
+
+        $em = $this->getDoctrine()->getManager();
+        $missionArchives = $em->getRepository('ApplicationUsersBundle:MissionArchive')->getLastestFromTo($limit, $offset);
+
+        $next = count($missionArchives) <= 50;
+
+        return $this->render('ApplicationUsersBundle:MissionArchive:list.html.twig', array(
+            'missionArchives' => $missionArchives,
+            "next" => $next
+        ));
+    }
 }

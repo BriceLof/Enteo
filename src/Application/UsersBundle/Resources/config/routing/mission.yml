@@ -33,3 +33,9 @@ application_mission_contrat:
     defaults: { _controller: "ApplicationUsersBundle:Mission:downloadContratMission" }
     options:
         expose:  true
+
+application_mission_get_list:
+    path:     /getList/{state}/{page}/{idConsultant}
+    defaults: { _controller: "ApplicationUsersBundle:Mission:getList" , idConsultant : null}
+    options:
+        expose:  true

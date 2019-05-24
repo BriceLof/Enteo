@@ -11,6 +11,11 @@ application_user_mission:
     resource: "@ApplicationUsersBundle/Resources/config/routing/mission.yml"
     prefix:   /mission
 
+#mission_archive
+application_user_mission_archive:
+    resource: "@ApplicationUsersBundle/Resources/config/routing/missionArchive.yml"
+    prefix:   /mission-archive
+
 #facturation
 application_user_facturation:
     resource: "@ApplicationUsersBundle/Resources/config/routing/facturation.yml"

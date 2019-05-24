@@ -1,28 +1,16 @@
-{% set new = [] %}
-{% set accepted = [] %}
-{% set confirmed = [] %}
-{% for mission in missions %}
-    {% if mission.state == 'new' %}
-        {% set new = new|merge([mission]) %}
-    {% elseif mission.state == 'accepted' %}
-        {% set accepted = accepted|merge([mission]) %}
-    {% elseif mission.state == 'confirmed' %}
-        {% set confirmed = confirmed|merge([mission]) %}
-    {% endif %}
-{% endfor %}
 <div id="tabs_mission">
     <ul>
-        <li><a href="#tabs-1">Nouvelle <span class="badge">{{ new|length }}</span></a></li>
-        <li><a href="#tabs-2">En attente de confirmation <span class="badge">{{ accepted|length }}</span></a></li>
-        <li><a href="#tabs-3">En cours <span class="badge">{{ confirmed|length }}</span></a></li>
+        <li><a href="#tabs-1">Nouvelle <span class="badge">{{ nbNew }}</span></a></li>
+        <li><a href="#tabs-2">En attente de confirmation <span class="badge">{{ nbAccepted }}</span></a></li>
+        <li><a href="#tabs-3">En cours <span class="badge">{{ nbConfirmed }}</span></a></li>
     </ul>
     <div id="tabs-1">
-        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'new'}  %}
+        {% include "ApplicationUsersBundle:Mission:table.html.twig" with {'state': 'new', 'idConsultant' : consultant.id}  %}
     </div>
     <div id="tabs-2">
-        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'accepted'}  %}
+        {% include "ApplicationUsersBundle:Mission:table.html.twig" with {'state': 'accepted', 'idConsultant' : consultant.id}  %}
     </div>
     <div id="tabs-3">
-        {% include "ApplicationUsersBundle:Mission:list.html.twig" with {'state': 'confirmed'}  %}
+        {% include "ApplicationUsersBundle:Mission:table.html.twig" with {'state': 'confirmed', 'idConsultant' : consultant.id}  %}
     </div>
 </div>

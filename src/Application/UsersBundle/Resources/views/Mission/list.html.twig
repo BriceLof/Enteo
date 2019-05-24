@@ -1,118 +1,104 @@
-<div>
-    <table class="table">
-        <thead>
+{% for mission in missions|reverse %}
+    {% if mission.state == state %}
         <tr>
             {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) %}
-                <th>Consultant</th>
+                <td>
+                    <a href="{{ path('user_show', {'id': mission.consultant.id}) }}">
+                        {{ mission.consultant.prenom|capitalize~" "~mission.consultant.nom|upper }}
+                    </a>
+                </td>
             {% endif %}
-            <th>Bénéficiaire</th>
-            <th>Ville</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for mission in missions|reverse %}
-            {% if mission.state == state %}
-                <tr>
-                    {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) %}
-                        <td>
-                            <a href="{{ path('user_show', {'id': mission.consultant.id}) }}">
-                                {{ mission.consultant.prenom|capitalize~" "~mission.consultant.nom|upper }}
-                            </a>
-                        </td>
-                    {% endif %}
-                    <td>
-                        <a title="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': mission.beneficiaire.id}) }}">
-                            {{ mission.beneficiaire.nomConso|capitalize~" "~mission.beneficiaire.prenomConso|capitalize }}
-                        </a>
-                    </td>
-                    <td>{{ mission.beneficiaire.ville.nom~" ("~mission.beneficiaire.ville.cp~")" }}</td>
-                    {% if mission.state == 'new' %}
-                        <td>{{ mission.dateCreation|date('d/m/y') }}</td>
-                        <td>
-                            <span class="glyphicon glyphicon-ok" data-toggle="modal" data-target="#missionAccept{{ loop.index }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#missionDecline{{ loop.index }}"></span>
-                            <a title="Afficher le document" href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        </td>
-                    {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
-                        <td>{{ mission.dateAcceptation|date('d/m/y') }}</td>
-                        <td>
-                            <span class="glyphicon glyphicon-ok" data-toggle="modal" data-target="#missionConfirm{{ loop.index }}"></span>
-                            <span class="glyphicon glyphicon-remove" data-toggle="modal" data-target="#missionRevoke{{ loop.index }}"></span>
-                            <a title="Afficher le document" href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}" target="_blank"><span class="glyphicon glyphicon-zoom-in"></span></a>
-                        </td>
-                    {% elseif (mission.state == 'confirmed') %}
-                        <td>{{ mission.dateConfirmation|date('d/m/y') }}</td>
-                        <td>
-                            <a title="Afficher le document" href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}" target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        </td>
-                    {% endif %}
-                </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
-
-    {% for mission in missions|reverse %}
-        {% if mission.state == 'new' %}
-            {#accepter#}
-            <div class="modal fade" id="missionAccept{{ loop.index }}" tabindex="-1"
-                 role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    {{ render(controller("ApplicationUsersBundle:Mission:addDocument",{'id': mission.id })) }}
-                </div>
-            </div>
-
-            {#decliner#}
-            <div class="modal fade" id="missionDecline{{ loop.index }}" tabindex="-1"
-                 role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    {{ render(controller("ApplicationUsersBundle:Mission:decline",{'id': mission.id })) }}
-                </div>
-            </div>
-
-        {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
-            {#confirmer#}
-            <div class="modal fade" id="missionConfirm{{ loop.index }}" tabindex="-1"
-                 role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">Confirmer accompagnement</h4>
+            <td>
+                <a title="Voir la fiche du bénéficiaire" target="_blank"
+                   href="{{ path('application_show_beneficiaire', {'id': mission.beneficiaire.id}) }}">
+                    {{ mission.beneficiaire.nomConso|capitalize~" "~mission.beneficiaire.prenomConso|capitalize }}
+                </a>
+            </td>
+            <td>{{ mission.beneficiaire.ville.nom~" ("~mission.beneficiaire.ville.cp~")" }}</td>
+            {% if mission.state == 'new' %}
+                <td>{{ mission.dateCreation|date('d/m/y') }}</td>
+                <td>
+                            <span class="glyphicon glyphicon-ok" data-toggle="modal"
+                                  data-target="#missionAccept{{ loop.index }}"></span>
+                    <span class="glyphicon glyphicon-remove" data-toggle="modal"
+                          data-target="#missionDecline{{ loop.index }}"></span>
+                    <a title="Afficher le document"
+                       href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}"
+                       target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    {#accepter#}
+                    <div class="modal fade" id="missionAccept{{ loop.index }}" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            {{ render(controller("ApplicationUsersBundle:Mission:addDocument",{'id': mission.id })) }}
                         </div>
-                        <div class="modal-body">
-                            <div>
-                                <span>Êtes-vous sûr ?</span><br><br>
-                            </div>
+                    </div>
+
+                    {#decliner#}
+                    <div class="modal fade" id="missionDecline{{ loop.index }}" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            {{ render(controller("ApplicationUsersBundle:Mission:decline",{'id': mission.id })) }}
                         </div>
-                        <div class="modal-footer">
-                            <div>
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">Annuler
-                                </button>
-                                <a style="width: 80px;float: right"
-                                   href="{{ path('application_mission_state', { 'state': 'confirm', 'id': mission.id }) }}">
-                                    <button class="btn btn-danger">confirmer</button>
-                                </a>
+                    </div>
+                </td>
+            {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
+                <td>{{ mission.dateAcceptation|date('d/m/y') }}</td>
+                <td>
+                            <span class="glyphicon glyphicon-ok" data-toggle="modal"
+                                  data-target="#missionConfirm{{ loop.index }}"></span>
+                    <span class="glyphicon glyphicon-remove" data-toggle="modal"
+                          data-target="#missionRevoke{{ loop.index }}"></span>
+                    <a title="Afficher le document"
+                       href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}"
+                       target="_blank"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                    {#confirmer#}
+                    <div class="modal fade" id="missionConfirm{{ loop.index }}" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirmer accompagnement</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <span>Êtes-vous sûr ?</span><br><br>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div>
+                                        <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">Annuler
+                                        </button>
+                                        <a style="width: 80px;float: right"
+                                           href="{{ path('application_mission_state', { 'state': 'confirm', 'id': mission.id }) }}">
+                                            <button class="btn btn-danger">confirmer</button>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            {#revoquer#}
-            <div class="modal fade" id="missionRevoke{{ loop.index }}" tabindex="-1"
-                 role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    {{ render(controller("ApplicationUsersBundle:Mission:revoked",{'id': mission.id })) }}
-                </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-
-</div>
+                    {#revoquer#}
+                    <div class="modal fade" id="missionRevoke{{ loop.index }}" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            {{ render(controller("ApplicationUsersBundle:Mission:revoked",{'id': mission.id })) }}
+                        </div>
+                    </div>
+                </td>
+            {% elseif (mission.state == 'confirmed') %}
+                <td>{{ mission.dateConfirmation|date('d/m/y') }}</td>
+                <td>
+                    <a title="Afficher le document"
+                       href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}"
+                       target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
+                </td>
+            {% endif %}
+        </tr>
+    {% endif %}
+{% endfor %}

@@ -24,8 +24,10 @@ class MissionController extends Controller
     /**
      * @param $idBeneficiaire
      * @param $idConsultant
+     * @param $montant
+     * @throws \Exception
      */
-    public function newAction($idBeneficiaire , $idConsultant, $montant)
+    public function newAction($idBeneficiaire, $idConsultant, $montant)
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($idBeneficiaire);
@@ -37,7 +39,7 @@ class MissionController extends Controller
         ));
 
         //si le bénéficiaire a déjà une mission il faut archivé cette mission
-        if (is_null($mission)){
+        if (is_null($mission)) {
             $mission = new Mission();
         }
 
@@ -49,7 +51,7 @@ class MissionController extends Controller
 
         $suiviMission = new SuiviAdministratif();
         $suiviMission->setBeneficiaire($beneficiaire);
-        $suiviMission->setInfo("Mission Envoyée à ".ucfirst($consultant->getPrenom())." ".strtoupper($consultant->getNom()));
+        $suiviMission->setInfo("Mission Envoyée à " . ucfirst($consultant->getPrenom()) . " " . strtoupper($consultant->getNom()));
         $em->persist($suiviMission);
 
         //envoyer l'email pour le consultant
@@ -68,13 +70,13 @@ class MissionController extends Controller
             'images' => true,
         ));
 
-        $name = $this->get('application_plateforme.text')->slugify(strtolower("contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso().".pdf"));
-        $fileName = 'uploads/consultant/'.$mission->getConsultant()->getId().'/'.$name;
-        if (file_exists($fileName)){
+        $name = $this->get('application_plateforme.text')->slugify(strtolower("contrat_" . $mission->getBeneficiaire()->getNomConso() . "_" . $mission->getBeneficiaire()->getPrenomConso() . ".pdf"));
+        $fileName = 'uploads/consultant/' . $mission->getConsultant()->getId() . '/' . $name;
+        if (file_exists($fileName)) {
             unlink($fileName);
         }
 
-        $this->get('knp_snappy.pdf')->generateFromHtml($html,$fileName);
+        $this->get('knp_snappy.pdf')->generateFromHtml($html, $fileName);
 
         $mission->setDocument($name);
         $em->persist($mission);
@@ -84,14 +86,15 @@ class MissionController extends Controller
             "file" => $data
         );
 
-        $this->get('application_users.mailer.mail_for_mission')->newMission($beneficiaire,$consultant,$attachement);
+//        $this->get('application_users.mailer.mail_for_mission')->newMission($beneficiaire,$consultant,$attachement);
     }
 
     /**
-     * Mission accepté par le consultant
      * @param $id
+     * @throws \Exception
      */
-    public function acceptedAction($id){
+    public function acceptedAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
         $beneficiaire = $mission->getBeneficiaire();
@@ -100,7 +103,7 @@ class MissionController extends Controller
 
         $suiviMission = new SuiviAdministratif();
         $suiviMission->setBeneficiaire($beneficiaire);
-        $suiviMission->setInfo("Mission acceptée par ".ucfirst($beneficiaire->getConsultant()->getPrenom())." ".strtoupper($beneficiaire->getConsultant()->getNom()));
+        $suiviMission->setInfo("Mission acceptée par " . ucfirst($beneficiaire->getConsultant()->getPrenom()) . " " . strtoupper($beneficiaire->getConsultant()->getNom()));
         $em->persist($suiviMission);
 
         $em->persist($mission);
@@ -112,12 +115,12 @@ class MissionController extends Controller
     }
 
     /**
-     * cette fonction permet de confirmer une mission et ajouter le consultant comme le consultant du bénéficiaire
-     *
      * @param $id
-     * @return response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
-    public function confirmedAction($id){
+    public function confirmedAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
         $mission->setState('confirmed');
@@ -127,7 +130,7 @@ class MissionController extends Controller
 
         $suiviMission = new SuiviAdministratif();
         $suiviMission->setBeneficiaire($beneficiaire);
-        $suiviMission->setInfo("Accord pour démarrage VAE à ".ucfirst($beneficiaire->getConsultant()->getPrenom())." ".strtoupper($beneficiaire->getConsultant()->getNom()));
+        $suiviMission->setInfo("Accord pour démarrage VAE à " . ucfirst($beneficiaire->getConsultant()->getPrenom()) . " " . strtoupper($beneficiaire->getConsultant()->getNom()));
         $em->persist($suiviMission);
 
         $historique = new Historique();
@@ -137,7 +140,7 @@ class MissionController extends Controller
         $historique->setTypeRdv("");
         $historique->setConsultant($beneficiaire->getConsultant());
         $historique->setBeneficiaire($beneficiaire);
-        $historique->setDescription("Accord pour démarrage VAE à ".ucfirst(strtolower($beneficiaire->getConsultant()->getPrenom()))." ".ucfirst(strtolower($beneficiaire->getConsultant()->getNom())));
+        $historique->setDescription("Accord pour démarrage VAE à " . ucfirst(strtolower($beneficiaire->getConsultant()->getPrenom())) . " " . ucfirst(strtolower($beneficiaire->getConsultant()->getNom())));
         $historique->setEventId("0");
         $historique->setUser($this->getUser());
         $em->persist($historique);
@@ -150,9 +153,9 @@ class MissionController extends Controller
         $this->get('application_users.mailer.mail_for_mission')->confirmedMission($beneficiaire, $beneficiaire->getConsultant());
 
         $typeUser = $this->get('application_users.getTypeUser')->typeUser($this->getUser());
-        if ($typeUser == 'Administrateur'){
+        if ($typeUser == 'Administrateur') {
             return $this->redirect($this->generateUrl('application_mission_admin_index'));
-        }else{
+        } else {
             return $this->redirectToRoute('my_account');
         }
     }
@@ -164,11 +167,12 @@ class MissionController extends Controller
      * @param $id
      * @return Response
      */
-    public function declineAction(Request $request, $id){
+    public function declineAction(Request $request, $id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
-        $form_email = $this->createForm(MailingType::class,null,array(
+        $form_email = $this->createForm(MailingType::class, null, array(
             'action' => $this->generateUrl('application_mission_decline', array(
                 'id' => $mission->getId()
             )),
@@ -176,13 +180,13 @@ class MissionController extends Controller
         ));
         $form_email->handleRequest($request);
 
-        if ($form_email->isValid() && $request->isMethod('POST')){
+        if ($form_email->isValid() && $request->isMethod('POST')) {
             $message = $form_email['message']->getData();
 
             $beneficiaire = $mission->getBeneficiaire();
             $suiviMission = new SuiviAdministratif();
             $suiviMission->setBeneficiaire($beneficiaire);
-            $suiviMission->setInfo("Mission refusée par ".ucfirst($beneficiaire->getConsultant()->getPrenom())." ".strtoupper($beneficiaire->getConsultant()->getNom()));
+            $suiviMission->setInfo("Mission refusée par " . ucfirst($beneficiaire->getConsultant()->getPrenom()) . " " . strtoupper($beneficiaire->getConsultant()->getNom()));
             $em->persist($suiviMission);
 
             $this->forward('ApplicationUsersBundle:MissionArchive:new', array(
@@ -192,15 +196,15 @@ class MissionController extends Controller
             ));
 
             $typeUser = $this->get('application_users.getTypeUser')->typeUser($this->getUser());
-            if ($typeUser == 'Administrateur'){
+            if ($typeUser == 'Administrateur') {
                 return $this->redirect($this->generateUrl('application_mission_admin_index'));
-            }else{
+            } else {
                 return $this->redirectToRoute('my_account');
             }
 
         }
 
-        return $this->render('ApplicationUsersBundle:Mission:info.html.twig', array(
+        return $this->render('ApplicationUsersBundle:Mission:modal.html.twig', array(
             'form_email' => $form_email->createView(),
             'mission' => $mission
         ));
@@ -211,11 +215,12 @@ class MissionController extends Controller
      * @param $id
      * @return Response
      */
-    public function revokedAction(Request $request, $id){
+    public function revokedAction(Request $request, $id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
-        $form_email = $this->createForm(MailingType::class,null, array(
+        $form_email = $this->createForm(MailingType::class, null, array(
             'action' => $this->generateUrl('application_mission_revoke', array(
                 'id' => $mission->getId()
             )),
@@ -223,7 +228,7 @@ class MissionController extends Controller
         ));
         $form_email->handleRequest($request);
 
-        if ($form_email->isValid() && $request->isMethod('POST')){
+        if ($form_email->isValid() && $request->isMethod('POST')) {
 
             $message = $form_email['message']->getData();
             $this->get('application_users.mailer.mail_for_mission')->revokedMission($mission, $message);
@@ -235,14 +240,14 @@ class MissionController extends Controller
             ));
 
             $typeUser = $this->get('application_users.getTypeUser')->typeUser($this->getUser());
-            if ($typeUser == 'Administrateur'){
+            if ($typeUser == 'Administrateur') {
                 return $this->redirect($this->generateUrl('application_mission_admin_index'));
-            }else{
+            } else {
                 return $this->redirectToRoute('my_account');
             }
         }
 
-        return $this->render('ApplicationUsersBundle:Mission:info.html.twig', array(
+        return $this->render('ApplicationUsersBundle:Mission:modal.html.twig', array(
             'form_email' => $form_email->createView(),
             'mission' => $mission
         ));
@@ -253,7 +258,8 @@ class MissionController extends Controller
      *
      * @param $id
      */
-    public function deleteAction($id){
+    public function deleteAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
@@ -268,16 +274,17 @@ class MissionController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function stateAction($state, $id){
+    public function stateAction($state, $id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION')) {
             $consultant = $mission->getConsultant();
-        }elseif ($this->getUser()->getid() == $mission->getConsultant()->getId()) {
+        } elseif ($this->getUser()->getid() == $mission->getConsultant()->getId()) {
             $consultant = $this->getUser();
-        }else{
+        } else {
             return $this->redirect($this->generateUrl('application_plateforme_homepage'));
         }
 
@@ -300,9 +307,9 @@ class MissionController extends Controller
         }
 
         $typeUser = $this->get('application_users.getTypeUser')->typeUser($this->getUser());
-        if ($typeUser == 'Administrateur'){
+        if ($typeUser == 'Administrateur') {
             return $this->redirect($this->generateUrl('application_mission_admin_index'));
-        }else{
+        } else {
             return $this->redirectToRoute('my_account');
         }
     }
@@ -313,18 +320,26 @@ class MissionController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function indexAction($id){
+    public function indexAction($id)
+    {
         $authorization = $this->get('security.authorization_checker');
-        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getid() == $id ) {
-        }else{
+        if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION') || $this->getUser()->getid() == $id) {
+        } else {
             return $this->redirect($this->generateUrl('application_plateforme_homepage'));
         }
 
         $em = $this->getDoctrine()->getManager();
         $consultant = $em->getRepository('ApplicationUsersBundle:Users')->find($id);
 
+        $nbMissionNew = $em->getRepository('ApplicationUsersBundle:Mission')->countByState("new", $id);
+        $nbMissionAccepted = $em->getRepository('ApplicationUsersBundle:Mission')->countByState("accepted", $id);
+        $nbMissionConfirmed = $em->getRepository('ApplicationUsersBundle:Mission')->countByState("confirmed", $id);
+
         return $this->render('ApplicationUsersBundle:Mission:index.html.twig', array(
-            'missions' => $consultant->getMission(),
+            'consultant' => $consultant,
+            'nbNew' => $nbMissionNew,
+            'nbAccepted' => $nbMissionAccepted,
+            'nbConfirmed' => $nbMissionConfirmed
         ));
     }
 
@@ -333,10 +348,11 @@ class MissionController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function adminIndexAction(){
+    public function adminIndexAction()
+    {
         $authorization = $this->get('security.authorization_checker');
         if (true === $authorization->isGranted('ROLE_ADMIN') || true === $authorization->isGranted('ROLE_COMMERCIAL') || true === $authorization->isGranted('ROLE_GESTION')) {
-        }else{
+        } else {
             return $this->redirect($this->generateUrl('application_plateforme_homepage'));
         }
 
@@ -355,28 +371,28 @@ class MissionController extends Controller
      * @param $id
      * @return Response
      */
-    public function addDocumentAction(Request $request, $id){
+    public function addDocumentAction(Request $request, $id)
+    {
 
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
 
         $form = $this->createForm(FormType::class, $mission);
-        $form->add('submit',  SubmitType::class, array(
+        $form->add('submit', SubmitType::class, array(
             'label' => 'Accepter'
         ))
-            ->add('document',FileType::class, array(
+            ->add('document', FileType::class, array(
                 'label' => false,
                 'required' => false,
                 'data_class' => null,
-            ))
-        ;
+            ));
 
         $form->handleRequest($request);
         if ($request->isMethod('POST')) {
             $file = $mission->getDocument();
-            if(!is_null($file)){
-                $name = strtolower("contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso().".pdf");
-                $fileName = $this->get('app.file_uploader')->uploadAvatar($file, 'uploads/consultant/'.$mission->getConsultant()->getId(), $name, $name);
+            if (!is_null($file)) {
+                $name = strtolower("contrat_" . $mission->getBeneficiaire()->getNomConso() . "_" . $mission->getBeneficiaire()->getPrenomConso() . ".pdf");
+                $fileName = $this->get('app.file_uploader')->uploadAvatar($file, 'uploads/consultant/' . $mission->getConsultant()->getId(), $name, $name);
                 $mission->setDocument($fileName);
             }
 
@@ -401,7 +417,8 @@ class MissionController extends Controller
      * @param $id
      * @return Response
      */
-    public function downloadContratMissionAction($id){
+    public function downloadContratMissionAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $mission = $em->getRepository('ApplicationUsersBundle:Mission')->find($id);
         $beneficiaire = $mission->getBeneficiaire();
@@ -425,9 +442,30 @@ class MissionController extends Controller
             )),
             200,
             array(
-                'Content-Type'          => 'application/pdf',
-                'Content-Disposition'   => 'inline; filename="contrat_'.$beneficiaire->getPrenomConso().'_'.$beneficiaire->getNomConso().'.pdf"',
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="contrat_' . $beneficiaire->getPrenomConso() . '_' . $beneficiaire->getNomConso() . '.pdf"',
             )
         );
+    }
+
+    public function getListAction($state, $page = 0, $idConsultant = null)
+    {
+        $limit = 10;
+        if ($page == 0) {
+            $offset = 0;
+        } else {
+            $offset = $limit + (($page - 1) * 50);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $missions = $em->getRepository('ApplicationUsersBundle:Mission')->getLastestFromToByState($limit, $offset, $state, $idConsultant);
+
+        $next = count($missions) <= 50;
+
+        return $this->render('ApplicationUsersBundle:Mission:list.html.twig', array(
+            'missions' => $missions,
+            'state' => $state,
+            "next" => $next,
+        ));
     }
 }

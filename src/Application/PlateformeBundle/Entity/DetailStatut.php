@@ -35,6 +35,13 @@ class DetailStatut
     private $statut;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="rang", type="integer", unique=false)
+     */
+    private $rang;
+
+    /**
      * Get id
      *
      * @return int
@@ -90,5 +97,29 @@ class DetailStatut
     public function getStatut()
     {
         return $this->statut;
+    }
+
+    /**
+     * Set rang
+     *
+     * @param integer $rang
+     *
+     * @return DetailStatut
+     */
+    public function setRang($rang)
+    {
+        $this->rang = $rang;
+
+        return $this;
+    }
+
+    /**
+     * Get rang
+     *
+     * @return integer
+     */
+    public function getRang()
+    {
+        return $this->rang;
     }
 }

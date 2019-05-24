@@ -60,7 +60,11 @@ $(document).ready(function() {
             dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
             weekHeader: 'Sem.'
         });
-    })
+    });
+
+    // showHideNextButton('new');
+    showHideNextButton('accepted');
+    showHideNextButton('confirmed');
 });
 
 /**
@@ -86,3 +90,58 @@ $(document).ready(function() {
         }
     }
 })();
+
+function chargeNextMissionArchive(e) {
+    element = $("#tbody_mission_archive");
+    e.preventDefault();
+    page = $("#tbody_mission_archive").data("page");
+    $.ajax({
+        url: Routing.generate('application_mission_archive_show_all', {'page': page}), // le nom du fichier indiqué dans le formulaire
+        cache: true,
+        type: 'get',
+        dataType: 'html',
+        beforeSend: function () {
+        },
+        success: function (data) {
+            $("#tbody_mission_archive").append(data);
+            $("#tbody_mission_archive").data("page", page + 1);
+            if( $("#tbody_mission_archive tr").length < (10 + 50 * (page + 1) )){
+                $("#next_page").hide();
+            }
+        },
+        error: function () {
+            console.log('error')
+        }
+    });
+}
+
+function chargeNextMission(state, idConsultant ,e) {
+    e.preventDefault();
+    page = $("#tbody_mission_" + state).data("page") + 1;
+
+    $.ajax({
+        url: Routing.generate('application_mission_get_list', { 'state': state,'page': page, 'idConsultant': idConsultant}), // le nom du fichier indiqué dans le formulaire
+        cache: true,
+        type: 'get',
+        dataType: 'html',
+        beforeSend: function () {
+        },
+        success: function (data) {
+            $("#tbody_mission_"+ state).append(data);
+            $("#tbody_mission_"+ state).data("page", page);
+            if( $("#tbody_mission_"+ state +" tr").length < (10 + 50 * (page + 1) )){
+                $("#next_page_"+ state).hide();
+            }
+        },
+        error: function () {
+            console.log('error')
+        }
+    });
+}
+
+function showHideNextButton(state, page) {
+    page = $("#tbody_mission_" + state).data("page");
+    if( $("#tbody_mission_"+ state +" tr").length < (10 + 50 * (page) )){
+        $("#next_page_"+ state).hide();
+    }
+}

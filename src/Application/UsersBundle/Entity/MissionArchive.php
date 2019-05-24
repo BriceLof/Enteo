@@ -51,7 +51,7 @@ class MissionArchive
     protected $information;
 
     /**
-     * @ORM\Column(name="date", type="date", nullable=true)
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 

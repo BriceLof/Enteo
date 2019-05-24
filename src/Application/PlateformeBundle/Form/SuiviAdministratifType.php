@@ -43,6 +43,7 @@ class SuiviAdministratifType extends AbstractType
                 'query_builder' => function(EntityRepository $er) use ($suivi) {
                     return $er->createQueryBuilder('ds')
                         ->where('ds.statut = :statut')
+                        ->orderBy('ds.rang', 'ASC')
                         ->setParameters(array('statut' => $suivi->getStatut()));
                 }
             ))

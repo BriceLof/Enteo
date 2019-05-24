@@ -82,7 +82,10 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $statut = $em->getRepository("ApplicationPlateformeBundle:Statut")->find($idStatut);
-        $detailsStatut = $em->getRepository("ApplicationPlateformeBundle:DetailStatut")->findBy(array("statut" => $statut));
+        $detailsStatut = $em->getRepository("ApplicationPlateformeBundle:DetailStatut")->findBy(
+            array("statut" => $statut),
+            array("rang" => "ASC")
+        );
 
         foreach ($detailsStatut as $detailStatut) {
             $tabDetail[] = array("id" => $detailStatut->getId(), "detail" => $detailStatut->getDetail());

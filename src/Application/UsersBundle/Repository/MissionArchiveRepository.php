@@ -10,4 +10,29 @@ namespace Application\UsersBundle\Repository;
  */
 class MissionArchiveRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $limit
+     * @return array
+     */
+    public function getLastest($limit)
+    {
+        $qb = $this->createQueryBuilder('ma')
+            ->orderBy('ma.date', 'DESC')
+            ->setMaxResults($limit);
+        return $qb->getQuery()->getResult();
+    }
+
+    /***
+     * @param $limit
+     * @param $offset
+     * @return array
+     */
+    public function getLastestFromTo($limit, $offset)
+    {
+        $qb = $this->createQueryBuilder('ma')
+            ->orderBy('ma.date', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+        return $qb->getQuery()->getResult();
+    }
 }

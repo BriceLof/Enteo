@@ -47,22 +47,22 @@ class Mission
     protected $document;
 
     /**
-     * @ORM\Column(name="date_creation", type="date", nullable=true)
+     * @ORM\Column(name="date_creation", type="datetime", nullable=true)
      */
     private $dateCreation;
 
     /**
-     * @ORM\Column(name="date_accepter", type="date", nullable=true)
+     * @ORM\Column(name="date_accepter", type="datetime", nullable=true)
      */
     private $dateAcceptation;
 
     /**
-     * @ORM\Column(name="date_confirmation", type="date", nullable=true)
+     * @ORM\Column(name="date_confirmation", type="datetime", nullable=true)
      */
     private $dateConfirmation;
 
     /**
-     * @ORM\Column(name="date_terminer", type="date", nullable=true)
+     * @ORM\Column(name="date_terminer", type="datetime", nullable=true)
      */
     private $dateTerminer;
 

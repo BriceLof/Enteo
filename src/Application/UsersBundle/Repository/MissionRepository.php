@@ -10,4 +10,48 @@ namespace Application\UsersBundle\Repository;
  */
 class MissionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param $limit
+     * @param $offset
+     * @param $state
+     * @param null $idConsultant
+     * @return array
+     */
+    public function getLastestFromToByState($limit, $offset, $state, $idConsultant = null)
+    {
+
+        $qb = $this->createQueryBuilder('m')
+            ->where('m.state = :state')
+            ->setParameter('state', $state);
+        if (!is_null($idConsultant)) {
+            $qb->andWhere('m.consultant = :idConsultant')
+                ->setParameter('idConsultant', $idConsultant);
+        }
+        $qb->orderBy('m.dateCreation', 'DESC')
+            ->setMaxResults($limit);
+        if ($offset != 0)
+            $qb->setFirstResult($offset);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param $state
+     * @param $idConsultant
+     * @return mixed
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function countByState($state, $idConsultant)
+    {
+        $qb = $this->createQueryBuilder('m');
+            $qb->select('count(m.id)')
+            ->where('m.state = :state')
+            ->setParameter('state', $state);
+        if (!is_null($idConsultant)) {
+            $qb->andWhere('m.consultant = :idConsultant')
+                ->setParameter('idConsultant', $idConsultant);
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
