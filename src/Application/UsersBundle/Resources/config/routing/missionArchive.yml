@@ -1,0 +1,5 @@
+application_mission_archive_show_all:
+    path:     /getLists/{page}
+    defaults: { _controller: "ApplicationUsersBundle:MissionArchive:getList" }
+    options:
+        expose:  true

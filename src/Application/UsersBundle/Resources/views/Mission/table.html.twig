@@ -1,0 +1,21 @@
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) %}
+                <th>Consultant</th>
+            {% endif %}
+            <th>Bénéficiaire</th>
+            <th>Ville</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="tbody_mission_{{ state }}" data-page="0">
+        {{ render(controller("ApplicationUsersBundle:Mission:getList",{'state': state , 'idConsultant': idConsultant})) }}
+        </tbody>
+    </table>
+    <div>
+        <a href="#" id="next_page_{{ state }}" onclick="chargeNextMission('{{ state }}', '{{ idConsultant }}', event)">Voir suivants >></a>
+    </div>
+</div>
