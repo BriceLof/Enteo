@@ -1,0 +1,13 @@
+{% extends "::mail/layout.html.twig" %}
+{% block ref %}{{ reference }}{% endblock %}
+{% block contentMail %}
+    Bonjour,<br><br>
+    Le dossier de recevabilité de {{ beneficiaire.civiliteConso|capitalize~' '~beneficiaire.prenomConso|capitalize~' '~beneficiaire.nomConso|capitalize}}
+    a été {{ statut }}
+    <br><br>
+    En cas d'accord, passer le dossier au financeur
+    <br>
+    En cas de refus, voir avec le Consultant si le dossier doit être abandonné.
+    <br><br>
+    Merci.
+{% endblock %}

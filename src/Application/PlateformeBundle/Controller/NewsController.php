@@ -177,6 +177,12 @@ class NewsController extends Controller
                 $em->persist($suiviAdministraif);
             }
 
+            if ($statut->getDetailStatut()->getId() == 24){
+                $this->get('application_plateforme.statut.mail.mail_for_statut')->AlerteRecevabilite($beneficiaire,"accordé");
+            }elseif ($statut->getDetailStatut()->getId() == 25){
+                $this->get('application_plateforme.statut.mail.mail_for_statut')->AlerteRecevabilite($beneficiaire,"refusé");
+            }
+
             $em->persist($statut);
             $em->flush();
 

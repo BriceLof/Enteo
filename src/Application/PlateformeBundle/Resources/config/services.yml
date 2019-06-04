@@ -5,7 +5,7 @@ services:
 
     application_plateforme.mail:
         class: Application\PlateformeBundle\Services\Mailer
-        arguments: ["@mailer", "@templating", "@doctrine.orm.entity_manager", "@application_plateforme.date", %web_directory%, %host_name%]
+        arguments: ["@mailer", "@templating", "@doctrine.orm.entity_manager", "@application_plateforme.date", %web_directory%, %env%]
 
 
     ## DEBUT : Notification lors de la création/mise à jour d'entités lié à la fiche bénéficiaire

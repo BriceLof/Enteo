@@ -62,7 +62,7 @@ class Mailer
             }
         }
 
-        if($this->hostname == "https://appli-dev.entheor.com/web"){
+        if($this->hostname == "DEV"){
             $data["to"] = array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof"));
 //            if(!is_null($cc) && $cc != ''){
 //                $data["cc"] = $data["to"];
@@ -144,8 +144,8 @@ class Mailer
             }
         }
 
-        if($this->hostname == "https://appli-dev.entheor.com/web"){
-            $data["to"] = array(array("email" => "support.informatique@entheor.com", "name" => "Brice Lof"));
+        if($this->hostname == "DEV"){
+            $data["to"] = array(array("email" => "ranfidy@hotmail.com", "name" => "Fidy"));
         }
 
         $this->apiCurlSmtpSendinblue($data);
