@@ -39,7 +39,18 @@ class SuiviAdministratifController extends Controller
         $consultant = $beneficiaire->getConsultant();
         if (!is_null($consultant)) {
             (is_null($consultant->getFacturation())) ? $tab [] = 'Contact facturation Consultant' : null;
-            (is_null($consultant->getContrats())) ? $tab [] = 'Contrat cadre Consultant' : null;
+
+            $boolContrat = false;
+
+            foreach ($consultant->getContrats() as $contrat){
+                if ($contrat->getEnabled() == true){
+                    $boolContrat = true;
+                    break;
+                }
+            }
+            if ($boolContrat == false){
+                $tab [] = 'Contrat cadre Consultant';
+            }
         }
         (is_null($beneficiaire->getAccompagnement()->getDateDebut())) ? $tab [] = 'Date debut Accompagnement' : null;
         (is_null($beneficiaire->getAccompagnement()->getDateFin())) ? $tab [] = 'Date fin Accompagnement' : null;
