@@ -1709,7 +1709,7 @@ if(document.getElementById('suiviAdministratif')) {
      * function qui permet d'afficher le modal tarif
      */
     function afficheLien() {
-        if (($('#suivi_administratif_detailStatut').val() == 55 || $('#suivi_administratif_detailStatut').val() == 21 || $("#suivi_administratif_detailStatut").val() == 22) && $('#suivi_administratif_statut').val() == 8) {
+        if (($('#suivi_administratif_detailStatut').val() == 21 || $("#suivi_administratif_detailStatut").val() == 22) && $('#suivi_administratif_statut').val() == 8) {
             $("#add_mission_tarif").show('slow');
         }else{
             if ($("#add_mission_tarif").attr("data-afficher") == 'false'){
