@@ -129,7 +129,7 @@
                     <p class="top50">
                         {% if facturation.type == 'entreprise' %}
                             <b>{{ facturation.representantLegalCivilite|capitalize~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper }}</b>
-                                , {{ facturation.representantLegalFonction }} de la SASU {{ facturation.raisonSociale }}
+                                , {{ (facturation.representantLegalFonction == 'directeur') ? 'Directeur Général' : facturation.representantLegalFonction }} de {{ facturation.raisonSociale }} {{ facturation.formeSociete|upper }}
                                 , domiciliée
                                 au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
                         {% elseif facturation.type == 'entrepreneur' %}
