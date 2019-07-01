@@ -43,6 +43,7 @@ class BeneficiaryController extends Controller
                     $ville->setDepartementId(0);
                     $em->persist($ville);
                 }
+                $beneficiary->setOrigineMer('Entheor.com_Rappel Expatrié_naturel');
             }else{
                 $ville = $em->getRepository("ApplicationPlateformeBundle:Ville")->findOneBy(array('cp' => $form['codePostal']->getData()));
             }
