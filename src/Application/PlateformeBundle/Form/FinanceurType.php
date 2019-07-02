@@ -29,7 +29,6 @@ class FinanceurType extends AbstractType
                     'Entreprise' => 'Entreprise',
                     'Bénéficiaire' => 'Beneficiaire',
                     'Pôle Emploi' => 'Pole Emploi',
-                    'FAFCEA' => 'FAFCEA'
                 ),
                 'attr' => array(
                     'class' => 'nom_organisme organisme_input accompangment',

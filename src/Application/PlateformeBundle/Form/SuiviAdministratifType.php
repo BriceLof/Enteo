@@ -78,7 +78,6 @@ class SuiviAdministratifType extends AbstractType
                     'Entreprise' => 'Entreprise',
                     'Bénéficiaire' => 'Beneficiaire',
                     'Pôle Emploi' => 'Pole Emploi',
-                    'FAFCEA' => 'FAFCEA'
                 ),
                 'attr' => array(
                     'class' => 'suivi type_employeur',
