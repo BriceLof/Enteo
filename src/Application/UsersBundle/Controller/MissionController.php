@@ -27,7 +27,7 @@ class MissionController extends Controller
      * @param $montant
      * @throws \Exception
      */
-    public function newAction($idBeneficiaire, $idConsultant, $montant)
+    public function newAction($idBeneficiaire, $idConsultant, $montant, $duree)
     {
         $em = $this->getDoctrine()->getManager();
         $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($idBeneficiaire);
@@ -47,6 +47,7 @@ class MissionController extends Controller
         $mission->setConsultant($consultant);
         $mission->setState('new');
         $mission->setTarif($montant);
+        $mission->setDuree($duree);
         $mission->setDateCreation(new \DateTime('now'));
 
         $suiviMission = new SuiviAdministratif();

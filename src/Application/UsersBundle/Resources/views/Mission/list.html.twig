@@ -18,13 +18,13 @@
             {% if mission.state == 'new' %}
                 <td>{{ mission.dateCreation|date('d/m/y') }}</td>
                 <td>
-                            <span class="glyphicon glyphicon-ok" data-toggle="modal"
-                                  data-target="#missionAccept{{ loop.index }}"></span>
-                    <span class="glyphicon glyphicon-remove" data-toggle="modal"
-                          data-target="#missionDecline{{ loop.index }}"></span>
                     <a title="Afficher le document"
                        href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}"
                        target="_blank"><span class="glyphicon glyphicon-eye-open"></span></a>
+                    <span class="glyphicon glyphicon-ok" data-toggle="modal"
+                          data-target="#missionAccept{{ loop.index }}"></span>
+                    <span class="glyphicon glyphicon-remove" data-toggle="modal"
+                          data-target="#missionDecline{{ loop.index }}"></span>
                     {#accepter#}
                     <div class="modal fade" id="missionAccept{{ loop.index }}" tabindex="-1"
                          role="dialog" aria-labelledby="myModalLabel">
@@ -44,13 +44,14 @@
             {% elseif (mission.state == 'accepted') and (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL') or is_granted('ROLE_GESTION')) %}
                 <td>{{ mission.dateAcceptation|date('d/m/y') }}</td>
                 <td>
-                            <span class="glyphicon glyphicon-ok" data-toggle="modal"
-                                  data-target="#missionConfirm{{ loop.index }}"></span>
-                    <span class="glyphicon glyphicon-remove" data-toggle="modal"
-                          data-target="#missionRevoke{{ loop.index }}"></span>
                     <a title="Afficher le document"
                        href="{{ asset('uploads/consultant/'~mission.consultant.id~'/'~mission.document) }}"
                        target="_blank"><span class="glyphicon glyphicon-zoom-in"></span></a>
+                    <span class="glyphicon glyphicon-ok" data-toggle="modal"
+                          data-target="#missionConfirm{{ loop.index }}"></span>
+                    <span class="glyphicon glyphicon-remove" data-toggle="modal"
+                          data-target="#missionRevoke{{ loop.index }}"></span>
+
                     {#confirmer#}
                     <div class="modal fade" id="missionConfirm{{ loop.index }}" tabindex="-1"
                          role="dialog" aria-labelledby="myModalLabel">

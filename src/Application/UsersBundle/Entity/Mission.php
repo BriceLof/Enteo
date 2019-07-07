@@ -66,14 +66,22 @@ class Mission
      */
     private $dateTerminer;
 
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="montant", type="float", nullable=true)
+     */
+    private $tarif;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="montant", type="float",nullable=true)
+     * @ORM\Column(name="duree", type="integer",nullable=true)
      */
-    private $tarif;
+    private $duree;
+
+
 
     /**
      * Constructor
@@ -307,5 +315,29 @@ class Mission
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
+    }
+
+    /**
+     * Set duree
+     *
+     * @param integer $duree
+     *
+     * @return Mission
+     */
+    public function setDuree($duree)
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    /**
+     * Get duree
+     *
+     * @return integer
+     */
+    public function getDuree()
+    {
+        return $this->duree;
     }
 }

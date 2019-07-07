@@ -129,9 +129,9 @@
                     <p class="top50">
                         {% if facturation.type == 'entreprise' %}
                             <b>{{ facturation.representantLegalCivilite|capitalize~" "~facturation.representantLegalPrenom|capitalize~" "~facturation.representantLegalNom|upper }}</b>
-                                , {{ (facturation.representantLegalFonction == 'directeur') ? 'Directeur Général' : facturation.representantLegalFonction }} de {{ facturation.raisonSociale }} {{ facturation.formeSociete|upper }}
-                                , domiciliée
-                                au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
+                            , {{ (facturation.representantLegalFonction == 'directeur') ? 'Directeur Général' : facturation.representantLegalFonction }} de {{ facturation.raisonSociale }} {{ facturation.formeSociete|upper }}
+                            , domiciliée
+                            au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, et immatriculée sous le numéro SIRET, {{ facturation.siret }} ayant tous pouvoirs à l'effet des présentes.
                         {% elseif facturation.type == 'entrepreneur' %}
                             {{ facturation.raisonSociale }}, auto-entrepreneur ou micro-entreprise, domiciliée au {{ facturation.adresse~", "~facturation.ville.cp~" "~facturation.ville.nom }}, et immatriculée sous le numéro SIRET, {{ facturation.siret }}, représentée par
                             <b>{{ consultant.civilite|capitalize~" "~consultant.prenom|capitalize~" "~consultant.nom|upper }}</b> ayant tous pouvoirs à l'effet des présentes.
@@ -235,7 +235,12 @@
                         <li>La Mission devra se dérouler entre le
                             : {{ beneficiaire.accompagnement.dateDebut|date("d/m/Y") }} et
                             le {{ beneficiaire.accompagnement.dateFin|date("d/m/Y") }}</li>
-                        <li>La durée prévue de l'accompagnement est de : {{ beneficiaire.accompagnement.heure }}
+                        <li>La durée prévue de l'accompagnement est de :
+                            {% if mission.duree is not null %}
+                                {{ mission.duree }}
+                            {% else %}
+                                {{ beneficiaire.accompagnement.heure }}
+                            {% endif %}
                             heures
                         </li>
                     </ul>
@@ -245,9 +250,13 @@
                         Livret 1.
                     </p>
                     <p>
-                        Certains financeurs exigent l'accord de recevabilité pour se prononcer sur un éventuel financement. Dans ce cas, une Mission peut être proposée au Prestataire mais celle-ci sera interrompue au terme de l'accompagnement sur le Livret 1.
+                        Certains financeurs exigent l'accord de recevabilité pour se prononcer sur un éventuel
+                        financement. Dans ce cas, une Mission peut être proposée au Prestataire mais celle-ci sera
+                        interrompue au terme de l'accompagnement sur le Livret 1.
                         <br>
-                        La Mission ne reprendra qu'après obtention de l'accord de financement. En l'absence ou en cas de refus de financement, la Mission sera abandonnée. Le Prestataire est informé et comprend qu'il ne pourra en ce cas prétendre à une rémunération même partielle.
+                        La Mission ne reprendra qu'après obtention de l'accord de financement. En l'absence ou en cas de
+                        refus de financement, la Mission sera abandonnée. Le Prestataire est informé et comprend qu'il
+                        ne pourra en ce cas prétendre à une rémunération même partielle.
                     </p>
                     <p class="top20">
                         Le Client a mis à la disposition du Prestataire un outil de suivi des Bénéficiaires
@@ -299,7 +308,9 @@
                         <li>que la Mission d'accompagnement à la VAE soit terminée dans les délais impartis ;</li>
                         <li>que la feuille de présence orginale ait été réceptionnée par le Client ;</li>
                         <li>que la fiche du Bénéficiaire soit complète,</li>
-                        <li>que le Livret 2 et le questionnaire de satisfaction aient été téléchargés dans l'espace documentaire du Bénéficiaire ;</li>
+                        <li>que le Livret 2 et le questionnaire de satisfaction aient été téléchargés dans l'espace
+                            documentaire du Bénéficiaire ;
+                        </li>
                     </ul>
                     <p class="top20">
                         Le Prestataire percevra en rémunération de sa Mission d'accompagnement à la VAE des honoraires

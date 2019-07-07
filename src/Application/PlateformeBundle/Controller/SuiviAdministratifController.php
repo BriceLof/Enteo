@@ -129,7 +129,8 @@ class SuiviAdministratifController extends Controller
                 $this->forward('ApplicationUsersBundle:Mission:new', array(
                     'idBeneficiaire' => $beneficiaire->getId(),
                     'idConsultant' => $beneficiaire->getConsultant()->getId(),
-                    'montant' => $form['tarif']->getData()
+                    'montant' => $form['tarif']->getData(),
+                    'duree' => $form['dureeMission']->getData(),
                 ));
                 $this->get('session')->getFlashBag()->add('info', 'Mission bien envoyée');
             }

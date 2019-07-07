@@ -55,6 +55,9 @@ class SuiviAdministratifType extends AbstractType
                     'readonly' => true
                 )
             ))
+            ->add('dureeMission', HiddenType::class, array(
+                'mapped' => false
+            ))
             ->add('mission', HiddenType::class, array(
                 'mapped' => false,
                 'data' => 'false'

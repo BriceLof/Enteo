@@ -2,7 +2,7 @@
       action="{{ path('application_new_suivi_administratif', { 'id' : beneficiaire.id }) }}">
 
     <div class="row mt-10">
-        <div class="col-md-12 bold green">Information de suivi : </div>
+        <div class="col-md-12 bold green">Information de suivi :</div>
     </div>
     <div class="row">
         <div class="col-xs-6">{{ form_widget(form.info) }}</div>
@@ -63,7 +63,9 @@
             </div>
         </div>
     </div>
-    <div class="mt-10" style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top: 10px">Mofidier le Statut Administratif : </div>
+    <div class="mt-10" style="font-weight: bold;color: #50a60d;font-size: 13px;margin-top: 10px">Mofidier le Statut
+        Administratif :
+    </div>
 
     <div class="row">
         <span class="col-xs-2">{{ form_label(form.statut) }}</span>
@@ -139,10 +141,19 @@
                             à {{ beneficiaire.consultant.prenom|capitalize~" "~beneficiaire.consultant.nom|upper }}</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="col-xs-2" for="input_tarif_modal">Tarif (€)</label>
-                        <div class="col-xs-3 input-group">
-                            <input type="number" id="input_tarif_modal" step=".01">
-                            <span class="input-group-addon" id="basic-addon3">€</span>
+                        <div>
+                            <label class="col-xs-2" for="input_duree_modal">Durée</label>
+                            <div class="col-xs-3 input-group">
+                                <input type="number" id="input_duree_modal" class="text-right">
+                                <span class="input-group-addon" id="basic-addon3">Heures</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="col-xs-2" for="input_tarif_modal">Tarif (€)</label>
+                            <div class="col-xs-3 input-group">
+                                <input type="number" id="input_tarif_modal" step=".01">
+                                <span class="input-group-addon" id="basic-addon3">€</span>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

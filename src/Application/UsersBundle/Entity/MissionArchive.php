@@ -63,6 +63,13 @@ class MissionArchive
     private $tarif;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="duree", type="integer",nullable=true)
+     */
+    private $duree;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -246,5 +253,29 @@ class MissionArchive
     public function getBeneficiaire()
     {
         return $this->beneficiaire;
+    }
+
+    /**
+     * Set duree
+     *
+     * @param integer $duree
+     *
+     * @return MissionArchive
+     */
+    public function setDuree($duree)
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+    /**
+     * Get duree
+     *
+     * @return integer
+     */
+    public function getDuree()
+    {
+        return $this->duree;
     }
 }

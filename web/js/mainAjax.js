@@ -1722,7 +1722,7 @@ if(document.getElementById('suiviAdministratif')) {
 
 function nouvelleMission() {
     $('#suivi_administratif_tarif').val($("#input_tarif_modal").val());
-    // $("#ModalTarif").modal('hide');
+    $('#suivi_administratif_dureeMission').val($("#input_duree_modal").val());
     $("#link_add_mission").hide("slow");
     $('#tarif_mission').show("slow");
     $("#suivi_administratif_mission").val('true');
