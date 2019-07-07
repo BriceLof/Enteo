@@ -148,7 +148,7 @@
                         {{ form_errors(form.description) }}
                         {{ form_widget(form.description) }}
                     </div>
-                    {% if is_granted('ROLE_ADMIN') %}
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REFERENT') or is_granted('ROLE_GESTION') %}
                         <div class="col-md-6 block_form_adresse" style="display:none">
                             {{ form_label(form.bureau) }}
                             {{ form_errors(form.bureau) }}
