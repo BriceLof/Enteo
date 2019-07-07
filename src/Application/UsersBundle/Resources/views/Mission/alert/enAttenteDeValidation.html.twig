@@ -1,0 +1,52 @@
+{% extends "::mail/layout.html.twig" %}
+
+{% block ref %}
+    {{ reference }}
+{% endblock %}
+
+{% block contentMail %}
+    Bonjour Virginie,
+    <br>
+    <br>
+    {% if newMissions|length > 0 %}
+        <b>1) Liste des {{ newMissions|length }} Missions en statut 'Attente acceptation Consultants</b>
+        <p style='margin-left:10px;'>&bull;
+            Consultant - Bénéficiaire - Ville - Date Proposition
+        </p>
+        {% for mission in newMissions %}
+            <p style='margin-left:10px;'>&bull;
+                {{ mission.consultant.prenom|capitalize~' '~mission.consultant.nom|capitalize }}
+                <a href="https://appli.entheor.com/web/beneficiaire/show/{{ mission.beneficiaire.id }}">
+                    - {{ mission.beneficiaire.prenomConso|capitalize~' '~mission.beneficiaire.nomConso|capitalize }}
+                </a>
+                - {{ mission.beneficiaire.ville.nom|upper~' ('~mission.beneficiaire.ville.cp~')' }}
+                - {{ mission.dateCreation|date('d/m/Y') }}
+            </p>
+        {% endfor %}
+        <br>
+        <br>
+    {% endif %}
+    {% if newMissions|length > 0 %}
+        <b>1) Liste des {{ newMissions|length }} Missions en statut 'Attente acceptation Consultants</b>
+        <p style='margin-left:10px;'>&bull;
+            Consultant - Bénéficiaire - Ville - Date Proposition
+        </p>
+        {% for mission in acceptedMissions %}
+            <p style='margin-left:10px;'>&bull;
+                {{ mission.consultant.prenom|capitalize~' '~mission.consultant.nom|capitalize }}
+                <a href="https://appli.entheor.com/web/beneficiaire/show/{{ mission.beneficiaire.id }}">
+                    - {{ mission.beneficiaire.prenomConso|capitalize~' '~mission.beneficiaire.nomConso|capitalize }}
+                </a>
+                - {{ mission.beneficiaire.ville.nom|upper~' ('~mission.beneficiaire.ville.cp~')' }}
+                - {{ mission.dateCreation|date('d/m/Y') }}
+            </p>
+        {% endfor %}
+        <br>
+        <br>
+    {% endif %}
+    <span>Christine Clément</span>
+    <br>
+    <a href="mailto:christine.clementmolier@entheor.com">christine.clementmolier@entheor.com</a>
+    <br>
+    <span>{{ tel_christine }}</span>
+{% endblock %}
