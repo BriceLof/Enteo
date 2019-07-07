@@ -284,4 +284,33 @@ class MissionMailer extends Mailer
         $this->sendMessage($from, $to,null, $cc, $bcc, $subject, $body);
     }
 
+    /**
+     * reference m-3r-change consultant
+     *
+     * @param Users $consultant
+     * @param Beneficiaire $beneficiaire
+     */
+    public function alerteMissionEnAttente($newMissions, $acceptedMissions){
+        $ref = 'Mission 10';
+        $from = array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com");
+        $subject = count($newMissions) . " Missions en attente validation Consultants et " . count($acceptedMissions) . " en attente traitement Enthéor" ;
+        $template = '@Aub/Mission/alert/enAttenteDeValidation.html.twig';
+        $listeGestionnaires = array();
+        $cc = null;
+        $to = array_merge(array(
+            array("email" => "virginie.hiairrassary@entheor.com", "name" => "Virginie Hiairrassary"),
+            array("email" => "ph.rouzaud@entheor.com", "name" => "ph.rouzaud@entheor.com"),
+            array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com"),
+            array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"),
+            array("email" => "contact@entheor.com", "name" => "Contact"),
+        ), $listeGestionnaires);
+        $body = $this->templating->render($template, array(
+            'newMissions' => $newMissions,
+            'acceptedMissions' => $acceptedMissions,
+            'reference' => $ref,
+        ));
+
+        $this->sendMessage($from, $to,null, $cc, null, $subject, $body);
+    }
+
 }
