@@ -72,17 +72,6 @@ class Users extends BaseUser
 
     /**
      * @ORM\Column(type="string", nullable=true)
-     *
-     *
-     * @Assert\File(mimeTypes={
-     *          "image/jpeg",
-     *          "image/png",
-     *          "image/jpg",
-     *          "image/gif"
-     *     },
-     *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
-     *     uploadErrorMessage = "Erreur dans l'upload du fichier"
-     * )
      */
     protected $image;
     
