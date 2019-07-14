@@ -37,18 +37,18 @@ Application\PlateformeBundle\Entity\Bureau:
     thirdImage:
       groups: ['office']
 
-Application\UsersBundle\Entity\Users:
-  attributes:
-    id:
-      groups: ['office']
-    nom:
-      groups: ['office']
-    prenom:
-      groups: ['office']
-    image:
-      groups: ['office']
-    description:
-      groups: ['office']
+#Application\UsersBundle\Entity\Users:
+#  attributes:
+#    id:
+#      groups: ['office']
+#    nom:
+#      groups: ['office']
+#    prenom:
+#      groups: ['office']
+#    image:
+#      groups: ['office']
+#    description:
+#      groups: ['office']
 
 Application\PlateformeBundle\Entity\Beneficiaire:
   attributes:
