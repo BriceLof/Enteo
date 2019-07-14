@@ -29,16 +29,12 @@ class Bureau
     protected $ville;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="bureau", cascade={"persist"} )
+     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="bureau", cascade={"persist"} )
      */
     private $beneficiaires;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Users" cascade={"persist"} )
-     * @ORM\JoinTable(name="users_bureau",
-     *      joinColumns={@ORM\JoinColumn(name="users_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="bureau_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="Application\UsersBundle\Entity\Users", mappedBy="bureaux", cascade={"persist"} )
      */
     private $consultants;
 
