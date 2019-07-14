@@ -1,7 +1,7 @@
 {% for mission in missions|reverse %}
     {% if mission.state == state %}
-        <tr>
-            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) %}
+        <tr style="font-size: 11px">
+            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL'))  or is_granted('ROLE_GESTION') %}
                 <td>
                     <a href="{{ path('user_show', {'id': mission.consultant.id}) }}">
                         {{ mission.consultant.prenom|capitalize~" "~mission.consultant.nom|upper }}
@@ -15,6 +15,7 @@
                 </a>
             </td>
             <td>{{ mission.beneficiaire.ville.nom~" ("~mission.beneficiaire.ville.cp~")" }}</td>
+            <td>{{ mission.beneficiaire.accompagnement.dateDebut|date('d/m/y')~" / "~mission.beneficiaire.accompagnement.dateFin|date('d/m/y') }}</td>
             {% if mission.state == 'new' %}
                 <td>{{ mission.dateCreation|date('d/m/y') }}</td>
                 <td>
