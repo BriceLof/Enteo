@@ -29,7 +29,7 @@ class Bureau
     protected $ville;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="bureau", cascade={"persist"} )
+     * @ORM\ManyToMany(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", mappedBy="bureau", cascade={"persist"} )
      */
     private $beneficiaires;
 
