@@ -123,6 +123,98 @@ class Csv
         return $response;
     }
 
+    public function getCsvFromListMission($missions, $state)
+    {
+
+        $response = new StreamedResponse();
+        $response->setCallback(function () use ($missions, $state) {
+            $handle = fopen('php://output', 'w+');
+            fputcsv($handle, array(
+                'Consultant',
+                utf8_decode('Bénéficiaire'),
+                'Ville',
+                utf8_decode('Début Accompagnement'),
+                utf8_decode('Fin Accompagnement'),
+                'Date',
+            ), ';');
+
+            foreach ($missions as $mission) {
+                $consultant = $mission->getConsultant();
+                $beneficiaire = $mission->getBeneficiaire();
+
+                switch ($state) {
+                    case 'new' :
+                        $date = $mission->getDateCreation();
+                        break;
+                    case 'accepted' :
+                        $date = $mission->getDateAcceptation();
+                        break;
+                    case 'confirmed':
+                        $date = $mission->getDateConfirmation();
+                        break;
+                }
+
+                fputcsv(
+                    $handle,
+                    array(
+                        utf8_decode($consultant->getPrenom() . ' ' . strtoupper($consultant->getNom())),
+                        utf8_decode($beneficiaire->getPrenomConso() . ' ' . strtoupper($beneficiaire->getNomConso())),
+                        utf8_decode($beneficiaire->getVille()->getNom() . ' (' . $beneficiaire->getVille()->getCp() . ')'),
+                        utf8_decode($beneficiaire->getAccompagnement()->getDateDebut()->format('d/m/Y')),
+                        utf8_decode($beneficiaire->getAccompagnement()->getDateFin()->format('d/m/Y')),
+                        $date->format('d/m/Y')
+                    ),
+                    ';'
+                );
+            }
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export_mission_' . $state . '_' . (new \DateTime())->format('d_m_Y') . '.csv"');
+        return $response;
+    }
+
+    public function getCsvFromListMissionArchive($missionArchives)
+    {
+
+        $response = new StreamedResponse();
+        $response->setCallback(function () use ($missionArchives) {
+            $handle = fopen('php://output', 'w+');
+            fputcsv($handle, array(
+                'Consultant',
+                utf8_decode('Bénéficiaire'),
+                'Ville',
+                'Motif',
+                'Date',
+            ), ';');
+
+            foreach ($missionArchives as $missionArchive) {
+                $consultant = $missionArchive->getConsultant();
+                $beneficiaire = $missionArchive->getBeneficiaire();
+
+                fputcsv(
+                    $handle,
+                    array(
+                        utf8_decode($consultant->getPrenom() . ' ' . strtoupper($consultant->getNom())),
+                        utf8_decode($beneficiaire->getPrenomConso() . ' ' . strtoupper($beneficiaire->getNomConso())),
+                        utf8_decode($beneficiaire->getVille()->getNom() . ' (' . $beneficiaire->getVille()->getCp() . ')'),
+                        utf8_decode($missionArchive->getInformation()),
+                        $missionArchive->getDate()->format('d/m/Y)')
+                    ),
+                    ';'
+                );
+            }
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export_mission_archive_' . (new \DateTime())->format('d_m_Y') . '.csv"');
+        return $response;
+    }
+
     public function getCsvFileEmployeur($beneficiaires)
     {
         $response = new StreamedResponse();
@@ -441,7 +533,7 @@ class Csv
 
                 $historiquesFactures = $this->em->getRepository('ApplicationPlateformeBundle:HistoriquePaiementFacture')->findByFacture($facture);
 
-                if(count($historiquesFactures) > 0){
+                if (count($historiquesFactures) > 0) {
                     $i = 0;
 
                     foreach ($historiquesFactures as $historiqueFacture) {
@@ -485,7 +577,7 @@ class Csv
                         }
                         $i++;
                     }
-                }else{
+                } else {
                     fputcsv(
                         $handle,
                         $tabValue,

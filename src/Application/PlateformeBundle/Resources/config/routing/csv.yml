@@ -16,3 +16,15 @@ application_csv_getFileEmployeur:
     options:
         expose: true
 
+application_csv_getListMission:
+    path:     /getListMission/{state}
+    defaults: { _controller: "ApplicationPlateformeBundle:Csv:getListMission" }
+    options:
+        expose: true
+
+application_csv_getListMissionArchive:
+    path:     /getListMissionArchive
+    defaults: { _controller: "ApplicationPlateformeBundle:Csv:getListMissionArchive" }
+    options:
+        expose: true
+

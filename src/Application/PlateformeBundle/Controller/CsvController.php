@@ -98,7 +98,22 @@ class CsvController extends Controller
         return $this->get('application_plateforme.csv')->getCsvForFacture($factures);
     }
 
+    public function getListMissionAction($state){
+        $em = $this->getDoctrine()->getManager();
+        $missions = $em->getRepository('ApplicationUsersBundle:Mission')->findBy(array(
+            "state" => $state
+        ));
 
+        return $this->get('application_plateforme.csv')->getCsvFromListMission($missions, $state);
+    }
+
+    public function getListMissionArchiveAction(){
+
+        $em = $this->getDoctrine()->getManager();
+        $missionArchives = $em->getRepository('ApplicationUsersBundle:MissionArchive')->findAll();
+
+        return $this->get('application_plateforme.csv')->getCsvFromListMissionArchive($missionArchives);
+    }
 
     public function getFileEmployeurAction(Request $request){
         ini_set('memory_limit', -1);

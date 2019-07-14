@@ -2,12 +2,13 @@
     <table class="table">
         <thead>
         <tr>
-            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) %}
+            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMERCIAL')) or is_granted('ROLE_GESTION') %}
                 <th>Consultant</th>
             {% endif %}
             <th>Bénéficiaire</th>
             <th>Ville</th>
-            <th>Date</th>
+            <th>Déb/Fin Accomp</th>
+            <th>Date Mission</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -16,6 +17,12 @@
         </tbody>
     </table>
     <div>
-        <a href="#" id="next_page_{{ state }}" onclick="chargeNextMission('{{ state }}', '{{ idConsultant }}', event)">Voir suivants >></a>
+        <a href="#" id="next_page_{{ state }}" onclick="chargeNextMission('{{ state }}', '{{ idConsultant }}', event)">Voir
+            suivants >></a>
+    </div>
+    <div>
+        <a href="{{ path('application_csv_getListMission', {state : state}) }}">
+            <img src="{{ asset('images/icon_excel.png') }}" alt="excel" width="20">
+        </a>
     </div>
 </div>
