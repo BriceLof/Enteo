@@ -34,7 +34,11 @@ class Bureau
     private $beneficiaires;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Users", mappedBy="bureau", cascade={"persist"} )
+     * @ORM\OneToMany(targetEntity="Application\UsersBundle\Entity\Users" cascade={"persist"} )
+     * @ORM\JoinTable(name="users_bureau",
+     *      joinColumns={@ORM\JoinColumn(name="users_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="bureau_id", referencedColumnName="id")}
+     *      )
      */
     private $consultants;
 
