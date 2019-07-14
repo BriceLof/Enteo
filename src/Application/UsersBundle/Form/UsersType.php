@@ -100,7 +100,7 @@ class UsersType extends AbstractType
             ->add('description', CKEditorType::class, array(
                 'required' => false,
             ))
-            ->add('bureau', EntityType::class, array(
+            ->add('bureaux', EntityType::class, array(
                 'class' => 'ApplicationPlateformeBundle:Bureau',
                 'label' => 'Bureau *',
                 'placeholder' => '...',
@@ -108,6 +108,8 @@ class UsersType extends AbstractType
                     return $er->createQueryBuilder('b')
                         ->where('b.enabledEntheor = 1');
                 },
+                'multiple' => true,
+                'expanded' => true,
                 'required' => false
             ))
         ;

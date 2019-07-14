@@ -149,10 +149,10 @@
                         {{ form_widget(form.description) }}
                     </div>
                     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REFERENT') or is_granted('ROLE_GESTION') %}
-                        <div class="col-md-6 block_form_adresse" style="display:none">
-                            {{ form_label(form.bureau) }}
-                            {{ form_errors(form.bureau) }}
-                            {{ form_widget(form.bureau) }}
+                        <div class="col-md-12 block_form_adresse" style="display:none">
+                            {{ form_label(form.bureaux) }}
+                            {{ form_errors(form.bureaux) }}
+                            {{ form_widget(form.bureaux) }}
                         </div>
                     {% endif %}
                     <div class="clearfix"></div>

@@ -30,10 +30,10 @@ class Users extends BaseUser
     private $consultants;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="consultants")
+     * @ORM\ManyToMany(targetEntity="Application\PlateformeBundle\Entity\Bureau", inversedBy="consultants")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $bureau;
+    protected $bureaux;
 
     /**
      * @ORM\OneToMany(targetEntity="Application\StatsBundle\Entity\Semaine", mappedBy="commercial")
@@ -822,26 +822,36 @@ class Users extends BaseUser
     }
 
     /**
-     * Set bureau
+     * Add bureaux
      *
-     * @param \Application\PlateformeBundle\Entity\Bureau $bureau
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureaux
      *
      * @return Users
      */
-    public function setBureau(\Application\PlateformeBundle\Entity\Bureau $bureau = null)
+    public function addBureaux(\Application\PlateformeBundle\Entity\Bureau $bureaux)
     {
-        $this->bureau = $bureau;
+        $this->bureaux[] = $bureaux;
 
         return $this;
     }
 
     /**
-     * Get bureau
+     * Remove bureaux
      *
-     * @return \Application\PlateformeBundle\Entity\Bureau
+     * @param \Application\PlateformeBundle\Entity\Bureau $bureaux
      */
-    public function getBureau()
+    public function removeBureaux(\Application\PlateformeBundle\Entity\Bureau $bureaux)
     {
-        return $this->bureau;
+        $this->bureaux->removeElement($bureaux);
+    }
+
+    /**
+     * Get bureaux
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBureaux()
+    {
+        return $this->bureaux;
     }
 }
