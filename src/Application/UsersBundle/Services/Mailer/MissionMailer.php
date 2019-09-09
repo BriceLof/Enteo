@@ -299,6 +299,7 @@ class MissionMailer extends Mailer
         $cc = null;
         $to = array_merge(array(
             array("email" => "virginie.hiairrassary@entheor.com", "name" => "Virginie Hiairrassary"),
+            array("email" => "f.azoulay@entheor.com", "name" => "Franck Azoulay"),
             array("email" => "ph.rouzaud@entheor.com", "name" => "ph.rouzaud@entheor.com"),
             array("email" => "christine.clementmolier@entheor.com", "name" => "christine.clementmolier@entheor.com"),
             array("email" => "support.informatique@entheor.com", "name" => "support.informatique@entheor.com"),
