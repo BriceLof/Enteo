@@ -33,11 +33,12 @@ framework:
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
+        # https://stackoverflow.com/questions/49323144/symfony-3-4-session-time
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
-        # Session cookie lifetime à 0 = expire quand on ferme le navigateur
-        cookie_lifetime: 0
+        cookie_lifetime: 31536000
+        gc_maxlifetime: 31536000
     fragments:       ~
     http_method_override: true
     assets: ~
