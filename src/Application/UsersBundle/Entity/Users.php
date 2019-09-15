@@ -858,7 +858,7 @@ class Users extends BaseUser
     /**
      * @param mixed $bureaux
      */
-    public function setBureaux($bureaux): void
+    public function setBureaux($bureaux)
     {
         $this->bureaux = $bureaux;
     }

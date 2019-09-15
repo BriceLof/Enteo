@@ -35,19 +35,14 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Mes coordonnées</b></h3>
+                        <h3 class="panel-title"><b>Mes Missions</b></h3>
                     </div>
                     <div class="panel-body">
-                        <p><b>Civilité :</b>{{ user.civilite |capitalize }}</p>
-                        <p><b>Nom : <span class="text-danger">{{ user.nom |capitalize }}</span></b></p>
-                        <p><b>Prénom : <span class="text-danger">{{ user.prenom |capitalize }}</span></b></p>
-                        <p><b>Tél 1 :</b> {{ user.tel1 }}</p>
-                        <p><b>Tél 2 :</b> {{ user.tel2 }}</p>
-                        <p><b>Email 1 : <span class="text-danger">{{ user.email }}</span></b></p>
-                        <p><b>Email 2 :</b> {{ user.email2 }}</p>
+                        {{ render(controller("ApplicationUsersBundle:Mission:index", { 'id': user.id } )) }}
                     </div>
                 </div>
             </div>
@@ -68,8 +63,6 @@
                             <span>{{ user.numDeclarationActivite }}</span>
                             {{ render(controller("ApplicationUsersBundle:Users:editDeclarationActivite" )) }}
                         </p>
-                        <p><b>Dossiers en Cours :</b> {{ nbDossiersEnCours }}</p><br>
-
                         <p><b>Login :</b> {{ user.username }}</p>
                         <p><b>Mot de passe : </b>{{ is_granted("ROLE_ADMIN") ? user.password | slice(0,-45) : " ********" }}</p>
 
@@ -97,10 +90,16 @@
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><b>Mes Missions</b></h3>
+                        <h3 class="panel-title"><b>Mes coordonnées</b></h3>
                     </div>
                     <div class="panel-body">
-                        {{ render(controller("ApplicationUsersBundle:Mission:index", { 'id': user.id } )) }}
+                        <p><b>Civilité :</b>{{ user.civilite |capitalize }}</p>
+                        <p><b>Nom : <span class="text-danger">{{ user.nom |capitalize }}</span></b></p>
+                        <p><b>Prénom : <span class="text-danger">{{ user.prenom |capitalize }}</span></b></p>
+                        <p><b>Tél 1 :</b> {{ user.tel1 }}</p>
+                        <p><b>Tél 2 :</b> {{ user.tel2 }}</p>
+                        <p><b>Email 1 : <span class="text-danger">{{ user.email }}</span></b></p>
+                        <p><b>Email 2 :</b> {{ user.email2 }}</p>
                     </div>
                 </div>
             </div>
