@@ -455,7 +455,7 @@ class MissionController extends Controller
         if ($page == 0) {
             $offset = 0;
         } else {
-            $offset = $limit + (($page - 1) * 50);
+            $offset = $limit + (($page) * $limit);
         }
 
         $em = $this->getDoctrine()->getManager();

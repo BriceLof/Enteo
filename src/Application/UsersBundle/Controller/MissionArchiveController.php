@@ -103,8 +103,8 @@ class MissionArchiveController extends Controller
     }
 
     public function getListAction($page){
-        $limit = 50;
-        $offset = 10 + ($page * $limit);
+        $limit = 10;
+        $offset = $limit + (($page - 1) * $limit);
 
         $em = $this->getDoctrine()->getManager();
         $missionArchives = $em->getRepository('ApplicationUsersBundle:MissionArchive')->getLastestFromTo($limit, $offset);

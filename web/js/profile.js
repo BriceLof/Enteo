@@ -94,7 +94,7 @@ $(document).ready(function() {
 function chargeNextMissionArchive(e) {
     element = $("#tbody_mission_archive");
     e.preventDefault();
-    page = $("#tbody_mission_archive").data("page");
+    page = $("#tbody_mission_archive").data("page") + 1;
     $.ajax({
         url: Routing.generate('application_mission_archive_show_all', {'page': page}), // le nom du fichier indiqué dans le formulaire
         cache: true,
@@ -104,8 +104,8 @@ function chargeNextMissionArchive(e) {
         },
         success: function (data) {
             $("#tbody_mission_archive").append(data);
-            $("#tbody_mission_archive").data("page", page + 1);
-            if( $("#tbody_mission_archive tr").length < (10 + 50 * (page + 1) )){
+            $("#tbody_mission_archive").data("page", page);
+            if( $("#tbody_mission_archive tr").length < (10 + 10 * (page) )){
                 $("#next_page").hide();
             }
         },
@@ -129,7 +129,7 @@ function chargeNextMission(state, idConsultant ,e) {
         success: function (data) {
             $("#tbody_mission_"+ state).append(data);
             $("#tbody_mission_"+ state).data("page", page);
-            if( $("#tbody_mission_"+ state +" tr").length < (10 + 50 * (page + 1) )){
+            if( $("#tbody_mission_"+ state +" tr").length < (10 + 10 * (page) )){
                 $("#next_page_"+ state).hide();
             }
         },
