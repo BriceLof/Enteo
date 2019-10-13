@@ -1,11 +1,23 @@
 <tr>
+    <td class="text-center">
+        {% if missionArchive.beneficiaire.isAbandon == true %}
+            <b>A</b>
+        {% else %}
+            {% if  missionArchive.beneficiaire.mission is not null and missionArchive.consultant.id != missionArchive.beneficiaire.mission.consultant.id %}
+                <i class="glyphicon glyphicon-arrow-right text-success"></i>
+            {% else %}
+                <i class="glyphicon glyphicon-remove text-danger"></i>
+            {% endif %}
+        {% endif %}
+    </td>
     <td>
         <a href="{{ path('user_show', {'id': missionArchive.consultant.id}) }}">
             {{ missionArchive.consultant.prenom|capitalize~" "~missionArchive.consultant.nom|upper }}
         </a>
     </td>
     <td>
-        <a title="Voir la fiche du bénéficiaire" target="_blank" href="{{ path('application_show_beneficiaire', {'id': missionArchive.beneficiaire.id}) }}">
+        <a title="Voir la fiche du bénéficiaire" target="_blank"
+           href="{{ path('application_show_beneficiaire', {'id': missionArchive.beneficiaire.id}) }}">
             {{ missionArchive.beneficiaire.nomConso|capitalize~" "~missionArchive.beneficiaire.prenomConso|capitalize }}
         </a>
     </td>

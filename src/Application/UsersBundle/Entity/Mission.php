@@ -31,7 +31,7 @@ class Mission
     protected $consultant;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire")
+     * @ORM\OneToOne(targetEntity="Application\PlateformeBundle\Entity\Beneficiaire", inversedBy="mission")
      * @ORM\JoinColumn(name="beneficiaire_id", nullable=false)
      */
     protected $beneficiaire;

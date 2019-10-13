@@ -119,6 +119,11 @@ class Beneficiaire
     protected $missionArchives;
 
     /**
+     * @ORM\OneToOne(targetEntity="Application\UsersBundle\Entity\Mission", mappedBy="beneficiaire")
+     */
+    protected $mission;
+
+    /**
      * @ORM\OneToMany(targetEntity="Avis", mappedBy="beneficiaire", cascade={"persist","remove"})
      * @Assert\Valid
      */
@@ -2166,4 +2171,26 @@ class Beneficiaire
     {
         return $this->nomNaissance;
     }
+
+    public function isAbandon(){
+        return $this->lastDetailStatut->getStatut()->getId() == 12;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMission()
+    {
+        return $this->mission;
+    }
+
+    /**
+     * @param mixed $mission
+     */
+    public function setMission($mission)
+    {
+        $this->mission = $mission;
+    }
+
+
 }

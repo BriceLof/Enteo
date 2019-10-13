@@ -34,7 +34,6 @@ class MissionArchiveController extends Controller
         $destination = realpath($this->get('kernel')->getRootDir())."/../web/uploads/consultant/".$mission->getConsultant()->getId()."/archives/";
         $name = strtolower("contrat_".$mission->getBeneficiaire()->getNomConso()."_".$mission->getBeneficiaire()->getPrenomConso()."_".(new \DateTime('now'))->getTimestamp().".pdf");
 
-
         if (!file_exists($destination)){
             mkdir($destination);
         }
