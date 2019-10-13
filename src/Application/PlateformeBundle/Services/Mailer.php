@@ -63,7 +63,7 @@ class Mailer
         }
 
         if($this->hostname == "DEV"){
-            $data["to"] = array(array("email" => "ranfidy@hotmail.com", "name" => "Brice Lof"));
+            $data["to"] = array(array("email" => "ranfidy@hotmail.com", "name" => "Fidy"));
 //            if(!is_null($cc) && $cc != ''){
 //                $data["cc"] = $data["to"];
 //            }

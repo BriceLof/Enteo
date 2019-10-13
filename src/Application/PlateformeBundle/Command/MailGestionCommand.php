@@ -23,7 +23,9 @@ class MailGestionCommand extends ContainerAwareCommand
         ini_set('memory_limit',-1);
 
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findAll();
+        $beneficiaires = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->findBy(array(
+            'deleted' => 0
+        ));
         $i = 0;
         $j = 0;
         $k = 0;
