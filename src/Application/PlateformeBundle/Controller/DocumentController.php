@@ -32,7 +32,6 @@ class DocumentController extends Controller
         $document_form->handleRequest($request);
 
         if ($document_form->isSubmitted()) {
-            //var_dump($beneficiaire->getDocuments());die;
             if($document_form->isValid()){
                 $em = $this->getDoctrine()->getManager();
                 $beneficiaire = $em->getRepository('ApplicationPlateformeBundle:Beneficiaire')->find($id);
@@ -56,7 +55,6 @@ class DocumentController extends Controller
                 }
 
                 $this->get('session')->getFlashBag()->add('info', 'erreur sur l\'enregistrement du document');
-                //var_dump($form->getData());die;
 
                 return $this->redirectToRoute('application_new_document', array(
                     'erreur' => $document_form->getData(),

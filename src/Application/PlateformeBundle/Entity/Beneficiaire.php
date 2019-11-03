@@ -223,7 +223,7 @@ class Beneficiaire
     private $dateNaissance;
 
     /**
-     * @ORM\Column(name="statut", type="string", length=255)
+     * @ORM\Column(name="statut", type="string", length=255, nullable=true)
      */
     private $statut;
 
